@@ -74,6 +74,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgricultureContextMigrations\202209111329214_Agriculture_Depo.cs" />
+    <Compile Include="AgricultureContextMigrations\202209111329214_Agriculture_Depo.Designer.cs">
+      <DependentUpon>202209111329214_Agriculture_Depo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgricultureContextMigrations\Configuration.cs" />
+    <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
+    <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
+    <Compile Include="AgricultureDAL\AgricultureRepository.cs" />
+    <Compile Include="AgricultureDAL\AgricultureUnitOfWork.cs" />
+    <Compile Include="AgricultureDAL\IAgricultureUnitOfWork.cs" />
     <Compile Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.cs" />
     <Compile Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.Designer.cs">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
@@ -96,6 +106,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AgricultureContextMigrations\202209111329214_Agriculture_Depo.resx">
+      <DependentUpon>202209111329214_Agriculture_Depo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
     </EmbeddedResource>

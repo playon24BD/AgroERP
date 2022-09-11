@@ -82,23 +82,37 @@
     <Compile Include="Common\ExecutionStateWithText.cs" />
     <Compile Include="Common\UserInformation.cs" />
     <Compile Include="Common\UserPrivilege.cs" />
+    <Compile Include="Configuration\DomainModels\BankSetup.cs" />
     <Compile Include="ControlPanel\DomainModels\Branch.cs" />
     <Compile Include="ControlPanel\DomainModels\AppUser.cs" />
+    <Compile Include="Configuration\DomainModels\DepotSetup.cs" />
+    <Compile Include="Configuration\DomainModels\FinishGoodProduct.cs" />
+    <Compile Include="Configuration\DomainModels\FinishGoodSupplier.cs" />
     <Compile Include="ControlPanel\DomainModels\MainMenu.cs" />
+    <Compile Include="Configuration\DomainModels\MeasurementSetup.cs" />
     <Compile Include="ControlPanel\DomainModels\Module.cs" />
     <Compile Include="ControlPanel\DomainModels\OrganizationAuthorization.cs" />
+    <Compile Include="Configuration\DomainModels\RawMaterial.cs" />
+    <Compile Include="Configuration\DomainModels\RawMaterialSupplier.cs" />
     <Compile Include="ControlPanel\DomainModels\Role.cs" />
     <Compile Include="ControlPanel\DomainModels\RoleAuthorization.cs" />
     <Compile Include="ControlPanel\DomainModels\SubMenu.cs" />
     <Compile Include="ControlPanel\DomainModels\UserAuthorization.cs" />
     <Compile Include="ControlPanel\DTOModels\AppUserDTO.cs" />
+    <Compile Include="Configuration\DTOModels\BankSetupDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\BranchDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\ChangePasswordDTO.cs" />
+    <Compile Include="Configuration\DTOModels\DepotSetupDTO.cs" />
+    <Compile Include="Configuration\DTOModels\FinishGoodProductDTO.cs" />
+    <Compile Include="Configuration\DTOModels\FinishGoodSupplierDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\ManiMenuDTO.cs" />
+    <Compile Include="Configuration\DTOModels\MeasurementSetupDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\ModuleDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\OrganizationAuthorizationDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\OrganizationDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\OrgAuthMenusDTO.cs" />
+    <Compile Include="Configuration\DTOModels\RawMaterialDTO.cs" />
+    <Compile Include="Configuration\DTOModels\RawMaterialSupplierDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\RoleDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\SubMenuDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\RoleAuthorizationDTO.cs" />
@@ -110,14 +124,21 @@
     <Compile Include="ControlPanel\DTOModels\UserLogInDTO.cs" />
     <Compile Include="ControlPanel\DTOModels\UserMenuDTO.cs" />
     <Compile Include="ControlPanel\ViewModels\AppUserViewModel.cs" />
+    <Compile Include="Configuration\ViewModels\BankSetupViewModel.cs" />
     <Compile Include="ControlPanel\ViewModels\BranchViewModel.cs" />
     <Compile Include="ControlPanel\ViewModels\ChangePasswordViewModel.cs" />
+    <Compile Include="Configuration\ViewModels\DepotSetupViewModel.cs" />
+    <Compile Include="Configuration\ViewModels\FinishGoodProductViewModel.cs" />
+    <Compile Include="Configuration\ViewModels\FinishGoodSupplierViewModel.cs" />
     <Compile Include="ControlPanel\ViewModels\MainMenuViewModel.cs" />
+    <Compile Include="Configuration\ViewModels\MeasurementSetupViewModel.cs" />
     <Compile Include="ControlPanel\ViewModels\ModuleViewModel.cs" />
     <Compile Include="ControlPanel\ViewModels\OrganizationAuthorizationViewModel.cs" />
     <Compile Include="ControlPanel\ViewModels\OrganizationViewModel.cs" />
     <Compile Include="ControlPanel\ViewModels\OrgAuthMenusDTO.cs" />
     <Compile Include="ControlPanel\ViewModels\OrgAuthUIViewModel.cs" />
+    <Compile Include="Configuration\ViewModels\RawMaterialSupplierViewModel.cs" />
+    <Compile Include="Configuration\ViewModels\RawMaterialViewModel.cs" />
     <Compile Include="ControlPanel\ViewModels\RoleAuthorizationViewModel.cs" />
     <Compile Include="ControlPanel\ViewModels\RoleViewModel.cs" />
     <Compile Include="ControlPanel\ViewModels\SubMenuViewModel.cs" />
@@ -139,6 +160,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Configuration\ReportModels\" />
     <Folder Include="ControlPanel\ReportModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

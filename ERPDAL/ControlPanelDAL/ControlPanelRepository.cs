@@ -1,4 +1,5 @@
-﻿using ERPBO.ControlPanel.DomainModels;
+﻿
+using ERPBO.ControlPanel.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace ERPDAL.ControlPanelDAL
 {
+    
     public class OrganizationRepository : ControlPanelBaseRepository<Organization>
     {
         public OrganizationRepository(IControlPanelUnitOfWork controlPanelUnitOfWork) : base(controlPanelUnitOfWork) { }

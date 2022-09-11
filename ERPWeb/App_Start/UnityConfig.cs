@@ -1,12 +1,13 @@
 
-using ERPBLL.ControlPanel;
 using ERPBLL.ControlPanel.Interface;
+using ERPBLL.ControlPanel;
 
 using ERPDAL.ControlPanelDAL;
 
 using System.Web.Mvc;
 using Unity;
 using Unity.Mvc5;
+using ERPBLL.Agriculture;
 
 namespace ERPWeb
 {
@@ -19,12 +20,13 @@ namespace ERPWeb
             // it is NOT necessary to register your controllers
             // e.g. container.RegisterType<ITestService, TestService>();
             // Inventory Database
-   
+
 
             // Production Database
- 
+
             // ControlPanel Database
             #region ControlPanel
+            
             container.RegisterType<ISubMenuBusiness, SubMenuBusiness>();
             container.RegisterType<IManiMenuBusiness, ManiMenuBusiness>();
             container.RegisterType<IAppUserBusiness, AppUserBusiness>();
@@ -40,9 +42,11 @@ namespace ERPWeb
             #endregion
 
             // Configuration Database
-        
+            #region ControlPanel
+            container.RegisterType<IDepotSetup, DepotSetupBusiness>();
+            #endregion
             // FrontDesk Database
-         
+
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

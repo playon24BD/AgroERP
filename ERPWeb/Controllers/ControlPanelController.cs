@@ -1,4 +1,5 @@
-﻿using ERPBLL.Common;
+﻿using ERPBLL.ControlPanel.Interface;
+using ERPBLL.Common;
 using ERPBLL.ControlPanel.Interface;
 using ERPBO.ControlPanel.DTOModels;
 using ERPBO.ControlPanel.ViewModels;
@@ -15,6 +16,7 @@ namespace ERPWeb.Controllers
     [CustomAuthorize]
     public class ControlPanelController : BaseController
     {
+        private readonly IDepotSetup _depotSetup;
         private readonly IOrganizationBusiness _organizationBusiness;
         private readonly IBranchBusiness _branchBusiness;
         private readonly IRoleBusiness _roleBusiness;
@@ -26,8 +28,9 @@ namespace ERPWeb.Controllers
         private readonly IUserAuthorizationBusiness _userAuthorizationBusiness;
         private readonly IRoleAuthorizationBusiness _roleAuthorizationBusiness;
 
-        public ControlPanelController(IOrganizationBusiness organizationBusiness, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness)
+        public ControlPanelController(IOrganizationBusiness               organizationBusiness,IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness)
         {
+            this._depotSetup = depotSetup;
             this._organizationBusiness = organizationBusiness;
             this._branchBusiness = branchBusiness;
             this._roleBusiness = roleBusiness;
@@ -40,6 +43,8 @@ namespace ERPWeb.Controllers
             this._roleAuthorizationBusiness = roleAuthorizationBusiness;
         }
         // GET: ControlPanel
+
+
 
         #region Organization
         [HttpGet]

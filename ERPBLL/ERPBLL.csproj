@@ -103,8 +103,10 @@
     <Compile Include="Common\Utility.cs" />
     <Compile Include="ControlPanel\AppUserBusiness.cs" />
     <Compile Include="ControlPanel\BranchBusiness.cs" />
+    <Compile Include="Agriculture\DepotSetupBusiness.cs" />
     <Compile Include="ControlPanel\Interface\IAppUserBusiness.cs" />
     <Compile Include="ControlPanel\Interface\IBranchBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IDepotSetup.cs" />
     <Compile Include="ControlPanel\Interface\IManiMenuBusiness.cs" />
     <Compile Include="ControlPanel\Interface\IModuleBusiness.cs" />
     <Compile Include="ControlPanel\Interface\IOrganizationAuthBusiness.cs" />
