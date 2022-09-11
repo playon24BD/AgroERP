@@ -214,11 +214,34 @@ namespace ERPWeb.Controllers
         }
         #endregion
 
+        #region Dropdown List
+        [HttpPost]
+        public ActionResult GetRolesByOrgId(long orgId)
+        {
+            IEnumerable<Dropdown> dropdowns = new List<Dropdown>();
+            if (orgId > 0)
+            {
+                dropdowns = _roleBusiness.GetAllRoleByOrgId(orgId).Select(r => new Dropdown { text = r.RoleName, value = r.RoleId.ToString() }).ToList();
+            }
+            return Json(dropdowns);
+        }
+        [HttpPost]
+        public ActionResult GetBranchesByOrgId(long orgId)
+        {
+            IEnumerable<Dropdown> dropdowns = new List<Dropdown>();
+            if (orgId > 0)
+            {
+                dropdowns = _branchBusiness.GetBranchByOrgId(orgId).Select(r => new Dropdown { text = r.BranchName, value = r.BranchId.ToString() }).ToList();
+            }
+            return Json(dropdowns);
+        }
+        #endregion
 
 
 
 
- 
+
+
 
 
         protected override void Dispose(bool disposing)
