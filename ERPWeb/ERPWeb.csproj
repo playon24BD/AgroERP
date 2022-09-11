@@ -310,105 +310,6 @@
     <Content Include="Content\LogIn\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\LogIn\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <Content Include="Reports\DataSets\ProductionDS.xsc">
-      <DependentUpon>ProductionDS.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\DataSets\InventoryDS.xsc">
-      <DependentUpon>InventoryDS.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\DataSets\Accounts.xsc">
-      <DependentUpon>Accounts.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\Accounts.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Accounts.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Reports\DataSets\Accounts.xss">
-      <DependentUpon>Accounts.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\DataSets\dsDailyProductionSummery.xsc">
-      <DependentUpon>dsDailyProductionSummery.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\DataSets\dsCartonStickerForBarcode.xsc">
-      <DependentUpon>dsCartonStickerForBarcode.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\dsCartonStickerForBarcode.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsCartonStickerForBarcode.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Reports\DataSets\dsCartonStickerForBarcode.xss">
-      <DependentUpon>dsCartonStickerForBarcode.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\DataSets\dsCartoonInfo.xsc">
-      <DependentUpon>dsCartoonInfo.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\dsCartoonInfo.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsCartoonInfo.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Reports\DataSets\dsCartoonInfo.xss">
-      <DependentUpon>dsCartoonInfo.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\DataSets\dsDailyProductAndProcessFaultyReport.xsc">
-      <DependentUpon>dsDailyProductAndProcessFaultyReport.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\dsDailyProductAndProcessFaultyReport.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsDailyProductAndProcessFaultyReport.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Reports\DataSets\dsDailyProductAndProcessFaultyReport.xss">
-      <DependentUpon>dsDailyProductAndProcessFaultyReport.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\dsDailyProductionSummery.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsDailyProductionSummery.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Reports\DataSets\dsDailyProductionSummery.xss">
-      <DependentUpon>dsDailyProductionSummery.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\DataSets\dsDailyQCCheckingReport.xsc">
-      <DependentUpon>dsDailyQCCheckingReport.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\dsDailyQCCheckingReport.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsDailyQCCheckingReport.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Reports\DataSets\dsDailyQCCheckingReport.xss">
-      <DependentUpon>dsDailyQCCheckingReport.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\InventoryDS.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>InventoryDS.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Reports\DataSets\InventoryDS.xss">
-      <DependentUpon>InventoryDS.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\ProductionDS.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ProductionDS.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Reports\DataSets\ProductionDS.xss">
-      <DependentUpon>ProductionDS.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\DataSets\ServicesDS.xsc">
-      <DependentUpon>ServicesDS.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\ServicesDS.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ServicesDS.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Reports\DataSets\ServicesDS.xss">
-      <DependentUpon>ServicesDS.xsd</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\download.js" />
@@ -458,7 +359,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AccessController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AgroConfigurationController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
@@ -476,51 +376,6 @@
     <Compile Include="Infrastructure\PagerData.cs" />
     <Compile Include="Infrastructure\PrintReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\DataSets\Accounts.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Accounts.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\DataSets\dsCartonStickerForBarcode.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsCartonStickerForBarcode.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\DataSets\dsCartoonInfo.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsCartoonInfo.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\DataSets\dsDailyProductAndProcessFaultyReport.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsDailyProductAndProcessFaultyReport.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\DataSets\dsDailyProductionSummery.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsDailyProductionSummery.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\DataSets\dsDailyQCCheckingReport.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsDailyQCCheckingReport.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\DataSets\InventoryDS.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>InventoryDS.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\DataSets\ProductionDS.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProductionDS.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\DataSets\ServicesDS.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServicesDS.xsd</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -528,14 +383,12 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\ControlPanel\GetOrganizations.cshtml" />
     <Content Include="Views\ControlPanel\CreateOrganization.cshtml" />
-    <Content Include="Views\Shared\UI_Common_Layout.cshtml" />
     <Content Include="Views\ControlPanel\GetBranchList.cshtml" />
     <Content Include="Views\ControlPanel\GetRoleList.cshtml" />
     <Content Include="Views\ControlPanel\GetAppUserList.cshtml" />
@@ -548,7 +401,6 @@
     <Content Include="Views\Common\_sidebar.cshtml" />
     <Content Include="Views\Access\LogIn.cshtml" />
     <Content Include="Views\Access\_token.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Error\ServerError.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
@@ -559,9 +411,6 @@
     <Content Include="Views\ControlPanel\GetUserRoleList.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
     <Content Include="Views\ControlPanel\GetBranchListForClient.cshtml" />
-    <Content Include="Views\Shared\UI_Layout_Card.cshtml" />
-    <Content Include="Views\User\ReturnStockDetails.cshtml" />
-    <Content Include="Views\Shared\UI_Card_Tab_Panel.cshtml" />
     <Content Include="Views\ControlPanel\CreateAppUser.cshtml" />
     <Content Include="Views\ControlPanel\CreateAppRole.cshtml" />
     <Content Include="Views\ControlPanel\AppUserConfiguration.cshtml" />
@@ -603,174 +452,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Reports\Accounts\" />
+    <Folder Include="Reports\DataSets\" />
+    <Folder Include="Reports\ERPRpt\" />
+    <Folder Include="Reports\ServiceRpt\Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Reports\ERPRpt\Production\rptProductionRequisition.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Reports\ERPRpt\Production\rptQRCodesByRef.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\Configuration\rptCurrentStockReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptInvoiceReceipt.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptJobOrder.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptJobOrderCreateReceipt.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptJobOrderReceipt.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptJobReturnDeliveryChalan.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptJobTransferDeliveryChalan.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptOtherBranchRepairJob.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\Configuration\rptPartsReturnStock.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptSellsReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\Configuration\rptTSRequsitionReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\Configuration\rptUsedPartsReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptRepairedJobOfOtherBranch.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Reports\ERPRpt\Inventory\rptWarehouseStockDetail.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Reports\ERPRpt\Inventory\rptStockShortageOrExcess.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="ExcelFile\Demo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\Accounts\rptCreditVoucherReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Accounts\rptDebitVoucherReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Accounts\rptJournalVoucherReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Accounts\rptLedgerReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Accounts\rptCashbookReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="ExcelFile\IMEIUplodDemo.rdlc" />
-    <EmbeddedResource Include="Reports\ERPRpt\Inventory\GetPass.rdlc" />
-    <EmbeddedResource Include="Reports\ERPRpt\Inventory\GetPass1.rdlc" />
-    <EmbeddedResource Include="Reports\ERPRpt\Inventory\GetPassFinishGoods.rdlc" />
-    <EmbeddedResource Include="Reports\ERPRpt\Inventory\ItemWisePartsStockReport.rdlc" />
-    <EmbeddedResource Include="Reports\ERPRpt\Inventory\rptModelWiseDailyItemStock.rdlc" />
-    <Content Include="Reports\ERPRpt\Inventory\rptStockShortageOrExcess - Copy.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="Reports\ERPRpt\Inventory\rptModelWiseItemStock.rdlc" />
-    <EmbeddedResource Include="Reports\ERPRpt\Inventory\SalarySheetReport.rdlc" />
-    <Content Include="Reports\ServiceRpt\Configuration\rptOtherBranchRequsition.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptAllBranchDailySummaryReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptDailySummaryReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptJobSignInAndOutReport - Copy.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptJobSignInAndOutReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptReceivedJobOrderReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptReceivedReturnJobOrderReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptLotInBarcodeSticker.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptBarcodeForCartonSticker20PCs.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptBarcodeForCartonSticker40PCs.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptBarcodeForCartonSticker50PCs.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptDailyProductAndProcessFaultyReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptDailyProductionSummery.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptLotInBarcodeSticker - Copy.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptDailyQCCheckingReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptQRCodeProblemList.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptRequsitionDetails.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ERPRpt\Production\rptLotInBarcodeSticker - Copy %282%29.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="Reports\ERPRpt\Production\ItemWisePartsStockReport.rdlc" />
-    <EmbeddedResource Include="Reports\ERPRpt\Production\rptDailyPackagingProductSummeryReport.rdlc" />
-    <Content Include="Reports\ERPRpt\Production\rptDailyQCCheckingReport_Test.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="Reports\ERPRpt\Production\rptPackagingProductSummeryReport.rdlc" />
-    <EmbeddedResource Include="Reports\ERPRpt\Production\rptProductSummeryReport.rdlc" />
-    <EmbeddedResource Include="Reports\ServiceRpt\Configuration\rptOtherBranchRequsition - Copy.rdlc" />
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptHandsetChangeInformation.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptMultipleJobOrderDelivery.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\FrontDesk\rptDealerReceipt.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\ServiceRpt\Configuration\rptTotalStockDetailReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="Reports\ServiceRpt\FrontDesk\rptQCPassFailReport.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ERPBLL\ERPBLL.csproj">
