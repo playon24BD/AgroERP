@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{83DE419F-8912-4254-A909-5F63A35EB2EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ERPBO</RootNamespace>
+    <AssemblyName>ERPBO</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\DailySellsChart.cs" />
+    <Compile Include="Common\DayAndModelWiseProductionChart.cs" />
+    <Compile Include="Common\DaysAndLineWiseProductionChart.cs" />
+    <Compile Include="Common\CustomPrincipalSerializeModel.cs" />
+    <Compile Include="Common\Dropdown.cs" />
+    <Compile Include="Common\ExecutionStateWithText.cs" />
+    <Compile Include="Common\UserInformation.cs" />
+    <Compile Include="Common\UserPrivilege.cs" />
+    <Compile Include="ControlPanel\DomainModels\Branch.cs" />
+    <Compile Include="ControlPanel\DomainModels\AppUser.cs" />
+    <Compile Include="ControlPanel\DomainModels\MainMenu.cs" />
+    <Compile Include="ControlPanel\DomainModels\Module.cs" />
+    <Compile Include="ControlPanel\DomainModels\OrganizationAuthorization.cs" />
+    <Compile Include="ControlPanel\DomainModels\Role.cs" />
+    <Compile Include="ControlPanel\DomainModels\RoleAuthorization.cs" />
+    <Compile Include="ControlPanel\DomainModels\SubMenu.cs" />
+    <Compile Include="ControlPanel\DomainModels\UserAuthorization.cs" />
+    <Compile Include="ControlPanel\DTOModels\AppUserDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\BranchDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\ChangePasswordDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\ManiMenuDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\ModuleDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\OrganizationAuthorizationDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\OrganizationDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\OrgAuthMenusDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\RoleDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\SubMenuDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\RoleAuthorizationDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\TechnicalServiceByRoleDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserAuthorizationDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserAuthorizeMenusDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserCustomMenusDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserDetaildDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserLogInDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserMenuDTO.cs" />
+    <Compile Include="ControlPanel\ViewModels\AppUserViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\BranchViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\ChangePasswordViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\MainMenuViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\ModuleViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\OrganizationAuthorizationViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\OrganizationViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\OrgAuthMenusDTO.cs" />
+    <Compile Include="ControlPanel\ViewModels\OrgAuthUIViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\RoleAuthorizationViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\RoleViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\SubMenuViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\TechnicalServiceByRoleViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserAuthorizationViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserAuthorizeMenusViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserCustomMenusViewModels.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserDetaildViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserLogInViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserMenuViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\VmUserMenu.cs" />
+    <Compile Include="CustomValidationAttribute\Production\RequisitionForInRepairRequisitionAttr.cs" />
+    <Compile Include="CustomValidationAttribute\Production\RequisitionForInProductionRequisitionAttr.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ControlPanel\DomainModels\Organization.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ControlPanel\ReportModels\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

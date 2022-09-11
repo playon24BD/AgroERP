@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Tablix Name="Tablix1">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>1.08438in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.28293in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Image Name="Image1">
+                      <Source>Database</Source>
+                      <Value>=Fields!BarcodeLotInNumber.Value</Value>
+                      <MIMEType>image/png</MIMEType>
+                      <Sizing>Fit</Sizing>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingTop>5pt</PaddingTop>
+                      </Style>
+                    </Image>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.08218in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="CodeNo">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!CodeNo.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>CodeNo</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingTop>1pt</PaddingTop>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Details" />
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>dsLotInBarcode</DataSetName>
+        <Left>0.01562in</Left>
+        <Height>0.36511in</Height>
+        <Width>1.08438in</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+    </ReportItems>
+    <Height>0.36511in</Height>
+    <Style>
+      <Border>
+        <Style>None</Style>
+      </Border>
+    </Style>
+  </Body>
+  <Width>1.1in</Width>
+  <Page>
+    <PageHeight>0.5in</PageHeight>
+    <PageWidth>1.18in</PageWidth>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="dsLotInBarcode">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>227d6c7c-478f-4b2c-ac2e-58819aa39367</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsLotInBarcode">
+      <Query>
+        <DataSourceName>dsLotInBarcode</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="CodeNo">
+          <DataField>CodeNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BarcodeLotInNumber">
+          <DataField>BarcodeLotInNumber</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>dsLotInBarcode</rd:DataSetName>
+        <rd:SchemaPath>D:\Project\MYCELL-ERP\ERPWeb\Reports\DataSets\dsLotInBarcode.xsd</rd:SchemaPath>
+        <rd:TableName>dsLotInBarcode</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
+  <EmbeddedImages>
+    <EmbeddedImage Name="logo1">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>81b25d0b-5f59-44d3-be67-281a1e515946</rd:ReportID>
+</Report>

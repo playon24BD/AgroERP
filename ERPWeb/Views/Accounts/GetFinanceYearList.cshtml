@@ -1,0 +1,244 @@
+﻿@model IEnumerable<ERPBO.Accounts.ViewModels.FinanceYearViewModel>
+@{
+    ViewBag.Title = "Finance Year";
+    int sl = 0;
+}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <h4>List Finance Year</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-header">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" name="search" id="searchBy" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('#tblFinanceYear tbody tr',this)" />
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn btn-primary btn-sm" style="background-color:darkblue" id="btnAddNew"><i class="fa fa-plus"></i> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.AntiForgeryToken()
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 text-sm">
+                        <table class="table table-bordered table-sm table-striped" id="tblFinanceYear">
+                            <thead class="btn-dark">
+                                <tr class="text-center">
+                                    <th>#SL</th>
+                                    <th class="hide"></th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th>Session</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var fy in Model)
+                                {
+                                    sl = sl + 1;
+                                    string fromdate = fy.FromDate != null ? fy.FromDate.Value.ToString("dd-MMM-yyy") : "";
+                                    string todate = fy.ToDate != null ? fy.ToDate.Value.ToString("dd-MMM-yyy") : "";
+                                    <tr>
+                                        <td class="text-center" width="10%">@sl</td>
+                                        <td class="hide">@fy.FinanceYearId</td>
+                                        <td>@fromdate</td>
+                                        <td>@todate</td>
+                                        <td>@fy.Session</td>
+                                        <td>@fy.Remarks</td>
+                                    </tr>
+                                }
+                                @if (Model.Count() == 0)
+                                {
+                                    <tr class="text-center empty-row">
+                                        <td colspan="5">
+                                            No Rows Found
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalFinanceYear" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary" style="height:60px">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead">Add Year</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmAccessories">
+                    <input type="hidden" name="Id" id="hdSessionId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="txtSession" class="control-label font-weight-bold">Session<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                            <input type="text" name="txtSession" value="" id="txtSession" class="form-control form-control-sm" />
+                            <span class="error hide required-session font-weight-bold">Input Session!</span>
+                            <span class="error hide duplicate-session font-weight-bold">Already Session Exist!</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label font-weight-bold">From Date</label>
+                            <div class="input-group input-group-sm ">
+                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
+                                <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                    <span class="input-group-text">&#10008;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="form-row">
+                       <div class="form-group col-md-12">
+                           <label class="control-label font-weight-bold">To Date</label>
+                           <div class="input-group input-group-sm ">
+                               <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" />
+                               <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                   <span class="input-group-text">&#10008;</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="txtRemarks" class="control-label font-weight-bold">Remarks</label>
+                            <input type="text" name="remarks" value="" id="txtRemarks" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-sm btn-success float-right" id="btnSubmit"><i class="far fa-save"></i> <span id="spanSaveText">Save </span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var hdSessionId = $("#hdSessionId");
+        var txtSession = $("#txtSession");
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+        var txtRemarks = $("#txtRemarks");
+        $(document).ready(function () {
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true,
+                showOn: "button",
+                buttonImageOnly: true,
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+        })
+
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                   // LoadDataTableForLedger();
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                   // LoadDataTableForLedger();
+                }
+            }
+        })
+
+        dptFromDate.change(function () {
+            //LoadDataTableForLedger();
+        })
+        dptToDate.change(function () {
+           // LoadDataTableForLedger();
+        })
+
+        function OpenYearModal() {
+            $("#spanModalHead").text('Add Finance Year');
+            $("#spanSaveText").text('Save');
+            $("#modalFinanceYear").modal("show");
+            $(".error").addClass("hide");
+        }
+        $("#btnAddNew").click(function (e) {
+            e.preventDefault();
+            //clearCtrl();
+            OpenYearModal();
+        })
+        function validateFinanceForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if ($.trim(txtSession.val()) == "") {
+                $(".required-session").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            if (validateFinanceForm() == true) {
+                $(".error").addClass("hide");
+                var data = JSON.stringify({ Session: txtSession.val(), FromDate: dptFromDate.val(), ToDate: dptToDate.val(), Remarks: txtRemarks.val() });
+                console.log("Year");
+                //return console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/Accounts/SaveFinanceYear', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        message("#msg1", "#tblFinanceYear");
+                    }
+                    else {
+                        message("#msg2");
+                    }
+                    enable("#btnSubmit");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmit");
+                });
+            }
+        })
+    </script>
+    }

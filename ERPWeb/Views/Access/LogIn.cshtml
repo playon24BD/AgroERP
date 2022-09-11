@@ -1,0 +1,85 @@
+﻿@model ERPBO.ControlPanel.ViewModels.UserLogInViewModel
+
+@{
+    ViewBag.Title = "LogIn";
+    Layout = null;
+}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Welcome to Enterprise Resource Planning</title>
+    <!-- Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="PlayOn24,PO24,PlayOn,On24" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //Meta Tags -->
+    <!-- font-awesome-stylesheet -->
+    <link href="~/Content/LogIn/css/font-awesome.css" rel="stylesheet" />
+    <!-- //font-awesome-stylesheet -->
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/LogIn/css/style.css" rel="stylesheet" />
+
+    <!--fonts-->
+    <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">
+    <!--//fonts-->
+    <style type="text/css">
+        .text-danger {
+            color: #ed2d2d
+        }
+    </style>
+</head>
+<body>
+    <!-- main-content -->
+    <h1 style="text-shadow: 2px 2px #a19c9c;">Enterprise Resource Planning</h1>
+    <div class="main-content-agileits">
+        <!-- left-content -->
+        <div class="left-text-w3ls">
+            <h3>Make Your Business Easier</h3>
+            <p><a class="fa fa-bullseye" aria-hidden="true"></a> To enhance user performance use Google <img src="~/Content/LogIn/images/chormeLogo.png" alt="Alternate Text" width="30" height="30" /> Chrome Browser</p>
+        </div>
+        <!-- //left-content -->
+        <!-- form -->
+        <div class="login-w3l">
+            <div class="top-img-agileits-w3layouts">
+                <h2 class="sub-head-w3-agileits">Sign in to start your session</h2>
+            </div>
+            <div class="login-form">
+                @using (Html.BeginForm())
+                {
+                    @Html.Partial("_token")
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @placeholder = "User Name", @class = "form-control", @required = "" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @placeholder = "Password", @class = "form-control", @type = "password", @required = "" } })
+
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <input type="submit" value="Log In">
+                }
+            </div>
+        </div>
+        <!-- //form -->
+        <div class="clear"></div>
+    </div>
+
+    <!--// main-content -->
+    <!--Copyright-->
+    <div class="footer-agileits">
+        <p>©Copyright @DateTime.Now.Year . All Rights Reserved | Developed & Maintained by <a href="http://playon24.com.bd/" target="_blank"> PlayOn24</a> | Hotline: 01632 54 93 23 (10am-5pm)</p>
+    </div>
+    <!--//Copyright-->
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+            $(document).keypress(function (e) {
+                if (e.which == '13') {
+                    $("form").submit();
+                }
+            })
+    </script>
+</body>
+</html>
+

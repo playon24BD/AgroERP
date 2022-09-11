@@ -1,0 +1,225 @@
+﻿
+@{
+    ViewBag.Title = "Organization Configuration";
+    string checkboxId = string.Empty;
+    List<ERPBO.ControlPanel.ViewModels.ModuleUIViewModel> menuData = (List<ERPBO.ControlPanel.ViewModels.ModuleUIViewModel>)ViewBag.Mainmenus;
+}
+
+<div class="row text-sm">
+    <div class="col-md-12" style="margin-top:-15px">
+        <div class="card card-primary card-outline card-tabs">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-one-org-tab" data-toggle="pill" href="#custom-tabs-one-org" role="tab" aria-controls="custom-tabs-one-org" aria-selected="true">Organization Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-two-orgAuth-tab" data-toggle="pill" href="#custom-tabs-two-orgAuth" role="tab" aria-controls="custom-tabs-two-orgAuth" aria-selected="true">Organization Authorization</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    <div class="tab-pane fade show active" id="custom-tabs-one-org" role="tabpanel" aria-labelledby="custom-tabs-one-org-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    Organization Information
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="text" name="search" id="searchByModule" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('.tblOraganizationData tbody tr',this)" />
+                                            </div>
+                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4">
+                                                <a href="/ControlPanel/CreateOrganization" class="btn btn-outline-primary btn-flat btn-sm float-right"><i class="fa fa-plus"></i> Create Organization</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer1">
+                                            @{Html.RenderAction("OrgConfiguration", "ControlPanel", new { @flag = "Org" }); }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="custom-tabs-two-orgAuth" role="tabpanel" aria-labelledby="custom-tabs-two-orgAuth-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    Organization Authorization
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @Html.AntiForgeryToken()
+                                                @Html.DropDownList("ddlOrganization", (List<SelectListItem>)ViewBag.ddlOrganization, "---Select Organization---", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-4">
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="submit" id="btnSubmit" class="btn float-right btn-outline-success btn-flat"><i class="fas fa-paper-plane"></i> Save...</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row text-sm">
+                                            @foreach (var item in menuData)
+                                            {
+                                                <div class="col-lg-3 col-6">
+                                                    <div class="card card-secondary">
+                                                        <div class="card-header text-bold">
+                                                            @item.ModuleName
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <ul class="todo-list" data-widget="todo-list">
+                                                                @foreach (var menu in item.MainMenus)
+                                                                {
+                                                                    checkboxId = "mainmenu" + menu.MMId.ToString();
+                                                                    <li>
+                                                                        <div class="icheck-primary d-inline ml-2">
+                                                                            <input type="checkbox" value="" data-item-module="@item.MId" data-item-mainmenu="@menu.MMId" name="mainmenu" id="@checkboxId">
+                                                                            <label for="@checkboxId"></label>
+                                                                        </div>
+                                                                        <span class="text" style="color:#000">@menu.MainmenuName</span>
+                                                                    </li>
+                                                                }
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        var ddlOrganization = $("#ddlOrganization");
+
+        ddlOrganization.change(function () {
+            $('li').removeClass('done');
+            $('input[type="checkbox"][name="mainmenu"]').prop('checked', false);
+            if (ddlOrganization.val() !== "") {
+                $.when(postReqWithData(dataType.applicationJson, dataType.json, type.post, '/ControlPanel/OrgConfiguration', JSON.stringify({ flag: "OrgAuth", orgId: TryParseInt(ddlOrganization.val(), 0) }))).then(function (res, status) {
+                    if (status === 'success') {
+                       // consoleLog(res);
+                        $.each(res, function (index, item) {
+                            var li = $("input[type='checkbox'][name='mainmenu'][data-item-mainmenu='" + item.MMId + "']").parent().parents('li').addClass('done');;
+                            //$("input[type='checkbox'][name='mainmenu'][data-item-mainmenu='" + item.MMId + "']").parent('li').addClass('done');
+                            $("input[type='checkbox'][name='mainmenu'][data-item-mainmenu='" + item.MMId + "']").prop("checked", true);
+                            consoleLog(li);
+                        })
+                    }
+                }).fail(function (error) {
+                    consoleLog(error);
+                })
+            }
+        })
+
+        $(document).on("change", 'input[type="checkbox"]', function () {
+            if ($(this).is(":checked")) {
+                //alert("Checked");
+                $(this).parent().parents('li').addClass("done");
+            }
+            else {
+                //alert("Not Checked");
+                $(this).parent().parents('li').removeClass("done");
+            }
+        })
+
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            if (TryParseInt(ddlOrganization.val(), 0) > 0) {
+                bootbox.confirm('Are you sure you want to save?', function (result) {
+                    if (result === true) {
+                        disable("#btnSubmit");
+                        var allCheckboxItem = $('input[type="checkbox"][name="mainmenu"]');
+                        var menuData = [];
+                        menuData.length = 0;
+
+                        $.each(allCheckboxItem, function (index, item) {
+                            if ($("input[type='checkbox'][name='mainmenu'][data-item-mainmenu='" + item.getAttribute("data-item-mainmenu") + "']").is(":checked")) {
+                                menuData.push({ mainmenuId: item.getAttribute("data-item-mainmenu"), moduleId: item.getAttribute("data-item-module") })
+                            }
+                        })
+
+                        var data = JSON.stringify({ orgId: TryParseInt(ddlOrganization.val(), 0), menus: menuData });
+                        consoleLog(data);
+
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, type.post, '/ControlPanel/SaveOrganizationAuthMenus', data, getToken())).then(function (res, status) {
+                            if (res === true && status === 'success') {
+                                $('.toastrDefaultSuccess').trigger("click");
+                                $('.toastrDefaultSuccess').fadeOut(500);
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger("click");
+                                $('.toastrDefaultError').fadeOut(500);
+                            }
+                        }).fail(function (error) {
+                            consoleLog(error);
+                        })
+                        enable("#btnSubmit");
+                    }
+                })
+            }
+        })
+    </script>
+}

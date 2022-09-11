@@ -1,0 +1,45 @@
+﻿@model ERPWeb.Infrastructure.PagerData
+@{ 
+    string active = string.Empty;
+    string currentPage = string.Empty;
+}
+<div class="clearfix mb-2">
+    @if (Model.TotalPages > 1)
+    {
+        string previous = Model.Current == 1 ? "disabled" : "";
+        string next = Model.TotalPages == Model.Current ? "disabled" : "";
+        int previousPageNo = Model.Current == 1 ? 0 : (Model.Current - 1);
+        int nextPageNo = (Model.TotalPages == Model.Current) ? 0 : (Model.Current + 1);
+        string pageOutOf = "Page " + Model.Current.ToString() + " Of " + Model.TotalPages.ToString();
+        int pageStartFrom = Model.Current <= 5 ? 1 : Model.Current;
+
+        <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item">
+                <span class="page-link btn-secondary" href="#">@pageOutOf</span>
+            </li>
+            <li class="page-item @previous">
+                <a class="page-link" href="#" title="Go To First" data-page-no="1">&laquo;</a>
+            </li>
+            <li class="page-item @previous">
+                <a class="page-link" href="#" data-page-no="@previousPageNo">Previous</a>
+            </li>
+            @for (int i = pageStartFrom; i <= (pageStartFrom + 4); i++)
+            {
+                active = (Model.Current == i) ? "active" : "";
+                currentPage = (Model.Current == i) ? "current-page" : "";
+                if (i <= Model.TotalPages)
+                {
+                    <li class="page-item @active">
+                        <a class="page-link @currentPage" href="#" data-page-no="@i">@i</a>
+                    </li>
+                }
+            }
+            <li class="page-item @next">
+                <a class="page-link" href="#" title="Next" data-page-no="@nextPageNo">Next</a>
+            </li>
+            <li class="page-item @next">
+                <a class="page-link" href="#" title="Go To Last" data-page-no="@Model.TotalPages">&raquo;</a>
+            </li>
+        </ul>
+    }
+</div>

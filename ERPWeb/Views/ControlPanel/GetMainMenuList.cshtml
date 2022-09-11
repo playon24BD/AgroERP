@@ -1,0 +1,212 @@
+﻿@model IEnumerable<ERPBO.ControlPanel.ViewModels.MainMenuViewModel>
+@{
+    ViewBag.Title = "GetMainMenuList";
+    int sl = 0;
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h4><b style="color:darkblue">Main Menu</b></h4>
+        <hr />
+    </div>
+    <div class="col-md-12 mb-2">
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="search" id="searchBy" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('#tblMainMenuData tbody tr',this)" />
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                @if (privilege != null && privilege.Add)
+                {
+                    <button class="btn btn-primary btn-sm float-lg-right" style="background-color:darkblue" id="btnAddNew"><i class="fa fa-plus"></i> Create MainMenu</button>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm table-striped table-responsive-lg" id="tblMainMenuData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th>SL No.</th>
+                    <th class="hide"></th>
+                    <th>MenuName</th>
+                    <th class="hide"></th>
+                    <th>ModuleName</th>
+                    <th>Entry User</th>
+                    <th>Update User</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var mainmenu in Model)
+                {
+                    sl = sl + 1;
+                    <tr>
+                        <td class="text-center" width="10%">@sl</td>
+                        <td class="hide">@mainmenu.MMId</td>
+                        <td>@mainmenu.MenuName</td>
+                        <td class="hide">@mainmenu.MId</td>
+                        <td>@mainmenu.ModuleName</td>
+                        <td class="text-center text-sm">@mainmenu.EntryUser</td>
+                        <td class="text-center text-sm">@mainmenu.UpdateUser</td>
+                        <td class="text-center">
+                            @if (privilege != null && privilege.Edit)
+                            {
+                                <a href="#" class="btn btn-warning btn-sm data-edit-item" data-edit-item="@mainmenu.MMId"><i class="fa fa-pen"></i> Edit</a>
+                            }
+                        </td>
+                    </tr>
+                }
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="6">
+                            No Rows Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modalMainMenu" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead">Add New MainMenu</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmRole">
+                    <input type="hidden" name="Id" id="hdfMMId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtMenuName" class="control-label font-weight-bold">Menu Name</label>
+                            <input type="text" name="menuName" value="" id="txtMenuName" class="form-control form-control-sm" />
+                            <span class="error hide required-menuName font-weight-bold">Input Menu Name!</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="ddlModuleName" class="control-label font-weight-bold">ModuleName</label>
+                            @Html.DropDownList("ddlModuleName", (IEnumerable<SelectListItem>)ViewBag.ddlModuleName, "--Select ModuleName--", new { @class = "form-control form-control-sm" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-success float-right" id="btnSubmit"><i class="far fa-save"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var hdfMMId = $("#hdfMMId");
+        var txtMenuName = $("#txtMenuName");
+        var ddlModuleName = $("#ddlModuleName");
+
+        //$(document).ready(function () {
+        //    $('#modalMainMenu').DataTable({
+        //        "paging": false,
+        //        "lengthChange": false,
+        //        "searching": false,
+        //        "ordering": true,
+        //        "info": false,
+        //        "autoWidth": false,
+        //    });
+        //})
+
+        function OpenModal() {
+            $("#spanModalHead").text('Add New MainMenu');
+            $("#spanSaveText").text('Save');
+            $("#modalMainMenu").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        $("#btnAddNew").click(function (e) {
+            e.preventDefault();
+            OpenModal();
+            clearCtrl();
+        })
+
+        function validateForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if ($.trim(txtMenuName.val()) == "") {
+                $(".required-menuName").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        //Data add
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            $(".error").addClass("hide");
+            if (validateForm() == true) {
+                var data = JSON.stringify({
+                    MMId: TryParseInt(hdfMMId.val(), 0),
+                    MenuName: txtMenuName.val(),
+                    MId: TryParseInt(ddlModuleName.val(), 0),
+                });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/ControlPanel/SaveMainMenu', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        message("#msg1", "#modalMainMenu");
+                    }
+                    else {
+                        message("#msg2");
+                    }
+                    enable("#btnSubmit");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmit");
+                });
+            }
+
+        })
+
+        $(document).on("click", "a.data-edit-item", function (e) {
+            e.preventDefault()
+            clearCtrl();
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+
+            hdfMMId.val(td1);
+            txtMenuName.val(td2);
+            ddlModuleName.val(td3);
+
+        })
+        function clearCtrl() {
+            hdfMMId.val('0');
+            txtMenuName.val('');
+            ddlModuleName.val('');
+
+        }
+        $(".data-edit-item").click(function (e) {
+            e.preventDefault()
+            OpenModal()
+            $("#spanModalHead").text('Update MainMenu');
+            $("#spanSaveText").text('Update');
+        });
+
+    </script>
+}

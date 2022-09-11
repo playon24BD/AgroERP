@@ -1,0 +1,160 @@
+﻿.ccc {
+    background: #0c2d51 !important;
+}
+
+.ccc2 {
+    background: #fff;
+}
+.widthcheck {
+    width: 125px !important;
+}
+
+.dashboard_input {
+    /*#a6a2a28a*/
+    color: white;
+    background-color: #69dfb854 !important;
+    font-weight: 700;
+    border: 1px solid #0000;
+    border-radius: 15px;
+    display: block;
+    width: 100%;
+    line-height: 35px;
+}
+
+.fh {
+    height: 170px;
+    overflow-y: scroll;
+}
+
+.row-cards-one .mycard.bg1 {
+    background-image: -webkit-linear-gradient(left, #ffd507, #0e64bd);
+}
+
+.row-cards-one .mycard.bg2 {
+    background-image: -webkit-linear-gradient(left, #08b6f8, #a28a53);
+}
+
+.row-cards-one .mycard.bg3 {
+    background-image: -webkit-linear-gradient(left, #6610f2, #9d8abf);
+}
+
+.row-cards-one .mycard.bg4 {
+    background-image: -webkit-linear-gradient(left, #061627, #2964a0);
+}
+
+.row-cards-one .mycard.bg5 {
+    background-image: -webkit-linear-gradient(left, #03ff71, #057134);
+}
+
+.row-cards-one .mycard.bg6 {
+    background-image: -webkit-linear-gradient(left, #029c25, #1d4426);
+}
+
+.row-cards-one .mycard.bg7 {
+    background-image: -webkit-linear-gradient(left, #212529, #5c6e80);
+}
+
+.row-cards-one .mycard.bg8 {
+    background-image: -webkit-linear-gradient(left, #29d085, #325043);
+}
+
+.row-cards-one .mycard.bg9 {
+    background-image: -webkit-linear-gradient(left, #2082bb, #1b525a);
+}
+
+.row-cards-one .mycard.bg10 {
+    background-image: -webkit-linear-gradient(left, #797d80, #1d4365);
+}
+
+.row-cards-one .mycard {
+    border-radius: 3px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.30) !important;
+    padding: 25px 40px 30px;
+    margin-bottom: 20px;
+    /*display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;*/
+    position: relative;
+    -webkit-transition: all 0.3s ease-in;
+    -o-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in;
+}
+
+    .row-cards-one .mycard .left .title {
+        font-size: 20px;
+        color: #fff;
+        line-height: 15px;
+        font-weight: 700;
+        font-style: italic;
+        margin-bottom: 2px;
+        margin-top: -10px;
+        margin-left: -10px;
+    }
+
+    .row-cards-one .mycard .left .number {
+        font-size: 15px;
+        line-height: 3px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 0px;
+        font-style: italic;
+    }
+
+    .row-cards-one .mycard .left .link {
+        width: 80px;
+        height: 30px;
+        background: #fff;
+        border-radius: 50px;
+        line-height: 30px;
+        font-size: 14px;
+        display: block;
+        text-align: center;
+        -webkit-transition: all 0.3s ease-in;
+        -o-transition: all 0.3s ease-in;
+        transition: all 0.3s ease-in;
+    }
+
+    .row-cards-one .mycard .right .icon {
+        font-size: 40px;
+        color: #fff;
+        margin-right: -10px;
+    }
+/*.row-cards-one .mycard.bg1::after {
+        background: #f85108;
+    }
+
+    .row-cards-one .mycard::after {
+        right: -145px;
+    }*/
+
+/*.row-cards-one .mycard::after {
+        right: -100px;
+    }*/
+
+/*.row-cards-one .mycard::after {
+        position: absolute;
+        content: " ";
+        width: 160px;
+        height: 500px;
+        top: -100px;
+        right: -50px;
+        -webkit-transform: rotate(28deg);
+        -ms-transform: rotate(28deg);
+        transform: rotate(28deg);
+    }*/
+
+.das-icon {
+    z-index: 9999;
+}
+
+.footer-fixed {
+    position: fixed;
+    height: 40px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+}

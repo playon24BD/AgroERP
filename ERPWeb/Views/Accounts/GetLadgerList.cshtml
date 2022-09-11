@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "Ledger";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow card-primary card-outline card-tabs" style="margin-top:-20px">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs nav-pills" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-two-ledgerList-tab" data-toggle="pill" href="#custom-tabs-two-ledgerList" role="tab" aria-controls="custom-tabs-two-ledgerList" aria-selected="true">Ledger</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body shadow">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-two-ledgerList" role="tabpanel" aria-labelledby="custom-tabs-two-ledgerList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card shadow card-gray shadow">
+                                    <div class="card-header shadow">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    Ledger
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-sm">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card shadow">
+                                    <div class="card-body shadow">
+                                        @using (Html.BeginForm("GetLedgerReports", "Accounts", FormMethod.Get, new { @target = "_blank" }))
+                                        {
+                                            <div class="col-md-12">
+                                                <form method="get">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label for="ddlLedgerAccountName" class="control-label font-weight-bold">Particular<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                                                            @Html.DropDownList("ddlLedgerAccountName", (IEnumerable<SelectListItem>)ViewBag.ddlLedgerAccountName, "--Select--", new { @class = "form-control form-control-sm select2 select2-danger" })
+                                                            <span class="error hide require-ladgeraccountName font-weight-bold">Name is required !</span>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="control-label font-weight-bold">From Date</label>
+                                                            <div class="input-group input-group-sm ">
+                                                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" name="fromDate" />
+                                                                <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                                                    <span class="input-group-text">&#10008;</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="control-label font-weight-bold">To Date</label>
+                                                            <div class="input-group input-group-sm ">
+                                                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" name="toDate"/>
+                                                                <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                                                    <span class="input-group-text">&#10008;</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label for="rptType">Type</label>
+                                                            <select name="rptType" id="rptType" class="form-control form-control-sm">
+                                                                <option value="PDF">PDF</option>
+                                                                <option value="EXCEL">EXCEL</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <label for="Download" style="visibility:hidden">Download</label>
+                                                            <button type="submit" title="Download Report" class="btn btn-sm btn-outline-success"><i class="fas fa-download"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </form>
+                                            </div>
+                                            <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
+                                                @*@{Html.RenderAction("JournalList", new { @flag_ = "journal" });}*@
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var ddlLedgerAccountName = $("#ddlLedgerAccountName");
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+
+        $(document).ready(function () {
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true,
+                showOn: "button",
+                buttonImageOnly: true,
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('.select2').select2();
+        })
+
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                    LoadDataTableForLedger();
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                    LoadDataTableForLedger();
+                }
+            }
+        })
+
+        dptFromDate.change(function () {
+            LoadDataTableForLedger();
+        })
+        dptToDate.change(function () {
+            LoadDataTableForLedger();
+        })
+        ddlLedgerAccountName.change(function () {
+            LoadDataTableForLedger();
+        })
+        function LoadDataTableForLedger() {
+            var data = {_flag:"view", accountId: TryParseInt(ddlLedgerAccountName.val(),0), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+
+           // return console.log(data);
+            $.when(getReqWithData('html', 'GET', '/Accounts/GetLadgerList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+        }
+    </script>
+    }

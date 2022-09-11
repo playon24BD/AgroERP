@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ERPBO.FrontDesk.ViewModels.TsStockReturnDetailViewModel>
+@using ERPBO.FrontDesk.ViewModels;
+@{
+    int sl = 0;
+    RequsitionInfoForJobOrderViewModel info = ((RequsitionInfoForJobOrderViewModel)ViewBag.ReqInfoJobOrder);
+}
+
+<table class="table table-bordered table-striped table-sm table-responsive-lg">
+    <tr>
+        <td style="width:13%">Job Order</td>
+        <td style="width:20%"><b>@info.JobOrderCode</b></td>
+        <td style="width:13%">Requsition Code</td>
+        <td style="width:20%"><b>@info.RequsitionCode</b></td>
+        <td style="width:13%">Model</td>
+        <td style="width:20%"><b>@info.ModelName</b></td>
+    </tr>
+    <tr>
+        <td style="width:13%">Request By</td>
+        <td style="width:20%"><b>@info.Requestby</b></td>
+        <td style="width:13%">Request Date</td>
+        <td style="width:20%"><b>@info.EntryDate</b></td>
+        <td style="width:13%">Color</td>
+        <td style="width:20%"><b>@info.ModelColor</b></td>
+    </tr>
+</table>
+<table class="table table-bordered table-sm table-striped" id="tblWarehouseStockInfo">
+    <thead class="btn-dark">
+        <tr class="text-center">
+            <th>#SL</th>
+            <th class="hide"></th>
+            <th class="hide"></th>
+            <th class="hide"></th>
+            <th>Parts Name</th>
+            <th>Parts Code</th>
+            <th>Qty.</th>
+            <th class="hide"></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var details in Model)
+        {
+            sl = sl + 1;
+            <tr>
+                <td class="text-center text-bold">@sl</td>
+                <td class="hide">@details.ReturnInfoId</td>
+                <td class="hide">@details.ReturnDetailId</td>
+                <td class="hide">@details.PartsId</td>
+                <td>@details.PartsName</td>
+                <td>@details.PartsCode</td>
+                <td class="text-center">@details.Quantity</td>
+                <td class="hide">@details.ModelId</td>
+            </tr>
+        }
+        @if (Model.Count() == 0)
+        {
+            <tr class="text-center empty-row">
+                <td colspan="13">
+                    No data available in table
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

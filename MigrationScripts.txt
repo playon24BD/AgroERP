@@ -1,0 +1,16 @@
+
+To clear - cls
+
+Enable-Migrations -ProjectName 'ERPDAL' -ContextTypeName ERPDAL.InventoryDAL.InventoryDbContext –MigrationsDirectory InventoryContextMigrations
+
+Enable-Migrations -ProjectName 'ERPDAL' -ContextTypeName ERPDAL.ControlPanelDAL.ControlPanelDbContext –MigrationsDirectory ControlPanelContextMigrations
+
+Enable-Migrations -ProjectName 'ERPDAL' -ContextTypeName ERPDAL.ProductionDAL.ProductionDbContext –MigrationsDirectory ProductionContextMigrations
+
+Add-Migration 'ControlPanelDbInitialize' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ControlPanelContextMigrations.Configuration
+Add-Migration 'InventoryDbInitialize' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.InventoryContextMigrations.Configuration
+Add-Migration 'ProductionDbInitialize' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ProductionContextMigrations.Configuration
+
+Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ControlPanelContextMigrations.Configuration
+Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.InventoryContextMigrations.Configuration
+Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ProductionContextMigrations.Configuration

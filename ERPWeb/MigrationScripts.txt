@@ -1,0 +1,43 @@
+
+To clear - cls
+
+Enable-Migrations -ProjectName 'ERPDAL' -ContextTypeName ERPDAL.InventoryDAL.InventoryDbContext –MigrationsDirectory InventoryContextMigrations
+Enable-Migrations -ProjectName 'ERPDAL' -ContextTypeName ERPDAL.ControlPanelDAL.ControlPanelDbContext –MigrationsDirectory ControlPanelContextMigrations
+Enable-Migrations -ProjectName 'ERPDAL' -ContextTypeName ERPDAL.ProductionDAL.ProductionDbContext –MigrationsDirectory ProductionContextMigrations
+Enable-Migrations -ProjectName 'ERPDAL' -ContextTypeName ERPDAL.ConfigurationDAL.ConfigurationDbContext –MigrationsDirectory ConfigurationContextMigrations
+Enable-Migrations -ProjectName 'ERPDAL' -ContextTypeName ERPDAL.FrontDeskDAL.FrontDeskDbContext –MigrationsDirectory FrontDeskContextMigrations
+Enable-Migrations -ProjectName 'ERPDAL' -ContextTypeName ERPDAL.SalesAndDistributionDAL.SalesAndDistributionDbContext –MigrationsDirectory SalesAndDistributionContextMigrations
+Enable-Migrations -ProjectName 'ERPDAL' -ContextTypeName ERPDAL.AccountsDAL.AccountsDbContext –MigrationsDirectory AccountsContextMigrations
+
+Add-Migration 'ControlPanel_' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ControlPanelContextMigrations.Configuration
+Add-Migration 'Inventory_' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.InventoryContextMigrations.Configuration
+Add-Migration 'Production_' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ProductionContextMigrations.Configuration
+Add-Migration 'Configuration_' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ConfigurationContextMigrations.Configuration
+Add-Migration 'FrontDesk_' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.FrontDeskContextMigrations.Configuration
+Add-Migration 'SalesAndDistribution_' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.SalesAndDistributionContextMigrations.Configuration
+Add-Migration 'Accounts_' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AccountsContextMigrations.Configuration
+
+
+Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ControlPanelContextMigrations.Configuration
+Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.InventoryContextMigrations.Configuration
+Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ProductionContextMigrations.Configuration
+Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ConfigurationContextMigrations.Configuration
+Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.FrontDeskContextMigrations.Configuration
+Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.SalesAndDistributionContextMigrations.Configuration
+Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AccountsContextMigrations.Configuration
+
+
+--- Scripts
+Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ControlPanelContextMigrations.Configuration
+Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.InventoryContextMigrations.Configuration
+Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ProductionContextMigrations.Configuration
+Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ConfigurationContextMigrations.Configuration
+Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.FrontDeskContextMigrations.Configuration
+Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.SalesAndDistributionContextMigrations.Configuration
+Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AccountsContextMigrations.Configuration
+
+-- Yeasin
+
+
+--- Model State Validation ---
+ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => x.Key).ToList()
