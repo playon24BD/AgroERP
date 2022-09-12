@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPBO.ControlPanel.ViewModels
+namespace ERPBO.Agriculture.DTOModels
 {
-    public class BankSetupViewModel
+    public class BankSetupDTO
     {
         [Key]
         public long BankId { get; set; }

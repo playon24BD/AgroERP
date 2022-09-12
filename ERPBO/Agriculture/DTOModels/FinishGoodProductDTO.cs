@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPBO.ControlPanel.DomainModels
+namespace ERPBO.Agriculture.DTOModels
 {
-    [Table("tblFinishGoodInfo")]
-    public class FinishGoodProduct
+    public class FinishGoodProductDTO
     {
         [Key]
         public long FinishGoodProductId { get; set; }
@@ -21,6 +19,5 @@ namespace ERPBO.ControlPanel.DomainModels
         public DateTime EntryDate { get; set; }
         public long EntryUserId { get; set; }
         public string Status { get; set; }
-
     }
 }

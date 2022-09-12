@@ -11,6 +11,9 @@ namespace ERPWeb.Controllers
         // GET: AgroConfiguration
         public ActionResult DepotList()
         {
+            //ViewBag.ddlOrganization = _organizationBusiness.GetAllOrganizations().Select(des => new SelectListItem { Text = des.OrganizationName, Value = des.OrganizationId.ToString() }).ToList();
+
+
             return View();
         }
     }

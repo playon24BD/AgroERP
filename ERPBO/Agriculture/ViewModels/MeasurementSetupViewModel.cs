@@ -5,18 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPBO.ControlPanel.ViewModels
+namespace ERPBO.Agriculture.ViewModels
 {
-    public class RawMaterialSupplierViewModel
+    public class MeasurementSetupViewModel
     {
         [Key]
-        public long RawMaterialSupplierId { get; set; }
-        public string RawMaterialSupplierName { get; set; }
+        public long MeasurementId { get; set; }
+        public string MeasurementName { get; set; }
         public long OrganizationId { get; set; }
+        public long MasterCarton { get; set; }
+        public long InnerBox { get; set; }
+        public long PackSize { get; set; }
+        public string Unit { get; set; }
         public long RoleId { get; set; }
-        [Phone]
-        public long MobileNumber { get; set; }
-        public string Address { get; set; }
         public DateTime UpdateDate { get; set; }
         public long UpdateUserId { get; set; }
         public DateTime EntryDate { get; set; }

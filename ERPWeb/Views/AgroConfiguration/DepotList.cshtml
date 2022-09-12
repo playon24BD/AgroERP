@@ -3,5 +3,88 @@
     ViewBag.Title = "DepotList";
 }
 
-<h2>DepotList</h2>
+<div class="row text-sm">
+    <div class="col-md-12">
+        <div class="card card-primary card-outline card-tabs">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="DepotSetup-TabList" href="#DepotSetupList" aria-selected="true" aria-controls="DepotSetupList" data-toggle="pill">Depot Setup List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="DepotSetup-Tab" href="#DepotSetup" aria-selected="true" aria-controls="DepotSetup" data-toggle="pill">Depot Setup</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                @Html.AntiForgeryToken()
+                <div class="tab-content">
+                    <div class="tab-pane fade show" id="DepotSetup" aria-labelledby="DepotSetup-Tab">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-purple">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center align-middle text-bold">Depot Config</h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body text-sm">
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="ddlOrganization" class="control-label">
+                                                    Organization Name
+                                                </label>
+
+                                                
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label for="ddlDepotName" class="control-label">
+                                                    Depot Name
+                                                </label>
+                                                <input id="ddlDepotName" type="text" class="form-control form-control-sm" />
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label for="ddlStatus" class="control-label">
+                                                    Status
+                                                </label>
+                                                <select id="ddlStatus" class="form-control form-control-sm">
+                                                    <option value="Active">Active</option>
+                                                    <option value="InActive">InActive</option>
+
+                                                </select>
+                                                @*<input type="text" class="form-control form-control-sm" />*@
+                                            </div>
+
+                                            <div class="col-md-2">
+
+                                                <button class="btn btn-success  float-left mt-4" id="SaveButton">SAVE</button>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 

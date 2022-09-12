@@ -5,15 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPBO.ControlPanel.ViewModels
+namespace ERPBO.Agriculture.DTOModels
 {
-    public class FinishGoodProductViewModel
+    public class RawMaterialSupplierDTO
     {
         [Key]
-        public long FinishGoodProductId { get; set; }
-        public string FinishGoodProductName { get; set; }
+        public long RawMaterialSupplierId { get; set; }
+        public string RawMaterialSupplierName { get; set; }
         public long OrganizationId { get; set; }
         public long RoleId { get; set; }
+        [Phone]
+        public long MobileNumber { get; set; }
+        public string Address { get; set; }
         public DateTime UpdateDate { get; set; }
         public long UpdateUserId { get; set; }
         public DateTime EntryDate { get; set; }
