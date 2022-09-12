@@ -10,6 +10,9 @@ using Unity.Mvc5;
 using ERPBLL.Agriculture;
 using ERPBLL.Agriculture.Interface;
 
+using ERPDAL.AgricultureDAL;
+
+
 namespace ERPWeb
 {
     public static class UnityConfig
@@ -43,8 +46,10 @@ namespace ERPWeb
             #endregion
 
             // Configuration Database
-            #region ControlPanel
+            #region Agriculture
             container.RegisterType<IDepotSetup, DepotSetupBusiness>();
+            container.RegisterType<IRawMaterialBusiness,RawMaterialBusiness>();
+            container.RegisterType<IAgricultureUnitOfWork, AgricultureUnitOfWork>();
             #endregion
             // FrontDesk Database
 

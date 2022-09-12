@@ -99,6 +99,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agriculture\Interface\IRawMaterialBusiness.cs" />
+    <Compile Include="Agriculture\RawMaterialBusiness.cs" />
     <Compile Include="Common\Status.cs" />
     <Compile Include="Common\Utility.cs" />
     <Compile Include="ControlPanel\AppUserBusiness.cs" />

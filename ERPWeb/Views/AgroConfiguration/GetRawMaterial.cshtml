@@ -25,15 +25,19 @@
                         <h4>Search by:</h4>
 
                     </div>
+                    @*<div class="col-md-3">
+
+           <input  type="text" class="form-control form-control-sm" id="rawmetarialNamed"/>
+
+        </div>*@
                     <div class="col-md-3">
-                       <input  type="text" class="form-control form-control-sm" id="rawmetarialNamed"/>
 
                     </div>
                     <div class="col-md-3">
 
                     </div>
                     <div class="col-md-3 text-right">
-                        <button type="button"  class="btn btn-primary btn-sm" id="btnAdd"><i class="fa-fa-plus">Add New Metarial</i></button>
+                        <button type="button" class="btn btn-primary btn-sm" id="btnAdd"><i class="fa-fa-plus">Add New Metarial</i></button>
 
                     </div>
                 </div>
@@ -50,8 +54,8 @@
         <div class="card shadow">
             <div class="card-body">
                 <div class="row text-center" id="dataContainer">
-                    @*@{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }*@
-                    <h4 class="text-center" style="color:red">Loading</h4>
+                    @{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }
+                    @*<h4 class="text-center" style="color:red">Loading</h4>*@
 
                 </div>
             </div>
@@ -74,7 +78,42 @@
                 <form id="formRawMetarial">
                     <input type="hidden" id="hdmaterialId" />
                     <div class="form-row">
-                        <
+                        <label class="">Organization</label>
+                        <select class="form-control form-control-sm" id="ddlOrganization">
+                            <option value="0">Select Organization</option>
+                            <option value="9">Agro Farm</option>
+
+                        </select>
+
+                        <span class="error hide required-ddlOrganization font-weight-bold">Depot Name is Required</span>
+
+                    </div>
+                    <div class="form-row" >
+                        
+                        <label class="control-label font-weight-bold">Depot Name</label>
+                        <select class="form-control form-control-sm" id="ddlDepotName">
+                            <option value="0">Select Depot</option>
+                            <option value="1">Depot Name1</option>
+                            <option value="1">Depot Name2</option>
+                            <option value="1">Depot Name3</option>
+                        </select>
+                        <span class="error hide required-ddlDepotName font-weight-bold">Depot Name is Required</span>
+                    </div>
+                    <div class="form-row">
+                        <label>Raw Material Name</label>
+                        <input type="text" id="rawMaterialName" class="form-control form-control-sm"/>
+                        <span class="error hide required-raqMaterialName">Material Name is Required</span>
+                  
+
+                    </div>
+                    <div class="form-row">
+                        <label class="control-label font-weight-bold">Expiry Date</label>
+                        <input type="text" id="expairDate" class="form-control form-control-sm datepicker ctr-changed" />
+                        <span class="error hide required-expairDate"> Date is Required</span>
+                    </div>
+                    <div class="form-row">
+                        <label class="control-label" for="remarks">Remarks</label>
+                        <input type="text" id="remarks" class="form-control form-control-sm" />
 
                     </div>
 
@@ -82,12 +121,47 @@
  
 
             </div>
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been Successfully Saved
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been faild to Save
+                    </div>
+                </div>
+                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fa fa-times "data-dismiss="modal" data-target="#" >Cancel</i> </button>
+                <button type="submit"  id="btnSave" class="btn btn-success float-right"><i class="fa fa-save">Save</i></button>
+            </div>
         </div>
     </div>
 </div>
 @section scripts{
 
     <script type="text/javascript">
+        var hdmaterialId = $("#hdmaterialId");
+        var ddlDepotName = $("#ddlDepotName");
+        var ddlOrganization = $("#ddlOrganization");
+        var expairDate = $("#expairDate");
+        var remarks = $("#remarks");
+        var rawMaterialName = $("#rawMaterialName");
+
+
+
+        $(document).ready(function () {
+            expairDate.prop('readonly', true);
+            expairDate.prop('readonly', true);
+            expairDate.css("background-color", "#fff");
+            expairDate.css("background-color", "#fff");
+            $('#expairDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+        
+        })
+
 
         function OpenModal() {
             $("#spanModalHead").text("Add New Raw Material");
@@ -103,6 +177,65 @@
             OpenModal();
             
         })
+        $("#btnSave").click(function (e) {
+
+            e.preventDefault();
+            var data = { organizationId: TryParseInt(ddlOrganization.val(), 0), depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), expireDate: expairDate.val() }
+            if (formValidation() == true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (status, res) {
+                    if (res == true) {
+                        message("#msg1", "#rawmetarialModal");
+                
+
+                    }
+                    else {
+                        message("#msg2", "#rawmetarialModal");
+                    }
+
+                })
+
+
+
+
+         
+
+
+            }
+
+
+
+        })
+        function formValidation() {
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlOrganization.val()) == 0) {
+                $('.required-ddlOrganization').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlDepotName.val()) == 0) {
+                $('.required-ddlDepotName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(rawMaterialName.val()) == "") {
+                $('.required-raqMaterialName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(expairDate.val()) == "") {
+                $('.required-expairDate').removeClass("hide");
+                Isvalid = false;
+            }
+            return Isvalid
+
+        }
+        function ClearCtrl() {
+            rawMaterialName.val("");
+            remarks.val('');
+            expairDate.val('');
+            ddlOrganization.val('');
+            ddlDepotName.val('');
+            hdmaterialId.val('0');
+
+        }
 
     </script>
     

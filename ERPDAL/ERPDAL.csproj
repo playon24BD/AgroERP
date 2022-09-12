@@ -82,6 +82,10 @@
     <Compile Include="AgricultureContextMigrations\202209121210185_Agriculture_RawMaterial.Designer.cs">
       <DependentUpon>202209121210185_Agriculture_RawMaterial.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202209121335506_Agriculture_null.cs" />
+    <Compile Include="AgricultureContextMigrations\202209121335506_Agriculture_null.Designer.cs">
+      <DependentUpon>202209121335506_Agriculture_null.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -115,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202209121210185_Agriculture_RawMaterial.resx">
       <DependentUpon>202209121210185_Agriculture_RawMaterial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202209121335506_Agriculture_null.resx">
+      <DependentUpon>202209121335506_Agriculture_null.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
