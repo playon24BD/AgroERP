@@ -15,6 +15,7 @@ namespace ERPDAL.AgricultureDAL
         {
 
         }
+        public DbSet<RawMaterial> tblRawMaterialInfo { get; set; }
         public DbSet<DepotSetup> tblDepotInfo { get; set; }
       
     }

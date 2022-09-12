@@ -1,14 +1,15 @@
-﻿using System;
+﻿using ERPBO.Agriculture.DomainModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPBLL.ControlPanel.Interface
+namespace ERPBLL.Agriculture.Interface
 {
     public interface IDepotSetup
     {
-
+        IEnumerable<DepotSetup> GetAllDepotSetup(long OrgId);
 
     }
 }

@@ -1,4 +1,6 @@
-﻿using ERPBLL.ControlPanel.Interface;
+﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.ControlPanel.Interface;
+using ERPBO.Agriculture.DomainModels;
 using ERPDAL.AgricultureDAL;
 using ERPDAL.ControlPanelDAL;
 using System;
@@ -18,6 +20,11 @@ namespace ERPBLL.Agriculture
         {
             this._AgricultureUnitOfWork = AgricultureUnitOfWork;
             this._depotSetupRepository = new DepotSetupRepository(this._AgricultureUnitOfWork);
+        }
+
+        public IEnumerable<DepotSetup> GetAllDepotSetup(long OrgId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

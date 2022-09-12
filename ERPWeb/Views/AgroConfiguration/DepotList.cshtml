@@ -3,88 +3,166 @@
     ViewBag.Title = "DepotList";
 }
 
-<div class="row text-sm">
-    <div class="col-md-12">
-        <div class="card card-primary card-outline card-tabs">
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="DepotSetup-TabList" href="#DepotSetupList" aria-selected="true" aria-controls="DepotSetupList" data-toggle="pill">Depot Setup List</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="DepotSetup-Tab" href="#DepotSetup" aria-selected="true" aria-controls="DepotSetup" data-toggle="pill">Depot Setup</a>
-                    </li>
-                </ul>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <h4>Depot Setup</h4>
+
             </div>
-            <div class="card-body">
-                @Html.AntiForgeryToken()
-                <div class="tab-content">
-                    <div class="tab-pane fade show" id="DepotSetup" aria-labelledby="DepotSetup-Tab">
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card card-purple">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="text-center align-middle text-bold">Depot Config</h5>
-                                            </div>
-                                            <div class="col-md-3">
-                                            </div>
-                                        </div>
-                                    </div>
+        </div>
 
-                                    <div class="card-body text-sm">
+    </div>
 
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label for="ddlOrganization" class="control-label">
-                                                    Organization Name
-                                                </label>
-
-                                                
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <label for="ddlDepotName" class="control-label">
-                                                    Depot Name
-                                                </label>
-                                                <input id="ddlDepotName" type="text" class="form-control form-control-sm" />
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <label for="ddlStatus" class="control-label">
-                                                    Status
-                                                </label>
-                                                <select id="ddlStatus" class="form-control form-control-sm">
-                                                    <option value="Active">Active</option>
-                                                    <option value="InActive">InActive</option>
-
-                                                </select>
-                                                @*<input type="text" class="form-control form-control-sm" />*@
-                                            </div>
-
-                                            <div class="col-md-2">
-
-                                                <button class="btn btn-success  float-left mt-4" id="SaveButton">SAVE</button>
-                                            </div>
-
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-navy shadow">
+            <div class="card-header">
+                <div class="row text-sm">
+                    <div class="col-md-2">
+                        <h4>Search by:</h4>
+                    </div>
+                    <div class="col-md-3 float-right">
+                        <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
                     </div>
+                    <div class="col-7">
+                        <button class="btn btn-outline-primary btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Depot</button>
+                    </div>
+
                 </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="row text-center" id="dataContainer">
+                    @{Html.RenderAction("DepotList", new { @flag = "DepotSetup" }); }
+                    <h4 class="text-center" style="color:red">Loading</h4>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="modal" id="depotmodal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formdepot">
+                    <input type="hidden" id="hddepotId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="ddlOrganizationName" class="control-label">OrganizationName</label>
+                            @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm" })
+                            <span class="error hide required-OrganizationName font-weight-bold">Input Organization Name!</span>
+                        </div>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="ddlDepotName" class="control-label">DepotName</label>
+                            <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
+                            <span class="error hide required-DepotName font-weight-bold">Input Depot Name!</span>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="ddlStatus" class="control-label">Status</label>
+                            <select class="form-control form-control-sm" id="ddlStatus">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                        </div>
+
+
+
+                    </div>
+
+                </form>
+
+
+            </div>
+
+            <div class="modal-footer btn-default">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="Save">Save</span> </button>
             </div>
         </div>
     </div>
 </div>
+@section scripts{
+
+    <script type="text/javascript">
+
+        //DepotList
+        var hddepotId = $("#hddepotId");
+        var searchByAny = $("#searchByAny");
+        var ddlOrganizationName = $("#ddlOrganizationName");
+        var ddlStatus = $("#ddlStatus");
+        var ddlDepotName = $("#ddlDepotName");
+
+        searchByAny.keyup(function () {
+            LoadDepotDataTable()
+        })
+
+        function LoadDepotDataTable() {
+            var data = { flag: "DepotSetup", name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/DepotList', data)).then(function (res, status) {
+                console.log(res);
+                if (status === "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+
+
+
+        function OpenModal() {
+            $("#spanModalHead").text("Add New Depot");
+            $("#saveButton").text('Save');
+            $("#depotmodal").modal("show");
+            $(".error").addClass("hide");
+
+
+        }
+        $("#addButton").click(function (e) {
+            e.preventDefault();
+
+
+            OpenModal();
+
+        })
+
+    </script>
+
+}
+
+
+
+
 

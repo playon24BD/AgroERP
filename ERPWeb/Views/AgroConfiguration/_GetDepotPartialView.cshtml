@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.DepotSetupViewModel>
+
+@{ 
+    ViewBag.Title = "List of Depot";
+}
+<div class="row">
+    <div class="col-md-12" style="overflow-y:scroll">
+        <table class="table table-bordered table-striped table-hover" id="tblDepotData">
+            <tr class="text-center">
+                <th style="vertical-align:middle">#SL</th>
+                <th style="vertical-align:middle">Organization Name</th>
+                <th style="vertical-align:middle">Depot Name</th>
+                <th style="vertical-align:middle">Status</th>
+                <th style="vertical-align:middle">EntryUser</th>
+                <th style="vertical-align:middle">UpdateUser</th>
+            </tr>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>SL</td>
+                        <td class="text-center">@item.OrganizationId</td>
+                        <td class="text-center">@item.DepotName</td>
+                        <td class="text-center">@item.EntryUserId</td>
+                        <td class="text-center">@item.UpdateUserId</td>
+                        <td class="text-center">@item.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -445,6 +445,7 @@
     <Content Include="Views\AgroConfiguration\DepotList.cshtml" />
     <Content Include="Views\AgroConfiguration\GetRawMaterial.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRawMaterial.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetDepotPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
