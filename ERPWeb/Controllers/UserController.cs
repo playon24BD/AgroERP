@@ -23,7 +23,7 @@ namespace ERPWeb.Controllers
         {
             
     
-                return View("Index3");
+                return View("Index");
     
         }
 

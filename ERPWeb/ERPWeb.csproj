@@ -434,7 +434,7 @@
     <Content Include="Views\Accounts\GetFinanceYearList.cshtml" />
     <Content Include="Views\Accounts\GetLadgerList.cshtml" />
     <Content Include="Views\Accounts\_GetLadgerList.cshtml" />
-    <Content Include="Views\User\Index3.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Accounts\GetChequeBookList.cshtml" />
     <Content Include="Views\Accounts\_GetChequeBookList.cshtml" />
     <Content Include="Views\Accounts\GetAllCustomerAndSupplier.cshtml" />
@@ -443,6 +443,8 @@
     <Content Include="Views\Accounts\_DebitVoucherList.cshtml" />
     <Content Include="Views\Accounts\_CreditVoucherList.cshtml" />
     <Content Include="Views\AgroConfiguration\DepotList.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetRawMaterial.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetRawMaterial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

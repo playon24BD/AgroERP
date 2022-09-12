@@ -9,5 +9,6 @@ namespace ERPBLL.ControlPanel.Interface
     public interface IDepotSetup
     {
 
+
     }
 }
