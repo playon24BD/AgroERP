@@ -12,6 +12,8 @@ namespace ERPBO.Agriculture.ViewModels
         [Key]
         public long DepotId { get; set; }
         public long OrganizationId { get; set; }
+        public string OrganizationName { get; set; }
+        public string UserName { get; set; }
         public string DepotName { get; set; }
         public long RoleId { get; set; }
         public DateTime UpdateDate { get; set; }

@@ -25,17 +25,19 @@
                         <h4>Search by:</h4>
 
                     </div>
+                    <div class="col-md-3">
+             
+                    @Html.DropDownList("ddlDepotNameforSearch", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--Search by Depot--",new { @class = "form-control ctrl-changed select2 select2-danger ctrl-changed" })
+
+                    </div>
+                    <div class="col-md-3">
+                   @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Search by Material--",new {@class="form-control ctrl-changed select2 setect2-danger" })
+
+                    </div>
                     @*<div class="col-md-3">
 
-           <input  type="text" class="form-control form-control-sm" id="rawmetarialNamed"/>
-
         </div>*@
-                    <div class="col-md-3">
 
-                    </div>
-                    <div class="col-md-3">
-
-                    </div>
                     <div class="col-md-3 text-right">
                         <button type="button" class="btn btn-primary btn-sm" id="btnAdd"><i class="fa-fa-plus">Add New Metarial</i></button>
 
@@ -91,12 +93,8 @@
                     <div class="form-row" >
                         
                         <label class="control-label font-weight-bold">Depot Name</label>
-                        <select class="form-control form-control-sm" id="ddlDepotName">
-                            <option value="0">Select Depot</option>
-                            <option value="1">Depot Name1</option>
-                            <option value="1">Depot Name2</option>
-                            <option value="1">Depot Name3</option>
-                        </select>
+                        @Html.DropDownList("ddlDepotName",(IEnumerable<SelectListItem>)ViewBag.ddlDepotName,"Select Depot Name",new {@class="form-control control-changed select2" })
+
                         <span class="error hide required-ddlDepotName font-weight-bold">Depot Name is Required</span>
                     </div>
                     <div class="form-row">
@@ -145,6 +143,8 @@
         var expairDate = $("#expairDate");
         var remarks = $("#remarks");
         var rawMaterialName = $("#rawMaterialName");
+        var ddlRawMaterial = $("#ddlRawMaterial");
+        var ddlDepotNameforSearch = $("#ddlDepotNameforSearch");
 
 
 
@@ -177,19 +177,53 @@
             OpenModal();
             
         })
+        ddlDepotNameforSearch.change(function () {
+
+            loadRawMaterial();
+
+        })
+        ddlRawMaterial.change(function () {
+            loadRawMaterial();
+
+        })
+
+        function loadRawMaterial() {
+            data = { flag: 'Search', depotId: TryParseInt(ddlDepotNameforSearch.val(), 0), rawmaterialName: ddlRawMaterial.val() };
+            $.when(getReqWithData("html", 'Get', '/AgroConfiguration/GetRawMaterial', data)).then(function (res, status) {
+                if (status == "success") {
+                    $("#dataContainer").fadeOut("500", function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn("500");
+                    })
+
+
+
+                }
+
+            }).fail(function (error) {
+                Console.log(error);
+
+            });
+
+        }
+
         $("#btnSave").click(function (e) {
 
             e.preventDefault();
             var data = { organizationId: TryParseInt(ddlOrganization.val(), 0), depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), expireDate: expairDate.val() }
             if (formValidation() == true) {
-                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (status, res) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
+                    //console.log('respons' + JSON.parse( res));
+                    console.log(status);
                     if (res == true) {
                         message("#msg1", "#rawmetarialModal");
+                  
+
                 
 
                     }
                     else {
-                        message("#msg2", "#rawmetarialModal");
+                        message("#msg2");
                     }
 
                 })

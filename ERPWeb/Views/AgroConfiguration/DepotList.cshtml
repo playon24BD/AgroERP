@@ -41,21 +41,28 @@
 
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="card shadow">
-            <div class="card-body">
-                <div class="row text-center" id="dataContainer">
-                    @{Html.RenderAction("DepotList", new { @flag = "DepotSetup" }); }
-                    <h4 class="text-center" style="color:red">Loading</h4>
+@*<div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="row text-center" id="dataContainer">
 
+                    </div>
                 </div>
+
             </div>
 
         </div>
 
-    </div>
+    </div>*@
+<div class="col-md-12" style="margin-top:-10px">
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-12" id="dataContainer">
 
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -73,8 +80,8 @@
                         <div class="form-group col-md-8">
                             <label for="ddlOrganizationName" class="control-label">OrganizationName</label>
                             @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm" })
-                            <span class="error hide required-OrganizationName font-weight-bold">Input Organization Name!</span>
-                        </div>
+                            <span class="error hide required-organizatinName font-weight-bold">Input OrganizatinName!</span>
+                            <span class="error hide duplicate-organizatinName font-weight-bold">Already OrganizatinName Exist!</span>
                         </div>
                         <div class="form-group col-md-8">
                             <label for="ddlDepotName" class="control-label">DepotName</label>
@@ -113,6 +120,7 @@
         </div>
     </div>
 </div>
+
 @section scripts{
 
     <script type="text/javascript">
@@ -123,10 +131,23 @@
         var ddlOrganizationName = $("#ddlOrganizationName");
         var ddlStatus = $("#ddlStatus");
         var ddlDepotName = $("#ddlDepotName");
+        $(document).ready(function () {
+            LoadDepotDataTable()
+        })
+        function LoadDataInitializer() {
+            LoadDepotDataTable();
+
+        }
+
+        //#region Warehouse
 
         searchByAny.keyup(function () {
             LoadDepotDataTable()
         })
+        //function LoadDataInitializer() {
+        //searchByAny.keyup(function () {
+        //    LoadDepotDataTable();
+        //})
 
         function LoadDepotDataTable() {
             var data = { flag: "DepotSetup", name: $.trim(searchByAny.val()) }
@@ -140,6 +161,55 @@
         }
 
 
+        $("#saveButton").click(function (e) {
+            e.preventDefault();
+            //console.log("btnsubmit click");
+            $(".error").addClass("hide");
+            if (true) {
+                debugger;
+                var data = JSON.stringify({ OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), DepotName: ddlDepotName.val(), Status: ddlStatus.val() });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveDepotInfo', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        //message("#msg1", "#modalWarehouse");
+                        $("#depotmodal").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        LoadDepotDataTable();
+                    }
+                    else {
+                        //message("#msg2");
+                        toastrErrorAlert(execuStatus.fail);
+                    }
+                    enable("#saveButton");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#saveButton");
+                });
+            }
+
+        })
+
+        $(document).on("click", "a.data-edit-item-Depot", function (e) {
+            alert();
+            e.preventDefault()
+            clearCtrlUnit();
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+
+            hddepotId.val(td1);
+            ddlOrganizationName.val(td2);
+            ddlStatus.val(td3)
+            ddlDepotName.val(td4);
+
+            OpenModalUnit();
+            $("#spanModalHead").text('Update Unit');
+            $("#spanSaveTextUnit").text('Update');
+        })
 
 
         function OpenModal() {

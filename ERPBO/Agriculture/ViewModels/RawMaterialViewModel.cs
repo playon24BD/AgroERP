@@ -22,5 +22,6 @@ namespace ERPBO.Agriculture.ViewModels
         public long DepotId { get; set; }
 
         public DateTime ExpireDate { get; set; }
+        public string DepotName { get; set; }
     }
 }

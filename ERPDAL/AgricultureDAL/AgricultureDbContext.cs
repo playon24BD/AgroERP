@@ -16,10 +16,10 @@ namespace ERPDAL.AgricultureDAL
         {
 
         }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
+        //}
 
         public DbSet<RawMaterial> tblRawMaterialInfo { get; set; }
         public DbSet<DepotSetup> tblDepotInfo { get; set; }
