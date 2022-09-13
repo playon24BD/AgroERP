@@ -21,7 +21,7 @@ namespace ERPWeb.Controllers
         private readonly IFinishGoodProductBusiness _finishGoodProductBusiness;
         private readonly IOrganizationBusiness _organizationBusiness;
 
-        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness,IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness,IFinishGoodProductBusiness finishGoodProductBusiness)
+        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness)
         {
             this._organizationBusiness = organizationBusiness;
             this._depotSetup = depotSetup;
@@ -76,17 +76,17 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetRawMaterial(string flag,long? depotId,string rawmaterialName)
+        public ActionResult GetRawMaterial(string flag, long? depotId, string rawmaterialName)
         {
             if (string.IsNullOrEmpty(flag))
             {
                 ViewBag.ddlOrganization = _organizationBusiness.GetAllOrganizations().Select(des => new SelectListItem { Text = des.OrganizationName, Value = des.OrganizationId.ToString() }).ToList();
                 ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
-                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem {Text=a.RawMaterialName,Value=a.RawMaterialName });
+                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialName });
 
                 return View();
             }
-            else if (flag == "Row")
+            else if (flag == "Raw")
             {
                 IEnumerable<RawMaterialDTO> dto1 = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
                 {
@@ -96,7 +96,7 @@ namespace ERPWeb.Controllers
                     ExpireDate = a.ExpireDate,
 
 
-                });
+                }).ToList();
 
                 List<RawMaterialViewModel> viewModels1 = new List<RawMaterialViewModel>();
                 AutoMapper.Mapper.Map(dto1, viewModels1);
@@ -104,37 +104,82 @@ namespace ERPWeb.Controllers
                 return PartialView("_GetRawMaterial", viewModels1);
 
             }
-            else
+            else if (flag == "Search" && rawmaterialName != "" && depotId != 0)
             {
 
-          
-
-            IEnumerable<RawMaterialDTO> dto = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO() {
-                OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
-                DepotName =_depotSetup.GetDepotNamebyId(a.DepotId,User.OrgId).DepotName,
-                RawMaterialName = a.RawMaterialName,
-                ExpireDate = a.ExpireDate,
 
 
-            });
+                var dto = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
+                {
+                    OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
+                    DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
+                    RawMaterialName = a.RawMaterialName,
+                    ExpireDate = a.ExpireDate,
+                    DepotId = a.DepotId,
 
-            dto.Where(a =>a.DepotId == depotId || a.DepotId == 0).ToList();
-            //dto.Where(a =>(a.DepotId==depotId || a.DepotId==0 )&&(a.RawMaterialName==rawmaterialName || a.RawMaterialName== "")).ToList();
-            List<RawMaterialViewModel> viewModels=new List<RawMaterialViewModel>();
-            AutoMapper.Mapper.Map(dto,viewModels);
 
-            return PartialView ("_GetRawMaterial", viewModels);
+                }).Where(a => (a.DepotId == depotId && a.RawMaterialName == rawmaterialName) && (a.DepotId == depotId || a.RawMaterialName == rawmaterialName)).ToList();
+
+                //dto.Where(a =>a.DepotId == depotId).ToList();
+                //dto.Where(a => (a.DepotId == depotId || a.DepotId == 0) && (a.RawMaterialName == rawmaterialName || a.RawMaterialName == "")).ToList();
+                List<RawMaterialViewModel> viewModels = new List<RawMaterialViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+
+                return PartialView("_GetRawMaterial", viewModels);
             }
+            else if(flag == "Search" && (rawmaterialName != "" || depotId != 0))
+            {
+
+
+                var dto = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
+                {
+                    OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
+                    DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
+                    RawMaterialName = a.RawMaterialName,
+                    ExpireDate = a.ExpireDate,
+                    DepotId = a.DepotId,
+
+
+                }).Where(a =>  a.DepotId == depotId || a.RawMaterialName == rawmaterialName).ToList();
+
+                //dto.Where(a =>a.DepotId == depotId).ToList();
+                //dto.Where(a => (a.DepotId == depotId || a.DepotId == 0) && (a.RawMaterialName == rawmaterialName || a.RawMaterialName == "")).ToList();
+                List<RawMaterialViewModel> viewModels = new List<RawMaterialViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+
+                return PartialView("_GetRawMaterial", viewModels);
+
+            }
+            else
+            {
+                IEnumerable<RawMaterialDTO> dto1 = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
+                {
+                    OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
+                    DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
+                    RawMaterialName = a.RawMaterialName,
+                    ExpireDate = a.ExpireDate,
+
+
+                }).ToList();
+
+                List<RawMaterialViewModel> viewModels1 = new List<RawMaterialViewModel>();
+                AutoMapper.Mapper.Map(dto1, viewModels1);
+
+                return PartialView("_GetRawMaterial", viewModels1);
+
+
+            }
+
         }
-        public ActionResult SaveRawMaterial(RawMaterialViewModel model )
+        public ActionResult SaveRawMaterial(RawMaterialViewModel model)
         {
 
             RawMaterialDTO rawMaterialDTO = new RawMaterialDTO();
-            AutoMapper.Mapper.Map(model,rawMaterialDTO);
+            AutoMapper.Mapper.Map(model, rawMaterialDTO);
             bool isSuccess = false;
             if (ModelState.IsValid)
             {
-                isSuccess = _rawMaterialBusiness.SaveRawMaterial(rawMaterialDTO,User.UserId,User.OrgId);
+                isSuccess = _rawMaterialBusiness.SaveRawMaterial(rawMaterialDTO, User.UserId, User.OrgId);
             }
             return Json(isSuccess);
         }

@@ -8,6 +8,7 @@
             <tr class="btn-dark">
                 <th class="hide">id</th>
                 <th>SL</th>
+                <th class="hide">depotid</th>
                 <th>Organization name</th>
                 <th>Depot Name</th>
                 <th>Raw Material</th>
@@ -25,10 +26,11 @@
 
                 <td class="hide">@raw.RawMaterialId</td>
                 <td>@sl</td>
+                <td class="hide">@raw.DepotId</td>
                 <td>@raw.OrganizationName</td>
                 <td>@raw.DepotName</td>
                 <td>@raw.RawMaterialName</td>
-                <td>@raw.ExpireDate.ToShortDateString()</td>
+                <td>@raw.ExpireDate</td>
             </tr>
 
                 }
