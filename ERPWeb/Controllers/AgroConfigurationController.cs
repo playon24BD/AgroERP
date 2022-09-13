@@ -86,24 +86,7 @@ namespace ERPWeb.Controllers
 
                 return View();
             }
-            else if (flag == "Raw")
-            {
-                IEnumerable<RawMaterialDTO> dto1 = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
-                {
-                    OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
-                    DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
-                    RawMaterialName = a.RawMaterialName,
-                    ExpireDate = a.ExpireDate,
-
-
-                }).ToList();
-
-                List<RawMaterialViewModel> viewModels1 = new List<RawMaterialViewModel>();
-                AutoMapper.Mapper.Map(dto1, viewModels1);
-
-                return PartialView("_GetRawMaterial", viewModels1);
-
-            }
+           
             else if (flag == "Search" && rawmaterialName != "" && depotId != 0)
             {
 
