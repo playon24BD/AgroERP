@@ -53,11 +53,11 @@
 </div>
 
 
-<div class="modal" id="depotmodal" role="dialog">
+<div class="modal" id="modalProduct" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header alert-secondary">
-                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHeadProduct"></span></h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
-                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="Save">Save</span> </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextProduct">Save</span> </button>
             </div>
         </div>
     </div>
@@ -152,14 +152,14 @@
             $(".error").addClass("hide");
             if (formValidation() == true) {
                 debugger;
-                var data = JSON.stringify({ OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), FinishGoodProductName: ddlProductName.val(), Status: ddlStatus.val() });
+                var data = JSON.stringify({ FinishGoodProductId: TryParseInt(hdproductId.val(), 0),OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), FinishGoodProductName: ddlProductName.val(), Status: ddlStatus.val() });
                 console.log(data);
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveFinishGoodProduct', data, getToken())).then(function (res, status) {
                     console.log(status);
                     console.log(res);
                     if (res == true) {
                         //message("#msg1", "#modalWarehouse");
-                        $("#depotmodal").modal("toggle");
+                        $("#modalProduct").modal("toggle");
                         toastrSuccessAlert(execuStatus.successSave);
                         LoadProductDataTable();
                     }
@@ -176,39 +176,49 @@
 
         })
 
-        $(document).on("click", "a.data-edit-item-Depot", function (e) {
-            alert();
+        $(document).on("click", "a.data-edit-item-Product", function (e) {
             e.preventDefault()
-            clearCtrlUnit();
+            ClearCtrl();
             var row = $(this).parent().parents('tr');
             var td1 = row.find('td:eq(1)').html();
             var td2 = row.find('td:eq(2)').html();
             var td3 = row.find('td:eq(3)').html();
             var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
 
-            hddepotId.val(td1);
+            hdproductId.val(td1);
             ddlOrganizationName.val(td2);
-            ddlStatus.val(td3)
-            ddlDepotName.val(td4);
+            ddlProductName.val(td4);
+            ddlStatus.prop("checked", false);
+            if (td6.toLowerCase() === 'active') {
+                ddlStatus.prop("checked", true);
+            }
+            
 
-            OpenModalUnit();
+            OpenModal();
             $("#spanModalHead").text('Update Unit');
-            $("#spanSaveTextUnit").text('Update');
+            $("#spanSaveTextProduct").text('Update');
         })
 
 
+        //function OpenModal() {
+        //    $("#spanModalHead").text("Add New Depot");
+        //    $("#saveButton").text('Save');
+        //    $("#depotmodal").modal("show");
+        //    $(".error").addClass("hide");
+
+
+        //}
+
         function OpenModal() {
-            $("#spanModalHead").text("Add New Depot");
-            $("#saveButton").text('Save');
-            $("#depotmodal").modal("show");
+            $("#spanModalHeadProduct").text('Add New Product');
+            $("#spanSaveTextProduct").text('Save');
+            $("#modalProduct").modal("show");
             $(".error").addClass("hide");
-
-
         }
         $("#addButton").click(function (e) {
             e.preventDefault();
-
-
             OpenModal();
 
         })
@@ -229,12 +239,9 @@
 
         }
         function ClearCtrl() {
-            rawMaterialName.val("");
-            remarks.val('');
-            expairDate.val('');
-            ddlOrganization.val('');
-            ddlDepotName.val('');
-            hdmaterialId.val('0');
+            ddlProductName.val("");
+            //ddlOrganizationName.val('');
+            hdproductId.val('0');
 
         }
 

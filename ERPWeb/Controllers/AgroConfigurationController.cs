@@ -166,6 +166,10 @@ namespace ERPWeb.Controllers
             }
             return Json(isSuccess);
         }
+        public ActionResult GetRawMaterialSupplier(string flag)
+        {
+            return null;
+        }
 
         public ActionResult GetFinishGoodProduct(string flag, string name)
         {
@@ -175,7 +179,7 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "Search")
             {
-                IEnumerable<FinishGoodProductDTO> dto = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(o => new FinishGoodProductDTO
+                IEnumerable<FinishGoodProductDTO> dto = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.FinishGoodProductName.Contains(name))).Select(o => new FinishGoodProductDTO
                 {
                     FinishGoodProductId = o.FinishGoodProductId,
                     OrganizationId = o.OrganizationId,
@@ -199,7 +203,6 @@ namespace ERPWeb.Controllers
             }
             return View();
         }
-
         public ActionResult SaveFinishGoodProduct(FinishGoodProductViewModel model)
         {
 
