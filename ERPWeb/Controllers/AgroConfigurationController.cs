@@ -18,15 +18,18 @@ namespace ERPWeb.Controllers
     {
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
         private readonly IDepotSetup _depotSetup;
+        private readonly IFinishGoodProductBusiness _finishGoodProductBusiness;
         private readonly IOrganizationBusiness _organizationBusiness;
 
-        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness,IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness)
+        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness,IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness,IFinishGoodProductBusiness finishGoodProductBusiness)
         {
             this._organizationBusiness = organizationBusiness;
             this._depotSetup = depotSetup;
             this._rawMaterialBusiness = rawMaterialBusiness;
+            this._finishGoodProductBusiness = finishGoodProductBusiness;
         }
         // GET: AgroConfiguration
+
         public ActionResult DepotList(string flag)
         {
 
@@ -60,7 +63,6 @@ namespace ERPWeb.Controllers
             }
             return View();
         }
-
         [HttpPost]
         public ActionResult SaveDepotInfo(DepotSetupViewModel viewModel)
         {
@@ -137,6 +139,51 @@ namespace ERPWeb.Controllers
             return Json(isSuccess);
         }
 
+        public ActionResult GetFinishGoodProduct(string flag, string name)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == "Search")
+            {
+                IEnumerable<FinishGoodProductDTO> dto = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(o => new FinishGoodProductDTO
+                {
+                    FinishGoodProductId = o.FinishGoodProductId,
+                    OrganizationId = o.OrganizationId,
+                    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
+                    FinishGoodProductName = o.FinishGoodProductName,
+                    Status = (o.Status = true ? "Active" : "Inactive"),
+                    RoleId = o.RoleId,
+                    //EntryUserId=o.EntryUserId.ToString(),
+                    UserName = UserForEachRecord(o.EntryUser.Value).UserName,
+                    EntryDate = o.EntryDate,
+                    UpdateUserId = o.UpdateUser,
+                    UpdateDate = o.UpdateDate
+                }).ToList();
+
+                List<FinishGoodProductViewModel> viewModel = new List<FinishGoodProductViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModel);
+                return PartialView("_GetFinishGoodProductPartialView", viewModel);
+
+
+
+            }
+            return View();
+        }
+
+        public ActionResult SaveFinishGoodProduct(FinishGoodProductViewModel model)
+        {
+
+            FinishGoodProductDTO finishGoodProduct = new FinishGoodProductDTO();
+            AutoMapper.Mapper.Map(model, finishGoodProduct);
+            bool isSuccess = false;
+            if (ModelState.IsValid)
+            {
+                isSuccess = _finishGoodProductBusiness.SaveFinishGoodProductName(finishGoodProduct, User.UserId, User.OrgId);
+            }
+            return Json(isSuccess);
+        }
 
     }
 }

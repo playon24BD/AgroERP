@@ -90,6 +90,14 @@
     <Compile Include="AgricultureContextMigrations\202209130846339_Agriculture_entryUseridNull.Designer.cs">
       <DependentUpon>202209130846339_Agriculture_entryUseridNull.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202209131113385_Agriculture_Depo FinishProduct.cs" />
+    <Compile Include="AgricultureContextMigrations\202209131113385_Agriculture_Depo FinishProduct.Designer.cs">
+      <DependentUpon>202209131113385_Agriculture_Depo FinishProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgricultureContextMigrations\202209131127549_Agriculture_Depo FinishProducts.cs" />
+    <Compile Include="AgricultureContextMigrations\202209131127549_Agriculture_Depo FinishProducts.Designer.cs">
+      <DependentUpon>202209131127549_Agriculture_Depo FinishProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -129,6 +137,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202209130846339_Agriculture_entryUseridNull.resx">
       <DependentUpon>202209130846339_Agriculture_entryUseridNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202209131113385_Agriculture_Depo FinishProduct.resx">
+      <DependentUpon>202209131113385_Agriculture_Depo FinishProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202209131127549_Agriculture_Depo FinishProducts.resx">
+      <DependentUpon>202209131127549_Agriculture_Depo FinishProducts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

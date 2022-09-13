@@ -1,13 +1,14 @@
 ﻿
 @{
-    ViewBag.Title = "DepotList";
+    ViewBag.Title = "GetFinishGoodProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row">
     <div class="col-md-12 text-center">
         <div class="card card-gray shadow">
             <div class="card-header">
-                <h4>Depot Setup</h4>
+                <h4>Finish Good Product</h4>
 
             </div>
 
@@ -29,7 +30,7 @@
 
                     </div>
                     <div class="col-7">
-                        <button class="btn btn-outline-primary btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Depot</button>
+                        <button class="btn btn-outline-primary btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Product</button>
                     </div>
 
                 </div>
@@ -61,7 +62,7 @@
             </div>
             <div class="modal-body">
                 <form id="formdepot">
-                    <input type="hidden" id="hddepotId" />
+                    <input type="hidden" id="hdproductId" />
                     <div class="form-row">
                         <div class="form-group col-md-8">
                             <label for="ddlOrganizationName" class="control-label">OrganizationName</label>
@@ -70,9 +71,9 @@
                             <span class="error hide duplicate-organizatinName font-weight-bold">Already OrganizatinName Exist!</span>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="ddlDepotName" class="control-label">DepotName</label>
-                            <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
-                            <span class="error hide required-DepotName font-weight-bold">Input Depot Name!</span>
+                            <label for="ddlProductName" class="control-label">Product Name</label>
+                            <input type="text" id="ddlProductName" class="form-control form-control-sm" />
+                            <span class="error hide required-ProductName font-weight-bold">Input Product Name!</span>
                         </div>
                         <div class="form-group col-md-5">
                             <label for="ddlStatus" class="control-label">Status</label>
@@ -109,32 +110,32 @@
     <script type="text/javascript">
 
         //DepotList
-        var hddepotId = $("#hddepotId");
+        var hdproductId = $("#hdproductId");
         var searchByAny = $("#searchByAny");
         var ddlOrganizationName = $("#ddlOrganizationName");
         var ddlStatus = $("#ddlStatus");
-        var ddlDepotName = $("#ddlDepotName");
+        var ddlProductName = $("#ddlProductName");
         $(document).ready(function () {
-            LoadDepotDataTable()
+            LoadProductDataTable()
         })
         function LoadDataInitializer() {
-            LoadDepotDataTable();
+            LoadProductDataTable();
 
         }
 
         //#region Warehouse
 
         searchByAny.keyup(function () {
-            LoadDepotDataTable()
+            LoadProductDataTable()
         })
         //function LoadDataInitializer() {
         //searchByAny.keyup(function () {
         //    LoadDepotDataTable();
         //})
 
-        function LoadDepotDataTable() {
-            var data = { flag: "DepotSetup", name: $.trim(searchByAny.val()) }
-            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/DepotList', data)).then(function (res, status) {
+        function LoadProductDataTable() {
+            var data = { flag: 'Search', name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetFinishGoodProduct', data)).then(function (res, status) {
                 console.log(res);
                 if (status === "success") {
                     $("#dataContainer").empty();
@@ -146,20 +147,21 @@
 
         $("#saveButton").click(function (e) {
             e.preventDefault();
+            debugger;
             //console.log("btnsubmit click");
             $(".error").addClass("hide");
-            if (true) {
+            if (formValidation() == true) {
                 debugger;
-                var data = JSON.stringify({ OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), DepotName: ddlDepotName.val(), Status: ddlStatus.val() });
+                var data = JSON.stringify({ OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), FinishGoodProductName: ddlProductName.val(), Status: ddlStatus.val() });
                 console.log(data);
-                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveDepotInfo', data, getToken())).then(function (res, status) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveFinishGoodProduct', data, getToken())).then(function (res, status) {
                     console.log(status);
                     console.log(res);
                     if (res == true) {
                         //message("#msg1", "#modalWarehouse");
                         $("#depotmodal").modal("toggle");
                         toastrSuccessAlert(execuStatus.successSave);
-                        LoadDepotDataTable();
+                        LoadProductDataTable();
                     }
                     else {
                         //message("#msg2");
@@ -211,11 +213,33 @@
 
         })
 
+        function formValidation() {
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlOrganizationName.val()) == 0) {
+                $('.required-ddlOrganization').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlProductName.val()) == 0) {
+                $('.required-ProductName').removeClass("hide");
+                Isvalid = false;
+            }
+            
+            return Isvalid
+
+        }
+        function ClearCtrl() {
+            rawMaterialName.val("");
+            remarks.val('');
+            expairDate.val('');
+            ddlOrganization.val('');
+            ddlDepotName.val('');
+            hdmaterialId.val('0');
+
+        }
+
     </script>
 
 }
-
-
-
 
 
