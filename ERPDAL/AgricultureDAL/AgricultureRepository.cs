@@ -38,5 +38,13 @@ namespace ERPDAL.AgricultureDAL
         }
 
     }
+    public class FinishGoodProductSupplierRepository : AgricultureBaseRepository<FinishGoodSupplier>
+    {
+        public FinishGoodProductSupplierRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
+        {
+
+        }
+
+    }
 
 }
