@@ -120,7 +120,6 @@
         })
         function LoadDataInitializer() {
             LoadProductDataTable();
-
         }
 
         //#region Warehouse
@@ -143,7 +142,6 @@
                 }
             }).fail(function (err) { console.log(err) })
         }
-
 
         $("#saveButton").click(function (e) {
             e.preventDefault();
@@ -190,10 +188,11 @@
             hdproductId.val(td1);
             ddlOrganizationName.val(td2);
             ddlProductName.val(td4);
-            ddlStatus.prop("checked", false);
-            if (td6.toLowerCase() === 'active') {
-                ddlStatus.prop("checked", true);
-            }
+            ddlStatus.val(td6);
+            //ddlStatus.prop("checked", false);
+            //if (td6.toLowerCase() === 'active') {
+            //    ddlStatus.prop("checked", true);
+            //}
             
 
             OpenModal();
@@ -219,6 +218,7 @@
         }
         $("#addButton").click(function (e) {
             e.preventDefault();
+            ClearCtrl();
             OpenModal();
 
         })
@@ -240,7 +240,7 @@
         }
         function ClearCtrl() {
             ddlProductName.val("");
-            //ddlOrganizationName.val('');
+            ddlOrganizationName.val('');
             hdproductId.val('0');
 
         }

@@ -204,8 +204,8 @@
         }
 
         $(document).on("click", "a.data-edit-item-Depot", function (e) {
-            alert();
-            debugger;
+            //alert();
+            //debugger;
             e.preventDefault()
             clearCtrlDepot();
             var row = $(this).parent().parents('tr');
@@ -219,11 +219,11 @@
             hddepotId.val(td1);
             ddlOrganizationName.val(td2);
             ddlDepotName.val(td4);
-
-            ddlStatus.prop("checked", false);
-            if (td6.toLowerCase() === 'active') {
-                ddlStatus.prop("checked", true);
-            }
+            ddlStatus.val(t6);
+            //ddlStatus.prop("checked", false);
+            //if (td6.toLowerCase() === 'active') {
+            //    ddlStatus.prop("checked", true);
+            //}
             
            
 
@@ -244,7 +244,7 @@
         $("#addButton").click(function (e) {
             e.preventDefault();
 
-
+            clearCtrlDepot();
             OpenModal();
 
         })
@@ -252,6 +252,7 @@
             ddlDepotName.val("");
             ddlOrganizationName.val('');
             hddepotId.val('0');
+            ddlStatus.val("");
 
         }
 

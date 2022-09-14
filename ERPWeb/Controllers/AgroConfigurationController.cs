@@ -24,10 +24,18 @@ namespace ERPWeb.Controllers
         }
         // GET: AgroConfiguration
 
+<<<<<<< Updated upstream
         #region Depot Setup
         public ActionResult DepotList(string flag, string name)
 
         
+=======
+        #region AgroConfiguration
+
+        #region Depot Setup
+        public ActionResult DepotList(string flag, string name)
+
+>>>>>>> Stashed changes
         {
 
             if (string.IsNullOrEmpty(flag))
@@ -42,7 +50,7 @@ namespace ERPWeb.Controllers
                     OrganizationId = o.OrganizationId,
                     OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
                     DepotName = o.DepotName,
-                    Status = (o.Status = true ? "Active" : "Inactive"),
+                    Status = o.Status ,
                     RoleId = o.RoleId,
                     //EntryUserId=o.EntryUserId.ToString(),
                     UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
@@ -189,7 +197,7 @@ namespace ERPWeb.Controllers
                     OrganizationId = o.OrganizationId,
                     OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
                     FinishGoodProductName = o.FinishGoodProductName,
-                    Status = (o.Status = true ? "Active" : "Inactive"),
+                    Status = o.Status,
                     RoleId = o.RoleId,
                     //EntryUserId=o.EntryUserId.ToString(),
                     UserName = UserForEachRecord(o.EntryUser.Value).UserName,

@@ -52,6 +52,7 @@ namespace ERPBLL.Agriculture
                 finishGoodProductName = GetFinishGoodProductById(finishGoodProduct.FinishGoodProductId, orgId);
                 finishGoodProductName.FinishGoodProductName = finishGoodProduct.FinishGoodProductName;
                 finishGoodProductName.OrganizationId = finishGoodProduct.OrganizationId;
+                finishGoodProductName.Status = finishGoodProduct.Status;
                 finishGoodProductName.UpdateDate = finishGoodProduct.UpdateDate;
                 finishGoodProductName.UpdateUser = finishGoodProduct.UpdateUserId;
                 _finishGoodProductRepository.Update(finishGoodProductName);
