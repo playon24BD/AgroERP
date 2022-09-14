@@ -10,13 +10,15 @@ namespace ERPWeb.Controllers
 {
     public class AgroConfigurationController : BaseController
     {
+        private readonly IBankSetup _bankSetup;
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
         private readonly IDepotSetup _depotSetup;
         private readonly IFinishGoodProductBusiness _finishGoodProductBusiness;
         private readonly IOrganizationBusiness _organizationBusiness;
 
-        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness)
+        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness,IBankSetup bankSetup)
         {
+            this._bankSetup = bankSetup;
             this._organizationBusiness = organizationBusiness;
             this._depotSetup = depotSetup;
             this._rawMaterialBusiness = rawMaterialBusiness;
@@ -247,6 +249,21 @@ namespace ERPWeb.Controllers
             }
             return View();
         }
+
+        public ActionResult SaveBankInfo(BankSetupViewModel viewModel)
+        {
+            bool isSuccess = false;
+            if (ModelState.IsValid)
+            {
+                BankSetupDTO dto = new BankSetupDTO();
+                AutoMapper.Mapper.Map(viewModel, dto);
+                isSuccess = _bankSetup.SaveBankInfo(dto, User.UserId, User.OrgId);
+
+            }
+
+            return Json(isSuccess);
+        }
+
         #endregion
 
         
