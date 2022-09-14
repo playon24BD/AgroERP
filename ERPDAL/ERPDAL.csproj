@@ -110,6 +110,10 @@
     <Compile Include="AgricultureContextMigrations\202209141009085_Agriculture_BankUpdateAccountNumber.Designer.cs">
       <DependentUpon>202209141009085_Agriculture_BankUpdateAccountNumber.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202209141238236_Agriculture_Depoadd.cs" />
+    <Compile Include="AgricultureContextMigrations\202209141238236_Agriculture_Depoadd.Designer.cs">
+      <DependentUpon>202209141238236_Agriculture_Depoadd.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -164,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202209141009085_Agriculture_BankUpdateAccountNumber.resx">
       <DependentUpon>202209141009085_Agriculture_BankUpdateAccountNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202209141238236_Agriculture_Depoadd.resx">
+      <DependentUpon>202209141238236_Agriculture_Depoadd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

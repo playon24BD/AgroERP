@@ -81,11 +81,8 @@
                     <input type="hidden" id="hdmaterialId" />
                     <div class="form-row">
                         <label class="">Organization</label>
-                        <select class="form-control form-control-sm" id="ddlOrganization">
-                            <option value="0">Select Organization</option>
-                            <option value="9">Agro Farm</option>
 
-                        </select>
+                        @Html.DropDownList("ddlOrganization",(IEnumerable<SelectListItem>)ViewBag.ddlOrganization,"--Select Organization--",new { @class="form-control form-control-sm select2"})
 
                         <span class="error hide required-ddlOrganization font-weight-bold">Depot Name is Required</span>
 
@@ -93,7 +90,7 @@
                     <div class="form-row" >
                         
                         <label class="control-label font-weight-bold">Depot Name</label>
-                        @Html.DropDownList("ddlDepotName",(IEnumerable<SelectListItem>)ViewBag.ddlDepotName,"Select Depot Name",new {@class="form-control control-changed select2" })
+                        @Html.DropDownList("ddlDepotName",(IEnumerable<SelectListItem>)ViewBag.ddlDepotName,"Select Depot Name",new {@class= "form-control form-control-sm select2" })
 
                         <span class="error hide required-ddlDepotName font-weight-bold">Depot Name is Required</span>
                     </div>
@@ -128,8 +125,8 @@
                         Data has been faild to Save
                     </div>
                 </div>
-                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fa fa-times "data-dismiss="modal" data-target="#" >Cancel</i> </button>
-                <button type="submit"  id="btnSave" class="btn btn-success float-right"><i class="fa fa-save">Save</i></button>
+                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane "data-dismiss="modal" data-target="#" >Cancel</i> </button>
+                <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
             </div>
         </div>
     </div>
@@ -210,7 +207,7 @@
         $("#btnSave").click(function (e) {
 
             e.preventDefault();
-            var data = { organizationId: TryParseInt(ddlOrganization.val(), 0), depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), expireDate: expairDate.val() }
+            var data = { organizationId: TryParseInt(ddlOrganization.val(), 0), depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), expireDate: expairDate.val(), rawMaterialId: hdmaterialId.val() }
             if (formValidation() == true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
                     //console.log('respons' + JSON.parse( res));
@@ -239,6 +236,41 @@
 
 
         })
+
+        $(document).on("click", "a.data-edit-item-rawMaterialId", function (e) {
+
+            e.preventDefault()
+
+
+
+            ClearCtrl();
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(0)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td8 = row.find('td:eq(7)').html();
+
+            rawMaterialName.val(td5);
+            remarks.val('');
+            expairDate.val(td6);
+            ddlOrganization.val(td8);
+            ddlOrganization.trigger("change");
+
+            ddlDepotName.val(td2);
+            ddlDepotName.trigger("change");
+
+            hdmaterialId.val(td1);
+
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update RawMaterial');
+            $("#spanSaveText").text('Update');
+        })
+
         function formValidation() {
             Isvalid = true;
             $('.error').addClass("hide");
@@ -270,6 +302,9 @@
             hdmaterialId.val('0');
 
         }
+
+
+
 
     </script>
     

@@ -13,6 +13,8 @@
                 <th>Depot Name</th>
                 <th>Raw Material</th>
                 <th>Expire Date</th>
+                <th class="hide">organizationId</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -30,7 +32,11 @@
                 <td>@raw.OrganizationName</td>
                 <td>@raw.DepotName</td>
                 <td>@raw.RawMaterialName</td>
-                <td>@raw.ExpireDate</td>
+                <td>@raw.ExpireDate.Value.ToShortDateString()</td>
+                <td class="hide">@raw.OrganizationId</td>
+                <td>
+                    <a href="#" class="btn btn-warning btn-sm data-edit-item-rawMaterialId" data-edit-item-rawMaterialId="@raw.RawMaterialId"><i class="fa fa-pen"></i>Edit</a>
+                </td>
             </tr>
 
                 }

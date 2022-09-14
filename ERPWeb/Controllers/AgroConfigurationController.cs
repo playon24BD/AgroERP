@@ -1,4 +1,8 @@
-﻿using ERPBLL.Agriculture.Interface;
+
+﻿
+using ERPBLL.Agriculture.Interface;
+using ERPBLL.ControlPanel;
+
 using ERPBLL.ControlPanel.Interface;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ViewModels;
@@ -82,7 +86,8 @@ namespace ERPWeb.Controllers
         {
             if (string.IsNullOrEmpty(flag))
             {
-                ViewBag.ddlOrganization = _organizationBusiness.GetAllOrganizations().Select(des => new SelectListItem { Text = des.OrganizationName, Value = des.OrganizationId.ToString() }).ToList();
+   
+                ViewBag.ddlOrganization = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(des => new SelectListItem { Text = des.OrganizationName, Value = des.OrganizationId.ToString() }).ToList();
                 ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
                 ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialName });
 
@@ -101,6 +106,9 @@ namespace ERPWeb.Controllers
                     RawMaterialName = a.RawMaterialName,
                     ExpireDate = a.ExpireDate,
                     DepotId = a.DepotId,
+                    RawMaterialId=a.RawMaterialId,
+                    OrganizationId=a.OrganizationId,
+                    
 
 
                 }).Where(a => (a.DepotId == depotId && a.RawMaterialName == rawmaterialName) && (a.DepotId == depotId || a.RawMaterialName == rawmaterialName)).ToList();
@@ -114,8 +122,9 @@ namespace ERPWeb.Controllers
             }
             else if (flag == "Search" && (rawmaterialName != "" || depotId != 0))
             {
+                //(rawmaterialName != "" || depotId != 0) || (rawmaterialName != "" && depotId != 0)
 
-
+                
                 var dto = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
                 {
                     OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
@@ -123,6 +132,8 @@ namespace ERPWeb.Controllers
                     RawMaterialName = a.RawMaterialName,
                     ExpireDate = a.ExpireDate,
                     DepotId = a.DepotId,
+                    RawMaterialId=a.RawMaterialId,
+                         OrganizationId = a.OrganizationId,
 
 
                 }).Where(a => a.DepotId == depotId || a.RawMaterialName == rawmaterialName).ToList();
@@ -143,6 +154,9 @@ namespace ERPWeb.Controllers
                     DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
                     RawMaterialName = a.RawMaterialName,
                     ExpireDate = a.ExpireDate,
+                    DepotId = a.DepotId,
+                    RawMaterialId = a.RawMaterialId,
+                         OrganizationId = a.OrganizationId,
 
 
                 }).ToList();
