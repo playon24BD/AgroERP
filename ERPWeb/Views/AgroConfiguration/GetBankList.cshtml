@@ -4,5 +4,131 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>GetBankList</h2>
+<div class="row text-sm">
+    <div class="col-md-12">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h4 class="text-center">Bank Setup</h4>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-navy">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-2">
+                        <h4>Search By</h4>
+                    </div>
+                    <div class="col-10">
+                        <button class="btn btn-outline-primary btn-flat btn-sm float-right" id="clickButton"><i class="fa fa-plus"></i> Create New Bank</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12" id="dataContainer1">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal" id="bankModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 class="modal-title" id="modalHeading"><span id="spanModalHeading"></span></h4>
+                <button class="close" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="bankForm">
+                    <input type="hidden" id="hiddenBank" />
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="ddlOrganizationName" class="control-label">Organization Name</label>
+                            @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select OrgName--", new { @class = "form-control form-control-sm" })
+                            <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="ddlBankName" class="control-label">Bank Name</label>
+                            <input type="text" id="ddlBankName" class="form-control form-control-sm" />
+                            <span class="error hide required-BankName font-weight-bold">Input Bank Name!</span>
+
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="ddlAccountNumber" class="control-label">Account Number</label>
+                            <input type="text" id="ddlAccountNumber" class="form-control form-control-sm" />
+                            <span class="error hide required-AccountNumber font-weight-bold">Input AccountNumber!</span>
+
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <label for="ddlStatus" class="control-label">Status</label>
+                            <select class="form-control form-control-sm" id="ddlStatus">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-default">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success float-right" id="banksaveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextBank">Save</span> </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    
+<script type="text/javascript">
+
+    //BankSetup
+    var hiddenBank = $("#hiddenBank");
+
+    function OpenModals() {
+        $("#spanModalHeading").text('Create New Bank');
+        $("#bankModal").modal('show');
+    }
+
+
+    $("#clickButton").click(function (e) {
+
+        e.preventDefault();
+
+        OpenModals()
+    });
+
+
+
+
+
+
+    </script>
+    
+    }

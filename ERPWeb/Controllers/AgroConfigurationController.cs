@@ -24,14 +24,10 @@ namespace ERPWeb.Controllers
         }
         // GET: AgroConfiguration
 
-<<<<<<< Updated upstream
-        public ActionResult DepotList(string flag, string name)
-=======
-        #region AgroConfiguration
-
         #region Depot Setup
-        public ActionResult DepotList(string flag)
->>>>>>> Stashed changes
+        public ActionResult DepotList(string flag, string name)
+
+        
         {
 
             if (string.IsNullOrEmpty(flag))
@@ -244,11 +240,22 @@ namespace ERPWeb.Controllers
         #region Bank Setup
         public ActionResult GetBankList(string flag, string name)
         {
-
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+            }
             return View();
         }
         #endregion
 
+        #region
+
+        //public ActionResult SaveBankInfo()
+        //{
+
+        //}
         #endregion
+
+
     }
 }
