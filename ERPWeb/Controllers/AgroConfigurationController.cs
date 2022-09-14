@@ -18,15 +18,17 @@ namespace ERPWeb.Controllers
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
         private readonly IDepotSetup _depotSetup;
         private readonly IFinishGoodProductBusiness _finishGoodProductBusiness;
+        private readonly IFinishGoodProductSupplierBusiness _finishGoodProductSupplierBusiness;
         private readonly IOrganizationBusiness _organizationBusiness;
 
-        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness,IBankSetup bankSetup)
+        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness,IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness)
         {
             this._bankSetup = bankSetup;
             this._organizationBusiness = organizationBusiness;
             this._depotSetup = depotSetup;
             this._rawMaterialBusiness = rawMaterialBusiness;
             this._finishGoodProductBusiness = finishGoodProductBusiness;
+            this._finishGoodProductSupplierBusiness = finishGoodProductSupplierBusiness;
         }
         // GET: AgroConfiguration
 
@@ -241,8 +243,52 @@ namespace ERPWeb.Controllers
         #region Finish Good Product Supplier
         public ActionResult GetFinishGoodProductSupplierList(string flag, string name)
         {
-            
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == "Search")
+            {
+                IEnumerable<FinishGoodSupplierDTO> dto = _finishGoodProductSupplierBusiness.GetAllProductSupplierInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.FinishGoodSupplierName.Contains(name))|| (s.MobileNumber.ToString().Contains(name))).Select(o => new FinishGoodSupplierDTO
+                {
+                    FinishGoodSupplierId = o.FinishGoodSupplierId,
+                    OrganizationId = o.OrganizationId,
+                    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
+                    FinishGoodSupplierName = o.FinishGoodSupplierName,
+                    MobileNumber = o.MobileNumber,
+                    Address = o.Address,
+                    Status = o.Status,
+                    RoleId = o.RoleId,
+                    //EntryUserId=o.EntryUserId.ToString(),
+                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
+                    EntryDate = o.EntryDate,
+                    UpdateUserId = o.UpdateUserId,
+                    UpdateDate = o.UpdateDate
+                }).ToList();
+
+                List<FinishGoodSupplierViewModel> viewModel = new List<FinishGoodSupplierViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModel);
+                return PartialView("_GetFinishGoodProductSupplierPartialView", viewModel);
+
+
+
+            }
             return View();
+
+            //return View();
+        }
+
+        public ActionResult SaveFinishGoodProductSupplier(FinishGoodSupplierViewModel model)
+        {
+
+            FinishGoodSupplierDTO finishGoodProductSupplier = new FinishGoodSupplierDTO();
+            AutoMapper.Mapper.Map(model, finishGoodProductSupplier);
+            bool isSuccess = false;
+            if (ModelState.IsValid)
+            {
+                isSuccess = _finishGoodProductSupplierBusiness.SaveFinishGoodProductSupplierName(finishGoodProductSupplier, User.UserId, User.OrgId);
+            }
+            return Json(isSuccess);
         }
         #endregion
 
