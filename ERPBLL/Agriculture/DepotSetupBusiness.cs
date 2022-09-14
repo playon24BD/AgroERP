@@ -35,23 +35,43 @@ namespace ERPBLL.Agriculture
         }
         public bool SaveDepotInfo(DepotSetupDTO infoDTO, long orgId, long userId)
         {
-            DepotSetup depot = new DepotSetup()
+            bool IsSuccess = false;
+            if (infoDTO.DepotId == 0)
             {
-                OrganizationId = infoDTO.OrganizationId,
-                DepotName = infoDTO.DepotName,
-                RoleId = infoDTO.RoleId,
-                UpdateDate = DateTime.Now,
-                UpdateUserId = infoDTO.UpdateUserId,
-                EntryDate = DateTime.Now,
-                EntryUserId = userId,
-                Status = infoDTO.Status
+                DepotSetup depot = new DepotSetup()
+                {
+                    OrganizationId = infoDTO.OrganizationId,
+                    DepotName = infoDTO.DepotName,
+                    RoleId = infoDTO.RoleId,
+                    UpdateDate = DateTime.Now,
+                    UpdateUserId = infoDTO.UpdateUserId,
+                    EntryDate = DateTime.Now,
+                    EntryUserId = userId,
+                    Status = infoDTO.Status
 
-            };
+                };
+                _depotSetupRepository.Insert(depot);
 
-            _depotSetupRepository.Insert(depot);
-            bool saveSuccess = false;
-            saveSuccess = _depotSetupRepository.Save();
-            return saveSuccess;
+            }
+            else
+            {
+                DepotSetup depot = new DepotSetup();
+                depot = GetDepotNamebyId(infoDTO.DepotId, orgId);
+                depot.DepotName = infoDTO.DepotName;
+                depot.OrganizationId = infoDTO.OrganizationId;
+                depot.UpdateDate = DateTime.Now;
+                depot.UpdateUserId = infoDTO.UpdateUserId;
+                depot.Status = infoDTO.Status;
+                _depotSetupRepository.Update(depot);
+            }
+
+            IsSuccess = _depotSetupRepository.Save();
+            return IsSuccess;
+
+            //_depotSetupRepository.Insert(depot);
+            //bool saveSuccess = false;
+            //saveSuccess = _depotSetupRepository.Save();
+            //return saveSuccess;
         }
     }
 }

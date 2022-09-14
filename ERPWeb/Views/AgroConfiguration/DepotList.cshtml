@@ -66,13 +66,14 @@
                         <div class="form-group col-md-8">
                             <label for="ddlOrganizationName" class="control-label">OrganizationName</label>
                             @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm" })
-                            <span class="error hide required-organizatinName font-weight-bold">Input OrganizatinName!</span>
-                            <span class="error hide duplicate-organizatinName font-weight-bold">Already OrganizatinName Exist!</span>
+                            <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
+                            
                         </div>
                         <div class="form-group col-md-8">
                             <label for="ddlDepotName" class="control-label">DepotName</label>
                             <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
                             <span class="error hide required-DepotName font-weight-bold">Input Depot Name!</span>
+                            <span class="error hide duplicate-DepotName font-weight-bold">Already DepotName Exist!</span>
                         </div>
                         <div class="form-group col-md-5">
                             <label for="ddlStatus" class="control-label">Status</label>
@@ -98,7 +99,7 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
-                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="Save">Save</span> </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextDepot">Save</span> </button>
             </div>
         </div>
     </div>
@@ -133,7 +134,7 @@
         //})
 
         function LoadDepotDataTable() {
-            var data = { flag: "DepotSetup", name: $.trim(searchByAny.val()) }
+            var data = { flag: 'DepotSetup', name: $.trim(searchByAny.val()) }
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/DepotList', data)).then(function (res, status) {
                 console.log(res);
                 if (status === "success") {
@@ -148,9 +149,9 @@
             e.preventDefault();
             //console.log("btnsubmit click");
             $(".error").addClass("hide");
-            if (true) {
+            if (formValidations() == true) {
                 debugger;
-                var data = JSON.stringify({ OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), DepotName: ddlDepotName.val(), Status: ddlStatus.val() });
+                var data = JSON.stringify({ DepotId: TryParseInt(hddepotId.val(), 0), OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), DepotName: ddlDepotName.val(), Status: ddlStatus.val() });
                 console.log(data);
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveDepotInfo', data, getToken())).then(function (res, status) {
                     console.log(status);
@@ -174,30 +175,67 @@
 
         })
 
+        function formValidations() {
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlOrganizationName.val()) == 0) {
+                $('.required-OrganizationName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlDepotName.val()) == 0) {
+                $('.required-DepotName').removeClass("hide");
+                Isvalid = false;
+            }
+           
+            //if ($.trim(ddlDepotName.val()) ==0) {
+            //    $('.duplicate-DepotName').removeClass("hide");
+            //    Isvalid = false;
+            //}
+            //if (depotName.value == list.value) {
+            //    $('.duplicate-DepotName').removeClass("hide");
+            //    Isvalid = false;
+            //}
+            //else {
+            //    alert('DepotName Already Exists');
+            //}
+
+            return Isvalid
+
+        }
+
         $(document).on("click", "a.data-edit-item-Depot", function (e) {
             alert();
+            debugger;
             e.preventDefault()
-            clearCtrlUnit();
+            clearCtrlDepot();
             var row = $(this).parent().parents('tr');
             var td1 = row.find('td:eq(1)').html();
             var td2 = row.find('td:eq(2)').html();
             var td3 = row.find('td:eq(3)').html();
             var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
 
             hddepotId.val(td1);
             ddlOrganizationName.val(td2);
-            ddlStatus.val(td3)
             ddlDepotName.val(td4);
 
-            OpenModalUnit();
+            ddlStatus.prop("checked", false);
+            if (td6.toLowerCase() === 'active') {
+                ddlStatus.prop("checked", true);
+            }
+            
+           
+
+            OpenModal();
             $("#spanModalHead").text('Update Unit');
-            $("#spanSaveTextUnit").text('Update');
+            $("#spanSaveTextDepot").text('Update');
         })
 
 
         function OpenModal() {
             $("#spanModalHead").text("Add New Depot");
-            $("#saveButton").text('Save');
+            $("#spanSaveTextDepot").text('Save');
             $("#depotmodal").modal("show");
             $(".error").addClass("hide");
 
@@ -210,6 +248,12 @@
             OpenModal();
 
         })
+        function clearCtrlDepot() {
+            ddlDepotName.val("");
+            ddlOrganizationName.val('');
+            hddepotId.val('0');
+
+        }
 
     </script>
 

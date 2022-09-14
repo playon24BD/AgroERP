@@ -30,7 +30,7 @@ namespace ERPWeb.Controllers
         }
         // GET: AgroConfiguration
 
-        public ActionResult DepotList(string flag)
+        public ActionResult DepotList(string flag, string name)
         {
 
             if (string.IsNullOrEmpty(flag))
@@ -39,7 +39,7 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "DepotSetup")
             {
-                IEnumerable<DepotSetupDTO> dto = _depotSetup.GetAllDepotSetup(User.OrgId).Select(o => new DepotSetupDTO
+                IEnumerable<DepotSetupDTO> dto = _depotSetup.GetAllDepotSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.DepotName.Contains(name))).Select(o => new DepotSetupDTO
                 {
                     DepotId = o.DepotId,
                     OrganizationId = o.OrganizationId,
