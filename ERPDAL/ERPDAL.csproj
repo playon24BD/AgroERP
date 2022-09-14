@@ -110,15 +110,10 @@
     <Compile Include="AgricultureContextMigrations\202209141009085_Agriculture_BankUpdateAccountNumber.Designer.cs">
       <DependentUpon>202209141009085_Agriculture_BankUpdateAccountNumber.cs</DependentUpon>
     </Compile>
-<<<<<<< Updated upstream
-    <Compile Include="AgricultureContextMigrations\202209141238236_Agriculture_Depoadd.cs" />
-    <Compile Include="AgricultureContextMigrations\202209141238236_Agriculture_Depoadd.Designer.cs">
-      <DependentUpon>202209141238236_Agriculture_Depoadd.cs</DependentUpon>
-=======
     <Compile Include="AgricultureContextMigrations\202209141233027_Agriculture_Depo FinishGoodSuppliersseee.cs" />
     <Compile Include="AgricultureContextMigrations\202209141233027_Agriculture_Depo FinishGoodSuppliersseee.Designer.cs">
       <DependentUpon>202209141233027_Agriculture_Depo FinishGoodSuppliersseee.cs</DependentUpon>
->>>>>>> Stashed changes
+
     </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
@@ -175,13 +170,12 @@
     <EmbeddedResource Include="AgricultureContextMigrations\202209141009085_Agriculture_BankUpdateAccountNumber.resx">
       <DependentUpon>202209141009085_Agriculture_BankUpdateAccountNumber.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< Updated upstream
-    <EmbeddedResource Include="AgricultureContextMigrations\202209141238236_Agriculture_Depoadd.resx">
-      <DependentUpon>202209141238236_Agriculture_Depoadd.cs</DependentUpon>
-=======
+
+
+
     <EmbeddedResource Include="AgricultureContextMigrations\202209141233027_Agriculture_Depo FinishGoodSuppliersseee.resx">
       <DependentUpon>202209141233027_Agriculture_Depo FinishGoodSuppliersseee.cs</DependentUpon>
->>>>>>> Stashed changes
+
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
