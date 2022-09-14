@@ -168,10 +168,12 @@
 
         }
         $("#btnAdd").click(function (e) {
+
             e.preventDefault();
 
-
+            ClearCtrl();
             OpenModal();
+       
             
         })
         ddlDepotNameforSearch.change(function () {
