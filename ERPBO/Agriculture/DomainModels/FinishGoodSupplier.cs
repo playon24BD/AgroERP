@@ -16,13 +16,12 @@ namespace ERPBO.Agriculture.DomainModels
         public string FinishGoodSupplierName { get; set; }
         public long OrganizationId { get; set; }
         public long RoleId { get; set; }
-        [Phone]
         public long MobileNumber { get; set; }
         public string Address { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public long UpdateUserId { get; set; }
-        public DateTime EntryDate { get; set; }
-        public long EntryUserId { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public long? UpdateUserId { get; set; }
+        public DateTime? EntryDate { get; set; }
+        public long? EntryUserId { get; set; }
         public string Status { get; set; }
     }
 }
