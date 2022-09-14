@@ -12,6 +12,10 @@ namespace ERPBO.Agriculture.ViewModels
         [Key]
         public long BankId { get; set; }
         public string BankName { get; set; }
+        [Phone]
+        public long MobileNumber { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
         public long OrganizationId { get; set; }
         public long RoleId { get; set; }
         public DateTime UpdateDate { get; set; }

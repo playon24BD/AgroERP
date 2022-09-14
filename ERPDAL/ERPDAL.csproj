@@ -102,6 +102,10 @@
     <Compile Include="AgricultureContextMigrations\202209140648351_Agriculture_BankSetup.Designer.cs">
       <DependentUpon>202209140648351_Agriculture_BankSetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202209140828412_Agriculture_BankMigration.cs" />
+    <Compile Include="AgricultureContextMigrations\202209140828412_Agriculture_BankMigration.Designer.cs">
+      <DependentUpon>202209140828412_Agriculture_BankMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -150,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202209140648351_Agriculture_BankSetup.resx">
       <DependentUpon>202209140648351_Agriculture_BankSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202209140828412_Agriculture_BankMigration.resx">
+      <DependentUpon>202209140828412_Agriculture_BankMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

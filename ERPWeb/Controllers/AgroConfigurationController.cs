@@ -24,18 +24,11 @@ namespace ERPWeb.Controllers
         }
         // GET: AgroConfiguration
 
-<<<<<<< Updated upstream
-        #region Depot Setup
-        public ActionResult DepotList(string flag, string name)
 
-        
-=======
         #region AgroConfiguration
 
         #region Depot Setup
         public ActionResult DepotList(string flag, string name)
-
->>>>>>> Stashed changes
         {
 
             if (string.IsNullOrEmpty(flag))
@@ -256,12 +249,7 @@ namespace ERPWeb.Controllers
         }
         #endregion
 
-        #region
-
-        //public ActionResult SaveBankInfo()
-        //{
-
-        //}
+        
         #endregion
 
 
