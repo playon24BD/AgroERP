@@ -1,15 +1,9 @@
-﻿
-using ERPBLL.Agriculture.Interface;
-
-using ERPBLL.ControlPanel;
+﻿using ERPBLL.Agriculture.Interface;
 using ERPBLL.ControlPanel.Interface;
-
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ERPWeb.Controllers
@@ -30,7 +24,14 @@ namespace ERPWeb.Controllers
         }
         // GET: AgroConfiguration
 
+<<<<<<< Updated upstream
         public ActionResult DepotList(string flag, string name)
+=======
+        #region AgroConfiguration
+
+        #region Depot Setup
+        public ActionResult DepotList(string flag)
+>>>>>>> Stashed changes
         {
 
             if (string.IsNullOrEmpty(flag))
@@ -75,7 +76,9 @@ namespace ERPWeb.Controllers
             return Json(isSuccess);
 
         }
+        #endregion
 
+        #region Raw Material Setup
         public ActionResult GetRawMaterial(string flag, long? depotId, string rawmaterialName)
         {
             if (string.IsNullOrEmpty(flag))
@@ -86,7 +89,7 @@ namespace ERPWeb.Controllers
 
                 return View();
             }
-           
+
             else if (flag == "Search" && rawmaterialName != "" && depotId != 0)
             {
 
@@ -110,7 +113,7 @@ namespace ERPWeb.Controllers
 
                 return PartialView("_GetRawMaterial", viewModels);
             }
-            else if(flag == "Search" && (rawmaterialName != "" || depotId != 0))
+            else if (flag == "Search" && (rawmaterialName != "" || depotId != 0))
             {
 
 
@@ -123,7 +126,7 @@ namespace ERPWeb.Controllers
                     DepotId = a.DepotId,
 
 
-                }).Where(a =>  a.DepotId == depotId || a.RawMaterialName == rawmaterialName).ToList();
+                }).Where(a => a.DepotId == depotId || a.RawMaterialName == rawmaterialName).ToList();
 
                 //dto.Where(a =>a.DepotId == depotId).ToList();
                 //dto.Where(a => (a.DepotId == depotId || a.DepotId == 0) && (a.RawMaterialName == rawmaterialName || a.RawMaterialName == "")).ToList();
@@ -166,11 +169,16 @@ namespace ERPWeb.Controllers
             }
             return Json(isSuccess);
         }
+        #endregion
+
+        #region Raw Material Supplier Setup
         public ActionResult GetRawMaterialSupplier(string flag)
         {
             return null;
         }
+        #endregion
 
+        #region Finish Good Product Setup
         public ActionResult GetFinishGoodProduct(string flag, string name)
         {
             if (string.IsNullOrEmpty(flag))
@@ -215,6 +223,32 @@ namespace ERPWeb.Controllers
             }
             return Json(isSuccess);
         }
+        #endregion
 
+        #region Finish Good Product Supplier
+        public ActionResult GetFinishGoodProductSupplierList(string flag, string name)
+        {
+            
+            return View();
+        }
+        #endregion
+
+        #region Measurement Setup
+        public ActionResult GetMeasurementList(string flag, string name)
+        {
+
+            return View();
+        }
+        #endregion
+
+        #region Bank Setup
+        public ActionResult GetBankList(string flag, string name)
+        {
+
+            return View();
+        }
+        #endregion
+
+        #endregion
     }
 }
