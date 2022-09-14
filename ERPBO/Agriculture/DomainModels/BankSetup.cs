@@ -14,9 +14,8 @@ namespace ERPBO.Agriculture.DomainModels
         [Key]
         public long BankId { get; set; }
         public string BankName { get; set; }
-        [Phone]
-        public long MobileNumber { get; set; }
-        [EmailAddress]
+        public string MobileNumber { get; set; }
+        public string AccountNumber { get; set; }
         public string Email { get; set; }
         public long OrganizationId { get; set; }
         public long RoleId { get; set; }
