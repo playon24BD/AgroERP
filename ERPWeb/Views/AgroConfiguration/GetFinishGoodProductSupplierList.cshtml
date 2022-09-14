@@ -64,27 +64,27 @@
                 <form id="formdepot">
                     <input type="hidden" id="hdSupplierId" />
                     <div class="form-row">
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                             <label for="ddlOrganizationName" class="control-label">OrganizationName</label>
                             @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm" })
                             <span class="error hide required-organizatinName font-weight-bold">Input OrganizatinName!</span>
                             <span class="error hide duplicate-organizatinName font-weight-bold">Already OrganizatinName Exist!</span>
                         </div>
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                             <label for="ddlSupplierName" class="control-label">Supplier Name</label>
                             <input type="text" id="ddlSupplierName" class="form-control form-control-sm" />
                             <span class="error hide required-SupplierName font-weight-bold">Input Supplier Name!</span>
                         </div>
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                             <label for="ddlMobileName" class="control-label">Mobile Name</label>
                             <input type="text" id="ddlMobileNumber" class="form-control form-control-sm" onkeypress="return isNumber(event)" />
                             <span class="error hide required-MobileNumber font-weight-bold">Input Mobile Name!</span>
                         </div>
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                             <label for="ddlAddress" class="control-label">Address</label>
                             <input type="text" id="ddlAddress" class="form-control form-control-sm" />
                         </div>
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm" id="ddlStatus">
                                 <option value="Active">Active</option>
@@ -228,16 +228,17 @@
         //}
 
         function OpenModal() {
-            $("#spanModalHeadSupplier").text('Add New Product');
+            $("#spanModalHeadSupplier").text('Add New Finish Good Supplier');
             $("#spanSaveTextSupplier").text('Save');
             $("#modalSupplier").modal("show");
             $(".error").addClass("hide");
+            
         }
         $("#addButton").click(function (e) {
             e.preventDefault();
             ClearCtrl();
             OpenModal();
-
+            enable("#ddlOrganizationName");
         })
 
         function formValidation() {
