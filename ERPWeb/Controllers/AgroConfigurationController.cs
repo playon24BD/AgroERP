@@ -298,6 +298,19 @@ namespace ERPWeb.Controllers
 
             return View();
         }
+        public ActionResult SaveMeasurement()
+        {
+            bool IsSuccess = false;
+            if (ModelState.IsValid)
+            {
+
+
+            }
+
+
+            return Json(IsSuccess);
+        }
+
         #endregion
 
         #region Bank Setup
@@ -326,8 +339,9 @@ namespace ERPWeb.Controllers
 
         #endregion
 
-        
+
         #endregion
+
 
 
     }

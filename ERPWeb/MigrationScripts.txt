@@ -1,23 +1,11 @@
 
 To clear - cls
+Enable-Migragions:
 Enable-Migrations -ContextTypeName ERPDAL.AgricultureDAL.AgricultureDbContext –MigrationsDirectory AgricultureContextMigrations
 
+Add-Migration:
  Add-Migration 'Agriculture_Depo' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
 
+ Update-Database:
  Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
 
-
---- Scripts
-Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ControlPanelContextMigrations.Configuration
-Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.InventoryContextMigrations.Configuration
-Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ProductionContextMigrations.Configuration
-Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.ConfigurationContextMigrations.Configuration
-Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.FrontDeskContextMigrations.Configuration
-Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.SalesAndDistributionContextMigrations.Configuration
-Update-database -script -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AccountsContextMigrations.Configuration
-
--- Yeasin
-
-
---- Model State Validation ---
-ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => x.Key).ToList()
