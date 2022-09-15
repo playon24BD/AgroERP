@@ -47,6 +47,7 @@ namespace ERPWeb
 
             // Configuration Database
             #region Agriculture
+            container.RegisterType<IRawMaterialSupplier, RawMaterialSupplierBusiness>();
             container.RegisterType<IBankSetup, BankSetupBusiness>();
             container.RegisterType<IDepotSetup, DepotSetupBusiness>();
             container.RegisterType<IRawMaterialBusiness,RawMaterialBusiness>();

@@ -448,15 +448,12 @@
     <Content Include="Views\AgroConfiguration\_GetDepotPartialView.cshtml" />
     <Content Include="Views\AgroConfiguration\GetFinishGoodProduct.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetFinishGoodProductPartialView.cshtml" />
-    <Content Include="Views\AgroConfiguration\GetRawMaterialSupplier.cshtml" />
     <Content Include="Views\AgroConfiguration\GetFinishGoodProductSupplierList.cshtml" />
     <Content Include="Views\AgroConfiguration\GetMeasurementList.cshtml" />
     <Content Include="Views\AgroConfiguration\GetBankList.cshtml" />
-
     <Content Include="Views\AgroConfiguration\_GetFinishGoodProductSupplierPartialView.cshtml" />
-
     <Content Include="Views\AgroConfiguration\_GetBankPartialView.cshtml" />
-
+    <Content Include="Views\AgroConfiguration\GetRawMaterialSupplier.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

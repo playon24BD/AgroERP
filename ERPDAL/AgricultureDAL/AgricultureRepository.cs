@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace ERPDAL.AgricultureDAL
 {
+    public class RawMaterialSupplierRepository : AgricultureBaseRepository<RawMaterialSupplier>
+    {
+        public RawMaterialSupplierRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
     public class BankSetupRepository : AgricultureBaseRepository<BankSetup>
     {
         public BankSetupRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }

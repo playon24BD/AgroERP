@@ -191,7 +191,7 @@ namespace ERPWeb.Controllers
         #region Raw Material Supplier Setup
         public ActionResult GetRawMaterialSupplier(string flag)
         {
-            return null;
+            return View();
         }
         #endregion
 
