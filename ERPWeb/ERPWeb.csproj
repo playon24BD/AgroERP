@@ -452,7 +452,11 @@
     <Content Include="Views\AgroConfiguration\GetFinishGoodProductSupplierList.cshtml" />
     <Content Include="Views\AgroConfiguration\GetMeasurementList.cshtml" />
     <Content Include="Views\AgroConfiguration\GetBankList.cshtml" />
+
     <Content Include="Views\AgroConfiguration\_GetFinishGoodProductSupplierPartialView.cshtml" />
+
+    <Content Include="Views\AgroConfiguration\_GetBankPartialView.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

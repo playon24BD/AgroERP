@@ -22,5 +22,6 @@ namespace ERPBO.Agriculture.ViewModels
         public long EntryUserId { get; set; }
         public string Status { get; set; }
         public string OrganizationName { get; set; }
+        public string UserName { get; set; }
     }
 }

@@ -21,24 +21,57 @@ namespace ERPBLL.Agriculture
             this._bankSetupRepository = new BankSetupRepository(this._agricultureUnitOfWork);
         }
 
+        public IEnumerable<BankSetup> GetAllBankSetup(long OrgId)
+        {
+            return _bankSetupRepository.GetAll(a => a.OrganizationId == OrgId);
+        }
+
+        public BankSetup GetBankNameById(long bankId, long orgId)
+        {
+            return _bankSetupRepository.GetOneByOrg(a => a.BankId == bankId && a.OrganizationId == orgId);
+        }
+
         public bool SaveBankInfo(BankSetupDTO infoDTO, long userId, long orgId)
         {
-            BankSetup bankInfo = new BankSetup()
-            {
-                BankName=infoDTO.BankName,
-                MobileNumber=infoDTO.MobileNumber,
-                Email=infoDTO.Email,
-                OrganizationId=orgId,
-                RoleId=infoDTO.RoleId,
-                UpdateDate=DateTime.Now,
-                UpdateUserId=infoDTO.UpdateUserId,
-                EntryDate=DateTime.Now,
-                EntryUserId=userId,
-                Status=infoDTO.Status
-            };
-
-            _bankSetupRepository.Insert(bankInfo);
             bool saveSuccess = false;
+            if (infoDTO.BankId == 0)
+            {
+
+                BankSetup bankInfo = new BankSetup()
+                {
+                    BankName = infoDTO.BankName,
+                    MobileNumber = infoDTO.MobileNumber,
+                    AccountNumber = infoDTO.AccountNumber,
+                    Email = infoDTO.Email,
+                    OrganizationId = orgId,
+                    RoleId = infoDTO.RoleId,
+                    UpdateDate = DateTime.Now,
+                    UpdateUserId = infoDTO.UpdateUserId,
+                    EntryDate = DateTime.Now,
+                    EntryUserId = userId,
+                    Status = infoDTO.Status
+                };
+
+                _bankSetupRepository.Insert(bankInfo);
+            }
+
+            else
+            {
+                BankSetup bankSetup = new BankSetup();
+                bankSetup = GetBankNameById(infoDTO.BankId, orgId);
+                bankSetup.MobileNumber = infoDTO.MobileNumber;
+                bankSetup.AccountNumber = infoDTO.AccountNumber;
+                bankSetup.Email = infoDTO.Email;
+                bankSetup.OrganizationId = orgId;
+                bankSetup.RoleId = infoDTO.RoleId;
+                bankSetup.UpdateDate = DateTime.Now;
+                bankSetup.UpdateUserId = infoDTO.UpdateUserId;
+                bankSetup.EntryDate = DateTime.Now;
+                bankSetup.EntryUserId = userId;
+                bankSetup.Status = infoDTO.Status;
+
+            }
+
             saveSuccess = _bankSetupRepository.Save();
             return saveSuccess;
         }

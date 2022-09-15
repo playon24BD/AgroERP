@@ -307,6 +307,30 @@ namespace ERPWeb.Controllers
             {
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
             }
+            else if(!string.IsNullOrEmpty(flag) && flag == "BankSetup")
+            {
+                IEnumerable<BankSetupDTO> dto = _bankSetup.GetAllBankSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.BankName.Contains(name)|| s.AccountNumber.Contains(name))).Select(o => new BankSetupDTO
+                {
+                    BankId=o.BankId,
+                    OrganizationId=o.OrganizationId,
+                    Status=o.Status,
+                    RoleId=o.RoleId,
+                    BankName=o.BankName,
+                    EntryDate=o.EntryDate,
+                    UpdateDate=o.UpdateDate,
+                    UpdateUserId=o.UpdateUserId,
+                    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
+                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
+                    AccountNumber=o.AccountNumber,
+                    MobileNumber=o.MobileNumber,
+                    Email=o.Email
+
+                }).ToList();
+                List<BankSetupViewModel> viewModel = new List<BankSetupViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModel);
+                return PartialView("_GetBankPartialView", viewModel);
+            }
+
             return View();
         }
 

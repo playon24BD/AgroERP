@@ -21,6 +21,7 @@ namespace ERPBO.Agriculture.DTOModels
         public DateTime? EntryDate { get; set; }
         public long EntryUserId { get; set; }
         public string Status { get; set; }
+        public string UserName { get; set; }
         public string OrganizationName { get; set; }
     }
 }
