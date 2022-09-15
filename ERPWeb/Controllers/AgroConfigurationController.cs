@@ -22,7 +22,9 @@ namespace ERPWeb.Controllers
         private readonly IOrganizationBusiness _organizationBusiness;
         private readonly IMeasuremenBusiness _measuremenBusiness;
 
-        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness,IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness)
+        private readonly IRawMaterialSupplier _rawMaterialSupplierBusiness;
+
+        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness,IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness,IRawMaterialSupplier rawMaterialSupplierBusiness)
         {
             this._bankSetup = bankSetup;
             this._organizationBusiness = organizationBusiness;
@@ -31,6 +33,7 @@ namespace ERPWeb.Controllers
             this._finishGoodProductBusiness = finishGoodProductBusiness;
             this._finishGoodProductSupplierBusiness = finishGoodProductSupplierBusiness;
             this._measuremenBusiness = measuremenBusiness;
+            this._rawMaterialSupplierBusiness = rawMaterialSupplierBusiness;
         }
         // GET: AgroConfiguration
 
@@ -189,10 +192,53 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Raw Material Supplier Setup
-        public ActionResult GetRawMaterialSupplier(string flag)
+        public ActionResult GetRawMaterialSupplier(string flag, string name)
         {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == "Search")
+            {
+                IEnumerable<RawMaterialSupplierDTO> dto = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.RawMaterialSupplierName.Contains(name)) || (s.MobileNumber.ToString().Contains(name))).Select(o => new RawMaterialSupplierDTO
+                {
+                    RawMaterialSupplierId = o.RawMaterialSupplierId,
+                    OrganizationId = o.OrganizationId,
+                    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
+                    RawMaterialSupplierName = o.RawMaterialSupplierName,
+                    MobileNumber = o.MobileNumber,
+                    Address = o.Address,
+                    Status = o.Status,
+                    RoleId = o.RoleId,
+                    //EntryUserId=o.EntryUserId.ToString(),
+                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
+                    EntryDate = o.EntryDate,
+                    UpdateUserId = o.UpdateUserId,
+                    UpdateDate = o.UpdateDate
+                }).ToList();
+
+                List<RawMaterialSupplierViewModel> viewModel = new List<RawMaterialSupplierViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModel);
+                return PartialView("_GetRawMaterialSupplierPartialView", viewModel);
+
+
+
+            }
             return View();
         }
+        public ActionResult SaveRawMaterialSupplier(RawMaterialSupplierViewModel model)
+        {
+
+            RawMaterialSupplierDTO rawMaterialSupplier = new RawMaterialSupplierDTO();
+            AutoMapper.Mapper.Map(model, rawMaterialSupplier);
+            bool isSuccess = false;
+            if (ModelState.IsValid)
+            {
+                isSuccess = _rawMaterialSupplierBusiness.SaveRawMaterialSupplierName(rawMaterialSupplier, User.UserId, User.OrgId);
+            }
+            return Json(isSuccess);
+        }
+
         #endregion
 
         #region Finish Good Product Setup
