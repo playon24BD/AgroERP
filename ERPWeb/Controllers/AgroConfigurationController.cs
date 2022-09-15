@@ -322,7 +322,7 @@ namespace ERPWeb.Controllers
             }
             else if(!string.IsNullOrEmpty(flag) && flag == "BankSetup")
             {
-                IEnumerable<BankSetupDTO> dto = _bankSetup.GetAllBankSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.BankName.Contains(name)|| s.AccountNumber.Contains(name))).Select(o => new BankSetupDTO
+                IEnumerable<BankSetupDTO> dto = _bankSetup.GetAllBankSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.BankName.Contains(name))|| (s.AccountNumber.Contains(name))|| (s.MobileNumber.Contains(name))).Select(o => new BankSetupDTO
                 {
                     BankId=o.BankId,
                     OrganizationId=o.OrganizationId,

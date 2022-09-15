@@ -59,6 +59,7 @@ namespace ERPBLL.Agriculture
             {
                 BankSetup bankSetup = new BankSetup();
                 bankSetup = GetBankNameById(infoDTO.BankId, orgId);
+                bankSetup.BankName = infoDTO.BankName;
                 bankSetup.MobileNumber = infoDTO.MobileNumber;
                 bankSetup.AccountNumber = infoDTO.AccountNumber;
                 bankSetup.Email = infoDTO.Email;
