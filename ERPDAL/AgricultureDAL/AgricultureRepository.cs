@@ -23,7 +23,7 @@ namespace ERPDAL.AgricultureDAL
 
     public class RawMaterialRepository : AgricultureBaseRepository<RawMaterial>
     {
-        public RawMaterialRepository(IAgricultureUnitOfWork agricultureUnitOfWork):base(agricultureUnitOfWork)
+        public RawMaterialRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
         {
 
         }
@@ -41,6 +41,14 @@ namespace ERPDAL.AgricultureDAL
     public class FinishGoodProductSupplierRepository : AgricultureBaseRepository<FinishGoodSupplier>
     {
         public FinishGoodProductSupplierRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
+        {
+
+        }
+
+    }
+    public class MeasurmentRepository:AgricultureBaseRepository<MeasurementSetup>
+    {
+        public MeasurmentRepository(IAgricultureUnitOfWork agricultureUnitOfWork):base(agricultureUnitOfWork)
         {
 
         }

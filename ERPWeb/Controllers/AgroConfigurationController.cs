@@ -20,8 +20,9 @@ namespace ERPWeb.Controllers
         private readonly IFinishGoodProductBusiness _finishGoodProductBusiness;
         private readonly IFinishGoodProductSupplierBusiness _finishGoodProductSupplierBusiness;
         private readonly IOrganizationBusiness _organizationBusiness;
+        private readonly IMeasuremenBusiness _measuremenBusiness;
 
-        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness,IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness)
+        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness,IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness)
         {
             this._bankSetup = bankSetup;
             this._organizationBusiness = organizationBusiness;
@@ -29,6 +30,7 @@ namespace ERPWeb.Controllers
             this._rawMaterialBusiness = rawMaterialBusiness;
             this._finishGoodProductBusiness = finishGoodProductBusiness;
             this._finishGoodProductSupplierBusiness = finishGoodProductSupplierBusiness;
+            this._measuremenBusiness = measuremenBusiness;
         }
         // GET: AgroConfiguration
 
@@ -295,7 +297,7 @@ namespace ERPWeb.Controllers
         #region Measurement Setup
         public ActionResult GetMeasurementList(string flag, string name)
         {
-
+            
             return View();
         }
         public ActionResult SaveMeasurement()

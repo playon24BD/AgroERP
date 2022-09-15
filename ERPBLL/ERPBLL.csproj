@@ -105,7 +105,9 @@
     <Compile Include="Agriculture\Interface\IBankSetup.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductBusiness.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductSupplierBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IMeasuremenBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialBusiness.cs" />
+    <Compile Include="Agriculture\MeasuremenBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialBusiness.cs" />
     <Compile Include="Common\Status.cs" />
     <Compile Include="Common\Utility.cs" />
