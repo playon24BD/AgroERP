@@ -74,21 +74,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
     <Compile Include="Agriculture\DomainModels\RawMaterialStock.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialStockDetail.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialStockDetailDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialStockDTO.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialStockDetailViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialStockViewModel.cs" />
-=======
     <Compile Include="Agriculture\DomainModels\FinishGoodRecipeDetails.cs" />
     <Compile Include="Agriculture\DomainModels\FinishGoodRecipeInfo.cs" />
     <Compile Include="Agriculture\DTOModels\FinishGoodRecipeDetailsDTO.cs" />
     <Compile Include="Agriculture\DTOModels\FinishGoodRecipeInfoDTO.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodRecipeDetailsViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodRecipeInfoViewModel.cs" />
->>>>>>> Stashed changes
     <Compile Include="Common\DailySellsChart.cs" />
     <Compile Include="Common\DayAndModelWiseProductionChart.cs" />
     <Compile Include="Common\DaysAndLineWiseProductionChart.cs" />

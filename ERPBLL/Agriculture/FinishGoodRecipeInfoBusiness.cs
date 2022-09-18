@@ -14,13 +14,13 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _AgricultureUnitOfWork;
         private readonly FinishGoodRecipeInfoRepository _finishGoodRecipeInfoRepository;
-        private readonly IFinishGoodRecipeDetailsBusiness _finishGoodRecipeDetailsBusiness;
-
-        public FinishGoodRecipeInfoBusiness(IAgricultureUnitOfWork AgricultureUnitOfWork, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness)
+        //private readonly IFinishGoodRecipeDetailsBusiness _finishGoodRecipeDetailsBusiness;
+        //, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness
+        public FinishGoodRecipeInfoBusiness(IAgricultureUnitOfWork AgricultureUnitOfWork)
         {
             this._AgricultureUnitOfWork = AgricultureUnitOfWork;
             this._finishGoodRecipeInfoRepository = new FinishGoodRecipeInfoRepository(this._AgricultureUnitOfWork);
-            this._finishGoodRecipeDetailsBusiness = finishGoodRecipeDetailsBusiness;
+            //this._finishGoodRecipeDetailsBusiness = finishGoodRecipeDetailsBusiness;
         }
 
         public bool SaveFinishGoodRecipe(FinishGoodRecipeInfoDTO info, List<FinishGoodRecipeDetailsDTO> details, long userId, long orgId)

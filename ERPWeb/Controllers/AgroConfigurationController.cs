@@ -1,8 +1,5 @@
 
-
 using ERPBLL.Agriculture.Interface;
-using ERPBLL.ControlPanel;
-
 using ERPBLL.ControlPanel.Interface;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ViewModels;
@@ -24,9 +21,10 @@ namespace ERPWeb.Controllers
 
         private readonly IRawMaterialSupplier _rawMaterialSupplierBusiness;
         private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
+        private readonly IFinishGoodRecipeDetailsBusiness _finishGoodRecipeDetailsBusiness;
 
 
-        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness)
+        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness)
         {
             this._bankSetup = bankSetup;
             this._organizationBusiness = organizationBusiness;
@@ -37,6 +35,7 @@ namespace ERPWeb.Controllers
             this._measuremenBusiness = measuremenBusiness;
             this._rawMaterialSupplierBusiness = rawMaterialSupplierBusiness;
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
+            this._finishGoodRecipeDetailsBusiness = finishGoodRecipeDetailsBusiness;
         }
         // GET: AgroConfiguration
 
@@ -432,7 +431,7 @@ namespace ERPWeb.Controllers
             bool IsSuccess = false;
             //var pre = UserPrivilege("Inventory", "GetItemPreparation");
             //var permission = ((pre.Edit) || (pre.Add));
-            if (ModelState.IsValid && details.Count > 0 )
+            if (ModelState.IsValid && details.Count > 0)
             {
                 FinishGoodRecipeInfoDTO infoDTO = new FinishGoodRecipeInfoDTO();
                 List<FinishGoodRecipeDetailsDTO> detailDTOs = new List<FinishGoodRecipeDetailsDTO>();

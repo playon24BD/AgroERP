@@ -456,6 +456,7 @@
     <Content Include="Views\AgroConfiguration\GetRawMaterialSupplier.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRawMaterialSupplierPartialView.cshtml" />
     <Content Include="Views\AgroConfiguration\FinishGoodRecipe.cshtml" />
+    <Content Include="Views\AgroConfiguration\CreateFinishGoodRecipe.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

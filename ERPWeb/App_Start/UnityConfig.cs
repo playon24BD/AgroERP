@@ -55,10 +55,10 @@ namespace ERPWeb
             container.RegisterType<IRawMaterialBusiness,RawMaterialBusiness>();
             container.RegisterType<IFinishGoodProductBusiness, FinishGoodProductBusiness>();
             container.RegisterType<IFinishGoodProductSupplierBusiness, FinishGoodProductSupplierBusiness>();
-            container.RegisterType<IAgricultureUnitOfWork, AgricultureUnitOfWork>();
             container.RegisterType<IMeasuremenBusiness, MeasuremenBusiness>();
             container.RegisterType<IFinishGoodRecipeInfoBusiness, FinishGoodRecipeInfoBusiness>();
             container.RegisterType<IFinishGoodRecipeDetailsBusiness, FinishGoodRecipeDetailsBusiness>();
+            container.RegisterType<IAgricultureUnitOfWork, AgricultureUnitOfWork>();
             #endregion
             // FrontDesk Database
 
