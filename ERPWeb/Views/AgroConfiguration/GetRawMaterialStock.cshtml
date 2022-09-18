@@ -1,0 +1,175 @@
+﻿@{
+    ViewBag.Title = "GetRawMaterialStock";
+
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <h4 class="text-center">Raw Material Stock</h4>
+            </div>
+
+            <div class="card-body text-sm">
+                <div class="row " style="margin-top:-8px;">
+                    <div class="col-md-2">
+                        <label for="ddlOrganizationName" class="control-label">Organization Name</label>
+
+                        @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm" })
+
+                        <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
+
+                        @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm" })
+
+                        <span class="error hide required-RawMaterialName font-weight-bold">RawMaterial Name is Required</span>
+                    </div>
+
+                    <div class="col-md-2 hide">
+                        <label for="ddlBatchCode" class="control-label">Batch Code</label>
+                        <input type="text" class="form-control form-control-sm" id="ddlBatchCode" />
+
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="ddlQuantity" class="control-label">Quantity</label>
+                        <input type="number" class="form-control form-control-sm" id="ddlQuantity" />
+                        <span class="error hide req-single-qty">Quantity is required</span>
+
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlUnit" class="control-label">Unit</label>
+                        <select id="ddlUnit" class="form-control form-control-sm">
+                            <option value="">Select Unit</option>
+                            <option value="Kg">Kg</option>
+                            <option value="Gram">Gram</option>
+                            <option value="hg">hg</option>
+                            <option value="dag">dag</option>
+                        </select>
+                        <span class="error hide req-unitName">Unit is required</span>
+                    </div>
+
+                    <div class="col-md-1 " style="margin-top:5px;">
+                        <label for="addButton" class="control-label"></label>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
+                            <thead>
+                                <tr>
+                                    <th colspan="9">
+                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                    </th>
+                                </tr>
+
+                                <tr class="text-center btn-dark">
+                                    <th style="width:5%">#SL</th>
+                                    <th style="width:15%">Raw Material Name</th>
+                                    <th style="width:15%">Batch Code</th>
+                                    <th style="width:10%">Unit</th>
+                                    <th style="width:10%">Quantity</th>
+                                    <th style="width:10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+    var ddlOrganizationName = $("#ddlOrganizationName");
+    var ddlRawMaterialName = $("#ddlRawMaterialName");
+    var ddlBatchCode = $("#ddlBatchCode");
+    var ddlQuantity = $("#ddlQuantity");
+    var ddlUnit = $("#ddlUnit");
+
+
+
+
+    $("#addButton").click(function (e) {
+        e.preventDefault();
+        debugger;
+        if (true) {
+
+            var sl = $("#tblSingleItems tbody tr").length;
+            var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+            var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
+            var td3 = "<td class='text-center text-bold'>" +ddlBatchCode.val() + "</td>";
+            var td4 = "<td class='text-center'>" + ddlUnit.val() + "</td>";
+            var td5 = "<td class='text-center text-bold'>" + ddlQuantity.val() + "</td>";
+
+            var td6 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
+            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + "</tr>";
+
+            if ($("#tblSingleItems tbody tr").length == 0) {
+                $("#tblSingleItems tbody").append(tr);
+            }
+            else {
+                $("#tblSingleItems tbody tr").eq(0).after(tr);
+            }
+        }
+    })
+
+    $(document).on("click", "a.data-onfly-del", function (e) {
+        e.preventDefault();
+        var index = $(this).parent().parents('tbody tr').index();
+        removeTableRow("#tblSingleItems tbody", index);
+        fnFixTheTbodyRowSerialInDecsOrder("#tblSingleItems", index);
+    })
+
+
+        function validate() {
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (ddlOrganizationName.val() === "") {
+                $(".required-ddlOrganization").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlRawMaterialName.val() === "") {
+                $(".required-RawMaterialName").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlUnit.val() === "") {
+                $(".req-unitName").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(ddlQuantity.val(), 0) <= 0) {
+                $(".req-single-qty").removeClass('hide');
+                isValid = false;
+            }
+            
+
+            return isValid;
+        }
+
+
+
+        $("#saveButton").click(function (e) {
+            e.preventDefault();
+
+        }
+
+    </script>
+
+}
+
+

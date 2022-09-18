@@ -11,6 +11,8 @@ namespace ERPWeb.Controllers
 {
     public class AgroConfigurationController : BaseController
     {
+        private readonly IRawMaterialStockInfo _rawMaterialStockInfo;
+        private readonly IRawMaterialStockDetail _rawMaterialStockDetail;
         private readonly IBankSetup _bankSetup;
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
         private readonly IDepotSetup _depotSetup;
@@ -24,8 +26,10 @@ namespace ERPWeb.Controllers
         private readonly IFinishGoodRecipeDetailsBusiness _finishGoodRecipeDetailsBusiness;
 
 
-        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness)
+        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness,IRawMaterialStockInfo rawMaterialStockInfo,IRawMaterialStockDetail rawMaterialStockDetail)
         {
+            this._rawMaterialStockInfo = rawMaterialStockInfo;
+            this._rawMaterialStockDetail = rawMaterialStockDetail;
             this._bankSetup = bankSetup;
             this._organizationBusiness = organizationBusiness;
             this._depotSetup = depotSetup;
@@ -441,6 +445,34 @@ namespace ERPWeb.Controllers
             }
             return Json(IsSuccess);
         }
+
+        #region
+
+        public ActionResult GetRawMaterialStock()
+        {
+            ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SaveRawMaterialStock(RawMaterialStockInfoViewModel info, List<RawMaterialStockDetailViewModel> details)
+        {
+            bool IsSuccess = false;
+            if (ModelState.IsValid && details.Count > 0)
+            {
+                RawMaterialStockInfoDTO infoDTO = new RawMaterialStockInfoDTO();
+                List<RawMaterialStockDetailDTO> detailDTOs = new List<RawMaterialStockDetailDTO>();
+                AutoMapper.Mapper.Map(info, infoDTO);
+                AutoMapper.Mapper.Map(details, detailDTOs);
+                IsSuccess = _rawMaterialStockInfo.SaveRawMaterialStock(infoDTO, detailDTOs, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
+        }
+        #endregion
+
+
         #endregion
 
 
