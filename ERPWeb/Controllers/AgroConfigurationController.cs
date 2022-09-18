@@ -1,5 +1,5 @@
 
-﻿
+
 using ERPBLL.Agriculture.Interface;
 using ERPBLL.ControlPanel;
 
@@ -23,8 +23,10 @@ namespace ERPWeb.Controllers
         private readonly IMeasuremenBusiness _measuremenBusiness;
 
         private readonly IRawMaterialSupplier _rawMaterialSupplierBusiness;
+        private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
 
-        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness,IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness,IRawMaterialSupplier rawMaterialSupplierBusiness)
+
+        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness)
         {
             this._bankSetup = bankSetup;
             this._organizationBusiness = organizationBusiness;
@@ -34,6 +36,7 @@ namespace ERPWeb.Controllers
             this._finishGoodProductSupplierBusiness = finishGoodProductSupplierBusiness;
             this._measuremenBusiness = measuremenBusiness;
             this._rawMaterialSupplierBusiness = rawMaterialSupplierBusiness;
+            this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
         }
         // GET: AgroConfiguration
 
@@ -56,7 +59,7 @@ namespace ERPWeb.Controllers
                     OrganizationId = o.OrganizationId,
                     OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
                     DepotName = o.DepotName,
-                    Status = o.Status ,
+                    Status = o.Status,
                     RoleId = o.RoleId,
                     //EntryUserId=o.EntryUserId.ToString(),
                     UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
@@ -93,7 +96,7 @@ namespace ERPWeb.Controllers
         {
             if (string.IsNullOrEmpty(flag))
             {
-   
+
                 ViewBag.ddlOrganization = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(des => new SelectListItem { Text = des.OrganizationName, Value = des.OrganizationId.ToString() }).ToList();
                 ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
                 ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialName });
@@ -113,9 +116,9 @@ namespace ERPWeb.Controllers
                     RawMaterialName = a.RawMaterialName,
                     ExpireDate = a.ExpireDate,
                     DepotId = a.DepotId,
-                    RawMaterialId=a.RawMaterialId,
-                    OrganizationId=a.OrganizationId,
-                    
+                    RawMaterialId = a.RawMaterialId,
+                    OrganizationId = a.OrganizationId,
+
 
 
                 }).Where(a => (a.DepotId == depotId && a.RawMaterialName == rawmaterialName) && (a.DepotId == depotId || a.RawMaterialName == rawmaterialName)).ToList();
@@ -131,7 +134,7 @@ namespace ERPWeb.Controllers
             {
                 //(rawmaterialName != "" || depotId != 0) || (rawmaterialName != "" && depotId != 0)
 
-                
+
                 var dto = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
                 {
                     OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
@@ -139,8 +142,8 @@ namespace ERPWeb.Controllers
                     RawMaterialName = a.RawMaterialName,
                     ExpireDate = a.ExpireDate,
                     DepotId = a.DepotId,
-                    RawMaterialId=a.RawMaterialId,
-                         OrganizationId = a.OrganizationId,
+                    RawMaterialId = a.RawMaterialId,
+                    OrganizationId = a.OrganizationId,
 
 
                 }).Where(a => a.DepotId == depotId || a.RawMaterialName == rawmaterialName).ToList();
@@ -163,7 +166,7 @@ namespace ERPWeb.Controllers
                     ExpireDate = a.ExpireDate,
                     DepotId = a.DepotId,
                     RawMaterialId = a.RawMaterialId,
-                         OrganizationId = a.OrganizationId,
+                    OrganizationId = a.OrganizationId,
 
 
                 }).ToList();
@@ -297,7 +300,7 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "Search")
             {
-                IEnumerable<FinishGoodSupplierDTO> dto = _finishGoodProductSupplierBusiness.GetAllProductSupplierInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.FinishGoodSupplierName.Contains(name))|| (s.MobileNumber.ToString().Contains(name))).Select(o => new FinishGoodSupplierDTO
+                IEnumerable<FinishGoodSupplierDTO> dto = _finishGoodProductSupplierBusiness.GetAllProductSupplierInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.FinishGoodSupplierName.Contains(name)) || (s.MobileNumber.ToString().Contains(name))).Select(o => new FinishGoodSupplierDTO
                 {
                     FinishGoodSupplierId = o.FinishGoodSupplierId,
                     OrganizationId = o.OrganizationId,
@@ -343,7 +346,7 @@ namespace ERPWeb.Controllers
         #region Measurement Setup
         public ActionResult GetMeasurementList(string flag, string name)
         {
-            
+
             return View();
         }
         public ActionResult SaveMeasurement()
@@ -368,23 +371,23 @@ namespace ERPWeb.Controllers
             {
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
             }
-            else if(!string.IsNullOrEmpty(flag) && flag == "BankSetup")
+            else if (!string.IsNullOrEmpty(flag) && flag == "BankSetup")
             {
-                IEnumerable<BankSetupDTO> dto = _bankSetup.GetAllBankSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.BankName.Contains(name))|| (s.AccountNumber.Contains(name))|| (s.MobileNumber.Contains(name))).Select(o => new BankSetupDTO
+                IEnumerable<BankSetupDTO> dto = _bankSetup.GetAllBankSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.BankName.Contains(name)) || (s.AccountNumber.Contains(name)) || (s.MobileNumber.Contains(name))).Select(o => new BankSetupDTO
                 {
-                    BankId=o.BankId,
-                    OrganizationId=o.OrganizationId,
-                    Status=o.Status,
-                    RoleId=o.RoleId,
-                    BankName=o.BankName,
-                    EntryDate=o.EntryDate,
-                    UpdateDate=o.UpdateDate,
-                    UpdateUserId=o.UpdateUserId,
+                    BankId = o.BankId,
+                    OrganizationId = o.OrganizationId,
+                    Status = o.Status,
+                    RoleId = o.RoleId,
+                    BankName = o.BankName,
+                    EntryDate = o.EntryDate,
+                    UpdateDate = o.UpdateDate,
+                    UpdateUserId = o.UpdateUserId,
                     OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
                     UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
-                    AccountNumber=o.AccountNumber,
-                    MobileNumber=o.MobileNumber,
-                    Email=o.Email
+                    AccountNumber = o.AccountNumber,
+                    MobileNumber = o.MobileNumber,
+                    Email = o.Email
 
                 }).ToList();
                 List<BankSetupViewModel> viewModel = new List<BankSetupViewModel>();
@@ -414,6 +417,32 @@ namespace ERPWeb.Controllers
 
         #endregion
 
+        #region Depot/Warehouse
+        [HttpGet]
+        public ActionResult CreateFinishGoodRecipe(long? id)
+        {
+            ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).Select(r => new SelectListItem { Text = r.RawMaterialName, Value = r.RawMaterialId.ToString() }).ToList();
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SaveFinishGoodRecipe(FinishGoodRecipeInfoViewModel info, List<FinishGoodRecipeDetailsViewModel> details)
+        {
+            bool IsSuccess = false;
+            //var pre = UserPrivilege("Inventory", "GetItemPreparation");
+            //var permission = ((pre.Edit) || (pre.Add));
+            if (ModelState.IsValid && details.Count > 0 )
+            {
+                FinishGoodRecipeInfoDTO infoDTO = new FinishGoodRecipeInfoDTO();
+                List<FinishGoodRecipeDetailsDTO> detailDTOs = new List<FinishGoodRecipeDetailsDTO>();
+                AutoMapper.Mapper.Map(info, infoDTO);
+                AutoMapper.Mapper.Map(details, detailDTOs);
+                IsSuccess = _finishGoodRecipeInfoBusiness.SaveFinishGoodRecipe(infoDTO, detailDTOs, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
+        }
+        #endregion
 
 
     }

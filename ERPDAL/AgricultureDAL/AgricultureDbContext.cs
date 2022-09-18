@@ -30,6 +30,8 @@ namespace ERPDAL.AgricultureDAL
         public DbSet<FinishGoodProduct> tblFinishGoodProductInfo { get; set; }
         public DbSet<FinishGoodSupplier> tblFinishGoodSupplierInfo { get; set; }
         public DbSet<MeasurementSetup> tblMeasurement { get; set; }
+        public DbSet<FinishGoodRecipeInfo> tblFinishGoodRecipeInfo { get; set; }
+        public DbSet<FinishGoodRecipeDetails> tblFinishGoodRecipeDetails { get; set; }
 
         //public DbSet<RawMaterial> tblRawMaterials { get; set; }
 

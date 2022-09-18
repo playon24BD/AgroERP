@@ -60,5 +60,10 @@ namespace ERPBLL.Agriculture
             IsSuccess = _finishGoodProductRepository.Save();
             return IsSuccess;
         }
+
+        public IEnumerable<FinishGoodProduct> GetProductNameByOrgId(long orgId)
+        {
+            return _finishGoodProductRepository.GetAll(des => des.OrganizationId == orgId).ToList();
+        }
     }
 }

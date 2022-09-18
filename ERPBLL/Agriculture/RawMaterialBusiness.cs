@@ -25,6 +25,11 @@ namespace ERPBLL.Agriculture
             return _rawMaterialRepository.GetOneByOrg(r=>r.RawMaterialId==rawMaterialId && r.OrganizationId==orgId);
         }
 
+        public IEnumerable<RawMaterial> GetRawMaterialByOrgId(long orgId)
+        {
+            return _rawMaterialRepository.GetAll(des => des.OrganizationId == orgId).ToList();
+        }
+
         public IEnumerable<RawMaterial> GetRawMaterials(long orgId)
         {
             return _rawMaterialRepository.GetAll(a=>a.OrganizationId==orgId);
