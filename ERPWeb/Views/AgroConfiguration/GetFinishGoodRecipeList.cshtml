@@ -33,8 +33,8 @@
                                             </div>
                                             <div class="col-md-3">
                                                 @*@if (privilege != null && privilege.Add)
-                                                {*@
-                                                    <a href="/AgroConfiguration/CreateFinishGoodRecipe" class="btn btn-outline-primary btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Recipe</a>
+                                                    {*@
+                                                <a href="/AgroConfiguration/CreateFinishGoodRecipe" class="btn btn-outline-primary btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Recipe</a>
                                                 @*//}*@
                                             </div>
                                         </div>
@@ -107,123 +107,127 @@
 
 
 
-@section scripts{
-    <script type="text/javascript">
-        var ddlProductName = $("#ddlProductName");
-        var hdfRowIndex = $("#hdfRowIndex");
-        var txtRawMaterialUpdateQty = $("#txtRawMaterialUpdateQty");
+<script src="~/Content/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+    var ddlProductName = $("#ddlProductName");
+    var hdfRowIndex = $("#hdfRowIndex");
+    var txtRawMaterialUpdateQty = $("#txtRawMaterialUpdateQty");
 
-        $(document).ready(function () {
-            //Initialize Select2 Elements
-            $('.select2').select2();
+    $(document).ready(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
 
-            //Initialize Select2 Elements
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            });
-        })
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+        //LoadDataTable();
+    })
+    
+    function LoadDataInitializer() {
+        LoadDataTable();
+    }
 
-        ddlProductName.change(function () {
-            LoadDataTable();
-        })
+    ddlProductName.change(function () {
+        LoadDataTable();
+    })
 
-        
 
-        function LoadDataTable() {
-           
-            var data = { flag: "View", FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), id: 0};
+
+    function LoadDataTable() {
+        debugger;
+        var data = { flag: "View", FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), id: 0 };
+        $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetFinishGoodRecipeList', data)).then(function (res, status) {
+            console.log(status);
+            if (status === "success") {
+                $("#dataContainer").fadeOut('500', function () {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res).fadeIn('500');
+                });
+            }
+        }).fail(function (error) {
+            console.log(error);
+        });
+        //pageNo = 1;
+    }
+
+    $(document).on('click', 'a.data-item-detail', function (e) {
+        e.preventDefault();
+        $("#dataContainer2").empty();
+        var id = $(this).parent().parents('tr').children('td').eq(1).html();
+        if (TryParseInt(id, 0) > 0) {
+            var data = { flag: "Detail", FinishGoodProductId: 0, id: id };
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetFinishGoodRecipeList', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {
-                    $("#dataContainer").fadeOut('500', function () {
-                        $("#dataContainer").empty();
-                        $("#dataContainer").append(res).fadeIn('500');
-                    });
+                    $("#dataContainer2").empty();
+                    $("#dataContainer2").append(res);
+                    $("#FinishGoodRecipeDetails").modal('show');
                 }
             }).fail(function (error) {
                 console.log(error);
-            });
-            pageNo = 1;
+            })
+        }
+    })
+
+    $(document).on('click', 'a.data-item-del', function (e) {
+        e.preventDefault();
+        var id = $(this).parent().parents('tr').children('td').eq(1).html();
+        var index = $(this).parent().parents('tr').index;
+        bootbox.confirm('Are you sure you want to delete?', function (result) {
+            if (result === true) {
+                if (TryParseInt(id, 0) > 0) {
+                    var data = JSON.stringify({ flag: "Delete", FinishGoodProductId: 0, id: id });
+                    $.when(postReqWithData(dataType.applicationJson, dataType.json, type.post, '/AgroConfiguration/GetFinishGoodRecipeList', data)).then(function (res, status) {
+                        console.log(status);
+                        if (res === true && status === "success") {
+                            fnRemoveARowFromTbody("#tblFinishGoodRecipeList", index);
+                            $('.toastrDefaultDelete').trigger('click');
+                            LoadDataTable();
+                        }
+                        else {
+                            $('.toastrDefaultError').trigger('click');
+                        }
+                    }).fail(function (error) {
+                        console.log(error);
+                    })
+                }
+            }
+        })
+    })
+
+    $(document).on('click', 'a.data-item-edit', function (e) {
+        e.preventDefault();
+        $("#dataContainer3").empty();
+        var id = $(this).parent().parents('tr').children('td').eq(1).html();
+
+        if (TryParseInt(id, 0) > 0) {
+            var data = { flag: "Edit", FinishGoodProductId: 0, id: id };
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetFinishGoodRecipeList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer3").empty();
+                    $("#dataContainer3").append(res);
+                    $("#FinishGoodRecipeModal").modal('show');
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
         }
 
-        $(document).on('click', 'a.data-item-detail', function (e) {
-            e.preventDefault();
-            $("#dataContainer2").empty();
-            var id = $(this).parent().parents('tr').children('td').eq(1).html();
-            if (TryParseInt(id, 0) > 0) {
-                var data = { flag: "Detail", FinishGoodProductId: 0, id: id };
-                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetFinishGoodRecipeList', data)).then(function (res, status) {
-                    console.log(status);
-                    if (status === "success") {
-                        $("#dataContainer2").empty();
-                        $("#dataContainer2").append(res);
-                        $("#FinishGoodRecipeDetails").modal('show');
-                    }
-                }).fail(function (error) {
-                    console.log(error);
-                })
-            }
-        })
+    })
 
-        $(document).on('click', 'a.data-item-del', function (e) {
-            e.preventDefault();
-            var id = $(this).parent().parents('tr').children('td').eq(1).html();
-            var index = $(this).parent().parents('tr').index;
-            bootbox.confirm('Are you sure you want to delete?', function (result) {
-                if (result === true) {
-                    if (TryParseInt(id, 0) > 0) {
-                        var data = JSON.stringify({ flag: "Delete", FinishGoodProductId: 0, id: id });
-                        $.when(postReqWithData(dataType.applicationJson, dataType.json, type.post, '/AgroConfiguration/GetFinishGoodRecipeList', data)).then(function (res, status) {
-                            console.log(status);
-                            if (res === true && status === "success") {
-                                fnRemoveARowFromTbody("#tblFinishGoodRecipeList", index);
-                                $('.toastrDefaultDelete').trigger('click');
-                                LoadDataTable();
-                            }
-                            else {
-                                $('.toastrDefaultError').trigger('click');
-                            }
-                        }).fail(function (error) {
-                            console.log(error);
-                        })
-                    }
-                }
-            })
-        })
+    // Pagination
+    $(document).on('click', 'a.page-link', function (e) {
+        e.preventDefault();
+        if (!$(this).hasClass('current-page')) {
+            //alert('Page Clicked');
+            pageNo = $(this).attr('data-page-no');
+            //console.log('Page No');
+            //console.log(!isNaN(pageNo));
+            LoadDataTable();
+        }
+    })
 
-        $(document).on('click', 'a.data-item-edit', function (e) {
-            e.preventDefault();
-            $("#dataContainer3").empty();
-            var id = $(this).parent().parents('tr').children('td').eq(1).html();
-
-            if (TryParseInt(id, 0) > 0) {
-                var data = { flag: "Edit", FinishGoodProductId: 0, id: id };
-                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetFinishGoodRecipeList', data)).then(function (res, status) {
-                    console.log(status);
-                    if (status === "success") {
-                        $("#dataContainer3").empty();
-                        $("#dataContainer3").append(res);
-                        $("#FinishGoodRecipeModal").modal('show');
-                    }
-                }).fail(function (error) {
-                    console.log(error);
-                })
-            }
-            
-        })
-
-        // Pagination
-        $(document).on('click', 'a.page-link', function (e) {
-            e.preventDefault();
-            if (!$(this).hasClass('current-page')) {
-                //alert('Page Clicked');
-                pageNo = $(this).attr('data-page-no');
-                //console.log('Page No');
-                //console.log(!isNaN(pageNo));
-                LoadDataTable();
-            }
-        })
-
-    </script>
-}
+</script>
 

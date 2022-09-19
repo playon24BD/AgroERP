@@ -49,8 +49,9 @@
     <button type="button" id="btnSubmit" class="btn btn-sm btn-flat btn-success">Update</button>
 </div>
 
-@section scripts{
+
 <script type="text/javascript">
+
     $(document).ready(function () {
         //Initialize Select2 Elements
         $('.select2').select2();
@@ -71,7 +72,7 @@
                         debugger;
                         //disable("#btnSubmit");
                         //getTargetItemAndItemTypeAndWarehouse();
-                        var info = { FGRId: 0, FinishGoodProductId: txtFGRRawMaterQty.val, FGRQty: txtProductQty.val(), FGRUnit: ddlProductunit.val(), RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), FGRRawMaterQty: txtRawMaterialQty.val(), FGRRawMaterUnit: ddlRawMaterialunit.val() };
+                        var info = { FGRId: 0, FinishGoodProductId: txtFGRRawMaterQty.val(), FGRQty: txtFGRRawMaterQty.val(), FGRUnit: ddlProductunit.val(), RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), FGRRawMaterQty: txtRawMaterialQty.val(), FGRRawMaterUnit: ddlRawMaterialunit.val() };
 
                         var details = [];
                         details.length = 0;
@@ -114,4 +115,4 @@
             }
         })
 </script>
-}
+
