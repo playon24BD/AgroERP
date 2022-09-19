@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBO.Agriculture.DomainModels;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,11 @@ namespace ERPBLL.Agriculture
             this._AgricultureUnitOfWork = AgricultureUnitOfWork;
             this._finishGoodRecipeDetailsRepository = new FinishGoodRecipeDetailsRepository(this._AgricultureUnitOfWork);
             //this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
+        }
+
+        public IEnumerable<FinishGoodRecipeDetails> GetFinishGoodRecipeDetailsByInfoId(long infoId, long orgId)
+        {
+            return _finishGoodRecipeDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.FGRId == infoId).ToList();
         }
     }
 }

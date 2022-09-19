@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
@@ -21,6 +22,38 @@ namespace ERPBLL.Agriculture
             this._AgricultureUnitOfWork = AgricultureUnitOfWork;
             this._finishGoodRecipeInfoRepository = new FinishGoodRecipeInfoRepository(this._AgricultureUnitOfWork);
             //this._finishGoodRecipeDetailsBusiness = finishGoodRecipeDetailsBusiness;
+        }
+        public FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByOrgId(long id, long orgId)
+        {
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.FGRId == id && i.OrganizationId == orgId);
+        }
+        public bool DeletefinishGoodRecipe(long id, long userId, long orgId)
+        {
+            _finishGoodRecipeInfoRepository.DeleteAll(i => i.FGRId == id && i.OrganizationId == orgId);
+            return _finishGoodRecipeInfoRepository.Save();
+        }
+
+        public IEnumerable<FinishGoodRecipeInfoDTO> GetFinishGoodRecipeInfos(long orgId, long? ProductId)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeInfoss(orgId, ProductId)).ToList();
+        }
+
+        private string QueryForFinishGoodRecipeInfoss(long orgId, long? productId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and fgr.OrganizationId={0}", orgId);
+            if (productId != null && productId > 0)
+            {
+                param += string.Format(@" and fgr.FinishGoodProductId={0}", productId);
+            }
+            query = string.Format(@"SELECT fgr.FGRId,fgr.FinishGoodProductId,fg.FinishGoodProductName,
+                  fgr.FGRQty,fgr.FGRUnit,fgr.OrganizationId 
+                 FROM [Agriculture].dbo.tblFinishGoodRecipeInfo fgr
+                 INNER JOIN [Agriculture].dbo.tblFinishGoodProductInfo fg on fgr.FinishGoodProductId=fg.FinishGoodProductId Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
         }
 
         public bool SaveFinishGoodRecipe(FinishGoodRecipeInfoDTO info, List<FinishGoodRecipeDetailsDTO> details, long userId, long orgId)

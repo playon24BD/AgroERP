@@ -10,6 +10,7 @@ namespace ERPBO.Agriculture.DTOModels
     {
         public long FGRDetailsId { get; set; }
         public long RawMaterialId { get; set; }
+        public string RawMaterialName { get; set; }
         public int FGRRawMaterQty { get; set; }
         public string FGRRawMaterUnit { get; set; }
         public long OrganizationId { get; set; }

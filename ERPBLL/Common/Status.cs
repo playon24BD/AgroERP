@@ -140,6 +140,7 @@ namespace ERPBLL.Common
         public static readonly string Delete = "Delete";
         public static readonly string Direct = "Direct";
         public static readonly string Indirect = "Indirect";
+        public static readonly string Edit = "Edit";
     }
     public class RequisitionExecuationType
     {
@@ -201,6 +202,13 @@ namespace ERPBLL.Common
     {
         public static readonly string Production = "Production";
         public static readonly string Packaging = "Packaging";
+    }
+
+    public class UnitType
+    {
+        public static readonly string Kg = "Kg";
+        public static readonly string meter = "meter";
+        public static readonly string Litter = "Litter";
     }
 
     public class QRCodeStatus

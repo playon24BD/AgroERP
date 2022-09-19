@@ -9,7 +9,8 @@ namespace ERPBO.Agriculture.DTOModels
    public class FinishGoodRecipeInfoDTO
     {
         public long FGRId { get; set; }
-        public long FinishGoodProductId { get; set; }       
+        public long FinishGoodProductId { get; set; }
+        public string FinishGoodProductName { get; set; }
         public int FGRQty { get; set; }
         public string FGRUnit { get; set; }
         public long OrganizationId { get; set; }

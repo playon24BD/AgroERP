@@ -1,5 +1,6 @@
 
 using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBLL.ControlPanel.Interface;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ViewModels;
@@ -26,7 +27,7 @@ namespace ERPWeb.Controllers
         private readonly IFinishGoodRecipeDetailsBusiness _finishGoodRecipeDetailsBusiness;
 
 
-        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness,IRawMaterialStockInfo rawMaterialStockInfo,IRawMaterialStockDetail rawMaterialStockDetail)
+        public AgroConfigurationController(ERPBLL.ControlPanel.Interface.IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail)
         {
             this._rawMaterialStockInfo = rawMaterialStockInfo;
             this._rawMaterialStockDetail = rawMaterialStockDetail;
@@ -421,33 +422,6 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Depot/Warehouse
-        [HttpGet]
-        public ActionResult CreateFinishGoodRecipe(long? id)
-        {
-            ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).Select(r => new SelectListItem { Text = r.RawMaterialName, Value = r.RawMaterialId.ToString() }).ToList();
-
-            return View();
-        }
-        [HttpPost]
-        public ActionResult SaveFinishGoodRecipe(FinishGoodRecipeInfoViewModel info, List<FinishGoodRecipeDetailsViewModel> details)
-        {
-            bool IsSuccess = false;
-            //var pre = UserPrivilege("Inventory", "GetItemPreparation");
-            //var permission = ((pre.Edit) || (pre.Add));
-            if (ModelState.IsValid && details.Count > 0)
-            {
-                FinishGoodRecipeInfoDTO infoDTO = new FinishGoodRecipeInfoDTO();
-                List<FinishGoodRecipeDetailsDTO> detailDTOs = new List<FinishGoodRecipeDetailsDTO>();
-                AutoMapper.Mapper.Map(info, infoDTO);
-                AutoMapper.Mapper.Map(details, detailDTOs);
-                IsSuccess = _finishGoodRecipeInfoBusiness.SaveFinishGoodRecipe(infoDTO, detailDTOs, User.UserId, User.OrgId);
-            }
-            return Json(IsSuccess);
-        }
-
-        #region
-
         public ActionResult GetRawMaterialStock()
         {
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
@@ -470,8 +444,139 @@ namespace ERPWeb.Controllers
             }
             return Json(IsSuccess);
         }
-        #endregion
 
+        public ActionResult GetFinishGoodRecipeList(string flag, long? ProductId, long? id)
+        {
+            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetFinishGoodRecipeList");
+
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+                return View();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfos(User.OrgId, ProductId ?? 0);
+
+
+                List<FinishGoodRecipeInfoViewModel> viewModels = new List<FinishGoodRecipeInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetFinishGoodRecipeList", viewModels);
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+                var ProductNames = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).ToList();
+                var RawMaterialNames=_rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                var info = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(id.Value, User.OrgId);
+                List<FinishGoodRecipeDetailsViewModel> details = new List<FinishGoodRecipeDetailsViewModel>();
+                if (info != null)
+                {
+                    
+
+                    ViewBag.Info = new FinishGoodRecipeInfoViewModel
+                    {
+                        FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
+
+                        FGRQty = info.FGRQty,
+                        FGRUnit = info.FGRUnit
+                    };
+                    details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
+                    {
+                        RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                        FGRRawMaterQty=i.FGRRawMaterQty,
+                        FGRRawMaterUnit=i.FGRRawMaterUnit
+                    }).ToList();
+                }
+                else
+                {
+                    ViewBag.Info = new FinishGoodRecipeInfoViewModel();
+                }
+                return PartialView("_GetFinishGoodRecipeDetail", details);
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Edit)
+            {
+                var ProductNames = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).ToList();
+                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                var info = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(id.Value, User.OrgId);
+                List<FinishGoodRecipeDetailsViewModel> details = new List<FinishGoodRecipeDetailsViewModel>();
+                if (info != null)
+                {
+
+
+                    ViewBag.Info = new FinishGoodRecipeInfoViewModel
+                    {
+                        FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
+
+                        FGRQty = info.FGRQty,
+                        FGRUnit = info.FGRUnit
+                    };
+                    details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
+                    {
+                        RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                        FGRRawMaterQty = i.FGRRawMaterQty,
+                        FGRRawMaterUnit = i.FGRRawMaterUnit
+                    }).ToList();
+                }
+                else
+                {
+                    ViewBag.Info = new FinishGoodRecipeInfoViewModel();
+                }
+                return PartialView("_GetFinishGoodRecipeEdit", details);
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(flag) && flag == Flag.Delete)
+                {
+                    bool IsSuccess = false;
+                    if (id != null && id > 0)
+                    {
+                        IsSuccess = _finishGoodRecipeInfoBusiness.DeletefinishGoodRecipe(id.Value, User.UserId, User.OrgId);
+                    }
+                    return Json(IsSuccess);
+                }
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult CreateFinishGoodRecipe(long? id)
+        {
+            ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).Select(r => new SelectListItem { Text = r.RawMaterialName, Value = r.RawMaterialId.ToString() }).ToList();
+
+            ViewBag.ddlProductunit = new List<SelectListItem>()
+            {
+                new SelectListItem(){ Text = UnitType.Kg,Value= UnitType.Kg },
+                new SelectListItem(){ Text = UnitType.Litter,Value= UnitType.Litter },
+                new SelectListItem(){ Text = UnitType.meter,Value= UnitType.meter }
+            }.ToList();
+            ViewBag.ddlRawMaterialunit = new List<SelectListItem>()
+            {
+                new SelectListItem(){ Text = UnitType.Kg,Value= UnitType.Kg },
+                new SelectListItem(){ Text = UnitType.Litter,Value= UnitType.Litter },
+                new SelectListItem(){ Text = UnitType.meter,Value= UnitType.meter }
+            }.ToList();
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SaveFinishGoodRecipe(FinishGoodRecipeInfoViewModel info, List<FinishGoodRecipeDetailsViewModel> details)
+        {
+            bool IsSuccess = false;
+            //var pre = UserPrivilege("Inventory", "GetItemPreparation");
+            //var permission = ((pre.Edit) || (pre.Add));
+            if (ModelState.IsValid && details.Count > 0)
+            {
+                FinishGoodRecipeInfoDTO infoDTO = new FinishGoodRecipeInfoDTO();
+                List<FinishGoodRecipeDetailsDTO> detailDTOs = new List<FinishGoodRecipeDetailsDTO>();
+                AutoMapper.Mapper.Map(info, infoDTO);
+                AutoMapper.Mapper.Map(details, detailDTOs);
+                IsSuccess = _finishGoodRecipeInfoBusiness.SaveFinishGoodRecipe(infoDTO, detailDTOs, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
+        }
 
         #endregion
 
