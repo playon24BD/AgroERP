@@ -1,0 +1,117 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.FinishGoodRecipeDetailsViewModel>
+
+@{
+    ViewBag.Title = "_GetFinishGoodRecipeEdit";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    int sl = 0;
+    var info = (ERPBO.Agriculture.ViewModels.FinishGoodRecipeInfoViewModel)ViewBag.Info;
+}
+
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm">
+    @if (info != null)
+    {
+        <tr>
+            <td style="width:13%">Product Name</td>
+            @*<td style="width:15%"><input type="text" placeholder="Qty" name="quantity" id="txtProductQty" class="form-control form-control-sm" dataval="@info.FinishGoodProductName" /> </td>*@
+            <td style="width:15%"><b>@info.FinishGoodProductName</b></td>
+            <td style="width:18%">Product Qty</td>
+            <td style="width:20%"><b>@info.FGRQty</b></td>
+            <td style="width:13%">Product Unit</td>
+            <td style="width:20%"><b>@info.FGRUnit</b></td>
+        </tr>
+    }
+</table>
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" id="tblReturnItems">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th>RawMaterial Name</th>
+            <th>RawMaterial Qty</th>
+            <th>RawMaterial Unit</th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td class="text-center">@item.RawMaterialName</td>
+                <td class="form-control form-control text-center text-bold" id="txtFGRRawMaterQty" contenteditable='true'>@item.FGRRawMaterQty</td>
+                <td class="text-center">@item.FGRRawMaterUnit</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-sm btn-flat btn-danger">Cancel</button>
+    <button type="button" id="btnSubmit" class="btn btn-sm btn-flat btn-success">Update</button>
+</div>
+
+@section scripts{
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+    })
+
+    $("#btnSubmit").click(function (e) {
+            debugger
+            e.preventDefault();
+            if (true === true) {
+
+                bootbox.confirm("Are you sure you want to Save this Recipe", function (result) {
+                    if (result) {
+                        debugger;
+                        //disable("#btnSubmit");
+                        //getTargetItemAndItemTypeAndWarehouse();
+                        var info = { FGRId: 0, FinishGoodProductId: txtFGRRawMaterQty.val, FGRQty: txtProductQty.val(), FGRUnit: ddlProductunit.val(), RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), FGRRawMaterQty: txtRawMaterialQty.val(), FGRRawMaterUnit: ddlRawMaterialunit.val() };
+
+                        var details = [];
+                        details.length = 0;
+
+                        $.each($("#tblList tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+                                FGRDetailsId: 0,
+                                RawMaterialId: tds.eq(5).html(),
+                                FGRRawMaterQty: tds.eq(2).html(),
+                                FGRRawMaterUnit: tds.eq(3).html()
+
+                            });
+                        })
+
+                        console.log('Info');
+                        console.log(info);
+                        console.log('Detail');
+                        console.log(details);
+                        var data = JSON.stringify({ info: info, details: details });
+                        //return;
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveFinishGoodRecipe', data, getToken())).then(function (res, status) {
+                            if (res === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                @* setTimeout(function () {
+                                    redirectPage('@Url.Action("GetItemPreparation")');
+                                }, 1000);*@
+                                //resetUI();
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+                    }
+                })
+            }
+        })
+</script>
+}
