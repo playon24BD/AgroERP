@@ -1,0 +1,285 @@
+﻿@{
+    ViewBag.Title = "CreateRawMaterialStock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/GetRawMaterialStock" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">Create Raw Material Stock</h5>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-body text-sm">
+                <div class="row " style="margin-top:-8px;">
+                    <div class="col-md-2">
+                        <label for="ddlOrganizationName" class="control-label">Organization Name</label>
+
+                        @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm" })
+
+                        <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
+
+                        @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm" })
+
+                        <span class="error hide required-RawMaterialName font-weight-bold">RawMaterial Name is Required</span>
+                    </div>
+
+                    <div class="col-md-2 hide">
+                        <label for="ddlBatchCode" class="control-label">Batch Code</label>
+                        <input type="text" class="form-control form-control-sm" id="ddlBatchCode" />
+
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="ddlQuantity" class="control-label">Quantity</label>
+                        <input type="number" class="form-control form-control-sm" id="ddlQuantity" />
+                        <span class="error hide req-single-qty">Quantity is required</span>
+
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlUnit" class="control-label">Unit</label>
+                        <select id="ddlUnit" class="form-control form-control-sm">
+                            <option value="">Select Unit</option>
+                            <option value="Kg">Kg</option>
+                            <option value="Gram">Gram</option>
+                            <option value="hg">hg</option>
+                            <option value="dag">dag</option>
+                        </select>
+                        <span class="error hide req-unitName">Unit is required</span>
+                    </div>
+
+                    <div class="col-md-1 " style="margin-top:5px;">
+                        <label for="addButton" class="control-label"></label>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
+                            <thead>
+                                <tr>
+                                    <th colspan="9">
+                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                    </th>
+                                </tr>
+
+                                <tr class="text-center btn-dark">
+                                    <th style="width:5%">#SL</th>
+                                    <th style="width:15%">Raw Material Name</th>
+                                    <th style="width:10%">Unit</th>
+                                    <th style="width:10%">Quantity</th>
+                                    <th style="width:10%">Action</th>
+                                    <th class="hide RawMaterialId"></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="RawMaterialStockModal" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <input type="hidden" id="hdStockModal" />
+                <h4 id="modalHeading" class="modal-title">Edit Raw Material</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <table id="tableEdit" class="table table-sm table-bordered table-striped table-responsive-lg">
+                    <tbody>
+                        <tr>
+                            <td class="alert-secondary" style="width:15%">Raw Material Name</td>
+                            <td style="width:35%; background-color:#e1dada"></td>
+                            <td class="alert-secondary" style="width:15%">Unit</td>
+                            <td style="width:35%; background-color:#e1dada"> <input type="number" class="form-control form-control-sm" id="RawMaterialUpdateQty" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-sm btn-flat btn-danger">Cancel</button>
+                <button type="button" id="saveButton" class="btn btn-sm btn-flat btn-success">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var ddlOrganizationName = $("#ddlOrganizationName");
+        var ddlRawMaterialName = $("#ddlRawMaterialName");
+        var ddlBatchCode = $("#ddlBatchCode");
+        var ddlQuantity = $("#ddlQuantity");
+        var ddlUnit = $("#ddlUnit");
+        var RawMaterialUpdateQty = $("#RawMaterialUpdateQty");
+        var hdStockModal = $("#hdStockModal");
+        var RawMaterialId = '';
+
+
+
+
+        $("#addButton").click(function (e) {
+            e.preventDefault();
+
+            debugger;
+            if (validate() == true) {
+
+                var sl = $("#tblSingleItems tbody tr").length;
+                var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
+                var td3 = "<td class='text-center'>" + ddlUnit.val() + "</td>";
+                var td4 = "<td class='text-center text-bold'>" + ddlQuantity.val() + "</td>";
+
+                var td5 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td6 = "<td class='hide RawMaterialId'>" + ddlRawMaterialName.val() + "</td>";
+                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + "</tr>";
+
+                if ($("#tblSingleItems tbody tr").length == 0) {
+                    $("#tblSingleItems tbody").append(tr);
+                }
+                else {
+                    $("#tblSingleItems tbody tr").eq(0).after(tr);
+                }
+            }
+
+            //ClearData();
+        })
+
+
+
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            removeTableRow("#tblSingleItems tbody", index);
+            fnFixTheTbodyRowSerialInDecsOrder("#tblSingleItems", index);
+        })
+
+
+        function validate() {
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (ddlOrganizationName.val() === "") {
+                $(".required-ddlOrganization").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlRawMaterialName.val() === "") {
+                $(".required-RawMaterialName").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlUnit.val() === "") {
+                $(".req-unitName").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(ddlQuantity.val(), 0) <= 0) {
+                $(".req-single-qty").removeClass('hide');
+                isValid = false;
+            }
+
+
+            return isValid;
+        }
+
+
+
+        $("#saveButton").click(function (e) {
+            e.preventDefault();
+            debugger;
+            //if (true) {
+            //bootbox.confirm("Are you sure you want to Save Database", function (result) {
+            //    if (result) {
+            var info = { RawMaterialStockId: 0, OrganizationId: ddlOrganizationName.val(), RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val() };
+
+            var details = [];
+            details.length = 0;
+
+            $.each($("#tblSingleItems tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+
+                    RawMaterialStockDetailId: 0,
+                    RawMaterialId: tds.eq(5).html(),
+                    Quantity: tds.eq(3).html(),
+                    Unit: tds.eq(2).html(),
+
+                });
+            })
+
+            console.log(info);
+            console.log(details);
+            var data = JSON.stringify({ info: info, details: details });
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialStock', data, getToken())).then(function (res, status) {
+                if (res === true) {
+                    $('.toastrDefaultSuccess').trigger('click');
+
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+            }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#saveButton");
+            })
+            //}
+            //})
+            //}
+        })
+
+
+        
+
+        function ClearData() {
+            ddlRawMaterialName.val("");
+            ddlQuantity.val("");
+            ddlUnit.val("");
+
+        }
+
+        function BatchCodeGenerate() {
+            var text = "";
+            var BatchCode = '"RM-BC-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss")';
+
+            for (var i = 0; i < 10; i++)
+                text += BatchCode.charAt(Math.floor(Math.random() * BatchCode.length));
+
+            return text;
+        }
+
+    </script>
+
+
+
+
+
+}

@@ -462,6 +462,7 @@
     <Content Include="Views\AgroConfiguration\_GetFinishGoodRecipeList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetFinishGoodRecipeDetail.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetFinishGoodRecipeEdit.cshtml" />
+    <Content Include="Views\AgroConfiguration\CreateRawMaterialStock.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

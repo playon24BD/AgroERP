@@ -43,13 +43,13 @@ namespace ERPBLL.Agriculture
                     RawMaterialStockDetail rawMaterial = new RawMaterialStockDetail()
                     {
                         
-                        OrganizationId =item.OrganizationId,
+                        OrganizationId =orgId,
                         RawMaterialId=item.RawMaterialId,
                         Quantity=item.Quantity,
                         Unit=item.Unit,
                         StockDate=DateTime.Now,
-                        UpdateDate=item.UpdateDate,
-                        UpdateUserId=item.UpdateUserId,
+                        UpdateDate=DateTime.Now,
+                        UpdateUserId=userId,
                         RawMaterialStockId=item.RawMaterialStockId,
                         Status=item.Status="Pending"
                         

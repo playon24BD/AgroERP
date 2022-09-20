@@ -4,6 +4,7 @@ using ERPBLL.Common;
 using ERPBLL.ControlPanel.Interface;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -424,12 +425,25 @@ namespace ERPWeb.Controllers
         #region Depot/Warehouse
         public ActionResult GetRawMaterialStock()
         {
+            
+           
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Where(a=>a.ExpireDate.Value.Date>=DateTime.Now.Date).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+            
 
             return View();
         }
+
+        public ActionResult CreateRawMaterialStock()
+        {
+            ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Where(a => a.ExpireDate.Value.Date >= DateTime.Now.Date).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+
+            return View();
+        }
+
         [HttpPost]
         public ActionResult SaveRawMaterialStock(RawMaterialStockInfoViewModel info, List<RawMaterialStockDetailViewModel> details)
         {

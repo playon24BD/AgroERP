@@ -1,174 +1,143 @@
 ﻿@{
     ViewBag.Title = "GetRawMaterialStock";
-
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="row">
     <div class="col-md-12">
-        <div class="card card-gray shadow">
-            <div class="card-header">
-                <h4 class="text-center">Raw Material Stock</h4>
+        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-two-RawMaterialStockList-tab" data-toggle="pill" href="#custom-tabs-two-RawMaterialStockList" role="tab" aria-controls="custom-tabs-two-RawMaterialStockList" aria-selected="true">Raw Material Stock List</a>
+                    </li>
+                </ul>
             </div>
-
-            <div class="card-body text-sm">
-                <div class="row " style="margin-top:-8px;">
-                    <div class="col-md-2">
-                        <label for="ddlOrganizationName" class="control-label">Organization Name</label>
-
-                        @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm" })
-
-                        <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
-
-                        @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm" })
-
-                        <span class="error hide required-RawMaterialName font-weight-bold">RawMaterial Name is Required</span>
-                    </div>
-
-                    <div class="col-md-2 hide">
-                        <label for="ddlBatchCode" class="control-label">Batch Code</label>
-                        <input type="text" class="form-control form-control-sm" id="ddlBatchCode" />
-
-                    </div>
-
-                    <div class="col-md-2">
-                        <label for="ddlQuantity" class="control-label">Quantity</label>
-                        <input type="number" class="form-control form-control-sm" id="ddlQuantity" />
-                        <span class="error hide req-single-qty">Quantity is required</span>
-
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlUnit" class="control-label">Unit</label>
-                        <select id="ddlUnit" class="form-control form-control-sm">
-                            <option value="">Select Unit</option>
-                            <option value="Kg">Kg</option>
-                            <option value="Gram">Gram</option>
-                            <option value="hg">hg</option>
-                            <option value="dag">dag</option>
-                        </select>
-                        <span class="error hide req-unitName">Unit is required</span>
-                    </div>
-
-                    <div class="col-md-1 " style="margin-top:5px;">
-                        <label for="addButton" class="control-label"></label>
-                        <div class="clearfix">
-                            <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-two-RawMaterialStockList" role="tabpanel" aria-labelledby="custom-tabs-two-RawMaterialStockList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    Raw Material Stock List
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="/AgroConfiguration/CreateRawMaterialStock" class="btn btn-outline-primary btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Raw Material</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Search By</h4>
+                                    </div>
+
+                                    <div class="card-body text-sm">
+                                        <div class="row" style="margin-top:-15px">
+                                            <div class="col-md-3">
+                                                <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
+
+                                                @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm" })
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
-                            <thead>
-                                <tr>
-                                    <th colspan="9">
-                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
-                                    </th>
-                                </tr>
-
-                                <tr class="text-center btn-dark">
-                                    <th style="width:5%">#SL</th>
-                                    <th style="width:15%">Raw Material Name</th>
-                                    <th style="width:15%">Batch Code</th>
-                                    <th style="width:10%">Unit</th>
-                                    <th style="width:10%">Quantity</th>
-                                    <th style="width:10%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-
                 </div>
             </div>
-
         </div>
     </div>
+</div>
 
+
+<div class="modal fade" id="RawMaterialModalDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title">Raw Material Stock Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="RawMaterialStockModal" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title">Raw Material Stock Edit</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer3">
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
 @section scripts{
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-    var ddlOrganizationName = $("#ddlOrganizationName");
     var ddlRawMaterialName = $("#ddlRawMaterialName");
-    var ddlBatchCode = $("#ddlBatchCode");
-    var ddlQuantity = $("#ddlQuantity");
-    var ddlUnit = $("#ddlUnit");
+    var RawMaterialUpdateQty = $("#RawMaterialUpdateQty");
+    var hdStockModal = $("#hdStockModal");
 
+    function LoadDataInitializer() {
+        LoadDeatils();
+    }
 
+    function LoadDeatils() {
+        var data = { flag: "View", RawMaterialId: ddlRawMaterialName.val() };
 
-
-    $("#addButton").click(function (e) {
-        e.preventDefault();
-        debugger;
-        if (true) {
-
-            var sl = $("#tblSingleItems tbody tr").length;
-            var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-            var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
-            var td3 = "<td class='text-center text-bold'>" +ddlBatchCode.val() + "</td>";
-            var td4 = "<td class='text-center'>" + ddlUnit.val() + "</td>";
-            var td5 = "<td class='text-center text-bold'>" + ddlQuantity.val() + "</td>";
-
-            var td6 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
-
-            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + "</tr>";
-
-            if ($("#tblSingleItems tbody tr").length == 0) {
-                $("#tblSingleItems tbody").append(tr);
+        $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetRawMaterialStock', data)).then(function (res, status) {
+            console.log(status);
+            if (status === "success") {
+                $("#dataContainer").fadeOut('500', function () {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res).fadeIn('500');
+                });
             }
-            else {
-                $("#tblSingleItems tbody tr").eq(0).after(tr);
-            }
-        }
-    })
-
-    $(document).on("click", "a.data-onfly-del", function (e) {
-        e.preventDefault();
-        var index = $(this).parent().parents('tbody tr').index();
-        removeTableRow("#tblSingleItems tbody", index);
-        fnFixTheTbodyRowSerialInDecsOrder("#tblSingleItems", index);
-    })
-
-
-        function validate() {
-            var isValid = true;
-            $(".error").addClass('hide');
-
-            if (ddlOrganizationName.val() === "") {
-                $(".required-ddlOrganization").removeClass('hide');
-                isValid = false;
-            }
-            if (ddlRawMaterialName.val() === "") {
-                $(".required-RawMaterialName").removeClass('hide');
-                isValid = false;
-            }
-            if (ddlUnit.val() === "") {
-                $(".req-unitName").removeClass('hide');
-                isValid = false;
-            }
-            if (TryParseInt(ddlQuantity.val(), 0) <= 0) {
-                $(".req-single-qty").removeClass('hide');
-                isValid = false;
-            }
-            
-
-            return isValid;
-        }
-
-
-
-        $("#saveButton").click(function (e) {
-            e.preventDefault();
-
-        }
+        }).fail(function (error) {
+            console.log(error);
+        });
+    }
 
     </script>
+
+
 
 }
 
