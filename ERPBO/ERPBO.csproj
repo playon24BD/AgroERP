@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agriculture\DomainModels\RawMaterialIssueStockInfo.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialStock.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialStockDetail.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialStockDetailDTO.cs" />
