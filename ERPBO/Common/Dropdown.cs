@@ -11,4 +11,10 @@ namespace ERPBO.Common
         public string value { get; set; }
         public string  text { get; set; }
     }
+    public class AgroDropdown
+    {
+        public long value { get; set; }
+        public string text { get; set; }
+    }
+
 }
