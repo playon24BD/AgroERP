@@ -47,27 +47,40 @@
                                                     <option value="">Select One</option>
                                                     <option value="9">Agro Farm</option>
                                                 </select>
+                                                <span class="error hide req-ddlOrganiation">Organization is required</span>
 
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="control-label font-weight-bold " for="measurementName">Measurement Name</label>
                                                 <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" />
+                                                <span class="error hide req-txtmeasurementName">Measurement Name is required</span>
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="control-label font-weight-bold " for="masterBox">Master Box</label>
                                                 <input type="number" name="masterBox" id="txtmasterBox" class="form-control form-control-sm" />
+                                                <span class="error hide req-txtmasterBox">Master Box is required</span>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="innerBox" class="control-label font-weight-bold">Innner Box</label>
                                                 <input type="number" id="txtinnerBox" name="innerBox" class="form-control form-control-sm" />
+                                                <span class="error hide req-txtinnerBox">Inner Box is required</span>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="control-label" for="model">Pack Size</label>
-                                                <input type="text" id="txtpackSize" name="packSize" class="form-control form-control-sm">
+                                                <input type="number" id="txtpackSize" name="packSize" class="form-control form-control-sm">
+                                                <span class="error hide req-txtpackSize">Pack Size is required</span>
                                             </div>
                                             <div class="col-md-2">
-                                                <label class="control-label" for="model">Unit</label>
-                                                <input type="text" id="txtunit" name="unit" class="form-control form-control-sm">
+
+                                                <label for="txtunit" class="control-label">Unit</label>
+                                                <select id="txtunit" class="form-control form-control-sm">
+                                                    <option value="">Select Unit</option>
+                                                    <option value="Kg">Kg</option>
+                                                    <option value="Gram">Gram</option>
+                                                    <option value="hg">hg</option>
+                                                    <option value="dag">dag</option>
+                                                </select>
+                                                <span class="error hide req-txtunit">Unit is required</span>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
@@ -119,19 +132,19 @@
                             <div class="col-md-12">
                                 <div class="card shadow card-gray-dark">
                                     @*<div class="card-header shadow">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="text-center text-bold" style="height:10px">
-                                                    Measurement List
-                                                </h5>
-                                            </div>
-                                            <div class="col-md-3">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="text-center text-bold" style="height:10px">
+                                                        Measurement List
+                                                    </h5>
+                                                </div>
+                                                <div class="col-md-3">
 
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>*@
+                                        </div>*@
                                 </div>
                             </div>
                         </div>
@@ -219,14 +232,20 @@
                         <div class="form-group col-md-12">
                             <label for="packSize" class="control-label">Pack Size </label>
                             <input type="number" id="packSize" class="form-control form-control-sm" />
-                            <span class="error hide required-masterCartoonBox font-weight-bold">Input packSize!</span>
+                            <span class="error hide required-packSize font-weight-bold">Input packSize!</span>
 
                         </div>
-  
+
                         <div class="form-group col-md-12">
-                            <label for="masterCartoonBox" class="control-label">Master Cartoon </label>
-                            <input type="text" id="unit" class="form-control form-control-sm" />
-                            <span class="error hide required-masterCartoonBox font-weight-bold">Input Master Cartoon!</span>
+                            <label for="unit" class="control-label">Unit</label>
+                            <select id="unit" class="form-control form-control-sm">
+                                <option value="">Select Unit</option>
+                                <option value="Kg">Kg</option>
+                                <option value="Gram">Gram</option>
+                                <option value="hg">hg</option>
+                                <option value="dag">dag</option>
+                            </select>
+                            <span class="error hide required-unit font-weight-bold">Unit Is Required</span>
 
                         </div>
 
@@ -236,8 +255,9 @@
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
+                            <span class="error hide required-ddlStatus font-weight-bold">Status Is Required</span>
                         </div>
- 
+
 
 
                     </div>
@@ -283,22 +303,27 @@
 
         $("#addTolist").click(function (e) {
             e.preventDefault();
-            var index = $("#tblMeasurement  tbody tr").length;
-            var sl = "<td>" + (index+1) + "</td>";
-            var org = "<td class='hide'>" + ddlOrganiation.val(); + "</td>";
-            var measurementName = "<td>" + txtmeasurementName.val(); + "</td>";
-            var masterBox = "<td class='hide'>" + txtmasterBox.val(); + "</td>";
-            var innerBox = "<td class='hide'>" + txtinnerBox.val(); + "</td>";
-            var packSize = "<td class='hide'>" + txtpackSize.val(); + "</td>";
-            var unit = "<td>" + txtunit.val(); + "</td>";
-            var item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
-            var measurementItem = "<td>" + item + "</td>";
-            var action = "<td><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
+            if (validate() == true) {
+                var index = $("#tblMeasurement  tbody tr").length;
+                var sl = "<td>" + (index + 1) + "</td>";
+                var org = "<td class='hide'>" + ddlOrganiation.val(); + "</td>";
+                var measurementName = "<td>" + txtmeasurementName.val(); + "</td>";
+                var masterBox = "<td class='hide'>" + txtmasterBox.val(); + "</td>";
+                var innerBox = "<td class='hide'>" + txtinnerBox.val(); + "</td>";
+                var packSize = "<td class='hide'>" + txtpackSize.val(); + "</td>";
+                var unit = "<td>" + txtunit.val(); + "</td>";
+                var item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
+                var measurementItem = "<td>" + item + "</td>";
+                var action = "<td><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
 
-            var tr = "<tr>" + sl + measurementName + measurementItem + unit + org + masterBox + innerBox + packSize + action + "</tr>";
+                var tr = "<tr>" + sl + measurementName + measurementItem + unit + org + masterBox + innerBox + packSize + action + "</tr>";
 
-            $("#tblMeasurement tbody").append(tr);
-            clearCtrl();
+                $("#tblMeasurement tbody").append(tr);
+                clearCtrl();
+
+
+            }
+           
         });
 
         $(document).on("click", "a.data-onfly-del", function (e) {
@@ -362,14 +387,16 @@
 
         $("#btnUpdate").click(function (e) {
             e.preventDefault();
-            var data = {
+            if (validateUpdate() == true) {
+
+                 var data = {
                 measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(), Unit: unit.val(), Status: ddlStatus.val()
             }
           //  var models = JSON.stringify(data);
 
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/UpdateMeasurement', JSON.stringify(data), getToken())).then(function (res, status) {
                 if (res == true) {
-          
+
                     $("#modalMeasurementSetup").modal("hide")
 
                  setTimeout(function () {
@@ -385,6 +412,9 @@
             })
 
 
+            }
+           
+
 
         });
 
@@ -399,7 +429,7 @@
         txtmeasurementName.keyup(function () {
 
             var value = $(this).val();
-            if (value.length > 1 && txtmasterBox.val().length > 1) {
+            if (value.length > 1) {
                 $("#addTolist").show();
 
             }
@@ -453,6 +483,68 @@
             $("#modalMeasurementSetup").modal("show");
             $("#modalHeading").text("MeasureMent Setup Update");
             $("#btnMeasureMentSaveText").text("Update");
+        }
+
+        function validate() {
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (ddlOrganiation.val() === "") {
+                $(".req-ddlOrganiation").removeClass('hide');
+                isValid = false;
+            }
+            if (txtmeasurementName.val() === "") {
+                $(".req-txtmeasurementName").removeClass('hide');
+                isValid = false;
+            }
+
+            if (txtmasterBox.val() === "" ) {
+                $(".req-txtmasterBox").removeClass('hide');
+                isValid = false;
+            }
+            if (txtinnerBox.val() === "") {
+                $(".req-txtinnerBox").removeClass('hide');
+                isValid = false;
+            }
+            if (txtunit.val() === "") {
+                $(".req-txtunit").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(txtpackSize.val(), 0) <= 0) {
+                $(".req-txtpackSize").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+        function validateUpdate() {
+            var isValid = true;
+            $(".error").addClass('hide');
+
+
+            if (measureMentName.val() === "") {
+                $(".required-measureMentName").removeClass('hide');
+                isValid = false;
+            }
+
+            if (masterCartoonBox.val() === "") {
+                $(".required-masterCartoonBox").removeClass('hide');
+                isValid = false;
+            }
+            if (innerBox.val() === "") {
+                $(".required-innerBox").removeClass('hide');
+                isValid = false;
+            }
+            if (unit.val() === "") {
+                $(".required-unit").removeClass('hide');
+                isValid = false;
+            }
+            if (packSize.val() === "") {
+                $(".required-packSize").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
         }
 
         function clearCtrl() {

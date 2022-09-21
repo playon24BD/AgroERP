@@ -48,7 +48,9 @@ namespace ERPBLL.Agriculture
                         MasterCarton = item.MasterCarton,
                         InnerBox = item.InnerBox,
                         PackSize = item.PackSize,
-                        Unit = item.Unit
+                        Unit = item.Unit,
+                        Status="Active"
+
 
                     };
                     measurements.Add(measurement);
