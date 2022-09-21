@@ -349,16 +349,33 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Measurement Setup
-        public ActionResult GetMeasurementList(string flag, string name)
+        public ActionResult GetMeasurementList(string flag)
         {
+            if (string.IsNullOrEmpty(flag))
+            {
+                return View();
 
-            return View();
+            }
+            else
+            {
+                var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
+                List<MeasurementSetupViewModel> viewModels = new List<MeasurementSetupViewModel>();
+                AutoMapper.Mapper.Map(measureMent,viewModels);
+
+
+                return PartialView("_GetMeasurementList", viewModels);
+            }
+
+   
         }
-        public ActionResult SaveMeasurement()
+        public ActionResult SaveMeasurement(List< MeasurementSetupViewModel> models )
         {
             bool IsSuccess = false;
             if (ModelState.IsValid)
             {
+                List<MeasurementSetupDTO> measurementSetupDTOs = new List<MeasurementSetupDTO>();
+                AutoMapper.Mapper.Map(models,measurementSetupDTOs);
+             IsSuccess=   _measuremenBusiness.SaveMeasureMent(measurementSetupDTOs, User.OrgId);
 
 
             }
@@ -366,6 +383,28 @@ namespace ERPWeb.Controllers
 
             return Json(IsSuccess);
         }
+
+
+             public ActionResult UpdateMeasurement(MeasurementSetupViewModel models)
+        {
+            bool IsSuccess = false;
+            if (ModelState.IsValid)
+            {
+                MeasurementSetupDTO measurementSetupDTO = new MeasurementSetupDTO();
+
+
+                AutoMapper.Mapper.Map(models, measurementSetupDTO);
+                IsSuccess = _measuremenBusiness.UpdateMeasureMent(measurementSetupDTO,User.UserId,User.OrgId);
+
+
+            }
+
+
+            return Json(IsSuccess);
+        }
+
+
+
 
         #endregion
 

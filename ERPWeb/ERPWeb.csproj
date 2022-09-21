@@ -458,11 +458,15 @@
     <Content Include="Views\AgroConfiguration\FinishGoodRecipe.cshtml" />
     <Content Include="Views\AgroConfiguration\CreateFinishGoodRecipe.cshtml" />
     <Content Include="Views\AgroConfiguration\GetRawMaterialStock.cshtml" />
+
     <Content Include="Views\AgroConfiguration\GetFinishGoodRecipeList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetFinishGoodRecipeList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetFinishGoodRecipeDetail.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetFinishGoodRecipeEdit.cshtml" />
     <Content Include="Views\AgroConfiguration\CreateRawMaterialStock.cshtml" />
+
+    <Content Include="Views\AgroConfiguration\_GetMeasurementList.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

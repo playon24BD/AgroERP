@@ -58,12 +58,10 @@ namespace ERPDAL.AgricultureDAL
         }
 
     }
+    //Measurement
     public class MeasurmentRepository:AgricultureBaseRepository<MeasurementSetup>
     {
-        public MeasurmentRepository(IAgricultureUnitOfWork agricultureUnitOfWork):base(agricultureUnitOfWork)
-        {
-
-        }
+        public MeasurmentRepository(IAgricultureUnitOfWork agricultureUnitOfWork):base(agricultureUnitOfWork){}
 
     }
 

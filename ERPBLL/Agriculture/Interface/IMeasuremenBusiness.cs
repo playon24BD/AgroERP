@@ -1,4 +1,5 @@
 ﻿using ERPBO.Agriculture.DomainModels;
+using ERPBO.Agriculture.DTOModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<MeasurementSetup> GetMeasurementSetups(long orgId);
         MeasurementSetup GetMeasurementById(long measureMentId, long orgId);
-        bool SaveMeasureMent(long orgId);
+        bool SaveMeasureMent(List<MeasurementSetupDTO> measurementDTO,  long orgId);
+        bool UpdateMeasureMent( MeasurementSetupDTO measurementSetup,long userId, long orgId);
 
 
     }
