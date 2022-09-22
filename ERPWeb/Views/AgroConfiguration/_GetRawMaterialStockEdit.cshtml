@@ -1,0 +1,106 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.RawMaterialStockDetailViewModel>
+
+@{
+    ViewBag.Title = "_GetRawMaterialStockEdit";
+    int sl = 0;
+    var info = (ERPBO.Agriculture.ViewModels.RawMaterialStockInfoViewModel)ViewBag.Info;
+}
+
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm">
+    @if (info != null)
+    {
+    <tr>
+        <td style="width:13%">Raw Material Name</td>
+        <td style="width:15%"><b>@info.RawMaterialName</b></td>
+        <td style="width:18%">Quantity</td>
+        <td style="width:20%"><b>@info.Quantity</b></td>
+        <td style="width:13%">Unit</td>
+        <td style="width:20%"><b>@info.Unit</b></td>
+    </tr>
+    }
+</table>
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" id="tblReturnItems">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th>Sl</th>
+            <th>RawMaterial Name</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+            <tr>
+
+                <td class="text-center">@sl</td>
+                <td class="text-center">@item.RawMaterialName</td>
+                <td class="form-control form-control text-center text-bold" id="RawMaterialUpdateQty" contenteditable='true'>@item.Quantity</td>
+                <td class="text-center">@item.Unit</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-sm btn-flat btn-danger">Cancel</button>
+    <button type="button" id="saveButton" class="btn btn-sm btn-flat btn-success">Update</button>
+</div>
+
+
+<script type="text/javascript">
+
+    var RawMaterialUpdateQty = $("#RawMaterialUpdateQty");
+
+    $("#saveButton").click(function (e) {
+        e.preventDefault();
+        debugger;
+        //if (true) {
+        //bootbox.confirm("Are you sure you want to Save Database", function (result) {
+        //    if (result) {
+        var info = { RawMaterialStockId: 0, OrganizationId: ddlOrganizationName.val(), RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val() };
+
+        var details = [];
+        details.length = 0;
+
+        $.each($("#tblSingleItems tbody tr"), function (index, item) {
+            var tds = $(this).children('td');
+            details.push({
+
+                RawMaterialStockDetailId: 0,
+                RawMaterialId: tds.eq(5).html(),
+                Quantity: tds.eq(3).html(),
+                Unit: tds.eq(2).html(),
+
+            });
+        })
+
+        console.log(info);
+        console.log(details);
+        var data = JSON.stringify({ info: info, details: details });
+
+        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialStock', data, getToken())).then(function (res, status) {
+            if (res === true) {
+                $('.toastrDefaultSuccess').trigger('click');
+
+            }
+            else {
+                $('.toastrDefaultError').trigger('click');
+            }
+            enable("#saveButton");
+        }).fail(function (error) {
+            alert(execuStatus.fail);
+            enable("#saveButton");
+        })
+        //}
+        //})
+        //}
+    })
+
+   
+</script>
+
+

@@ -145,15 +145,24 @@
 
 
 
-
+        var materialNameList = [];
         $("#addButton").click(function (e) {
             e.preventDefault();
 
-            debugger;
+
             if (validate() == true) {
 
+
+           
+                //console.log(materialNameList);
+               
+                if (materialNameList.includes(ddlRawMaterialName.val())) {
+                    toastrErrorAlert("Raw Material Name Already Exist");
+                }
+                else {
+                   
                 var sl = $("#tblSingleItems tbody tr").length;
-                var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                var td1 = "<td class='text-center'><b>" + (sl+1) + "</b></td>"
                 var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
                 var td3 = "<td class='text-center'>" + ddlUnit.val() + "</td>";
                 var td4 = "<td class='text-center text-bold'>" + ddlQuantity.val() + "</td>";
@@ -162,12 +171,17 @@
                 var td6 = "<td class='hide RawMaterialId'>" + ddlRawMaterialName.val() + "</td>";
                 var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + "</tr>";
 
-                if ($("#tblSingleItems tbody tr").length == 0) {
+         
                     $("#tblSingleItems tbody").append(tr);
+                    materialNameList.push(ddlRawMaterialName.val());
+
+ 
+                
+     
+
                 }
-                else {
-                    $("#tblSingleItems tbody tr").eq(0).after(tr);
-                }
+
+
             }
 
             //ClearData();
@@ -179,8 +193,18 @@
         $(document).on("click", "a.data-onfly-del", function (e) {
             e.preventDefault();
             var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+       
+            var rawMaterialId = tds.eq(5).html();
+            console.log("rawMaterialId :"+ rawMaterialId);
+            const mid = materialNameList.indexOf(rawMaterialId);
+            materialNameList.splice(mid, 1);
+  
+
+
+
             removeTableRow("#tblSingleItems tbody", index);
-            fnFixTheTbodyRowSerialInDecsOrder("#tblSingleItems", index);
+            fnFixTheTbodyRowSerial("#tblSingleItems tbody", index);
         })
 
 

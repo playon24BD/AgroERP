@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "GetRawMaterialStock";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
 }
 
 <div class="row">
@@ -63,7 +64,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="col-md-12" id="dataContainer">
-
+                                            @{Html.RenderAction("GetRawMaterialStock", "AgroConfiguration", new { @flag = "View" });}
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +93,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="RawMaterialStockModal" role="dialog" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="RawMaterialStockModalEdit" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header alert-secondary">
@@ -115,12 +116,16 @@
     var RawMaterialUpdateQty = $("#RawMaterialUpdateQty");
     var hdStockModal = $("#hdStockModal");
 
+    $(document).ready(function () {
+        //LoadDetails()
+    })
+
     function LoadDataInitializer() {
-        LoadDeatils();
+        //LoadDetails();
     }
 
-    function LoadDeatils() {
-        var data = { flag: "View", RawMaterialId: ddlRawMaterialName.val() };
+    function LoadDetails() {
+        var data = { flag: "view", RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), id: 0 };
 
         $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetRawMaterialStock', data)).then(function (res, status) {
             console.log(status);
@@ -134,6 +139,74 @@
             console.log(error);
         });
     }
+
+    $(document).on('click', 'a.data-item-detail', function (e) {
+        e.preventDefault();
+        $("#dataContainer2").empty();
+        var id = $(this).parent().parents('tr').children('td').eq(1).html();
+        if (TryParseInt(id, 0) > 0) {
+            var data = { flag: "Detail", RawMaterialId: 0, id: id };
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetRawMaterialStock', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer2").empty();
+                    $("#dataContainer2").append(res);
+                    $("#RawMaterialModalDetails").modal('show');
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
+        }
+    })
+
+
+    $(document).on('click', 'a.data-item-edit', function (e) {
+        e.preventDefault();
+        $("#dataContainer3").empty();
+        var id = $(this).parent().parents('tr').children('td').eq(1).html();
+
+        if (TryParseInt(id, 0) > 0) {
+            var data = { flag: "Edit", RawMaterialId: 0, id: id };
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetRawMaterialStock', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer3").empty();
+                    $("#dataContainer3").append(res);
+                    $("#RawMaterialStockModalEdit").modal('show');
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
+        }
+
+    })
+
+
+    $(document).on('click', 'a.data-item-del', function (e) {
+        e.preventDefault();
+        var id = $(this).parent().parents('tr').children('td').eq(1).html();
+        var index = $(this).parent().parents('tr').index;
+        //bootbox.confirm('Are you sure you want to delete?', function () {
+            if (true) {
+                if (TryParseInt(id, 0) > 0) {
+                    var data = JSON.stringify({ flag: "Delete", RawMaterialId: 0, id: id });
+                    $.when(postReqWithData(dataType.applicationJson, dataType.json, type.post, '/AgroConfiguration/GetRawMaterialStock', data)).then(function (res, status) {
+                        console.log(status);
+                        if (res === true && status === "success") {
+                            fnRemoveARowFromTbody("#tblRawMaterialStockList", index);
+                            $('.toastrDefaultDelete').trigger('click');
+                            //LoadDetails();
+                        }
+                        else {
+                            $('.toastrDefaultError').trigger('click');
+                        }
+                    }).fail(function (error) {
+                        console.log(error);
+                    })
+                }
+            }
+        //})
+    })
 
     </script>
 

@@ -119,7 +119,7 @@ namespace ERPWeb.Controllers
                     OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
                     DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
                     RawMaterialName = a.RawMaterialName,
-                    ExpireDate = a.ExpireDate,
+                    //ExpireDate = a.ExpireDate,
                     DepotId = a.DepotId,
                     RawMaterialId = a.RawMaterialId,
                     OrganizationId = a.OrganizationId,
@@ -145,7 +145,7 @@ namespace ERPWeb.Controllers
                     OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
                     DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
                     RawMaterialName = a.RawMaterialName,
-                    ExpireDate = a.ExpireDate,
+                    //ExpireDate = a.ExpireDate,
                     DepotId = a.DepotId,
                     RawMaterialId = a.RawMaterialId,
                     OrganizationId = a.OrganizationId,
@@ -168,7 +168,7 @@ namespace ERPWeb.Controllers
                     OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
                     DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
                     RawMaterialName = a.RawMaterialName,
-                    ExpireDate = a.ExpireDate,
+                    //ExpireDate = a.ExpireDate,
                     DepotId = a.DepotId,
                     RawMaterialId = a.RawMaterialId,
                     OrganizationId = a.OrganizationId,
@@ -462,15 +462,105 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Depot/Warehouse
-        public ActionResult GetRawMaterialStock()
+        public ActionResult GetRawMaterialStock(string flag, long? rawMaterialId, long? id)
         {
-            
-           
-            ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetRawMaterialStock");
 
-            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Where(a=>a.ExpireDate.Value.Date>=DateTime.Now.Date).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
-            
+            if (string.IsNullOrEmpty(flag)) { 
 
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+
+                return View();
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _rawMaterialStockInfo.GetRawMaterialStockInfos(User.OrgId, rawMaterialId ?? 0);
+
+
+                List<RawMaterialStockInfoViewModel> viewModels = new List<RawMaterialStockInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetRawMaterialStockList", viewModels);
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+
+                var info = _rawMaterialStockInfo.GetRawMaterialStockById(id.Value, User.OrgId);
+                List<RawMaterialStockDetailViewModel> details = new List<RawMaterialStockDetailViewModel>();
+
+                if (info != null)
+                {
+                    ViewBag.Info = new RawMaterialStockInfoViewModel
+                    {
+                        RawMaterialName = RawMaterialNames.FirstOrDefault(it => it.RawMaterialId == info.RawMaterialId).RawMaterialName,
+
+                        Quantity = info.Quantity,
+                        Unit = info.Unit
+                    };
+
+                    details =
+                        _rawMaterialStockDetail.GetRawMaterialStockDetailsById(id.Value, User.OrgId).Select(i => new RawMaterialStockDetailViewModel
+                    {
+                            //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
+                        RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId ==i.RawMaterialId).RawMaterialName,
+                       Quantity =i.Quantity,
+                       Unit=i.Unit
+                    }).ToList();
+                }
+                else
+                {
+                    ViewBag.Info = new RawMaterialStockInfoViewModel();
+                }
+                return PartialView("_GetRawMaterialStockDetail", details);
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Edit)
+            {
+                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+
+                var info = _rawMaterialStockInfo.GetRawMaterialStockById(id.Value, User.OrgId);
+                List<RawMaterialStockDetailViewModel> details = new List<RawMaterialStockDetailViewModel>();
+
+                if (info != null)
+                {
+                    ViewBag.Info = new RawMaterialStockInfoViewModel
+                    {
+                        RawMaterialName = RawMaterialNames.FirstOrDefault(it => it.RawMaterialId == info.RawMaterialId).RawMaterialName,
+
+                        Quantity = info.Quantity,
+                        Unit = info.Unit
+                    };
+
+                    details =
+                        _rawMaterialStockDetail.GetRawMaterialStockDetailsById(id.Value, User.OrgId).Select(i => new RawMaterialStockDetailViewModel
+                        {
+                            //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
+                            RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                            Quantity = i.Quantity,
+                            Unit = i.Unit
+                        }).ToList();
+                }
+                else
+                {
+                    ViewBag.Info = new RawMaterialStockInfoViewModel();
+                }
+                return PartialView("_GetRawMaterialStockEdit", details);
+            }
+
+            else
+            {
+                if (!string.IsNullOrEmpty(flag) && flag == Flag.Delete)
+                {
+                    bool IsSuccess = false;
+                    if (id != null && id > 0)
+                    {
+                        IsSuccess = _rawMaterialStockInfo.DeleteRawMaterialStock(id.Value, User.UserId, User.OrgId);
+                    }
+                    return Json(IsSuccess);
+                }
+            }
             return View();
         }
 
@@ -478,7 +568,7 @@ namespace ERPWeb.Controllers
         {
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Where(a => a.ExpireDate.Value.Date >= DateTime.Now.Date).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
 
             return View();
         }

@@ -22,6 +22,8 @@ namespace ERPBO.Agriculture.DomainModels
         public long? EntryUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
+        public string IssueStatus { get; set; }
+        public DateTime? ExpireDate { get; set; }
         public ICollection<RawMaterialStockDetail> RawMaterialStockDetails { get; set; }
     }
 }
