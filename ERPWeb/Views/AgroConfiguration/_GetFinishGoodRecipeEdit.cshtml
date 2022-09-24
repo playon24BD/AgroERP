@@ -10,20 +10,22 @@
 <table class="table table-bordered table-striped table-sm table-responsive-lg text-sm">
     @if (info != null)
     {
-        <tr>
-            <td class="hide">finishGoodProductId</td>
-            <td class="hide" data-val-finishGoodProductId="@info.FinishGoodProductId" id="finishGoodProductId" >@info.FinishGoodProductId</td>
-            <td class="hide" id="finishGoodRecipeInfoId" data-val-finishGoodRecipeInfoId="@info.FGRId"></td>
+    <tr>
+        <td class="hide">finishGoodProductId</td>
+        <td class="hide" data-val-finishGoodProductId="@info.FinishGoodProductId" id="finishGoodProductId">@info.FinishGoodProductId</td>
+        <td class="hide" id="finishGoodRecipeInfoId" data-val-finishGoodRecipeInfoId="@info.FGRId"></td>
 
-            <td style="width:13%">Product Name</td>
+        <td style="width:13%">Product Name</td>
 
-            @*<td style="width:15%"><input type="text" placeholder="Qty" name="quantity" id="txtProductQty" class="form-control form-control-sm" dataval="@info.FinishGoodProductName" /> </td>*@
-            <td style="width:15%"><b>@info.FinishGoodProductName</b></td>
-            <td style="width:18%">Product Qty</td>
-            <td style="width:20%"><b>@info.FGRQty</b></td>
-            <td style="width:13%">Product Unit</td>
-            <td style="width:20%"><b>@info.FGRUnit</b></td>
-        </tr>
+        @*<td style="width:15%"><input type="text" placeholder="Qty" name="quantity" id="txtProductQty" class="form-control form-control-sm" dataval="@info.FinishGoodProductName" /> </td>*@
+        <td style="width:15%"><b>@info.FinishGoodProductName</b></td>
+        <td style="width:18%">Product Qty</td>
+        <td style="width:20%"><b>@info.FGRQty</b></td>
+        <td style="width:13%">Product Unit</td>
+        <td style="width:20%"><b>@info.FGRUnit</b></td>
+        <td style="width:13%">Receipe Status</td>
+        <td style="width:20%"><b>@info.Status</b></td>
+    </tr>
     }
 </table>
 <table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" id="tblFinishGoodReceip">

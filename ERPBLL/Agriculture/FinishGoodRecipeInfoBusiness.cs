@@ -69,6 +69,7 @@ namespace ERPBLL.Agriculture
                     FGRQty = info.FGRQty,
                     FGRUnit = info.FGRUnit,
                     OrganizationId = orgId,
+                    Status=info.Status,
                     EUserId = userId,
                     EntryDate = DateTime.Now
                    

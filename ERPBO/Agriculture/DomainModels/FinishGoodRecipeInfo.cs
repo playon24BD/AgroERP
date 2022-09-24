@@ -18,6 +18,7 @@ namespace ERPBO.Agriculture.DomainModels
         public string FGRUnit { get; set; }
         public long OrganizationId { get; set; }
         public long? EUserId { get; set; }
+        public string Status { get; set; }
         public Nullable<DateTime> EntryDate { get; set; }
         public long? UpUserId { get; set; }
         public Nullable<DateTime> UpdateDate { get; set; }

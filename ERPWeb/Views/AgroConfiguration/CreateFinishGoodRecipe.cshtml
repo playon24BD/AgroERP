@@ -45,6 +45,13 @@
                                 @Html.DropDownList("ddlProductunit", (IEnumerable<SelectListItem>)ViewBag.ddlProductunit, "--Select Product unit--", new { @class = "form-control form-control-sm ctrl-changed" })
                                 <span class="error hide req-preparation text-bold">Unit is required</span>
                             </div>
+                            <div class="form-row col-6">
+                                <label for="ddlStatus" class="control-label">Status</label>
+                                <select class="form-control form-control-sm" id="ddlStatus">
+                                    <option value="Active">Active</option>
+                                    <option value="InActive">InActive</option>
+                                </select>
+                            </div>
                             @*<div class="col-md-4">
             <label class="col-form-label" for="model">Product Unit</label>
             <input type="text" id="txtProductunit" name="unit" class="form-control form-control-sm">
@@ -156,6 +163,7 @@
         var ddlRawMaterialName = $("#ddlRawMaterialName");
         var txtRawMaterialQty = $("#txtRawMaterialQty");
         var ddlRawMaterialunit = $("#ddlRawMaterialunit");
+        var ddlStatus = $("#ddlStatus");
 
         var hdfRowIndex = $("#hdfRowIndex");
         var txtRawMaterialUpdateQty = $("#txtRawMaterialUpdateQty");
@@ -292,7 +300,7 @@
                         debugger;
                         //disable("#btnSubmit");
                         //getTargetItemAndItemTypeAndWarehouse();
-                        var info = { FGRId: 0, FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), FGRQty: txtProductQty.val(), FGRUnit: ddlProductunit.val(), RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), FGRRawMaterQty: txtRawMaterialQty.val(), FGRRawMaterUnit: ddlRawMaterialunit.val() };
+                        var info = { FGRId: 0, FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), FGRQty: txtProductQty.val(), FGRUnit: ddlProductunit.val(), Status: ddlStatus.val(), RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), FGRRawMaterQty: txtRawMaterialQty.val(), FGRRawMaterUnit: ddlRawMaterialunit.val() };
 
                         var details = [];
                         details.length = 0;
