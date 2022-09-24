@@ -563,7 +563,7 @@ namespace ERPWeb.Controllers
             return View();
         }
 
-        public ActionResult CreateRawMaterialStock()
+        public ActionResult CreateRawMaterialStock(long? id)
         {
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 

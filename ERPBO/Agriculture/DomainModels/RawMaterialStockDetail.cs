@@ -26,6 +26,7 @@ namespace ERPBO.Agriculture.DomainModels
         [ForeignKey("RawMaterialStockInfo")]
         public long RawMaterialStockId { get; set; }
         public RawMaterialStockInfo RawMaterialStockInfo { get; set; }
+        public DateTime? ExpireDate { get; set; }
 
     }
 }
