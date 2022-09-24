@@ -1,4 +1,3 @@
-
 using ERPBLL.Agriculture.Interface;
 using ERPBLL.Common;
 using ERPBLL.ControlPanel.Interface;
@@ -651,15 +650,18 @@ namespace ERPWeb.Controllers
                     ViewBag.Info = new FinishGoodRecipeInfoViewModel
                     {
                         FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
-
+                        FGRId=info.FGRId,
                         FGRQty = info.FGRQty,
-                        FGRUnit = info.FGRUnit
+                        FGRUnit = info.FGRUnit,
+                        FinishGoodProductId=info.FinishGoodProductId,
                     };
                     details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
                     {
                         RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                         FGRRawMaterQty = i.FGRRawMaterQty,
-                        FGRRawMaterUnit = i.FGRRawMaterUnit
+                        FGRRawMaterUnit = i.FGRRawMaterUnit,
+                        FGRDetailsId=i.FGRDetailsId,
+                   
                     }).ToList();
                 }
                 else
@@ -710,7 +712,7 @@ namespace ERPWeb.Controllers
             bool IsSuccess = false;
             //var pre = UserPrivilege("Inventory", "GetItemPreparation");
             //var permission = ((pre.Edit) || (pre.Add));
-            if (ModelState.IsValid && details.Count > 0)
+            if (ModelState.IsValid)
             {
                 FinishGoodRecipeInfoDTO infoDTO = new FinishGoodRecipeInfoDTO();
                 List<FinishGoodRecipeDetailsDTO> detailDTOs = new List<FinishGoodRecipeDetailsDTO>();

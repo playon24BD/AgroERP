@@ -173,11 +173,25 @@
         })
 
 
+        var rawMetarialList = [];
 
         $("#btnAddToList").click(function (e) {
             e.preventDefault();
             if (validateAddToList()) {
-                addToList();
+                var IsExistRawMetarial = rawMetarialList.includes(ddlRawMaterialName.val());
+                if (IsExistRawMetarial) {
+
+                    alert("This metarial is already Exist");
+                }
+                else
+                {
+                    addToList();
+                    rawMetarialList.push(ddlRawMaterialName.val());
+
+                }
+
+
+
             }
         })
 
@@ -304,9 +318,9 @@
                         {
                             if (res === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
-                                @*setTimeout(function () {
-                                    redirectPage('@Url.Action("GetItemPreparation")');
-                                }, 1000);*@
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetFinishGoodRecipeList")');
+                                }, 1000);
                                 //resetUI();
                             }
                             else {
@@ -325,8 +339,16 @@
         $(document).on("click", "a.data-onfly-del", function (e) {
             e.preventDefault();
             var index = $(this).parent().parents('tbody tr').index();
+            var td = $(this).parent().parents('tbody tr').children("td");
+            var rawMaterialId = td.eq(5).html();
+            var indexRawMaterial = rawMetarialList.indexOf(rawMaterialId);
+            rawMetarialList.splice(indexRawMaterial, 1);
+
             if (bootbox.confirm("Are you sure you want to delete?", function (result) {
                 if (result === true) {
+
+
+
                     removeTableRow("#tblList tbody", index);
                     fnFixTheTbodyRowSerialInDecsOrder("#tblList", index);
                 };

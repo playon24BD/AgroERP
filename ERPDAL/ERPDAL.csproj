@@ -134,6 +134,10 @@
     <Compile Include="AgricultureContextMigrations\202209221340490_Agriculture_RawMaterialStockaddExpireDate.Designer.cs">
       <DependentUpon>202209221340490_Agriculture_RawMaterialStockaddExpireDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202209240456230_Agriculture_nothinTwo.cs" />
+    <Compile Include="AgricultureContextMigrations\202209240456230_Agriculture_nothinTwo.Designer.cs">
+      <DependentUpon>202209240456230_Agriculture_nothinTwo.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -206,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202209221340490_Agriculture_RawMaterialStockaddExpireDate.resx">
       <DependentUpon>202209221340490_Agriculture_RawMaterialStockaddExpireDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202209240456230_Agriculture_nothinTwo.resx">
+      <DependentUpon>202209240456230_Agriculture_nothinTwo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

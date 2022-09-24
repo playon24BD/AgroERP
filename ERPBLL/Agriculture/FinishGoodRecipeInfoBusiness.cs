@@ -15,13 +15,14 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _AgricultureUnitOfWork;
         private readonly FinishGoodRecipeInfoRepository _finishGoodRecipeInfoRepository;
-        //private readonly IFinishGoodRecipeDetailsBusiness _finishGoodRecipeDetailsBusiness;
+        private readonly IFinishGoodRecipeDetailsBusiness _fDetail;
         //, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness
-        public FinishGoodRecipeInfoBusiness(IAgricultureUnitOfWork AgricultureUnitOfWork)
+        public FinishGoodRecipeInfoBusiness(IAgricultureUnitOfWork AgricultureUnitOfWork,IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness)
         {
             this._AgricultureUnitOfWork = AgricultureUnitOfWork;
+            this._fDetail = finishGoodRecipeDetailsBusiness;
             this._finishGoodRecipeInfoRepository = new FinishGoodRecipeInfoRepository(this._AgricultureUnitOfWork);
-            //this._finishGoodRecipeDetailsBusiness = finishGoodRecipeDetailsBusiness;
+   
         }
         public FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByOrgId(long id, long orgId)
         {
@@ -59,6 +60,7 @@ namespace ERPBLL.Agriculture
         public bool SaveFinishGoodRecipe(FinishGoodRecipeInfoDTO info, List<FinishGoodRecipeDetailsDTO> details, long userId, long orgId)
         {
             bool IsSuccess = false;
+      
             if (info.FGRId == 0)
             {
                 FinishGoodRecipeInfo model = new FinishGoodRecipeInfo
@@ -72,6 +74,7 @@ namespace ERPBLL.Agriculture
                    
                 };
                 List<FinishGoodRecipeDetails> modelDetails = new List<FinishGoodRecipeDetails>();
+
                 foreach (var item in details)
                 {
                     FinishGoodRecipeDetails FinishGoodRecipeDetails = new FinishGoodRecipeDetails()
@@ -89,6 +92,12 @@ namespace ERPBLL.Agriculture
 
                 _finishGoodRecipeInfoRepository.Insert(model);
                 IsSuccess = _finishGoodRecipeInfoRepository.Save();
+            }
+            else
+            {
+
+             IsSuccess=   _fDetail.updateFinishGoodRecipDetails(details, userId, orgId);
+
             }
             return IsSuccess;
         }
