@@ -117,11 +117,11 @@
     var hdStockModal = $("#hdStockModal");
 
     $(document).ready(function () {
-        //LoadDetails()
+        LoadDetails()
     })
 
     function LoadDataInitializer() {
-        //LoadDetails();
+        LoadDetails();
     }
 
     function LoadDetails() {
@@ -195,7 +195,7 @@
                         if (res === true && status === "success") {
                             fnRemoveARowFromTbody("#tblRawMaterialStockList", index);
                             $('.toastrDefaultDelete').trigger('click');
-                            //LoadDetails();
+                            LoadDetails();
                         }
                         else {
                             $('.toastrDefaultError').trigger('click');

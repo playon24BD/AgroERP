@@ -102,20 +102,20 @@ namespace ERPBLL.Agriculture
                         RawMaterialStock.Quantity += item.Quantity;
                         _rawMaterialStockInfoRepository.Update(RawMaterialStock);
 
-                        RawMaterialStockDetail rawMaterials = new RawMaterialStockDetail()
-                        {
-                            OrganizationId = orgId,
-                            RawMaterialId = item.RawMaterialId,
-                            Quantity = item.Quantity,
-                            Unit = item.Unit,
-                            StockDate = DateTime.Now,
-                            UpdateDate = DateTime.Now,
-                            UpdateUserId = userId,
-                            RawMaterialStockId = item.RawMaterialStockId,
-                            Status = item.Status = "Pending"
+                        //RawMaterialStockDetail rawMaterials = new RawMaterialStockDetail()
+                        //{
+                        //    OrganizationId = orgId,
+                        //    RawMaterialId = item.RawMaterialId,
+                        //    Quantity = item.Quantity,
+                        //    Unit = item.Unit,
+                        //    StockDate = DateTime.Now,
+                        //    UpdateDate = DateTime.Now,
+                        //    UpdateUserId = userId,
+                        //    RawMaterialStockId = item.RawMaterialStockId,
+                        //    Status = item.Status = "Pending"
 
-                        };
-                        stockDetails.Add(rawMaterials);
+                        //};
+                        //stockDetails.Add(rawMaterials);
 
                     }
                     else

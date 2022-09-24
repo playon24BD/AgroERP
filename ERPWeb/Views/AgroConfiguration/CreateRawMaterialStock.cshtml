@@ -146,6 +146,8 @@
 
 
         var materialNameList = [];
+
+        
         $("#addButton").click(function (e) {
             e.preventDefault();
 
@@ -264,8 +266,11 @@
 
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialStock', data, getToken())).then(function (res, status) {
                 if (res === true) {
+                    debugger;
                     $('.toastrDefaultSuccess').trigger('click');
-
+                     setTimeout(function () {
+                                    redirectPage('@Url.Action("GetRawMaterialStock")');
+                                }, 1000);
                 }
                 else {
                     $('.toastrDefaultError').trigger('click');
@@ -298,6 +303,9 @@
                 text += BatchCode.charAt(Math.floor(Math.random() * BatchCode.length));
 
             return text;
+        }
+        function redirectPage(page) {
+            window.location.replace(page);
         }
 
     </script>
