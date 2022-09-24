@@ -141,8 +141,7 @@
             debugger;
             
             var data = { flag: "View", ProductId: TryParseInt(ddlProductName.val(), 0), id: 0 };
-            debugger;
-            alert(ddlProductName.val());
+
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetFinishGoodRecipeList', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {
