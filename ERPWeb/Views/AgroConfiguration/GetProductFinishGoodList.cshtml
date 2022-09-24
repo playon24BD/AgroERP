@@ -1,8 +1,178 @@
 ﻿
-@{
-    ViewBag.Title = "GetProductFinishGoodList";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card  shadow card card-primary card-outline card-tabs" style="margin-top:-20px">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+
+                <ul class="nav nav-tabs nav-pills" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-two-producFinishGoodList-tab" data-toggle="pill" href="#custom-tabs-two-producFinishGoodList" role="tab" aria-controls="custom-tabs-two-producFinishGoodList" aria-selected="false">FinishGood list</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-two-finishGoodProduction-tab" data-toggle="pill" href="#custom-tabs-two-finishGoodProduction" role="tab" aria-controls="custom-tabs-two-finishGoodProduction" aria-selected="false">Finish Good Production</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+        <div class="card-body shadow">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+                <div class="tab-pane fade show active" id="custom-tabs-two-producFinishGoodList" role="tabpanel" aria-labelledby="custom-tabs-two-producFinishGoodList-tab">
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card shadow card-gray-dark">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-navy shadow">
+                                <div class="card-header">
+                                    <div class="row text-sm">
+                                        <div class="col-md-2">
+                                            <h4>Search by:</h4>
+                                        </div>
+                                        <div class="col-md-3 float-right">
+                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+                                        </div>
+                                        <div class="col-7">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
+                                            <h4>Loading List</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade show " id="custom-tabs-two-finishGoodProduction" role="tabpanel" aria-labelledby="custom-tabs-two-finishGoodProduction-tab">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header" style="text-align: center;">
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5 class="text-center text-bold">
+
+                                               Finish Good Production
+                                            </h5>
+                                        </div>
+                                        <div class="col-md-3">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <input type="hidden" id="hdMeasurementId" />
+                                        <div class="col-md-3">
+                                            <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
+                                            <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
+                                                <option value="">Select One</option>
+                                                <option value="9">Agro Farm</option>
+                                            </select>
+                                            <span class="error hide req-ddlOrganiation">Organization is required</span>
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label" for="ddlProduct">Product</label>
+                                            @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, new { @class = "form-control form-control-sm" })
+
+                                            <span class="error hide req-ddlProduct">Product Name is Required</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="qty"> Qty</label>
+                                            <input  type="number" id="qty" name="qty" class="form-control form-control-sm"/>
+                                            <span class="error hide req-qty">Qty Is Required</span>
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label  for="targetQty" class="control-label"> Target Qty</label>
+                                            <input type="number" id="targetQty" class="form-control form-control-sm"/>
+                                            <span class="error hide req-targetQty"></span>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
+                                            <div class="clearfix">
+                                                <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolist"><i class="fas fa-plus"></i> &nbsp; ADD TO LIST </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12" style="overflow-y:scroll">
+                                                <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblMeasurement">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="6">
+                                                                <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
+                                                            </th>
+                                                        </tr>
+                                                        <tr class="btn-dark">
+                                                            <th>Sl</th>
+                                                            <th>Raw Material</th>
+                                                            <th>Per Qty</th>
+                                                            <th>Total Production Qty</th>
+                                                            <th>Required Qty</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+    </script>
+
+
 }
-
-<h2>GetProductFinishGoodList</h2>
-

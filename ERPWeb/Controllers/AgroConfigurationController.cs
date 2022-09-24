@@ -756,8 +756,7 @@ namespace ERPWeb.Controllers
 
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-            //ViewBag.ddlRawMaterialName = _rawMaterialStockInfo.GetDepotRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value }).ToList();
-
+            ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId,User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
             return View();
         }

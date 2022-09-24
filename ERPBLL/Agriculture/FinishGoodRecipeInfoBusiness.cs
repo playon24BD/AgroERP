@@ -101,5 +101,10 @@ namespace ERPBLL.Agriculture
             }
             return IsSuccess;
         }
+
+        public IEnumerable<FinishGoodRecipeInfo> GetAllFinishGoodReceif(long orgId)
+        {
+            return _finishGoodRecipeInfoRepository.GetAll(f=>f.OrganizationId==orgId);
+        }
     }
 }

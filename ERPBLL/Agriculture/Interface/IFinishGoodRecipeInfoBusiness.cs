@@ -10,6 +10,8 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IFinishGoodRecipeInfoBusiness
     {
+        IEnumerable<FinishGoodRecipeInfo> GetAllFinishGoodReceif(long orgId);
+
         bool SaveFinishGoodRecipe(FinishGoodRecipeInfoDTO info, List<FinishGoodRecipeDetailsDTO> details, long userId, long orgId);
         IEnumerable<FinishGoodRecipeInfoDTO> GetFinishGoodRecipeInfos(long orgId, long? ProductId);
         FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByOrgId(long id, long orgId);

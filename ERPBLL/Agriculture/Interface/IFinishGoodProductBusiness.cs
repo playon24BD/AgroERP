@@ -13,6 +13,6 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<FinishGoodProduct> GetAllProductInfo(long OrgId);
         bool SaveFinishGoodProductName(FinishGoodProductDTO finishGoodProduct, long userId, long orgId);
         IEnumerable<FinishGoodProduct> GetProductNameByOrgId(long orgId);
-        // FinishGoodProduct GetFinishGoodProductById(long FinishGoodProductId, long orgId);
+        FinishGoodProduct GetFinishGoodProductById(long FinishGoodProductId, long orgId);
     }
 }
