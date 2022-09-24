@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPBO.Agriculture.DomainModels
+namespace ERPBO.Agriculture.ViewModels
 {
-    [Table("tblRawMaterialIssueStockInfo")]
-    public class RawMaterialIssueStockInfo
+    public class RawMaterialIssueStockInfoViewModel
     {
-        [Key]
         public long RawMaterialIssueStockId { get; set; }
         public string ProductBatchCode { get; set; }
         public long OrganizationId { get; set; }
@@ -23,6 +19,5 @@ namespace ERPBO.Agriculture.DomainModels
         public long? EntryUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
-        public ICollection<RawMaterialIssueStockDetails> RawMaterialStockIssueDetails { get; set; }
     }
 }

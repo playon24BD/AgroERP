@@ -81,5 +81,21 @@ namespace ERPDAL.AgricultureDAL
         }
 
     }
+    public class RawMaterialIssueStockInfoRepository : AgricultureBaseRepository<RawMaterialIssueStockInfo>
+    {
+        public RawMaterialIssueStockInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
+        {
+
+        }
+
+    }
+    public class RawMaterialIssueStockDetailsRepository : AgricultureBaseRepository<RawMaterialIssueStockDetails>
+    {
+        public RawMaterialIssueStockDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
+        {
+
+        }
+
+    }
 
 }

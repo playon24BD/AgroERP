@@ -74,11 +74,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agriculture\DomainModels\RawMaterialIssueStockDetails.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialIssueStockInfo.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialStock.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialStockDetail.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialIssueStockDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialIssueStockInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialStockDetailDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialStockDTO.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialIssueStockDetailsViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialIssueStockInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialStockDetailViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialStockViewModel.cs" />
     <Compile Include="Agriculture\DomainModels\FinishGoodRecipeDetails.cs" />
