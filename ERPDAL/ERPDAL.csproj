@@ -142,6 +142,10 @@
     <Compile Include="AgricultureContextMigrations\202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.Designer.cs">
       <DependentUpon>202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202209241120599_Agriculture_RawMaterialStockAddSupplierId.cs" />
+    <Compile Include="AgricultureContextMigrations\202209241120599_Agriculture_RawMaterialStockAddSupplierId.Designer.cs">
+      <DependentUpon>202209241120599_Agriculture_RawMaterialStockAddSupplierId.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -220,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.resx">
       <DependentUpon>202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202209241120599_Agriculture_RawMaterialStockAddSupplierId.resx">
+      <DependentUpon>202209241120599_Agriculture_RawMaterialStockAddSupplierId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

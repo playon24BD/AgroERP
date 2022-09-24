@@ -51,7 +51,7 @@
                                             <div class="col-md-3">
                                                 <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
 
-                                                @*@Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm" })*@
+                                                @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             </div>
 
                                         </div>
@@ -64,7 +64,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="col-md-12" id="dataContainer">
-                                            @{Html.RenderAction("GetRawMaterialStock", "AgroConfiguration", new { @flag = "View" });}
+                                            @*@{Html.RenderAction("GetRawMaterialStock", "AgroConfiguration", new { @flag = "View" });}*@
                                         </div>
                                     </div>
                                 </div>
@@ -116,6 +116,19 @@
     var RawMaterialUpdateQty = $("#RawMaterialUpdateQty");
     var hdStockModal = $("#hdStockModal");
 
+
+    $(document).ready(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+        LoadDetails();
+    })
+
+
     $(document).ready(function () {
         LoadDetails()
     })
@@ -124,8 +137,13 @@
         LoadDetails();
     }
 
+    ddlRawMaterialName.change(function () {
+
+        LoadDetails();
+    })
+
     function LoadDetails() {
-        var data = { flag: "view", rawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), id: 0 };
+        var data = { flag: "View", rawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), id: 0 };
 
         $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetRawMaterialStock', data)).then(function (res, status) {
             console.log(status);

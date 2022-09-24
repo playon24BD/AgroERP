@@ -22,6 +22,7 @@ namespace ERPBO.Agriculture.ViewModels
         public string IssueStatus { get; set; }
         public DateTime? ExpireDate { get; set; }
         public string RawMaterialName { get; set; }
+        public long RawMaterialSupplierId { get; set; }
         public List<RawMaterialStockDetailViewModel> RawMaterialStockDetails { get; set; }
     }
 }
