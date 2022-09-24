@@ -238,5 +238,24 @@ Where RMI.OrganizationId={0}", orgId)).ToList();
             return _rawMaterialStockInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.RawMaterialId == RawMaterialId);
 
         }
+
+        public IEnumerable<RawMaterialStockInfoDTO> GetCheckExpairDatewiseRawMaterials(long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialStockInfoDTO>(QueryForCheckExpairDatewiseRawMaterials(orgId)).ToList();
+        }
+
+        private string QueryForCheckExpairDatewiseRawMaterials(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and rmsi.OrganizationId={0}", orgId);
+            
+            query = string.Format(@"SELECT rmsi.RawMaterialId,rmi.RawMaterialName               
+FROM [Agriculture].dbo.tblRawMaterialStockInfo rmsi
+INNER JOIN [Agriculture].dbo.tblRawMaterialInfo rmi on rmsi.RawMaterialId=rmi.RawMaterialId Where 1=1 and rmsi.ExpireDate>=Getdate() {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }

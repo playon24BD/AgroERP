@@ -463,15 +463,13 @@
     <Content Include="Views\AgroConfiguration\_GetFinishGoodRecipeDetail.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetFinishGoodRecipeEdit.cshtml" />
     <Content Include="Views\AgroConfiguration\CreateRawMaterialStock.cshtml" />
-
     <Content Include="Views\AgroConfiguration\_GetMeasurementList.cshtml" />
     <Content Include="Views\AgroConfiguration\GetRawMaterialIssueStock.cshtml" />
     <Content Include="Views\AgroConfiguration\GetProductFinishGoodList.cshtml" />
-
     <Content Include="Views\AgroConfiguration\_GetRawMaterialStockList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRawMaterialStockDetail.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRawMaterialStockEdit.cshtml" />
-
+    <Content Include="Views\AgroConfiguration\CreateRawMaterialIssueStock.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

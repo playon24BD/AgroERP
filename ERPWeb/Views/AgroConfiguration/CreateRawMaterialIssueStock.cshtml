@@ -1,7 +1,9 @@
-﻿@{
-    ViewBag.Title = "CreateRawMaterialStock";
+﻿
+@{
+    ViewBag.Title = "CreateRawMaterialIssueStock";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="row">
     <div class="col-md-12">
         <div class="card card-gray shadow">
@@ -13,7 +15,7 @@
                         </a>
                     </div>
                     <div class="col-md-6">
-                        <h5 class="text-center text-bold">Create Raw Material Stock</h5>
+                        <h5 class="text-center text-bold">Raw Material Issue </h5>
                     </div>
                     <div class="col-md-3">
                     </div>
@@ -30,6 +32,13 @@
 
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
                     </div>
+                    @*<div class="col-md-2">
+                        <label for="ddlOrganizationName" class="control-label">Product Name</label>
+
+                        @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product Name--", new { @class = "form-control form-control-sm" })
+
+                        <span class="error hide required-ddlOrganization font-weight-bold">Product Name is Required</span>
+                    </div>*@
                     <div class="col-md-2">
                         <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
 
@@ -38,11 +47,6 @@
                         <span class="error hide required-RawMaterialName font-weight-bold">RawMaterial Name is Required</span>
                     </div>
 
-                    <div class="col-md-2 hide">
-                        <label for="ddlBatchCode" class="control-label">Batch Code</label>
-                        <input type="text" class="form-control form-control-sm" id="ddlBatchCode" />
-
-                    </div>
 
                     <div class="col-md-2">
                         <label for="ddlQuantity" class="control-label">Quantity</label>
@@ -101,12 +105,12 @@
 
 </div>
 
-<div class="modal fade" id="RawMaterialStockModal" role="dialog" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="RawMaterialIssueStockModal" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header alert-secondary">
-                <input type="hidden" id="hdStockModal" />
-                <h4 id="modalHeading" class="modal-title">Edit Raw Material</h4>
+                <input type="hidden" id="hdIssueStockModal" />
+                <h4 id="modalHeading" class="modal-title">Edit Raw Material Issue</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
 
@@ -117,7 +121,7 @@
                             <td class="alert-secondary" style="width:15%">Raw Material Name</td>
                             <td style="width:35%; background-color:#e1dada"></td>
                             <td class="alert-secondary" style="width:15%">Unit</td>
-                            <td style="width:35%; background-color:#e1dada"> <input type="number" class="form-control form-control-sm" id="RawMaterialUpdateQty" /></td>
+                            <td style="width:35%; background-color:#e1dada"> <input type="number" class="form-control form-control-sm" id="IssueRawMaterialUpdateQty" /></td>
                         </tr>
                     </tbody>
                 </table>
@@ -136,18 +140,19 @@
 
         var ddlOrganizationName = $("#ddlOrganizationName");
         var ddlRawMaterialName = $("#ddlRawMaterialName");
+        var ddlProductName = $("#ddlProductName");
         var ddlBatchCode = $("#ddlBatchCode");
         var ddlQuantity = $("#ddlQuantity");
         var ddlUnit = $("#ddlUnit");
-        var RawMaterialUpdateQty = $("#RawMaterialUpdateQty");
-        var hdStockModal = $("#hdStockModal");
+        var IssueRawMaterialUpdateQty = $("#IssueRawMaterialUpdateQty");
+        var hdIssueStockModal = $("#hdIssueStockModal");
         var RawMaterialId = '';
 
 
 
         var materialNameList = [];
 
-        
+
         $("#addButton").click(function (e) {
             e.preventDefault();
 
@@ -155,14 +160,14 @@
             if (validate() == true) {
 
 
-           
+
                 //console.log(materialNameList);
-               
+
                 if (materialNameList.includes(ddlRawMaterialName.val())) {
                     toastrErrorAlert("Raw Material Name Already Exist");
                 }
                 else {
-                   
+
                 var sl = $("#tblSingleItems tbody tr").length;
                 var td1 = "<td class='text-center'><b>" + (sl+1) + "</b></td>"
                 var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
@@ -173,13 +178,13 @@
                 var td6 = "<td class='hide RawMaterialId'>" + ddlRawMaterialName.val() + "</td>";
                 var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + "</tr>";
 
-         
+
                     $("#tblSingleItems tbody").append(tr);
                     materialNameList.push(ddlRawMaterialName.val());
 
- 
-                
-     
+
+
+
 
                 }
 
@@ -196,12 +201,12 @@
             e.preventDefault();
             var index = $(this).parent().parents('tbody tr').index();
             var tds = $(this).parent().parents('tbody tr').children('td');
-       
+
             var rawMaterialId = tds.eq(5).html();
             console.log("rawMaterialId :"+ rawMaterialId);
             const mid = materialNameList.indexOf(rawMaterialId);
             materialNameList.splice(mid, 1);
-  
+
 
 
 
@@ -286,7 +291,7 @@
         })
 
 
-        
+
 
         function ClearData() {
             ddlRawMaterialName.val("");
@@ -311,3 +316,4 @@
     </script>
 
 }
+

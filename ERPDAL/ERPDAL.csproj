@@ -142,9 +142,15 @@
     <Compile Include="AgricultureContextMigrations\202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.Designer.cs">
       <DependentUpon>202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.cs</DependentUpon>
     </Compile>
+<<<<<<< Updated upstream
     <Compile Include="AgricultureContextMigrations\202209241120599_Agriculture_RawMaterialStockAddSupplierId.cs" />
     <Compile Include="AgricultureContextMigrations\202209241120599_Agriculture_RawMaterialStockAddSupplierId.Designer.cs">
       <DependentUpon>202209241120599_Agriculture_RawMaterialStockAddSupplierId.cs</DependentUpon>
+=======
+    <Compile Include="AgricultureContextMigrations\202209240824173_Agriculture_tblRawMaterialIssueStockInfo.cs" />
+    <Compile Include="AgricultureContextMigrations\202209240824173_Agriculture_tblRawMaterialIssueStockInfo.Designer.cs">
+      <DependentUpon>202209240824173_Agriculture_tblRawMaterialIssueStockInfo.cs</DependentUpon>
+>>>>>>> Stashed changes
     </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
@@ -225,8 +231,13 @@
     <EmbeddedResource Include="AgricultureContextMigrations\202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.resx">
       <DependentUpon>202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< Updated upstream
     <EmbeddedResource Include="AgricultureContextMigrations\202209241120599_Agriculture_RawMaterialStockAddSupplierId.resx">
       <DependentUpon>202209241120599_Agriculture_RawMaterialStockAddSupplierId.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="AgricultureContextMigrations\202209240824173_Agriculture_tblRawMaterialIssueStockInfo.resx">
+      <DependentUpon>202209240824173_Agriculture_tblRawMaterialIssueStockInfo.cs</DependentUpon>
+>>>>>>> Stashed changes
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
