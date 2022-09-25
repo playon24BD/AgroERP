@@ -58,6 +58,7 @@ namespace ERPBLL.Agriculture
                 finishGoodRecipeDetail.UpdateDate = DateTime.Now;
                 finishGoodRecipeDetail.UpUserId = userId;
                 finishGoodRecipeDetails.Add(finishGoodRecipeDetail);
+
             }
             _finishGoodRecipeDetailsRepository.UpdateAll(finishGoodRecipeDetails);
             IsSuccess = _finishGoodRecipeDetailsRepository.Save();

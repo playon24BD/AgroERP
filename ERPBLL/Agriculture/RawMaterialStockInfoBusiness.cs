@@ -50,6 +50,8 @@ namespace ERPBLL.Agriculture
             rm.RawMaterialName,
             rms.Quantity,
             rms.Unit,
+            --rms.ExpireDate,
+            (select CAST(rms.ExpireDate as date))'ExpireDate',
             rms.OrganizationId
             from [Agriculture].dbo.tblRawMaterialStockInfo rms
             inner join [Agriculture].dbo.tblRawMaterialInfo rm on   rms.RawMaterialId=rm.RawMaterialId
@@ -93,20 +95,7 @@ namespace ERPBLL.Agriculture
                         RawMaterialStock.Quantity += item.Quantity;
                         _rawMaterialStockInfoRepository.Update(RawMaterialStock);
 
-                        //RawMaterialStockDetail rawMaterials = new RawMaterialStockDetail()
-                        //{
-                        //    OrganizationId = orgId,
-                        //    RawMaterialId = item.RawMaterialId,
-                        //    Quantity = item.Quantity,
-                        //    Unit = item.Unit,
-                        //    StockDate = DateTime.Now,
-                        //    UpdateDate = DateTime.Now,
-                        //    UpdateUserId = userId,
-                        //    RawMaterialStockId = item.RawMaterialStockId,
-                        //    Status = item.Status = "Pending"
-
-                        //};
-                        //stockDetails.Add(rawMaterials);
+                        
 
                     }
                     else
@@ -120,7 +109,9 @@ namespace ERPBLL.Agriculture
                             Quantity = item.Quantity,
                             Unit = item.Unit,
                             EntryDate = DateTime.Now,
-                            EntryUserId = userId
+                            EntryUserId = userId,
+                            ExpireDate=item.ExpireDate,
+                            RawMaterialSupplierId=info.RawMaterialSupplierId
                             //IssueStatus=info.IssueStatus="Pending"
                         };
                         stockInfoAll.Add(stockInfo);
@@ -162,6 +153,11 @@ namespace ERPBLL.Agriculture
                 }
                 // isSuccess = _rawMaterialStockInfoRepository.Save();
             }
+            else
+            {
+                isSuccess = _rawMaterialStockDetail.updateRawMaterialStockDetails(info,details, userId, orgId);
+            }
+
             return isSuccess;
         }
 

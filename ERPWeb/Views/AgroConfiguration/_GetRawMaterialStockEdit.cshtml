@@ -21,6 +21,8 @@
         <td style="width:20%"><b>@info.Quantity</b></td>
         <td style="width:13%">Unit</td>
         <td style="width:20%"><b>@info.Unit</b></td>
+        @*<td style="width:13%">ExpireDate</td>
+        <td style="width:20%"><b>@info.ExpireDate</b></td>*@
     </tr>
     }
 </table>
@@ -31,6 +33,7 @@
             <th>RawMaterial Name</th>
             <th>Quantity</th>
             <th>Unit</th>
+            @*<th>ExpireDate</th>*@
 
         </tr>
 
@@ -46,6 +49,7 @@
                 <td class="text-center">@item.RawMaterialName</td>
                 <td class="form-control form-control text-center text-bold" id="RawMaterialUpdateQty" contenteditable='true'>@item.Quantity</td>
                 <td class="text-center">@item.Unit</td>
+                @*<td class="text-center">@item.ExpireDate</td>*@
 
             </tr>
         }
@@ -53,74 +57,79 @@
 </table>
 <div class="modal-footer">
     <button type="button" data-dismiss="modal" class="btn btn-sm btn-flat btn-danger">Cancel</button>
-    <button type="button" id="UpdateButton" class="btn btn-sm btn-flat btn-success">Update</button>
+    <button type="button" id="saveButton" class="btn btn-sm btn-flat btn-success">Update</button>
 </div>
 
 
 <script type="text/javascript">
 
-    var RawMaterialUpdateQty = $("#RawMaterialUpdateQty");
+    $(document).ready(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
 
-    $("#UpdateButton").click(function (e) {
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+    })
+
+    $("#saveButton").click(function (e) {
+            debugger
         e.preventDefault();
-        debugger;
-
         var rawMaterialInfoId = $("#rawMaterialInfoId").attr("data-val-rawMaterialInfoId");
-        //if (true) {
-        //bootbox.confirm("Are you sure you want to Save Database", function (result) {
-        //    if (result) {
-        //var info = { RawMaterialStockId: 0, OrganizationId: ddlOrganizationName.val(), RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val() };
 
-        //var details = [];
-        //details.length = 0;
+        //console.log("finishGoodProductId :" + JSON.stringify(finishGoodProductId));
 
-        var info = { RawMaterialStockId: TryParseInt(rawMaterialInfoId, 0) };
+            if (true === true) {
 
-        var details = [];
+                bootbox.confirm("Are you sure you want to Update this Raw Material", function (result) {
+                    if (result) {
+                        debugger;
+                        //disable("#btnSubmit");
+                        //getTargetItemAndItemTypeAndWarehouse();
+                        var info = { RawMaterialStockId: TryParseInt(rawMaterialInfoId,0)};
 
-        $.each($("#tblReturnItems tbody tr"), function (index, item) {
-            var tds = $(this).children('td');
-            details.push({
+                        var details = [];
+                       // details.length = 0;
 
-                RawMaterialStockDetailId: tds.eq(1).html(),
-                Quantity: tds.eq(3).html()
+                        $.each($("#tblReturnItems tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+                                RawMaterialStockDetailId: tds.eq(1).html(),
+                                Quantity: tds.eq(3).html(),
+                            });
+                        })
 
-                //RawMaterialStockDetailId: 0,
-                //RawMaterialId: tds.eq(5).html(),
-                //Quantity: tds.eq(3).html(),
-                //Unit: tds.eq(2).html(),
-
-            });
-        })
-
-        console.log(info);
-        console.log(details);
-        var data = JSON.stringify({ info: info, details: details });
-
-        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialStock', data, getToken())).then(function (res, status) {
-            if (res === true) {
-                $('.toastrDefaultSuccess').trigger('click');
-                setTimeout(function () {
-                redirectPage('@Url.Action("GetRawMaterialStock")');
-                }, 1000);
+                        console.log('Info');
+                        console.log(info);
+                        console.log('Detail');
+                        console.log(details);
+                        var data = JSON.stringify({ info: info, details: details });
+                        //return;
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialStock', data, getToken())).then(function (res, status) {
+                            if (res === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                 setTimeout(function () {
+                                    redirectPage('@Url.Action("GetRawMaterialStock")');
+                                }, 1000);
+                                //resetUI();
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#saveButton");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#saveButton");
+                        })
+                    }
+                })
             }
-            else {
-                $('.toastrDefaultError').trigger('click');
-            }
-            enable("#UpdateButton");
-        }).fail(function (error) {
-            alert(execuStatus.fail);
-            enable("#UpdateButton");
-        })
-        //}
-        //})
-        //}
     })
 
     function redirectPage(page) {
         window.location.replace(page);
     }
-   
 </script>
 
 

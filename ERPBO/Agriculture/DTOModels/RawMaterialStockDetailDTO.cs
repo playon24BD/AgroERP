@@ -22,5 +22,6 @@ namespace ERPBO.Agriculture.DTOModels
         public string Status { get; set; }
         public string RawMaterialName { get; set; }
         public DateTime? ExpireDate { get; set; }
+        public long RawMaterialSupplierId { get; set; }
     }
 }

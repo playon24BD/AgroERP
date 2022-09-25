@@ -30,6 +30,14 @@
 
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
                     </div>
+
+                    <div class="col-md-2">
+                        <label for="ddlRawMaterialSupplierName" class="control-label">Supplier Name</label>
+
+                        @Html.DropDownList("ddlRawMaterialSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm" })
+
+                        <span class="error hide required-ddlSupplierName font-weight-bold">Supplier Name is Required</span>
+                    </div>
                     <div class="col-md-2">
                         <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
 
@@ -44,7 +52,7 @@
 
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <label for="ddlQuantity" class="control-label">Quantity</label>
                         <input type="number" class="form-control form-control-sm" id="ddlQuantity" />
                         <span class="error hide req-single-qty">Quantity is required</span>
@@ -60,6 +68,23 @@
                             <option value="dag">dag</option>
                         </select>
                         <span class="error hide req-unitName">Unit is required</span>
+                    </div>
+
+                    @*<div class="col-md-2">
+            <label for="ddlExpireDate" class="control-label">ExpireDate</label>
+            <input type="text" class="form-control form-control-sm" id="ddlExpireDate" />
+            <span class="error hide req-single-qty">ExpireDate is required</span>
+
+        </div>*@
+
+                    <div class="col-md-2">
+                        <label class="control-label font-weight-bold">ExpireDate</label>
+                        <div class="input-group input-group-sm ">
+                            <input type="text" class="form-control form-control-sm date-datePicker-ExpireDate ctrl-changed" id="ExpireDate" />
+                            <div class="input-group-prepend cursor-pointer remove-date ExpireDate" style="cursor:pointer">
+                                <span class="input-group-text">&#10008;</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-md-1 " style="margin-top:5px;">
@@ -82,11 +107,15 @@
 
                                 <tr class="text-center btn-dark">
                                     <th style="width:5%">#SL</th>
+                                    <th style="width:15%">Supplier Name</th>
                                     <th style="width:15%">Raw Material Name</th>
                                     <th style="width:10%">Unit</th>
                                     <th style="width:10%">Quantity</th>
+                                    <th style="width:10%">ExpireDate</th>
                                     <th style="width:10%">Action</th>
                                     <th class="hide RawMaterialId"></th>
+                                    <th class="hide RawMaterialSupplierId"></th>
+
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -135,6 +164,7 @@
     <script type="text/javascript">
 
         var ddlOrganizationName = $("#ddlOrganizationName");
+        var ddlRawMaterialSupplierName = $("#ddlRawMaterialSupplierName");
         var ddlRawMaterialName = $("#ddlRawMaterialName");
         var ddlBatchCode = $("#ddlBatchCode");
         var ddlQuantity = $("#ddlQuantity");
@@ -142,6 +172,44 @@
         var RawMaterialUpdateQty = $("#RawMaterialUpdateQty");
         var hdStockModal = $("#hdStockModal");
         var RawMaterialId = '';
+        var ExpireDate = $("#ExpireDate");
+
+        $(document).ready(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            ExpireDate.prop('readonly', true);
+            ExpireDate.css("background-color", "#fff");
+            $('#ExpireDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true
+            })
+
+            //ExpireDate.prop('readonly', true);
+            //ExpireDate.css("background-color", "#fff");
+            //$('#ExpireDateExpireDate').datepicker({
+            //    format: "dd MM yyyy",
+            //    orientation: "bottom auto",
+            //    todayHighlight: true
+            //})
+
+        })
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("ExpireDate")) {
+                if (ExpireDate.val() !== '') {
+                    ExpireDate.val('');
+                    
+                }
+            }
+            
+        }).on('change', function () {
+            $('.datepicker').hide();
+        });
 
 
 
@@ -164,22 +232,21 @@
                 else {
                    
                 var sl = $("#tblSingleItems tbody tr").length;
-                var td1 = "<td class='text-center'><b>" + (sl+1) + "</b></td>"
-                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
-                var td3 = "<td class='text-center'>" + ddlUnit.val() + "</td>";
-                var td4 = "<td class='text-center text-bold'>" + ddlQuantity.val() + "</td>";
-
-                var td5 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
-                var td6 = "<td class='hide RawMaterialId'>" + ddlRawMaterialName.val() + "</td>";
-                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + "</tr>";
+                    var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialSupplierName") + "</td>";
+                var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
+                var td4 = "<td class='text-center'>" + ddlUnit.val() + "</td>";
+                var td5 = "<td class='text-center text-bold'>" + ddlQuantity.val() + "</td>";
+                var td6 = "<td class='text-center text-bold'>" + ExpireDate.val() + "</td>";
+                var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td8 = "<td class='hide RawMaterialId'>" + ddlRawMaterialName.val() + "</td>";
+                var td9 = "<td class='hide RawMaterialSupplierId'>" + ddlRawMaterialSupplierName.val() + "</td>";
+                
+                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 +td9 +"</tr>";
 
          
                     $("#tblSingleItems tbody").append(tr);
                     materialNameList.push(ddlRawMaterialName.val());
-
- 
-                
-     
 
                 }
 
@@ -214,8 +281,8 @@
             var isValid = true;
             $(".error").addClass('hide');
 
-            if (ddlOrganizationName.val() === "") {
-                $(".required-ddlOrganization").removeClass('hide');
+            if (ddlRawMaterialSupplierName.val() === "") {
+                $(".required-ddlSupplierName").removeClass('hide');
                 isValid = false;
             }
             if (ddlRawMaterialName.val() === "") {
@@ -230,6 +297,7 @@
                 $(".req-single-qty").removeClass('hide');
                 isValid = false;
             }
+            
 
 
             return isValid;
@@ -243,7 +311,7 @@
             //if (true) {
             //bootbox.confirm("Are you sure you want to Save Database", function (result) {
             //    if (result) {
-            var info = { RawMaterialStockId: 0, OrganizationId: ddlOrganizationName.val(), RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val() };
+            var info = { RawMaterialStockId: 0, OrganizationId: ddlOrganizationName.val(), RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val(), RawMaterialSupplierId: ddlRawMaterialSupplierName.val(),ExpireDate:ExpireDate.val() };
 
             var details = [];
             details.length = 0;
@@ -253,9 +321,11 @@
                 details.push({
 
                     RawMaterialStockDetailId: 0,
-                    RawMaterialId: tds.eq(5).html(),
-                    Quantity: tds.eq(3).html(),
-                    Unit: tds.eq(2).html(),
+                    RawMaterialId: tds.eq(7).html(),
+                    Quantity: tds.eq(4).html(),
+                    Unit: tds.eq(3).html(),
+                    ExpireDate: tds.eq(5).html(),
+                    RawMaterialSupplierId: tds.eq(8).html()
 
                 });
             })
