@@ -471,14 +471,8 @@ namespace ERPWeb.Controllers
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetRawMaterialStock");
 
-<<<<<<< Updated upstream
             if (string.IsNullOrEmpty(flag))
             {
-=======
-            if (string.IsNullOrEmpty(flag)) {
-
-                ViewBag.ddlRawMaterialSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(suplier => new SelectListItem { Text = suplier.RawMaterialSupplierName, Value = suplier.RawMaterialSupplierId.ToString() }).ToList();
->>>>>>> Stashed changes
 
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
@@ -540,7 +534,7 @@ namespace ERPWeb.Controllers
                     ViewBag.Info = new RawMaterialStockInfoViewModel
                     {
                         RawMaterialName = RawMaterialNames.FirstOrDefault(it => it.RawMaterialId == info.RawMaterialId).RawMaterialName,
-                        RawMaterialStockId=info.RawMaterialStockId,
+
                         Quantity = info.Quantity,
                         Unit = info.Unit
                     };
@@ -551,8 +545,7 @@ namespace ERPWeb.Controllers
                             //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
                             RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                             Quantity = i.Quantity,
-                            Unit = i.Unit,
-                            RawMaterialStockDetailId = i.RawMaterialStockDetailId,
+                            Unit = i.Unit
                         }).ToList();
                 }
                 else
@@ -584,6 +577,7 @@ namespace ERPWeb.Controllers
             ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
 
             ViewBag.ddlRawMaterialSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(suplier => new SelectListItem { Text = suplier.RawMaterialSupplierName, Value = suplier.RawMaterialSupplierId.ToString() }).ToList();
+
 
             return View();
         }
@@ -661,6 +655,7 @@ namespace ERPWeb.Controllers
                 List<FinishGoodRecipeDetailsViewModel> details = new List<FinishGoodRecipeDetailsViewModel>();
                 if (info != null)
                 {
+
 
                     ViewBag.Info = new FinishGoodRecipeInfoViewModel
                     {
