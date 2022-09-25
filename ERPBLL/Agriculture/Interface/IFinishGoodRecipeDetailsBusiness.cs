@@ -12,6 +12,7 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<FinishGoodRecipeDetails> GetFinishGoodRecipeDetailsByInfoId(long infoId, long orgId);
         FinishGoodRecipeDetails GetFinishGoodRecipeDetailsById(long fgDetailsId, long orgId);
-        bool updateFinishGoodRecipDetails(List<FinishGoodRecipeDetailsDTO> finishGoodRecipeDetail,long userId, long orgId);
+        //bool updateFinishGoodRecipDetails(List<FinishGoodRecipeDetailsDTO> finishGoodRecipeDetail,long userId, long orgId);
+        bool updateFinishGoodRecipDetails(FinishGoodRecipeInfoDTO info, List<FinishGoodRecipeDetailsDTO> finishGoodRecipeDetail, long userId, long orgId);
     }
 }

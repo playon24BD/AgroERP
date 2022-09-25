@@ -23,11 +23,7 @@ namespace ERPBLL.Agriculture
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._rawMaterialStockInfoRepository = new RawMaterialStockInfoRepository(this._agricultureUnitOfWork);
-
             this._rawMaterialStockDetail = rawMaterialStockDetail;
-
-
-
         }
 
         public IEnumerable<RawMaterialStockInfo> GetRawMaterialStockDetails(long orgId)
@@ -61,18 +57,13 @@ namespace ERPBLL.Agriculture
             Utility.ParamChecker(param));
             return query;
         }
-
         public bool SaveRawMaterialStock(RawMaterialStockInfoDTO info, List<RawMaterialStockDetailDTO> details, long userId, long orgId)
         {
             bool isSuccess = false;
 
             if (info.RawMaterialStockId == 0)
             {
-
-
-
                 List<RawMaterialStockInfo> stockInfoAll = new List<RawMaterialStockInfo>();
-
                 List<RawMaterialStockDetail> stockDetails = new List<RawMaterialStockDetail>();
 
                 var BatchCodes = "BC-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
@@ -174,7 +165,6 @@ namespace ERPBLL.Agriculture
             return isSuccess;
         }
 
-
         public List<AgroDropdown> GetDepotRawMaterials(long orgId)
         {
             return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroDropdown>(string.Format(@"Select RM.RawMaterialName 'text',
@@ -183,35 +173,27 @@ From Agriculture.dbo.tblRawMaterialStockInfo RMI
 Inner Join [Agriculture].dbo.tblRawMaterialInfo RM on RMI.RawMaterialId =RM.RawMaterialId 
 Where RMI.OrganizationId={0}", orgId)).ToList();
         }
-
         public RawMaterialStockInfo RawMaterialStockInfoCheckValues(long? RawMaterialId)
         {
             return _rawMaterialStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == RawMaterialId);
         }
-
         public RawMaterialStockInfo GetRawMaterialStockById(long id, long orgId)
         {
             return _rawMaterialStockInfoRepository.GetOneByOrg(i => i.RawMaterialStockId == id && i.OrganizationId == orgId);
         }
-
         public bool DeleteRawMaterialStock(long id, long userId, long orgId)
         {
             _rawMaterialStockInfoRepository.DeleteAll(i => i.RawMaterialStockId == id && i.OrganizationId == orgId);
             return _rawMaterialStockInfoRepository.Save();
         }
-
-
-
         public RawMaterialStockInfo RawMaterialStockInfoIdGet(long orgId, long? RawMaterialId)
         {
             return _rawMaterialStockInfoRepository.GetOneByOrg(i => i.OrganizationId == orgId && i.RawMaterialId == RawMaterialId);
         }
-
         public List<RawMaterialStockInfoDTO> RawMaterialStockInfoIdGet(long orgId, string BatchCode)
         {
             return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialStockInfoDTO>(QueryForRawMaterialInfoGetId(orgId, BatchCode)).ToList();
         }
-
         private string QueryForRawMaterialInfoGetId(long orgId, string batchCode)
         {
             string query = string.Empty;
@@ -232,18 +214,20 @@ Where RMI.OrganizationId={0}", orgId)).ToList();
             Utility.ParamChecker(param));
             return query;
         }
-
         public RawMaterialStockInfo GetRawMaterialStockInfoQuantity(long orgId, long RawMaterialId)
         {
             return _rawMaterialStockInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.RawMaterialId == RawMaterialId);
 
         }
+        public RawMaterialStockInfo GetCheckRawmeterislQuantity(long RawMaterialId, long orgId)
+        {
+            return _rawMaterialStockInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.RawMaterialId == RawMaterialId);
 
+        }
         public IEnumerable<RawMaterialStockInfoDTO> GetCheckExpairDatewiseRawMaterials(long orgId)
         {
             return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialStockInfoDTO>(QueryForCheckExpairDatewiseRawMaterials(orgId)).ToList();
         }
-
         private string QueryForCheckExpairDatewiseRawMaterials(long orgId)
         {
             string query = string.Empty;

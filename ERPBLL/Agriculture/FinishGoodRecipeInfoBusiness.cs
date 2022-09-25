@@ -97,7 +97,7 @@ namespace ERPBLL.Agriculture
             else
             {
 
-             IsSuccess=   _fDetail.updateFinishGoodRecipDetails(details, userId, orgId);
+             IsSuccess=   _fDetail.updateFinishGoodRecipDetails(info,details,userId, orgId);
 
             }
             return IsSuccess;

@@ -14,11 +14,12 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _AgricultureUnitOfWork;
         private readonly FinishGoodRecipeDetailsRepository _finishGoodRecipeDetailsRepository;
-        //private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
+        private readonly FinishGoodRecipeInfoRepository _finishGoodRecipeInfoRepository;
         public FinishGoodRecipeDetailsBusiness(IAgricultureUnitOfWork AgricultureUnitOfWork)
         {
             this._AgricultureUnitOfWork = AgricultureUnitOfWork;
             this._finishGoodRecipeDetailsRepository = new FinishGoodRecipeDetailsRepository(this._AgricultureUnitOfWork);
+            this._finishGoodRecipeInfoRepository = new FinishGoodRecipeInfoRepository(this._AgricultureUnitOfWork);
             //this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
         }
 
@@ -32,9 +33,22 @@ namespace ERPBLL.Agriculture
             return _finishGoodRecipeDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.FGRId == infoId).ToList();
         }
 
-        public bool updateFinishGoodRecipDetails(List<FinishGoodRecipeDetailsDTO> finishGoodRecipeDetailDTO, long userId, long orgId)
+        public bool updateFinishGoodRecipDetails(FinishGoodRecipeInfoDTO info, List<FinishGoodRecipeDetailsDTO> finishGoodRecipeDetailDTO, long userId, long orgId)
         {
             bool IsSuccess = false;
+            var reDetailInDb = GetRecipeById(info.FGRId, orgId);
+            if (info.FGRId != 0)
+            {
+               
+                    reDetailInDb.Status = info.Status;
+                    reDetailInDb.UpUserId = userId;
+                    reDetailInDb.UpdateDate = DateTime.Now;
+                _finishGoodRecipeInfoRepository.Update(reDetailInDb);
+                
+            }
+            IsSuccess = _finishGoodRecipeInfoRepository.Save();
+            
+
             List<FinishGoodRecipeDetails> finishGoodRecipeDetails = new List<FinishGoodRecipeDetails>();
             FinishGoodRecipeDetails finishGoodRecipeDetail = new FinishGoodRecipeDetails();
             foreach (var item in finishGoodRecipeDetailDTO)
@@ -49,6 +63,12 @@ namespace ERPBLL.Agriculture
             IsSuccess = _finishGoodRecipeDetailsRepository.Save();
 
             return IsSuccess;
+        }
+
+       
+        public FinishGoodRecipeInfo GetRecipeById(long fGRId, long orgId)
+        {
+            return _finishGoodRecipeInfoRepository.GetAll(rd => rd.FGRId == fGRId && rd.OrganizationId == orgId).FirstOrDefault();
         }
     }
 }

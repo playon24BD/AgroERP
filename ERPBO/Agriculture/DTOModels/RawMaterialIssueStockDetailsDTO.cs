@@ -20,5 +20,6 @@ namespace ERPBO.Agriculture.DTOModels
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
         public string Status { get; set; }
+        public long RawMaterialIssueStockId { get; set; }
     }
 }

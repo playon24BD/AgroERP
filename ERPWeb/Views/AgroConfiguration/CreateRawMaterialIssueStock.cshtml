@@ -33,12 +33,12 @@
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
                     </div>
                     @*<div class="col-md-2">
-                        <label for="ddlOrganizationName" class="control-label">Product Name</label>
+                            <label for="ddlOrganizationName" class="control-label">Product Name</label>
 
-                        @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product Name--", new { @class = "form-control form-control-sm" })
+                            @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product Name--", new { @class = "form-control form-control-sm" })
 
-                        <span class="error hide required-ddlOrganization font-weight-bold">Product Name is Required</span>
-                    </div>*@
+                            <span class="error hide required-ddlOrganization font-weight-bold">Product Name is Required</span>
+                        </div>*@
                     <div class="col-md-2">
                         <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
 
@@ -51,7 +51,13 @@
                     <div class="col-md-2">
                         <label for="ddlQuantity" class="control-label">Quantity</label>
                         <input type="number" class="form-control form-control-sm" id="ddlQuantity" />
+                        <label for="ddlQuantity" class="control-label font-weight-bold">
+                            Raw Material Qty
+                            <span id="RawMaterialStockQty"></span>
+                            @*<input type="number" id="stockQty" />*@
+                        </label>
                         <span class="error hide req-single-qty">Quantity is required</span>
+                        <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
 
                     </div>
                     <div class="col-md-2">
@@ -147,48 +153,68 @@
         var IssueRawMaterialUpdateQty = $("#IssueRawMaterialUpdateQty");
         var hdIssueStockModal = $("#hdIssueStockModal");
         var RawMaterialId = '';
-
-
-
+        var RawMaterialStockQty = $("#RawMaterialStockQty");
         var materialNameList = [];
 
+
+        ddlRawMaterialName.change(function () {
+            LoadRawMaterialStock();
+
+        }) 
+
+
+ 
+
+        function LoadRawMaterialStock() {
+            debugger;
+
+            $("#ddlQuantity").text('(0)');
+            var RawMaterialId = ddlRawMaterialName.val() ;
+            if (RawMaterialId!="") {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetRawmaterialstockCheck', JSON.stringify({ RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0)}), getToken())).then(function (res, status) {
+                    console.log(res);
+                    console.log(status);
+                    if (status == "success") {
+                        disable("#RawMaterialStockQty");
+                        //$("#RawMaterialStockQty").text('(' + res.RawMaterialStockQty + ')');
+                        RawMaterialStockQty.text('(' + res.RawMaterialStockQty + ')');
+                    
+                    }
+                }).fail(function (error) {
+                    consoleLog(error);
+                })
+            }
+        }
 
         $("#addButton").click(function (e) {
             e.preventDefault();
 
 
             if (validate() == true) {
+          
 
 
+                    if (materialNameList.includes(ddlRawMaterialName.val())) {
+                        toastrErrorAlert("Raw Material Name Already Exist");
+                    }
+                    else {
 
-                //console.log(materialNameList);
+                    var sl = $("#tblSingleItems tbody tr").length;
+                    var td1 = "<td class='text-center'><b>" + (sl+1) + "</b></td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
+                    var td3 = "<td class='text-center'>" + ddlUnit.val() + "</td>";
+                    var td4 = "<td class='text-center text-bold'>" + ddlQuantity.val() + "</td>";
 
-                if (materialNameList.includes(ddlRawMaterialName.val())) {
-                    toastrErrorAlert("Raw Material Name Already Exist");
-                }
-                else {
-
-                var sl = $("#tblSingleItems tbody tr").length;
-                var td1 = "<td class='text-center'><b>" + (sl+1) + "</b></td>"
-                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
-                var td3 = "<td class='text-center'>" + ddlUnit.val() + "</td>";
-                var td4 = "<td class='text-center text-bold'>" + ddlQuantity.val() + "</td>";
-
-                var td5 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
-                var td6 = "<td class='hide RawMaterialId'>" + ddlRawMaterialName.val() + "</td>";
-                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + "</tr>";
+                    var td5 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                    var td6 = "<td class='hide RawMaterialId'>" + ddlRawMaterialName.val() + "</td>";
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + "</tr>";
 
 
-                    $("#tblSingleItems tbody").append(tr);
-                    materialNameList.push(ddlRawMaterialName.val());
+                        $("#tblSingleItems tbody").append(tr);
+                        materialNameList.push(ddlRawMaterialName.val());
+                    }
 
-
-
-
-
-                }
-
-
+                
             }
 
             //ClearData();
@@ -237,6 +263,22 @@
             }
 
 
+            if (QuantityCheck()==true) {
+                $(".req-qtyChecking").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function QuantityCheck() {
+            var isValid = false;
+            var originalQty = RawMaterialStockQty.text();
+            var qty = originalQty.replace(/\(|\)/g, '');
+            console.log(qty);
+            if (TryParseInt(ddlQuantity.val()) > qty) {
+                isValid = true
+            }
             return isValid;
         }
 
@@ -248,7 +290,7 @@
             //if (true) {
             //bootbox.confirm("Are you sure you want to Save Database", function (result) {
             //    if (result) {
-            var info = { RawMaterialStockId: 0, OrganizationId: ddlOrganizationName.val(), RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val() };
+            var info = { RawMaterialIssueStockId: 0, OrganizationId: ddlOrganizationName.val(), RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val() };
 
             var details = [];
             details.length = 0;
@@ -257,7 +299,7 @@
                 var tds = $(this).children('td');
                 details.push({
 
-                    RawMaterialStockDetailId: 0,
+                    RawMaterialIssueStockDetailsId: 0,
                     RawMaterialId: tds.eq(5).html(),
                     Quantity: tds.eq(3).html(),
                     Unit: tds.eq(2).html(),
@@ -269,7 +311,7 @@
             console.log(details);
             var data = JSON.stringify({ info: info, details: details });
 
-            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialStock', data, getToken())).then(function (res, status) {
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveProductionIssueRawMaterialStock', data, getToken())).then(function (res, status) {
                 if (res === true) {
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
@@ -285,9 +327,6 @@
                 alert(execuStatus.fail);
                 enable("#saveButton");
             })
-            //}
-            //})
-            //}
         })
 
 

@@ -14,6 +14,9 @@ namespace ERPWeb.Controllers
     {
         private readonly IRawMaterialStockInfo _rawMaterialStockInfo;
         private readonly IRawMaterialStockDetail _rawMaterialStockDetail;
+        private readonly IRawMaterialIssueStockInfoBusiness _rawMaterialIssueStockInfoBusiness;
+        private readonly IRawMaterialIssueStockDetailsBusiness _rawMaterialIssueStockDetailsBusiness;
+
         private readonly IBankSetup _bankSetup;
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
         private readonly IDepotSetup _depotSetup;
@@ -25,13 +28,15 @@ namespace ERPWeb.Controllers
         private readonly IRawMaterialSupplier _rawMaterialSupplierBusiness;
         private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
         private readonly IFinishGoodRecipeDetailsBusiness _finishGoodRecipeDetailsBusiness;
-        
 
 
-        public AgroConfigurationController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail)
+
+        public AgroConfigurationController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness)
         {
             this._rawMaterialStockInfo = rawMaterialStockInfo;
             this._rawMaterialStockDetail = rawMaterialStockDetail;
+            this._rawMaterialIssueStockInfoBusiness = rawMaterialIssueStockInfoBusiness;
+            this._rawMaterialIssueStockDetailsBusiness = rawMaterialIssueStockDetailsBusiness;
             this._bankSetup = bankSetup;
             this._organizationBusiness = organizationBusiness;
             this._depotSetup = depotSetup;
@@ -360,22 +365,22 @@ namespace ERPWeb.Controllers
             {
                 var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
                 List<MeasurementSetupViewModel> viewModels = new List<MeasurementSetupViewModel>();
-                AutoMapper.Mapper.Map(measureMent,viewModels);
+                AutoMapper.Mapper.Map(measureMent, viewModels);
 
 
                 return PartialView("_GetMeasurementList", viewModels);
             }
 
-   
+
         }
-        public ActionResult SaveMeasurement(List< MeasurementSetupViewModel> models )
+        public ActionResult SaveMeasurement(List<MeasurementSetupViewModel> models)
         {
             bool IsSuccess = false;
             if (ModelState.IsValid)
             {
                 List<MeasurementSetupDTO> measurementSetupDTOs = new List<MeasurementSetupDTO>();
-                AutoMapper.Mapper.Map(models,measurementSetupDTOs);
-             IsSuccess=   _measuremenBusiness.SaveMeasureMent(measurementSetupDTOs, User.OrgId);
+                AutoMapper.Mapper.Map(models, measurementSetupDTOs);
+                IsSuccess = _measuremenBusiness.SaveMeasureMent(measurementSetupDTOs, User.OrgId);
 
 
             }
@@ -385,7 +390,7 @@ namespace ERPWeb.Controllers
         }
 
 
-             public ActionResult UpdateMeasurement(MeasurementSetupViewModel models)
+        public ActionResult UpdateMeasurement(MeasurementSetupViewModel models)
         {
             bool IsSuccess = false;
             if (ModelState.IsValid)
@@ -394,7 +399,7 @@ namespace ERPWeb.Controllers
 
 
                 AutoMapper.Mapper.Map(models, measurementSetupDTO);
-                IsSuccess = _measuremenBusiness.UpdateMeasureMent(measurementSetupDTO,User.UserId,User.OrgId);
+                IsSuccess = _measuremenBusiness.UpdateMeasureMent(measurementSetupDTO, User.UserId, User.OrgId);
 
 
             }
@@ -466,11 +471,12 @@ namespace ERPWeb.Controllers
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetRawMaterialStock");
 
-            if (string.IsNullOrEmpty(flag)) { 
+            if (string.IsNullOrEmpty(flag))
+            {
 
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+                ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
 
                 return View();
             }
@@ -503,12 +509,12 @@ namespace ERPWeb.Controllers
 
                     details =
                         _rawMaterialStockDetail.GetRawMaterialStockDetailsById(id.Value, User.OrgId).Select(i => new RawMaterialStockDetailViewModel
-                    {
+                        {
                             //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
-                        RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId ==i.RawMaterialId).RawMaterialName,
-                       Quantity =i.Quantity,
-                       Unit=i.Unit
-                    }).ToList();
+                            RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                            Quantity = i.Quantity,
+                            Unit = i.Unit
+                        }).ToList();
                 }
                 else
                 {
@@ -611,12 +617,12 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
             {
                 var ProductNames = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).ToList();
-                var RawMaterialNames=_rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
                 var info = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(id.Value, User.OrgId);
                 List<FinishGoodRecipeDetailsViewModel> details = new List<FinishGoodRecipeDetailsViewModel>();
                 if (info != null)
                 {
-                    
+
 
                     ViewBag.Info = new FinishGoodRecipeInfoViewModel
                     {
@@ -628,8 +634,8 @@ namespace ERPWeb.Controllers
                     details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
                     {
                         RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
-                        FGRRawMaterQty=i.FGRRawMaterQty,
-                        FGRRawMaterUnit=i.FGRRawMaterUnit
+                        FGRRawMaterQty = i.FGRRawMaterQty,
+                        FGRRawMaterUnit = i.FGRRawMaterUnit
                     }).ToList();
                 }
                 else
@@ -651,18 +657,19 @@ namespace ERPWeb.Controllers
                     ViewBag.Info = new FinishGoodRecipeInfoViewModel
                     {
                         FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
-                        FGRId=info.FGRId,
+                        FGRId = info.FGRId,
                         FGRQty = info.FGRQty,
                         FGRUnit = info.FGRUnit,
-                        FinishGoodProductId=info.FinishGoodProductId,
+                        FinishGoodProductId = info.FinishGoodProductId,
+                        Status = info.Status,
                     };
                     details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
                     {
                         RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                         FGRRawMaterQty = i.FGRRawMaterQty,
                         FGRRawMaterUnit = i.FGRRawMaterUnit,
-                        FGRDetailsId=i.FGRDetailsId,
-                   
+                        FGRDetailsId = i.FGRDetailsId,
+
                     }).ToList();
                 }
                 else
@@ -749,6 +756,34 @@ namespace ERPWeb.Controllers
 
             return View();
         }
+        [HttpPost]
+        public ActionResult SaveProductionIssueRawMaterialStock(RawMaterialIssueStockInfoViewModel info, List<RawMaterialIssueStockDetailsViewModel> details)
+        {
+            bool IsSuccess = false;
+            if (ModelState.IsValid && details.Count > 0)
+            {
+                RawMaterialIssueStockInfoDTO infoDTO = new RawMaterialIssueStockInfoDTO();
+                List<RawMaterialIssueStockDetailsDTO> detailDTOs = new List<RawMaterialIssueStockDetailsDTO>();
+                AutoMapper.Mapper.Map(info, infoDTO);
+                AutoMapper.Mapper.Map(details, detailDTOs);
+                IsSuccess = _rawMaterialIssueStockInfoBusiness.SaveProductIssueRawMaterialStock(infoDTO, detailDTOs, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
+        }
+        [HttpPost]
+        public ActionResult GetRawmaterialstockCheck(long RawMaterialId)
+        {
+            var checkRawMaterialStockValue = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(RawMaterialId, User.OrgId);
+
+            var itemStock = 0;
+            if (checkRawMaterialStockValue != null)
+            {
+                itemStock = (checkRawMaterialStockValue.Quantity);
+            }
+            return Json(new { RawMaterialStockQty = itemStock });
+            
+
+        }
 
         public ActionResult GetProductFinishGoodList()
         {
@@ -756,7 +791,7 @@ namespace ERPWeb.Controllers
 
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-            ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId,User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
             return View();
         }

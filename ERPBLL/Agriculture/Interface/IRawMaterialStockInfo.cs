@@ -25,6 +25,7 @@ namespace ERPBLL.Agriculture.Interface
         //RawMaterialStockInfo RawMaterialStockInfoIdGet(string BatchCodes, long? RawMaterialId);
 
         bool DeleteRawMaterialStock(long id, long userId, long orgId);
+        RawMaterialStockInfo GetCheckRawmeterislQuantity(long RawMaterialId, long orgId);
 
     }
 }
