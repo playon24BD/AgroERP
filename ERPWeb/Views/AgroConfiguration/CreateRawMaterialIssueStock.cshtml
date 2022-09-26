@@ -10,7 +10,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="/AgroConfiguration/GetRawMaterialStock" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                        <a href="/AgroConfiguration/GetRawMaterialIssueStock" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
                             <i class="fas fa-arrow-alt-circle-left"></i>
                         </a>
                     </div>
@@ -158,6 +158,7 @@
 
 
         ddlRawMaterialName.change(function () {
+            debugger;
             LoadRawMaterialStock();
 
         }) 
@@ -316,7 +317,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                      setTimeout(function () {
-                                    redirectPage('@Url.Action("")');
+                          redirectPage('@Url.Action("GetRawMaterialIssueStock")');
                                 }, 1000);
                 }
                 else {

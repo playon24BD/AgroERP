@@ -738,15 +738,61 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Production
-        public ActionResult GetRawMaterialIssueStock()
+        public ActionResult GetRawMaterialIssueStock(string flag,long? rawMaterialId, long? id)
         {
+            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetRawMaterialIssueStock");
+
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                ViewBag.ddlRawMaterialName = _rawMaterialStockInfo.GetDepotRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
 
 
-            ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                return View();
+            }
 
-            ViewBag.ddlRawMaterialName = _rawMaterialStockInfo.GetDepotRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockInfos(User.OrgId, rawMaterialId ?? 0);
 
 
+                List<RawMaterialIssueStockInfoViewModel> viewModels = new List<RawMaterialIssueStockInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetRawMaterialIssueStockList", viewModels);
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+
+                var info = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockById(id.Value, User.OrgId);
+                List<RawMaterialIssueStockDetailsViewModel> details = new List<RawMaterialIssueStockDetailsViewModel>();
+
+                if (info != null)
+                {
+                    ViewBag.Info = new RawMaterialIssueStockInfoViewModel
+                    {
+                        RawMaterialName = RawMaterialNames.FirstOrDefault(it => it.RawMaterialId == info.RawMaterialId).RawMaterialName,
+
+                        Quantity = info.Quantity,
+                        Unit = info.Unit
+                    };
+
+                    details =
+                        _rawMaterialIssueStockDetailsBusiness.GetRawMaterialIssueStockDetailsById(id.Value, User.OrgId).Select(i => new RawMaterialIssueStockDetailsViewModel
+                        {
+                            //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
+                            RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                            Quantity = i.Quantity,
+                            Unit = i.Unit
+                        }).ToList();
+                }
+                else
+                {
+                    ViewBag.Info = new RawMaterialIssueStockInfoViewModel();
+                }
+                return PartialView("_GetRawMaterialIssueStockDetail", details);
+            }
             return View();
         }
 

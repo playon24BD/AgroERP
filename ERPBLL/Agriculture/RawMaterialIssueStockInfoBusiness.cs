@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
@@ -29,7 +30,36 @@ namespace ERPBLL.Agriculture
 
 
         }
-        public RawMaterialIssueStockInfo RawMaterialStockInfoCheckValues(long? RawMaterialId, long orgId)
+
+        public IEnumerable<RawMaterialIssueStockInfoDTO> GetRawMaterialIssueStockInfos(long orgId, long? rawMaterialId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialIssueStockInfoDTO>(QueryForRawMaterialIssueInfoss(orgId, rawMaterialId)).ToList();
+        }
+
+        private string QueryForRawMaterialIssueInfoss(long orgId, long? rawMaterialId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and rms.OrganizationId={0}", orgId);
+            if (rawMaterialId != null && rawMaterialId > 0)
+            {
+                param += string.Format(@" and rms.RawMaterialId={0}", rawMaterialId);
+            }
+            query = string.Format(@"select rms.RawMaterialIssueStockId,
+            rms.RawMaterialId,
+            rm.RawMaterialName,
+            rms.Quantity,
+            rms.Unit,
+            rms.OrganizationId
+            from [Agriculture].dbo.tblRawMaterialIssueStockInfo rms
+            inner join [Agriculture].dbo.tblRawMaterialInfo rm on   rms.RawMaterialId=rm.RawMaterialId
+            where 1=1  {0}",
+            Utility.ParamChecker(param));
+            return query;
+        }
+
+            public RawMaterialIssueStockInfo RawMaterialStockInfoCheckValues(long? RawMaterialId, long orgId)
         {
             return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == RawMaterialId && i.OrganizationId==orgId);
         }
@@ -129,6 +159,11 @@ namespace ERPBLL.Agriculture
                 // isSuccess = _rawMaterialStockInfoRepository.Save();
             }
             return isSuccess;
+        }
+
+        public RawMaterialIssueStockInfo GetRawMaterialIssueStockById(long id, long orgId)
+        {
+            return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialIssueStockId == id && i.OrganizationId == orgId);
         }
     }
 }

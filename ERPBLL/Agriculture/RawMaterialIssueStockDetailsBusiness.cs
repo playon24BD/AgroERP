@@ -22,6 +22,11 @@ namespace ERPBLL.Agriculture
             //this._rawMaterialStockInfoRepositiory = new RawMaterialStockInfoRepository(this._agricultureUnitOfWork);
         }
 
+        public IEnumerable<RawMaterialIssueStockDetails> GetRawMaterialIssueStockDetailsById(long infoId, long orgId)
+        {
+            return _rawMaterialIssueStockDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.RawMaterialIssueStockId == infoId).ToList();
+        }
+
         public bool SaveIssuerawMaterialStockDetail(long OrganizationId, long RawMaterialId, int Quantity, string Unit, DateTime? IssueDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, long? UpdateUserId, string Status, long RawMaterialIssueStockId)
         {
             List<RawMaterialIssueStockDetails> IssueRawMaterialStockDetail = new List<RawMaterialIssueStockDetails>();

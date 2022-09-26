@@ -470,6 +470,8 @@
     <Content Include="Views\AgroConfiguration\_GetRawMaterialStockDetail.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRawMaterialStockEdit.cshtml" />
     <Content Include="Views\AgroConfiguration\CreateRawMaterialIssueStock.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetRawMaterialIssueStockList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetRawMaterialIssueStockDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

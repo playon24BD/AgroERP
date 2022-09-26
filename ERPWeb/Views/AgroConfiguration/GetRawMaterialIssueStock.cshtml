@@ -2,7 +2,193 @@
 @{
     ViewBag.Title = "GetRawMaterialIssueStock";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
 }
 
-<h2>GetRawMaterialIssueStock</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-RawMaterialIssueStockList-tab"  data-toggle="pill" role="tab" aria-selected="true" href="#custom-tabs-RawMaterialIssueStockList" aria-controls="custom-tabs-RawMaterialIssueStockList">Raw Material Issue Stock List</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-RawMaterialIssueStockList" aria-labelledby="custom-tabs-RawMaterialIssueStockList-tab" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h4 class="text-center text-bold">Raw Material Issue Stock</h4>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="/AgroConfiguration/CreateRawMaterialIssueStock" class="btn btn-outline-primary btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create Raw Issue Stock</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Search By</h4>
+                                    </div>
+
+                                    <div class="card-body text-sm">
+                                        <div class="row" style="margin-top:-15px">
+                                            <div class="col-md-3">
+                                                <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
+
+                                                @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="ModalRawMaterialIssueDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title">Raw Material Issue Stock Details</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    
+<script type="text/javascript">
+
+
+    var ddlRawMaterialName = $("#ddlRawMaterialName");
+
+
+
+    $(document).ready(function () {
+        $('.select2').select2();
+
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+        LoadIssueDetails()
+    })
+
+    $(document).ready(function () {
+        LoadIssueDetails()
+    })
+
+    ddlRawMaterialName.change(function () {
+
+        LoadIssueDetails();
+    })
+    function LoadIssueDetails() {
+        var data = { flag: "View", rawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), id: 0 };
+
+        $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetRawMaterialIssueStock', data)).then(function (res, status) {
+            console.log(status);
+            if (status === "success") {
+                $("#dataContainer").fadeOut('500', function () {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res).fadeIn('500');
+                });
+            }
+        }).fail(function (error) {
+            console.log(error);
+        });
+    }
+
+
+    $(document).on('click', 'a.data-item-detail', function (e) {
+        e.preventDefault();
+        $("#dataContainer2").empty();
+        var id = $(this).parent().parents('tr').children('td').eq(1).html();
+        if (TryParseInt(id, 0) > 0) {
+            var data = { flag: "Detail", RawMaterialId: 0, id: id };
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetRawMaterialIssueStock', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer2").empty();
+                    $("#dataContainer2").append(res);
+                    $("#ModalRawMaterialIssueDetails").modal('show');
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
+        }
+    })
+
+    $(document).on('click', 'a.data-item-del', function (e) {
+        e.preventDefault();
+        var id = $(this).parent().parents('tr').children('td').eq(1).html();
+        var index = $(this).parent().parents('tr').index;
+        //bootbox.confirm('Are you sure you want to delete?', function () {
+        if (true) {
+            if (TryParseInt(id, 0) > 0) {
+                var data = JSON.stringify({ flag: "Delete", RawMaterialId: 0, id: id });
+                $.when(postReqWithData(dataType.applicationJson, dataType.json, type.post, '/AgroConfiguration/GetRawMaterialIssueStock', data)).then(function (res, status) {
+                    console.log(status);
+                    if (res === true && status === "success") {
+                        fnRemoveARowFromTbody("#tblRawMaterialIssueStockList", index);
+                        $('.toastrDefaultDelete').trigger('click');
+                        LoadIssueDetails();
+                    }
+                    else {
+                        $('.toastrDefaultError').trigger('click');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        }
+        //})
+    })
+
+    </script>
+
+    }
+
 
