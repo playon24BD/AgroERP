@@ -86,6 +86,7 @@ namespace ERPBLL.Agriculture
                             UpdateDate = DateTime.Now,
                             UpdateUserId = userId,
                             RawMaterialStockId = item.RawMaterialStockId,
+                            RawMaterialSupplierId=item.RawMaterialSupplierId,
                             Status = item.Status = "Pending"
 
                         };
@@ -111,7 +112,7 @@ namespace ERPBLL.Agriculture
                             EntryDate = DateTime.Now,
                             EntryUserId = userId,
                             ExpireDate=item.ExpireDate,
-                            RawMaterialSupplierId=info.RawMaterialSupplierId
+                           
                             //IssueStatus=info.IssueStatus="Pending"
                         };
                         stockInfoAll.Add(stockInfo);
@@ -126,6 +127,7 @@ namespace ERPBLL.Agriculture
                             UpdateDate = DateTime.Now,
                             UpdateUserId = userId,
                             RawMaterialStockId = item.RawMaterialStockId,
+                            RawMaterialSupplierId=item.RawMaterialSupplierId,
                             Status = item.Status = "Pending"
 
                         };
@@ -145,7 +147,7 @@ namespace ERPBLL.Agriculture
 
                         var RawMaterialStockInfoid = RawMaterialStockInfoIdGet(items.OrganizationId, items.RawMaterialId);
 
-                        isSuccess = _rawMaterialStockDetail.SaverawMaterialStockDetail(items.OrganizationId, items.RawMaterialId, items.Quantity, items.Unit, items.StockDate, items.EntryDate, items.EntryUserId, items.UpdateDate, items.UpdateUserId, items.Status, RawMaterialStockInfoid.RawMaterialStockId);
+                        isSuccess = _rawMaterialStockDetail.SaverawMaterialStockDetail(items.OrganizationId, items.RawMaterialId,items.RawMaterialSupplierId, items.Quantity, items.Unit, items.StockDate, items.EntryDate, items.EntryUserId, items.UpdateDate, items.UpdateUserId, items.Status, RawMaterialStockInfoid.RawMaterialStockId);
                     }
 
 

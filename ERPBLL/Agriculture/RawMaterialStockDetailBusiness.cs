@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ERPBLL.Agriculture
 {
-    public class RawMaterialStockDetailBusiness:IRawMaterialStockDetail
+    public class RawMaterialStockDetailBusiness : IRawMaterialStockDetail
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly RawMaterialStockDetailRepository _rawMaterialStockDetailRepository;
@@ -38,24 +38,25 @@ namespace ERPBLL.Agriculture
             return _rawMaterialStockDetailRepository.GetAll(i => i.OrganizationId == orgId && i.RawMaterialStockId == infoId).ToList();
         }
 
-        public bool SaverawMaterialStockDetail(long OrganizationId, long RawMaterialId, int Quantity, string Unit, DateTime? StockDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, long? UpdateUserId, string Status, long RawMaterialStockId)
+        public bool SaverawMaterialStockDetail(long OrganizationId, long RawMaterialId, long SupplierId, int Quantity, string Unit, DateTime? StockDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, long? UpdateUserId, string Status, long RawMaterialStockId)
         {
             List<RawMaterialStockDetail> RawMaterialStockDetail = new List<RawMaterialStockDetail>();
 
-        
-                RawMaterialStockDetail stockDetails = new RawMaterialStockDetail();
 
-                stockDetails.OrganizationId = OrganizationId;
-                stockDetails.RawMaterialId = RawMaterialId;
-                //  var RawMaterialId = item.RawMaterialId;
-                stockDetails.Quantity = Quantity;
-                stockDetails.Unit = Unit;
-                stockDetails.StockDate = StockDate;
-                stockDetails.UpdateDate = DateTime.Now;
-                stockDetails.UpdateUserId = UpdateUserId;
-                stockDetails.Status = Status;
-                stockDetails.RawMaterialStockId = RawMaterialStockId;
-                RawMaterialStockDetail.Add(stockDetails);
+            RawMaterialStockDetail stockDetails = new RawMaterialStockDetail();
+
+            stockDetails.OrganizationId = OrganizationId;
+            stockDetails.RawMaterialId = RawMaterialId;
+            stockDetails.RawMaterialSupplierId = SupplierId;
+            //  var RawMaterialId = item.RawMaterialId;
+            stockDetails.Quantity = Quantity;
+            stockDetails.Unit = Unit;
+            stockDetails.StockDate = StockDate;
+            stockDetails.UpdateDate = DateTime.Now;
+            stockDetails.UpdateUserId = UpdateUserId;
+            stockDetails.Status = Status;
+            stockDetails.RawMaterialStockId = RawMaterialStockId;
+            RawMaterialStockDetail.Add(stockDetails);
 
             //}
 
@@ -64,14 +65,14 @@ namespace ERPBLL.Agriculture
         }
 
 
-        public bool updateRawMaterialStockDetails(RawMaterialStockInfoDTO info,List<RawMaterialStockDetailDTO> rawMaterialStockDetailsDTO, long userId, long orgId)
+        public bool updateRawMaterialStockDetails(RawMaterialStockInfoDTO info, List<RawMaterialStockDetailDTO> rawMaterialStockDetailsDTO, long userId, long orgId)
         {
             bool IsSuccess = false;
             var rawmeterialinfoqty = 0;
             var rawmeterialinfoupdateqty = GetRecipeById(info.RawMaterialStockId, orgId);
             if (info.RawMaterialStockId != 0)
             {
-                foreach(var Items in rawMaterialStockDetailsDTO)
+                foreach (var Items in rawMaterialStockDetailsDTO)
                 {
                     rawmeterialinfoqty = Items.Quantity;
                 }
@@ -91,7 +92,7 @@ namespace ERPBLL.Agriculture
 
             foreach (var item in rawMaterialStockDetailsDTO)
             {
-                rawMaterialStockDetail = GetRawMaterialStockById(item.RawMaterialStockDetailId,orgId);
+                rawMaterialStockDetail = GetRawMaterialStockById(item.RawMaterialStockDetailId, orgId);
                 rawMaterialStockDetail.Quantity = item.Quantity;
                 rawMaterialStockDetails.Add(rawMaterialStockDetail);
             }

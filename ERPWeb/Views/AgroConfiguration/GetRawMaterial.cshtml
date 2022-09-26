@@ -101,11 +101,11 @@
                   
 
                     </div>
-                    <div class="form-row">
+                    @*<div class="form-row">
                         <label class="control-label font-weight-bold">Expiry Date</label>
                         <input type="text" id="expairDate" class="form-control form-control-sm datepicker ctr-changed" />
                         <span class="error hide required-expairDate"> Date is Required</span>
-                    </div>
+                    </div>*@
                     <div class="form-row">
                         <label class="control-label" for="remarks">Remarks</label>
                         <input type="text" id="remarks" class="form-control form-control-sm" />
@@ -137,7 +137,7 @@
         var hdmaterialId = $("#hdmaterialId");
         var ddlDepotName = $("#ddlDepotName");
         var ddlOrganization = $("#ddlOrganization");
-        var expairDate = $("#expairDate");
+        //var expairDate = $("#expairDate");
         var remarks = $("#remarks");
         var rawMaterialName = $("#rawMaterialName");
         var ddlRawMaterial = $("#ddlRawMaterial");
@@ -209,7 +209,7 @@
         $("#btnSave").click(function (e) {
 
             e.preventDefault();
-            var data = { organizationId: TryParseInt(ddlOrganization.val(), 0), depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), expireDate: expairDate.val(), rawMaterialId: hdmaterialId.val() }
+            var data = { organizationId: TryParseInt(ddlOrganization.val(), 0), depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val() }
             if (formValidation() == true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
                     //console.log('respons' + JSON.parse( res));
@@ -252,12 +252,12 @@
             var td3 = row.find('td:eq(3)').html();
             var td4 = row.find('td:eq(4)').html();
             var td5 = row.find('td:eq(5)').html();
-            var td6 = row.find('td:eq(6)').html();
-            var td8 = row.find('td:eq(7)').html();
+            //var td6 = row.find('td:eq(6)').html();
+            var td8 = row.find('td:eq(6)').html();
 
             rawMaterialName.val(td5);
             remarks.val('');
-            expairDate.val(td6);
+            //expairDate.val(td6);
             ddlOrganization.val(td8);
             ddlOrganization.trigger("change");
 
@@ -288,17 +288,17 @@
                 $('.required-raqMaterialName').removeClass("hide");
                 Isvalid = false;
             }
-            if ($.trim(expairDate.val()) == "") {
-                $('.required-expairDate').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(expairDate.val()) == "") {
+            //    $('.required-expairDate').removeClass("hide");
+            //    Isvalid = false;
+            //}
             return Isvalid
 
         }
         function ClearCtrl() {
             rawMaterialName.val("");
             remarks.val('');
-            expairDate.val('');
+            //expairDate.val('');
             ddlOrganization.val('');
             ddlDepotName.val('');
             hdmaterialId.val('0');

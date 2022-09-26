@@ -60,12 +60,14 @@ namespace ERPBLL.Agriculture
         public bool SaveFinishGoodRecipe(FinishGoodRecipeInfoDTO info, List<FinishGoodRecipeDetailsDTO> details, long userId, long orgId)
         {
             bool IsSuccess = false;
-      
+            var ReceipeBatchCodes = "RecBC-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+
             if (info.FGRId == 0)
             {
                 FinishGoodRecipeInfo model = new FinishGoodRecipeInfo
                 {
                     FinishGoodProductId = info.FinishGoodProductId,
+                    ReceipeBatchCode= ReceipeBatchCodes,
                     FGRQty = info.FGRQty,
                     FGRUnit = info.FGRUnit,
                     OrganizationId = orgId,
@@ -81,6 +83,7 @@ namespace ERPBLL.Agriculture
                     FinishGoodRecipeDetails FinishGoodRecipeDetails = new FinishGoodRecipeDetails()
                     {
                         RawMaterialId = item.RawMaterialId,
+                        ReceipeBatchCode= ReceipeBatchCodes,
                         FGRRawMaterQty = item.FGRRawMaterQty,
                         FGRRawMaterUnit = item.FGRRawMaterUnit,
                         OrganizationId = orgId,

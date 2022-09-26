@@ -23,6 +23,7 @@ namespace ERPBO.Agriculture.DomainModels
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
         public string Status { get; set; }
+        public long RawMaterialSupplierId { get; set; }
         [ForeignKey("RawMaterialStockInfo")]
         public long RawMaterialStockId { get; set; }
         public RawMaterialStockInfo RawMaterialStockInfo { get; set; }
