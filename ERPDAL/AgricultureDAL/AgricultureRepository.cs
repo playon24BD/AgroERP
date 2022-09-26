@@ -98,4 +98,17 @@ namespace ERPDAL.AgricultureDAL
 
     }
 
+
+    public class FinishGoodProductionInfoRepository:AgricultureBaseRepository<FinishGoodProductionInfo>
+    {
+        public  FinishGoodProductionInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) :base(agricultureUnitOfWork )
+        { }           
+    }
+
+    public class FinishGoodProductionDetailsRepository : AgricultureBaseRepository<FinishGoodProductionDetails>
+    {
+        public FinishGoodProductionDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
+        { }
+    }
+
 }

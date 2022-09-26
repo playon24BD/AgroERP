@@ -33,7 +33,13 @@ namespace ERPBLL.Agriculture
             return _finishGoodRecipeDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.FGRId == infoId).ToList();
         }
 
+
         public bool updateFinishGoodRecipDetails(FinishGoodRecipeInfoDTO info, List<FinishGoodRecipeDetailsDTO> finishGoodRecipeDetailDTO, long userId, long orgId)
+
+
+
+        //public bool updateFinishGoodRecipDetails(List<FinishGoodRecipeDetailsDTO> finishGoodRecipeDetailDTO, long userId, long orgId)
+
         {
             bool IsSuccess = false;
             var reDetailInDb = GetRecipeById(info.FGRId, orgId);

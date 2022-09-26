@@ -108,7 +108,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label for="qty"> Qty</label>
-                                            <input  type="number" id="qty" name="qty" class="form-control form-control-sm"/>
+                                            <input  type="number" id="qty" name="qty" class="form-control form-control-sm" readonly/>
                                             <span class="error hide req-qty">Qty Is Required</span>
 
                                         </div>
@@ -171,6 +171,25 @@
 
 @section scripts{
     <script type="text/javascript">
+        var ddlProduct = $("#ddlProduct");
+        var qty = $("#qty");
+        var targetQty = $("#targetQty");
+        ddlProduct.change(function () {
+
+            LoadData();
+        })
+        function LoadData() {
+            var data = { finishGoodProductId: TryParseInt(ddlProduct.val(), 0) };
+  
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
+                qty.val(res);
+            });
+        }
+       
+  
+
+  
+
 
     </script>
 

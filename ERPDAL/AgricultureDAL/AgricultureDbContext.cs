@@ -35,6 +35,8 @@ namespace ERPDAL.AgricultureDAL
 
         public DbSet<RawMaterialIssueStockInfo> tblRawMaterialIssueStockInfo { get; set; }
         public DbSet<RawMaterialIssueStockDetails> tblRawMaterialIssueStockDetails { get; set; }
+        public DbSet<FinishGoodProductionInfo> tblFinishGoodProductionInfos { get; set; }
+        public DbSet<FinishGoodProductionDetails> tblFinishGoodProductionDetails { get; set; }
 
         //public DbSet<RawMaterial> tblRawMaterials { get; set; }
 

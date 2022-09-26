@@ -302,7 +302,7 @@ function getReqWithData(dataType, type, url, data) {
         url: url,
         data: data,
         success: function (result) {
-            consoleLog(result);
+            //consoleLog(result);
         },
         error: function (err) {
             consoleLog(err);

@@ -28,6 +28,7 @@ namespace ERPWeb.Controllers
         private readonly IRawMaterialSupplier _rawMaterialSupplierBusiness;
         private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
         private readonly IFinishGoodRecipeDetailsBusiness _finishGoodRecipeDetailsBusiness;
+        private readonly IFinishGoodProductionInfoBusiness _finishGoodProductionInfoBusiness;
 
 
 
@@ -798,6 +799,64 @@ namespace ERPWeb.Controllers
 
             return View();
         }
+
+        public ActionResult GetReceipyByProductionId(long finishGoodProductId)
+        {
+            try
+            {
+                int quantity = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(finishGoodProductId, User.OrgId).FGRQty;
+                return Json(quantity, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
+        public ActionResult GetReceipyDetailsByProductionId(long finishGoodProductId)
+        {
+            try
+            {
+                var AllMetarial = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(finishGoodProductId, User.OrgId).Select(m => new FinishGoodRecipeDetailsDTO() {
+                    FGRDetailsId = m.FGRDetailsId,
+                    RawMaterialId = m.RawMaterialId,
+                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(m.RawMaterialId, User.OrgId).RawMaterialName,
+                    FGRId=m.FGRId,
+                    FGRRawMaterQty=m.FGRRawMaterQty,
+                    
+
+                }).ToList();
+                List<FinishGoodRecipeDetailsViewModel> viewModels = new List<FinishGoodRecipeDetailsViewModel>();
+                AutoMapper.Mapper.Map(AllMetarial, viewModels);
+                return Json(viewModels, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json($"Not Found: {ex}", JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
+        public ActionResult SaveFinishGoodProduction(FinishGoodProductionInfoViewModel info,List<FinishGoodProductionDetailViewModel> details )
+        {
+            bool isSucccess = false;
+            if (ModelState.IsValid && details.Count()>0)
+            {
+                //AbNormal
+                FinishGoodProductionInfoDTO finishGoodProductionInfoDTO = new FinishGoodProductionInfoDTO();
+                List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTOs = new List<FinishGoodProductionDetailsDTO>();
+                AutoMapper.Mapper.Map(info, finishGoodProductionInfoDTO);
+                AutoMapper.Mapper.Map(details, finishGoodProductionDetailsDTOs);
+                isSucccess =_finishGoodProductionInfoBusiness.SaveFinishGoodInfo(finishGoodProductionInfoDTO,finishGoodProductionDetailsDTOs,User.UserId,User.OrgId);
+            }
+            return Json(isSucccess); 
+        }
+
+
+
         #endregion
 
 

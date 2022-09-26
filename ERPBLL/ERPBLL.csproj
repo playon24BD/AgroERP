@@ -101,11 +101,15 @@
   <ItemGroup>
     <Compile Include="Agriculture\BankSetupBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductBusiness.cs" />
+    <Compile Include="Agriculture\FinishGoodProductDetailsBusiness.cs" />
+    <Compile Include="Agriculture\FinishGoodProductionInfoBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductSupplierBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodRecipeDetailsBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodRecipeInfoBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IFinishGoodProductionDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IBankSetup.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IFinishGoodProductionInfoBusiness.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductSupplierBusiness.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodRecipeDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodRecipeInfoBusiness.cs" />
