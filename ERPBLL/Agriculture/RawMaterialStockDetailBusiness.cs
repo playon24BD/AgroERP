@@ -32,6 +32,10 @@ namespace ERPBLL.Agriculture
         {
             return _rawMaterialStockDetailRepository.GetOneByOrg(a => a.RawMaterialStockDetailId == RMDetailsId && a.OrganizationId == orgId);
         }
+        public RawMaterialStockDetail GetRawMaterialStockUpdateById(long Id, long orgId)
+        {
+            return _rawMaterialStockDetailRepository.GetOneByOrg(a => a.RawMaterialStockDetailId == Id && a.OrganizationId == orgId);
+        }
 
         public IEnumerable<RawMaterialStockDetail> GetRawMaterialStockDetailsById(long infoId, long orgId)
         {
@@ -64,7 +68,45 @@ namespace ERPBLL.Agriculture
             return _rawMaterialStockDetailRepository.Save();
         }
 
+        public bool updateRawmaterialstockdetails(long id, int UpdateRawMaterialStock,int IssueRawMaterialStockQty, long orgId)
+        {
+            bool IsSuccess = false;
+            int b = 0;
 
+            var rawmeterialdetailsqty = GetRawMaterialStockDetailsById(id, orgId);
+            
+
+            foreach (var itemss in rawmeterialdetailsqty)
+            {
+                if (itemss.Quantity>= IssueRawMaterialStockQty)
+                {
+                    var rawmeterialInfoqty = GetRawMaterialStockUpdateById(itemss.RawMaterialStockDetailId, orgId);
+                    int a = itemss.Quantity;
+                     b = a - IssueRawMaterialStockQty;
+
+                    rawmeterialInfoqty.Quantity = b;
+                    _rawMaterialStockDetailRepository.Update(rawmeterialInfoqty);
+                }
+                
+               
+               // _rawMaterialStockDetailRepository.UpdateAll(rawmeterialdetailsqty);
+            }
+            IsSuccess = _rawMaterialStockDetailRepository.Save();
+
+            //if (rawmeterialdetailsqty != null)
+            //{
+            //    rawmeterialdetailsqty. = rawmeterialinfoqty;
+
+            //    _rawMaterialStockInfoRepositiory.Update(rawmeterialinfoupdateqty);
+
+            //}
+            //IsSuccess = _rawMaterialStockInfoRepository.Save();
+            //if (IsSuccess)
+            //{
+            //    var rawMaterialStockDetailsUpdate = _rawMaterialStockDetail.updateRawmaterialstockdetails(id, UpdateRawMaterialStock, orgId);
+            //}
+            return IsSuccess;
+        }
         public bool updateRawMaterialStockDetails(RawMaterialStockInfoDTO info, List<RawMaterialStockDetailDTO> rawMaterialStockDetailsDTO, long userId, long orgId)
         {
             bool IsSuccess = false;

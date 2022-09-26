@@ -15,14 +15,17 @@ namespace ERPBLL.Agriculture
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly RawMaterialIssueStockInfoRepository _rawMaterialIssueStockInfoRepository;
         private readonly IRawMaterialIssueStockDetailsBusiness _rawMaterialIssueStockDetailsBusiness;
+        private readonly IRawMaterialStockInfo _rawMaterialStockInfo;
+        private readonly IRawMaterialStockDetail _rawMaterialStockDetail;
 
-        public RawMaterialIssueStockInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness)
+        public RawMaterialIssueStockInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._rawMaterialIssueStockInfoRepository = new RawMaterialIssueStockInfoRepository(this._agricultureUnitOfWork);
 
             this._rawMaterialIssueStockDetailsBusiness = rawMaterialIssueStockDetailsBusiness;
-
+            this._rawMaterialStockInfo = rawMaterialStockInfo;
+            this._rawMaterialStockDetail = rawMaterialStockDetail;
 
 
         }
@@ -33,6 +36,7 @@ namespace ERPBLL.Agriculture
         public bool SaveProductIssueRawMaterialStock(RawMaterialIssueStockInfoDTO info, List<RawMaterialIssueStockDetailsDTO> details, long userId, long orgId)
         {
             bool isSuccess = false;
+          
             List<RawMaterialIssueStockInfo> IssuestockInfoAll = new List<RawMaterialIssueStockInfo>();
             List<RawMaterialIssueStockDetails> IssuestockDetails = new List<RawMaterialIssueStockDetails>();
 
@@ -60,7 +64,7 @@ namespace ERPBLL.Agriculture
 
                         };
                         IssuestockDetails.Add(IssuerawMaterials);
-                        var IssueRawMaterialStock = RawMaterialStockInfoCheckValues(orgId, item.RawMaterialId);
+                        var IssueRawMaterialStock = RawMaterialStockInfoCheckValues(item.RawMaterialId,orgId);
 
                         IssueRawMaterialStock.Quantity += item.Quantity;
                         _rawMaterialIssueStockInfoRepository.Update(IssueRawMaterialStock);
@@ -104,15 +108,22 @@ namespace ERPBLL.Agriculture
                 _rawMaterialIssueStockInfoRepository.InsertAll(IssuestockInfoAll);
                 if (_rawMaterialIssueStockInfoRepository.Save())
                 {
-
+                    
                     foreach (var items in IssuestockDetails)
                     {
-                        var IssueRawMaterialStockInfoid = RawMaterialStockInfoCheckValues(items.OrganizationId, items.RawMaterialId);
+                        var IssueRawMaterialStockInfoid = RawMaterialStockInfoCheckValues(items.RawMaterialId, items.OrganizationId);
 
                         isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveIssuerawMaterialStockDetail(items.OrganizationId, items.RawMaterialId, items.Quantity, items.Unit, items.IssueDate, items.EntryDate, items.EntryUserId, items.UpdateDate, items.UpdateUserId, items.Status, IssueRawMaterialStockInfoid.RawMaterialIssueStockId);
                     }
 
-
+                    if (isSuccess)
+                    {
+                        var RawmaterialvalueCheck = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(info.RawMaterialId, orgId);
+                        var RawMaterialStockQty = RawmaterialvalueCheck.Quantity;
+                        var IssueRawMaterialStockQty = info.Quantity;
+                        var UpdateRawMaterialStock = RawMaterialStockQty - IssueRawMaterialStockQty;
+                        var rawMaterialStockInfoUpdate = _rawMaterialStockInfo.UpdateRawmaterialstockInfo(RawmaterialvalueCheck.RawMaterialStockId, UpdateRawMaterialStock, IssueRawMaterialStockQty,orgId);
+                    }
 
                 }
                 // isSuccess = _rawMaterialStockInfoRepository.Save();

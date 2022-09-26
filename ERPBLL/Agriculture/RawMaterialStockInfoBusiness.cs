@@ -16,6 +16,7 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly RawMaterialStockInfoRepository _rawMaterialStockInfoRepository;
+
         private readonly IRawMaterialStockDetail _rawMaterialStockDetail;
 
 
@@ -58,6 +59,24 @@ namespace ERPBLL.Agriculture
             where 1=1  {0}",
             Utility.ParamChecker(param));
             return query;
+        }
+        public bool UpdateRawmaterialstockInfo(long id, int UpdateRawMaterialStock,int IssueRawMaterialStockQty, long orgId)
+        {
+            bool IsSuccess = false;
+
+            var rawmeterialinfoupdateqty = GetRawMaterialStockById(id, orgId);
+            if (rawmeterialinfoupdateqty != null)
+            {
+                rawmeterialinfoupdateqty.Quantity = UpdateRawMaterialStock;
+                _rawMaterialStockInfoRepository.Update(rawmeterialinfoupdateqty);
+
+            }
+            IsSuccess = _rawMaterialStockInfoRepository.Save();
+            if (IsSuccess)
+            {
+                var rawMaterialStockDetailsUpdate = _rawMaterialStockDetail.updateRawmaterialstockdetails(id, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId);
+            }
+            return IsSuccess;
         }
         public bool SaveRawMaterialStock(RawMaterialStockInfoDTO info, List<RawMaterialStockDetailDTO> details, long userId, long orgId)
         {

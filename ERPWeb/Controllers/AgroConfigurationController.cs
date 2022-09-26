@@ -720,7 +720,7 @@ namespace ERPWeb.Controllers
         }
         [HttpPost]
         public ActionResult SaveFinishGoodRecipe(FinishGoodRecipeInfoViewModel info, List<FinishGoodRecipeDetailsViewModel> details)
-        {
+        { 
             bool IsSuccess = false;
             //var pre = UserPrivilege("Inventory", "GetItemPreparation");
             //var permission = ((pre.Edit) || (pre.Add));
@@ -766,7 +766,7 @@ namespace ERPWeb.Controllers
             bool IsSuccess = false;
             if (ModelState.IsValid && details.Count > 0)
             {
-                RawMaterialIssueStockInfoDTO infoDTO = new RawMaterialIssueStockInfoDTO();
+                  RawMaterialIssueStockInfoDTO infoDTO = new RawMaterialIssueStockInfoDTO();
                 List<RawMaterialIssueStockDetailsDTO> detailDTOs = new List<RawMaterialIssueStockDetailsDTO>();
                 AutoMapper.Mapper.Map(info, infoDTO);
                 AutoMapper.Mapper.Map(details, detailDTOs);
