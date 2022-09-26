@@ -26,7 +26,7 @@ namespace ERPBLL.Agriculture
         }
         public FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByOrgId(long id, long orgId)
         {
-            return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.FGRId == id && i.OrganizationId == orgId);
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.FinishGoodProductId == id && i.OrganizationId == orgId);
         }
         public bool DeletefinishGoodRecipe(long id, long userId, long orgId)
         {
@@ -109,6 +109,16 @@ namespace ERPBLL.Agriculture
         public IEnumerable<FinishGoodRecipeInfo> GetAllFinishGoodReceif(long orgId)
         {
             return _finishGoodRecipeInfoRepository.GetAll(f=>f.OrganizationId==orgId);
+        }
+
+        public IEnumerable<FinishGoodRecipeInfo> GetAllFinishGoodReceipCode(long productId, long orgId)
+        {
+            return _finishGoodRecipeInfoRepository.GetAll(a => a.FinishGoodProductId == productId && a.OrganizationId == orgId).ToList();
+        }
+
+        public FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByFGID(long id, long orgId)
+        {
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(a => a.FinishGoodProductId == id && a.OrganizationId == orgId);
         }
     }
 }

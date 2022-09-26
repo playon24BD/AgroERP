@@ -3,6 +3,7 @@ using ERPBLL.Common;
 using ERPBLL.ControlPanel.Interface;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ViewModels;
+using ERPBO.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,10 +30,12 @@ namespace ERPWeb.Controllers
         private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
         private readonly IFinishGoodRecipeDetailsBusiness _finishGoodRecipeDetailsBusiness;
         private readonly IFinishGoodProductionInfoBusiness _finishGoodProductionInfoBusiness;
+        private readonly IFinishGoodProductionDetailsBusiness _finishGoodProductionDetailsBusiness;
 
 
 
-        public AgroConfigurationController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness)
+
+        public AgroConfigurationController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
         {
             this._rawMaterialStockInfo = rawMaterialStockInfo;
             this._rawMaterialStockDetail = rawMaterialStockDetail;
@@ -48,6 +51,8 @@ namespace ERPWeb.Controllers
             this._rawMaterialSupplierBusiness = rawMaterialSupplierBusiness;
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
             this._finishGoodRecipeDetailsBusiness = finishGoodRecipeDetailsBusiness;
+            this._finishGoodProductionInfoBusiness = finishGoodProductionInfoBusiness;
+            this._finishGoodProductionDetailsBusiness = finishGoodProductionDetailsBusiness;
         }
         // GET: AgroConfiguration
 
@@ -844,6 +849,8 @@ namespace ERPWeb.Controllers
 
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
+            ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg=>fg.ReceipeBatchCode !=null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
+
             ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
             return View();
@@ -864,11 +871,36 @@ namespace ERPWeb.Controllers
 
         }
 
+        public ActionResult GetReceipyCodeByProductionId(long finishGoodProductId)
+        {
+            try
+            {
+                //var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(finishGoodProductId, User.OrgId).ReceipeBatchCode;
+                //var ddlRecipeCode = receipeBatchCode.Select(d => new Dropdown { text=receipeBatchCode,value=d });
+                var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipCode(finishGoodProductId, User.OrgId);
+
+                var dropDown = receipeBatchCode.Where(a=>a.ReceipeBatchCode !=null).Select(s => new Dropdown { text = s.ReceipeBatchCode, value = s.ReceipeBatchCode }).ToList();
+
+
+                return Json(dropDown, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Not Found", JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
+
+
         public ActionResult GetReceipyDetailsByProductionId(long finishGoodProductId)
         {
             try
             {
-                var AllMetarial = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(finishGoodProductId, User.OrgId).Select(m => new FinishGoodRecipeDetailsDTO() {
+                long fgid = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByFGID(finishGoodProductId, User.OrgId).FGRId;
+
+                var AllMetarial = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(fgid, User.OrgId).Select(m => new FinishGoodRecipeDetailsDTO() {
                     FGRDetailsId = m.FGRDetailsId,
                     RawMaterialId = m.RawMaterialId,
                     RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(m.RawMaterialId, User.OrgId).RawMaterialName,

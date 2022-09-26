@@ -107,6 +107,12 @@
                                             <span class="error hide req-ddlProduct">Product Name is Required</span>
                                         </div>
                                         <div class="col-md-3">
+                                            <label class="control-label" for="ddlReceipBatchCode">BatchCode</label>
+                                            @Html.DropDownList("ddlReceipBatchCode",(IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode,"--Select Batch--",new {@class= " form-control form-control-sm select2" })
+                                            <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
+
+                                        </div>
+                                        <div class="col-md-3">
                                             <label for="qty"> Qty</label>
                                             <input  type="number" id="qty" name="qty" class="form-control form-control-sm" readonly/>
                                             <span class="error hide req-qty">Qty Is Required</span>
@@ -134,7 +140,7 @@
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-12" style="overflow-y:scroll">
-                                                <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblMeasurement">
+                                                <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblFinishGoodProduction">
                                                     <thead>
                                                         <tr>
                                                             <th colspan="6">
@@ -142,12 +148,12 @@
                                                             </th>
                                                         </tr>
                                                         <tr class="btn-dark">
-                                                            <th>Sl</th>
+                                             
                                                             <th>Raw Material</th>
                                                             <th>Per Qty</th>
                                                             <th>Total Production Qty</th>
                                                             <th>Required Qty</th>
-                                                            <th>Action</th>
+                                          
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -171,20 +177,98 @@
 
 @section scripts{
     <script type="text/javascript">
+        var ddlOrganiation = $("#ddlOrganiation");
         var ddlProduct = $("#ddlProduct");
         var qty = $("#qty");
         var targetQty = $("#targetQty");
+
         ddlProduct.change(function () {
 
-            LoadData();
+            LoadQuantityData();
         })
-        function LoadData() {
+
+
+
+        //ddlProduct.change(function () {
+            
+        //    //debugger;
+        //    clearDropdown("ddlReceipBatchCode");
+        //    if (ddlProduct.val() != "") {
+           
+        //        LoadDropDown('/AgroConfiguration/GetReceipyCodeByProductionId', 'POST', ddlReceipBatchCode, JSON.stringify({ finishGoodProductId: ddlProduct.val() }));
+        //    }
+        //   // $("#ddlRequesition option:not(:first)").remove();
+
+          
+        //})
+
+        //function loadRecipyBatchCode() {
+        //    var data = { finishGoodProductId: TryParseInt(ddlProduct.val(), 0) };
+        //    $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
+        //        qty.val(res);
+        //    });
+
+        //}
+
+        function LoadQuantityData() {
             var data = { finishGoodProductId: TryParseInt(ddlProduct.val(), 0) };
   
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
                 qty.val(res);
             });
         }
+
+        $("#addTolist").click(function (e) {
+            e.preventDefault();
+            var data = { finishGoodProductId: TryParseInt(ddlProduct.val(), 0) };
+
+
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByProductionId", data)).then(function (res, status) {
+
+                console.log(res);
+                var sl = 0;
+                material = JSON.parse(res)
+                console.log(material);
+                //console.log(material[0].RawMaterialName);
+                $.each(material, function (index, value) {
+
+                    var td1 = "<td>" + value.RawMaterialName + "</td>";
+                    var td2 = "<td>" + value.FGRRawMaterQty + "</td>";
+                    var td3 = "<td>" + targetQty.val() + "</td>";
+                    var td4 = "<td>" + (value.FGRRawMaterQty * targetQty.val()) + "</td>";
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + "</tr>";
+                    $("#tblFinishGoodProduction tbody").append(tr)
+                  
+                })
+
+
+            });
+
+
+
+
+
+        })
+
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            var data = {};
+            var finishGoodProduction = { organizationId: ddlOrganiation.val(), finishGoodProductId: ddlProduct.val(), quanity: qty.val(), targetQuantity: targetQty.val()}
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, type.post, "/AgroConfiguration/SaveFinishGoodProduction", data, getToken())).then(function (res, status) {
+                if (status == "success") {
+
+
+                }
+
+
+            }).fail(function (error) {
+
+                console.log(error)
+            })
+
+        });
        
   
 
