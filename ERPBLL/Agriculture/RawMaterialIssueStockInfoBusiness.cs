@@ -90,7 +90,7 @@ namespace ERPBLL.Agriculture
                             UpdateDate = DateTime.Now,
                             UpdateUserId = userId,
                             RawMaterialIssueStockId = item.RawMaterialIssueStockId,
-                            Status =  "Pending"
+                            Status =  "StockIn"
 
                         };
                         IssuestockDetails.Add(IssuerawMaterials);
@@ -125,7 +125,7 @@ namespace ERPBLL.Agriculture
                             UpdateDate = DateTime.Now,
                             UpdateUserId = userId,
                             RawMaterialIssueStockId = item.RawMaterialIssueStockId,
-                            Status =  "Pending"
+                            Status = "StockIn"
 
                         };
                         IssuestockDetails.Add(rawMaterialIssue);

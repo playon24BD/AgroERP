@@ -74,7 +74,12 @@ namespace ERPBLL.Agriculture
             IsSuccess = _rawMaterialStockInfoRepository.Save();
             if (IsSuccess)
             {
+                
+
+
+
                 var rawMaterialStockDetailsUpdate = _rawMaterialStockDetail.updateRawmaterialstockdetails(id, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId);
+
             }
             return IsSuccess;
         }
@@ -106,7 +111,7 @@ namespace ERPBLL.Agriculture
                             UpdateUserId = userId,
                             RawMaterialStockId = item.RawMaterialStockId,
                             RawMaterialSupplierId=item.RawMaterialSupplierId,
-                            Status = item.Status = "Pending"
+                            Status = item.Status = "StockIn"
 
                         };
                         stockDetails.Add(rawMaterial);
@@ -147,7 +152,7 @@ namespace ERPBLL.Agriculture
                             UpdateUserId = userId,
                             RawMaterialStockId = item.RawMaterialStockId,
                             RawMaterialSupplierId=item.RawMaterialSupplierId,
-                            Status = item.Status = "Pending"
+                            Status = item.Status = "StockIn"
 
                         };
                         stockDetails.Add(rawMaterial);

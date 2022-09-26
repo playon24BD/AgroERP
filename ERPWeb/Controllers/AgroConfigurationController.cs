@@ -514,7 +514,8 @@ namespace ERPWeb.Controllers
                             //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
                             RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                             Quantity = i.Quantity,
-                            Unit = i.Unit
+                            Unit = i.Unit,
+                            Status=i.Status,
                         }).ToList();
                 }
                 else
@@ -826,11 +827,13 @@ namespace ERPWeb.Controllers
             var checkRawMaterialStockValue = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(RawMaterialId, User.OrgId);
 
             var itemStock = 0;
+            string unit = "";
             if (checkRawMaterialStockValue != null)
             {
                 itemStock = (checkRawMaterialStockValue.Quantity);
+                unit = (checkRawMaterialStockValue.Unit);
             }
-            return Json(new { RawMaterialStockQty = itemStock });
+            return Json(new { RawMaterialStockQty = itemStock , RawMaterialStockUnit = unit });
             
 
         }

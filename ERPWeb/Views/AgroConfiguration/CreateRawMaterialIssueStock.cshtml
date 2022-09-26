@@ -62,6 +62,7 @@
                     </div>
                     <div class="col-md-2">
                         <label for="ddlUnit" class="control-label">Unit</label>
+
                         <select id="ddlUnit" class="form-control form-control-sm">
                             <option value="">Select Unit</option>
                             <option value="Kg">Kg</option>
@@ -154,6 +155,7 @@
         var hdIssueStockModal = $("#hdIssueStockModal");
         var RawMaterialId = '';
         var RawMaterialStockQty = $("#RawMaterialStockQty");
+        var RawMaterialStockUnit = $("#RawMaterialStockUnit");
         var materialNameList = [];
 
 
@@ -161,10 +163,10 @@
             debugger;
             LoadRawMaterialStock();
 
-        }) 
+        })
 
 
- 
+
 
         function LoadRawMaterialStock() {
             debugger;
@@ -177,9 +179,11 @@
                     console.log(status);
                     if (status == "success") {
                         disable("#RawMaterialStockQty");
+                        disable("#RawMaterialStockUnit");
                         //$("#RawMaterialStockQty").text('(' + res.RawMaterialStockQty + ')');
                         RawMaterialStockQty.text('(' + res.RawMaterialStockQty + ')');
-                    
+                        RawMaterialStockUnit.text('(' + res.RawMaterialStockUnit + ')');
+
                     }
                 }).fail(function (error) {
                     consoleLog(error);
@@ -192,7 +196,7 @@
 
 
             if (validate() == true) {
-          
+
 
 
                     if (materialNameList.includes(ddlRawMaterialName.val())) {
@@ -215,7 +219,7 @@
                         materialNameList.push(ddlRawMaterialName.val());
                     }
 
-                
+
             }
 
             //ClearData();

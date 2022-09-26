@@ -72,25 +72,43 @@ namespace ERPBLL.Agriculture
         {
             bool IsSuccess = false;
             int b = 0;
+            long rowMaterialId = 0;
 
             var rawmeterialdetailsqty = GetRawMaterialStockDetailsById(id, orgId);
+
             
 
             foreach (var itemss in rawmeterialdetailsqty)
             {
                 if (itemss.Quantity>= IssueRawMaterialStockQty)
                 {
-                    var rawmeterialInfoqty = GetRawMaterialStockUpdateById(itemss.RawMaterialStockDetailId, orgId);
-                    int a = itemss.Quantity;
-                     b = a - IssueRawMaterialStockQty;
 
-                    rawmeterialInfoqty.Quantity = b;
-                    _rawMaterialStockDetailRepository.Update(rawmeterialInfoqty);
+                    rowMaterialId = itemss.RawMaterialId;
+                   
+                 
                 }
                 
                
                // _rawMaterialStockDetailRepository.UpdateAll(rawmeterialdetailsqty);
             }
+
+            RawMaterialStockDetail stockDetails = new RawMaterialStockDetail();
+
+            stockDetails.OrganizationId = orgId;
+            stockDetails.RawMaterialId = rowMaterialId;
+            stockDetails.RawMaterialSupplierId = 0;
+            //  var RawMaterialId = item.RawMaterialId;
+            stockDetails.Quantity = IssueRawMaterialStockQty;
+            stockDetails.Unit = "KG";
+            stockDetails.StockDate = DateTime.Now;
+            stockDetails.UpdateDate = DateTime.Now;
+            stockDetails.UpdateUserId = 23;
+            stockDetails.Status = "StockOut";
+            stockDetails.RawMaterialStockId = id;
+            _rawMaterialStockDetailRepository.Insert(stockDetails);
+
+
+
             IsSuccess = _rawMaterialStockDetailRepository.Save();
 
             //if (rawmeterialdetailsqty != null)
