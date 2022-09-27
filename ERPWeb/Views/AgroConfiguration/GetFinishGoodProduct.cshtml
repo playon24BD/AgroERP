@@ -64,18 +64,18 @@
                 <form id="formdepot">
                     <input type="hidden" id="hdproductId" />
                     <div class="form-row">
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                             <label for="ddlOrganizationName" class="control-label">OrganizationName</label>
-                            @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm" })
+                            @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             <span class="error hide required-organizatinName font-weight-bold">Input OrganizatinName!</span>
                             <span class="error hide duplicate-organizatinName font-weight-bold">Already OrganizatinName Exist!</span>
                         </div>
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                             <label for="ddlProductName" class="control-label">Product Name</label>
                             <input type="text" id="ddlProductName" class="form-control form-control-sm" />
                             <span class="error hide required-ProductName font-weight-bold">Input Product Name!</span>
                         </div>
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm" id="ddlStatus">
                                 <option value="Active">Active</option>
@@ -117,6 +117,12 @@
         var ddlProductName = $("#ddlProductName");
 
         $(document).ready(function () {
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
             LoadProductDataTable()
         })
         function LoadDataInitializer() {

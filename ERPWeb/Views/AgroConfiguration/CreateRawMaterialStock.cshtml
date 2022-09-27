@@ -26,7 +26,7 @@
                     <div class="col-md-2">
                         <label for="ddlOrganizationName" class="control-label">Organization Name</label>
 
-                        @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm" })
+                        @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
                     </div>
@@ -34,14 +34,14 @@
                     <div class="col-md-2">
                         <label for="ddlRawMaterialSupplierName" class="control-label">Supplier Name</label>
 
-                        @Html.DropDownList("ddlRawMaterialSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm" })
+                        @Html.DropDownList("ddlRawMaterialSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                         <span class="error hide required-ddlSupplierName font-weight-bold">Supplier Name is Required</span>
                     </div>
                     <div class="col-md-2">
                         <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
 
-                        @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm" })
+                        @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                         <span class="error hide required-RawMaterialName font-weight-bold">RawMaterial Name is Required</span>
                     </div>

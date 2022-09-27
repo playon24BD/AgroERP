@@ -26,17 +26,17 @@
 
                     </div>
                     <div class="col-md-3">
-             
-                    @Html.DropDownList("ddlDepotNameforSearch", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--Search by Depot--",new { @class = "form-control ctrl-changed select2 select2-danger ctrl-changed" })
+
+                        @Html.DropDownList("ddlDepotNameforSearch", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--Search by Depot--", new { @class = "form-control ctrl-changed select2 select2-danger ctrl-changed" })
 
                     </div>
                     <div class="col-md-3">
-                   @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Search by Material--",new {@class="form-control ctrl-changed select2 setect2-danger" })
+                        @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Search by Material--", new { @class = "form-control ctrl-changed select2 setect2-danger" })
 
                     </div>
                     @*<div class="col-md-3">
 
-        </div>*@
+                        </div>*@
 
                     <div class="col-md-3 text-right">
                         <button type="button" class="btn btn-primary btn-sm" id="btnAdd"><i class="fa-fa-plus">Add New Metarial</i></button>
@@ -79,41 +79,43 @@
             <div class="modal-body">
                 <form id="formRawMetarial">
                     <input type="hidden" id="hdmaterialId" />
-                    <div class="form-row">
-                        <label class="">Organization</label>
+                    <div class="col-md-12">
+                        <label class="control-label font-weight-bold">Organization</label>
 
-                        @Html.DropDownList("ddlOrganization",(IEnumerable<SelectListItem>)ViewBag.ddlOrganization,"--Select Organization--",new { @class="form-control form-control-sm select2"})
+                        @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganization, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
-                        <span class="error hide required-ddlOrganization font-weight-bold">Depot Name is Required</span>
+                        <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
 
                     </div>
-                    <div class="form-row" >
-                        
-                        <label class="control-label font-weight-bold">Depot Name</label>
-                        @Html.DropDownList("ddlDepotName",(IEnumerable<SelectListItem>)ViewBag.ddlDepotName,"Select Depot Name",new {@class= "form-control form-control-sm select2" })
-
-                        <span class="error hide required-ddlDepotName font-weight-bold">Depot Name is Required</span>
-                    </div>
-                    <div class="form-row">
-                        <label>Raw Material Name</label>
-                        <input type="text" id="rawMaterialName" class="form-control form-control-sm"/>
-                        <span class="error hide required-raqMaterialName">Material Name is Required</span>
                   
+                        <div class="col-md-12">
+
+                            <label class="control-label font-weight-bold">Depot Name</label>
+                            @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "Select Depot Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                            <span class="error hide required-ddlDepotName font-weight-bold">Depot Name is Required</span>
+                        </div>
+                   
+                    <div class="col-md-12">
+                        <label class="control-label font-weight-bold">Raw Material Name</label>
+                        <input type="text" id="rawMaterialName" class="form-control form-control-sm" />
+                        <span class="error hide required-raqMaterialName">Material Name is Required</span>
+
 
                     </div>
                     @*<div class="form-row">
-                        <label class="control-label font-weight-bold">Expiry Date</label>
-                        <input type="text" id="expairDate" class="form-control form-control-sm datepicker ctr-changed" />
-                        <span class="error hide required-expairDate"> Date is Required</span>
-                    </div>*@
-                    <div class="form-row">
-                        <label class="control-label" for="remarks">Remarks</label>
+                            <label class="control-label font-weight-bold">Expiry Date</label>
+                            <input type="text" id="expairDate" class="form-control form-control-sm datepicker ctr-changed" />
+                            <span class="error hide required-expairDate"> Date is Required</span>
+                        </div>*@
+                    <div class="col-md-12">
+                        <label class="control-label font-weight-bold" for="remarks">Remarks</label>
                         <input type="text" id="remarks" class="form-control form-control-sm" />
 
                     </div>
 
                 </form>
- 
+
 
             </div>
             <div class="modal-footer btn-light">
@@ -125,7 +127,7 @@
                         Data has been faild to Save
                     </div>
                 </div>
-                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane "data-dismiss="modal" data-target="#" >Cancel</i> </button>
+                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
                 <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
             </div>
         </div>
@@ -146,6 +148,12 @@
 
 
         $(document).ready(function () {
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
             expairDate.prop('readonly', true);
             expairDate.prop('readonly', true);
             expairDate.css("background-color", "#fff");
@@ -156,7 +164,8 @@
                 todayHighlight: true,
                 autoclose: true
             });
-        
+
+
         })
 
 
@@ -173,8 +182,8 @@
 
             ClearCtrl();
             OpenModal();
-       
-            
+
+
         })
         ddlDepotNameforSearch.change(function () {
 
@@ -216,9 +225,9 @@
                     console.log(status);
                     if (res == true) {
                         message("#msg1", "#rawmetarialModal");
-                  
 
-                
+
+
 
                     }
                     else {
@@ -230,7 +239,7 @@
 
 
 
-         
+
 
 
             }
@@ -309,7 +318,7 @@
 
 
     </script>
-    
+
 }
 
 

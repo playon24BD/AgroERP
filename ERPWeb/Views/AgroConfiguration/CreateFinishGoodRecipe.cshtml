@@ -42,7 +42,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="ddlProductunit" class="col-form-label">Product Unit</label>
-                                @Html.DropDownList("ddlProductunit", (IEnumerable<SelectListItem>)ViewBag.ddlProductunit, "--Select Product unit--", new { @class = "form-control form-control-sm ctrl-changed" })
+                                @Html.DropDownList("ddlProductunit", (IEnumerable<SelectListItem>)ViewBag.ddlProductunit, "--Select Product unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-preparation text-bold">Unit is required</span>
                             </div>
                             <div class="form-row col-6">
@@ -64,7 +64,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="ddlRawMaterialName" class="col-form-label">Raw Material Name</label>
-                                @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select RawMaterial Name--", new { @class = "form-control form-control-sm ctrl-changed" })
+                                @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select RawMaterial Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-src-RawMaterialName font-weight-bold">RawMaterial Name is required !</span>
 
                             </div>
@@ -75,7 +75,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="ddlRawMaterial" class="col-form-label">Product Unit</label>
-                                @Html.DropDownList("ddlRawMaterialunit", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialunit, "--Select RawMaterial unit--", new { @class = "form-control form-control-sm ctrl-changed" })
+                                @Html.DropDownList("ddlRawMaterialunit", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialunit, "--Select RawMaterial unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-preparation text-bold">Unit is required</span>
                             </div>
                             @*<div class="col-md-3">

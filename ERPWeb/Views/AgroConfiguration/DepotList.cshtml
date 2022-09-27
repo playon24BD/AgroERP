@@ -65,7 +65,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-8">
                             <label for="ddlOrganizationName" class="control-label">OrganizationName</label>
-                            @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm" })
+                            @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
                             
                         </div>
@@ -75,7 +75,7 @@
                             <span class="error hide required-DepotName font-weight-bold">Input Depot Name!</span>
                             <span class="error hide duplicate-DepotName font-weight-bold">Already DepotName Exist!</span>
                         </div>
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-8">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm" id="ddlStatus">
                                 <option value="Active">Active</option>
@@ -115,11 +115,21 @@
         var ddlOrganizationName = $("#ddlOrganizationName");
         var ddlStatus = $("#ddlStatus");
         var ddlDepotName = $("#ddlDepotName");
+
+
         $(document).ready(function () {
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
             LoadDepotDataTable()
         })
 
-
+        function LoadDataInitializer() {
+            LoadDepotDataTable();
+        }
 
         //#region Warehouse
 
@@ -250,7 +260,7 @@
             ddlDepotName.val("");
             ddlOrganizationName.val('');
             hddepotId.val('0');
-            ddlStatus.val("");
+           // ddlStatus.val("");
 
         }
 

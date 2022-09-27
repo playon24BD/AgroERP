@@ -364,8 +364,8 @@ namespace ERPWeb.Controllers
         {
             if (string.IsNullOrEmpty(flag))
             {
+                //ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == User.OrgId).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
                 return View();
-
             }
             else
             {
@@ -376,7 +376,7 @@ namespace ERPWeb.Controllers
 
                 return PartialView("_GetMeasurementList", viewModels);
             }
-
+            //return View();
 
         }
         public ActionResult SaveMeasurement(List<MeasurementSetupViewModel> models)
