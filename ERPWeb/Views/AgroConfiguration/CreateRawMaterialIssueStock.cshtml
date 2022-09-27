@@ -63,7 +63,7 @@
                     <div class="col-md-2">
                         <label for="ddlUnit" class="control-label">Unit</label>
 
-                        <select id="ddlUnit" class="form-control form-control-sm">
+                        <select id="ddlUnit" class="form-control form-control-sm" readonly>
                             <option value="">Select Unit</option>
                             <option value="Kg">Kg</option>
                             <option value="Gram">Gram</option>
@@ -169,11 +169,21 @@
 
         ddlRawMaterialName.change(function () {
             debugger;
-            LoadRawMaterialStock();
+           // LoadRawMaterialStock();
+            clearDropdown("ddlUnit");
+            LoadDropDown("/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", "Post", ddlUnit.val(), JSON.stringify({ RawMaterialId: ddlRawMaterialName.val() }))
+            //LoadUnitData();
 
         })
 
+        function LoadUnitData() {
+            debugger;
+            var data = { RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0) };
 
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", data)).then(function (res, status) {
+                ddlUnit.val(res);
+            });
+        }
 
 
         function LoadRawMaterialStock() {
