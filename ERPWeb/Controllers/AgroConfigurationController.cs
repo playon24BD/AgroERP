@@ -799,6 +799,20 @@ namespace ERPWeb.Controllers
                 }
                 return PartialView("_GetRawMaterialIssueStockDetail", details);
             }
+
+            else
+            {
+                if (!string.IsNullOrEmpty(flag) && flag == Flag.Delete)
+                {
+                    bool IsSuccess = false;
+                    if (id != null && id > 0)
+                    {
+                        IsSuccess = _rawMaterialIssueStockInfoBusiness.DeleteRawMaterialIssueStock(id.Value, User.UserId, User.OrgId);
+                    }
+                    return Json(IsSuccess);
+                }
+            }
+
             return View();
         }
 
@@ -812,6 +826,13 @@ namespace ERPWeb.Controllers
 
             return View();
         }
+        public ActionResult GetRawMaterialIssueStockLoadUnit(long RawMaterialId)
+        {
+            string Unit = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockUnitById(RawMaterialId, User.OrgId).Unit;
+
+            return Json(Unit);
+        }
+
         [HttpPost]
         public ActionResult SaveProductionIssueRawMaterialStock(RawMaterialIssueStockInfoViewModel info, List<RawMaterialIssueStockDetailsViewModel> details)
         {

@@ -173,5 +173,16 @@ namespace ERPBLL.Agriculture
         {
             return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialIssueStockId == id && i.OrganizationId == orgId);
         }
+
+        public bool DeleteRawMaterialIssueStock(long id, long userId, long orgId)
+        {
+            _rawMaterialIssueStockInfoRepository.DeleteAll(i => i.RawMaterialIssueStockId == id && i.OrganizationId == orgId);
+            return _rawMaterialIssueStockInfoRepository.Save();
+        }
+
+        public RawMaterialIssueStockInfo GetRawMaterialIssueStockUnitById(long id, long orgId)
+        {
+            return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == id && i.OrganizationId == orgId);
+        }
     }
 }
