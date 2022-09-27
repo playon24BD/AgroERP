@@ -831,7 +831,7 @@ namespace ERPWeb.Controllers
         {
             var checkRawMaterialStockValue = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(RawMaterialId, User.OrgId);
 
-            var itemStock = 0;
+            double itemStock = 0;
             string unit = "";
             if (checkRawMaterialStockValue != null)
             {

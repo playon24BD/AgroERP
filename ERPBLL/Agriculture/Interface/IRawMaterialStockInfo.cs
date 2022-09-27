@@ -26,7 +26,7 @@ namespace ERPBLL.Agriculture.Interface
 
         bool DeleteRawMaterialStock(long id, long userId, long orgId);
         RawMaterialStockInfo GetCheckRawmeterislQuantity(long RawMaterialId, long orgId);
-        bool UpdateRawmaterialstockInfo(long id, int UpdateRawMaterialStock,int IssueRawMaterialStockQty,long orgId);
+        bool UpdateRawmaterialstockInfo(long id, double UpdateRawMaterialStock,double IssueRawMaterialStockQty,long orgId, string Unit, DateTime? EntryDate, long? EntryUserId);
 
     }
 }

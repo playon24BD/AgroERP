@@ -60,7 +60,7 @@ namespace ERPBLL.Agriculture
             Utility.ParamChecker(param));
             return query;
         }
-        public bool UpdateRawmaterialstockInfo(long id, int UpdateRawMaterialStock,int IssueRawMaterialStockQty, long orgId)
+        public bool UpdateRawmaterialstockInfo(long id, double UpdateRawMaterialStock, double IssueRawMaterialStockQty, long orgId, string Unit, DateTime? EntryDate, long? EntryUserId)
         {
             bool IsSuccess = false;
 
@@ -78,7 +78,7 @@ namespace ERPBLL.Agriculture
 
 
 
-                var rawMaterialStockDetailsUpdate = _rawMaterialStockDetail.updateRawmaterialstockdetails(id, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId);
+                var rawMaterialStockDetailsUpdate = _rawMaterialStockDetail.updateRawmaterialstockdetails(id, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId, Unit, EntryDate, EntryUserId);
 
             }
             return IsSuccess;

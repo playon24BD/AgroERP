@@ -42,7 +42,7 @@ namespace ERPBLL.Agriculture
             return _rawMaterialStockDetailRepository.GetAll(i => i.OrganizationId == orgId && i.RawMaterialStockId == infoId).ToList();
         }
 
-        public bool SaverawMaterialStockDetail(long OrganizationId, long RawMaterialId, long SupplierId, int Quantity, string Unit, DateTime? StockDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, long? UpdateUserId, string Status, long RawMaterialStockId)
+        public bool SaverawMaterialStockDetail(long OrganizationId, long RawMaterialId, long SupplierId, double Quantity, string Unit, DateTime? StockDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, long? UpdateUserId, string Status, long RawMaterialStockId)
         {
             List<RawMaterialStockDetail> RawMaterialStockDetail = new List<RawMaterialStockDetail>();
 
@@ -68,7 +68,7 @@ namespace ERPBLL.Agriculture
             return _rawMaterialStockDetailRepository.Save();
         }
 
-        public bool updateRawmaterialstockdetails(long id, int UpdateRawMaterialStock,int IssueRawMaterialStockQty, long orgId)
+        public bool updateRawmaterialstockdetails(long id, double UpdateRawMaterialStock, double IssueRawMaterialStockQty, long orgId, string Unit, DateTime? EntryDate, long? EntryUserId)
         {
             bool IsSuccess = false;
             int b = 0;
@@ -99,10 +99,10 @@ namespace ERPBLL.Agriculture
             stockDetails.RawMaterialSupplierId = 0;
             //  var RawMaterialId = item.RawMaterialId;
             stockDetails.Quantity = IssueRawMaterialStockQty;
-            stockDetails.Unit = "KG";
+            stockDetails.Unit = Unit;
             stockDetails.StockDate = DateTime.Now;
-            stockDetails.UpdateDate = DateTime.Now;
-            stockDetails.UpdateUserId = 23;
+            stockDetails.EntryDate = EntryDate;
+            stockDetails.EntryUserId = EntryUserId;
             stockDetails.Status = "StockOut";
             stockDetails.RawMaterialStockId = id;
             _rawMaterialStockDetailRepository.Insert(stockDetails);
@@ -128,7 +128,7 @@ namespace ERPBLL.Agriculture
         public bool updateRawMaterialStockDetails(RawMaterialStockInfoDTO info, List<RawMaterialStockDetailDTO> rawMaterialStockDetailsDTO, long userId, long orgId)
         {
             bool IsSuccess = false;
-            var rawmeterialinfoqty = 0;
+            double rawmeterialinfoqty = 0;
             var rawmeterialinfoupdateqty = GetRecipeById(info.RawMaterialStockId, orgId);
             if (info.RawMaterialStockId != 0)
             {

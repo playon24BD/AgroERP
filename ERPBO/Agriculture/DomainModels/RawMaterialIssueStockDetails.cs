@@ -15,7 +15,7 @@ namespace ERPBO.Agriculture.DomainModels
         public long RawMaterialIssueStockDetailsId { get; set; }
         public long OrganizationId { get; set; }
         public long RawMaterialId { get; set; }
-        public int Quantity { get; set; }
+        public double Quantity { get; set; }
         public string Unit { get; set; }
         public DateTime? IssueDate { get; set; }
         public DateTime? EntryDate { get; set; }

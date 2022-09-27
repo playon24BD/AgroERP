@@ -87,8 +87,8 @@ namespace ERPBLL.Agriculture
                             Quantity = item.Quantity,
                             Unit = item.Unit,
                             IssueDate = DateTime.Now,
-                            UpdateDate = DateTime.Now,
-                            UpdateUserId = userId,
+                            EntryDate = DateTime.Now,
+                            EntryUserId = userId,
                             RawMaterialIssueStockId = item.RawMaterialIssueStockId,
                             Status =  "StockIn"
 
@@ -122,8 +122,8 @@ namespace ERPBLL.Agriculture
                             Quantity = item.Quantity,
                             Unit = item.Unit,
                             IssueDate = DateTime.Now,
-                            UpdateDate = DateTime.Now,
-                            UpdateUserId = userId,
+                            EntryDate = DateTime.Now,
+                            EntryUserId = userId,
                             RawMaterialIssueStockId = item.RawMaterialIssueStockId,
                             Status = "StockIn"
 
@@ -149,9 +149,9 @@ namespace ERPBLL.Agriculture
                         {
                             var RawmaterialvalueCheck = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(items.RawMaterialId, orgId);
                             var RawMaterialStockQty = RawmaterialvalueCheck.Quantity;
-                            var IssueRawMaterialStockQty = items.Quantity;
-                            var UpdateRawMaterialStock = RawMaterialStockQty - IssueRawMaterialStockQty;
-                            var rawMaterialStockInfoUpdate = _rawMaterialStockInfo.UpdateRawmaterialstockInfo(RawmaterialvalueCheck.RawMaterialStockId, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId);
+                            double IssueRawMaterialStockQty = items.Quantity;
+                            double UpdateRawMaterialStock = RawMaterialStockQty - IssueRawMaterialStockQty;
+                            var rawMaterialStockInfoUpdate = _rawMaterialStockInfo.UpdateRawmaterialstockInfo(RawmaterialvalueCheck.RawMaterialStockId, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId, items.Unit, items.EntryDate, items.EntryUserId);
                         }
                     }
 

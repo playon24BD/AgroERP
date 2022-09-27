@@ -14,9 +14,9 @@ namespace ERPBO.Agriculture.DomainModels
         public string FinishGoodProductionBatch { get; set; }
         public string ReceipeBatchCode { get; set; }
         public long RawMaterialId { get; set; }
-        public int FGRRawMaterQty { get; set; }
-        public int TotalQuantity { get; set; }
-        public int RequiredQuantity { get; set; }
+        public double FGRRawMaterQty { get; set; }
+        public double TotalQuantity { get; set; }
+        public double RequiredQuantity { get; set; }
         public string Status { get; set; }
         public string Remarks { get; set; }
         public string flag { get; set; }

@@ -13,7 +13,7 @@ namespace ERPBO.Agriculture.ViewModels
         public long OrganizationId { get; set; }
         public long FinishGoodProductId { get; set; }
         public long RawMaterialId { get; set; }
-        public int Quantity { get; set; }
+        public double Quantity { get; set; }
         public string Unit { get; set; }
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
