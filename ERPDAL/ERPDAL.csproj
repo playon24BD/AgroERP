@@ -166,6 +166,10 @@
     <Compile Include="AgricultureContextMigrations\202209260911503_Agriculture_productionfinishGoodInfoandDetailsAdded.Designer.cs">
       <DependentUpon>202209260911503_Agriculture_productionfinishGoodInfoandDetailsAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202209270558481_Agriculture_ReceipeUpdate.cs" />
+    <Compile Include="AgricultureContextMigrations\202209270558481_Agriculture_ReceipeUpdate.Designer.cs">
+      <DependentUpon>202209270558481_Agriculture_ReceipeUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -262,6 +266,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202209260911503_Agriculture_productionfinishGoodInfoandDetailsAdded.resx">
       <DependentUpon>202209260911503_Agriculture_productionfinishGoodInfoandDetailsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202209270558481_Agriculture_ReceipeUpdate.resx">
+      <DependentUpon>202209270558481_Agriculture_ReceipeUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

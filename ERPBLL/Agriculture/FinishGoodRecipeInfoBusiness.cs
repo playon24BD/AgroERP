@@ -26,7 +26,7 @@ namespace ERPBLL.Agriculture
         }
         public FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByOrgId(long id, long orgId)
         {
-            return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.FinishGoodProductId == id && i.OrganizationId == orgId);
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.FGRId == id && i.OrganizationId == orgId);
         }
         public bool DeletefinishGoodRecipe(long id, long userId, long orgId)
         {

@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="txtRawMaterialQty" class="col-form-label">RawMaterial Qty <span id="unitName" class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
-                                <input type="number" placeholder="Qty" name="quantity" id="txtRawMaterialQty" class="form-control form-control-sm" />
+                                <input type="text" placeholder="Qty" name="quantity" id="txtRawMaterialQty" class="form-control form-control-sm" />
                                 <span class="error hide req-src-RawMaterialqty text-bold">RawMaterial Qty is required!</span>
                             </div>
                             <div class="col-md-3">
@@ -219,10 +219,10 @@
                 $(".req-src-RawMaterialName").removeClass('hide');
                 isValid = false;
             }
-            if (TryParseInt(txtRawMaterialQty.val(), 0) <= 0) {
-                $(".req-src-RawMaterialqty").removeClass('hide');
-                isValid = false;
-            }
+            //if (TryParseInt(txtRawMaterialQty.val(), 0) <= 0) {
+            //    $(".req-src-RawMaterialqty").removeClass('hide');
+            //    isValid = false;
+            //}
 
             return isValid;
         }

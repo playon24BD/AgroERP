@@ -144,16 +144,18 @@ namespace ERPBLL.Agriculture
                         var IssueRawMaterialStockInfoid = RawMaterialStockInfoCheckValues(items.RawMaterialId, items.OrganizationId);
 
                         isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveIssuerawMaterialStockDetail(items.OrganizationId, items.RawMaterialId, items.Quantity, items.Unit, items.IssueDate, items.EntryDate, items.EntryUserId, items.UpdateDate, items.UpdateUserId, items.Status, IssueRawMaterialStockInfoid.RawMaterialIssueStockId);
+
+                        if (isSuccess)
+                        {
+                            var RawmaterialvalueCheck = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(items.RawMaterialId, orgId);
+                            var RawMaterialStockQty = RawmaterialvalueCheck.Quantity;
+                            var IssueRawMaterialStockQty = items.Quantity;
+                            var UpdateRawMaterialStock = RawMaterialStockQty - IssueRawMaterialStockQty;
+                            var rawMaterialStockInfoUpdate = _rawMaterialStockInfo.UpdateRawmaterialstockInfo(RawmaterialvalueCheck.RawMaterialStockId, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId);
+                        }
                     }
 
-                    if (isSuccess)
-                    {
-                        var RawmaterialvalueCheck = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(info.RawMaterialId, orgId);
-                        var RawMaterialStockQty = RawmaterialvalueCheck.Quantity;
-                        var IssueRawMaterialStockQty = info.Quantity;
-                        var UpdateRawMaterialStock = RawMaterialStockQty - IssueRawMaterialStockQty;
-                        var rawMaterialStockInfoUpdate = _rawMaterialStockInfo.UpdateRawmaterialstockInfo(RawmaterialvalueCheck.RawMaterialStockId, UpdateRawMaterialStock, IssueRawMaterialStockQty,orgId);
-                    }
+                    
 
                 }
                 // isSuccess = _rawMaterialStockInfoRepository.Save();

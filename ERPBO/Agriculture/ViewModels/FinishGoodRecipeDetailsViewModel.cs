@@ -12,7 +12,7 @@ namespace ERPBO.Agriculture.ViewModels
         public long RawMaterialId { get; set; }
         public string RawMaterialName { get; set; }
         public string ReceipeBatchCode { get; set; }
-        public int FGRRawMaterQty { get; set; }
+        public double FGRRawMaterQty { get; set; }
         public string FGRRawMaterUnit { get; set; }
         public long OrganizationId { get; set; }
         public long? EUserId { get; set; }
