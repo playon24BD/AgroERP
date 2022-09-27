@@ -9,6 +9,7 @@ namespace ERPBO.Agriculture.ViewModels
     public class FinishGoodProductionInfoViewModel
     {
         public long FinishGoodProductionInfoId { get; set; }
+        public string FinishGoodProductName { get; set; }
         public string FinishGoodProductionBatch { get; set; }
         public string ReceipeBatchCode { get; set; }
         public long FinishGoodProductId { get; set; }

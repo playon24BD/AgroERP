@@ -843,18 +843,48 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetProductFinishGoodList()
+        public ActionResult GetProductFinishGoodList(string flag,long? productId)
         {
 
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-            ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
 
-            ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg=>fg.ReceipeBatchCode !=null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
-
-            ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
 
-            return View();
+                return View();
+
+            }
+            else if (!string.IsNullOrEmpty(flag) && productId !=null)
+            {
+
+
+                return View();
+            }
+            else
+            {
+
+                IEnumerable<FinishGoodProductionInfoDTO>finishGoodProduction =  _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f=>new FinishGoodProductionInfoDTO {
+                    FinishGoodProductionInfoId=f.FinishGoodProductInfoId,
+                    FinishGoodProductionBatch=f.FinishGoodProductionBatch,
+                    TargetQuantity=f.TargetQuantity,
+                    Quanity=f.Quanity,
+                    Status=f.Status,
+                    ReceipeBatchCode=f.ReceipeBatchCode,
+                    FinishGoodProductId=f.FinishGoodProductId,
+                   FinishGoodProductName=_finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId,User.OrgId).FinishGoodProductName
+                    
+                }).ToList();
+
+                List<FinishGoodProductionInfoViewModel> viewModel = new List<FinishGoodProductionInfoViewModel>();
+                AutoMapper.Mapper.Map(finishGoodProduction, viewModel);
+                return PartialView("_GetProductFinishGoodList",viewModel);
+            }
+
+          
         }
 
         public ActionResult GetReceipyByProductionId(string receipeBatchCode)
