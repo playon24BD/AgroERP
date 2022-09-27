@@ -181,7 +181,9 @@
         var ddlProduct = $("#ddlProduct");
         var qty = $("#qty");
         var targetQty = $("#targetQty");
+        var ddlReceipBatchCode = $("#ddlReceipBatchCode");
 
+<<<<<<< Updated upstream
         $(document).ready(function () {
             $('.select2').select2();
 
@@ -192,35 +194,32 @@
         })
 
         ddlProduct.change(function () {
+=======
+        ddlReceipBatchCode.change(function () {
+>>>>>>> Stashed changes
 
             LoadQuantityData();
         })
 
 
 
-        //ddlProduct.change(function () {
+        ddlProduct.change(function () {
             
-        //    //debugger;
-        //    clearDropdown("ddlReceipBatchCode");
-        //    if (ddlProduct.val() != "") {
+            //debugger;
+            clearDropdown("ddlReceipBatchCode");
+            if (ddlProduct.val() != "") {
            
-        //        LoadDropDown('/AgroConfiguration/GetReceipyCodeByProductionId', 'POST', ddlReceipBatchCode, JSON.stringify({ finishGoodProductId: ddlProduct.val() }));
-        //    }
-        //   // $("#ddlRequesition option:not(:first)").remove();
+                LoadDropDown('/AgroConfiguration/GetReceipyCodeByProductionId', 'POST', ddlReceipBatchCode, JSON.stringify({ finishGoodProductId: ddlProduct.val() }));
+            }
+           // $("#ddlRequesition option:not(:first)").remove();
 
           
-        //})
+        })
 
-        //function loadRecipyBatchCode() {
-        //    var data = { finishGoodProductId: TryParseInt(ddlProduct.val(), 0) };
-        //    $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
-        //        qty.val(res);
-        //    });
 
-        //}
 
         function LoadQuantityData() {
-            var data = { finishGoodProductId: TryParseInt(ddlProduct.val(), 0) };
+            var data = { receipeBatchCode: ddlReceipBatchCode.val() };
   
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
                 qty.val(res);
@@ -229,33 +228,38 @@
 
         $("#addTolist").click(function (e) {
             e.preventDefault();
-            var data = { finishGoodProductId: TryParseInt(ddlProduct.val(), 0) };
+            var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
 
-
-
-            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByProductionId", data)).then(function (res, status) {
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
 
                 console.log(res);
                 var sl = 0;
                 material = JSON.parse(res)
                 console.log(material);
-                //console.log(material[0].RawMaterialName);
-                $.each(material, function (index, value) {
-
-                    var td1 = "<td>" + value.RawMaterialName + "</td>";
-                    var td2 = "<td>" + value.FGRRawMaterQty + "</td>";
-                    var td3 = "<td>" + targetQty.val() + "</td>";
-                    var td4 = "<td>" + (value.FGRRawMaterQty * targetQty.val()) + "</td>";
-                    var tr = "<tr>" + td1 + td2 + td3 + td4 + "</tr>";
-                    $("#tblFinishGoodProduction tbody").append(tr)
-                  
-                })
+                var len = material.length;
+                console.log("length: "+ len);
+                if (len < 30) {
 
 
-            });
+                    //console.log(material[0].RawMaterialName);
+                    $.each(material, function (index, value) {
 
+                        var td1 = "<td>" + value.RawMaterialName + "</td>";
+                        var td5 = "<td class='hide'>" + value.RawMaterialId + "</td>";
+                        var td2 = "<td>" + value.FGRRawMaterQty + "</td>";
+                        var td3 = "<td>" + targetQty.val() + "</td>";
+                        var td4 = "<td>" + (value.FGRRawMaterQty * targetQty.val()) + "</td>";
+                        var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + "</tr>";
+                        $("#tblFinishGoodProduction tbody").append(tr)
 
+                    })
 
+                }
+                else {
+                    alert(res);
+                }
+
+                });
 
 
         })
@@ -263,8 +267,24 @@
         $("#btnSubmit").click(function (e) {
             e.preventDefault();
             var data = {};
-            var finishGoodProduction = { organizationId: ddlOrganiation.val(), finishGoodProductId: ddlProduct.val(), quanity: qty.val(), targetQuantity: targetQty.val()}
+            var finishGoodProduction = { organizationId: ddlOrganiation.val(), finishGoodProductId: ddlProduct.val(), quanity: qty.val(), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
 
+            var details = [];
+            details.length = 0;
+
+            $.each($("#tblFinishGoodProduction tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+                    RawMaterialId: tds.eq(4).html(),
+                    ReceipeBatchCode: tds.eq(6).html(),
+                    FGRRawMaterQty: tds.eq(1).html(),
+                    TotalQuantity: tds.eq(2).html(),
+                    RequiredQuantity: tds.eq(3).html()
+
+                });
+            })
+
+            var data = JSON.stringify({ info: finishGoodProduction, details: details })
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, type.post, "/AgroConfiguration/SaveFinishGoodProduction", data, getToken())).then(function (res, status) {
                 if (status == "success") {
 

@@ -77,5 +77,10 @@ namespace ERPBLL.Agriculture
         {
             return _finishGoodRecipeInfoRepository.GetAll(rd => rd.FGRId == fGRId && rd.OrganizationId == orgId).FirstOrDefault();
         }
+
+        public IEnumerable<FinishGoodRecipeDetails> GetFinishGoodRecipeDetailsByBatchCode(string receipeBatchCode, long orgId)
+        {
+            return _finishGoodRecipeDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.ReceipeBatchCode == receipeBatchCode).ToList();
+        }
     }
 }

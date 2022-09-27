@@ -120,5 +120,10 @@ namespace ERPBLL.Agriculture
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(a => a.FinishGoodProductId == id && a.OrganizationId == orgId);
         }
+
+        public FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByBatchCode(string receipeBatchCode, long orgId)
+        {
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.ReceipeBatchCode == receipeBatchCode && i.OrganizationId == orgId);
+        }
     }
 }

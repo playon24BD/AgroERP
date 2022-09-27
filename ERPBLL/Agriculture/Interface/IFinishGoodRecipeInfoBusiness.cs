@@ -17,6 +17,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<FinishGoodRecipeInfoDTO> GetFinishGoodRecipeInfos(long orgId, long? ProductId);
         FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByOrgId(long id, long orgId);
         FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByFGID(long id, long orgId);
+        FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByBatchCode(string receipeBatchCode, long orgId);
         bool DeletefinishGoodRecipe(long id, long userId, long orgId);
     }
 }

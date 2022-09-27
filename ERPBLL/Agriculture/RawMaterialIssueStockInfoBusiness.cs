@@ -63,6 +63,12 @@ namespace ERPBLL.Agriculture
         {
             return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == RawMaterialId && i.OrganizationId==orgId);
         }
+        public RawMaterialIssueStockInfo RawMaterialStockIssueInfobyRawMaterialid(long rawMaterialId, long orgId)
+        {
+            return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == rawMaterialId && i.OrganizationId == orgId);
+        }
+
+
         public bool SaveProductIssueRawMaterialStock(RawMaterialIssueStockInfoDTO info, List<RawMaterialIssueStockDetailsDTO> details, long userId, long orgId)
         {
             bool isSuccess = false;

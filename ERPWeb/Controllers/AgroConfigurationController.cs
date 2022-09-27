@@ -853,14 +853,15 @@ namespace ERPWeb.Controllers
 
             ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
+
             return View();
         }
 
-        public ActionResult GetReceipyByProductionId(long finishGoodProductId)
+        public ActionResult GetReceipyByProductionId(string receipeBatchCode)
         {
             try
             {
-                int quantity = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(finishGoodProductId, User.OrgId).FGRQty;
+                int quantity = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByBatchCode(receipeBatchCode, User.OrgId).FGRQty;
                 return Json(quantity, JsonRequestBehavior.AllowGet);
             }
             catch
@@ -893,7 +894,7 @@ namespace ERPWeb.Controllers
         }
 
 
-
+        //Not Need at this time
         public ActionResult GetReceipyDetailsByProductionId(long finishGoodProductId)
         {
             try
@@ -914,6 +915,71 @@ namespace ERPWeb.Controllers
                 return Json(viewModels, JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)
+            {
+                return Json($"Not Found: {ex}", JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
+        public ActionResult GetReceipyDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty)
+        {
+          
+            double issueQunatity = 0;
+            double perRecepQuantity = 0;
+            double requirdQuantity = 0;
+            bool Checked = false;
+
+            try
+            {
+
+                var recipeDetailsRawMaterials = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByBatchCode(receipeBatchCode, User.OrgId);
+                foreach(var rawMaterial in recipeDetailsRawMaterials)
+                {
+                   issueQunatity= _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
+                     perRecepQuantity = rawMaterial.FGRRawMaterQty;
+                    requirdQuantity = (perRecepQuantity* targetQty);
+                    if (requirdQuantity > issueQunatity)
+                    {
+                        Checked = false;
+                    }
+                    else
+                    {
+                        Checked = true;
+                    }
+
+                }
+
+                if (Checked)
+                {
+                    var AllMetarial = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByBatchCode(receipeBatchCode, User.OrgId).Select(m => new FinishGoodRecipeDetailsDTO()
+                    {
+                        FGRDetailsId = m.FGRDetailsId,
+                        RawMaterialId = m.RawMaterialId,
+                        RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(m.RawMaterialId, User.OrgId).RawMaterialName,
+                        FGRId = m.FGRId,
+                        FGRRawMaterQty = m.FGRRawMaterQty,
+
+
+                    }).ToList();
+
+
+
+
+                    List<FinishGoodRecipeDetailsViewModel> viewModels = new List<FinishGoodRecipeDetailsViewModel>();
+                    AutoMapper.Mapper.Map(AllMetarial, viewModels);
+                    return Json(viewModels, JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    return Json("Issue Quantity Not Sufficient Please Check Target Quantity", JsonRequestBehavior.AllowGet);
+                }
+   
+
+
+            }
+            catch (Exception ex)
             {
                 return Json($"Not Found: {ex}", JsonRequestBehavior.AllowGet);
             }
