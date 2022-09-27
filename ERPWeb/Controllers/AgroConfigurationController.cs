@@ -828,7 +828,7 @@ namespace ERPWeb.Controllers
         }
         public ActionResult GetRawMaterialIssueStockLoadUnit(long RawMaterialId)
         {
-            string Unit = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockUnitById(RawMaterialId, User.OrgId).Unit;
+         string Unit = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockUnitById(RawMaterialId, User.OrgId).Unit;
 
             return Json(Unit);
         }
