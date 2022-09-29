@@ -31,7 +31,7 @@
                 <td>@item.TargetQuantity</td>
                 <td>@item.Quanity</td>
 
-                <td><a href="#" class="btn btn-secondary btn-sm" dat-item-detail="@item.FinishGoodProductionBatch"><i class="fas fa-eye"></i>View</a></td>
+                <td><a href="#" class="btn btn-secondary btn-sm data-item-detail" data-item-detail="@item.FinishGoodProductionBatch"><i class="fas fa-eye"></i>View</a></td>
 
             </tr>
 
@@ -40,7 +40,7 @@
             else
             {
                 <tr>
-                    <td colspan="3">Data Not Found</td>
+                    <td colspan="6" class="text-center">Data Not Found</td>
                 </tr>
             }
 

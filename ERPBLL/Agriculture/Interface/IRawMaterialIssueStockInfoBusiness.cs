@@ -12,16 +12,19 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<RawMaterialIssueStockInfoDTO> GetRawMaterialIssueStockInfos(long orgId, long? rawMaterialId);
 
+
         RawMaterialIssueStockInfo GetRawMaterialIssueStockById(long id, long orgId);
 
         RawMaterialIssueStockInfo RawMaterialStockIssueInfobyRawMaterialid(long rawMaterialId, long orgId);
 
 
         RawMaterialIssueStockInfo GetRawMaterialIssueStockUnitById(long id, long orgId);
-        
+        RawMaterialIssueStockInfo GetRawMaterialIssueStockByMeterialId(long rawMaterialId, long orgId);
+
+
 
         bool SaveProductIssueRawMaterialStock(RawMaterialIssueStockInfoDTO info, List<RawMaterialIssueStockDetailsDTO> details, long userId, long orgId);
-
+        bool UpdateProductIssueRawMaterialStock(List<RawMaterialIssueStockInfoDTO> issueStockInfoDTOs);
 
         bool DeleteRawMaterialIssueStock(long id, long userId, long orgId);
     }

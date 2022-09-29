@@ -12,6 +12,7 @@ namespace ERPBO.Agriculture.ViewModels
         public string FinishGoodProductionBatch { get; set; }
         public string ReceipeBatchCode { get; set; }
         public long RawMaterialId { get; set; }
+        public string RawMaterialName { get; set; }
         public double FGRRawMaterQty { get; set; }
         public double TotalQuantity { get; set; }
         public double RequiredQuantity { get; set; }

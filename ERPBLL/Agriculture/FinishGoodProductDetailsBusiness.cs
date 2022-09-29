@@ -27,6 +27,11 @@ namespace ERPBLL.Agriculture
             return _finishGoodProductionDetailsRepository.GetAll(fg=>fg.OrganizationId==orgId);
         }
 
+        public IEnumerable<FinishGoodProductionDetails> GetFinishGoodProductionDetails(string finishGoodProductionBatch,long orgId)
+        {
+            return _finishGoodProductionDetailsRepository.GetAll(f => f.FinishGoodProductionBatch == finishGoodProductionBatch);
+        }
+
         public FinishGoodProductionDetails GetFinishGoodProductionDetailsByAny(string any, long orgId)
         {
             throw new NotImplementedException();
@@ -42,7 +47,7 @@ namespace ERPBLL.Agriculture
 
             bool IsSuccess = false;
             FinishGoodProductionDetails details = new FinishGoodProductionDetails();
-            List<FinishGoodProductionDetails> finishGoodProductionlist = new List<FinishGoodProductionDetails>();
+            IList<FinishGoodProductionDetails> finishGoodProductionlist = new List<FinishGoodProductionDetails>();
 
             if (finishGoodProductionDetailsDTO.Count()>0)
             {
@@ -53,10 +58,16 @@ namespace ERPBLL.Agriculture
                     details.FGRRawMaterQty = item.FGRRawMaterQty;
                     details.TotalQuantity = item.TotalQuantity;
                     details.RequiredQuantity = item.RequiredQuantity;
-                    finishGoodProductionlist.Add(details);
+                    details.EntryDate = DateTime.Now;
+                    details.OrganizationId = orgId;
+                    details.EntryUserId = userId;
+                    details.Status = "Consumed";
+                    //finishGoodProductionlist.Add(details);
+                    _finishGoodProductionDetailsRepository.Insert(details);
+                    IsSuccess = _finishGoodProductionDetailsRepository.Save();
                 }
-                _finishGoodProductionDetailsRepository.InsertAll(finishGoodProductionlist);
-             IsSuccess= _finishGoodProductionDetailsRepository.Save();
+                //_finishGoodProductionDetailsRepository.InsertAll(finishGoodProductionlist);
+
             }
 
             return IsSuccess;
