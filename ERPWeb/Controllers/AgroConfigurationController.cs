@@ -7,6 +7,7 @@ using ERPBO.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace ERPWeb.Controllers
@@ -828,9 +829,17 @@ namespace ERPWeb.Controllers
         }
         public ActionResult GetRawMaterialIssueStockLoadUnit(long RawMaterialId)
         {
-         string Unit = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockUnitById(RawMaterialId, User.OrgId).Unit;
+            var Unit = _rawMaterialStockInfo.GetRawMaterialIssueStockUnitById(RawMaterialId, User.OrgId).Unit;
+            //var Unit = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockUnitById(RawMaterialId, User.OrgId).Unit;
+            //var AllUnit = Regex.Replace(Unit, @"(\[|""|\])", "");
+            //string AllUnit = Unit.Replace("[", "")
+            //   .Replace("", )
+            //   .Replace("]", "");
 
-            return Json(Unit);
+            return Json(Unit, JsonRequestBehavior.AllowGet);
+
+            //, JsonRequestBehavior.AllowGet
+
         }
 
         [HttpPost]
@@ -912,8 +921,138 @@ namespace ERPWeb.Controllers
         {
             try
             {
+
                 int quantity = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByBatchCode(receipeBatchCode, User.OrgId).FGRQty;
                 return Json(quantity, JsonRequestBehavior.AllowGet);
+                
+            }
+            catch
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+        public ActionResult GetReceipyTergetQty(string receipeBatchCode)
+        {
+            try
+            {
+
+                //double IssueMinQty = 0;
+                double issueQunatitys = 0;
+                double perRecepQuantitys = 0;
+                string myList = "";
+
+                double SpliteRawMaterialIdList = 0;
+                double SpliteRawMaterialIdList1 = 0;
+                double SpliteRawMaterialIdList2 = 0;
+                double SpliteRawMaterialIdList3 = 0;
+                double SpliteRawMaterialIdList4 = 0;
+
+                double SpliteRawMaterialMinValue1 = 0;
+                double SpliteRawMaterialMinValue2 = 0;
+                double SpliteRawMaterialMinValue3 = 0;
+                double SpliteRawMaterialMinValue4 = 0;
+
+                double SpliteRawMaterialMinValuefinal1 = 0;
+                double SpliteRawMaterialMinValuefinal2 = 0;
+                double SpliteRawMaterialMinValuefinal3 = 0;
+                double SpliteRawMaterialMinValuefinalvalue1 = 0;
+                double SpliteRawMaterialMinValuefinalvalue2 = 0;
+                double SpliteRawMaterialMinValuefinal = 0;
+                double SpliteRawMaterialRoundValue = 0;
+
+
+
+                var recipeDetailsRawMaterials = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByBatchCode(receipeBatchCode, User.OrgId);
+                foreach (var rawMaterial in recipeDetailsRawMaterials)
+                {
+
+                    issueQunatitys = _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
+                    // myList += string.Format("{0},", rawMaterial.RawMaterialId);
+
+
+                    perRecepQuantitys = rawMaterial.FGRRawMaterQty;//0.3
+                    double PerDividetQty = (issueQunatitys / perRecepQuantitys);//6/0.3=20
+                    myList += string.Format("{0},", PerDividetQty);
+
+
+                }
+                string RawMaterialIdList = myList.TrimEnd(',');
+                var a = recipeDetailsRawMaterials.Count();
+
+                switch (a)
+                {
+                    case 1:
+                        SpliteRawMaterialIdList = Convert.ToDouble(RawMaterialIdList.Split(',')[0]);
+                        SpliteRawMaterialMinValuefinal = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList);
+                        SpliteRawMaterialRoundValue = Math.Floor(SpliteRawMaterialMinValuefinal);
+                        return Json(SpliteRawMaterialRoundValue, JsonRequestBehavior.AllowGet);
+                        //break;
+                    case 2:
+                         SpliteRawMaterialIdList = Convert.ToDouble(RawMaterialIdList.Split(',')[0]);
+                         SpliteRawMaterialIdList1 = Convert.ToDouble(RawMaterialIdList.Split(',')[1]);
+                         SpliteRawMaterialMinValuefinal = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList1);
+                         SpliteRawMaterialRoundValue = Math.Floor(SpliteRawMaterialMinValuefinal);
+                        return Json(SpliteRawMaterialRoundValue, JsonRequestBehavior.AllowGet);
+                        //break;
+                    case 3:
+                         SpliteRawMaterialIdList = Convert.ToDouble(RawMaterialIdList.Split(',')[0]);
+                         SpliteRawMaterialIdList1 = Convert.ToDouble(RawMaterialIdList.Split(',')[1]);
+                         SpliteRawMaterialIdList2 = Convert.ToDouble(RawMaterialIdList.Split(',')[2]);
+                         SpliteRawMaterialMinValue1 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList1);
+                         SpliteRawMaterialMinValue2 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList2);
+
+                         SpliteRawMaterialMinValuefinal = Math.Min(SpliteRawMaterialMinValue1, SpliteRawMaterialMinValue2);
+                        SpliteRawMaterialRoundValue = Math.Floor(SpliteRawMaterialMinValuefinal);
+                        //break;
+                        return Json(SpliteRawMaterialRoundValue, JsonRequestBehavior.AllowGet);
+
+                    case 4:
+                        SpliteRawMaterialIdList = Convert.ToDouble(RawMaterialIdList.Split(',')[0]);
+                        SpliteRawMaterialIdList1 = Convert.ToDouble(RawMaterialIdList.Split(',')[1]);
+                        SpliteRawMaterialIdList2 = Convert.ToDouble(RawMaterialIdList.Split(',')[2]);
+                        SpliteRawMaterialIdList3 = Convert.ToDouble(RawMaterialIdList.Split(',')[3]);
+                        SpliteRawMaterialMinValue1 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList1);
+                        SpliteRawMaterialMinValue2 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList2);
+                        SpliteRawMaterialMinValue3 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList3);
+
+                        SpliteRawMaterialMinValuefinal1 = Math.Min(SpliteRawMaterialMinValue1, SpliteRawMaterialMinValue2);
+                        SpliteRawMaterialMinValuefinal2 = Math.Min(SpliteRawMaterialMinValue1, SpliteRawMaterialMinValue3);
+
+                        SpliteRawMaterialMinValuefinal = Math.Min(SpliteRawMaterialMinValuefinal1, SpliteRawMaterialMinValuefinal2);
+                        SpliteRawMaterialRoundValue = Math.Floor(SpliteRawMaterialMinValuefinal);
+                        //break;
+                        return Json(SpliteRawMaterialRoundValue, JsonRequestBehavior.AllowGet);
+
+                    case 5:
+                        SpliteRawMaterialIdList = Convert.ToDouble(RawMaterialIdList.Split(',')[0]);
+                        SpliteRawMaterialIdList1 = Convert.ToDouble(RawMaterialIdList.Split(',')[1]);
+                        SpliteRawMaterialIdList2 = Convert.ToDouble(RawMaterialIdList.Split(',')[2]);
+                        SpliteRawMaterialIdList3 = Convert.ToDouble(RawMaterialIdList.Split(',')[3]);
+                        SpliteRawMaterialIdList4 = Convert.ToDouble(RawMaterialIdList.Split(',')[4]);
+                        SpliteRawMaterialMinValue1 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList1);
+                        SpliteRawMaterialMinValue2 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList2);
+                        SpliteRawMaterialMinValue3 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList3);
+                        SpliteRawMaterialMinValue4 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList4);
+
+                        SpliteRawMaterialMinValuefinal1 = Math.Min(SpliteRawMaterialMinValue1, SpliteRawMaterialMinValue2);
+                        SpliteRawMaterialMinValuefinal2 = Math.Min(SpliteRawMaterialMinValue1, SpliteRawMaterialMinValue3);
+                        SpliteRawMaterialMinValuefinal3 = Math.Min(SpliteRawMaterialMinValue1, SpliteRawMaterialMinValue4);
+
+                        SpliteRawMaterialMinValuefinalvalue1 = Math.Min(SpliteRawMaterialMinValuefinal1, SpliteRawMaterialMinValuefinal2);
+                        SpliteRawMaterialMinValuefinalvalue2 = Math.Min(SpliteRawMaterialMinValuefinal1, SpliteRawMaterialMinValuefinal3);
+
+                        SpliteRawMaterialMinValuefinal = Math.Min(SpliteRawMaterialMinValuefinalvalue1, SpliteRawMaterialMinValuefinalvalue2);
+                        SpliteRawMaterialRoundValue = Math.Floor(SpliteRawMaterialMinValuefinal);
+
+                        //break;
+                        return Json(SpliteRawMaterialRoundValue, JsonRequestBehavior.AllowGet);
+
+                }
+
+                return Json(SpliteRawMaterialRoundValue, JsonRequestBehavior.AllowGet);
+
             }
             catch
             {
@@ -974,8 +1113,7 @@ namespace ERPWeb.Controllers
         }
 
         public ActionResult GetReceipyDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty)
-        {
-          
+        {          
             double issueQunatity = 0;
             double perRecepQuantity = 0;
             double requirdQuantity = 0;
@@ -987,16 +1125,19 @@ namespace ERPWeb.Controllers
                 var recipeDetailsRawMaterials = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByBatchCode(receipeBatchCode, User.OrgId);
                 foreach(var rawMaterial in recipeDetailsRawMaterials)
                 {
-                   issueQunatity= _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
+                    
+                    issueQunatity = _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
                      perRecepQuantity = rawMaterial.FGRRawMaterQty;
                     requirdQuantity = (perRecepQuantity* targetQty);
                     if (requirdQuantity > issueQunatity)
                     {
+                        
                         Checked = false;
                     }
                     else
                     {
                         Checked = true;
+                        
                     }
 
                 }

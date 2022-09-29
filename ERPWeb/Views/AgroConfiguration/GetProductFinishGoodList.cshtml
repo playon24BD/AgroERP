@@ -200,6 +200,7 @@
 
 
             LoadQuantityData();
+            LoadTergetQuantityData();
         })
 
 
@@ -223,12 +224,24 @@
             var data = { receipeBatchCode: ddlReceipBatchCode.val() };
   
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
+                debugger;
                 qty.val(res);
+                //targetQty.val();
+            });
+        }
+        function LoadTergetQuantityData() {
+            var data = { receipeBatchCode: ddlReceipBatchCode.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyTergetQty", data)).then(function (res, status) {
+                debugger;
+                //qty.val(res);
+                targetQty.val(res);
             });
         }
 
         $("#addTolist").click(function (e) {
             e.preventDefault();
+            debugger;
             var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
 
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {

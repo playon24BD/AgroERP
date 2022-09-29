@@ -31,6 +31,27 @@ namespace ERPBLL.Agriculture
 
         }
 
+        public IEnumerable<RawMaterialIssueStockInfoDTO> RawMaterialStockIssueMinQty(string RawMaterialIdList, long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialIssueStockInfoDTO>(QueryForRawMaterialIssueMinQty(RawMaterialIdList, orgId)).ToList();
+        }
+
+        private string QueryForRawMaterialIssueMinQty(string RawMaterialIdList, long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and OrganizationId={0}", orgId);
+            if (RawMaterialIdList != null && RawMaterialIdList != "")
+            {
+                param += string.Format(@" And RawMaterialId in ({0})", RawMaterialIdList);
+            }
+            query = string.Format(@" SELECT MIN(Quantity) Quantity from tblRawMaterialIssueStockInfo
+            where 1=1  {0}",
+            Utility.ParamChecker(param));
+            return query;
+        }
+
         public IEnumerable<RawMaterialIssueStockInfoDTO> GetRawMaterialIssueStockInfos(long orgId, long? rawMaterialId)
         {
             return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialIssueStockInfoDTO>(QueryForRawMaterialIssueInfoss(orgId, rawMaterialId)).ToList();
@@ -184,5 +205,10 @@ namespace ERPBLL.Agriculture
         {
             return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == id && i.OrganizationId == orgId);
         }
+
+        //public IEnumerable<RawMaterialIssueStockInfo> GetRawMaterialIssueStockUnitById(long id, long orgId)
+        //{
+        //    return _rawMaterialIssueStockInfoRepository.GetAll(i => i.RawMaterialId == id && i.OrganizationId == orgId);
+        //}
     }
 }

@@ -5,6 +5,7 @@ using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ERPBLL.Common;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,26 @@ namespace ERPBLL.Agriculture
             this._finishGoodRecipeDetailsRepository = new FinishGoodRecipeDetailsRepository(this._AgricultureUnitOfWork);
             this._finishGoodRecipeInfoRepository = new FinishGoodRecipeInfoRepository(this._AgricultureUnitOfWork);
             //this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
+        }
+        public IEnumerable<FinishGoodRecipeDetailsDTO> FinishGoodRecipeMinQty(string RawMaterialIdList, long orgId)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForFinishGoodReceipeMinQty(RawMaterialIdList, orgId)).ToList();
+        }
+
+        private string QueryForFinishGoodReceipeMinQty(string rawMaterialIdList, long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and OrganizationId={0}", orgId);
+            if (rawMaterialIdList != null && rawMaterialIdList != "")
+            {
+                param += string.Format(@" And RawMaterialId in ({0})", rawMaterialIdList);
+            }
+            query = string.Format(@" SELECT MIN(FGRRawMaterQty) FGRRawMaterQty from tblFinishGoodRecipeDetails
+            where 1=1  {0}",
+            Utility.ParamChecker(param));
+            return query;
         }
 
         public FinishGoodRecipeDetails GetFinishGoodRecipeDetailsById(long fgDetailsId,long orgId)

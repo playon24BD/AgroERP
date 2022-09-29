@@ -62,14 +62,14 @@
                     </div>
                     <div class="col-md-2">
                         <label for="ddlUnit" class="control-label">Unit</label>
+                       <input type="text" id="ddlUnit" name="ddlUnit" class="form-control form-control-sm" readonly />
 
-                        <select id="ddlUnit" class="form-control form-control-sm" readonly>
-                            <option value="">Select Unit</option>
-                            <option value="Kg">Kg</option>
-                            <option value="Gram">Gram</option>
-                            <option value="hg">hg</option>
-                            <option value="dag">dag</option>
-                        </select>
+                        @*<input type="text" value="@(ViewBag.ddlUnit)" />*@
+                        @*<select id="ddlUnit" class="form-control form-control-sm" readonly>
+            <option value="">Select Unit</option>
+            <option value="Kg">Kg</option>
+            <option value="Gram">Gram</option>
+        </select>*@
                         <span class="error hide req-unitName">Unit is required</span>
                     </div>
 
@@ -169,21 +169,31 @@
 
         ddlRawMaterialName.change(function () {
             debugger;
-           // LoadRawMaterialStock();
-            clearDropdown("ddlUnit");
-            LoadDropDown("/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", "Post", ddlUnit.val(), JSON.stringify({ RawMaterialId: ddlRawMaterialName.val() }))
+            LoadRawMaterialStock();
+            //clearDropdown("ddlUnit");
+
+            //LoadDropDown("/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", "Post", ddlUnit.val(), JSON.stringify({ RawMaterialId: ddlRawMaterialName.val() }))
             //LoadUnitData();
+            var data = { RawMaterialId: ddlRawMaterialName.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", data)).then(function (res, status) {
+               // debugger;
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnit.val(unit);
+                //targetQty.val();
+            });
 
         })
 
-        function LoadUnitData() {
-            debugger;
-            var data = { RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0) };
+        //function LoadUnitData() {
+        //    debugger;
+        //    var data = { RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0) };
 
-            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", data)).then(function (res, status) {
-                ddlUnit.val(res);
-            });
-        }
+        //    $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", data)).then(function (res, status) {
+        //        ddlUnit.val(res);
+        //    });
+        //}
 
 
         function LoadRawMaterialStock() {
@@ -358,7 +368,7 @@
         function ClearData() {
             ddlRawMaterialName.val("");
             ddlQuantity.val("");
-            ddlUnit.val("");
+           // ddlUnit.val("");
 
         }
 

@@ -42,7 +42,7 @@ namespace ERPBLL.Agriculture
             return _rawMaterialStockDetailRepository.GetAll(i => i.OrganizationId == orgId && i.RawMaterialStockId == infoId).ToList();
         }
 
-        public bool SaverawMaterialStockDetail(long OrganizationId, long RawMaterialId, long SupplierId, double Quantity, string Unit, DateTime? StockDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, long? UpdateUserId, string Status, long RawMaterialStockId)
+        public bool SaverawMaterialStockDetail(long OrganizationId, long RawMaterialId, long SupplierId, double Quantity, string Unit, DateTime? StockDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, DateTime? ExpireDate, long? UpdateUserId, string Status, long RawMaterialStockId)
         {
             List<RawMaterialStockDetail> RawMaterialStockDetail = new List<RawMaterialStockDetail>();
 
@@ -56,8 +56,9 @@ namespace ERPBLL.Agriculture
             stockDetails.Quantity = Quantity;
             stockDetails.Unit = Unit;
             stockDetails.StockDate = StockDate;
-            stockDetails.UpdateDate = DateTime.Now;
-            stockDetails.UpdateUserId = UpdateUserId;
+            stockDetails.EntryDate = DateTime.Now;
+            stockDetails.ExpireDate = ExpireDate;
+            stockDetails.EntryUserId = UpdateUserId;
             stockDetails.Status = Status;
             stockDetails.RawMaterialStockId = RawMaterialStockId;
             RawMaterialStockDetail.Add(stockDetails);

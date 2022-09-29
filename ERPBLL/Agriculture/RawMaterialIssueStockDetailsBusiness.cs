@@ -40,8 +40,8 @@ namespace ERPBLL.Agriculture
             IssuestockDetails.Quantity = Quantity;
             IssuestockDetails.Unit = Unit;
             IssuestockDetails.IssueDate = IssueDate;
-            IssuestockDetails.UpdateDate = DateTime.Now;
-            IssuestockDetails.UpdateUserId = UpdateUserId;
+            IssuestockDetails.EntryDate = DateTime.Now;
+            IssuestockDetails.EntryUserId = UpdateUserId;
             IssuestockDetails.Status = Status;
             IssuestockDetails.RawMaterialIssueStockId = RawMaterialIssueStockId;
             IssueRawMaterialStockDetail.Add(IssuestockDetails);

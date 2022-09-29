@@ -26,7 +26,10 @@ namespace ERPBLL.Agriculture
             this._rawMaterialStockInfoRepository = new RawMaterialStockInfoRepository(this._agricultureUnitOfWork);
             this._rawMaterialStockDetail = rawMaterialStockDetail;
         }
-
+        public RawMaterialStockInfo GetRawMaterialIssueStockUnitById(long id, long orgId)
+        {
+            return _rawMaterialStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == id && i.OrganizationId == orgId);
+        }
         public IEnumerable<RawMaterialStockInfo> GetRawMaterialStockDetails(long orgId)
         {
             return _rawMaterialStockInfoRepository.GetAll(a => a.OrganizationId == orgId);
@@ -68,6 +71,8 @@ namespace ERPBLL.Agriculture
             if (rawmeterialinfoupdateqty != null)
             {
                 rawmeterialinfoupdateqty.Quantity = UpdateRawMaterialStock;
+                rawmeterialinfoupdateqty.UpdateDate = DateTime.Now;
+                rawmeterialinfoupdateqty.UpdateUserId = EntryUserId;
                 _rawMaterialStockInfoRepository.Update(rawmeterialinfoupdateqty);
 
             }
@@ -107,11 +112,12 @@ namespace ERPBLL.Agriculture
                             Quantity = item.Quantity,
                             Unit = item.Unit,
                             StockDate = DateTime.Now,
-                            UpdateDate = DateTime.Now,
-                            UpdateUserId = userId,
+                            EntryDate = DateTime.Now,
+                            EntryUserId = userId,
                             RawMaterialStockId = item.RawMaterialStockId,
                             RawMaterialSupplierId=item.RawMaterialSupplierId,
-                            Status = item.Status = "StockIn"
+                            Status = item.Status = "StockIn",
+                            ExpireDate=item.ExpireDate,
 
                         };
                         stockDetails.Add(rawMaterial);
@@ -148,11 +154,12 @@ namespace ERPBLL.Agriculture
                             Quantity = item.Quantity,
                             Unit = item.Unit,
                             StockDate = DateTime.Now,
-                            UpdateDate = DateTime.Now,
-                            UpdateUserId = userId,
+                            EntryDate = DateTime.Now,
+                            EntryUserId = userId,
                             RawMaterialStockId = item.RawMaterialStockId,
                             RawMaterialSupplierId=item.RawMaterialSupplierId,
-                            Status = item.Status = "StockIn"
+                            Status = item.Status = "StockIn",
+                            ExpireDate = item.ExpireDate,
 
                         };
                         stockDetails.Add(rawMaterial);
@@ -171,7 +178,7 @@ namespace ERPBLL.Agriculture
 
                         var RawMaterialStockInfoid = RawMaterialStockInfoIdGet(items.OrganizationId, items.RawMaterialId);
 
-                        isSuccess = _rawMaterialStockDetail.SaverawMaterialStockDetail(items.OrganizationId, items.RawMaterialId,items.RawMaterialSupplierId, items.Quantity, items.Unit, items.StockDate, items.EntryDate, items.EntryUserId, items.UpdateDate, items.UpdateUserId, items.Status, RawMaterialStockInfoid.RawMaterialStockId);
+                        isSuccess = _rawMaterialStockDetail.SaverawMaterialStockDetail(items.OrganizationId, items.RawMaterialId,items.RawMaterialSupplierId, items.Quantity, items.Unit, items.StockDate, items.EntryDate, items.EntryUserId, items.UpdateDate,items.ExpireDate,items.UpdateUserId, items.Status, RawMaterialStockInfoid.RawMaterialStockId);
                     }
 
 
