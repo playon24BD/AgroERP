@@ -11,6 +11,8 @@ namespace ERPBLL.Agriculture.Interface
     public interface IFinishGoodProductionDetailsBusiness
     {
         IEnumerable<FinishGoodProductionDetails> GetFinishGoodProductionDetails(long orgId);
+
+        IEnumerable<FinishGoodProductionDetails> GetFinishGoodProductionDetails(string finishGoodProductionBatch, long orgId);
         FinishGoodProductionDetails GetProductionInfoById(long id, long orgId);
         FinishGoodProductionDetails GetFinishGoodProductionDetailsByAny(string any, long orgId);
         bool SaveFinishGoodDetails(List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTO,string finishGoodProductionBatch, long userId, long orgId);

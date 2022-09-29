@@ -1,5 +1,6 @@
 ﻿using ERPBLL.Agriculture.Interface;
 using ERPBO.Agriculture.DomainModels;
+using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,40 @@ namespace ERPBLL.Agriculture
 
             _rawMaterialIssueStockDetailsRepository.InsertAll(IssueRawMaterialStockDetail);
             return _rawMaterialIssueStockDetailsRepository.Save();
+        }
+
+
+        public bool SaveRawMaterialIssueDetails(List<RawMaterialIssueStockDetailsDTO> rawMaterialIssueStockDetailsDTOList, long userId,long orgId)
+        {
+
+            bool IsSuccess = false;
+            RawMaterialIssueStockDetails rawMaterialIssueStockDetail = new RawMaterialIssueStockDetails();
+       
+
+            if (rawMaterialIssueStockDetailsDTOList.Count()>0)
+            {
+                //List<RawMaterialIssueStockDetails> rawMaterialIssueStockDetailsList = new List<RawMaterialIssueStockDetails>();
+                foreach (var row in rawMaterialIssueStockDetailsDTOList)
+                    {
+                        rawMaterialIssueStockDetail.RawMaterialId = row.RawMaterialId;
+                        rawMaterialIssueStockDetail.Quantity = row.Quantity;
+                        rawMaterialIssueStockDetail.EntryUserId = row.EntryUserId;
+                        rawMaterialIssueStockDetail.OrganizationId = orgId;
+                    rawMaterialIssueStockDetail.Unit = row.Unit;
+
+                    rawMaterialIssueStockDetail.EntryDate = DateTime.Now;
+                        rawMaterialIssueStockDetail.RawMaterialIssueStockId = row.RawMaterialIssueStockId;
+                        rawMaterialIssueStockDetail.Status = "StockOut";
+                    //rawMaterialIssueStockDetailsList.Add(rawMaterialIssueStockDetail);
+                    _rawMaterialIssueStockDetailsRepository.Insert(rawMaterialIssueStockDetail);
+                    IsSuccess = _rawMaterialIssueStockDetailsRepository.Save();
+                }
+          
+            }
+
+
+
+            return IsSuccess;
         }
     }
 }

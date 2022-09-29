@@ -76,18 +76,21 @@ namespace ERPBLL.Agriculture
                 _rawMaterialStockInfoRepository.Update(rawmeterialinfoupdateqty);
 
             }
+           
             IsSuccess = _rawMaterialStockInfoRepository.Save();
             if (IsSuccess)
             {
-                
-
-
 
                 var rawMaterialStockDetailsUpdate = _rawMaterialStockDetail.updateRawmaterialstockdetails(id, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId, Unit, EntryDate, EntryUserId);
 
             }
             return IsSuccess;
         }
+
+
+
+
+
         public bool SaveRawMaterialStock(RawMaterialStockInfoDTO info, List<RawMaterialStockDetailDTO> details, long userId, long orgId)
         {
             bool isSuccess = false;

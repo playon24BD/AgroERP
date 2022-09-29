@@ -12,6 +12,7 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<RawMaterialIssueStockInfoDTO> GetRawMaterialIssueStockInfos(long orgId, long? rawMaterialId);
 
+
         RawMaterialIssueStockInfo GetRawMaterialIssueStockById(long id, long orgId);
 
         RawMaterialIssueStockInfo RawMaterialStockIssueInfobyRawMaterialid(long rawMaterialId, long orgId);
@@ -19,7 +20,9 @@ namespace ERPBLL.Agriculture.Interface
 
 
         RawMaterialIssueStockInfo GetRawMaterialIssueStockUnitById(long id, long orgId);
-        
+        RawMaterialIssueStockInfo GetRawMaterialIssueStockByMeterialId(long rawMaterialId, long orgId);
+
+
 
        
         //IEnumerable<RawMaterialIssueStockInfo> GetRawMaterialIssueStockUnitById(long id, long orgId);
@@ -27,7 +30,7 @@ namespace ERPBLL.Agriculture.Interface
 
 
         bool SaveProductIssueRawMaterialStock(RawMaterialIssueStockInfoDTO info, List<RawMaterialIssueStockDetailsDTO> details, long userId, long orgId);
-
+        bool UpdateProductIssueRawMaterialStock(List<RawMaterialIssueStockInfoDTO> issueStockInfoDTOs);
 
         bool DeleteRawMaterialIssueStock(long id, long userId, long orgId);
         IEnumerable<RawMaterialIssueStockInfoDTO> RawMaterialStockIssueMinQty(string RawMaterialIdList, long orgId);

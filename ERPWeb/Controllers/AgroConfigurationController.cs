@@ -791,7 +791,11 @@ namespace ERPWeb.Controllers
                             //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
                             RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                             Quantity = i.Quantity,
-                            Unit = i.Unit
+                            Unit = i.Unit,
+                            Status=i.Status,
+                            EntryDate=i.EntryDate
+                          
+                            
                         }).ToList();
                 }
                 else
@@ -873,8 +877,9 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetProductFinishGoodList(string flag,long? productId)
+        public ActionResult GetProductFinishGoodList(string flag,string finishGoodProductionBatch,long? productId)
         {
+
 
             if (string.IsNullOrEmpty(flag))
             {
@@ -888,11 +893,21 @@ namespace ERPWeb.Controllers
                 return View();
 
             }
-            else if (!string.IsNullOrEmpty(flag) && productId !=null)
+            else if (!string.IsNullOrEmpty(flag) && flag== "Detail" && finishGoodProductionBatch != null)
             {
+              IEnumerable<FinishGoodProductionDetailsDTO> dto= _finishGoodProductionDetailsBusiness.GetFinishGoodProductionDetails(finishGoodProductionBatch, User.OrgId).Select(a=>new FinishGoodProductionDetailsDTO {
+                  RawMaterialId=a.RawMaterialId,
+                  RawMaterialName=_rawMaterialBusiness.GetRawMaterialById(a.RawMaterialId,User.OrgId).RawMaterialName,
+                  RequiredQuantity=a.RequiredQuantity,
+                  Status=a.Status,
+                  EntryDate=a.EntryDate
 
+              }).ToList();
+                List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTO = new List<FinishGoodProductionDetailsDTO>();
+                List<FinishGoodProductionDetailViewModel> finishGoodProductionDetailViewModels = new List<FinishGoodProductionDetailViewModel>();
+                AutoMapper.Mapper.Map(dto,finishGoodProductionDetailViewModels);
 
-                return View();
+                return PartialView ("_GetProductFinishGoodDetails",finishGoodProductionDetailViewModels);
             }
             else
             {

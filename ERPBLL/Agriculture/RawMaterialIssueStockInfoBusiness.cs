@@ -205,10 +205,44 @@ namespace ERPBLL.Agriculture
         {
             return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == id && i.OrganizationId == orgId);
         }
+<<<<<<< HEAD
 
         //public IEnumerable<RawMaterialIssueStockInfo> GetRawMaterialIssueStockUnitById(long id, long orgId)
         //{
         //    return _rawMaterialIssueStockInfoRepository.GetAll(i => i.RawMaterialId == id && i.OrganizationId == orgId);
         //}
+=======
+        public RawMaterialIssueStockInfo GetRawMaterialIssueStockByMeterialId(long rawMaterialId, long orgId)
+        {
+            return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == rawMaterialId && i.OrganizationId == orgId);
+        }
+
+        public bool UpdateProductIssueRawMaterialStock(List<RawMaterialIssueStockInfoDTO> issueStockInfoDTOs)
+        {
+            bool isSuccess = false;
+            RawMaterialIssueStockInfo issueStockInfo = new RawMaterialIssueStockInfo();
+           List<RawMaterialIssueStockInfo> issueStockInfoList = new List<RawMaterialIssueStockInfo>();
+
+            if (issueStockInfoDTOs.Count() > 0)
+            {
+                foreach (var item in issueStockInfoDTOs)
+                {
+                    issueStockInfo = GetRawMaterialIssueStockById(item.RawMaterialIssueStockId, item.OrganizationId);
+                    issueStockInfo.Quantity -= item.Quantity;
+                    issueStockInfo.UpdateDate = DateTime.Now;
+                    issueStockInfo.UpdateUserId = item.UpdateUserId;
+                    issueStockInfoList.Add(issueStockInfo);
+                 
+
+                }
+
+            }
+            _rawMaterialIssueStockInfoRepository.UpdateAll(issueStockInfoList);
+
+            isSuccess = _rawMaterialIssueStockInfoRepository.Save();
+
+            return isSuccess;
+        }
+>>>>>>> dec52c4d3907430174954b65579f813626039802
     }
 }
