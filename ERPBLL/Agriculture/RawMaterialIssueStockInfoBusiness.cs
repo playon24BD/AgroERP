@@ -205,13 +205,7 @@ namespace ERPBLL.Agriculture
         {
             return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == id && i.OrganizationId == orgId);
         }
-<<<<<<< HEAD
 
-        //public IEnumerable<RawMaterialIssueStockInfo> GetRawMaterialIssueStockUnitById(long id, long orgId)
-        //{
-        //    return _rawMaterialIssueStockInfoRepository.GetAll(i => i.RawMaterialId == id && i.OrganizationId == orgId);
-        //}
-=======
         public RawMaterialIssueStockInfo GetRawMaterialIssueStockByMeterialId(long rawMaterialId, long orgId)
         {
             return _rawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialId == rawMaterialId && i.OrganizationId == orgId);
@@ -243,6 +237,6 @@ namespace ERPBLL.Agriculture
 
             return isSuccess;
         }
->>>>>>> dec52c4d3907430174954b65579f813626039802
+
     }
 }
