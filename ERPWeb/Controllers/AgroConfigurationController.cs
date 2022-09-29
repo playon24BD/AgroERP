@@ -1180,7 +1180,7 @@ namespace ERPWeb.Controllers
                 }
                 else
                 {
-                    return Json("Issue Quantity Not Sufficient Please Check Target Quantity", JsonRequestBehavior.AllowGet);
+                    return Json("Issue Quantity Not Sufficient Please Check Target Quantity...", JsonRequestBehavior.AllowGet);
                 }
    
 

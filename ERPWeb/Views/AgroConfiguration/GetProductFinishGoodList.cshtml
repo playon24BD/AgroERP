@@ -91,6 +91,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <input type="hidden" id="hdMeasurementId" />
+                                        <input type="hidden" id="hdTargetValue" />
                                         <div class="col-md-3">
                                             <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
                                             <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
@@ -196,6 +197,7 @@
         var qty = $("#qty");
         var targetQty = $("#targetQty");
         var ddlReceipBatchCode = $("#ddlReceipBatchCode");
+        var hdTargetValue = $("#hdTargetValue");
 
 
         $(document).ready(function () {
@@ -270,6 +272,8 @@
                 debugger;
                 //qty.val(res);
                 targetQty.val(res);
+                hdTargetValue.val(res);
+
             });
         }
 
@@ -285,8 +289,10 @@
                 material = JSON.parse(res)
                 console.log(material);
                 var len = material.length;
-                console.log("length: "+ len);
-                if (len < 30) {
+                console.log("length: " + len);
+                console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
+                console.log(targetQty.val() <= hdTargetValue.val());
+                if (targetQty.val() <= hdTargetValue.val() ) {
 
 
                     //console.log(material[0].RawMaterialName);
@@ -306,7 +312,7 @@
 
                 }
                 else {
-                    alert(res);
+                    alert("Issue Quantity Not Sufficient Please Check Target Quantity");
                 }
 
                 });
