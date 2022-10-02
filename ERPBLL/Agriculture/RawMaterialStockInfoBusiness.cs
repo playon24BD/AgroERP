@@ -44,21 +44,42 @@ namespace ERPBLL.Agriculture
             string query = string.Empty;
             string param = string.Empty;
 
-            param += string.Format(@" and rms.OrganizationId={0}", orgId);
+            param += string.Format(@" and rmd.OrganizationId={0}", orgId);
             if (rawMaterialId != null && rawMaterialId > 0)
             {
-                param += string.Format(@" and rms.RawMaterialId={0}", rawMaterialId);
+                param += string.Format(@" and rmd.RawMaterialId={0}", rawMaterialId);
             }
-            query = string.Format(@"select rms.RawMaterialStockId,
-            rms.RawMaterialId,
-            rm.RawMaterialName,
-            rms.Quantity,
-            rms.Unit,
-            --rms.ExpireDate,
-            (select CAST(rms.ExpireDate as date))'ExpireDate',
-            rms.OrganizationId
-            from [Agriculture].dbo.tblRawMaterialStockInfo rms
-            inner join [Agriculture].dbo.tblRawMaterialInfo rm on   rms.RawMaterialId=rm.RawMaterialId
+            query = string.Format(@"
+SELECT distinct rmd.RawMaterialId,rm.RawMaterialName,rmd.Unit,rmd.StockDate,rmd.Status,rmd.ExpireDate,
+    StockIn=ISNull((
+	    SELECT SUM(rmds.Quantity) as Quantity
+		FROM  [Agriculture].[dbo].[tblRawMaterialStockDetail] rmds
+		
+		where rmds.Status='StockIn' and rmds.RawMaterialId= rmd.RawMaterialId
+	),0),
+
+	StockOut=ISNull((
+	    SELECT SUM(rmds.Quantity) as Quantity
+		FROM  [Agriculture].[dbo].[tblRawMaterialStockDetail] rmds
+		
+		where rmds.Status='StockOut' and rmds.RawMaterialId= rmd.RawMaterialId
+	),0),
+
+	TotalStock=ISNull((
+	    SELECT SUM(rmds.Quantity) as Quantity
+		FROM  [Agriculture].[dbo].[tblRawMaterialStockDetail] rmds
+		
+		where rmds.Status='StockIn' and rmds.RawMaterialId= rmd.RawMaterialId
+	),0)-ISNull((
+	    SELECT SUM(rmds.Quantity) as Quantity
+		FROM  [Agriculture].[dbo].[tblRawMaterialStockDetail] rmds
+		
+		where rmds.Status='StockOut' and rmds.RawMaterialId= rmd.RawMaterialId
+	),0)
+
+   
+    FROM [Agriculture].dbo.tblRawMaterialStockDetail rmd
+	inner join [Agriculture].dbo.tblRawMaterialInfo rm on   rmd.RawMaterialId=rm.RawMaterialId
             where 1=1  {0}",
             Utility.ParamChecker(param));
             return query;
@@ -145,6 +166,7 @@ namespace ERPBLL.Agriculture
                             EntryDate = DateTime.Now,
                             EntryUserId = userId,
                             ExpireDate=item.ExpireDate,
+                            
                            
                             //IssueStatus=info.IssueStatus="Pending"
                         };

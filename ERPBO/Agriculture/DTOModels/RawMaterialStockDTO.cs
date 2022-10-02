@@ -20,8 +20,13 @@ namespace ERPBO.Agriculture.DTOModels
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
         public string IssueStatus { get; set; }
+        public string Status { get; set; }
         public DateTime? ExpireDate { get; set; }
         public string RawMaterialName { get; set; }
+        public DateTime? StockDate { get; set; }
+        public double StockIn { get; set; }
+        public double StockOut { get; set; }
+        public double TotalStock { get; set; }
       
         public List<RawMaterialStockDetailDTO> RawMaterialStockDetails { get; set; }
     }
