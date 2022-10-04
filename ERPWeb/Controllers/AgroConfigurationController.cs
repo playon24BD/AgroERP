@@ -14,6 +14,8 @@ namespace ERPWeb.Controllers
 {
     public class AgroConfigurationController : BaseController
     {
+        public readonly IZone _zone;
+        private readonly IZoneDetail _zoneDetail;
         private readonly IRawMaterialStockInfo _rawMaterialStockInfo;
         private readonly IRawMaterialStockDetail _rawMaterialStockDetail;
         private readonly IRawMaterialIssueStockInfoBusiness _rawMaterialIssueStockInfoBusiness;
@@ -36,8 +38,10 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
+        public AgroConfigurationController(IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
         {
+            this._zoneDetail = zoneDetail;
+            this._zone = zone;
             this._rawMaterialStockInfo = rawMaterialStockInfo;
             this._rawMaterialStockDetail = rawMaterialStockDetail;
             this._rawMaterialIssueStockInfoBusiness = rawMaterialIssueStockInfoBusiness;
@@ -1213,7 +1217,44 @@ namespace ERPWeb.Controllers
 
         #endregion
 
+        #region Sales and Distribution
+       
+        public ActionResult GetZoneInfo(string flag, long? ZoneId, long? id)
+        {
+            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetZoneInfo");
 
+
+            if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _zone.GetZoneInfos(User.OrgId, ZoneId ?? 0);
+
+
+                List<ZoneViewModel> viewModels = new List<ZoneViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetZonePartialViewList", viewModels);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SaveZoneInfo(ZoneViewModel viewModel,List<ZoneDetailViewModel> details)
+        {
+            bool isSuccess = false;
+            if (ModelState.IsValid)
+            {
+
+                ZoneDTO dto = new ZoneDTO();
+
+                List<ZoneDetailDTO> DetailsDTO = new List<ZoneDetailDTO>();
+                AutoMapper.Mapper.Map(details, DetailsDTO);
+                AutoMapper.Mapper.Map(viewModel, dto);
+                isSuccess = _zone.SaveZoneInfo(dto,DetailsDTO, User.UserId, User.OrgId);
+
+            }
+
+            return Json(isSuccess);
+        }
+        #endregion
 
     }
 }

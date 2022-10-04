@@ -1,0 +1,325 @@
+﻿
+@{
+    ViewBag.Title = "GetZoneInfo";
+}
+
+<div class="row text-sm">
+    <div class="col-md-12">
+        <div class="card card-primary card-outline card-tabs" style="margin-top:-15px">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-ZoneList-tab" data-toggle="pill" href="#custom-tabs-ZoneList" aria-controls="custom-tabs-ZoneList" aria-selected="true" role="tab">Zone List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-ZoneSetupList-tab" data-toggle="pill" href="#custom-tabs-ZoneSetupList" aria-controls="custom-tabs-ZoneSetupList" aria-selected="true" role="tab">Zone Setup</a>
+                    </li>
+
+                </ul>
+            </div>
+
+
+
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent" style="margin-top:-15px">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-ZoneList" role="tabpanel" aria-labelledby="custom-tabs-ZoneList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    Zone List
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <h6 class="card-title">Search By</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="tab-pane fade show" id="custom-tabs-ZoneSetupList" role="tabpanel" aria-labelledby="custom-tabs-custom-tabs-ZoneSetupList-tab">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    Add Zone
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body text-sm">
+                                        <div class="row" style="margin-top:-10px">
+                                            <div class="col-md-2">
+                                                <label for="ddlZoneName" class="control-label">Zone Name</label>
+                                                <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
+                                                <span class="error hide required-ddlZoneName font-weight-bold">Input Zone Name!</span>
+
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="ddlDivisionName" class="control-label">Division Name</label>
+
+                                                <select id="ddlDivisionName" class="form-control form-control-sm select2">
+                                                    <option value="" selected>---Select Division---</option>
+                                                    <option value="1">Division1</option>
+                                                    <option value="2">Division2</option>
+                                                    <option value="3">Division3</option>
+                                                    <option value="4">Division4</option>
+                                                    <option value="5">Division5</option>
+                                                </select>
+                                                <span class="error hide required-ddlDivisionName font-weight-bold">Select Division Name!</span>
+
+                                            </div>
+
+                                            <div class="col-md-1 " style="margin-top:5px;">
+                                                <label for="addButton" class="control-label"></label>
+                                                <div class="clearfix">
+                                                    <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblMargeItem">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="9">
+                                                <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                            </th>
+                                        </tr>
+
+                                        <tr class="text-center btn-dark">
+                                            <th style="width:5%">#SL</th>
+                                            <th style="width:15%">Zone Name</th>
+                                            <th style="width:10%">Division Name</th>
+                                            <th style="width:10%">Action</th>
+                                            <th class="hide DivisionId"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+@section scripts{
+    
+<script type="text/javascript">
+
+    var ddlZoneName = $("#ddlZoneName");
+    var ddlDivisionName = $("#ddlDivisionName");
+    var ZoneNameList = [];
+
+    $(document).ready(function () {
+        $('.select2').select2();
+
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+    })
+
+
+    $(document).ready(function () {
+        LoadZoneList()
+    })
+
+    ddlZoneName.change(function () {
+
+        LoadZoneList();
+    })
+
+    function LoadZoneList() {
+        var data = { flag: "View", ZoneId: TryParseInt(ddlZoneName.val(), 0), id: 0 };
+
+        $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetZoneInfo', data)).then(function (res, status) {
+            console.log(status);
+            if (status === "success") {
+                $("#dataContainer").fadeOut('500', function () {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res).fadeIn('500');
+                });
+            }
+        }).fail(function (error) {
+            console.log(error);
+        });
+    }
+
+
+    function validates() {
+        var isValid = true;
+        $(".error").addClass('hide');
+
+        if (ddlZoneName.val() === "") {
+            $(".required-ddlZoneName").removeClass('hide');
+            isValid = false;
+        }
+        if (ddlDivisionName.val() === "") {
+            $(".required-ddlDivisionName").removeClass('hide');
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+
+    $("#addButton").click(function (e) {
+        e.preventDefault();
+
+
+        if (true) {
+
+            if (ZoneNameList.includes(ddlZoneName.val())) {
+                toastrErrorAlert(" Zone Name Already Exist");
+            }
+            else {
+
+            var sl = $("#tblMargeItem tbody tr").length;
+            var td1 = "<td class='text-center align-middle'><b>" + (sl + 1) + "</b></td>"
+            var td2 = "<td class='text-center align-middle'>" + ddlZoneName.val() + "</td>";
+            var td3 = "<td class='text-center align-middle'>" + dropDownSelectedText("ddlDivisionName") + "</td>";
+            var td4 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";  
+            var td5 = "<td class='hide DivisionId'>" + ddlDivisionName.val() + "</td>";
+            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 +"</tr>";
+
+
+                $("#tblMargeItem tbody").append(tr);
+
+                ZoneNameList.push(ddlZoneName.val());
+
+            }
+            
+           //ClearData();
+
+        }
+        
+        
+    })
+
+    $(document).on("click", "a.data-onfly-del", function (e) {
+        e.preventDefault();
+        var index = $(this).parent().parents('tbody tr').index();
+        var tds = $(this).parent().parents('tbody tr').children('td');
+
+        var ZoneId = tds.eq(1).html();
+        console.log("ZoneId :" + ZoneId);
+        const mid = ZoneNameList.indexOf(ZoneId);
+        ZoneNameList.splice(mid, 1);
+
+
+
+
+        removeTableRow("#tblMargeItem tbody", index);
+        fnFixTheTbodyRowSerial("#tblMargeItem tbody", index);
+    })
+
+
+    function ClearData() {
+        ddlZoneName.val("");
+        //ddlDivisionName.val("");
+
+    }
+
+    $("#saveButton").click(function (e) {
+        e.preventDefault();
+        //$(".error").addClass("hide");
+        debugger;
+        if (true) {
+
+            var info = { ZoneName: ddlZoneName.val(), DivisionId: TryParseInt(ddlDivisionName.val(),0) };
+            
+            var details = [];
+            details.length = 0;
+
+            $.each($("#tblMargeItem tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+
+                    DivisionId: tds.eq(4).html()
+
+                });
+            })
+            console.log(info);
+            console.log(details);
+
+            var data = JSON.stringify({ details: details, viewModel: info });
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveZoneInfo', data, getToken())).then(function (res, status) {
+                console.log(status);
+                console.log(res);
+                if (res == true) {
+                    $('.toastrDefaultSuccess').trigger('click');
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+            }).fail(function (err) {
+                console.log(err);
+                enable("#saveButton");
+            });
+
+
+        }
+    })
+
+
+    </script>
+    
+    }

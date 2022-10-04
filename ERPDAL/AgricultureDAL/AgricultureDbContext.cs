@@ -12,7 +12,7 @@ namespace ERPDAL.AgricultureDAL
 {
     public class AgricultureDbContext : DbContext
     {
-        public AgricultureDbContext():base("Agriculture")
+        public AgricultureDbContext() : base("Agriculture")
         {
 
         }
@@ -21,6 +21,8 @@ namespace ERPDAL.AgricultureDAL
         //    modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
         //}
 
+        public DbSet<Zone> tblZoneInfo { get; set; }
+        public DbSet<ZoneDetail> tblZoneDetail { get; set; }
         public DbSet<RawMaterialStockInfo> tblRawMaterialStockInfo { get; set; }
         public DbSet<RawMaterialStockDetail> tblRawMaterialStockDetail { get; set; }
         public DbSet<RawMaterialSupplier> tblRawMaterialSupplierInfo { get; set; }

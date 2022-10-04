@@ -119,6 +119,8 @@
     <Compile Include="Agriculture\Interface\IRawMaterialIssueStockInfoBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialStockDetail.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialStockInfo.cs" />
+    <Compile Include="Agriculture\Interface\IZone.cs" />
+    <Compile Include="Agriculture\Interface\IZoneDetail.cs" />
     <Compile Include="Agriculture\MeasuremenBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialSupplier.cs" />
     <Compile Include="Agriculture\RawMaterialBusiness.cs" />
@@ -127,6 +129,8 @@
     <Compile Include="Agriculture\RawMaterialStockDetailBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialStockInfoBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialSupplierBusiness.cs" />
+    <Compile Include="Agriculture\ZoneBusiness.cs" />
+    <Compile Include="Agriculture\ZoneDetailBusiness.cs" />
     <Compile Include="Common\Status.cs" />
     <Compile Include="Common\Utility.cs" />
     <Compile Include="ControlPanel\AppUserBusiness.cs" />
