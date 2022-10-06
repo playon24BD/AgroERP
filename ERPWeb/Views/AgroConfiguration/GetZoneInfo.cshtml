@@ -47,8 +47,32 @@
                             <div class="col-md-12" style="margin-top:-10px">
                                 <div class="card card-navy">
                                     <div class="card-header">
-                                        <h6 class="card-title">Search By</h6>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <h4>Search by:</h4>
+                                            </div>
+                                            @*<div class="col-md-3 float-right" style="margin-left:-20px">
+                                                    <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+                                                </div>*@
+                                        </div>
+
                                     </div>
+
+
+                                    <div class="card-body text-sm">
+                                        <div class="row" style="margin-top:-15px">
+                                            <div class="col-md-3">
+                                                <label for="ddlZoneName" class="control-label">Zone Name</label>
+                                                @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Material--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
                                 </div>
                             </div>
 
@@ -89,9 +113,9 @@
                                     <div class="card-body text-sm">
                                         <div class="row" style="margin-top:-10px">
                                             <div class="col-md-2">
-                                                <label for="ddlZoneName" class="control-label">Zone Name</label>
-                                                <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
-                                                <span class="error hide required-ddlZoneName font-weight-bold">Input Zone Name!</span>
+                                                <label for="txtZoneName" class="control-label">Zone Name</label>
+                                                <input type="text" id="txtZoneName" class="form-control form-control-sm" />
+                                                <span class="error hide required-txtZoneName font-weight-bold">Input Zone Name!</span>
 
                                             </div>
                                             <div class="col-md-2">
@@ -158,14 +182,50 @@
 
 </div>
 
+<div class="modal fade" id="ZoneModalEdit" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title">Zone Edit</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="dataContainer1">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ZoneModalDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title">Zone Details</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 @section scripts{
-    
-<script type="text/javascript">
+
+    <script type="text/javascript">
 
     var ddlZoneName = $("#ddlZoneName");
+    var txtZoneName = $("#txtZoneName");
     var ddlDivisionName = $("#ddlDivisionName");
-    var ZoneNameList = [];
+    var searchByAny = $("#searchByAny");
+    var DivisionNameList = [];
 
     $(document).ready(function () {
         $('.select2').select2();
@@ -173,17 +233,24 @@
         $('.select2bs4').select2({
             theme: 'bootstrap4'
         });
-    })
+
+        $("#ddlDivisionName").hide();
+        $("#saveButton").hide();
 
 
-    $(document).ready(function () {
         LoadZoneList()
     })
+
+
 
     ddlZoneName.change(function () {
 
         LoadZoneList();
     })
+
+    //searchByAny.keyup(function () {
+    //    LoadZoneList()
+    //})
 
     function LoadZoneList() {
         var data = { flag: "View", ZoneId: TryParseInt(ddlZoneName.val(), 0), id: 0 };
@@ -206,8 +273,8 @@
         var isValid = true;
         $(".error").addClass('hide');
 
-        if (ddlZoneName.val() === "") {
-            $(".required-ddlZoneName").removeClass('hide');
+        if (txtZoneName.val() === "") {
+            $(".required-txtZoneName").removeClass('hide');
             isValid = false;
         }
         if (ddlDivisionName.val() === "") {
@@ -225,31 +292,34 @@
 
         if (true) {
 
-            if (ZoneNameList.includes(ddlZoneName.val())) {
-                toastrErrorAlert(" Zone Name Already Exist");
+            if (DivisionNameList.includes(ddlDivisionName.val())) {
+                toastrErrorAlert(" Division Name Already Exist");
             }
             else {
-
+                debugger;
             var sl = $("#tblMargeItem tbody tr").length;
             var td1 = "<td class='text-center align-middle'><b>" + (sl + 1) + "</b></td>"
-            var td2 = "<td class='text-center align-middle'>" + ddlZoneName.val() + "</td>";
+            var td2 = "<td class='text-center align-middle'>" + txtZoneName.val() +"</td>";
             var td3 = "<td class='text-center align-middle'>" + dropDownSelectedText("ddlDivisionName") + "</td>";
-            var td4 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";  
+            var td4 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
             var td5 = "<td class='hide DivisionId'>" + ddlDivisionName.val() + "</td>";
             var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 +"</tr>";
 
 
-                $("#tblMargeItem tbody").append(tr);
+            $("#tblMargeItem tbody").append(tr);
+            $("#saveButton").show();
 
-                ZoneNameList.push(ddlZoneName.val());
+            disable(txtZoneName);
+
+                DivisionNameList.push(ddlDivisionName.val());
 
             }
-            
+
            //ClearData();
 
         }
-        
-        
+
+
     })
 
     $(document).on("click", "a.data-onfly-del", function (e) {
@@ -259,8 +329,8 @@
 
         var ZoneId = tds.eq(1).html();
         console.log("ZoneId :" + ZoneId);
-        const mid = ZoneNameList.indexOf(ZoneId);
-        ZoneNameList.splice(mid, 1);
+        const mid = DivisionNameList.indexOf(ZoneId);
+        DivisionNameList.splice(mid, 1);
 
 
 
@@ -271,7 +341,7 @@
 
 
     function ClearData() {
-        ddlZoneName.val("");
+        txtZoneName.val("");
         //ddlDivisionName.val("");
 
     }
@@ -282,8 +352,8 @@
         debugger;
         if (true) {
 
-            var info = { ZoneName: ddlZoneName.val(), DivisionId: TryParseInt(ddlDivisionName.val(),0) };
-            
+            var info = { ZoneName: txtZoneName.val(), DivisionId: TryParseInt(ddlDivisionName.val(),0) };
+
             var details = [];
             details.length = 0;
 
@@ -305,6 +375,11 @@
                 console.log(res);
                 if (res == true) {
                     $('.toastrDefaultSuccess').trigger('click');
+
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("GetZoneInfo")');
+                    },1000)
+
                 }
                 else {
                     $('.toastrDefaultError').trigger('click');
@@ -320,6 +395,10 @@
     })
 
 
-    </script>
-    
+    function redirectPage(page) {
+        window.location.replace(page);
     }
+
+    </script>
+
+}

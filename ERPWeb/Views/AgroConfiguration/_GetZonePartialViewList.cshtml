@@ -5,7 +5,7 @@
     var sl = 0;
     var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
 }
-<table class="table table-bordered table-sm table-striped table-responsive-lg text-sm" id="tblZoneList">
+<table class="table table-bordered table-sm table-striped table-hover table-responsive-lg text-sm" id="tblZoneList">
     <thead class="btn-dark">
         <tr class="text-center text-bold">
             <th style="vertical-align:middle">#SL</th>
@@ -30,11 +30,11 @@
                         <i class="fas fa-eye"></i>
                     </a>
 
-                    <a href="#" class="btn btn-outline-warning data-item-edit hide" title="Edit" data-edit-item="@item.ZoneId" style="line-height:1">
+                    <a href="#" class="btn btn-outline-warning data-item-edit" title="Edit" data-edit-item="@item.ZoneId" style="line-height:1">
                         <i class="fas fa-pen"></i>
                     </a>
 
-                    <a href="#" class="btn btn-outline-danger data-item-del" title="Delete" data-del-item="@item.ZoneId" style="line-height:1">
+                    <a href="#" class="btn btn-outline-danger data-item-del hide" title="Delete" data-del-item="@item.ZoneId" style="line-height:1">
                         <i class="fas fa-trash"></i>
                     </a>
 

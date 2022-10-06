@@ -1218,13 +1218,20 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Sales and Distribution
-       
+
         public ActionResult GetZoneInfo(string flag, long? ZoneId, long? id)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetZoneInfo");
 
+            if (string.IsNullOrEmpty(flag))
+            {
 
-            if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                ViewBag.ddlZoneName = _zone.GetAllZoneInfo(User.OrgId).Select(des => new SelectListItem { Text = des.ZoneName, Value = des.ZoneId.ToString() }).ToList();
+
+                return View();
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
                 var dto = _zone.GetZoneInfos(User.OrgId, ZoneId ?? 0);
 
@@ -1232,8 +1239,17 @@ namespace ERPWeb.Controllers
                 List<ZoneViewModel> viewModels = new List<ZoneViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_GetZonePartialViewList", viewModels);
+
             }
-            return View();
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+                var ZoneNames = _zone.GetAllZoneInfo(User.OrgId).ToList();
+
+            }
+
+             return View();
+
         }
 
         [HttpPost]
