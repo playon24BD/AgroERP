@@ -170,10 +170,7 @@
         ddlRawMaterialName.change(function () {
             debugger;
             LoadRawMaterialStock();
-            //clearDropdown("ddlUnit");
-
-            //LoadDropDown("/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", "Post", ddlUnit.val(), JSON.stringify({ RawMaterialId: ddlRawMaterialName.val() }))
-            //LoadUnitData();
+           
             var data = { RawMaterialId: ddlRawMaterialName.val() };
 
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", data)).then(function (res, status) {

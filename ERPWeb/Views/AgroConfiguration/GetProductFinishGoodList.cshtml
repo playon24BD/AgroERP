@@ -283,7 +283,7 @@
             var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
 
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
-
+                debugger;
                 console.log(res);
                 var sl = 0;
                 material = JSON.parse(res)
@@ -292,7 +292,7 @@
                 console.log("length: " + len);
                 console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
                 console.log(targetQty.val() <= hdTargetValue.val());
-                if (targetQty.val() <= hdTargetValue.val() ) {
+                if (Number(targetQty.val()) <= Number( hdTargetValue.val())) {
 
 
                     //console.log(material[0].RawMaterialName);
