@@ -21,6 +21,8 @@ namespace ERPWeb.Controllers
         private readonly IRawMaterialIssueStockInfoBusiness _rawMaterialIssueStockInfoBusiness;
         private readonly IRawMaterialIssueStockDetailsBusiness _rawMaterialIssueStockDetailsBusiness;
 
+        private readonly IZoneSetup _zoneSetup;//e
+
         private readonly IBankSetup _bankSetup;
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
         private readonly IDepotSetup _depotSetup;
@@ -38,8 +40,10 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
+        public AgroConfigurationController(IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
         {
+            this._zoneSetup = zoneSetup;//e
+
             this._zoneDetail = zoneDetail;
             this._zone = zone;
             this._rawMaterialStockInfo = rawMaterialStockInfo;
@@ -92,9 +96,6 @@ namespace ERPWeb.Controllers
                 List<DepotSetupViewModel> viewModel = new List<DepotSetupViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModel);
                 return PartialView("_GetDepotPartialView", viewModel);
-
-
-
             }
             return View();
         }
@@ -1253,6 +1254,19 @@ namespace ERPWeb.Controllers
             }
 
             return Json(isSuccess);
+        }
+
+
+
+
+        public ActionResult Zonelist (string flag, string name)
+        {
+          
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+            }
+            return View();
         }
         #endregion
 

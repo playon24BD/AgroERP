@@ -11,7 +11,7 @@ using ERPBLL.Agriculture;
 using ERPBLL.Agriculture.Interface;
 
 using ERPDAL.AgricultureDAL;
-
+using ERPBO.Agriculture.DomainModels;
 
 namespace ERPWeb
 {
@@ -54,6 +54,10 @@ namespace ERPWeb
             container.RegisterType<IRawMaterialSupplier, RawMaterialSupplierBusiness>();
             container.RegisterType<IBankSetup, BankSetupBusiness>();
             container.RegisterType<IDepotSetup, DepotSetupBusiness>();
+
+            //e
+            container.RegisterType<IZoneSetup, ZoneSetupBusiness>();
+
             container.RegisterType<IRawMaterialBusiness,RawMaterialBusiness>();
             container.RegisterType<IFinishGoodProductBusiness, FinishGoodProductBusiness>();
             container.RegisterType<IFinishGoodProductSupplierBusiness, FinishGoodProductSupplierBusiness>();

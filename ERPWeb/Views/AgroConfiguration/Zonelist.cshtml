@@ -1,0 +1,157 @@
+﻿
+@{
+	ViewBag.Title = "ZoneList";
+}
+
+<div class="row">
+		<div class="col-md-12 text-center">
+			<div class="card card-gray shadow">
+				<div class="card-header">
+					<h4>Zone Setup</h4>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card card-navy shadow">
+				<div class="card-header">
+					<div class="row text-sm">
+
+						<div class="col-md-2">
+							<h4>Search by:</h4>
+						</div>
+						<div class="col-md-3 float-right">
+							<input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+						</div>
+						<div class="col-7">
+							<button class="btn btn-outline-primary btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Zone</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-12" style="margin-top:-10px">
+		<div class="card">
+			<div class="card-body">
+				<div class="col-md-12" id="dataContainer">
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal" id="zonemodal" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header alert-secondary">
+					<h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<form id="formzone">
+						<input type="hidden" id="hdzonetId" />
+						<div class="form-row">
+							<div class="form-group col-md-8">
+								<label for="ddlorgname" class="control-label">OrganizationName</label>
+								@Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+								<span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
+							</div>
+							<div class="form-group col-md-8">
+								<label for="ddlZoneName" class="control-label">ZoneName</label>
+								<input type="text" id="ddlZoneName" class="form-control form-control-sm" />
+								<span class="error hide required-ZoneName font-weight-bold">Input Zone Name!</span>
+								<span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
+							</div>
+							<div class="form-group col-md-8">
+								<label for="ddlRemarks" class="control-label">Remarks</label>
+								<input type="text" id="ddlRemarks" class="form-control form-control-sm" />
+							</div>
+						</div>
+					</form>
+				</div>
+
+
+				<div class="modal-footer btn-default">
+					<div class="col-md-6">
+						<div id="msg1" class="alert alert-success hide float-left">
+							Data has been saved Successful!
+						</div>
+						<div id="msg2" class="alert alert-danger hide float-left">
+							Data has been failed to save!
+						</div>
+					</div>
+					<button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+					<button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextZone">Save</span> </button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+@section scripts{
+
+	<script type="text/javascript">
+
+		//asign modal value
+
+		var hdzonetId = $("#hdzonetId");
+		var ddlorgname = $("#ddlorgname");
+		var ddlZoneName = $("#ddlZoneName");
+		var ddlRemarks = $("#ddlRemarks");
+
+
+		//openmodals
+		function OpenModal() {
+			$("#spanModalHead").text("Add New Zone");
+			$("#spanSaveTextZone").text('Save');
+			$("#zonemodal").modal("show");
+			$(".error").addClass("hide");
+		}
+		$(document).ready(function () {
+			$('.select2').select2();
+
+			//Initialize Select2 Elements
+			$('.select2bs4').select2({
+				theme: 'bootstrap4'
+			});
+			
+		})
+
+		//createbutton
+		$("#addButton").click(function (e) {
+			alert("Clicked");
+			OpenModal()
+		})
+
+
+
+		//save in database
+		$("#saveButton").click(function (e) {
+			//debugger;
+			e.preventDefault();
+			//alert(TryParseInt(ddlorgname.val(), 0));
+			var data = JSON.stringify({ ZoneId: TryParseInt(hdzonetId.val(), 0), OrganizationId: TryParseInt(ddlorgname.val(), 0), ZoneName: ddlZoneName.val(), Remarks: ddlRemarks.val() });
+			
+			console.log(data);
+
+
+			return data;
+
+		})
+
+
+
+
+	</script>
+}

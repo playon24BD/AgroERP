@@ -20,6 +20,8 @@ namespace ERPDAL.AgricultureDAL
         //{
         //    modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
         //}
+        
+           
 
         public DbSet<Zone> tblZoneInfo { get; set; }
         public DbSet<ZoneDetail> tblZoneDetail { get; set; }
@@ -39,6 +41,9 @@ namespace ERPDAL.AgricultureDAL
         public DbSet<RawMaterialIssueStockDetails> tblRawMaterialIssueStockDetails { get; set; }
         public DbSet<FinishGoodProductionInfo> tblFinishGoodProductionInfos { get; set; }
         public DbSet<FinishGoodProductionDetails> tblFinishGoodProductionDetails { get; set; }
+        public DbSet<ZoneSetup> tblZoneInfos { get; set; } //e
+
+
 
         //public DbSet<RawMaterial> tblRawMaterials { get; set; }
 

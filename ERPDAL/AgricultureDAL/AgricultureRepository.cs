@@ -37,8 +37,12 @@ namespace ERPDAL.AgricultureDAL
     public class DepotSetupRepository : AgricultureBaseRepository<DepotSetup>
     {
         public DepotSetupRepository(IAgricultureUnitOfWork AgricultureUnitOfWork) : base(AgricultureUnitOfWork) { }
+    }
 
-
+    //e
+    public class ZoneSetupRepository : AgricultureBaseRepository<ZoneSetup>
+    {
+        public ZoneSetupRepository(IAgricultureUnitOfWork AgricultureUnitOfWork) : base(AgricultureUnitOfWork) { }
     }
 
     public class RawMaterialRepository : AgricultureBaseRepository<RawMaterial>

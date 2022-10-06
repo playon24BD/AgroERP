@@ -476,6 +476,7 @@
     <Content Include="Views\AgroConfiguration\_GetProductFinishGoodDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\GetZoneInfo.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetZonePartialViewList.cshtml" />
+    <Content Include="Views\AgroConfiguration\Zonelist.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
