@@ -106,10 +106,7 @@ namespace ERPWeb.Controllers
             DepotSetupDTO dto = new DepotSetupDTO();
             AutoMapper.Mapper.Map(viewModel, dto);
             isSuccess = _depotSetup.SaveDepotInfo(dto, User.OrgId, User.UserId);
-
-
             return Json(isSuccess);
-
         }
         #endregion
 
@@ -1282,8 +1279,42 @@ namespace ERPWeb.Controllers
             {
                 ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
             }
+            else if (!string.IsNullOrEmpty(flag) && flag== "Zonsetup")
+            {
+                IEnumerable<ZoneSetupDTO> dto = _zoneSetup.GetAllZoneSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.ZoneName.Contains(name)) || (s.MobileNumber.Contains(name)) || (s.ZoneAsignName.Contains(name))).Select(o => new ZoneSetupDTO
+                {
+                    ZoneId = o.ZoneId,
+                    ZoneName= o.ZoneName,
+                    ZoneAsignName = o.ZoneAsignName,
+                    MobileNumber= o.MobileNumber,
+                    Remarks = o.Remarks,
+
+                    RoleId= o.RoleId,
+                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
+                    EntryDate = o.EntryDate,
+                    UpdateUserId = o.UpdateUserId,
+                    UpdateDate = o.UpdateDate,
+                    OrganizationId = o.OrganizationId,
+                    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
+
+                }).ToList();
+                List<ZoneSetupViewModel> viewmodel = new List<ZoneSetupViewModel>();
+                AutoMapper.Mapper.Map(dto, viewmodel);
+                return PartialView("_GetZonePartialView",viewmodel);
+            }
             return View();
         }
+
+        [HttpPost]
+        public ActionResult SaveZonetInfo(ZoneSetupViewModel viewModel)
+        {
+            bool isSuccess = false;
+            ZoneSetupDTO dto = new ZoneSetupDTO();
+            AutoMapper.Mapper.Map(viewModel, dto);
+            isSuccess = _zoneSetup.SaveZonetInfo(dto, User.OrgId, User.UserId);
+            return Json(isSuccess);
+            }
+
         #endregion
 
     }

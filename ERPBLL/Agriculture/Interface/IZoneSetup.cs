@@ -12,6 +12,6 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<ZoneSetup> GetAllZoneSetup(long OrgId);
         ZoneSetup GetZoneNamebyId(long zoneId, long orgId);
-        bool SaveDepotInfo(ZoneSetupDTO infoDTO, long orgId, long userId);
+        bool SaveZonetInfo(ZoneSetupDTO infoDTO, long orgId, long userId);
     }
 }
