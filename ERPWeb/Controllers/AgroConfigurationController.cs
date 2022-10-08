@@ -1317,6 +1317,14 @@ namespace ERPWeb.Controllers
             return View();
         }
 
+
+        //createget
+        public ActionResult CreateZonelist(long? id)
+        {
+            ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+            return View();
+        }
+
         [HttpPost]
         public ActionResult SaveZonetInfo(ZoneSetupViewModel viewModel)
         {
