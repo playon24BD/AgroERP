@@ -478,6 +478,7 @@
     <Content Include="Views\AgroConfiguration\_GetZonePartialViewList.cshtml" />
     <Content Include="Views\AgroConfiguration\Zonelist.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetZonePartialView.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetRawMaterialCurrentStockList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

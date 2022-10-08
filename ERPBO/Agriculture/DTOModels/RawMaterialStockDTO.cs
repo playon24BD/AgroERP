@@ -30,6 +30,7 @@ namespace ERPBO.Agriculture.DTOModels
 
         //Custom 
         public DateTime? StockIssueDate { get; set; }
+        public double CurrentStock { get; set; }
 
         public List<RawMaterialStockDetailDTO> RawMaterialStockDetails { get; set; }
     }
