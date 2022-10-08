@@ -15,6 +15,7 @@ namespace ERPBO.Agriculture.ViewModels
         public double Quantity { get; set; }
         public string Unit { get; set; }
         public DateTime? StockDate { get; set; }
+        public DateTime? StockIssueDate { get; set; }
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
         public DateTime? UpdateDate { get; set; }

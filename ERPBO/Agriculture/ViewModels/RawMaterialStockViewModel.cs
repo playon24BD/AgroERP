@@ -27,6 +27,8 @@ namespace ERPBO.Agriculture.ViewModels
         public double StockIn { get; set; }
         public double StockOut { get; set; }
         public double TotalStock { get; set; }
+        //Custom 
+        public DateTime? StockIssueDate { get; set; }
 
         public List<RawMaterialStockDetailViewModel> RawMaterialStockDetails { get; set; }
     }

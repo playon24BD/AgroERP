@@ -54,11 +54,22 @@
                                                 @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             </div>
 
+                                            <div class="col-md-3">
+                                                <label for="ddlStatus" class="control-label">Status</label>
+
+                                                <select class="form-control form-control-sm" id="ddlStatus">
+                                                    <option value="">--Select Stock Status--</option>
+                                                    <option value="StockIn">StockIn</option>
+                                                    <option value="StockOut">StockOut</option>
+                                                </select>
+                                            </div>
+
                                         </div>
 
                                     </div>
+
+
                                 </div>
-                            </div>
 
                             <div class="col-md-12" style="margin-top:-10px">
                                 <div class="card">
@@ -115,6 +126,7 @@
     var ddlRawMaterialName = $("#ddlRawMaterialName");
     var RawMaterialUpdateQty = $("#RawMaterialUpdateQty");
     var hdStockModal = $("#hdStockModal");
+    var ddlStatus = $("#ddlStatus");
 
 
     $(document).ready(function () {
@@ -141,9 +153,13 @@
 
         LoadDetails();
     })
+    ddlStatus.change(function () {
+
+        LoadDetails();
+    })
 
     function LoadDetails() {
-        var data = { flag: "View", rawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), id: 0 };
+        var data = { flag: "View", rawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), id: 0, Status: ddlStatus.val() };
 
         $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetRawMaterialStock', data)).then(function (res, status) {
             console.log(status);

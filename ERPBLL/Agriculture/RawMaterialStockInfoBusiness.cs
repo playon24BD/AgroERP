@@ -35,11 +35,11 @@ namespace ERPBLL.Agriculture
             return _rawMaterialStockInfoRepository.GetAll(a => a.OrganizationId == orgId);
         }
 
-        public IEnumerable<RawMaterialStockInfoDTO> GetRawMaterialStockInfos(long orgId, long? rawMaterialId)
+        public IEnumerable<RawMaterialStockInfoDTO> GetRawMaterialStockInfos(long orgId, long? rawMaterialId,string Status)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialStockInfoDTO>(QueryForRawMaterialInfoss(orgId, rawMaterialId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialStockInfoDTO>(QueryForRawMaterialInfoss(orgId, rawMaterialId, Status)).ToList();
         }
-        private string QueryForRawMaterialInfoss(long orgId, long? rawMaterialId)
+        private string QueryForRawMaterialInfoss(long orgId, long? rawMaterialId,string Status)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -49,38 +49,42 @@ namespace ERPBLL.Agriculture
             {
                 param += string.Format(@" and rmd.RawMaterialId={0}", rawMaterialId);
             }
+            if (Status != null && Status!= "")
+            {
+                param += string.Format(@" and rmd.Status='{0}'", Status);
+            }
             query = string.Format(@"
-SELECT distinct rmd.RawMaterialId,rm.RawMaterialName,rmd.Unit,rmd.StockDate,rmd.Status,rmd.ExpireDate,
-    StockIn=ISNull((
-	    SELECT SUM(rmds.Quantity) as Quantity
-		FROM  [Agriculture].[dbo].[tblRawMaterialStockDetail] rmds
-		
-		where rmds.Status='StockIn' and rmds.RawMaterialId= rmd.RawMaterialId
-	),0),
+SELECT distinct rmd.RawMaterialId,rm.RawMaterialName,rmd.Unit,rmd.Status,
+ 
+  CASE WHEN Status = 'StockIn' 
+                     THEN CAST(rmd.ExpireDate as date)
+                  ELSE ''
+             END  as ExpireDate,
 
-	StockOut=ISNull((
-	    SELECT SUM(rmds.Quantity) as Quantity
-		FROM  [Agriculture].[dbo].[tblRawMaterialStockDetail] rmds
-		
-		where rmds.Status='StockOut' and rmds.RawMaterialId= rmd.RawMaterialId
-	),0),
+ CASE WHEN Status = 'StockIn' 
+                     THEN CAST(rmd.StockDate as date)
+                  ELSE ''
+             END  as StockDate,
+CASE WHEN Status = 'StockOut' 
+					 THEN CAST(rmd.StockIssueDate as date)
+                  ELSE ''
+             END  as StockIssueDate,
 
-	TotalStock=ISNull((
-	    SELECT SUM(rmds.Quantity) as Quantity
-		FROM  [Agriculture].[dbo].[tblRawMaterialStockDetail] rmds
-		
-		where rmds.Status='StockIn' and rmds.RawMaterialId= rmd.RawMaterialId
-	),0)-ISNull((
-	    SELECT SUM(rmds.Quantity) as Quantity
-		FROM  [Agriculture].[dbo].[tblRawMaterialStockDetail] rmds
-		
-		where rmds.Status='StockOut' and rmds.RawMaterialId= rmd.RawMaterialId
-	),0)
+CASE WHEN Status = 'StockIn' 
+                     THEN SUM(Quantity) 
+                  ELSE 0
+             END  as StockIn,
+
+CASE WHEN Status = 'StockOut' 
+                     THEN SUM(Quantity) 
+                  ELSE 0
+             END  as StockOut
+
 
    
     FROM [Agriculture].dbo.tblRawMaterialStockDetail rmd
 	inner join [Agriculture].dbo.tblRawMaterialInfo rm on   rmd.RawMaterialId=rm.RawMaterialId
-            where 1=1  {0}",
+            where 1=1  {0} group by rmd.RawMaterialId,rm.RawMaterialName,rmd.Unit,rmd.StockDate,rmd.Status,rmd.ExpireDate,rmd.StockIssueDate",
             Utility.ParamChecker(param));
             return query;
         }
@@ -203,7 +207,7 @@ SELECT distinct rmd.RawMaterialId,rm.RawMaterialName,rmd.Unit,rmd.StockDate,rmd.
 
                         var RawMaterialStockInfoid = RawMaterialStockInfoIdGet(items.OrganizationId, items.RawMaterialId);
 
-                        isSuccess = _rawMaterialStockDetail.SaverawMaterialStockDetail(items.OrganizationId, items.RawMaterialId,items.RawMaterialSupplierId, items.Quantity, items.Unit, items.StockDate, items.EntryDate, items.EntryUserId, items.UpdateDate,items.ExpireDate,items.UpdateUserId, items.Status, RawMaterialStockInfoid.RawMaterialStockId);
+                        isSuccess = _rawMaterialStockDetail.SaverawMaterialStockDetail(items.OrganizationId, items.RawMaterialId,items.RawMaterialSupplierId, items.Quantity, items.Unit, items.StockDate,items.StockIssueDate, items.EntryDate, items.EntryUserId, items.UpdateDate,items.ExpireDate,items.UpdateUserId, items.Status, RawMaterialStockInfoid.RawMaterialStockId);
                     }
 
 

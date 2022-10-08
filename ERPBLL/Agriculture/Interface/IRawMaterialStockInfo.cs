@@ -17,7 +17,7 @@ namespace ERPBLL.Agriculture.Interface
 
         List<AgroDropdown> GetDepotRawMaterials(long orgId);
 
-        IEnumerable<RawMaterialStockInfoDTO> GetRawMaterialStockInfos(long orgId, long? rawMaterialId);
+        IEnumerable<RawMaterialStockInfoDTO> GetRawMaterialStockInfos(long orgId, long? rawMaterialId,string Status);
         IEnumerable<RawMaterialStockInfoDTO> GetCheckExpairDatewiseRawMaterials(long orgId);
 
         RawMaterialStockInfo GetRawMaterialStockById(long id, long orgId);

@@ -476,7 +476,7 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Depot/Warehouse
-        public ActionResult GetRawMaterialStock(string flag, long? rawMaterialId, long? id)
+        public ActionResult GetRawMaterialStock(string flag, long? rawMaterialId, long? id,string Status)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetRawMaterialStock");
 
@@ -492,7 +492,19 @@ namespace ERPWeb.Controllers
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                var dto = _rawMaterialStockInfo.GetRawMaterialStockInfos(User.OrgId, rawMaterialId ?? 0);
+                var dto = _rawMaterialStockInfo.GetRawMaterialStockInfos(User.OrgId, rawMaterialId ?? 0, Status ?? null);
+                //foreach(var items in dto)
+                //{
+                //    if(Convert.ToString( items.ExpireDate)== "1900-01-01")
+                //    {
+
+                //    }
+
+                //}
+                //if (dto.FirstOrDefault().ExpireDate.ToString() == "1900-01-01")
+                //{
+                //    dto.FirstOrDefault().ExpireDates = "NULL";
+                //}
 
 
                 List<RawMaterialStockInfoViewModel> viewModels = new List<RawMaterialStockInfoViewModel>();
