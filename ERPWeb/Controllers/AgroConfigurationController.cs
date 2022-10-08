@@ -492,57 +492,51 @@ namespace ERPWeb.Controllers
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
+                var dto = _rawMaterialStockInfo.GetRawMaterialStockInfosList(User.OrgId, rawMaterialId ?? 0);
+
+
+                List<RawMaterialStockInfoViewModel> viewModels = new List<RawMaterialStockInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetRawMaterialCurrentStockList", viewModels);
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
                 var dto = _rawMaterialStockInfo.GetRawMaterialStockInfos(User.OrgId, rawMaterialId ?? 0, Status ?? null);
-                //foreach(var items in dto)
-                //{
-                //    if(Convert.ToString( items.ExpireDate)== "1900-01-01")
-                //    {
-
-                //    }
-
-                //}
-                //if (dto.FirstOrDefault().ExpireDate.ToString() == "1900-01-01")
-                //{
-                //    dto.FirstOrDefault().ExpireDates = "NULL";
-                //}
 
 
                 List<RawMaterialStockInfoViewModel> viewModels = new List<RawMaterialStockInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_GetRawMaterialStockList", viewModels);
-            }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                //var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
 
-                var info = _rawMaterialStockInfo.GetRawMaterialStockById(id.Value, User.OrgId);
-                List<RawMaterialStockDetailViewModel> details = new List<RawMaterialStockDetailViewModel>();
+                //var info = _rawMaterialStockInfo.GetRawMaterialStockById(id.Value, User.OrgId);
+                //List<RawMaterialStockDetailViewModel> details = new List<RawMaterialStockDetailViewModel>();
 
-                if (info != null)
-                {
-                    ViewBag.Info = new RawMaterialStockInfoViewModel
-                    {
-                        RawMaterialName = RawMaterialNames.FirstOrDefault(it => it.RawMaterialId == info.RawMaterialId).RawMaterialName,
+                //if (info != null)
+                //{
+                //    ViewBag.Info = new RawMaterialStockInfoViewModel
+                //    {
+                //        RawMaterialName = RawMaterialNames.FirstOrDefault(it => it.RawMaterialId == info.RawMaterialId).RawMaterialName,
 
-                        Quantity = info.Quantity,
-                        Unit = info.Unit
-                    };
+                //        Quantity = info.Quantity,
+                //        Unit = info.Unit
+                //    };
 
-                    details =
-                        _rawMaterialStockDetail.GetRawMaterialStockDetailsById(id.Value, User.OrgId).Select(i => new RawMaterialStockDetailViewModel
-                        {
-                            //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
-                            RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
-                            Quantity = i.Quantity,
-                            Unit = i.Unit,
-                            Status=i.Status,
-                        }).ToList();
-                }
-                else
-                {
-                    ViewBag.Info = new RawMaterialStockInfoViewModel();
-                }
-                return PartialView("_GetRawMaterialStockDetail", details);
+                //    details =
+                //        _rawMaterialStockDetail.GetRawMaterialStockDetailsById(id.Value, User.OrgId).Select(i => new RawMaterialStockDetailViewModel
+                //        {
+                //            //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
+                //            RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                //            Quantity = i.Quantity,
+                //            Unit = i.Unit,
+                //            Status=i.Status,
+                //        }).ToList();
+                //}
+                //else
+                //{
+                //    ViewBag.Info = new RawMaterialStockInfoViewModel();
+                //}
+                //return PartialView("_GetRawMaterialStockDetail", details);
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Edit)
             {

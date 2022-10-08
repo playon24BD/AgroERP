@@ -88,6 +88,43 @@ CASE WHEN Status = 'StockOut'
             Utility.ParamChecker(param));
             return query;
         }
+
+
+        public IEnumerable<RawMaterialStockInfoDTO> GetRawMaterialStockInfosList(long orgId, long? rawMaterialId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialStockInfoDTO>(QueryForRawMaterialInfossList(orgId, rawMaterialId)).ToList();
+        }
+        private string QueryForRawMaterialInfossList(long orgId, long? rawMaterialId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and rm.OrganizationId={0}", orgId);
+            if (rawMaterialId != null && rawMaterialId > 0)
+            {
+                param += string.Format(@" and rm.RawMaterialId={0}", rawMaterialId);
+            }
+            
+            query = string.Format(@"
+SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockDate,
+
+ 
+  StockIn = isnull((SELECT sum(wsd.Quantity) FROM [Agriculture].[dbo].[tblRawMaterialStockDetail] wsd where wsd.RawMaterialId=rm.RawMaterialId and Status='StockIn'),0),
+
+  StockOut = isnull((SELECT sum(wsd.Quantity) FROM [Agriculture].[dbo].[tblRawMaterialStockDetail] wsd where wsd.RawMaterialId=rm.RawMaterialId and Status='StockOut'),0),
+
+  CurrentStock=(isnull((SELECT sum(wsd.Quantity) FROM [Agriculture].[dbo].[tblRawMaterialStockDetail] wsd where wsd.RawMaterialId=rm.RawMaterialId and Status='StockIn'),0)
+-isnull((SELECT sum(wsd.Quantity) FROM [Agriculture].[dbo].[tblRawMaterialStockDetail] wsd where wsd.RawMaterialId=rm.RawMaterialId and Status='StockOut'),0))
+
+
+   
+    FROM [Agriculture].dbo. tblRawMaterialStockInfo rmd
+	INNER join [Agriculture].dbo.tblRawMaterialInfo rm on   rm.RawMaterialId=rmd.RawMaterialId
+            where 1=1  {0} group by rm.EntryDate,rm.RawMaterialId,rm.RawMaterialName,rmd.Unit",
+            Utility.ParamChecker(param));
+            return query;
+        }
+
         public bool UpdateRawmaterialstockInfo(long id, double UpdateRawMaterialStock, double IssueRawMaterialStockQty, long orgId, string Unit, DateTime? EntryDate, long? EntryUserId)
         {
             bool IsSuccess = false;
