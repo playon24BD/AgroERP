@@ -1257,7 +1257,7 @@ namespace ERPWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveZoneInfo(ZoneViewModel viewModel,List<ZoneDetailViewModel> details)
+        public ActionResult SaveZoneInfo(ZoneViewModel viewModel, List<ZoneDetailViewModel> details)
         {
             bool isSuccess = false;
             if (ModelState.IsValid)
@@ -1268,7 +1268,7 @@ namespace ERPWeb.Controllers
                 List<ZoneDetailDTO> DetailsDTO = new List<ZoneDetailDTO>();
                 AutoMapper.Mapper.Map(details, DetailsDTO);
                 AutoMapper.Mapper.Map(viewModel, dto);
-                isSuccess = _zone.SaveZoneInfo(dto,DetailsDTO, User.UserId, User.OrgId);
+                isSuccess = _zone.SaveZoneInfo(dto, DetailsDTO, User.UserId, User.OrgId);
 
             }
 
@@ -1280,34 +1280,6 @@ namespace ERPWeb.Controllers
 
         public ActionResult Zonelist (string flag, string name)
         {
-          
-            if (string.IsNullOrEmpty(flag))
-            {
-                ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
-            }
-            else if (!string.IsNullOrEmpty(flag) && flag== "Zonsetup")
-            {
-                IEnumerable<ZoneSetupDTO> dto = _zoneSetup.GetAllZoneSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.ZoneName.Contains(name)) || (s.MobileNumber.Contains(name)) || (s.ZoneAsignName.Contains(name))).Select(o => new ZoneSetupDTO
-                {
-                    ZoneId = o.ZoneId,
-                    ZoneName= o.ZoneName,
-                    ZoneAsignName = o.ZoneAsignName,
-                    MobileNumber= o.MobileNumber,
-                    Remarks = o.Remarks,
-
-                    RoleId= o.RoleId,
-                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
-                    EntryDate = o.EntryDate,
-                    UpdateUserId = o.UpdateUserId,
-                    UpdateDate = o.UpdateDate,
-                    OrganizationId = o.OrganizationId,
-                    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
-
-                }).ToList();
-                List<ZoneSetupViewModel> viewmodel = new List<ZoneSetupViewModel>();
-                AutoMapper.Mapper.Map(dto, viewmodel);
-                return PartialView("_GetZonePartialView",viewmodel);
-            }
             return View();
         }
 
@@ -1320,14 +1292,17 @@ namespace ERPWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveZonetInfo(ZoneSetupViewModel viewModel)
+        public ActionResult SaveZonetInfo(List<ZoneSetupViewModel> details)
         {
-            bool isSuccess = false;
-            ZoneSetupDTO dto = new ZoneSetupDTO();
-            AutoMapper.Mapper.Map(viewModel, dto);
-            isSuccess = _zoneSetup.SaveZonetInfo(dto, User.OrgId, User.UserId);
-            return Json(isSuccess);
+            bool IsSuccess = false;
+            if (details.Count > 0)
+            {
+                List<ZoneSetupDTO> detailsDTO = new List<ZoneSetupDTO>();
+                AutoMapper.Mapper.Map(details,detailsDTO);
+                IsSuccess = _zoneSetup.SaveZoneInfo(detailsDTO, User.UserId,User.OrgId);
             }
+            return Json(IsSuccess);
+        }
 
         #endregion
 

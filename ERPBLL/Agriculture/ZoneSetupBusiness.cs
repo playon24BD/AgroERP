@@ -35,64 +35,35 @@ namespace ERPBLL.Agriculture
             return _zoneSetupRepository.GetOneByOrg(x => x.ZoneId == zoneId && x.OrganizationId == orgId);
         }
 
-        public bool SaveZonetInfo(ZoneSetupDTO infoDTO, long orgId, long userId)
+        public bool SaveZoneInfo(List<ZoneSetupDTO> detailsDTO, long userId, long orgId)
         {
+            bool IsSuccess = false;
+            List<ZoneSetup> ZoneSetup = new List<ZoneSetup>();
 
-            bool savesuccess = false;
-
-            //validation same name
-            var zonename = _zoneSetupRepository.GetAll(x => x.ZoneName == infoDTO.ZoneName).FirstOrDefault();
-            if(zonename != null)
+            foreach(var item in detailsDTO)
             {
-                return savesuccess;
-
-            }
-            else
-            {
-
-                if (infoDTO.ZoneId == 0)
+                ZoneSetup zoneSetups = new ZoneSetup()
                 {
-                    ZoneSetup zoneSetupinfo = new ZoneSetup()
-                    {
-                        ZoneName = infoDTO.ZoneName,
-                        Remarks = infoDTO.Remarks,
-                        MobileNumber = infoDTO.MobileNumber,
-                        ZoneAsignName = infoDTO.ZoneAsignName,
-                        OrganizationId = infoDTO.OrganizationId,
+                    OrganizationId = item.OrganizationId,
+                    ZoneId = item.ZoneId,
+                    ZoneName = item.ZoneName,
+                    ZoneAsignName = item.ZoneAsignName,
+                    MobileNumber = item.MobileNumber,
+                    Remarks = item.Remarks,
 
-                        EntryUserId = userId,
-                        UpdateUserId = infoDTO.UpdateUserId,
-                        EntryDate = DateTime.Now,
-                        UpdateDate = DateTime.Now,
-                        RoleId = infoDTO.RoleId
+                    EntryUserId = userId,
+                    UpdateUserId = userId,
+                    EntryDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    RoleId = 0
 
-                    };
-                    _zoneSetupRepository.Insert(zoneSetupinfo);
-                }
-                else
-                {
-                    ZoneSetup zoneSetup = new ZoneSetup();
-                    zoneSetup = GetZoneNamebyId(infoDTO.ZoneId, orgId);
-                    zoneSetup.ZoneName = infoDTO.ZoneName;
-                    zoneSetup.ZoneAsignName = infoDTO.ZoneAsignName;
-                    zoneSetup.Remarks = infoDTO.Remarks;
-                    zoneSetup.MobileNumber = infoDTO.MobileNumber;
-
-                    zoneSetup.OrganizationId = orgId;
-                    zoneSetup.EntryUserId = zoneSetup.EntryUserId;
-                    zoneSetup.UpdateUserId = userId;
-                    zoneSetup.EntryDate = zoneSetup.EntryDate;
-                    zoneSetup.UpdateDate = DateTime.Now;
-                    zoneSetup.RoleId = infoDTO.RoleId;
-
-                }
-                savesuccess = _zoneSetupRepository.Save();
-
-                return savesuccess;
-
+                };
+                _zoneSetupRepository.Insert(zoneSetups);
             }
 
-            
+            IsSuccess = _zoneSetupRepository.Save();
+            return IsSuccess;
         }
+
     }
 }

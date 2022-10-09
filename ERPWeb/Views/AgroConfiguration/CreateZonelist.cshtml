@@ -123,7 +123,7 @@
         //add
         $("#addButton").click(function (e) {
             //alert();
-            debugger;
+            //debugger;
             e.preventDefault();
 
              
@@ -148,7 +148,7 @@
 
         })
 
-        //save
+
         //save in database
         $("#saveButton").click(function (e) {
             debugger;
@@ -156,12 +156,10 @@
             alert();
             //$(".error").addClass("hide");
 
-            var data = JSON.stringify({OrganizationId: TryParseInt(ddlorgname.val(), 0), ZoneName: ddlZoneName.val(), Remarks: ddlRemarks.val(), ZoneAsignName: ddlZoneAsign.val(), MobileNumber: ddlAMobilenum.val() });
-            console.log(data);
+            //var data = JSON.stringify({OrganizationId: TryParseInt(ddlorgname.val(), 0), ZoneName: ddlZoneName.val(), Remarks: ddlRemarks.val(), ZoneAsignName: ddlZoneAsign.val(), MobileNumber: ddlAMobilenum.val() });
+            //console.log(data);
             var details = [];
             details.length = 0;
-
-
             $.each($("#tblSingleItems tbody tr"), function (index, item) {
                 var tds = $(this).children('td');
                 details.push({
@@ -175,10 +173,29 @@
 
                 });
             })
+            console.log(details);
+            var data = JSON.stringify({ details: details });
 
-           
-            Console.log(details);
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveZonetInfo', data, getToken())).then(function (res, status) {
+                if (res === true) {
+                    debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("Zonelist")');
+                    }, 1000);
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+            }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#saveButton");
+            })
 
+            function redirectPage(page) {
+                window.location.replace(page);
+            }
 
         });
 
