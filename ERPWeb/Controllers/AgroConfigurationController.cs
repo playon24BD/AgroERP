@@ -14,6 +14,7 @@ namespace ERPWeb.Controllers
 {
     public class AgroConfigurationController : BaseController
     {
+        public readonly IDivisionInfo _divisionInfo;
         public readonly IZone _zone;
         private readonly IZoneDetail _zoneDetail;
         private readonly IRawMaterialStockInfo _rawMaterialStockInfo;
@@ -41,8 +42,12 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IRegionSetup regionSetup ,IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
+        //public AgroConfigurationController(IRegionSetup regionSetup ,IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
+
+        public AgroConfigurationController(IRegionSetup regionSetup, IDivisionInfo divisionInfo,IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
+
         {
+            this._divisionInfo = divisionInfo;
             this._zoneSetup = zoneSetup;//e
 
             this._zoneDetail = zoneDetail;
@@ -1339,14 +1344,49 @@ namespace ERPWeb.Controllers
         }
 
 
+
         //Rigion
         public ActionResult Regionlist(string flag, string name)
         {
+            return View();
+        }
+
+        #region
+
+        public ActionResult GetDivisionInfo(string flag, string name)
+        {
+            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetDivisionInfo");
 
             if (string.IsNullOrEmpty(flag))
             {
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+
                 return View();
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                IEnumerable<DivisionInfoDTO> dto = _divisionInfo.GetAllDivisionSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.DivisionName.Contains(name))).Select(o => new DivisionInfoDTO
+                {
+                    ZoneId = o.ZoneId,
+                    OrganizationId = o.OrganizationId,
+                    DivisionName = o.DivisionName,
+                    DivisionAssignName = o.DivisionAssignName,
+                    MobileNumber = o.MobileNumber,
+                    Remarks = o.Remarks,
+                    EntryDate = o.EntryDate,
+                    UpdateUserId = o.UpdateUserId,
+                    UpdateDate = o.UpdateDate,
+
+
+                }).ToList();
+
+                List<DivisionInfoViewModel> viewModels = new List<DivisionInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetDivisionPartialView", viewModels);
+
+                
             }
             return View();
         }
@@ -1358,6 +1398,31 @@ namespace ERPWeb.Controllers
             ViewBag.ddlzonename = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(zne => new SelectListItem { Text = zne.ZoneName, Value = zne.ZoneId.ToString() }).ToList();
             return View();
         }
+
+
+        public ActionResult CreateDivisionInfo(long? id)
+        {
+            ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+            ViewBag.ddlZoneName=_zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+
+            return View();
+        }
+         
+        public ActionResult SaveDivisionInfo(List<DivisionInfoViewModel> viewModel)
+        {
+            bool IsSuccess = false;
+            if (viewModel.Count > 0)
+            {
+                List<DivisionInfoDTO> dto = new List<DivisionInfoDTO>();
+                AutoMapper.Mapper.Map(viewModel, dto);
+                IsSuccess = _divisionInfo.SaveDivisionInfo(dto, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
+        }
+
+        #endregion
+
 
         #endregion
 

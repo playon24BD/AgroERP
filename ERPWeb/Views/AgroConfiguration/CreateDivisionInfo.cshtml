@@ -1,0 +1,221 @@
+﻿
+@{
+    ViewBag.Title = "CreateDivisionInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/GetDivisionInfo" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">Create Division</h5>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body text-sm">
+                <div class="row " style="margin-top:-8px;">
+                    <div class="col-md-2">
+                        <label for="ddlOrganizationName" class="control-label">Organization Name</label>
+
+                        @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                        <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlZoneName" class="control-label">ZoneName</label>
+                        @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide required-ZoneName font-weight-bold">Select Zone Name!</span>
+                        <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtDivisionName" class="control-label">DivisionName</label>
+                        <input type="text" id="txtDivisionName" class="form-control form-control-sm" />
+                        <span class="error hide required-DivisionName font-weight-bold">Input Division Name!</span>
+                        <span class="error hide duplicate-DivisionName font-weight-bold">Already Division Exist!</span>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtDivisionAssignName" class="control-label">DivisionAssignName</label>
+                        <input type="text" id="txtDivisionAssignName" class="form-control form-control-sm" />
+                        <span class="error hide required-DivisionAssignName font-weight-bold">Input Assign Name!</span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="txtMobileNumber" class="control-label">Mobile Number</label>
+                        <input type="text" id="txtMobileNumber" class="form-control form-control-sm" />
+                        <span class="error hide required-Number font-weight-bold">Input Valid Mobile Number!</span>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="txtRemarks" class="control-label">Remarks</label>
+                        <input type="text" id="txtRemarks" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-md-1 " style="margin-top:5px;">
+                        <label for="addButton" class="control-label"></label>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblMargeItems">
+                            <thead>
+                                <tr>
+                                    <th colspan="9">
+                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                    </th>
+                                </tr>
+
+                                <tr class="text-center btn-dark">
+                                    <th style="width:5%">#SL</th>
+                                    <th style="width:15%">OrganizationName</th>
+                                    <th style="width:15%">Zone Name</th>
+                                    <th style="width:15%">Division Name</th>
+                                    <th style="width:15%">Division Assign Name</th>
+                                    <th style="width:10%">Mobile</th>
+                                    <th style="width:10%">Remarks</th>
+                                    <th style="width:10%">Action</th>
+                                    <th class="hide OrganizationId"></th>
+                                    <th class="hide ZoneId"></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+    
+<script type="text/javascript">
+
+    var ddlOrganizationName = $("#ddlOrganizationName");
+    var ddlZoneName = $("#ddlZoneName");
+    var txtDivisionName = $("#txtDivisionName");
+    var txtRemarks = $("#txtRemarks");
+    var txtMobileNumber = $("#txtMobileNumber");
+    var txtDivisionAssignName = $("#txtDivisionAssignName");
+
+
+    $(document).ready(function () {
+       
+        $('.select2').select2();
+
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+    })
+
+
+    $("#addButton").click(function (e) {
+        e.preventDefault();
+
+        var sl = $("#tblMargeItems tbody tr").length;
+        var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+        var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlOrganizationName") + "</td>";
+        var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlZoneName") + "</td>";
+        var td4 = "<td class='text-center'>" + txtDivisionName.val() + "</td>";
+        var td5 = "<td class='text-center'>" + txtDivisionAssignName.val() + "</td>";
+        var td6 = "<td class='text-center'>" + txtMobileNumber.val() + "</td>";
+        var td7 = "<td class='text-center'>" + txtRemarks.val() + "</td>";
+        var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+        var td9 = "<td class='hide OrganizationId'>" + ddlOrganizationName.val() + "</td>";
+        var td10 = "<td class='hide ZoneId'>" + ddlZoneName.val() + "</td>";
+
+        var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
+
+        $("#tblMargeItems tbody").append(tr);
+
+
+
+    })
+
+    $(document).on("click", "a.data-onfly-del", function (e) {
+        e.preventDefault();
+        var index = $(this).parent().parents('tbody tr').index();
+        //var tds = $(this).parent().parents('tbody tr').children('td');
+
+        //var rawMaterialId = tds.eq(5).html();
+        //console.log("rawMaterialId :" + rawMaterialId);
+        //const mid = materialNameList.indexOf(rawMaterialId);
+        //materialNameList.splice(mid, 1);
+
+
+
+
+        removeTableRow("#tblMargeItems tbody", index);
+        fnFixTheTbodyRowSerial("#tblMargeItems tbody", index);
+    })
+
+    //save database
+
+    $("#saveButton").click(function (e) {
+            debugger;
+        e.preventDefault();
+
+            var details = [];
+            details.length = 0;
+        $.each($("#tblMargeItems tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+
+                    DivisionId: 0,
+                    ZoneId: tds.eq(2).html(),
+                    DivisionName: tds.eq(3).html(),
+                    ZoneAsignName: tds.eq(4).html(),
+                    MobileNumber: tds.eq(5).html(),
+                    Remarks: tds.eq(6).html(),
+                    OrganizationId: tds.eq(1).html()
+
+                });
+            })
+            console.log(details);
+            var data = JSON.stringify({ details: details });
+
+        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveDivisionInfo', data, getToken())).then(function (res, status) {
+                if (res === true) {
+                    debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("GetDivisionInfo")');
+                    }, 1000);
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+        }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#saveButton");
+        })
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+    });
+
+
+    </script>
+
+    }
