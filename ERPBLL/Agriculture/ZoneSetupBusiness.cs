@@ -69,6 +69,10 @@ namespace ERPBLL.Agriculture
             IsSuccess = _zoneSetupRepository.Save();
             return IsSuccess;
         }
+        public IEnumerable<ZoneSetup> GetAllZoneName()
+        {
+            return _zoneSetupRepository.GetAll().ToList();
+        }
 
     }
 }

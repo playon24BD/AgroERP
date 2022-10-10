@@ -35,15 +35,15 @@
                         <span class="error hide required-ZoneName font-weight-bold">Input ZoneName!</span>
                     </div>
                     <div class="col-md-2">
-                        @*<label for="ddlDivisionname" class="control-label">DivisionName</label>
+                        <label for="ddlDivisionname" class="control-label">DivisionName</label>
         @Html.DropDownList("ddlDivisionname", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionname, "Select Division Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-        <span class="error hide required-DivisionName font-weight-bold">Input DivisionName!</span>*@
-                        <label for="ddlorgname" class="control-label">DivisionName</label>
+        <span class="error hide required-DivisionName font-weight-bold">Input DivisionName!</span>
+                        @*<label for="ddlorgname" class="control-label">DivisionName</label>
                         <select class="form-control form-control-sm" id="ddlDivisionname">
                             <option value="Division1">Division1</option>
                             <option value="Division2">Division2</option>
                             <option value="Division3">Division3</option>
-                        </select>
+                        </select>*@
                     </div>
                     <div class="col-md-2">
                         @*<label for="ddlRegionname" class="control-label">RegionName</label>
@@ -143,6 +143,8 @@
         var hdzonetId = '';
         var hddivisionId = '';
         var hdregionId = '';
+        var AreaId = '';
+        var AreaNameList = [];
 
         //select2
         $(document).ready(function () {
@@ -183,6 +185,23 @@
 
 
 
+        })
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+            var AreaId = tds.eq(5).html();
+            console.log("rawMaterialId :" + AreaId);
+            const mid = AreaNameList.indexOf(AreaId);
+            AreaNameList.splice(mid, 1);
+
+
+
+
+            removeTableRow("#tblSingleItems tbody", index);
+            fnFixTheTbodyRowSerial("#tblSingleItems tbody", index);
         })
 
         //save in database
