@@ -1353,16 +1353,19 @@ namespace ERPWeb.Controllers
 
         public ActionResult CreateRegionlist(long? id)
         {
+            
+                ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                ViewBag.ddlZonename = _zoneSetup.GetAllZoneName().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+            //ViewBag.ddlDivisionname = _division.GetAllZoneName().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+
 
             ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
             ViewBag.ddlzonename = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(zne => new SelectListItem { Text = zne.ZoneName, Value = zne.ZoneId.ToString() }).ToList();
             return View();
         }
 
-        public ActionResult getdiv(long id)
-        {
-            var divlist = _
-        }
+        
 
         #endregion
 
