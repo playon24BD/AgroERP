@@ -107,30 +107,45 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            $('#ddlzonename').change(function () {
-                let zid = $("#ddlzonename option:selected").val();
-                console.log(zid);
+   
 
-                var data = JSON.stringify({ id: zid });
+        $('#ddlzonename').change(function () {
+            let zid = $("#ddlzonename option:selected").val();
+            console.log(zid);
+            debugger;
 
-                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'GET', '/AgroConfiguration/getdiv', data, getToken())).then(function (mdata) {
-                    if (mdata.flag === "1") {
-                        $.each(mdata.data, function (i, obj) {
-                            let s = '<option value="' + obj.DivisionId + '">' + obj.DivisionName + '</option>';
-                            $('#ddldivname').append(s);
-                        });
-                    }
-                },
-                error: function (err) {
-                     consoleLog(err);
-                     //alert(result);
-                 }
-                    
-            }),
+            var data = { id: TryParseInt( zid,0) };
+            console.log(data);
+            alert(data);
 
-        })
-        
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/getdiv', data)).then(function (res,status) {
+                alert("here me");
+                console.log(res);
+                console.log('status');
+                console.log(status);
+                var res1 = JSON.parse(res);
+                console.log(res1.flag);
+                if (res1.flag === "1") {
+                    alert("here me 2");
+                    $.each(res1.data, function (i, obj) {
+                        debugger;
+                        console.log(i);
+                        console.log(obj.Value);
+                        console.log(obj.Text);
+                        let s = '<option value="' + obj.Value + '">' + obj.Text + '</option>';
+                        $('#ddldivname').append(s);
+                    });
+                }
+
+            }).fail(function (error) {
+                console.log(error);
+
+
+
+            })
+
+
+        });
 
             
 
@@ -140,21 +155,3 @@
     </script>
 }
 
-function postReqWithToken(contentType, dataType, type, url, data, token) {
-    return $.ajax({
-        contentType: contentType,
-        dataType: dataType,
-        type: type,
-        url: url,
-        headers: token,
-        data: data,
-        success: function (result) {
-            consoleLog(result);
-            //alert(result);
-        },
-        error: function (err) {
-            consoleLog(err);
-            //alert(result);
-        }
-    });
-}

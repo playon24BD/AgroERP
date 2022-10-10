@@ -1391,17 +1391,20 @@ namespace ERPWeb.Controllers
 
             return View();
         }
-        public JsonResult getdiv(long id)
+
+
+        public ActionResult getdiv(long id)
+
         {
 
             var divlist = _divisionInfo.GetAllDivisionSetup(User.OrgId).Where(x => x.ZoneId == id).Select(divv => new SelectListItem { Text = divv.DivisionName, Value = divv.DivisionId.ToString() }).ToList();
             if (divlist.Count > 0 && divlist != null)
             {
-                return Json(new { flag = "1", msg = "Division not found", data = divlist });
+                return Json(new { flag = "1", msg = "Division found", data = divlist }, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return Json(new { flag = "0", msg = "Division not found" });
+                return Json(new { flag = "0", msg = "Division not found" },JsonRequestBehavior.AllowGet);
             }
 
         }
