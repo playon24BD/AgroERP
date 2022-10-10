@@ -115,5 +115,10 @@ namespace ERPBLL.Agriculture
         {
             return _zoneRepository.GetAll(a => a.OrganizationId == OrgId).ToList();
         }
+
+        public IEnumerable<Zone> GetAllZoneName()
+        {
+            return _zoneRepository.GetAll().ToList();
+        }
     }
 }

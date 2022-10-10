@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agriculture\DomainModels\AreaInfoSetup.cs" />
     <Compile Include="Agriculture\DomainModels\DivisionInfo.cs" />
     <Compile Include="Agriculture\DomainModels\FinishGoodProductionDetails.cs" />
     <Compile Include="Agriculture\DomainModels\FinishGoodProductionInfo.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Agriculture\DomainModels\Zone.cs" />
     <Compile Include="Agriculture\DomainModels\ZoneDetail.cs" />
     <Compile Include="Agriculture\DomainModels\ZoneSetup.cs" />
+    <Compile Include="Agriculture\DTOModels\AreaSetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\DivisionInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\FinishGoodProductionDetailsDTO.cs" />
     <Compile Include="Agriculture\DTOModels\FinishGoodProductionInfoDTO.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Agriculture\DTOModels\ZoneDetailDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneSetupDTO.cs" />
+    <Compile Include="Agriculture\ViewModels\AreaSetupViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\DivisionInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionDetailViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionInfoViewModel.cs" />
