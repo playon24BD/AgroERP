@@ -1280,6 +1280,39 @@ namespace ERPWeb.Controllers
 
         public ActionResult Zonelist (string flag, string name)
         {
+            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "Zonelist");
+
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                return View();
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                IEnumerable<ZoneSetupDTO> dto = _zoneSetup.GetAllZoneSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.ZoneName.Contains(name))).Select(o => new ZoneSetupDTO
+                {
+                    ZoneId = o.ZoneId,
+                    OrganizationId =o.OrganizationId,
+                    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
+                    ZoneName = o.ZoneName,
+                    ZoneAsignName = o.ZoneAsignName,
+                    MobileNumber = o.MobileNumber,
+                    Remarks = o.Remarks,
+
+                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
+                    EntryDate = o.EntryDate,
+                    UpdateUserId = o.UpdateUserId,
+                    UpdateDate = o.UpdateDate,
+
+
+                }).ToList();
+
+                List<ZoneSetupViewModel> viewModels = new List<ZoneSetupViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetZonePartialView", viewModels);
+            }
             return View();
         }
 

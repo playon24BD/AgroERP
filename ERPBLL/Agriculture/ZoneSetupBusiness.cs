@@ -44,7 +44,7 @@ namespace ERPBLL.Agriculture
             {
                 ZoneSetup zoneSetups = new ZoneSetup()
                 {
-                    OrganizationId = item.OrganizationId,
+                    OrganizationId = orgId,
                     ZoneId = item.ZoneId,
                     ZoneName = item.ZoneName,
                     ZoneAsignName = item.ZoneAsignName,

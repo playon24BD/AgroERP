@@ -39,6 +39,33 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <h4 class="col-md-2">Search By</h4>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By Any" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -54,8 +81,34 @@
 @section scripts{
 
 	<script type="text/javascript">
+        var SearchAny = $("#SearchAny");
 
 
+        $(document).ready(function () {
+            
+            LoadZoneDataTable()
+        })
 
+        function LoadDataInitializer() {
+            LoadZoneDataTable();
+        }
+
+        SearchAny.keyup(function () {
+            LoadZoneDataTable()
+        })
+
+        function LoadZoneDataTable() {
+            debugger;
+            var data = { flag: "View", name: $.trim(SearchAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Zonelist', data)).then(function (res, status) {
+                console.log(res);
+                if (status == "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+        
 	</script>
 }
