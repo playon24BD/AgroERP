@@ -190,6 +190,10 @@
     <Compile Include="AgricultureContextMigrations\202210080630110_Agriculture_rrrtt.Designer.cs">
       <DependentUpon>202210080630110_Agriculture_rrrtt.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202210100531575_Agriculture_DivisionInfo.cs" />
+    <Compile Include="AgricultureContextMigrations\202210100531575_Agriculture_DivisionInfo.Designer.cs">
+      <DependentUpon>202210100531575_Agriculture_DivisionInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -304,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202210080630110_Agriculture_rrrtt.resx">
       <DependentUpon>202210080630110_Agriculture_rrrtt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210100531575_Agriculture_DivisionInfo.resx">
+      <DependentUpon>202210100531575_Agriculture_DivisionInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

@@ -100,12 +100,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agriculture\BankSetupBusiness.cs" />
+    <Compile Include="Agriculture\DivisionInfoBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductDetailsBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductionInfoBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductSupplierBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodRecipeDetailsBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodRecipeInfoBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IDivisionInfo.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductionDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IBankSetup.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductBusiness.cs" />
