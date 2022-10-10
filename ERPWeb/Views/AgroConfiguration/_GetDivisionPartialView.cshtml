@@ -1,1 +1,51 @@
-﻿
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.DivisionInfoViewModel>
+
+@{
+    ViewBag.Title = "List of Zone";
+    var SL = 0;
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+<div class="row">
+    <div class="col-md-12" style="overflow-y:scroll">
+        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblDivisionData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">#SL</th>
+                    <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle">Zone Name</th>
+                    <th style="vertical-align:middle">Division Name</th>
+                    <th style="vertical-align:middle">DivisionAssign Name</th>
+                    <th style="vertical-align:middle">MobileNumber</th>
+                    <th style="vertical-align:middle">Remarks</th>
+                    <th style="vertical-align:middle">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    SL = SL + 1;
+                    <tr>
+
+                        <td class="text-center text-bold">@SL</td>
+                        <td class="hide">@item.DivisionId</td>
+                        <td class="text-center">@item.ZoneName</td>
+                        <td class="text-center">@item.DivisionName</td>
+                        <td class="text-center">@item.DivisionAssignName</td>
+                        <td class="text-center">@item.MobileNumber</td>
+                        <td class="text-center">@item.Remarks</td>
+                        <td class="text-center">
+                          
+                            <a href="#" class="btn btn-outline-warning data-item-edit hide" title="Edit" data-edit-item="@item.DivisionId" style="line-height:1">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            
+                        </td>
+                    </tr>
+                }
+
+                
+            </tbody>
+        </table>
+    </div>
+
+</div>

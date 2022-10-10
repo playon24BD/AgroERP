@@ -19,5 +19,7 @@ namespace ERPBO.Agriculture.ViewModels
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
         public string Remarks { get; set; }
+        public string OrganizationName { get; set; }
+        public string ZoneName { get; set; }
     }
 }

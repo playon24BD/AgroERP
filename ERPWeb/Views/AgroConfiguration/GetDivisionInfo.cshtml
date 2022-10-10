@@ -50,11 +50,11 @@
 
                                     <div class="card-body text-sm">
                                         <div class="row" style="margin-top:-15px">
-                                            @*<div class="col-md-3">
-                                                <label for="ddlRawMaterialName" class="control-label">Raw Material Name</label>
+                                            <div class="col-md-3">
+                                                <label for="ddlZoneName" class="control-label">Zone Name</label>
+                                                @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
-                                                @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select Material--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                            </div>*@
+                                            </div>
 
                                         </div>
 
@@ -83,5 +83,36 @@
 
 </div>
 
+@section scripts{
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.select2').select2();
+
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+
+        LoadDivisionList()
+    })
+
+    function LoadDivisionList() {
+        var data = { flag: "View", divisionId: TryParseInt(ddlDivisionName.val(), 0), id: 0 };
+
+        $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetDivisionInfo', data)).then(function (res, status) {
+            console.log(status);
+            if (status === "success") {
+                $("#dataContainer").fadeOut('500', function () {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res).fadeIn('500');
+                });
+            }
+        }).fail(function (error) {
+            console.log(error);
+        });
+    }
 
 
+    </script>
+}

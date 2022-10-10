@@ -180,9 +180,9 @@
                 details.push({
 
                     DivisionId: 0,
-                    ZoneId: tds.eq(2).html(),
+                    ZoneId: tds.eq(9).html(),
                     DivisionName: tds.eq(3).html(),
-                    ZoneAsignName: tds.eq(4).html(),
+                    DivisionAssignName: tds.eq(4).html(),
                     MobileNumber: tds.eq(5).html(),
                     Remarks: tds.eq(6).html(),
                     OrganizationId: tds.eq(1).html()
@@ -209,13 +209,14 @@
                 enable("#saveButton");
         })
 
-        function redirectPage(page) {
-            window.location.replace(page);
-        }
+        
 
     });
 
 
-    </script>
-
+    function redirectPage(page) {
+        window.location.replace(page);
     }
+
+    </script>
+}

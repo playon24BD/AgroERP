@@ -1342,10 +1342,47 @@ namespace ERPWeb.Controllers
         public ActionResult Regionlist(string flag, string name)
         {
 
+            return View();
+        }
+        public ActionResult GetDivisionInfo(string flag, long? divisionId, long? id)
+        {
+            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetDivisionInfo");
+
             if (string.IsNullOrEmpty(flag))
             {
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+               
+
+                ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
                 return View();
+            }
+
+             
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _divisionInfo.GetDivisionInfos(User.OrgId, divisionId ?? 0);
+                //IEnumerable<DivisionInfoDTO> dto = _divisionInfo.GetAllDivisionSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.DivisionName.Contains(name))).Select(o => new DivisionInfoDTO
+                //{
+                //    ZoneId = o.ZoneId,
+                //    OrganizationId = o.OrganizationId,
+                //    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
+                //    DivisionName = o.DivisionName,
+                //    DivisionAssignName = o.DivisionAssignName,
+                //    MobileNumber = o.MobileNumber,
+                //    Remarks = o.Remarks,
+                //    EntryDate = o.EntryDate,
+                //    UpdateUserId = o.UpdateUserId,
+                //    UpdateDate = o.UpdateDate,
+
+
+                //}).ToList();
+
+                List<DivisionInfoViewModel> viewModels = new List<DivisionInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetDivisionPartialView", viewModels);
+
+                
             }
             return View();
         }
@@ -1354,6 +1391,7 @@ namespace ERPWeb.Controllers
 
             ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
             ViewBag.ddlzonename = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(zne => new SelectListItem { Text = zne.ZoneName, Value = zne.ZoneId.ToString() }).ToList();
+
             return View();
         }
         public JsonResult getdiv(long id)
@@ -1392,6 +1430,7 @@ namespace ERPWeb.Controllers
                 List<AreaSetupDTO> detailsDTO = new List<AreaSetupDTO>();
                 AutoMapper.Mapper.Map(details, detailsDTO);
                 IsSuccess = _areaSetupBusiness.SaveAreaInfo(detailsDTO, User.UserId, User.OrgId);
+
             }
             return Json(IsSuccess);
         }
