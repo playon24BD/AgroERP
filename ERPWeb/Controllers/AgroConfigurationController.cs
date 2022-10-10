@@ -1359,6 +1359,11 @@ namespace ERPWeb.Controllers
             return View();
         }
 
+        public ActionResult getdiv(long id)
+        {
+            var divlist = _
+        }
+
         #endregion
 
     }

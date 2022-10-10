@@ -22,26 +22,32 @@
 
             <div class="card-body text-sm">
                 <div class="row " style="margin-top:-8px;">
-                    @*<div class="col-md-2">
-                        <label for="ddlorgname" class="control-label">OrganizationName</label>
-                        @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                        <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
-                    </div>*@
-
                     <div class="col-md-2">
                         <label for="ddlorgname" class="control-label">OrganizationName</label>
                         @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                         <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
                     </div>
+
                     <div class="col-md-2">
-                        <label for="ddlZoneName" class="control-label">ZoneName</label>
-                        <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
+                        <label for="ddlorgname" id="ddlorgname" class="control-label">ZoneName</label>
+                        @Html.DropDownList("ddlzonename", (IEnumerable<SelectListItem>)ViewBag.ddlzonename, "Select ZoneName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide required-OrganizationName font-weight-bold">Input ZoneName!</span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlorgname" class="control-label">DivisionName</label>
+                        <select id="ddlorgname" class="form-control">
+                            <option value="0">Select Division</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlRegionName" class="control-label">RegionName</label>
+                        <input type="text" id="ddlRegionName" class="form-control form-control-sm" />
                         <span class="error hide required-ZoneName font-weight-bold">Input Zone Name!</span>
                         <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
                     </div>
                     <div class="col-md-3">
-                        <label for="ddlZoneAsign" class="control-label">ZoneAsignTO</label>
-                        <input type="text" id="ddlZoneAsign" class="form-control form-control-sm" />
+                        <label for="ddlRegionAsign" class="control-label">RegionAsignTO</label>
+                        <input type="text" id="ddlRegionAsign" class="form-control form-control-sm" />
                         <span class="error hide required-PeopleName font-weight-bold">Input Asign People Name!</span>
                     </div>
                     <div class="col-md-2">
@@ -73,13 +79,15 @@
 
                                 <tr class="text-center btn-dark">
                                     <th style="width:5%">#SL</th>
-                                    <th style="width:15%">ORGNAME</th>
-                                    <th style="width:15%">Zone Name</th>
-                                    <th style="width:15%">Zone Asign To</th>
+                                    <th style="width:10%">ORGNAME</th>
+                                    <th style="width:10%">ZoneName</th>
+                                    <th style="width:10%">DivisionName</th>
+                                    <th style="width:15%">Region Name</th>
+                                    <th style="width:15%">Region Asign To</th>
                                     <th style="width:10%">Mobile</th>
                                     <th style="width:10%">Remarks</th>
+                                    <th style="width:10%">Status</th>
                                     <th style="width:10%">Action</th>
-                                    @*<th class="hide hdzonetId"></th>*@
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -89,9 +97,26 @@
                 </div>
             </div>
 
-
-
         </div>
     </div>
 
 </div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#ddlzonename').change(function () {
+                let zid = $("#ddlzonename option:selected").val();
+                console.log(zid);
+            })
+
+        })
+
+
+
+
+    </script>
+}
