@@ -22,7 +22,7 @@ namespace ERPDAL.AgricultureDAL
         //}
         
            
-
+        public DbSet<DivisionInfo> tblDivisionInfo { get; set; }
         public DbSet<Zone> tblZoneInfo { get; set; }
         public DbSet<ZoneDetail> tblZoneDetail { get; set; }
         public DbSet<RawMaterialStockInfo> tblRawMaterialStockInfo { get; set; }
