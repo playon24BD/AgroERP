@@ -46,16 +46,16 @@
                         </select>*@
                     </div>
                     <div class="col-md-2">
-                        @*<label for="ddlRegionname" class="control-label">RegionName</label>
-        @Html.DropDownList("ddlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "Select Region Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-        <span class="error hide required-RegionName font-weight-bold">Input RegionName!</span>*@
-
                         <label for="ddlRegionname" class="control-label">RegionName</label>
+        @Html.DropDownList("ddlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "Select Region Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+        <span class="error hide required-RegionName font-weight-bold">Input RegionName!</span>
+
+                        @*<label for="ddlRegionname" class="control-label">RegionName</label>
                         <select class="form-control form-control-sm" id="ddlRegionname">
                             <option value="Region1">Region1</option>
                             <option value="Region2">Region2</option>
                             <option value="Region3">Region3</option>
-                        </select>
+                        </select>*@
                     </div>
                     <div class="col-md-2">
                         <label for="ddlAreaName" class="control-label">AreaName</label>

@@ -24,6 +24,7 @@ namespace ERPWeb.Controllers
 
         private readonly IZoneSetup _zoneSetup;//e
         private readonly IRegionSetup _regionSetup;//e
+        private readonly IAreaSetupBusiness _areaSetupBusiness;//e
 
         private readonly IBankSetup _bankSetup;
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
@@ -42,12 +43,13 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IDivisionInfo divisionInfo,IRegionSetup regionSetup ,IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
+
+        public AgroConfigurationController(IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
         {
             this._zoneSetup = zoneSetup;//e
             this._regionSetup = regionSetup;//e
             this._divisionInfo = divisionInfo;
-
+            this._areaSetupBusiness = areaSetupBusiness;
             this._zoneDetail = zoneDetail;
             this._zone = zone;
             this._rawMaterialStockInfo = rawMaterialStockInfo;
@@ -480,7 +482,7 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Depot/Warehouse
-        public ActionResult GetRawMaterialStock(string flag, long? rawMaterialId, long? id,string Status)
+        public ActionResult GetRawMaterialStock(string flag, long? rawMaterialId, long? id, string Status)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetRawMaterialStock");
 
@@ -739,7 +741,7 @@ namespace ERPWeb.Controllers
         }
         [HttpPost]
         public ActionResult SaveFinishGoodRecipe(FinishGoodRecipeInfoViewModel info, List<FinishGoodRecipeDetailsViewModel> details)
-        { 
+        {
             bool IsSuccess = false;
             //var pre = UserPrivilege("Inventory", "GetItemPreparation");
             //var permission = ((pre.Edit) || (pre.Add));
@@ -757,7 +759,7 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Production
-        public ActionResult GetRawMaterialIssueStock(string flag,long? rawMaterialId, long? id)
+        public ActionResult GetRawMaterialIssueStock(string flag, long? rawMaterialId, long? id)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetRawMaterialIssueStock");
 
@@ -804,10 +806,10 @@ namespace ERPWeb.Controllers
                             RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                             Quantity = i.Quantity,
                             Unit = i.Unit,
-                            Status=i.Status,
-                            EntryDate=i.EntryDate
-                          
-                            
+                            Status = i.Status,
+                            EntryDate = i.EntryDate
+
+
                         }).ToList();
                 }
                 else
@@ -864,7 +866,7 @@ namespace ERPWeb.Controllers
             bool IsSuccess = false;
             if (ModelState.IsValid && details.Count > 0)
             {
-                  RawMaterialIssueStockInfoDTO infoDTO = new RawMaterialIssueStockInfoDTO();
+                RawMaterialIssueStockInfoDTO infoDTO = new RawMaterialIssueStockInfoDTO();
                 List<RawMaterialIssueStockDetailsDTO> detailDTOs = new List<RawMaterialIssueStockDetailsDTO>();
                 AutoMapper.Mapper.Map(info, infoDTO);
                 AutoMapper.Mapper.Map(details, detailDTOs);
@@ -884,12 +886,12 @@ namespace ERPWeb.Controllers
                 itemStock = (checkRawMaterialStockValue.Quantity);
                 unit = (checkRawMaterialStockValue.Unit);
             }
-            return Json(new { RawMaterialStockQty = itemStock , RawMaterialStockUnit = unit });
-            
+            return Json(new { RawMaterialStockQty = itemStock, RawMaterialStockUnit = unit });
+
 
         }
 
-        public ActionResult GetProductFinishGoodList(string flag,string finishGoodProductionBatch,long? productId)
+        public ActionResult GetProductFinishGoodList(string flag, string finishGoodProductionBatch, long? productId)
         {
 
 
@@ -905,43 +907,45 @@ namespace ERPWeb.Controllers
                 return View();
 
             }
-            else if (!string.IsNullOrEmpty(flag) && flag== "Detail" && finishGoodProductionBatch != null)
+            else if (!string.IsNullOrEmpty(flag) && flag == "Detail" && finishGoodProductionBatch != null)
             {
-              IEnumerable<FinishGoodProductionDetailsDTO> dto= _finishGoodProductionDetailsBusiness.GetFinishGoodProductionDetails(finishGoodProductionBatch, User.OrgId).Select(a=>new FinishGoodProductionDetailsDTO {
-                  RawMaterialId=a.RawMaterialId,
-                  RawMaterialName=_rawMaterialBusiness.GetRawMaterialById(a.RawMaterialId,User.OrgId).RawMaterialName,
-                  RequiredQuantity=a.RequiredQuantity,
-                  Status=a.Status,
-                  EntryDate=a.EntryDate
+                IEnumerable<FinishGoodProductionDetailsDTO> dto = _finishGoodProductionDetailsBusiness.GetFinishGoodProductionDetails(finishGoodProductionBatch, User.OrgId).Select(a => new FinishGoodProductionDetailsDTO
+                {
+                    RawMaterialId = a.RawMaterialId,
+                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(a.RawMaterialId, User.OrgId).RawMaterialName,
+                    RequiredQuantity = a.RequiredQuantity,
+                    Status = a.Status,
+                    EntryDate = a.EntryDate
 
-              }).ToList();
+                }).ToList();
                 List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTO = new List<FinishGoodProductionDetailsDTO>();
                 List<FinishGoodProductionDetailViewModel> finishGoodProductionDetailViewModels = new List<FinishGoodProductionDetailViewModel>();
-                AutoMapper.Mapper.Map(dto,finishGoodProductionDetailViewModels);
+                AutoMapper.Mapper.Map(dto, finishGoodProductionDetailViewModels);
 
-                return PartialView ("_GetProductFinishGoodDetails",finishGoodProductionDetailViewModels);
+                return PartialView("_GetProductFinishGoodDetails", finishGoodProductionDetailViewModels);
             }
             else
             {
 
-                IEnumerable<FinishGoodProductionInfoDTO>finishGoodProduction =  _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f=>new FinishGoodProductionInfoDTO {
-                    FinishGoodProductionInfoId=f.FinishGoodProductInfoId,
-                    FinishGoodProductionBatch=f.FinishGoodProductionBatch,
-                    TargetQuantity=f.TargetQuantity,
-                    Quanity=f.Quanity,
-                    Status=f.Status,
-                    ReceipeBatchCode=f.ReceipeBatchCode,
-                    FinishGoodProductId=f.FinishGoodProductId,
-                   FinishGoodProductName=_finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId,User.OrgId).FinishGoodProductName
-                    
+                IEnumerable<FinishGoodProductionInfoDTO> finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f => new FinishGoodProductionInfoDTO
+                {
+                    FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
+                    FinishGoodProductionBatch = f.FinishGoodProductionBatch,
+                    TargetQuantity = f.TargetQuantity,
+                    Quanity = f.Quanity,
+                    Status = f.Status,
+                    ReceipeBatchCode = f.ReceipeBatchCode,
+                    FinishGoodProductId = f.FinishGoodProductId,
+                    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName
+
                 }).ToList();
 
                 List<FinishGoodProductionInfoViewModel> viewModel = new List<FinishGoodProductionInfoViewModel>();
                 AutoMapper.Mapper.Map(finishGoodProduction, viewModel);
-                return PartialView("_GetProductFinishGoodList",viewModel);
+                return PartialView("_GetProductFinishGoodList", viewModel);
             }
 
-          
+
         }
 
         public ActionResult GetReceipyByProductionId(string receipeBatchCode)
@@ -951,7 +955,7 @@ namespace ERPWeb.Controllers
 
                 int quantity = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByBatchCode(receipeBatchCode, User.OrgId).FGRQty;
                 return Json(quantity, JsonRequestBehavior.AllowGet);
-                
+
             }
             catch
             {
@@ -1015,22 +1019,22 @@ namespace ERPWeb.Controllers
                         SpliteRawMaterialMinValuefinal = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList);
                         SpliteRawMaterialRoundValue = Math.Floor(SpliteRawMaterialMinValuefinal);
                         return Json(SpliteRawMaterialRoundValue, JsonRequestBehavior.AllowGet);
-                        //break;
+                    //break;
                     case 2:
-                         SpliteRawMaterialIdList = Convert.ToDouble(RawMaterialIdList.Split(',')[0]);
-                         SpliteRawMaterialIdList1 = Convert.ToDouble(RawMaterialIdList.Split(',')[1]);
-                         SpliteRawMaterialMinValuefinal = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList1);
-                         SpliteRawMaterialRoundValue = Math.Floor(SpliteRawMaterialMinValuefinal);
+                        SpliteRawMaterialIdList = Convert.ToDouble(RawMaterialIdList.Split(',')[0]);
+                        SpliteRawMaterialIdList1 = Convert.ToDouble(RawMaterialIdList.Split(',')[1]);
+                        SpliteRawMaterialMinValuefinal = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList1);
+                        SpliteRawMaterialRoundValue = Math.Floor(SpliteRawMaterialMinValuefinal);
                         return Json(SpliteRawMaterialRoundValue, JsonRequestBehavior.AllowGet);
-                        //break;
+                    //break;
                     case 3:
-                         SpliteRawMaterialIdList = Convert.ToDouble(RawMaterialIdList.Split(',')[0]);
-                         SpliteRawMaterialIdList1 = Convert.ToDouble(RawMaterialIdList.Split(',')[1]);
-                         SpliteRawMaterialIdList2 = Convert.ToDouble(RawMaterialIdList.Split(',')[2]);
-                         SpliteRawMaterialMinValue1 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList1);
-                         SpliteRawMaterialMinValue2 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList2);
+                        SpliteRawMaterialIdList = Convert.ToDouble(RawMaterialIdList.Split(',')[0]);
+                        SpliteRawMaterialIdList1 = Convert.ToDouble(RawMaterialIdList.Split(',')[1]);
+                        SpliteRawMaterialIdList2 = Convert.ToDouble(RawMaterialIdList.Split(',')[2]);
+                        SpliteRawMaterialMinValue1 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList1);
+                        SpliteRawMaterialMinValue2 = Math.Min(SpliteRawMaterialIdList, SpliteRawMaterialIdList2);
 
-                         SpliteRawMaterialMinValuefinal = Math.Min(SpliteRawMaterialMinValue1, SpliteRawMaterialMinValue2);
+                        SpliteRawMaterialMinValuefinal = Math.Min(SpliteRawMaterialMinValue1, SpliteRawMaterialMinValue2);
                         SpliteRawMaterialRoundValue = Math.Floor(SpliteRawMaterialMinValuefinal);
                         //break;
                         return Json(SpliteRawMaterialRoundValue, JsonRequestBehavior.AllowGet);
@@ -1097,7 +1101,7 @@ namespace ERPWeb.Controllers
                 //var ddlRecipeCode = receipeBatchCode.Select(d => new Dropdown { text=receipeBatchCode,value=d });
                 var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipCode(finishGoodProductId, User.OrgId);
 
-                var dropDown = receipeBatchCode.Where(a=>a.ReceipeBatchCode !=null).Select(s => new Dropdown { text = s.ReceipeBatchCode, value = s.ReceipeBatchCode }).ToList();
+                var dropDown = receipeBatchCode.Where(a => a.ReceipeBatchCode != null).Select(s => new Dropdown { text = s.ReceipeBatchCode, value = s.ReceipeBatchCode }).ToList();
 
 
                 return Json(dropDown, JsonRequestBehavior.AllowGet);
@@ -1118,20 +1122,21 @@ namespace ERPWeb.Controllers
             {
                 long fgid = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByFGID(finishGoodProductId, User.OrgId).FGRId;
 
-                var AllMetarial = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(fgid, User.OrgId).Select(m => new FinishGoodRecipeDetailsDTO() {
+                var AllMetarial = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(fgid, User.OrgId).Select(m => new FinishGoodRecipeDetailsDTO()
+                {
                     FGRDetailsId = m.FGRDetailsId,
                     RawMaterialId = m.RawMaterialId,
                     RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(m.RawMaterialId, User.OrgId).RawMaterialName,
-                    FGRId=m.FGRId,
-                    FGRRawMaterQty=m.FGRRawMaterQty,
-                    
+                    FGRId = m.FGRId,
+                    FGRRawMaterQty = m.FGRRawMaterQty,
+
 
                 }).ToList();
                 List<FinishGoodRecipeDetailsViewModel> viewModels = new List<FinishGoodRecipeDetailsViewModel>();
                 AutoMapper.Mapper.Map(AllMetarial, viewModels);
                 return Json(viewModels, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json($"Not Found: {ex}", JsonRequestBehavior.AllowGet);
             }
@@ -1140,7 +1145,7 @@ namespace ERPWeb.Controllers
         }
 
         public ActionResult GetReceipyDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty)
-        {          
+        {
             double issueQunatity = 0;
             double perRecepQuantity = 0;
             double requirdQuantity = 0;
@@ -1150,21 +1155,21 @@ namespace ERPWeb.Controllers
             {
 
                 var recipeDetailsRawMaterials = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByBatchCode(receipeBatchCode, User.OrgId);
-                foreach(var rawMaterial in recipeDetailsRawMaterials)
+                foreach (var rawMaterial in recipeDetailsRawMaterials)
                 {
-                    
+
                     issueQunatity = _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
-                     perRecepQuantity = rawMaterial.FGRRawMaterQty;
-                    requirdQuantity = (perRecepQuantity* targetQty);
+                    perRecepQuantity = rawMaterial.FGRRawMaterQty;
+                    requirdQuantity = (perRecepQuantity * targetQty);
                     if (requirdQuantity > issueQunatity)
                     {
-                        
+
                         Checked = false;
                     }
                     else
                     {
                         Checked = true;
-                        
+
                     }
 
                 }
@@ -1194,7 +1199,7 @@ namespace ERPWeb.Controllers
                 {
                     return Json("Issue Quantity Not Sufficient Please Check Target Quantity...", JsonRequestBehavior.AllowGet);
                 }
-   
+
 
 
             }
@@ -1206,19 +1211,19 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult SaveFinishGoodProduction(FinishGoodProductionInfoViewModel info,List<FinishGoodProductionDetailViewModel> details )
+        public ActionResult SaveFinishGoodProduction(FinishGoodProductionInfoViewModel info, List<FinishGoodProductionDetailViewModel> details)
         {
             bool isSucccess = false;
-            if (ModelState.IsValid && details.Count()>0)
+            if (ModelState.IsValid && details.Count() > 0)
             {
                 //AbNormal
                 FinishGoodProductionInfoDTO finishGoodProductionInfoDTO = new FinishGoodProductionInfoDTO();
                 List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTOs = new List<FinishGoodProductionDetailsDTO>();
                 AutoMapper.Mapper.Map(info, finishGoodProductionInfoDTO);
                 AutoMapper.Mapper.Map(details, finishGoodProductionDetailsDTOs);
-                isSucccess =_finishGoodProductionInfoBusiness.SaveFinishGoodInfo(finishGoodProductionInfoDTO,finishGoodProductionDetailsDTOs,User.UserId,User.OrgId);
+                isSucccess = _finishGoodProductionInfoBusiness.SaveFinishGoodInfo(finishGoodProductionInfoDTO, finishGoodProductionDetailsDTOs, User.UserId, User.OrgId);
             }
-            return Json(isSucccess); 
+            return Json(isSucccess);
         }
 
 
@@ -1256,10 +1261,9 @@ namespace ERPWeb.Controllers
 
             }
 
-             return View();
+            return View();
 
         }
-
         [HttpPost]
         public ActionResult SaveZoneInfo(ZoneViewModel viewModel, List<ZoneDetailViewModel> details)
         {
@@ -1278,11 +1282,8 @@ namespace ERPWeb.Controllers
 
             return Json(isSuccess);
         }
-
-
-
         //Zone
-        public ActionResult Zonelist (string flag, string name)
+        public ActionResult Zonelist(string flag, string name)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "Zonelist");
 
@@ -1298,7 +1299,7 @@ namespace ERPWeb.Controllers
                 IEnumerable<ZoneSetupDTO> dto = _zoneSetup.GetAllZoneSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.ZoneName.Contains(name))).Select(o => new ZoneSetupDTO
                 {
                     ZoneId = o.ZoneId,
-                    OrganizationId =o.OrganizationId,
+                    OrganizationId = o.OrganizationId,
                     OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
                     ZoneName = o.ZoneName,
                     ZoneAsignName = o.ZoneAsignName,
@@ -1319,15 +1320,12 @@ namespace ERPWeb.Controllers
             }
             return View();
         }
-
-
         //createget
         public ActionResult CreateZonelist(long? id)
         {
             ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
             return View();
         }
-
         [HttpPost]
         public ActionResult SaveZonetInfo(List<ZoneSetupViewModel> details)
         {
@@ -1335,13 +1333,11 @@ namespace ERPWeb.Controllers
             if (details.Count > 0)
             {
                 List<ZoneSetupDTO> detailsDTO = new List<ZoneSetupDTO>();
-                AutoMapper.Mapper.Map(details,detailsDTO);
-                IsSuccess = _zoneSetup.SaveZoneInfo(detailsDTO, User.UserId,User.OrgId);
+                AutoMapper.Mapper.Map(details, detailsDTO);
+                IsSuccess = _zoneSetup.SaveZoneInfo(detailsDTO, User.UserId, User.OrgId);
             }
             return Json(IsSuccess);
         }
-
-
         //Rigion
         public ActionResult Regionlist(string flag, string name)
         {
@@ -1353,7 +1349,6 @@ namespace ERPWeb.Controllers
             }
             return View();
         }
-
         public ActionResult CreateRegionlist(long? id)
         {
 
@@ -1361,12 +1356,11 @@ namespace ERPWeb.Controllers
             ViewBag.ddlzonename = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(zne => new SelectListItem { Text = zne.ZoneName, Value = zne.ZoneId.ToString() }).ToList();
             return View();
         }
-
         public JsonResult getdiv(long id)
         {
 
             var divlist = _divisionInfo.GetAllDivisionSetup(User.OrgId).Where(x => x.ZoneId == id).Select(divv => new SelectListItem { Text = divv.DivisionName, Value = divv.DivisionId.ToString() }).ToList();
-            if(divlist.Count > 0 && divlist != null)
+            if (divlist.Count > 0 && divlist != null)
             {
                 return Json(new { flag = "1", msg = "Division not found", data = divlist });
             }
@@ -1374,10 +1368,34 @@ namespace ERPWeb.Controllers
             {
                 return Json(new { flag = "0", msg = "Division not found" });
             }
-            
+
+        }
+
+        //Area
+        public ActionResult GetArealist(long? id)
+        {
+            ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+            ViewBag.ddlZonename = _zoneSetup.GetAllZoneName().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+            ViewBag.ddlDivisionname = _divisionInfo.GetAllDivisionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+
+            ViewBag.ddlRegionname = _regionSetup.GetAllRegionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SaveAreaInfo(List<AreaSetupViewModel> details)
+        {
+            bool IsSuccess = false;
+            if (details.Count > 0)
+            {
+                List<AreaSetupDTO> detailsDTO = new List<AreaSetupDTO>();
+                AutoMapper.Mapper.Map(details, detailsDTO);
+                IsSuccess = _areaSetupBusiness.SaveAreaInfo(detailsDTO, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
         }
 
         #endregion
-
     }
 }
