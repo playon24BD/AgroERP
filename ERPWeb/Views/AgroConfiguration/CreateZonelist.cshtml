@@ -93,6 +93,10 @@
 
 
 
+
+
+
+
 @section scripts{
 
     <script type="text/javascript">
@@ -105,6 +109,7 @@
         var ddlRemarks = $("#ddlRemarks");
         var ddlAMobilenum = $("#ddlAMobilenum");
         var ddlZoneAsign = $("#ddlZoneAsign");
+        var zoneNameList = [];
 
         //select2
         $(document).ready(function () {
@@ -127,25 +132,48 @@
             e.preventDefault();
 
              
+            if (zoneNameList.includes(ddlZoneName.val())) {
+                toastrErrorAlert("Zone Name Already Exist");
+            }
+            else {
+                var sl = $("#tblSingleItems tbody tr").length;
+                var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlorgname") + "</td>";
+                var td3 = "<td class='text-center'>" + ddlZoneName.val() + "</td>";
+                var td4 = "<td class='text-center'>" + ddlZoneAsign.val() + "</td>";
+                var td5 = "<td class='text-center'>" + ddlAMobilenum.val() + "</td>";
+                var td6 = "<td class='text-center'>" + ddlRemarks.val() + "</td>";
+                var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
+
+                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + "</tr>";
+
+                $("#tblSingleItems tbody").append(tr);
+                zoneNameList.push(ddlZoneName.val());
+
+            }
+
+        })
 
 
 
-                        var sl = $("#tblSingleItems tbody tr").length;
-                        var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-                        var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlorgname") + "</td>";
-                        var td3 = "<td class='text-center'>" + ddlZoneName.val() + "</td>";
-                        var td4 = "<td class='text-center'>" + ddlZoneAsign.val() + "</td>";
-                        var td5 = "<td class='text-center'>" + ddlAMobilenum.val() + "</td>";
-                        var td6 = "<td class='text-center'>" + ddlRemarks.val() + "</td>";
-                        var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+        //remove
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            debugger;
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+            var rawMaterialId = tds.eq(7).html();
+            console.log("rawMaterialId :" + rawMaterialId);
+            const mid = zoneNameList.indexOf(rawMaterialId);
+            zoneNameList.splice(mid, 1);
 
 
-                        var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7+ "</tr>";
-
-                        $("#tblSingleItems tbody").append(tr);
-                          
 
 
+            removeTableRow("#tblSingleItems tbody", index);
+            fnFixTheTbodyRowSerial("#tblSingleItems tbody", index);
         })
 
 
@@ -153,7 +181,6 @@
         $("#saveButton").click(function (e) {
             debugger;
             e.preventDefault();
-            alert();
             //$(".error").addClass("hide");
 
             //var data = JSON.stringify({OrganizationId: TryParseInt(ddlorgname.val(), 0), ZoneName: ddlZoneName.val(), Remarks: ddlRemarks.val(), ZoneAsignName: ddlZoneAsign.val(), MobileNumber: ddlAMobilenum.val() });
@@ -192,6 +219,12 @@
                 alert(execuStatus.fail);
                 enable("#saveButton");
             })
+
+
+            
+
+
+
 
             function redirectPage(page) {
                 window.location.replace(page);

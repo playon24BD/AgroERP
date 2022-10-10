@@ -1,5 +1,5 @@
 ﻿@{
-	ViewBag.Title = "ZoneList";
+    ViewBag.Title = "ZoneList";
 }
 
 
@@ -76,16 +76,76 @@
 
 
 
+<div class="modal" id="zonemodal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formzone">
+                    <input type="hidden" id="hdzonetId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="ddlorgname" class="control-label">OrganizationName</label>
+                            @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlZoneName" class="control-label">ZoneName</label>
+                            <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
+                            <span class="error hide required-ZoneName font-weight-bold">Input Zone Name!</span>
+                            <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlZoneAsign" class="control-label">ZoneAsignTO</label>
+                            <input type="text" id="ddlZoneAsign" class="form-control form-control-sm" />
+                            <span class="error hide required-PeopleName font-weight-bold">Input Asign People Name!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlAMobilenum" class="control-label">Mobile Number</label>
+                            <input type="text" id="ddlAMobilenum" class="form-control form-control-sm" />
+                            <span class="error hide required-Number font-weight-bold">Input Valid Mobile Number!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlRemarks" class="control-label">Remarks</label>
+                            <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="modal-footer btn-default">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextZone">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 @section scripts{
 
-	<script type="text/javascript">
+    <script type="text/javascript">
         var SearchAny = $("#SearchAny");
 
 
         $(document).ready(function () {
-            
+
             LoadZoneDataTable()
         })
 
@@ -109,6 +169,48 @@
             }).fail(function (err) { console.log(err) })
         }
 
-        
-	</script>
+
+        //edit
+        //openmodals
+        function OpenModal() {
+            $("#spanModalHead").text("Add New Zone");
+            $("#spanSaveTextZone").text('Save');
+            $("#zonemodal").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        //edit
+        $(document).on("click", "a.data-edit-item-Zone", function (e) {
+            alert();
+            debugger;
+            e.preventDefault()
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td8 = row.find('td:eq(8)').html();
+
+            console.log(td2 + td3 + td4);
+
+            hdzonetId.val(td1);
+            ddlorgname.val(td2);
+            ddlorgname.trigger("change");
+            ddlZoneName.val(td4);
+            ddlZoneAsign.val(td5);
+            ddlAMobilenum.val(td6);
+            ddlRemarks.val(td8);
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update Zone');
+            $("#spanSaveTextZone").text('Update');
+        })
+
+
+
+    </script>
 }
