@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "CreateRegion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/Regionlist" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">Create Region</h5>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body text-sm">
+                <div class="row " style="margin-top:-8px;">
+                    @*<div class="col-md-2">
+                        <label for="ddlorgname" class="control-label">OrganizationName</label>
+                        @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
+                    </div>*@
+
+                    <div class="col-md-2">
+                        <label for="ddlorgname" class="control-label">OrganizationName</label>
+                        @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlZoneName" class="control-label">ZoneName</label>
+                        <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
+                        <span class="error hide required-ZoneName font-weight-bold">Input Zone Name!</span>
+                        <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="ddlZoneAsign" class="control-label">ZoneAsignTO</label>
+                        <input type="text" id="ddlZoneAsign" class="form-control form-control-sm" />
+                        <span class="error hide required-PeopleName font-weight-bold">Input Asign People Name!</span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlAMobilenum" class="control-label">Mobile Number</label>
+                        <input type="text" id="ddlAMobilenum" class="form-control form-control-sm" />
+                        <span class="error hide required-Number font-weight-bold">Input Valid Mobile Number!</span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlRemarks" class="control-label">Remarks</label>
+                        <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-md-1 " style="margin-top:5px;">
+                        <label for="addButton" class="control-label"></label>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
+                            <thead>
+                                <tr>
+                                    <th colspan="9">
+                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                    </th>
+                                </tr>
+
+                                <tr class="text-center btn-dark">
+                                    <th style="width:5%">#SL</th>
+                                    <th style="width:15%">ORGNAME</th>
+                                    <th style="width:15%">Zone Name</th>
+                                    <th style="width:15%">Zone Asign To</th>
+                                    <th style="width:10%">Mobile</th>
+                                    <th style="width:10%">Remarks</th>
+                                    <th style="width:10%">Action</th>
+                                    @*<th class="hide hdzonetId"></th>*@
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>

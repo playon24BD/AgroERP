@@ -479,6 +479,8 @@
     <Content Include="Views\AgroConfiguration\Zonelist.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetZonePartialView.cshtml" />
     <Content Include="Views\AgroConfiguration\CreateZonelist.cshtml" />
+    <Content Include="Views\AgroConfiguration\Regionlist.cshtml" />
+    <Content Include="Views\AgroConfiguration\CreateRegionlist.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

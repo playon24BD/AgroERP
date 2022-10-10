@@ -81,6 +81,7 @@
     <Compile Include="Agriculture\DomainModels\RawMaterialIssueStockInfo.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialStock.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialStockDetail.cs" />
+    <Compile Include="Agriculture\DomainModels\RegionSetup.cs" />
     <Compile Include="Agriculture\DomainModels\Zone.cs" />
     <Compile Include="Agriculture\DomainModels\ZoneDetail.cs" />
     <Compile Include="Agriculture\DomainModels\ZoneSetup.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Agriculture\DTOModels\RawMaterialIssueStockInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialStockDetailDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialStockDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RegionSetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneDetailDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneSetupDTO.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Agriculture\DTOModels\FinishGoodRecipeInfoDTO.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodRecipeDetailsViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodRecipeInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RegionSetupViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\ZoneDetailViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\ZoneSetupViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\ZoneViewModel.cs" />

@@ -22,6 +22,7 @@ namespace ERPWeb.Controllers
         private readonly IRawMaterialIssueStockDetailsBusiness _rawMaterialIssueStockDetailsBusiness;
 
         private readonly IZoneSetup _zoneSetup;//e
+        private readonly IRegionSetup _regionSetup;//e
 
         private readonly IBankSetup _bankSetup;
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
@@ -40,7 +41,7 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
+        public AgroConfigurationController(IRegionSetup regionSetup ,IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
         {
             this._zoneSetup = zoneSetup;//e
 
@@ -1277,14 +1278,14 @@ namespace ERPWeb.Controllers
 
 
 
-
+        //Zone
         public ActionResult Zonelist (string flag, string name)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "Zonelist");
 
             if (string.IsNullOrEmpty(flag))
             {
-                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
                 return View();
             }
@@ -1335,6 +1336,27 @@ namespace ERPWeb.Controllers
                 IsSuccess = _zoneSetup.SaveZoneInfo(detailsDTO, User.UserId,User.OrgId);
             }
             return Json(IsSuccess);
+        }
+
+
+        //Rigion
+        public ActionResult Regionlist(string flag, string name)
+        {
+
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                return View();
+            }
+            return View();
+        }
+
+        public ActionResult CreateRegionlist(long? id)
+        {
+
+            ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+            ViewBag.ddlzonename = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(zne => new SelectListItem { Text = zne.ZoneName, Value = zne.ZoneId.ToString() }).ToList();
+            return View();
         }
 
         #endregion
