@@ -34,8 +34,8 @@
                         <span class="error hide required-OrganizationName font-weight-bold">Input ZoneName!</span>
                     </div>
                     <div class="col-md-2">
-                        <label for="ddlorgname" class="control-label">DivisionName</label>
-                        <select id="ddlorgname" class="form-control">
+                        <label for="ddldivname" class="control-label">DivisionName</label>
+                        <select id="ddldivname" class="form-control">
                             <option value="0">Select Division</option>
                         </select>
                     </div>
@@ -111,12 +111,50 @@
             $('#ddlzonename').change(function () {
                 let zid = $("#ddlzonename option:selected").val();
                 console.log(zid);
-            })
+
+                var data = JSON.stringify({ id: zid });
+
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'GET', '/AgroConfiguration/getdiv', data, getToken())).then(function (mdata) {
+                    if (mdata.flag === "1") {
+                        $.each(mdata.data, function (i, obj) {
+                            let s = '<option value="' + obj.DivisionId + '">' + obj.DivisionName + '</option>';
+                            $('#ddldivname').append(s);
+                        });
+                    }
+                },
+                error: function (err) {
+                     consoleLog(err);
+                     //alert(result);
+                 }
+                    
+            }),
 
         })
+        
+
+            
 
 
 
 
     </script>
+}
+
+function postReqWithToken(contentType, dataType, type, url, data, token) {
+    return $.ajax({
+        contentType: contentType,
+        dataType: dataType,
+        type: type,
+        url: url,
+        headers: token,
+        data: data,
+        success: function (result) {
+            consoleLog(result);
+            //alert(result);
+        },
+        error: function (err) {
+            consoleLog(err);
+            //alert(result);
+        }
+    });
 }

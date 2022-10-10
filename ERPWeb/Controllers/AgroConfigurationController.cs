@@ -14,6 +14,7 @@ namespace ERPWeb.Controllers
 {
     public class AgroConfigurationController : BaseController
     {
+        public readonly IDivisionInfo _divisionInfo;
         public readonly IZone _zone;
         private readonly IZoneDetail _zoneDetail;
         private readonly IRawMaterialStockInfo _rawMaterialStockInfo;
@@ -41,9 +42,11 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IRegionSetup regionSetup ,IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
+        public AgroConfigurationController(IDivisionInfo divisionInfo,IRegionSetup regionSetup ,IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
         {
             this._zoneSetup = zoneSetup;//e
+            this._regionSetup = regionSetup;//e
+            this._divisionInfo = divisionInfo;
 
             this._zoneDetail = zoneDetail;
             this._zone = zone;
@@ -1359,9 +1362,19 @@ namespace ERPWeb.Controllers
             return View();
         }
 
-        public ActionResult getdiv(long id)
+        public JsonResult getdiv(long id)
         {
-            var divlist = _
+
+            var divlist = _divisionInfo.GetAllDivisionSetup(User.OrgId).Where(x => x.ZoneId == id).Select(divv => new SelectListItem { Text = divv.DivisionName, Value = divv.DivisionId.ToString() }).ToList();
+            if(divlist.Count > 0 && divlist != null)
+            {
+                return Json(new { flag = "1", msg = "Division not found", data = divlist });
+            }
+            else
+            {
+                return Json(new { flag = "0", msg = "Division not found" });
+            }
+            
         }
 
         #endregion
