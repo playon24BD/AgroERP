@@ -22,6 +22,7 @@ namespace ERPWeb.Controllers
         private readonly IRawMaterialIssueStockDetailsBusiness _rawMaterialIssueStockDetailsBusiness;
 
         private readonly IZoneSetup _zoneSetup;//e
+        private readonly IAreaSetupBusiness _areaSetupBusiness;//e
 
         private readonly IBankSetup _bankSetup;
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
@@ -40,9 +41,10 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
+        public AgroConfigurationController(IAreaSetupBusiness areaSetupBusiness, IZoneSetup zoneSetup,IZoneDetail zoneDetail,IZone zone,IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness , IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness )
         {
             this._zoneSetup = zoneSetup;//e
+            this._areaSetupBusiness = areaSetupBusiness;//e
 
             this._zoneDetail = zoneDetail;
             this._zone = zone;
@@ -1223,6 +1225,7 @@ namespace ERPWeb.Controllers
 
         #region Sales and Distribution
 
+        #region Zone Setup
         public ActionResult GetZoneInfo(string flag, long? ZoneId, long? id)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetZoneInfo");
@@ -1252,10 +1255,9 @@ namespace ERPWeb.Controllers
 
             }
 
-             return View();
+            return View();
 
         }
-
         [HttpPost]
         public ActionResult SaveZoneInfo(ZoneViewModel viewModel, List<ZoneDetailViewModel> details)
         {
@@ -1274,11 +1276,7 @@ namespace ERPWeb.Controllers
 
             return Json(isSuccess);
         }
-
-
-
-
-        public ActionResult Zonelist (string flag, string name)
+        public ActionResult Zonelist(string flag, string name)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "Zonelist");
 
@@ -1294,7 +1292,7 @@ namespace ERPWeb.Controllers
                 IEnumerable<ZoneSetupDTO> dto = _zoneSetup.GetAllZoneSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.ZoneName.Contains(name))).Select(o => new ZoneSetupDTO
                 {
                     ZoneId = o.ZoneId,
-                    OrganizationId =o.OrganizationId,
+                    OrganizationId = o.OrganizationId,
                     OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
                     ZoneName = o.ZoneName,
                     ZoneAsignName = o.ZoneAsignName,
@@ -1315,15 +1313,12 @@ namespace ERPWeb.Controllers
             }
             return View();
         }
-
-
-        //createget
+       //createget
         public ActionResult CreateZonelist(long? id)
         {
             ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
             return View();
         }
-
         [HttpPost]
         public ActionResult SaveZonetInfo(List<ZoneSetupViewModel> details)
         {
@@ -1331,11 +1326,39 @@ namespace ERPWeb.Controllers
             if (details.Count > 0)
             {
                 List<ZoneSetupDTO> detailsDTO = new List<ZoneSetupDTO>();
-                AutoMapper.Mapper.Map(details,detailsDTO);
-                IsSuccess = _zoneSetup.SaveZoneInfo(detailsDTO, User.UserId,User.OrgId);
+                AutoMapper.Mapper.Map(details, detailsDTO);
+                IsSuccess = _zoneSetup.SaveZoneInfo(detailsDTO, User.UserId, User.OrgId);
             }
             return Json(IsSuccess);
         }
+        #endregion
+        #region Area Setup
+
+        public ActionResult GetArealist(string flag, string name)
+        {
+            
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                ViewBag.ddlZonename = _zone.GetAllZoneName().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+                //ViewBag.ddlDivisionname = _division.GetAllZoneName().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SaveAreaInfo(List<AreaSetupViewModel> details)
+        {
+            bool IsSuccess = false;
+            if (details.Count > 0)
+            {
+                List<AreaSetupDTO> detailsDTO = new List<AreaSetupDTO>();
+                AutoMapper.Mapper.Map(details, detailsDTO);
+                IsSuccess=_areaSetupBusiness.SaveAreaInfo(detailsDTO, User.UserId, User.OrgId);
+                //IsSuccess = _zoneSetup.SaveZoneInfo(detailsDTO, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
+        }
+        #endregion
+
 
         #endregion
 

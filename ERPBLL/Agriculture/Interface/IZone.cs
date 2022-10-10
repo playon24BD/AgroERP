@@ -13,5 +13,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<Zone> GetAllZoneInfo(long OrgId);
         IEnumerable<ZoneDTO> GetZoneInfos(long orgId, long? ZoneId);
         bool SaveZoneInfo(ZoneDTO zoneInfo,List<ZoneDetailDTO> zoneDetailDTOs, long userId, long orgId);
+        IEnumerable<Zone> GetAllZoneName();
+
     }
 }

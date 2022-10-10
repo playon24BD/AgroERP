@@ -42,23 +42,28 @@ namespace ERPBLL.Agriculture
 
             foreach(var item in detailsDTO)
             {
-                ZoneSetup zoneSetups = new ZoneSetup()
+                if (item.ZoneId == 0)
                 {
-                    OrganizationId = orgId,
-                    ZoneId = item.ZoneId,
-                    ZoneName = item.ZoneName,
-                    ZoneAsignName = item.ZoneAsignName,
-                    MobileNumber = item.MobileNumber,
-                    Remarks = item.Remarks,
+                    ZoneSetup zoneSetups = new ZoneSetup()
+                    {
+                        OrganizationId = orgId,
+                        ZoneId = item.ZoneId,
+                        ZoneName = item.ZoneName,
+                        ZoneAsignName = item.ZoneAsignName,
+                        MobileNumber = item.MobileNumber,
+                        Remarks = item.Remarks,
 
-                    EntryUserId = userId,
-                    UpdateUserId = userId,
-                    EntryDate = DateTime.Now,
-                    UpdateDate = DateTime.Now,
-                    RoleId = 0
+                        EntryUserId = userId,
+                        UpdateUserId = userId,
+                        EntryDate = DateTime.Now,
+                        UpdateDate = DateTime.Now,
+                        RoleId = 0
 
-                };
-                _zoneSetupRepository.Insert(zoneSetups);
+                    };
+                    _zoneSetupRepository.Insert(zoneSetups);
+                }
+               
+               
             }
 
             IsSuccess = _zoneSetupRepository.Save();

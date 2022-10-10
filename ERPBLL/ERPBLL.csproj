@@ -99,6 +99,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agriculture\AreaSetupBusiness.cs" />
     <Compile Include="Agriculture\BankSetupBusiness.cs" />
     <Compile Include="Agriculture\DivisionInfoBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductBusiness.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Agriculture\FinishGoodProductSupplierBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodRecipeDetailsBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodRecipeInfoBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IAreaSetupBusiness.cs" />
     <Compile Include="Agriculture\Interface\IDivisionInfo.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductionDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IBankSetup.cs" />

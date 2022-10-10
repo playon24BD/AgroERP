@@ -131,6 +131,7 @@
             //debugger;
             e.preventDefault();
 
+<<<<<<< Updated upstream
              
             if (zoneNameList.includes(ddlZoneName.val())) {
                 toastrErrorAlert("Zone Name Already Exist");
@@ -150,6 +151,16 @@
 
                 $("#tblSingleItems tbody").append(tr);
                 zoneNameList.push(ddlZoneName.val());
+=======
+                        var sl = $("#tblSingleItems tbody tr").length;
+                        var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                        var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlorgname") + "</td>";
+                        var td3 = "<td class='text-center'>" + ddlZoneName.val() + "</td>";
+                        var td4 = "<td class='text-center'>" + ddlZoneAsign.val() + "</td>";
+                        var td5 = "<td class='text-center'>" + ddlAMobilenum.val() + "</td>";
+                        var td6 = "<td class='text-center'>" + ddlRemarks.val() + "</td>";
+                        var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+>>>>>>> Stashed changes
 
             }
 
