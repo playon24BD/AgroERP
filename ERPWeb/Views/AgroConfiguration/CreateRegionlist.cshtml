@@ -29,36 +29,20 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label for="ddlorgname" id="ddlorgname" class="control-label">ZoneName</label>
-                        @Html.DropDownList("ddlzonename", (IEnumerable<SelectListItem>)ViewBag.ddlzonename, "Select ZoneName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                        <span class="error hide required-OrganizationName font-weight-bold">Input ZoneName!</span>
-                    </div>
-                    <div class="col-md-2">
                         <label for="ddldivname" class="control-label">DivisionName</label>
-                        <select id="ddldivname" class="form-control">
-                            <option value="0">Select Division</option>
-                        </select>
+                        @Html.DropDownList("ddldivname", (IEnumerable<SelectListItem>)ViewBag.ddldivname, "Select Division Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide required-DivisionName font-weight-bold">Input DivisionName!</span>
+
                     </div>
+
+                  
                     <div class="col-md-2">
                         <label for="ddlRegionName" class="control-label">RegionName</label>
                         <input type="text" id="ddlRegionName" class="form-control form-control-sm" />
-                        <span class="error hide required-ZoneName font-weight-bold">Input Zone Name!</span>
-                        <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
+                        <span class="error hide required-ZoneName font-weight-bold">Input Region Name!</span>
+                        <span class="error hide duplicate-ZoneName font-weight-bold">Already RegionName Exist!</span>
                     </div>
-                    <div class="col-md-3">
-                        <label for="ddlRegionAsign" class="control-label">RegionAsignTO</label>
-                        <input type="text" id="ddlRegionAsign" class="form-control form-control-sm" />
-                        <span class="error hide required-PeopleName font-weight-bold">Input Asign People Name!</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlAMobilenum" class="control-label">Mobile Number</label>
-                        <input type="text" id="ddlAMobilenum" class="form-control form-control-sm" />
-                        <span class="error hide required-Number font-weight-bold">Input Valid Mobile Number!</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlRemarks" class="control-label">Remarks</label>
-                        <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
-                    </div>
+                    
                     <div class="col-md-1 " style="margin-top:5px;">
                         <label for="addButton" class="control-label"></label>
                         <div class="clearfix">
@@ -79,15 +63,11 @@
 
                                 <tr class="text-center btn-dark">
                                     <th style="width:5%">#SL</th>
-                                    <th style="width:10%">ORGNAME</th>
-                                    <th style="width:10%">ZoneName</th>
                                     <th style="width:10%">DivisionName</th>
-                                    <th style="width:15%">Region Name</th>
-                                    <th style="width:15%">Region Asign To</th>
-                                    <th style="width:10%">Mobile</th>
-                                    <th style="width:10%">Remarks</th>
-                                    <th style="width:10%">Status</th>
-                                    <th style="width:10%">Action</th>
+                                    <th style="width:10%">Region Name</th>
+                                  
+                                    <th style="width:5%">Action</th>
+                                    <th class="hide ddldivname"</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -107,50 +87,134 @@
 
     <script type="text/javascript">
 
-   
+  
+        var ddldivname = $("#ddldivname");
+        var ddlRegionName = $("#ddlRegionName");
+       
+        var regionNameList = [];
 
-        $('#ddlzonename').change(function () {
-            let zid = $("#ddlzonename option:selected").val();
-            console.log(zid);
+       //change zone
+        //$('#ddlzonename').change(function () {
+
+        //    let zid = $("#ddlzonename option:selected").val();
+        //    console.log(zid);
+        //    debugger;
+
+        //    var data = { id: TryParseInt( zid,0) };
+        //    console.log(data);
+        //    //alert(data);
+
+        //    $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/getdiv', data)).then(function (res,status) {
+        //        //alert("here me");
+        //        console.log(res);
+        //        console.log('status');
+        //        console.log(status);
+        //        var res1 = JSON.parse(res);
+        //        console.log(res1.flag);
+        //        if (res1.flag === "1") {
+        //            //alert("here me 2");
+        //            $.each(res1.data, function (i, obj) {
+        //                debugger;
+        //                console.log(i);
+        //                console.log(obj.Value);
+        //                console.log(obj.Text);
+        //                let s = '<option value="' + obj.Value + '">' + obj.Text + '</option>';
+        //                $('#ddldivname').append(s);
+        //            });
+        //        }
+
+        //    }).fail(function (error) {
+        //        console.log(error);
+        //    })
+
+
+        //});
+
+
+
+        //add
+        $("#addButton").click(function (e) {
+            alert();
             debugger;
+            e.preventDefault();
 
-            var data = { id: TryParseInt( zid,0) };
-            console.log(data);
-            alert(data);
 
-            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/getdiv', data)).then(function (res,status) {
-                alert("here me");
-                console.log(res);
-                console.log('status');
-                console.log(status);
-                var res1 = JSON.parse(res);
-                console.log(res1.flag);
-                if (res1.flag === "1") {
-                    alert("here me 2");
-                    $.each(res1.data, function (i, obj) {
-                        debugger;
-                        console.log(i);
-                        console.log(obj.Value);
-                        console.log(obj.Text);
-                        let s = '<option value="' + obj.Value + '">' + obj.Text + '</option>';
-                        $('#ddldivname').append(s);
-                    });
+
+            if (regionNameList.includes(ddlRegionName.val())) {
+                toastrErrorAlert("Region Name Already Exist");
+            }
+            else {
+                var sl = $("#tblSingleItems tbody tr").length;
+                var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddldivname") + "</td>";
+                var td3 = "<td class='text-center'>" + ddlRegionName.val() + "</td>";
+              
+
+                var td4 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
+                var td5 = "<td class='text-center hide'>" + ddldivname.val() + "</td>";
+
+                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5  +"</tr>";
+
+                $("#tblSingleItems tbody").append(tr);
+                regionNameList.push(ddlRegionName.val());
+
+
+            }
+
+
+
+        })
+
+
+        //save
+        $("#saveButton").click(function (e) {
+            alert();
+            debugger;
+            e.preventDefault();
+  
+            var details = [];
+            details.length = 0;
+            $.each($("#tblSingleItems tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+
+                    RegionId: 0,
+                    RegionName: tds.eq(2).html(),
+                    //RegionAsignName: tds.eq(4).html(),
+                    //MobileNumber: tds.eq(5).html(),
+                    //Remarks: tds.eq(6).html(),
+                    //ZoneId: tds.eq(8).html(),
+                    DivisionId: tds.eq(4).html(),
+                    
+
+                });
+            })
+            console.log(details);
+            var data = JSON.stringify({ details: details });
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRegionInfo', data, getToken())).then(function (res, status) {
+                if (res === true) {
+                    debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("Regionlist")');
+                    }, 1000);
                 }
-
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
             }).fail(function (error) {
-                console.log(error);
-
-
-
+                alert(execuStatus.fail);
+                enable("#saveButton");
             })
 
+            function redirectPage(page) {
+                window.location.replace(page);
+            }
 
         });
-
-            
-
-
-
 
     </script>
 }

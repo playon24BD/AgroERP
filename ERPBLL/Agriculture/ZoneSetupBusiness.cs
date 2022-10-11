@@ -49,14 +49,12 @@ namespace ERPBLL.Agriculture
                         OrganizationId = orgId,
                         ZoneId = item.ZoneId,
                         ZoneName = item.ZoneName,
-                        ZoneAsignName = item.ZoneAsignName,
-                        MobileNumber = item.MobileNumber,
-                        Remarks = item.Remarks,
+                       Status="Active",
 
                         EntryUserId = userId,
-                        UpdateUserId = userId,
+                        //UpdateUserId = userId,
                         EntryDate = DateTime.Now,
-                        UpdateDate = DateTime.Now,
+                        //UpdateDate = DateTime.Now,
                         RoleId = 0
 
                     };

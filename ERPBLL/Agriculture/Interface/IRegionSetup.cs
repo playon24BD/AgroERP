@@ -14,5 +14,7 @@ namespace ERPBLL.Agriculture.Interface
         RegionSetup GetRegionNamebyId(long regionId, long orgId);
 
         bool SaveRegionInfo(List<RegionSetupDTO> detailsDTO, long userId, long orgId);
+
+        
     }
 }

@@ -33,20 +33,7 @@
                         <span class="error hide required-ZoneName font-weight-bold">Input Zone Name!</span>
                         <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
                     </div>
-                    <div class="col-md-3">
-                        <label for="ddlZoneAsign" class="control-label">ZoneAsignTO</label>
-                        <input type="text" id="ddlZoneAsign" class="form-control form-control-sm" />
-                        <span class="error hide required-PeopleName font-weight-bold">Input Asign People Name!</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlAMobilenum" class="control-label">Mobile Number</label>
-                        <input type="text" id="ddlAMobilenum" class="form-control form-control-sm" />
-                        <span class="error hide required-Number font-weight-bold">Input Valid Mobile Number!</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlRemarks" class="control-label">Remarks</label>
-                        <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
-                    </div>
+                    
                     <div class="col-md-1 " style="margin-top:5px;">
                         <label for="addButton" class="control-label"></label>
                         <div class="clearfix">
@@ -69,9 +56,6 @@
                                     <th style="width:5%">#SL</th>
                                     <th style="width:15%">ORGNAME</th>
                                     <th style="width:15%">Zone Name</th>
-                                    <th style="width:15%">Zone Asign To</th>
-                                    <th style="width:10%">Mobile</th>
-                                    <th style="width:10%">Remarks</th>
                                     <th style="width:10%">Action</th>
                                     @*<th class="hide hdzonetId"></th>*@
                                 </tr>
@@ -106,9 +90,9 @@
         //var hdzonetId = $("#hdzonetId");
         var ddlorgname = $("#ddlorgname");
         var ddlZoneName = $("#ddlZoneName");
-        var ddlRemarks = $("#ddlRemarks");
-        var ddlAMobilenum = $("#ddlAMobilenum");
-        var ddlZoneAsign = $("#ddlZoneAsign");
+        //var ddlRemarks = $("#ddlRemarks");
+        //var ddlAMobilenum = $("#ddlAMobilenum");
+        //var ddlZoneAsign = $("#ddlZoneAsign");
         var zoneNameList = [];
 
         //select2
@@ -140,26 +124,15 @@
                 var sl = $("#tblSingleItems tbody tr").length;
                 var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
                 var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlorgname") + "</td>";
-                var td3 = "<td class='text-center'>" + ddlZoneName.val() + "</td>";
-                var td4 = "<td class='text-center'>" + ddlZoneAsign.val() + "</td>";
-                var td5 = "<td class='text-center'>" + ddlAMobilenum.val() + "</td>";
-                var td6 = "<td class='text-center'>" + ddlRemarks.val() + "</td>";
-                var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td3 = "<td class='text-center'>" + ddlZoneName.val() + "</td>";               
+                var td4 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
 
-                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + "</tr>";
+                var tr = "<tr>" + td1 + td2 + td3 + td4 + "</tr>";
 
                 $("#tblSingleItems tbody").append(tr);
                 zoneNameList.push(ddlZoneName.val());
 
-                        var sl = $("#tblSingleItems tbody tr").length;
-                        var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-                        var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlorgname") + "</td>";
-                        var td3 = "<td class='text-center'>" + ddlZoneName.val() + "</td>";
-                        var td4 = "<td class='text-center'>" + ddlZoneAsign.val() + "</td>";
-                        var td5 = "<td class='text-center'>" + ddlAMobilenum.val() + "</td>";
-                        var td6 = "<td class='text-center'>" + ddlRemarks.val() + "</td>";
-                        var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
 
             }
@@ -204,9 +177,9 @@
 
                     ZoneId: 0,
                     ZoneName: tds.eq(2).html(),
-                    Remarks: tds.eq(5).html(),
-                    MobileNumber: tds.eq(4).html(),
-                    ZoneAsignName: tds.eq(3).html(),
+                    //Remarks: tds.eq(5).html(),
+                    //MobileNumber: tds.eq(4).html(),
+                    //ZoneAsignName: tds.eq(3).html(),
                     OrganizationId: tds.eq(1).html()
 
                 });

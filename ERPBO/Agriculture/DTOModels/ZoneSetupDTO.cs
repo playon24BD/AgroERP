@@ -11,11 +11,7 @@ namespace ERPBO.Agriculture.DTOModels
 
         public long ZoneId { get; set; }
         public string ZoneName { get; set; }
-        public string Remarks { get; set; }
-
-        public string MobileNumber { get; set; }
-        public string ZoneAsignName { get; set; }
-
+        public string Status { get; set; }
 
         //default
         public long OrganizationId { get; set; }

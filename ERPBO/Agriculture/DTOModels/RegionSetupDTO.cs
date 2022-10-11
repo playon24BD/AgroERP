@@ -10,17 +10,10 @@ namespace ERPBO.Agriculture.DTOModels
     {
         public long RegionId { get; set; }
         public string RegionName { get; set; }
-        public string Remarks { get; set; }
-
-        public string MobileNumber { get; set; }
-        public string RegionAsignName { get; set; }
         public string Status { get; set; }
-
-
 
         //forignkey
         public long DivisionId { get; set; }
-        public long ZoneId { get; set; }
 
         //default
         public long OrganizationId { get; set; }

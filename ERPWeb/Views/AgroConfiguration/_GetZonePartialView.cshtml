@@ -14,10 +14,8 @@
                     <th style="vertical-align:middle" class="hide"></th>
                     <th style="vertical-align:middle">Organization Name</th>
                     <th style="vertical-align:middle">Zone Name</th>
-                    <th style="vertical-align:middle">Zone Asign Name</th>
-                    <th style="vertical-align:middle">PH Number</th>
-                    <th style="vertical-align:middle">EntryUser</th>
-                    <th style="vertical-align:middle">Remarks</th>
+                   
+                    <th style="vertical-align:middle">Status</th>
                     <th style="vertical-align:middle">Action</th>
                 </tr>
             </thead>
@@ -32,10 +30,8 @@
                         <td class="hide">@item.OrganizationId</td>
                         <td class="text-center">@item.OrganizationName</td>
                         <td class="text-center">@item.ZoneName</td>
-                        <td class="text-center">@item.ZoneAsignName</td>
-                        <td class="text-center">@item.MobileNumber</td>
-                        <td class="text-center">@item.UserName</td>
-                        <td class="text-center">@item.Remarks</td>
+                        <td class="text-center">@item.Status</td>
+                        @*<td class="text-center">@item.UserName</td>*@
                         <td class="text-center">
                             @*@if (privilege.Edit)
                                 {*@
