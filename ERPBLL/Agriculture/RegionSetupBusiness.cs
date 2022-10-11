@@ -93,5 +93,10 @@ on r.DivisionId=d.DivisionId
             Utility.ParamChecker(param));
             return query;
         }
+
+        public IEnumerable<RegionSetupDTO> GetAllRegionDetails(long DivisionId, long orgId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
