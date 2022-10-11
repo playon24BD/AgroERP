@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.DivisionInfoViewModel>
 
 @{
-    ViewBag.Title = "List of Zone";
+    ViewBag.Title = "_GetDivisionPartialView";
     var SL = 0;
     var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
 }
@@ -14,9 +14,7 @@
                     <th style="vertical-align:middle" class="hide"></th>
                     <th style="vertical-align:middle">Zone Name</th>
                     <th style="vertical-align:middle">Division Name</th>
-                    <th style="vertical-align:middle">DivisionAssign Name</th>
-                    <th style="vertical-align:middle">MobileNumber</th>
-                    <th style="vertical-align:middle">Remarks</th>
+                    <th style="vertical-align:middle">Status</th>
                     <th style="vertical-align:middle">Action</th>
                 </tr>
             </thead>
@@ -24,23 +22,23 @@
                 @foreach (var item in Model)
                 {
                     SL = SL + 1;
-                    <tr>
+                <tr>
 
-                        <td class="text-center text-bold">@SL</td>
-                        <td class="hide">@item.DivisionId</td>
-                        <td class="text-center">@item.ZoneName</td>
-                        <td class="text-center">@item.DivisionName</td>
-                        <td class="text-center">@item.DivisionAssignName</td>
-                        <td class="text-center">@item.MobileNumber</td>
-                        <td class="text-center">@item.Remarks</td>
-                        <td class="text-center">
-                          
-                            <a href="#" class="btn btn-outline-warning data-item-edit hide" title="Edit" data-edit-item="@item.DivisionId" style="line-height:1">
-                                <i class="fas fa-pen"></i>
-                            </a>
-                            
-                        </td>
-                    </tr>
+                    <td class="text-center text-bold">@SL</td>
+                    <td class="hide">@item.DivisionId</td>
+                    <td class="text-center">@item.ZoneName</td>
+                    <td class="text-center">@item.DivisionName</td>
+                    <td class="text-center">@item.Status</td>
+                    <td class="text-center hide">@item.ZoneId</td>
+
+                    <td class="text-center">
+
+                        <a href="#" class="btn btn-outline-warning data-edit-item-DivisionId" title="Edit" data-edit-item-DivisionId="@item.DivisionId" style="line-height:1">
+                            <i class="fas fa-pen"></i>
+                        </a>
+
+                    </td>
+                </tr>
                 }
 
                 

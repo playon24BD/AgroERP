@@ -44,21 +44,7 @@
                         <span class="error hide required-DivisionName font-weight-bold">Input Division Name!</span>
                         <span class="error hide duplicate-DivisionName font-weight-bold">Already Division Exist!</span>
                     </div>
-
-                    <div class="col-md-2">
-                        <label for="txtDivisionAssignName" class="control-label">DivisionAssignName</label>
-                        <input type="text" id="txtDivisionAssignName" class="form-control form-control-sm" />
-                        <span class="error hide required-DivisionAssignName font-weight-bold">Input Assign Name!</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="txtMobileNumber" class="control-label">Mobile Number</label>
-                        <input type="text" id="txtMobileNumber" class="form-control form-control-sm" />
-                        <span class="error hide required-Number font-weight-bold">Input Valid Mobile Number!</span>
-                    </div>
-                    <div class="col-md-1">
-                        <label for="txtRemarks" class="control-label">Remarks</label>
-                        <input type="text" id="txtRemarks" class="form-control form-control-sm" />
-                    </div>
+                    
                     <div class="col-md-1 " style="margin-top:5px;">
                         <label for="addButton" class="control-label"></label>
                         <div class="clearfix">
@@ -82,9 +68,6 @@
                                     <th style="width:15%">OrganizationName</th>
                                     <th style="width:15%">Zone Name</th>
                                     <th style="width:15%">Division Name</th>
-                                    <th style="width:15%">Division Assign Name</th>
-                                    <th style="width:10%">Mobile</th>
-                                    <th style="width:10%">Remarks</th>
                                     <th style="width:10%">Action</th>
                                     <th class="hide OrganizationId"></th>
                                     <th class="hide ZoneId"></th>
@@ -112,9 +95,6 @@
     var ddlOrganizationName = $("#ddlOrganizationName");
     var ddlZoneName = $("#ddlZoneName");
     var txtDivisionName = $("#txtDivisionName");
-    var txtRemarks = $("#txtRemarks");
-    var txtMobileNumber = $("#txtMobileNumber");
-    var txtDivisionAssignName = $("#txtDivisionAssignName");
 
 
     $(document).ready(function () {
@@ -130,24 +110,24 @@
     $("#addButton").click(function (e) {
         e.preventDefault();
 
-        var sl = $("#tblMargeItems tbody tr").length;
-        var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-        var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlOrganizationName") + "</td>";
-        var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlZoneName") + "</td>";
-        var td4 = "<td class='text-center'>" + txtDivisionName.val() + "</td>";
-        var td5 = "<td class='text-center'>" + txtDivisionAssignName.val() + "</td>";
-        var td6 = "<td class='text-center'>" + txtMobileNumber.val() + "</td>";
-        var td7 = "<td class='text-center'>" + txtRemarks.val() + "</td>";
-        var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
-        var td9 = "<td class='hide OrganizationId'>" + ddlOrganizationName.val() + "</td>";
-        var td10 = "<td class='hide ZoneId'>" + ddlZoneName.val() + "</td>";
+        if (Validations() == true) {
 
-        var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
+            var sl = $("#tblMargeItems tbody tr").length;
+            var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+            var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlOrganizationName") + "</td>";
+            var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlZoneName") + "</td>";
+            var td4 = "<td class='text-center'>" + txtDivisionName.val() + "</td>";
+            
+            var td5 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+            var td6 = "<td class='hide OrganizationId'>" + ddlOrganizationName.val() + "</td>";
+            var td7 = "<td class='hide ZoneId'>" + ddlZoneName.val() + "</td>";
 
-        $("#tblMargeItems tbody").append(tr);
+            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + "</tr>";
+
+            $("#tblMargeItems tbody").append(tr);
 
 
-
+        }
     })
 
     $(document).on("click", "a.data-onfly-del", function (e) {
@@ -180,11 +160,11 @@
                 details.push({
 
                     DivisionId: 0,
-                    ZoneId: tds.eq(9).html(),
+                    ZoneId: tds.eq(6).html(),
                     DivisionName: tds.eq(3).html(),
-                    DivisionAssignName: tds.eq(4).html(),
-                    MobileNumber: tds.eq(5).html(),
-                    Remarks: tds.eq(6).html(),
+                    //DivisionAssignName: tds.eq(4).html(),
+                    //MobileNumber: tds.eq(5).html(),
+                    //Remarks: tds.eq(6).html(),
                     OrganizationId: tds.eq(1).html()
 
                 });
@@ -212,6 +192,26 @@
         
 
     });
+
+
+    function Validations() {
+        Isvalid = true;
+        $('.error').addClass("hide");
+        if ($.trim(ddlOrganizationName.val()) == 0) {
+            $('.required-ddlOrganization').removeClass("hide");
+            Isvalid = false;
+        }
+        
+        if ($.trim(txtDivisionName.val()) == "") {
+            $('.required-DivisionName').removeClass("hide");
+            Isvalid = false;
+        }
+        
+
+        return Isvalid
+
+    }
+
 
 
     function redirectPage(page) {

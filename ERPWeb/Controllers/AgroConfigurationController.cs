@@ -1316,7 +1316,7 @@ namespace ERPWeb.Controllers
 
             return View();
         }
-        public ActionResult GetDivisionInfo(string flag, long? divisionId, long? id)
+        public ActionResult GetDivisionInfo(string flag, long? divisionId, long? zoneId, long? id)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetDivisionInfo");
 
@@ -1326,14 +1326,21 @@ namespace ERPWeb.Controllers
                
 
                 ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+
+                ViewBag.ddlDivisionName =_divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+
                 return View();
+
+                
             }
 
              
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                var dto = _divisionInfo.GetDivisionInfos(User.OrgId, divisionId ?? 0);
+
+                var dto = _divisionInfo.GetDivisionInfos(User.OrgId, zoneId ?? 0,divisionId?? 0);
+
                 //IEnumerable<DivisionInfoDTO> dto = _divisionInfo.GetAllDivisionSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.DivisionName.Contains(name))).Select(o => new DivisionInfoDTO
                 //{
                 //    ZoneId = o.ZoneId,
@@ -1358,6 +1365,29 @@ namespace ERPWeb.Controllers
             }
             return View();
         }
+
+        public ActionResult CreateDivisionInfo(long? id)
+        {
+            ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+            //ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+            ViewBag.ddlZonename = _zoneSetup.GetAllZoneName().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SaveDivisionInfo(List<DivisionInfoViewModel> details)
+        {
+            bool IsSuccess = false;
+            if (details.Count > 0)
+            {
+                List<DivisionInfoDTO> dto = new List<DivisionInfoDTO>();
+                AutoMapper.Mapper.Map(details, dto);
+                IsSuccess = _divisionInfo.SaveDivisionInfo(dto, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
+        }
+
         public ActionResult CreateRegionlist(long? id)
         {
 
