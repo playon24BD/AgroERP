@@ -1298,9 +1298,12 @@ namespace ERPWeb.Controllers
                 IEnumerable<RegionSetupDTO> dto = _regionSetup.GetAllRegionSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.RegionName.Contains(name))).Select(o => new RegionSetupDTO
                 {
                     RegionId= o.RegionId,
+                    RegionName= o.RegionName,
+                  
+
                     OrganizationId = o.OrganizationId,
                     OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
-                   Status=o.Status,
+                    Status=o.Status,
                     UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
                     EntryDate = o.EntryDate,
                     UpdateUserId = o.UpdateUserId,

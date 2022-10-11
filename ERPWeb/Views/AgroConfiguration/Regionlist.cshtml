@@ -73,3 +73,40 @@
 
     </div>
 </div>
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var SearchAny = $("#SearchAny");
+
+
+        $(document).ready(function () {
+
+            LoadRegionDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadRegionDataTable();
+        }
+
+        SearchAny.keyup(function () {
+            LoadRegionDataTable()
+        })
+
+        function LoadRegionDataTable() {
+            debugger;
+            var data = { flag: "View", name: $.trim(SearchAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Regionlist', data)).then(function (res, status) {
+                console.log(res);
+                if (status == "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+    </script>
+}

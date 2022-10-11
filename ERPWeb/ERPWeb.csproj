@@ -485,6 +485,7 @@
     <Content Include="Views\AgroConfiguration\CreateDivisionInfo.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetDivisionPartialView.cshtml" />
     <Content Include="Views\AgroConfiguration\GetArealist.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetRegionPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

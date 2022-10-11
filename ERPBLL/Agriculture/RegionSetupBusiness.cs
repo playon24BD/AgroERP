@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
@@ -26,9 +27,31 @@ namespace ERPBLL.Agriculture
             return _regionSetupRepository.GetAll(x => x.OrganizationId == OrgId).ToList();
         }
 
+
+
         public RegionSetup GetRegionNamebyId(long regionId, long orgId)
         {
-            return _regionSetupRepository.GetOneByOrg(x => x.RegionId == regionId && x.OrganizationId == orgId);
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RegionSetupDTO>(QueryForRegion(orgId, regionId)).ToList();
+            
+        }
+
+        private string QueryForRegion(long orgId, long? regionId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and OrganizationId={0}", orgId);
+            if (regionId != null && regionId > 0)
+            {
+                param += string.Format(@" and RegionId={0}", regionId);
+            }
+            query = string.Format(@"
+           select r.RegionName,d.DivisionName,r.Status from tblRegionInfos r
+inner join tblDivisionInfo d
+on r.DivisionId=d.DivisionId
+            where 1=1  {0}",
+            Utility.ParamChecker(param));
+            return query;
         }
 
         public bool SaveRegionInfo(List<RegionSetupDTO> detailsDTO, long userId, long orgId)
