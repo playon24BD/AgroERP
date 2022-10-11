@@ -95,6 +95,7 @@
     var ddlOrganizationName = $("#ddlOrganizationName");
     var ddlZoneName = $("#ddlZoneName");
     var txtDivisionName = $("#txtDivisionName");
+    var DivisionNameList = [];
 
 
     $(document).ready(function () {
@@ -112,6 +113,11 @@
 
         if (Validations() == true) {
 
+            if (DivisionNameList.includes(txtDivisionName.val())) {
+                toastrErrorAlert("Division Name Already Exist");
+            }
+            else {
+
             var sl = $("#tblMargeItems tbody tr").length;
             var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
             var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlOrganizationName") + "</td>";
@@ -124,7 +130,9 @@
 
             var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + "</tr>";
 
-            $("#tblMargeItems tbody").append(tr);
+                $("#tblMargeItems tbody").append(tr);
+                DivisionNameList.push(txtDivisionName.val());
+            }
 
 
         }
@@ -133,12 +141,12 @@
     $(document).on("click", "a.data-onfly-del", function (e) {
         e.preventDefault();
         var index = $(this).parent().parents('tbody tr').index();
-        //var tds = $(this).parent().parents('tbody tr').children('td');
+        var tds = $(this).parent().parents('tbody tr').children('td');
 
-        //var rawMaterialId = tds.eq(5).html();
-        //console.log("rawMaterialId :" + rawMaterialId);
-        //const mid = materialNameList.indexOf(rawMaterialId);
-        //materialNameList.splice(mid, 1);
+        var divisionId = tds.eq(5).html();
+        console.log("divisionId :" + divisionId);
+        const mid = DivisionNameList.indexOf(divisionId);
+        DivisionNameList.splice(mid, 1);
 
 
 

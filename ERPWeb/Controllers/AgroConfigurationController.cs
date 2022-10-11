@@ -1309,7 +1309,7 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
 
-                var dto = _divisionInfo.GetDivisionInfos(User.OrgId, zoneId ?? 0, divisionId ?? 0);
+                var dto = _divisionInfo.GetDivisionInfos(  divisionId ?? 0, zoneId ?? 0, User.OrgId);
 
                 //IEnumerable<DivisionInfoDTO> dto = _divisionInfo.GetAllDivisionSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.DivisionName.Contains(name))).Select(o => new DivisionInfoDTO
                 //{
@@ -1345,17 +1345,30 @@ namespace ERPWeb.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult SaveDivisionInfo(List<DivisionInfoViewModel> details)
+        public ActionResult SaveDivisionInfo(List<DivisionInfoViewModel> details, DivisionInfoViewModel update)
         {
             bool IsSuccess = false;
             if (details.Count > 0)
             {
                 List<DivisionInfoDTO> dto = new List<DivisionInfoDTO>();
+
                 AutoMapper.Mapper.Map(details, dto);
                 IsSuccess = _divisionInfo.SaveDivisionInfo(dto, User.UserId, User.OrgId);
             }
             return Json(IsSuccess);
         }
+
+        public ActionResult UpdateDivision(DivisionInfoViewModel update)
+        {
+            bool IsSuccess = false;
+            DivisionInfoDTO updateDTO = new DivisionInfoDTO();
+            AutoMapper.Mapper.Map(update, updateDTO);
+            IsSuccess = _divisionInfo.UpdateDivision(updateDTO, User.UserId, User.OrgId);
+
+            return Json(IsSuccess);
+        }
+
+
         #endregion
 
         #region Region List

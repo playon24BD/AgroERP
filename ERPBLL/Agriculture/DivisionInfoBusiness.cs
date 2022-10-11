@@ -27,12 +27,12 @@ namespace ERPBLL.Agriculture
             return _divisionInfoRepository.GetAll(o => o.OrganizationId == OrgId).ToList();
         }
 
-        public IEnumerable<DivisionInfoDTO> GetDivisionInfos(long orgId, long? divisionId, long? zoneId)
+        public IEnumerable<DivisionInfoDTO> GetDivisionInfos(long? divisionId, long? zoneId, long orgId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<DivisionInfoDTO>(QueryForDivisionInfoss(orgId, divisionId, zoneId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<DivisionInfoDTO>(QueryForDivisionInfoss( divisionId, zoneId, orgId)).ToList();
         }
 
-        private string QueryForDivisionInfoss(long orgId, long? divisionId, long? zoneId)
+        private string QueryForDivisionInfoss(long? divisionId, long? zoneId, long orgId)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -60,28 +60,36 @@ ZoneId
         public bool SaveDivisionInfo(List<DivisionInfoDTO> infoDTO, long userId, long orgId)
         {
             bool isSuccess = false;
+            //if (updateDTOs.DivisionId !=0)
+            //{
 
-            List<DivisionInfo> divisionInfos = new List<DivisionInfo>();
+                List<DivisionInfo> divisionInfos = new List<DivisionInfo>();
 
-            foreach (var item in infoDTO)
-            {
-                DivisionInfo division = new DivisionInfo()
+                foreach (var item in infoDTO)
                 {
-                    OrganizationId = orgId,
-                    DivisionName = item.DivisionName,
-                    ZoneId = item.ZoneId,
-                    Status = "Active",
-                    EntryDate = DateTime.Now,
-                    EntryUserId = userId,
-                };
-                _divisionInfoRepository.Insert(division);
-            }
+                    DivisionInfo division = new DivisionInfo()
+                    {
+                        OrganizationId = orgId,
+                        DivisionName = item.DivisionName,
+                        ZoneId = item.ZoneId,
+                        Status = "Active",
+                        EntryDate = DateTime.Now,
+                        EntryUserId = userId,
+                    };
+                    _divisionInfoRepository.Insert(division);
+                }
 
-            //DivisionInfo info = new DivisionInfo();
-            //info = GetDivisionInfoById(infoDTO.divisionId, orgId);
-            //info.DivisionName = infoDTO.DivisionName;
-            //info.ZoneName = infoDTO.ZoneName;
-            //_divisionInfoRepository.Update(info);
+            //}
+            //else
+            //{
+            //    DivisionInfo info = new DivisionInfo();
+            //    info = GetDivisionInfoById(updateDTOs.DivisionId, orgId);
+            //    info.DivisionName = updateDTOs.DivisionName;
+            //    info.ZoneId = updateDTOs.ZoneId;
+            //    _divisionInfoRepository.Update(info);
+            //}
+
+
 
             isSuccess = _divisionInfoRepository.Save();
             return isSuccess;
@@ -98,6 +106,24 @@ ZoneId
 From [Agriculture].[dbo].tblDivisionInfo D
 Inner Join [Agriculture].[dbo].tblZoneInfos Z on D.ZoneId=Z.ZoneId Where 1=1 and D.ZoneId={0} and D.OrganizationId={1} ", ZoneId, orgId)).ToList();
             return details;
+
+        }
+
+        public bool UpdateDivision(DivisionInfoDTO updateDTOs, long userId, long orgId)
+        {
+            bool isSuccess = false;
+
+            DivisionInfo info = new DivisionInfo();
+            info = GetDivisionInfoById(updateDTOs.DivisionId, orgId);
+            info.DivisionName = updateDTOs.DivisionName;
+            info.ZoneId = updateDTOs.ZoneId;
+            info.Status = updateDTOs.Status;
+            info.UpdateDate = DateTime.Now;
+            info.UpdateUserId = userId;
+            _divisionInfoRepository.Update(info);
+
+            isSuccess = _divisionInfoRepository.Save();
+            return isSuccess;
 
         }
     }

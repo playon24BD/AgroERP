@@ -58,9 +58,11 @@
 
                                             <div class="col-md-3">
                                                 <label for="ddlDivisionName" class="control-label">Division Name</label>
-                                                @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Division--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                                             </div>
+
+                                            
 
                                         </div>
 
@@ -101,14 +103,27 @@
                     <input type="hidden" id="hddivisionId" />
                     <div class="col-md-10">
                         <label for="ddlZoneName" class="control-label">Zone Name</label>
-                        @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        @Html.DropDownList("ddlZoneNameInput", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                     </div>
 
-                    <div class="col-md-10">
-                        <label for="ddlDivisionName" class="control-label">Division Name</label>
-                        @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    @*<div class="col-md-10">
+            <label for="ddlDivisionName" class="control-label">Division Name</label>
+            @Html.DropDownList("ddlDivisionNameInput", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
+        </div>*@
+
+                    <div class="col-md-10">
+                        <label for="txtDivisionName" class="control-label">DivisionName</label>
+                        <input type="text" id="txtDivisionName" class="form-control form-control-sm" />
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="ddlStatus" class="control-label">Status</label>
+
+                        <select id="ddlStatus" class="form-control form-control-sm select2">
+                            <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
+                        </select>
                     </div>
 
                 </form>
@@ -141,6 +156,10 @@
         var hddivisionId = $("#hddivisionId");
         var ddlZoneName = $("#ddlZoneName");
         var ddlDivisionName = $("#ddlDivisionName");
+        var txtDivisionName = $("#txtDivisionName");
+        var ddlDivisionNameInput = $("#ddlDivisionNameInput");
+        var ddlZoneNameInput = $("#ddlZoneNameInput");
+        var ddlStatus = $("#ddlStatus");
 
 
 
@@ -164,7 +183,7 @@
         })
 
         function LoadDivisionList() {
-
+            
             var data = { flag: "View", divisionId: TryParseInt(ddlDivisionName.val(), 0), zoneId: TryParseInt(ddlZoneName.val(), 0), id: 0 };
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetDivisionInfo', data)).then(function (res, status) {
@@ -182,19 +201,21 @@
 
 
         function OpenModal() {
-           
+
+            $("#spanSaveText").text('Save');
             $("#DivisionModal").modal("show");
 
 
         }
 
         $("#btnSave").click(function (e) {
-
+            
             e.preventDefault();
-            var data = { zoneId: TryParseInt(ddlZoneName.val(), 0), divisionId: TryParseInt(ddlDivisionName.val(), 0) }
+            debugger;
+            var data = { DivisionId: TryParseInt(hddivisionId.val(), 0), ZoneId: TryParseInt(ddlZoneNameInput.val(),0), DivisionName: txtDivisionName.val(),Status:ddlStatus.val() }
 
             if (true) {
-                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveDivisionInfo", JSON.stringify(data), getToken())).then(function (res, status) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/UpdateDivision", JSON.stringify(data), getToken())).then(function (res, status) {
                    
                     console.log(status);
                     if (res == true) {
@@ -213,18 +234,37 @@
 
         $(document).on("click", "a.data-edit-item-DivisionId", function (e) {
 
+      
             e.preventDefault()
             debugger;
             
 
             
             var row = $(this).parent().parents('tr');
-            var td2 = row.find('td:eq(2)').html();
-            var td3 = row.find('td:eq(3)').html();
-            
 
-            ddlDivisionName.val(td2);
-            ddlZoneName.val(td3);
+            console.log(row);
+            //var td2 = row.find('td:eq(2)').html();
+            //var td3 = row.find('td:eq(3)').html();
+            var divisionId = row.find('td:eq(4)').html();
+            var zoneId = row.find('td:eq(2)').html();
+            var hid = row.find('td:eq(1)').html();
+            var Status = row.find('td:eq(5)').html();
+
+
+
+            ddlStatus.val(Status);
+            hddivisionId.val(hid);
+            txtDivisionName.val(divisionId);
+            txtDivisionName.trigger("change");
+
+            ddlZoneNameInput.val(zoneId);
+            console.log(zoneId);
+            ddlZoneNameInput.trigger("change");
+
+
+
+            //txtDivisionName.val(td2);
+            //ddlZoneName.val(td3);
             
 
 
