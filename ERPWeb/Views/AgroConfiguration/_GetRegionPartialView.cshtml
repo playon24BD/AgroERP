@@ -12,8 +12,7 @@
                     <th style="vertical-align:middle">#SL</th>
                     <th style="vertical-align:middle" class="hide"></th>
                     <th style="vertical-align:middle" class="hide"></th>
-                    <th style="vertical-align:middle" class="hide"></th>
-                    <th style="vertical-align:middle">Organization Name</th>
+                    @*<th style="vertical-align:middle" class="hide"></th>*@
                     <th style="vertical-align:middle">Region Name</th>
                     <th style="vertical-align:middle">Devision Name</th>
                     <th style="vertical-align:middle">Status</th>
@@ -29,13 +28,12 @@
                     <td class="text-center text-bold">@SL</td>
                     <td class="hide">@item.RegionId</td>
                     <td class="hide">@item.DivisionId</td>
-                    <td class="hide">@item.OrganizationId</td>
-                    <td class="text-center">@item.OrganizationName</td>
+                    @*<td class="hide">@item.OrganizationId</td>*@
                     <td class="text-center">@item.RegionName</td>
                     <td class="text-center">@item.DivisionName</td>
                     <td class="text-center">@item.Status</td>
                     <td class="text-center">
-                        <a href="#" class="btn btn-warning btn-sm data-edit-item-Zone" style="line-height:1" data-edit-item-Zone="@item.RegionId"><i class="fa fa-pen"></i> Edit</a>
+                        <a href="#" class="btn btn-warning btn-sm data-edit-item-Region" style="line-height:1" data-edit-item-Region="@item.RegionId"><i class="fa fa-pen"></i> Edit</a>
                     </td>
                 </tr>
                 }

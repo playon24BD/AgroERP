@@ -35,7 +35,7 @@ namespace ERPBLL.Agriculture
             return _zoneSetupRepository.GetOneByOrg(x => x.ZoneId == zoneId && x.OrganizationId == orgId);
         }
 
-        public bool SaveZoneInfo(List<ZoneSetupDTO> detailsDTO, long userId, long orgId)
+        public bool SaveZoneInfo(List<ZoneSetupDTO> detailsDTO,  long userId, long orgId)
         {
             bool IsSuccess = false;
             List<ZoneSetup> ZoneSetup = new List<ZoneSetup>();
@@ -59,12 +59,34 @@ namespace ERPBLL.Agriculture
 
                     };
                     _zoneSetupRepository.Insert(zoneSetups);
-                }
-               
-               
+                }      
             }
 
             IsSuccess = _zoneSetupRepository.Save();
+            return IsSuccess;
+        }
+
+        public bool SaveZoneInfoEdit( ZoneSetupDTO edto, long userId, long orgId)
+        {
+            bool IsSuccess = false;
+
+            ZoneSetup zoneSetup = new ZoneSetup();
+            zoneSetup = GetZoneNamebyId(edto.ZoneId, orgId);
+            zoneSetup.ZoneName = edto.ZoneName;
+            zoneSetup.OrganizationId = orgId;
+            zoneSetup.RoleId = edto.RoleId;
+            zoneSetup.UpdateDate = DateTime.Now;
+            zoneSetup.UpdateUserId = userId;
+            zoneSetup.Status = edto.Status;
+            zoneSetup.EntryUserId = zoneSetup.EntryUserId;
+            zoneSetup.EntryDate = zoneSetup.EntryDate;
+            
+
+            IsSuccess = _zoneSetupRepository.Save();
+
+
+
+
             return IsSuccess;
         }
         public IEnumerable<ZoneSetup> GetAllZoneName()

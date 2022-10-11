@@ -99,18 +99,8 @@
                             <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="ddlZoneAsign" class="control-label">ZoneAsignTO</label>
-                            <input type="text" id="ddlZoneAsign" class="form-control form-control-sm" />
-                            <span class="error hide required-PeopleName font-weight-bold">Input Asign People Name!</span>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="ddlAMobilenum" class="control-label">Mobile Number</label>
-                            <input type="text" id="ddlAMobilenum" class="form-control form-control-sm" />
-                            <span class="error hide required-Number font-weight-bold">Input Valid Mobile Number!</span>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="ddlRemarks" class="control-label">Remarks</label>
-                            <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
+                            <label for="ddlstatus" class="control-label">Status</label>
+                            <input type="text" id="ddlstatus" class="form-control form-control-sm" />
                         </div>
                     </div>
                 </form>
@@ -141,6 +131,12 @@
 @section scripts{
 
     <script type="text/javascript">
+
+        var hdzonetId = $("#hdzonetId");
+        var ddlorgname = $("#ddlorgname");
+        var ddlZoneName = $("#ddlZoneName");
+        var ddlstatus = $("#ddlstatus");
+
         var SearchAny = $("#SearchAny");
 
 
@@ -158,7 +154,6 @@
         })
 
         function LoadZoneDataTable() {
-            debugger;
             var data = { flag: "View", name: $.trim(SearchAny.val()) }
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Zonelist', data)).then(function (res, status) {
                 console.log(res);
@@ -181,8 +176,8 @@
 
         //edit
         $(document).on("click", "a.data-edit-item-Zone", function (e) {
-            alert();
-            debugger;
+            //alert();
+            //debugger;
             e.preventDefault()
 
             var row = $(this).parent().parents('tr');
@@ -192,17 +187,16 @@
             var td4 = row.find('td:eq(4)').html();
             var td5 = row.find('td:eq(5)').html();
             var td6 = row.find('td:eq(6)').html();
-            var td8 = row.find('td:eq(8)').html();
 
-            console.log(td2 + td3 + td4);
+
+            console.log(td4);
 
             hdzonetId.val(td1);
             ddlorgname.val(td2);
             ddlorgname.trigger("change");
             ddlZoneName.val(td4);
-            ddlZoneAsign.val(td5);
-            ddlAMobilenum.val(td6);
-            ddlRemarks.val(td8);
+            ddlstatus.val(td5);
+
 
 
             OpenModal();
@@ -212,5 +206,57 @@
 
 
 
+        $("#saveButton").click(function (e) {
+            //alert();
+           // debugger;
+            e.preventDefault();
+            $(".error").addClass("hide");
+
+            if (ValidationForm() == true) {
+            var edetails = JSON.stringify({ ZoneId: TryParseInt(hdzonetId.val(), 0), OrganizationId: TryParseInt(ddlorgname.val(), 0), ZoneName: ddlZoneName.val(), Status: ddlstatus.val() });
+            console.log(edetails);
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveZonetInfo', edetails, getToken())).then(function (res, status) {
+                //alert("hitme");
+                //debugger;
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        $("#zonemodal").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        LoadZoneDataTable();
+                    }
+                    else {
+                        message("#msg2");
+                        toastrErrorAlert(execuStatus.fail);
+                        alert("This Zone Already Exist");
+                    }
+                    enable("#saveButton");
+            }).fail(function (err) {
+                    console.log(err);
+                    enable("#saveButton");
+                });
+            }
+        });
+
+
+
+    
+        //validationform
+        function ValidationForm() {
+            //debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlorgname.val()) == 0) {
+                $('.required-OrganizationName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlZoneName.val()) == 0) {
+                $('.required-ZoneName').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
     </script>
 }

@@ -39,8 +39,8 @@
                     <div class="col-md-2">
                         <label for="ddlRegionName" class="control-label">RegionName</label>
                         <input type="text" id="ddlRegionName" class="form-control form-control-sm" />
-                        <span class="error hide required-ZoneName font-weight-bold">Input Region Name!</span>
-                        <span class="error hide duplicate-ZoneName font-weight-bold">Already RegionName Exist!</span>
+                        <span class="error hide required-RegionName font-weight-bold">Input Region Name!</span>
+                        <span class="error hide required-RegionName font-weight-bold">Already RegionName Exist!</span>
                     </div>
                     
                     <div class="col-md-1 " style="margin-top:5px;">
@@ -87,12 +87,22 @@
 
     <script type="text/javascript">
 
-  
+        var ddlorgname = $("#ddlorgname");
         var ddldivname = $("#ddldivname");
         var ddlRegionName = $("#ddlRegionName");
        
         var regionNameList = [];
 
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+           
+        })
        //change zone
         //$('#ddlzonename').change(function () {
 
@@ -139,7 +149,7 @@
             e.preventDefault();
 
 
-
+            if (ValidationForm() == true) {
             if (regionNameList.includes(ddlRegionName.val())) {
                 toastrErrorAlert("Region Name Already Exist");
             }
@@ -158,13 +168,32 @@
 
                 $("#tblSingleItems tbody").append(tr);
                 regionNameList.push(ddlRegionName.val());
-
-
+                }
             }
-
-
-
         })
+
+
+
+        //remove
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            //debugger;
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+            var rznId = tds.eq(7).html();
+            console.log("rznId :" + rznId);
+            const mid = regionNameList.indexOf(rznId);
+            regionNameList.splice(mid, 1);
+
+
+
+
+            removeTableRow("#tblSingleItems tbody", index);
+            fnFixTheTbodyRowSerial("#tblSingleItems tbody", index);
+        })
+
+
 
 
         //save
@@ -215,6 +244,29 @@
             }
 
         });
+
+
+        //validation
+        function ValidationForm() {
+            debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlorgname.val()) == 0) {
+                $('.required-OrganizationName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddldivname.val()) == 0) {
+                $('.required-DivisionName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlRegionName.val()) == 0) {
+                $('.required-RegionName').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
 
     </script>
 }

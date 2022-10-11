@@ -86,7 +86,7 @@ namespace ERPBLL.Agriculture
                 param += string.Format(@" and d.DivisionId={0}", divisionId);
             }
             query = string.Format(@"
-           select r.RegionName,d.DivisionName,r.Status from tblRegionInfos r
+           select r.RegionName,d.DivisionName,r.Status,r.RegionId,r.DivisionId,r.OrganizationId from tblRegionInfos r
 inner join tblDivisionInfo d
 on r.DivisionId=d.DivisionId
             where 1=1  {0}",
@@ -97,6 +97,34 @@ on r.DivisionId=d.DivisionId
         public IEnumerable<RegionSetupDTO> GetAllRegionDetails(long DivisionId, long orgId)
         {
             throw new NotImplementedException();
+        }
+
+        public bool SaveRegionInfoEdit(RegionSetupDTO dTO, long userId, long orgId)
+        {
+            bool IsSuccess = false;
+
+            RegionSetup regionSetup = new RegionSetup();
+
+            regionSetup = GetRegionNamebyId(dTO.RegionId, orgId);
+            regionSetup.RegionName = dTO.RegionName;
+            regionSetup.DivisionId = dTO.DivisionId;
+            regionSetup.Status = dTO.Status;
+            regionSetup.UpdateUserId = userId;
+            regionSetup.UpdateDate = DateTime.Now;
+            regionSetup.OrganizationId = regionSetup.OrganizationId;
+            regionSetup.EntryDate = regionSetup.EntryDate;
+            regionSetup.EntryUserId = regionSetup.EntryUserId;
+
+
+            IsSuccess = _regionSetupRepository.Save();
+           
+
+            return IsSuccess;
+        }
+
+        public RegionSetup GetRegionNamebyId(long regionId, long orgId)
+        {
+            return _regionSetupRepository.GetOneByOrg(x => x.RegionId == regionId && x.OrganizationId == orgId);
         }
     }
 }

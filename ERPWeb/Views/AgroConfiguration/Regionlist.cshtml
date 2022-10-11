@@ -74,16 +74,79 @@
     </div>
 </div>
 
+@*modal*@
+<div class="modal" id="regionmodal" role="dialog">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header alert-secondary">
+            <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <form id="formregion">
+                <input type="hidden" id="hdregiontId" />
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="ddldivname" class="control-label">DivisionName</label>
+                        @Html.DropDownList("ddldivname", (IEnumerable<SelectListItem>)ViewBag.ddldivname, "Select divName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide required-DivisionName font-weight-bold">Input DivisionName!</span>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="ddlRegionName" class="control-label">RegionName</label>
+                        <input type="text" id="ddlRegionName" class="form-control form-control-sm" />
+                        <span class="error hide required-RegionName font-weight-bold">Input RegionName Name!</span>
+                        <span class="error hide duplicate-RegionName font-weight-bold">Already RegionName Exist!</span>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="ddlstatus" class="control-label">Status</label>
+                        <input type="text" id="ddlstatus" class="form-control form-control-sm" />
+                        <span class="error hide required-status font-weight-bold">Input status!</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="modal-footer btn-default">
+            <div class="col-md-6">
+                <div id="msg1" class="alert alert-success hide float-left">
+                    Data has been saved Successful!
+                </div>
+                <div id="msg2" class="alert alert-danger hide float-left">
+                    Data has been failed to save!
+                </div>
+            </div>
+            <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+            <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextRegion">Save</span> </button>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
 
 
 @section scripts{
 
     <script type="text/javascript">
 
-        var SearchAny = $("#SearchAny");
+        var hdregiontId = $("#hdregiontId");
+        var ddldivname = $("#ddldivname");
+        var ddlRegionName = $("#ddlRegionName");
+        var ddlstatus = $("#ddlstatus");
 
+        //var SearchAny = $("#SearchAny");
+
+       
 
         $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
 
             LoadRegionDataTable()
         })
@@ -92,13 +155,13 @@
             LoadRegionDataTable();
         }
 
-        SearchAny.keyup(function () {
-            LoadRegionDataTable()
-        })
+        //SearchAny.keyup(function () {
+        //    LoadRegionDataTable()
+        //})
 
         function LoadRegionDataTable() {
             debugger;
-            var data = { flag: "View", name: $.trim(SearchAny.val()) }
+            var data = { flag: "View"/*, name: $.trim(SearchAny.val())*/ }
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Regionlist', data)).then(function (res, status) {
                 console.log(res);
                 if (status == "success") {
@@ -108,5 +171,106 @@
             }).fail(function (err) { console.log(err) })
         }
 
+
+
+        //opemmodal
+        function OpenModal() {
+            $("#spanModalHead").text("Add New Zone");
+            $("#spanSaveTextRegion").text('Save');
+            $("#regionmodal").modal("show");
+            $(".error").addClass("hide");
+        }
+
+
+   
+        //editbuttun
+        $(document).on("click", "a.data-edit-item-Region", function (e) {
+            //alert();
+            debugger;
+            e.preventDefault()
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+
+
+            //console.log(td1);
+            //console.log(td2);
+
+            hdregiontId.val(td1);
+            ddldivname.val(td2);
+            //ddlorgname.trigger("change");
+            ddlRegionName.val(td3);
+            ddlstatus.val(td5);
+
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update Region');
+            $("#spanSaveTextZone").text('Update');
+        })
+
+
+        //savemodal
+        $("#saveButton").click(function (e) {
+            //alert();
+           //debugger;
+            e.preventDefault();
+            $(".error").addClass("hide");
+
+            if (ValidationForm() == true) {
+                var edetails = JSON.stringify({ RegionId: TryParseInt(hdregiontId.val(), 0), DivisionId: TryParseInt(ddldivname.val(), 0), RegionName: ddlRegionName.val(), Status: ddlstatus.val() });
+                console.log(edetails);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRegionInfo', edetails, getToken())).then(function (res, status) {
+                    //alert("hitme");
+                    debugger;
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        $("#zonemodal").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        LoadZoneDataTable();
+                    }
+                    else {
+                        message("#msg2");
+                        toastrErrorAlert(execuStatus.fail);
+                        alert("This Zone Already Exist");
+                    }
+                    enable("#saveButton");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#saveButton");
+                });
+            }
+        });
+
+
+
+        //validationform
+        function ValidationForm() {
+            //debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddldivname.val()) == 0) {
+                $('.required-DivisionName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlRegionName.val()) == 0) {
+                $('.required-RegionName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlstatus.val()) == 0) {
+                $('.required-status').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
     </script>
 }

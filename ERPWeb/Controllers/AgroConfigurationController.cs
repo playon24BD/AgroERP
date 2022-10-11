@@ -1273,15 +1273,23 @@ namespace ERPWeb.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult SaveZonetInfo(List<ZoneSetupViewModel> details)
+        public ActionResult SaveZonetInfo(List<ZoneSetupViewModel> details, ZoneSetupViewModel edetails)
         {
             bool IsSuccess = false;
-            if (details.Count > 0)
+
+            if (details == null && edetails != null)
+            {
+                ZoneSetupDTO dTO = new ZoneSetupDTO();
+                AutoMapper.Mapper.Map(edetails, dTO);
+                IsSuccess = _zoneSetup.SaveZoneInfoEdit(dTO, User.UserId, User.OrgId);
+            }
+            else if (details.Count > 0)
             {
                 List<ZoneSetupDTO> detailsDTO = new List<ZoneSetupDTO>();
                 AutoMapper.Mapper.Map(details, detailsDTO);
                 IsSuccess = _zoneSetup.SaveZoneInfo(detailsDTO, User.UserId, User.OrgId);
             }
+
             return Json(IsSuccess);
         }
         #endregion
@@ -1378,7 +1386,7 @@ namespace ERPWeb.Controllers
             if (string.IsNullOrEmpty(flag))
             {
                 ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
-
+                ViewBag.ddldivname = _divisionInfo.GetAllDivisionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
                 return View();
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
@@ -1398,14 +1406,22 @@ namespace ERPWeb.Controllers
         {
 
             ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
-            //ViewBag.ddlzonename = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(zne => new SelectListItem { Text = zne.ZoneName, Value = zne.ZoneId.ToString() }).ToList();
+      
             ViewBag.ddldivname = _divisionInfo.GetAllDivisionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
             return View();
         }
-        public ActionResult SaveRegionInfo(List<RegionSetupViewModel> details)
+        public ActionResult SaveRegionInfo(List<RegionSetupViewModel> details, RegionSetupViewModel edetails)
         {
             bool IsSuccess = false;
-            if (details.Count > 0)
+
+            if (details == null && edetails != null)
+            {
+                RegionSetupDTO dTO = new RegionSetupDTO();
+                AutoMapper.Mapper.Map(edetails, dTO);
+                IsSuccess = _regionSetup.SaveRegionInfoEdit(dTO, User.UserId, User.OrgId);
+            }
+
+            else if (details.Count > 0)
             {
                 List<RegionSetupDTO> detailsDTO = new List<RegionSetupDTO>();
                 AutoMapper.Mapper.Map(details, detailsDTO);

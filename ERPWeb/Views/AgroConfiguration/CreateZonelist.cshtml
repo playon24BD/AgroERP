@@ -87,12 +87,8 @@
 
 
         //value asign
-        //var hdzonetId = $("#hdzonetId");
         var ddlorgname = $("#ddlorgname");
         var ddlZoneName = $("#ddlZoneName");
-        //var ddlRemarks = $("#ddlRemarks");
-        //var ddlAMobilenum = $("#ddlAMobilenum");
-        //var ddlZoneAsign = $("#ddlZoneAsign");
         var zoneNameList = [];
 
         //select2
@@ -110,13 +106,14 @@
 
 
         //add
+       
         $("#addButton").click(function (e) {
             //alert();
-            //debugger;
+            debugger;
             e.preventDefault();
 
 
-             
+            if (ValidationForm() == true) {
             if (zoneNameList.includes(ddlZoneName.val())) {
                 toastrErrorAlert("Zone Name Already Exist");
             }
@@ -135,9 +132,11 @@
 
 
 
+                }
             }
 
         })
+       
 
 
 
@@ -148,9 +147,9 @@
             var index = $(this).parent().parents('tbody tr').index();
             var tds = $(this).parent().parents('tbody tr').children('td');
 
-            var rawMaterialId = tds.eq(7).html();
-            console.log("rawMaterialId :" + rawMaterialId);
-            const mid = zoneNameList.indexOf(rawMaterialId);
+            var rznId = tds.eq(7).html();
+            console.log("rznId :" + rznId);
+            const mid = zoneNameList.indexOf(rznId);
             zoneNameList.splice(mid, 1);
 
 
@@ -204,17 +203,30 @@
                 enable("#saveButton");
             })
 
-
-            
-
-
-
-
             function redirectPage(page) {
                 window.location.replace(page);
             }
 
         });
+
+
+        //validation
+        function ValidationForm() {
+            //debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlorgname.val()) == 0) {
+                $('.required-OrganizationName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlZoneName.val()) == 0) {
+                $('.required-ZoneName').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
 
     </script>
 }
