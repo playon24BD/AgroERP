@@ -28,32 +28,6 @@ namespace ERPBLL.Agriculture
         }
 
 
-
-        public RegionSetup GetRegionNamebyId(long regionId, long orgId)
-        {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RegionSetupDTO>(QueryForRegion(orgId, regionId)).ToList();
-            
-        }
-
-        private string QueryForRegion(long orgId, long? regionId)
-        {
-            string query = string.Empty;
-            string param = string.Empty;
-
-            param += string.Format(@" and OrganizationId={0}", orgId);
-            if (regionId != null && regionId > 0)
-            {
-                param += string.Format(@" and RegionId={0}", regionId);
-            }
-            query = string.Format(@"
-           select r.RegionName,d.DivisionName,r.Status from tblRegionInfos r
-inner join tblDivisionInfo d
-on r.DivisionId=d.DivisionId
-            where 1=1  {0}",
-            Utility.ParamChecker(param));
-            return query;
-        }
-
         public bool SaveRegionInfo(List<RegionSetupDTO> detailsDTO, long userId, long orgId)
         {
             bool IsSuccess = false;
@@ -86,6 +60,38 @@ on r.DivisionId=d.DivisionId
 
             IsSuccess = _regionSetupRepository.Save();
             return IsSuccess;
+        }
+
+
+
+
+        public IEnumerable<RegionSetupDTO> GetRegionInfos(long orgId, long? regionId, long? divisionId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RegionSetupDTO>(QueryForRegion(orgId, regionId, divisionId)).ToList();
+        }
+
+
+        private string QueryForRegion(long orgId, long? regionId, long? divisionId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and d.OrganizationId={0}", orgId);
+            if (regionId != null && regionId > 0)
+            {
+                param += string.Format(@" and r.RegionId={0}", regionId);
+            }
+            if (divisionId != null && divisionId > 0)
+            {
+                param += string.Format(@" and d.DivisionId={0}", divisionId);
+            }
+            query = string.Format(@"
+           select r.RegionName,d.DivisionName,r.Status from tblRegionInfos r
+inner join tblDivisionInfo d
+on r.DivisionId=d.DivisionId
+            where 1=1  {0}",
+            Utility.ParamChecker(param));
+            return query;
         }
     }
 }

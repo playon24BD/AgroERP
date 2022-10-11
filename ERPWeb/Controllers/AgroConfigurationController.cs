@@ -1285,7 +1285,7 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
         }
         //Rigion
-        public ActionResult Regionlist(string flag, string name)
+        public ActionResult Regionlist(string flag, string name, long? divisionId, long? regionId)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -1295,22 +1295,9 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                IEnumerable<RegionSetupDTO> dto = _regionSetup.GetAllRegionSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.RegionName.Contains(name))).Select(o => new RegionSetupDTO
-                {
-                    RegionId= o.RegionId,
-                    RegionName= o.RegionName,
-                  
+                var dto = _regionSetup.GetRegionInfos(User.OrgId, regionId ?? 0, divisionId ?? 0);
+                
 
-                    OrganizationId = o.OrganizationId,
-                    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
-                    Status=o.Status,
-                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
-                    EntryDate = o.EntryDate,
-                    UpdateUserId = o.UpdateUserId,
-                    UpdateDate = o.UpdateDate,
-
-
-                }).ToList();
 
                 List<RegionSetupViewModel> viewModels = new List<RegionSetupViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
