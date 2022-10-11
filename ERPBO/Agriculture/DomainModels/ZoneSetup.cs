@@ -15,7 +15,6 @@ namespace ERPBO.Agriculture.DomainModels
         public long ZoneId { get; set; }
         public string ZoneName { get; set; }
         public string Status { get; set; }
-
         //default
         public long OrganizationId { get; set; }
         public long RoleId { get; set; }

@@ -32,19 +32,14 @@ namespace ERPBLL.Agriculture
                 {
                     AreaInfoSetup areaInfoSetup = new AreaInfoSetup()
                     {
-                        OrganizationId = orgId,
-                        ZoneId = item.ZoneId,
-                        DivisionId = item.DivisionId,
+                        OrganizationId = orgId,                                           
                         RegionId = item.RegionId,
                         AreaName = item.AreaName,
-                        AreaAsignName = item.AreaAsignName,
-                        MobileNumber = item.MobileNumber,
                         EntryUserId = userId,
                         //UpdateUserId = userId,
                         EntryDate = DateTime.Now,
                         //UpdateDate = DateTime.Now,
-                        RoleId = 0,
-                        Remarks = null,
+                        RoleId = 0,                      
                         Status="Active"
                     
 

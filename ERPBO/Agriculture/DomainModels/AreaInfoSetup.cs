@@ -13,18 +13,9 @@ namespace ERPBO.Agriculture.DomainModels
     {
         [Key]
         public long AreaId { get; set; }
-        public string AreaName { get; set; }
-        public string AreaAsignName { get; set; }
-        public string MobileNumber { get; set; }
+        public string AreaName { get; set; } 
         public string Status { get; set; }
-        public string Remarks { get; set; }
-
-        public long ZoneId { get; set; }
-        public long DivisionId { get; set; }
         public long RegionId { get; set; }
-
-
-
         //default
         public long OrganizationId { get; set; }
         public long RoleId { get; set; }

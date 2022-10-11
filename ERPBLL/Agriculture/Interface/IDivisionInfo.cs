@@ -13,6 +13,7 @@ namespace ERPBLL.Agriculture.Interface
         DivisionInfo GetDivisionInfoById(long divisionId, long orgId);
         IEnumerable<DivisionInfoDTO> GetDivisionInfos(long orgId, long? divisionId,long? zoneId);
         IEnumerable<DivisionInfo> GetAllDivisionSetup(long OrgId);
+        IEnumerable<DivisionInfoDTO> GetAllDivisionDetails(long ZoneId, long orgId);
 
         bool SaveDivisionInfo(List<DivisionInfoDTO> infoDTO, long userId, long orgId);
     }
