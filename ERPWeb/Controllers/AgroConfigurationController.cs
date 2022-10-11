@@ -1,6 +1,7 @@
 using ERPBLL.Agriculture.Interface;
 using ERPBLL.Common;
 using ERPBLL.ControlPanel.Interface;
+using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ViewModels;
 using ERPBO.Common;
@@ -1415,27 +1416,52 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Area List
+
+        public ActionResult AreaList(string flag, string name)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                //ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                ViewBag.ddlRegionname = _regionSetup.GetAllRegionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == "AreaSetup")
+            {
+                var dto = _areaSetupBusiness.GetAllAreaSetup(User.OrgId,name ?? null);
+
+                List<AreaSetupViewModel> viewModel = new List<AreaSetupViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModel);
+                return PartialView("_GetAreaPartialView", viewModel);
+            }
+            return View();
+        }
         public ActionResult GetArealist(long? id)
         {
             ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-            ViewBag.ddlZonename = _zoneSetup.GetAllZoneName().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
-            ViewBag.ddlDivisionname = _divisionInfo.GetAllDivisionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+            //ViewBag.ddlZonename = _zoneSetup.GetAllZoneName().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+            //ViewBag.ddlDivisionname = _divisionInfo.GetAllDivisionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
 
             ViewBag.ddlRegionname = _regionSetup.GetAllRegionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
 
             return View();
         }
         [HttpPost]
-        public ActionResult SaveAreaInfo(List<AreaSetupViewModel> details)
+        public ActionResult SaveAreaInfo(List<AreaSetupViewModel> details, AreaSetupViewModel dto)
         {
             bool IsSuccess = false;
-            if (details.Count > 0)
+            if (details!=null && dto==null)
             {
                 List<AreaSetupDTO> detailsDTO = new List<AreaSetupDTO>();
                 AutoMapper.Mapper.Map(details, detailsDTO);
                 IsSuccess = _areaSetupBusiness.SaveAreaInfo(detailsDTO, User.UserId, User.OrgId);
 
+            }
+            else if(details==null && dto!=null)
+            {
+                AreaSetupDTO detailsDTO = new AreaSetupDTO();
+                AutoMapper.Mapper.Map(dto, detailsDTO);
+                IsSuccess = _areaSetupBusiness.SaveAreaInfoUpdate(detailsDTO, User.UserId, User.OrgId);
             }
             return Json(IsSuccess);
         }

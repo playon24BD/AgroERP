@@ -1,0 +1,262 @@
+﻿@{
+    ViewBag.Title = "AreaList";
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
+
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-DivisionInfoList-tab" data-toggle="pill" role="tab" aria-selected="true" href="#custom-tabs-DivisionInfoList" aria-controls="custom-tabs-DivisionInfoList">Area List</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-DivisionInfoList" aria-labelledby="custom-tabs-DivisionInfoList-tab" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h4 class="text-center text-bold">Area List</h4>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="/AgroConfiguration/GetArealist" class="btn btn-outline-primary btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Area</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-5px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Search By</h4>
+                                    </div>
+                                    <div class="card-body text-sm">
+                                        <div class="row" style="margin-top:-15px">
+                                            <div class="col-md-3 float-right">
+                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+
+                                    @*<div class="card-body text-sm">
+                                            <div class="row" style="margin-top:-15px">
+                                                <div class="col-md-3">
+                                                    <label for="ddlZoneName" class="control-label">Zone Name</label>
+                                                    @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label for="ddlDivisionName" class="control-label">Division Name</label>
+                                                    @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>*@
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal" id="AreaModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formDivision">
+                    <input type="hidden" id="hdAreaId" />
+                    
+                    <div class="col-md-10">
+                        <label for="ddlRegionname" class="control-label">RegionName</label>
+                        @Html.DropDownList("ddlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "Select Region Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide required-RegionName font-weight-bold">Input RegionName!</span>
+
+                    </div>
+                    <div class="col-md-10">
+                        <label for="ddlAreaName" class="control-label">AreaName</label>
+                        <input type="text" id="ddlAreaName" class="form-control form-control-sm" />
+                        <span class="error hide required-AreaName font-weight-bold">Input Area Name!</span>
+                        <span class="error hide duplicate-AreaName font-weight-bold">Already AreaName Exist!</span>
+                    </div>
+                    <div class="col-md-10">
+                        <label for="ddlStatus" class="control-label">Status</label>
+
+                        <select class="form-control form-control-sm" id="ddlStatus">
+                            <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
+                        </select>
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been Successfully Saved
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been faild to Save
+                    </div>
+                </div>
+                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
+                <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+        var ddlorgname = $("#ddlorgname");
+        var ddlRegionname = $("#ddlRegionname");
+        var ddlAreaName = $("#ddlAreaName");
+        var searchByAny = $("#searchByAny");
+        var ddlStatus = $("#ddlStatus");
+        var hdAreaId = $("#hdAreaId");
+
+        //var hdregionId = '';
+        //var AreaId = '';
+        //var hdOrgId = '';
+        //var AreaNameList = [];
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            LoadAreaDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadAreaDataTable();
+        }
+        searchByAny.keyup(function () {
+            LoadAreaDataTable();
+        })
+
+        function LoadAreaDataTable() {
+            debugger;
+            var data = { flag: 'AreaSetup', name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/AreaList', data)).then(function (res, status) {
+                console.log(res);
+                if (status === "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+        function OpenModal() {
+
+            $("#AreaModal").modal("show");
+
+
+        }
+
+        $("#btnSave").click(function (e) {
+            debugger;
+            e.preventDefault();
+            var data = { AreaId: hdAreaId.val(), RegionId: TryParseInt(ddlRegionname.val(), 0), AreaName: ddlAreaName.val(), Status: ddlStatus.val() }
+
+            if (true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveAreaInfo", JSON.stringify(data), getToken())).then(function (res, status) {
+
+                    console.log(status);
+                    if (res == true) {
+                        message("#msg1", "#AreaModal");
+
+                    }
+                    else {
+                        message("#msg2");
+                    }
+
+                })
+
+            }
+
+        })
+        $(document).on("click", "a.data-edit-item-Area", function (e) {
+
+            e.preventDefault()
+            debugger;
+
+
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+           
+
+
+            ddlRegionname.val(td2);
+            ddlRegionname.trigger("change");
+            ddlAreaName.val(td4);
+            //ddlStatus.val(td5);
+            hdAreaId.val(td1);
+
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update Division');
+            $("#spanSaveText").text('Update');
+        })
+
+      
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+    </script>
+
+
+}

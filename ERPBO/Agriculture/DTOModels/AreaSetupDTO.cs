@@ -22,5 +22,12 @@ namespace ERPBO.Agriculture.DTOModels
         public long UpdateUserId { get; set; }
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
+
+        // Extra
+
+        public string RegionName { get; set; }
+        public string OrgName { get; set; }
+        public string UserName { get; set; }
+        public string name { get; set; }
     }
 }
