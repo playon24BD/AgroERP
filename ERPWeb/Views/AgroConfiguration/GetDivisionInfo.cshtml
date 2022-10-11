@@ -56,6 +56,12 @@
 
                                             </div>
 
+                                            <div class="col-md-3">
+                                                <label for="ddlDivisionName" class="control-label">Division Name</label>
+                                                @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                            </div>
+
                                         </div>
 
                                     </div>
@@ -83,36 +89,150 @@
 
 </div>
 
+<div class="modal" id="DivisionModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formDivision">
+                    <input type="hidden" id="hddivisionId" />
+                    <div class="col-md-10">
+                        <label for="ddlZoneName" class="control-label">Zone Name</label>
+                        @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                    </div>
+
+                    <div class="col-md-10">
+                        <label for="ddlDivisionName" class="control-label">Division Name</label>
+                        @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been Successfully Saved
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been faild to Save
+                    </div>
+                </div>
+                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
+                <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @section scripts{
 
-<script type="text/javascript">
 
-    $(document).ready(function () {
-        $('.select2').select2();
+    <script type="text/javascript">
 
-        $('.select2bs4').select2({
-            theme: 'bootstrap4'
-        });
+        var hddivisionId = $("#hddivisionId");
+        var ddlZoneName = $("#ddlZoneName");
+        var ddlDivisionName = $("#ddlDivisionName");
 
-        LoadDivisionList()
-    })
 
-    function LoadDivisionList() {
-        var data = { flag: "View", divisionId: TryParseInt(ddlDivisionName.val(), 0), id: 0 };
 
-        $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetDivisionInfo', data)).then(function (res, status) {
-            console.log(status);
-            if (status === "success") {
-                $("#dataContainer").fadeOut('500', function () {
-                    $("#dataContainer").empty();
-                    $("#dataContainer").append(res).fadeIn('500');
-                });
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadDivisionList()
+        })
+
+        ddlZoneName.change(function () {
+
+            LoadDivisionList();
+        })
+        ddlDivisionName.change(function () {
+
+            LoadDivisionList();
+        })
+
+        function LoadDivisionList() {
+
+            var data = { flag: "View", divisionId: TryParseInt(ddlDivisionName.val(), 0), zoneId: TryParseInt(ddlZoneName.val(), 0), id: 0 };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetDivisionInfo', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+        }
+
+
+        function OpenModal() {
+           
+            $("#DivisionModal").modal("show");
+
+
+        }
+
+        $("#btnSave").click(function (e) {
+
+            e.preventDefault();
+            var data = { zoneId: TryParseInt(ddlZoneName.val(), 0), divisionId: TryParseInt(ddlDivisionName.val(), 0) }
+
+            if (true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveDivisionInfo", JSON.stringify(data), getToken())).then(function (res, status) {
+                   
+                    console.log(status);
+                    if (res == true) {
+                        message("#msg1", "#DivisionModal");
+
+                    }
+                    else {
+                        message("#msg2");
+                    }
+
+                })
+
             }
-        }).fail(function (error) {
-            console.log(error);
-        });
-    }
 
+        })
+
+        $(document).on("click", "a.data-edit-item-DivisionId", function (e) {
+
+            e.preventDefault()
+            debugger;
+            
+
+            
+            var row = $(this).parent().parents('tr');
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            
+
+            ddlDivisionName.val(td2);
+            ddlZoneName.val(td3);
+            
+
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update Division');
+            $("#spanSaveText").text('Update');
+        })
 
     </script>
 }

@@ -11,15 +11,13 @@ namespace ERPBO.Agriculture.ViewModels
         public long DivisionId { get; set; }
         public string DivisionName { get; set; }
         public long OrganizationId { get; set; }
-        public string DivisionAssignName { get; set; }
-        public string MobileNumber { get; set; }
         public long ZoneId { get; set; }
+        public long RoleId { get; set; }
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
-        public string Remarks { get; set; }
-        public string OrganizationName { get; set; }
+        public string Status { get; set; }
         public string ZoneName { get; set; }
     }
 }
