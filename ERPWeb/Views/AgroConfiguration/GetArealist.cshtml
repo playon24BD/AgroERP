@@ -29,28 +29,13 @@
                         @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                         <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
                     </div>
-                    <div class="col-md-2">
-                        <label for="ddlorgname" class="control-label">ZoneName</label>
-                        @Html.DropDownList("ddlZonename", (IEnumerable<SelectListItem>)ViewBag.ddlZonename, "Select Zone Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                        <span class="error hide required-ZoneName font-weight-bold">Input ZoneName!</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlDivisionname" class="control-label">DivisionName</label>
-        @Html.DropDownList("ddlDivisionname", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionname, "Select Division Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-        <span class="error hide required-DivisionName font-weight-bold">Input DivisionName!</span>
-                       
-                    </div>
+
                     <div class="col-md-2">
                         <label for="ddlRegionname" class="control-label">RegionName</label>
-        @Html.DropDownList("ddlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "Select Region Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-        <span class="error hide required-RegionName font-weight-bold">Input RegionName!</span>
+                        @Html.DropDownList("ddlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "Select Region Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide required-RegionName font-weight-bold">Input RegionName!</span>
 
-                        @*<label for="ddlRegionname" class="control-label">RegionName</label>
-                        <select class="form-control form-control-sm" id="ddlRegionname">
-                            <option value="Region1">Region1</option>
-                            <option value="Region2">Region2</option>
-                            <option value="Region3">Region3</option>
-                        </select>*@
+
                     </div>
                     <div class="col-md-2">
                         <label for="ddlAreaName" class="control-label">AreaName</label>
@@ -58,20 +43,7 @@
                         <span class="error hide required-AreaName font-weight-bold">Input Area Name!</span>
                         <span class="error hide duplicate-AreaName font-weight-bold">Already AreaName Exist!</span>
                     </div>
-                    <div class="col-md-3">
-                        <label for="ddlAreaAsign" class="control-label">AreaAsignTO</label>
-                        <input type="text" id="ddlAreaAsign" class="form-control form-control-sm" />
-                        <span class="error hide required-PeopleName font-weight-bold">Input Asign People Name!</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlMobilenum" class="control-label">Mobile Number</label>
-                        <input type="text" id="ddlMobilenum" class="form-control form-control-sm" />
-                        <span class="error hide required-Number font-weight-bold">Input Valid Mobile Number!</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlRemarks" class="control-label">Remarks</label>
-                        <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
-                    </div>
+
                     <div class="col-md-1 " style="margin-top:5px;">
                         <label for="addButton" class="control-label"></label>
                         <div class="clearfix">
@@ -92,16 +64,11 @@
 
                                 <tr class="text-center btn-dark">
                                     <th style="width:5%">#SL</th>
-                                    <th class="hide hdzonetId"></th>
-                                    <th style="width:15%">Zone Name</th>
-                                    <th class="hide hddivisionId"></th>
-                                    <th style="width:15%">Division Name</th>
+                                    <th class="hide hdOrgId"></th>
+                                    <th style="width:20%">Org Name</th>
                                     <th class="hide hdregionId"></th>
                                     <th style="width:15%">Region Name</th>
                                     <th style="width:15%">Area Name</th>
-                                    <th style="width:15%">Area Asign To</th>
-                                    <th style="width:10%">Mobile</th>
-                                    @*<th style="width:10%">Remarks</th>*@
                                     <th style="width:10%">Action</th>
 
                                 </tr>
@@ -128,17 +95,16 @@
         //value asign
         //var hdzonetId = $("#hdzonetId");
         var ddlorgname = $("#ddlorgname");
-        var ddlZonename = $("#ddlZonename");
-        var ddlDivisionname = $("#ddlDivisionname");
+        //var ddlZonename = $("#ddlZonename");
+        //var ddlDivisionname = $("#ddlDivisionname");
         var ddlRegionname = $("#ddlRegionname");
         var ddlAreaName = $("#ddlAreaName");
-        var ddlAreaAsign = $("#ddlAreaAsign");
-        var ddlMobilenum = $("#ddlMobilenum");
-        var ddlRemarks = $("#ddlRemarks");
-        var hdzonetId = '';
-        var hddivisionId = '';
+
+        //var hdzonetId = '';
+        //var hddivisionId = '';
         var hdregionId = '';
         var AreaId = '';
+        var hdOrgId = '';
         var AreaNameList = [];
 
         //select2
@@ -152,29 +118,27 @@
             });
         })
 
+
+
+
+
         //add
         $("#addButton").click(function (e) {
             //alert();
-            //debugger;
+            debugger;
             e.preventDefault();
 
                         var sl = $("#tblSingleItems tbody tr").length;
                         var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-                        var td2 = "<td class='hide ddlorgname'>" + ddlorgname.val() + "</td>";
-                        var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlZonename") + "</td>";
-                        var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlDivisionname") + "</td>";
-                        var td4 = "<td class='text-center'>" + dropDownSelectedText("ddlRegionname") + "</td>";
-                        var td5 = "<td class='text-center'>" + ddlAreaName.val() + "</td>";
-                        var td6 = "<td class='text-center'>" + ddlAreaAsign.val() + "</td>";
-                        var td7 = "<td class='text-center'>" + ddlMobilenum.val() + "</td>";
-                        var td8 = "<td class='hide hdzonetId'>" + ddlZonename.val() + "</td>";
-                        var td9 = "<td class='hide hddivisionId'>" + ddlDivisionname.val() + "</td>";
-                        var td10 = "<td class='hide hdregionId'>" + ddlRegionname.val() + "</td>";
-            //var td9 = "<td class='text-center'>" + ddlRemarks.val() + "</td>";
-                        var td11 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                        var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlorgname") + "</td>";
+                        var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlRegionname") + "</td>";
+                        var td4 = "<td class='text-center'>" + ddlAreaName.val() + "</td>";
+                        var td5 = "<td class='hide hdOrgId'>" + ddlorgname.val() + "</td>";
+                        var td6 = "<td class='hide hdregionId'>" + ddlRegionname.val() + "</td>";
+                        var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
 
-            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + + td9 + td10 + td11 +"</tr>";
+            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 +"</tr>";
 
                         $("#tblSingleItems tbody").append(tr);
 
@@ -204,22 +168,22 @@
             debugger;
             e.preventDefault();
             //alert();
-            
+
             var details = [];
             details.length = 0;
             $.each($("#tblSingleItems tbody tr"), function (index, item) {
                 var tds = $(this).children('td');
+                //console.log(tds);
+                //console.log(tds.eq(7));
+                //console.log(tds.eq(7).html());
+                //console.log(tds.eq(7));
+
                 details.push({
 
                     AreaId: 0,
-                    ZoneId: tds.eq(7).html(),
-                    DivisionId: tds.eq(8).html(),
-                    RegionId: tds.eq(9).html(),
-                    AreaName: tds.eq(4).html(),
-                    AreaAsignName: tds.eq(5).html(),
-                    MobileNumber: tds.eq(6).html(),
-                    OrganizationId: tds.eq(1).html()
-
+                    AreaName: tds.eq(3).html(),
+                    OrganizationId: tds.eq(4).html(),
+                    RegionId: tds.eq(5).html()
                 });
             })
             console.log(details);

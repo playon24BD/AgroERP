@@ -22,17 +22,19 @@ namespace ERPBLL.Agriculture
             this._regionSetupRepository = new RegionSetupRepository(this._agricultureUnitOfWork);
         }
 
+        public IEnumerable<RegionSetupDTO> GetAllRegionDetails(long DivisionId, long orgId)
+        {
+            IEnumerable<RegionSetupDTO> details = new List<RegionSetupDTO>();
+            details = this._agricultureUnitOfWork.Db.Database.SqlQuery<RegionSetupDTO>(string.Format(@"SELECT R.RegionId,R.RegionName 
+From [Agriculture].[dbo].tblRegionInfos R
+Inner Join [Agriculture].[dbo].tblDivisionInfo D on R.DivisionId=D.DivisionId
+where R.DivisionId={0} and D.OrganizationId={1} ", DivisionId, orgId)).ToList();
+            return details;
+        }
+
         public IEnumerable<RegionSetup> GetAllRegionSetup(long OrgId)
         {
             return _regionSetupRepository.GetAll(x => x.OrganizationId == OrgId).ToList();
-        }
-
-
-
-        public RegionSetup GetRegionNamebyId(long regionId, long orgId)
-        {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RegionSetupDTO>(QueryForRegion(orgId, regionId)).ToList();
-            
         }
 
         private string QueryForRegion(long orgId, long? regionId)
@@ -86,6 +88,11 @@ on r.DivisionId=d.DivisionId
 
             IsSuccess = _regionSetupRepository.Save();
             return IsSuccess;
+        }
+
+        public RegionSetup GetRegionNamebyId(long regionId, long orgId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

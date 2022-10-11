@@ -13,6 +13,8 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<RegionSetup> GetAllRegionSetup(long OrgId);
         RegionSetup GetRegionNamebyId(long regionId, long orgId);
 
+        IEnumerable<RegionSetupDTO> GetAllRegionDetails(long DivisionId, long orgId);
+
         bool SaveRegionInfo(List<RegionSetupDTO> detailsDTO, long userId, long orgId);
 
         

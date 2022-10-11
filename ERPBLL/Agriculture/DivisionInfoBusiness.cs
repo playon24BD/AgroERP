@@ -91,5 +91,14 @@ ZoneId
         {
             return _divisionInfoRepository.GetOneByOrg(r => r.DivisionId == divisionId && r.OrganizationId == orgId);
         }
+        public IEnumerable<DivisionInfoDTO> GetAllDivisionDetails(long ZoneId, long orgId)
+        {
+            IEnumerable<DivisionInfoDTO> details = new List<DivisionInfoDTO>();
+            details = this._agricultureUnitOfWork.Db.Database.SqlQuery<DivisionInfoDTO>(string.Format(@"SELECT D.DivisionId,D.DivisionName 
+From [Agriculture].[dbo].tblDivisionInfo D
+Inner Join [Agriculture].[dbo].tblZoneInfos Z on D.ZoneId=Z.ZoneId Where 1=1 and D.ZoneId={0} and D.OrganizationId={1} ", ZoneId, orgId)).ToList();
+            return details;
+
+        }
     }
 }

@@ -209,6 +209,7 @@ namespace ERPBLL.Common
         public static readonly string Kg = "Kg";
         public static readonly string meter = "meter";
         public static readonly string Litter = "Litter";
+        public static readonly string Gram = "Gram";
     }
 
     public class QRCodeStatus
