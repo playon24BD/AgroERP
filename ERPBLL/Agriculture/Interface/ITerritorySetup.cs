@@ -12,7 +12,7 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<TerritorySetup> GetAllTerritorySetup(long OrgId);
 
-        IEnumerable<TerritorySetupDTO> GetTerritoryInfos(long orgId, long? territoryId, long? divisionId);
+        IEnumerable<TerritorySetupDTO> GetTerritoryInfos(long orgId, string name, long? territoryId, long? areaId);
 
         bool SaveTerritoryInfo(List<TerritorySetupDTO> detailsDTO, long userId, long orgId);
 

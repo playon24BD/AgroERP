@@ -1,20 +1,19 @@
-﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.ZoneSetupViewModel>
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.TerritorySetupViewModel>
 
 @{
-    ViewBag.Title = "List of Zone";
+    ViewBag.Title = "List of Territory";
     var SL = 0;
 }
 <div class="row">
     <div class="col-md-12" style="overflow-y:scroll">
-        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblDepotData">
+        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblTerritoryData">
             <thead class="btn-dark">
                 <tr class="text-center">
                     <th style="vertical-align:middle">#SL</th>
                     <th style="vertical-align:middle" class="hide"></th>
                     <th style="vertical-align:middle" class="hide"></th>
-                    <th class="hide" style="vertical-align:middle">Organization Name</th>
-                    <th style="vertical-align:middle">Zone Name</th>
-                   
+                    <th style="vertical-align:middle">TerritoryName</th>
+                    <th style="vertical-align:middle">Area Name</th>
                     <th style="vertical-align:middle">Status</th>
                     <th style="vertical-align:middle">Action</th>
                 </tr>
@@ -26,17 +25,14 @@
                     <tr>
 
                         <td class="text-center text-bold">@SL</td>
-                        <td class="hide">@item.ZoneId</td>
-                        <td class="hide">@item.OrganizationId</td>
-                        <td class="hide">@item.OrganizationName</td>
-                        <td class="text-center">@item.ZoneName</td>
+                        <td class="hide">@item.TerritoryId</td>
+                        <td class="hide">@item.AreaId</td>
+                        @*<td class="hide">@item.OrganizationId</td>*@
+                        <td class="text-center">@item.TerritoryName</td>
+                        <td class="text-center">@item.AreaName</td>
                         <td class="text-center">@item.Status</td>
-                        @*<td class="text-center">@item.UserName</td>*@
                         <td class="text-center">
-                            @*@if (privilege.Edit)
-                                {*@
-                            <a href="#" class="btn btn-warning btn-sm data-edit-item-Zone" style="line-height:1" data-edit-item-Zone="@item.ZoneId"><i class="fa fa-pen"></i> Edit</a>
-                            @*}*@
+                            <a href="#" class="btn btn-warning btn-sm data-edit-item-Territory" style="line-height:1" data-edit-item-Territory="@item.TerritoryId"><i class="fa fa-pen"></i> Edit</a>
                         </td>
                     </tr>
                 }

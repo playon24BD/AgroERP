@@ -490,6 +490,7 @@
     <Content Include="Views\AgroConfiguration\_GetAreaPartialView.cshtml" />
     <Content Include="Views\AgroConfiguration\CreateTerritorylist.cshtml" />
     <Content Include="Views\AgroConfiguration\Territorylist.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetTerritoryPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

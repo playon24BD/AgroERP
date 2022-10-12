@@ -1495,7 +1495,7 @@ namespace ERPWeb.Controllers
 
         #region Teritory List
 
-        public ActionResult Territorylist(string flag, string name, long? divisionId, long? regionId)
+        public ActionResult Territorylist(string flag, string name, long? areaId, long? territoryId)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -1504,16 +1504,15 @@ namespace ERPWeb.Controllers
 
                 return View();
             }
-            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
-            //{
-            //    var dto = _regionSetup.GetRegionInfos(User.OrgId, regionId ?? 0, divisionId ?? 0);
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _territorySetup.GetTerritoryInfos(User.OrgId, name ?? null, territoryId ?? 0, areaId ?? 0);
 
 
-
-            //    List<RegionSetupViewModel> viewModels = new List<RegionSetupViewModel>();
-            //    AutoMapper.Mapper.Map(dto, viewModels);
-            //    return PartialView("_GetRegionPartialView", viewModels);
-            //}
+                List<TerritorySetupViewModel> viewModels = new List<TerritorySetupViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetTerritoryPartialView", viewModels);
+            }
 
             return View();
         }
@@ -1527,6 +1526,25 @@ namespace ERPWeb.Controllers
             return View();
         }
 
+        public ActionResult SaveTerritoryInfo(List<TerritorySetupViewModel> details, TerritorySetupViewModel edetails)
+        {
+            bool IsSuccess = false;
+
+            if (details == null && edetails != null)
+            {
+                TerritorySetupDTO dTO = new TerritorySetupDTO();
+                AutoMapper.Mapper.Map(edetails, dTO);
+                IsSuccess = _territorySetup.SaveTerritoryInfoEdit(dTO, User.UserId, User.OrgId);
+            }
+
+            else if (details.Count > 0)
+            {
+                List<TerritorySetupDTO> detailsDTO = new List<TerritorySetupDTO>();
+                AutoMapper.Mapper.Map(details, detailsDTO);
+                IsSuccess = _territorySetup.SaveTerritoryInfo(detailsDTO, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
+        }
         #endregion
 
         #region Extra Code

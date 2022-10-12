@@ -76,14 +76,14 @@ namespace ERPBLL.Agriculture
             string query = string.Empty;
             string param = string.Empty;
 
-            param += string.Format(@" and d.OrganizationId={0}", orgId);
+            param += string.Format(@" and r.OrganizationId={0}", orgId);
             if (regionId != null && regionId > 0)
             {
                 param += string.Format(@" and r.RegionId={0}", regionId);
             }
             if (divisionId != null && divisionId > 0)
             {
-                param += string.Format(@" and d.DivisionId={0}", divisionId);
+                param += string.Format(@" and r.DivisionId={0}", divisionId);
             }
             if (name != null && name != "")
             {

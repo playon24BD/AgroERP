@@ -22,11 +22,11 @@
 
             <div class="card-body text-sm">
                 <div class="row " style="margin-top:-8px;">
-                    <div class="col-md-2">
+                    @*<div class="col-md-2">
                         <label for="ddlorgname" class="control-label">OrganizationName</label>
                         @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                         <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
-                    </div>
+                    </div>*@
 
                     <div class="col-md-2">
                         <label for="ddldivname" class="control-label">DivisionName</label>
@@ -67,7 +67,7 @@
                                     <th style="width:10%">Region Name</th>
                                   
                                     <th style="width:5%">Action</th>
-                                    <th class="hide ddldivname"</th>
+                                    <th class="hide ddldivname"></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -87,7 +87,7 @@
 
     <script type="text/javascript">
 
-        var ddlorgname = $("#ddlorgname");
+        //var ddlorgname = $("#ddlorgname");
         var ddldivname = $("#ddldivname");
         var ddlRegionName = $("#ddlRegionName");
        
@@ -251,10 +251,10 @@
             debugger;
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlorgname.val()) == 0) {
-                $('.required-OrganizationName').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlorgname.val()) == 0) {
+            //    $('.required-OrganizationName').removeClass("hide");
+            //    Isvalid = false;
+            //}
             if ($.trim(ddldivname.val()) == 0) {
                 $('.required-DivisionName').removeClass("hide");
                 Isvalid = false;

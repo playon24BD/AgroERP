@@ -100,7 +100,11 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="ddlstatus" class="control-label">Status</label>
-                            <input type="text" id="ddlstatus" class="form-control form-control-sm" />
+                            <select class="form-control form-control-sm" id="ddlstatus">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                            <span class="error hide required-status font-weight-bold">Input status!</span>
                         </div>
                     </div>
                 </form>

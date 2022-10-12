@@ -46,7 +46,7 @@
                                         <div class="row">
                                             <h4 class="col-md-2">Search By</h4>
                                             <div class="col-md-3">
-                                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By Any" />
+                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search By Any" />
                                             </div>
                                         </div>
                                     </div>
@@ -87,8 +87,8 @@
                     <input type="hidden" id="hdterritoryId" />
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="ddlareaname" class="control-label">DivisionName</label>
-                            @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select divName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            <label for="ddlareaname" class="control-label">AreaName</label>
+                            @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select AreaName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             <span class="error hide required-AreaName font-weight-bold">Input AreaName!</span>
                         </div>
                         <div class="form-group col-md-12">
@@ -99,7 +99,10 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="ddlstatus" class="control-label">Status</label>
-                            <input type="text" id="ddlstatus" class="form-control form-control-sm" />
+                            <select class="form-control form-control-sm" id="ddlstatus">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
                             <span class="error hide required-status font-weight-bold">Input status!</span>
                         </div>
                     </div>
@@ -122,3 +125,164 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var hdterritoryId = $("#hdterritoryId");
+        var ddlareaname = $("#ddlareaname");
+        var ddlTerritoryName = $("#ddlTerritoryName");
+        var ddlstatus = $("#ddlstatus");
+        var searchByAny = $("#searchByAny");
+
+        //var SearchAny = $("#SearchAny");
+
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadTerritoryDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadTerritoryDataTable();
+        }
+
+        searchByAny.keyup(function () {
+            LoadTerritoryDataTable()
+        })
+
+        function LoadTerritoryDataTable() {
+            debugger
+           // alert("here me 2");
+            var data = { flag: "View", name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Territorylist', data)).then(function (res, status) {
+                console.log(res);
+                if (status == "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+
+
+        //opemmodal
+        function OpenModal() {
+            $("#territorymodal").modal("show");
+            //$("#spanModalHead").text("Add New Zone");
+            //$("#spanSaveTextRegion").text('Save');
+            //$("#regionmodal").modal("show");
+            //$(".error").addClass("hide");
+        }
+
+
+
+        //editbuttun
+        $(document).on("click", "a.data-edit-item-Territory", function (e) {
+            //alert();
+            debugger;
+            e.preventDefault()
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+
+
+            //console.log(td1);
+            //console.log(td2);
+
+            hdterritoryId.val(td1);
+            ddlareaname.val(td2);
+            ddlareaname.trigger("change");
+            ddlTerritoryName.val(td3);
+            ddlstatus.val(td5);
+
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update Region');
+            $("#spanSaveTextRegion").text('Update');
+            //spanSaveTextRegion
+        })
+
+
+        //savemodal
+        $("#saveButton").click(function (e) {
+            alert();
+            debugger;
+            e.preventDefault();
+            $(".error").addClass("hide");
+
+            //if (ValidationForm() == true) {
+                var edetails = JSON.stringify({ TerritoryId: TryParseInt(hdterritoryId.val(), 0), AreaId: TryParseInt(ddlareaname.val(), 0), TerritoryName: ddlTerritoryName.val(), Status: ddlstatus.val() });
+                console.log(edetails);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveTerritoryInfo', edetails, getToken())).then(function (res, status) {
+                    //alert("hitme");
+                    debugger;
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        //$("#zonemodal").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        //alert("Here Me");
+                        $("#territorymodal").modal("hide");
+
+                        LoadTerritoryDataTable();
+                    }
+                    else {
+                        //message("#msg2");
+                        toastrErrorAlert(execuStatus.fail);
+                        alert("This Territory Already Exist");
+                    }
+                    // enable("#saveButton");
+                })
+            //}
+        });
+
+
+
+        //validationform
+        //function ValidationForm() {
+        //    //debugger;
+        //    Isvalid = true;
+        //    $('.error').addClass("hide");
+        //    if ($.trim(ddlareaname.val()) == 0) {
+        //        $('.required-AreaName').removeClass("hide");
+        //        Isvalid = false;
+        //    }
+        //    if ($.trim(ddlTerritoryName.val()) == 0) {
+        //        $('.required-TerritoryName').removeClass("hide");
+        //        Isvalid = false;
+        //    }
+        //    if ($.trim(ddlstatus.val()) == 0) {
+        //        $('.required-status').removeClass("hide");
+        //        Isvalid = false;
+        //    }
+
+        //    return Isvalid
+
+        //}
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+    </script>
+}
