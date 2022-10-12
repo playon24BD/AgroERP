@@ -3,14 +3,9 @@ namespace ERPDAL.AgricultureContextMigrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Agriculture_sxsdsdsdw : DbMigration
+    public partial class Agriculture_tblTerritoryInfos : DbMigration
     {
         public override void Up()
-        {
-            DropTable("dbo.tblTerritoryInfos");
-        }
-        
-        public override void Down()
         {
             CreateTable(
                 "dbo.tblTerritoryInfos",
@@ -29,6 +24,11 @@ namespace ERPDAL.AgricultureContextMigrations
                     })
                 .PrimaryKey(t => t.TerritoryId);
             
+        }
+        
+        public override void Down()
+        {
+            DropTable("dbo.tblTerritoryInfos");
         }
     }
 }

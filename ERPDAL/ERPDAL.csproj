@@ -218,9 +218,9 @@
     <Compile Include="AgricultureContextMigrations\202210110725405_Agriculture_Areadddedee.Designer.cs">
       <DependentUpon>202210110725405_Agriculture_Areadddedee.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202210120643566_Agriculture_sxsdsdsdw.cs" />
-    <Compile Include="AgricultureContextMigrations\202210120643566_Agriculture_sxsdsdsdw.Designer.cs">
-      <DependentUpon>202210120643566_Agriculture_sxsdsdsdw.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202210120817281_Agriculture_tblTerritoryInfos.cs" />
+    <Compile Include="AgricultureContextMigrations\202210120817281_Agriculture_tblTerritoryInfos.Designer.cs">
+      <DependentUpon>202210120817281_Agriculture_tblTerritoryInfos.cs</DependentUpon>
     </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
@@ -358,8 +358,8 @@
     <EmbeddedResource Include="AgricultureContextMigrations\202210110725405_Agriculture_Areadddedee.resx">
       <DependentUpon>202210110725405_Agriculture_Areadddedee.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210120643566_Agriculture_sxsdsdsdw.resx">
-      <DependentUpon>202210120643566_Agriculture_sxsdsdsdw.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210120817281_Agriculture_tblTerritoryInfos.resx">
+      <DependentUpon>202210120817281_Agriculture_tblTerritoryInfos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
