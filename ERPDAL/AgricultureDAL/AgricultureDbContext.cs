@@ -23,6 +23,7 @@ namespace ERPDAL.AgricultureDAL
         
            
         public DbSet<StockiestInfo> tblStockiestInfo { get; set; }
+        public DbSet<UserAssign> tblUserAssign { get; set; }
         public DbSet<DivisionInfo> tblDivisionInfo { get; set; }
         public DbSet<Zone> tblZoneInfo { get; set; }
         public DbSet<ZoneDetail> tblZoneDetail { get; set; }
