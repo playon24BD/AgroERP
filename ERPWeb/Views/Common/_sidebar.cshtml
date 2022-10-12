@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ERPBO.ControlPanel.ViewModels.UserMainMenuViewModel>
+
+<!-- Sidebar Menu -->
+<nav class="mt-2 text-sm">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+        @foreach (var mm in Model)
+        {
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-list"></i>
+                    <p>
+                        @mm.MainmenuName
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @foreach (var sub in mm.UserSubmenus)
+                    {
+                        if (!sub.IsParent)
+                        {
+                            <li class="nav-item">
+                                <a href="/@sub.ControllerName/@sub.ActionName" class="nav-link">
+                                    <i class="fas fa-circle fa-1x nav-icon"></i>
+                                    <p>@sub.SubmenuName</p>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-circle fa-1x nav-icon"></i>
+                                    <p>@sub.SubmenuName</p>
+                                    <i class="right fas fa-angle-left"></i>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    @foreach (var subsub in sub.UserSubSubmenus)
+                                    {
+                                        <li class="nav-item">
+                                            <a href="/@subsub.ControllerName/@subsub.ActionName" class="nav-link">
+                                                <i class="far fa-dot-circle nav-icon"></i>
+                                                <p>@subsub.SubsubmenuName</p>
+                                            </a>
+                                        </li>
+
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+</nav>
+<!-- /.sidebar-menu -->

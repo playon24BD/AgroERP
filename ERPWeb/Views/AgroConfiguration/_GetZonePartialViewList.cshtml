@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.ZoneViewModel>
+
+@{
+    ViewBag.Title = "_GetZonePartialViewList";
+    var sl = 0;
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+<table class="table table-bordered table-sm table-striped table-hover table-responsive-lg text-sm" id="tblZoneList">
+    <thead class="btn-dark">
+        <tr class="text-center text-bold">
+            <th style="vertical-align:middle">#SL</th>
+            <th style="vertical-align:middle" class="hide"></th>
+            <th style="vertical-align:middle">Zone Name</th>
+            <th style="vertical-align:middle">Division Name</th>
+            <th style="vertical-align:middle">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+            <tr>
+                <td class="text-center text-bold">@sl</td>
+                <td class="hide">@item.ZoneId</td>
+                <td class="text-center">@item.ZoneName</td>
+                <td class="text-center">@item.DivisionId</td>
+                <td class="text-center">
+
+                    <a href="#" class="btn btn-outline-secondary data-item-detail" title="View Detail" data-item-detail="@item.ZoneId" style="line-height:1">
+                        <i class="fas fa-eye"></i>
+                    </a>
+
+                    <a href="#" class="btn btn-outline-warning data-item-edit" title="Edit" data-edit-item="@item.ZoneId" style="line-height:1">
+                        <i class="fas fa-pen"></i>
+                    </a>
+
+                    <a href="#" class="btn btn-outline-danger data-item-del hide" title="Delete" data-del-item="@item.ZoneId" style="line-height:1">
+                        <i class="fas fa-trash"></i>
+                    </a>
+
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

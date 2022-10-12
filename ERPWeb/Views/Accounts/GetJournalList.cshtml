@@ -1,0 +1,938 @@
+﻿
+@{
+    ViewBag.Title = "Journal Entry";
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+    string tab = Request.QueryString["tab"] != null ? Request.QueryString["tab"].ToString() : "";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow card-primary card-outline card-tabs" style="margin-top:-20px">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs nav-pills" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-two-debitVoucherList-tab" data-toggle="pill" href="#custom-tabs-two-debitVoucherList" role="tab" aria-controls="custom-tabs-two-debitVoucherList" aria-selected="true">Debit/Payment Voucher</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-two-creditVoucherList-tab" data-toggle="pill" href="#custom-tabs-two-creditVoucherList" role="tab" aria-controls="custom-tabs-two-creditVoucherList" aria-selected="true">Credit/Receipt Voucher</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-two-journalVoucherList-tab" data-toggle="pill" href="#custom-tabs-two-journalVoucherList" role="tab" aria-controls="custom-tabs-two-journalVoucherList" aria-selected="true">Journal Voucher</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body shadow">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-two-debitVoucherList" role="tabpanel" aria-labelledby="custom-tabs-two-debitVoucherList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card shadow card-gray shadow">
+                                    <div class="card-header shadow">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                   Entry Debit/Payment Voucher
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-sm">
+                            <div class="col-md-5">
+                                <div class="card card-secondary shadow">
+                                    <form id="frmDebitEntry">
+                                        <div class="card-body shadow">
+                                            <div class="row" style="border-bottom:1px solid #cecece">
+                                                <div class="col-md-8"></div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group input-group-sm mb-2">
+                                                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptDebitEntryDate" placeholder="Journal Entry Date" />
+                                                        <div class="input-group-prepend cursor-pointer remove-date dptDebitEntryDate" style="cursor:pointer">
+                                                            <span class="input-group-text">&#10008;</span>
+                                                        </div>
+                                                    </div>
+                                                    <span class="error hide require-debitEntryDate font-weight-bold">Entry Date is required !</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="ddlDebitAccountName" class="control-label font-weight-bold">Account Name<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                                                    @Html.DropDownList("ddlDebitAccountName", (IEnumerable<SelectListItem>)ViewBag.ddlDebitAccountName, "--Select--", new { @class = "form-control form-control-sm select2 select2-danger" })
+                                                    <span class="error hide require-accountName font-weight-bold">Name is required !</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="txtDebitPersonalCode" class="control-label font-weight-bold">Personal Code</label>
+                                                    <input type="text" class="form-control form-control-sm" id="txtDebitPersonalCode" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="txtDebitRefNumber" class="control-label font-weight-bold">Ref. Number</label>
+                                                    <input type="text" class="form-control form-control-sm" id="txtDebitRefNumber" />
+                                                    <span class="error hide require-dVoucherNumber font-weight-bold">Narration is required !</span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="txtDebitAmount" class="control-label font-weight-bold">Dr. Amount<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                                                    <input type="number" class="form-control form-control-sm" id="txtDebitAmount" />
+                                                    <span class="error hide require-debitAmount font-weight-bold">Amount is required !</span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="txtDebitDueAmount" class="control-label font-weight-bold">Due Amount</label>
+                                                    <input type="number" class="form-control form-control-sm" id="txtDebitDueAmount" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="txtDebitNarration" class="control-label font-weight-bold">Narration<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                                                    <textarea type="text" class="form-control form-control-sm" id="txtDebitNarration"></textarea>
+                                                    <span class="error hide require-narration font-weight-bold">Narration is required !</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="txtDebitRemarks" class="control-label font-weight-bold">Remarks</label>
+                                                    <textarea type="text" class="form-control form-control-sm" id="txtDebitRemarks"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <label for="txtRemarks" class="control-label font-weight-bold" style="visibility:hidden">button</label>
+                                                    <button type="submit" class="btn btn-sm btn-warning float-left mr-1" id="btnAddToListDebit" title="Add To List"><i class="fas fa-plus"> </i> </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card card-secondary shadow">
+                                    <div class="card-body shadow">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-sm table-striped table-responsive-lg" id="tblDebitVoucherEntry">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="10">
+                                                                <button type="submit" id="btnSaveDebitVoucher" class="btn btn-success btn-sm float-lg-right" value="Save"> SAVE <i class="fas fa-paper-plane"></i></button>
+                                                            </th>
+                                                        </tr>
+                                                        <tr class="btn-dark text-center">
+                                                            <th style="vertical-align:middle">#SL</th>
+                                                            <th style="vertical-align:middle" class="hide"></th>
+                                                            <th style="vertical-align:middle">Acc Name</th>
+                                                            <th style="vertical-align:middle">P Code</th>
+                                                            <th style="vertical-align:middle">Ref. No</th>
+                                                            <th style="vertical-align:middle">Narration</th>
+                                                            <th style="vertical-align:middle">Dr. Amount</th>
+                                                            <th style="vertical-align:middle">Remarks</th>
+                                                            <th style="vertical-align:middle">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="custom-tabs-two-creditVoucherList" role="tabpanel" aria-labelledby="custom-tabs-two-creditVoucherList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card shadow card-gray shadow">
+                                    <div class="card-header shadow">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                   Entry Credit/Receipt Voucher
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-sm">
+                            <div class="col-md-5 text-sm">
+                                <div class="card card-secondary shadow">
+                                    <form id="frmDebitEntry">
+                                        <div class="card-body shadow">
+                                            <div class="row" style="border-bottom:1px solid #cecece">
+                                                <div class="col-md-8"></div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group input-group-sm mb-2">
+                                                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptCreditEntryDate" placeholder="Journal Entry Date" />
+                                                        <div class="input-group-prepend cursor-pointer remove-date dptCreditEntryDate" style="cursor:pointer">
+                                                            <span class="input-group-text">&#10008;</span>
+                                                        </div>
+                                                    </div>
+                                                    <span class="error hide require-creditEntryDate font-weight-bold">Entry Date is required !</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="ddlCreditAccountName" class="control-label font-weight-bold">Account Name<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                                                    @Html.DropDownList("ddlCreditAccountName", (IEnumerable<SelectListItem>)ViewBag.ddlCreditAccountName, "--Select--", new { @class = "form-control form-control-sm select2 select2-danger" })
+                                                    <span class="error hide require-caccountName font-weight-bold">Name is required !</span>
+                                                </div>
+                                                
+                                                <div class="col-md-6">
+                                                    <label for="txtCreditPersonalCode" class="control-label font-weight-bold">Personal Code</label>
+                                                    <input type="text" class="form-control form-control-sm" id="txtCreditPersonalCode" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="txtCreditRefNumber" class="control-label font-weight-bold">Ref. Number</label>
+                                                    <input type="text" class="form-control form-control-sm" id="txtCreditRefNumber" />
+                                                    <span class="error hide require-dVoucherNumber font-weight-bold">Narration is required !</span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="txtCreditAmount" class="control-label font-weight-bold">Cr. Amount<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                                                    <input type="number" class="form-control form-control-sm" id="txtCreditAmount" />
+                                                    <span class="error hide require-ccAmount font-weight-bold">Amount is required !</span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="txtCreditDueAmount" class="control-label font-weight-bold">Due Amount</label>
+                                                    <input type="number" class="form-control form-control-sm" id="txtCreditDueAmount" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="txtCreditNarration" class="control-label font-weight-bold">Narration</label>
+                                                    <textarea type="text" class="form-control form-control-sm" id="txtCreditNarration"></textarea>
+                                                    <span class="error hide require-cNarration font-weight-bold">Narration is required !</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="txtCreditRemarks" class="control-label font-weight-bold">Remarks</label>
+                                                    <textarea type="text" class="form-control form-control-sm" id="txtCreditRemarks"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <label for="label" class="control-label font-weight-bold" style="visibility:hidden">button</label>
+                                                    <button type="submit" class="btn btn-sm btn-warning float-left mr-1" id="btnAddToListCredit" title="Add To List"><i class="fas fa-plus"> </i> </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-7 text-sm">
+                                <div class="card card-secondary shadow">
+                                    <div class="card-body shadow">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-sm table-striped table-responsive-lg" id="tblCreditVoucherEntry">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="10">
+                                                                <button type="submit" id="btnSaveCreditVoucher" class="btn btn-success btn-sm float-lg-right" value="Save"> SAVE <i class="fas fa-paper-plane"></i></button>
+                                                            </th>
+                                                        </tr>
+                                                        <tr class="btn-dark text-center">
+                                                            <th style="vertical-align:middle">#SL</th>
+                                                            <th style="vertical-align:middle" class="hide"></th>
+                                                            <th style="vertical-align:middle">Acc Name</th>
+                                                            <th style="vertical-align:middle">P Code</th>
+                                                            <th style="vertical-align:middle">Ref. No</th>
+                                                            <th style="vertical-align:middle">Narration</th>
+                                                            <th style="vertical-align:middle">Cr. Amount</th>
+                                                            <th style="vertical-align:middle">Remarks</th>
+                                                            <th style="vertical-align:middle">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="custom-tabs-two-journalVoucherList" role="tabpanel" aria-labelledby="custom-tabs-two-journalVoucherList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card shadow card-gray shadow">
+                                    <div class="card-header shadow">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                   Entry Journal Voucher
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-sm">
+                            <div class="col-md-5 text-sm">
+                                <div class="card card-secondary shadow">
+                                    <form id="frmjournalEntry">
+                                        <div class="card-body shadow">
+                                            <div class="row" style="border-bottom:1px solid #cecece">
+                                                <div class="col-md-8"></div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group input-group-sm mb-2">
+                                                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptJournalEntryDate" placeholder="Journal Entry Date" />
+                                                        <div class="input-group-prepend cursor-pointer remove-date dptJournalEntryDate" style="cursor:pointer">
+                                                            <span class="input-group-text">&#10008;</span>
+                                                        </div>
+                                                    </div>
+                                                    <span class="error hide require-journalEntryDate font-weight-bold">Entry Date is required !</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="ddlJournalAccountName" class="control-label font-weight-bold">Account Name<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                                                    @Html.DropDownList("ddlJournalAccountName", (IEnumerable<SelectListItem>)ViewBag.ddlJournalAccountName, "--Select--", new { @class = "form-control form-control-sm select2 select2-danger" })
+                                                    <span class="error hide require-jaccountName font-weight-bold">Name is required !</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="txtJournalPersonalCode" class="control-label font-weight-bold">Personal Code</label>
+                                                    <input type="text" class="form-control form-control-sm" id="txtJournalPersonalCode" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="txtJournalRefNumber" class="control-label font-weight-bold">Ref. Number</label>
+                                                    <input type="text" class="form-control form-control-sm" id="txtJournalRefNumber" />
+                                                    <span class="error hide require-dVoucherNumber font-weight-bold">Narration is required !</span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="ddlJournalType" class="control-label font-weight-bold">Type<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                                                    @Html.DropDownList("ddlJournalType", (IEnumerable<SelectListItem>)ViewBag.ddlJournalType, new { @class = "form-control form-control-sm select2 select2-danger" })
+                                                    <span class="error hide require-journalType font-weight-bold">Type is required !</span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="txtJournalAmount" class="control-label font-weight-bold">Amount<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                                                    <input type="number" class="form-control form-control-sm" id="txtJournalAmount" />
+                                                    <span class="error hide require-jAmount font-weight-bold">Amount is required !</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="txtJournalNarration" class="control-label font-weight-bold">Narration</label>
+                                                    <textarea type="text" class="form-control form-control-sm" id="txtJournalNarration"></textarea>
+                                                    <span class="error hide require-jNarration font-weight-bold">Narration is required !</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="txtJournalRemarks" class="control-label font-weight-bold">Remarks</label>
+                                                    <textarea type="text" class="form-control form-control-sm" id="txtJournalRemarks"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <label for="label" class="control-label font-weight-bold" style="visibility:hidden">button</label>
+                                                    <button type="submit" class="btn btn-sm btn-warning float-left mr-1" id="btnAddToListJournal" title="Add To List"><i class="fas fa-plus"> </i> </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-7 text-sm">
+                                <div class="card card-secondary shadow">
+                                    <div class="card-body shadow">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-sm table-striped table-responsive-lg" id="tblJournalVoucherEntry">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="10">
+                                                                <button type="submit" id="btnSaveJournalVoucher" class="btn btn-success btn-sm float-lg-right" value="Save"> SAVE <i class="fas fa-paper-plane"></i></button>
+                                                            </th>
+                                                        </tr>
+                                                        <tr class="btn-dark text-center">
+                                                            <th style="vertical-align:middle">#SL</th>
+                                                            <th style="vertical-align:middle" class="hide"></th>
+                                                            <th style="vertical-align:middle">Acc Name</th>
+                                                            <th style="vertical-align:middle">P Code</th>
+                                                            <th style="vertical-align:middle">Ref. No</th>
+                                                            <th style="vertical-align:middle">Narration</th>
+                                                            <th style="vertical-align:middle">Dr.</th>
+                                                            <th style="vertical-align:middle">Cr.</th>
+                                                            <th style="vertical-align:middle">Remarks</th>
+                                                            <th style="vertical-align:middle">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr class="text-white" style="background-color:gray">
+                                                            <th colspan="5" class="text-right">
+                                                                Total
+                                                            </th>
+                                                            <td class="text-center">0</td>
+                                                            <td class="text-center">0</td>
+                                                            <td colspan="3" class="text-center"></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        //Debit Voucher
+        var dptDebitEntryDate = $("#dptDebitEntryDate");
+        var ddlDebitAccountName = $("#ddlDebitAccountName");
+        var txtDebitAmount = $("#txtDebitAmount");
+        var txtDebitRemarks = $("#txtDebitRemarks");
+        var txtDebitVoucharNumber = $("#txtDebitVoucharNumber");
+        var txtDebitNarration = $("#txtDebitNarration");
+        var txtDebitPersonalCode = $("#txtDebitPersonalCode");
+        var txtDebitRefNumber = $("#txtDebitRefNumber");
+        var txtDebitDueAmount = $("#txtDebitDueAmount");
+        //Credit Voucher
+        var dptCreditEntryDate = $("#dptCreditEntryDate");
+        var ddlCreditAccountName = $("#ddlCreditAccountName");
+        var txtCreditAmount = $("#txtCreditAmount");
+        var txtCreditRemarks = $("#txtCreditRemarks");
+        var txtCreditVoucharNumber = $("#txtCreditVoucharNumber");
+        var txtCreditNarration = $("#txtCreditNarration");
+        var txtCreditPersonalCode = $("#txtCreditPersonalCode");
+        var txtCreditRefNumber = $("#txtCreditRefNumber");
+        var txtCreditDueAmount = $("#txtCreditDueAmount");
+        //Journal Voucher
+        var dptJournalEntryDate = $("#dptJournalEntryDate");
+        var ddlJournalAccountName = $("#ddlJournalAccountName");
+        var ddlJournalType = $("#ddlJournalType");
+        var txtJournalAmount = $("#txtJournalAmount");
+        var txtJournalNarration = $("#txtJournalNarration");
+        var txtJournalRemarks = $("#txtJournalRemarks");
+        var txtJournalVoucharNumber = $("#txtJournalVoucharNumber");
+        var txtJournalPersonalCode = $("#txtJournalPersonalCode");
+        var txtJournalRefNumber = $("#txtJournalRefNumber");
+
+        $(document).ready(function () {
+            
+            $('.select2').select2();
+
+            dptDebitEntryDate.prop('readonly', true);
+            dptCreditEntryDate.prop('readonly', true);
+            dptJournalEntryDate.prop('readonly', true);
+            dptDebitEntryDate.css("background-color", "#fff");
+            dptCreditEntryDate.css("background-color", "#fff");
+            dptJournalEntryDate.css("background-color", "#fff");
+            $('#dptDebitEntryDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('#dptCreditEntryDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('#dptJournalEntryDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            var date = new Date();
+            var thisDate = date.getDate() + ' ' + getMonthName(date.getMonth() + 1, "MM") + " " + date.getFullYear();
+            $('#dptDebitEntryDate').val(thisDate)
+            $('#dptDebitEntryDate').trigger('change');
+            $('#dptCreditEntryDate').val(thisDate)
+            $('#dptCreditEntryDate').trigger('change');
+            $('#dptJournalEntryDate').val(thisDate)
+            $('#dptJournalEntryDate').trigger('change'); 
+
+            if ('@tab' == "CreditVoucher") {
+                $("#custom-tabs-two-creditVoucherList-tab").trigger('click');
+            }
+            if ('@tab' == "JournalVoucher") {
+                $("#custom-tabs-two-journalVoucherList-tab").trigger('click');
+            }
+        });
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptDebitEntryDate")) {
+                if (dptDebitEntryDate.val() !== '') {
+                    dptDebitEntryDate.val('');
+                }
+            }
+            if ($(this).hasClass("dptCreditEntryDate")) {
+                if (dptCreditEntryDate.val() !== '') {
+                    dptCreditEntryDate.val('');
+                }
+            }
+            if ($(this).hasClass("dptJournalEntryDate")) {
+                if (dptJournalEntryDate.val() !== '') {
+                    dptJournalEntryDate.val('');
+                }
+            }
+        })
+
+        //DebitDueAmount
+        ddlDebitAccountName.change(function () {
+            $("#txtDebitDueAmount").val('');
+            if (ddlDebitAccountName.val() != "") {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/Common2/GetDebitDueAmount', JSON.stringify({ accountId: TryParseInt(ddlDebitAccountName.val(),0) }), getToken())).then(function (res, status) {
+                    //console.log(res);
+                    //console.log(status);
+                    if (status == "success") {
+                        $("#txtDebitDueAmount").val(res);
+                    }
+                }).fail(function (error) {
+                    consoleLog(error);
+                })
+            }
+
+        })
+        //CreditDueAmount
+        ddlCreditAccountName.change(function () {
+            $("#txtCreditDueAmount").val('');
+            if (ddlCreditAccountName.val() != "") {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/Common2/GetCreditDueAmount', JSON.stringify({ accountId: TryParseInt(ddlCreditAccountName.val(), 0) }), getToken())).then(function (res, status) {
+                    if (status == "success") {
+                        $("#txtCreditDueAmount").val(res);
+                    }
+                }).fail(function (error) {
+                    consoleLog(error);
+                })
+            }
+
+        })
+
+        //////Debit Voucher////////
+        function validateInputDebit() {
+            $('.error').addClass('hide');
+            var isValid = true;
+            if (TryParseInt(ddlDebitAccountName.val(), 0) <= 0) {
+                isValid = false;
+                $(".require-accountName").removeClass("hide");
+            }
+            if (TryParseInt(txtDebitAmount.val(), 0) <= 0) {
+                isValid = false;
+                $(".require-debitAmount").removeClass("hide");
+            }
+            if (txtDebitNarration.val() === "") {
+                $(".require-narration").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+        $("#btnAddToListDebit").click(function (e) {
+            e.preventDefault();
+            if (validateInputDebit() == true) {
+                disable("#ddlDebitAccountName");
+                disable("#txtDebitPersonalCode");
+                disable("#txtDebitRefNumber");
+                disable("#txtDebitNarration");
+                var sl = $("#tblDebitVoucherEntry tbody tr").length;
+                var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
+                var td2 = "<td class='hide'>" + ddlDebitAccountName.val() + "</td>";
+                var td3 = "<td>" + $("#ddlDebitAccountName option:selected").text() + "</td>";
+                var td4 = "<td class='text-center'>" + txtDebitNarration.val() + "</td>";
+                var td5 = "<td class='text-center'>" + txtDebitAmount.val() + "</td>";
+                var td6 = "<td class='text-center'>" + txtDebitRemarks.val() + "</td>";
+                var td7 = "<td class='text-center'>" + txtDebitPersonalCode.val() + "</td>";
+                var td8 = "<td class='text-center'>" + txtDebitRefNumber.val() + "</td>";
+                var td9 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
+                var tr = "<tr>" + td1 + td2 + td3 + td7 + td8 + td4 + td5 + td6 + td9 + "</tr>";
+                $("#tblDebitVoucherEntry tbody").append(tr);
+                //if ($("#tblDebitVoucherEntry tbody tr").length == 0) {
+                   
+                //}
+                //else {
+                //    $("#tblDebitVoucherEntry tbody tr").eq(0).after(tr);
+                //}
+                ctrlDebitVoucherAddtoList();
+            }
+        });
+        function ctrlDebitVoucherAddtoList() {
+            //ddlDebitAccountName.val('');
+            txtDebitAmount.val('');
+            txtDebitRemarks.val('');
+            //txtDebitVoucharNumber.val('');
+            //txtDebitNarration.val('');
+        }
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    removeTableRow("#tblDebitVoucherEntry tbody", index);
+                    fnFixTheTbodyRowSerialInDecsOrder("#tblDebitVoucherEntry", index);
+                };
+            }));
+        })
+
+        $("#btnSaveDebitVoucher").click(function (e) {
+            e.preventDefault();
+            if ($("#tblDebitVoucherEntry tbody tr").length > 0)
+            {
+                bootbox.confirm("Are you sure you want to save?", function (result) {
+                    if (result === true)
+                    {
+                        var reqData = [];
+                        reqData.length = 0;
+                        $.each($("#tblDebitVoucherEntry tbody tr"), function (index, item) {
+                            var td = $(this).children('td');
+                            reqData.push({
+                                JournalDate: dptDebitEntryDate.val(),
+                                AccountId: td.eq(1).html(),
+                                PersonalCode: td.eq(3).html(),
+                                ReferenceNum: td.eq(4).html(),
+                                Narration: td.eq(5).html(),
+                                Debit: td.eq(6).html(),
+                                Remarks: td.eq(7).html(),
+                                //ReferenceNum: td.eq(6).html()
+                            });
+                        })
+                        reqData = JSON.stringify({ models: reqData });
+                        console.log(reqData);
+                        //return console.log(reqData);
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/Accounts/SaveDebitVoucherWithReport', reqData, getToken())).then(function (res, status)
+                        {
+                            if (res.isSuccess === true && status === "success") {
+                                    $('.toastrDefaultSuccess').trigger('click');
+
+                                    var pdfWindow = window.open("", "_blank")
+                                    console.log(res.text);
+                                    pdfWindow.document.write("<embed  width='100%' height='100%' src='" + res.text + "'></embed >"); // Preview
+                                    //download(res.text, "DeliveryChallan", "application/pdf"); // Download
+
+                                    count = 0;
+                                    setTimeout(function () {
+                                        redirectPage('@Url.Action("GetJournalList")');
+                                    }, 1000);
+
+                                }
+                                else {
+                                    $('.toastrDefaultError').trigger('click');
+                                }
+                            @*if (res == true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetJournalList")');
+                                }, 500);
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                 }*@
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                        })
+                    }
+                })
+            }
+        })
+        
+
+        ////////Credit Voucher
+        function validateInputCredit() {
+            $('.error').addClass('hide');
+            var isValid = true;
+            if (TryParseInt(ddlCreditAccountName.val(), 0) <= 0) {
+                isValid = false;
+                $(".require-caccountName").removeClass("hide");
+            }
+            if (TryParseInt(txtCreditAmount.val(), 0) <= 0) {
+                isValid = false;
+                $(".require-ccAmount").removeClass("hide");
+            }
+            if (txtCreditNarration.val() === "") {
+                $(".require-cNarration").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+        $("#btnAddToListCredit").click(function (e) {
+            e.preventDefault();
+            if (validateInputCredit() == true) {
+                disable("#ddlCreditAccountName");
+                disable("#txtCreditNarration");
+                disable("#txtCreditPersonalCode");
+                disable("#txtCreditRefNumber");
+                var sl = $("#tblCreditVoucherEntry tbody tr").length;
+                var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
+                var td2 = "<td class='hide'>" + ddlCreditAccountName.val() + "</td>";
+                var td3 = "<td>" + $("#ddlCreditAccountName option:selected").text() + "</td>";
+                var td4 = "<td class='text-center'>" + txtCreditNarration.val() + "</td>";
+                var td5 = "<td class='text-center'>" + txtCreditAmount.val() + "</td>";
+                var td6 = "<td class='text-center'>" + txtCreditRemarks.val() + "</td>";
+                var td7 = "<td class='text-center'>" + txtCreditPersonalCode.val() + "</td>";
+                var td8 = "<td class='text-center'>" + txtCreditRefNumber.val() + "</td>";
+                var td9 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del-c'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
+                var tr = "<tr>" + td1 + td2 + td3 + td7 + td8 + td4 + td5 + td6 + td9 + "</tr>";
+                $("#tblCreditVoucherEntry tbody").append(tr);
+                ctrlCreditVoucherAddtoList();
+            }
+        });
+        function ctrlCreditVoucherAddtoList() {
+            txtCreditAmount.val('');
+            txtCreditRemarks.val('');
+        }
+        $(document).on("click", "a.data-onfly-del-c", function (e) {
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    removeTableRow("#tblCreditVoucherEntry tbody", index);
+                    fnFixTheTbodyRowSerialInDecsOrder("#tblCreditVoucherEntry", index);
+                };
+            }));
+        })
+
+        $("#btnSaveCreditVoucher").click(function (e) {
+            e.preventDefault();
+            if ($("#tblCreditVoucherEntry tbody tr").length > 0)
+            {
+                bootbox.confirm("Are you sure you want to save?", function (result) {
+                    if (result === true)
+                    {
+                        var reqData = [];
+                        reqData.length = 0;
+                        $.each($("#tblCreditVoucherEntry tbody tr"), function (index, item) {
+                            var td = $(this).children('td');
+                            reqData.push({
+                                JournalDate: dptCreditEntryDate.val(),
+                                AccountId: td.eq(1).html(),
+                                PersonalCode: td.eq(3).html(),
+                                ReferenceNum: td.eq(4).html(),
+                                Narration: td.eq(5).html(),
+                                Credit: td.eq(6).html(),
+                                Remarks: td.eq(7).html(),
+                            });
+                        })
+                        reqData = JSON.stringify({ models: reqData });
+                        console.log(reqData);
+                        //return console.log(reqData);
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/Accounts/SaveCreditVoucherWithReport', reqData, getToken())).then(function (res, status)
+                        {
+                            if (res.isSuccess === true && status === "success") {
+                                    $('.toastrDefaultSuccess').trigger('click');
+
+                                    var pdfWindow = window.open("", "_blank")
+                                    console.log(res.text);
+                                    pdfWindow.document.write("<embed  width='100%' height='100%' src='" + res.text + "'></embed >");
+                                    count = 0;
+                                    setTimeout(function () {
+                                        redirectPage('@Url.Action("GetJournalList", new { tab = "CreditVoucher" })');
+                                    }, 1000);
+
+                                }
+                                else {
+                                    $('.toastrDefaultError').trigger('click');
+                                }
+                            @*if (res == true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetJournalList", new { tab = "CreditVoucher" })');
+                                }, 500);
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                    }*@
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                        })
+                    }
+                })
+            }
+        })
+        //////////Journal Vouchar//////////////
+        function validateInputJournal() {
+            $('.error').addClass('hide');
+            var isValid = true;
+            if (TryParseInt(ddlJournalAccountName.val(), 0) <= 0) {
+                isValid = false;
+                $(".require-jaccountName").removeClass("hide");
+            }
+            if (ddlJournalType.val() === "") {
+                $(".require-journalType").removeClass("hide");
+                isValid = false;
+            }
+            if (TryParseInt(txtJournalAmount.val(), 0) <= 0) {
+                isValid = false;
+                $(".require-jAmount").removeClass("hide");
+            }
+            if (txtJournalNarration.val() === "") {
+                $(".require-jNarration").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        $("#btnAddToListJournal").click(function (e) {
+            e.preventDefault();
+            if (validateInputJournal() == true) {
+                var sl = $("#tblJournalVoucherEntry tbody tr").length;
+                var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
+                var td2 = "<td class='hide'>" + ddlJournalAccountName.val() + "</td>";
+                var td3 = "<td>" + $("#ddlJournalAccountName option:selected").text() + "</td>";
+                var td4 = "<td class='text-center'>" + txtJournalNarration.val() + "</td>";
+                if (ddlJournalType.val() == "Dr") {
+                    var td5 = "<td class='text-center' data-val='" + txtJournalAmount.val() + "'>" + txtJournalAmount.val() + "</td>";
+                }
+                else {
+                    var td5 = "<td class='text-center'  data-val='0'>" + 0 + "</td>";
+                }
+                if (ddlJournalType.val() == "Cr") {
+                    var td6 = "<td class='text-center' data-val='" + txtJournalAmount.val() + "'>" + txtJournalAmount.val() + "</td>";
+                }
+                else {
+                    var td6 = "<td class='text-center' data-val='0'>" + 0 + "</td>";
+                }
+                
+                var td7 = "<td class='text-center'>" + txtJournalRemarks.val() + "</td>";
+                //var td8 = "<td class='text-center'>" + txtJournalVoucharNumber.val() + "</td>";
+                var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del-j' title='Delete'><i class='far fa-trash-alt'></i></a></td>";
+                var td9 = "<td class='text-center'>" + txtJournalPersonalCode.val() + "</td>";
+                var td10 = "<td class='text-center'>" + txtJournalRefNumber.val() + "</td>";
+
+                var tr = "<tr>" + td1 + td2 + td3 + td9 + td10 + td4 + td5 + td6 + td7 + td8 + "</tr>";
+                $("#tblJournalVoucherEntry tbody").append(tr);
+                fnCalculateAmount();
+                ctrlJournalVoucherAddtoList();
+                
+            }
+        });
+
+        function fnCalculateAmount() {
+            var debitAmount = 0;
+            var creditAmmount = 0;
+            $.each($("#tblJournalVoucherEntry tbody tr"), function (index, item) {
+                var debit = TryParseInt($(this).children('td').eq(6).attr("data-val"), 0);
+                debitAmount += debit;
+                var credit = TryParseInt($(this).children('td').eq(7).attr("data-val"), 0); 
+                creditAmmount += credit;
+            })
+            $("#tblJournalVoucherEntry tfoot tr").children('td').eq(0).html(debitAmount);
+            $("#tblJournalVoucherEntry tfoot tr").children('td').eq(1).html(creditAmmount);
+        }
+
+        function ctrlJournalVoucherAddtoList() {
+            ddlJournalAccountName.val('');
+            ddlJournalAccountName.trigger('change');
+            txtJournalAmount.val('');
+           // txtJournalNarration.val('');
+            txtJournalRemarks.val('');
+           // txtJournalVoucharNumber.val('');
+        }
+        $(document).on("click", "a.data-onfly-del-j", function (e) {
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    removeTableRow("#tblJournalVoucherEntry tbody", index);
+                    fnFixTheTbodyRowSerial("#tblJournalVoucherEntry", index);
+                };
+            }));
+            setInterval(function () {
+                fnCalculateAmount()
+            }, 1000);
+        })
+        $("#btnSaveJournalVoucher").click(function (e) {
+            e.preventDefault();
+            
+            //return console.log(creditAmmount);
+            if ($("#tblJournalVoucherEntry tbody tr").length > 0)
+            {
+                var debitAmount = 0;
+                var creditAmmount = 0;
+                $.each($("#tblJournalVoucherEntry tbody tr"), function (index, item) {
+                    var debit = TryParseInt($(this).children('td').eq(6).attr("data-val"), 0);
+                    debitAmount += debit;
+                    var credit = TryParseInt($(this).children('td').eq(7).attr("data-val"), 0);
+                    creditAmmount += credit;
+                })
+                if (debitAmount == creditAmmount) {
+                    bootbox.confirm("Are you sure you want to save?", function (result) {
+                    if (result === true)
+                    {
+                        var reqData = [];
+                        reqData.length = 0;
+                        $.each($("#tblJournalVoucherEntry tbody tr"), function (index, item) {
+                            var td = $(this).children('td');
+                            reqData.push({
+                                JournalDate: dptJournalEntryDate.val(),
+                                AccountId: td.eq(1).html(),
+                                PersonalCode: td.eq(3).html(),
+                                ReferenceNum: td.eq(4).html(),
+                                Narration: td.eq(5).html(),
+                                Debit: td.eq(6).html(),
+                                Credit: td.eq(7).html(),
+                                Remarks: td.eq(8).html(),
+                               // ReferenceNum: td.eq(7).html()
+                            });
+                        })
+                        reqData = JSON.stringify({ models: reqData });
+                        console.log(reqData);
+                        //return console.log(reqData);
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/Accounts/SaveJournalVoucherWithReport', reqData, getToken())).then(function (res, status)
+                        {
+                            if (res.isSuccess === true && status === "success") {
+                                    $('.toastrDefaultSuccess').trigger('click');
+
+                                    var pdfWindow = window.open("", "_blank")
+                                    console.log(res.text);
+                                    pdfWindow.document.write("<embed  width='100%' height='100%' src='" + res.text + "'></embed >");
+                                    count = 0;
+                                    setTimeout(function () {
+                                        redirectPage('@Url.Action("GetJournalList", new { tab = "JournalVoucher" })');
+                                    }, 1000);
+
+                                }
+                                else {
+                                    $('.toastrDefaultError').trigger('click');
+                                }
+                            @*if (res == true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetJournalList", new { tab = "JournalVoucher" })');
+                                }, 500);
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }*@
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                        })
+                    }
+                })
+                }
+            }
+        })
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+    </script>
+}

@@ -1,0 +1,324 @@
+﻿
+@{
+    ViewBag.Title = "GetRawMaterial";
+}
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <h4>Raw Material</h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-header">
+                <div class="row tex-sm">
+                    <div class="col-md-3">
+                        <h4>Search by:</h4>
+
+                    </div>
+                    <div class="col-md-3">
+
+                        @Html.DropDownList("ddlDepotNameforSearch", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--Search by Depot--", new { @class = "form-control ctrl-changed select2 select2-danger ctrl-changed" })
+
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Search by Material--", new { @class = "form-control ctrl-changed select2 setect2-danger" })
+
+                    </div>
+                    @*<div class="col-md-3">
+
+                        </div>*@
+
+                    <div class="col-md-3 text-right">
+                        <button type="button" class="btn btn-primary btn-sm" id="btnAdd"><i class="fa-fa-plus">Add New Metarial</i></button>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="row text-center" id="dataContainer">
+                    @{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }
+                    @*<h4 class="text-center" style="color:red">Loading</h4>*@
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="modal" id="rawmetarialModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formRawMetarial">
+                    <input type="hidden" id="hdmaterialId" />
+                    <div class="col-md-12">
+                        <label class="control-label font-weight-bold">Organization</label>
+
+                        @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganization, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                        <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
+
+                    </div>
+                  
+                        <div class="col-md-12">
+
+                            <label class="control-label font-weight-bold">Depot Name</label>
+                            @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "Select Depot Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                            <span class="error hide required-ddlDepotName font-weight-bold">Depot Name is Required</span>
+                        </div>
+                   
+                    <div class="col-md-12">
+                        <label class="control-label font-weight-bold">Raw Material Name</label>
+                        <input type="text" id="rawMaterialName" class="form-control form-control-sm" />
+                        <span class="error hide required-raqMaterialName">Material Name is Required</span>
+
+
+                    </div>
+                    @*<div class="form-row">
+                            <label class="control-label font-weight-bold">Expiry Date</label>
+                            <input type="text" id="expairDate" class="form-control form-control-sm datepicker ctr-changed" />
+                            <span class="error hide required-expairDate"> Date is Required</span>
+                        </div>*@
+                    <div class="col-md-12">
+                        <label class="control-label font-weight-bold" for="remarks">Remarks</label>
+                        <input type="text" id="remarks" class="form-control form-control-sm" />
+
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been Successfully Saved
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been faild to Save
+                    </div>
+                </div>
+                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
+                <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script type="text/javascript">
+        var hdmaterialId = $("#hdmaterialId");
+        var ddlDepotName = $("#ddlDepotName");
+        var ddlOrganization = $("#ddlOrganization");
+        //var expairDate = $("#expairDate");
+        var remarks = $("#remarks");
+        var rawMaterialName = $("#rawMaterialName");
+        var ddlRawMaterial = $("#ddlRawMaterial");
+        var ddlDepotNameforSearch = $("#ddlDepotNameforSearch");
+
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            expairDate.prop('readonly', true);
+            expairDate.prop('readonly', true);
+            expairDate.css("background-color", "#fff");
+            expairDate.css("background-color", "#fff");
+            $('#expairDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+
+
+        })
+
+
+        function OpenModal() {
+            $("#spanModalHead").text("Add New Raw Material");
+            $("#rawmetarialModal").modal("show");
+            $(".error").addClass("hide");
+
+
+        }
+        $("#btnAdd").click(function (e) {
+
+            e.preventDefault();
+
+            ClearCtrl();
+            OpenModal();
+
+
+        })
+        ddlDepotNameforSearch.change(function () {
+
+            loadRawMaterial();
+
+        })
+        ddlRawMaterial.change(function () {
+            loadRawMaterial();
+
+        })
+
+        function loadRawMaterial() {
+            data = { flag: 'Search', depotId: TryParseInt(ddlDepotNameforSearch.val(), 0), rawmaterialName: ddlRawMaterial.val() };
+            $.when(getReqWithData("html", 'Get', '/AgroConfiguration/GetRawMaterial', data)).then(function (res, status) {
+                if (status == "success") {
+                    $("#dataContainer").fadeOut("500", function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn("500");
+                    })
+
+
+
+                }
+
+            }).fail(function (error) {
+                Console.log(error);
+
+            });
+
+        }
+
+        $("#btnSave").click(function (e) {
+
+            e.preventDefault();
+            var data = { organizationId: TryParseInt(ddlOrganization.val(), 0), depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val() }
+            if (formValidation() == true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
+                    //console.log('respons' + JSON.parse( res));
+                    console.log(status);
+                    if (res == true) {
+                        message("#msg1", "#rawmetarialModal");
+
+
+
+
+                    }
+                    else {
+                        message("#msg2");
+                    }
+
+                })
+
+
+
+
+
+
+
+            }
+
+
+
+        })
+
+        $(document).on("click", "a.data-edit-item-rawMaterialId", function (e) {
+
+            e.preventDefault()
+
+
+
+            ClearCtrl();
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(0)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            //var td6 = row.find('td:eq(6)').html();
+            var td8 = row.find('td:eq(6)').html();
+
+            rawMaterialName.val(td5);
+            remarks.val('');
+            //expairDate.val(td6);
+            ddlOrganization.val(td8);
+            ddlOrganization.trigger("change");
+
+            ddlDepotName.val(td2);
+            ddlDepotName.trigger("change");
+
+            hdmaterialId.val(td1);
+
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update RawMaterial');
+            $("#spanSaveText").text('Update');
+        })
+
+        function formValidation() {
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlOrganization.val()) == 0) {
+                $('.required-ddlOrganization').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlDepotName.val()) == 0) {
+                $('.required-ddlDepotName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(rawMaterialName.val()) == "") {
+                $('.required-raqMaterialName').removeClass("hide");
+                Isvalid = false;
+            }
+            //if ($.trim(expairDate.val()) == "") {
+            //    $('.required-expairDate').removeClass("hide");
+            //    Isvalid = false;
+            //}
+            return Isvalid
+
+        }
+        function ClearCtrl() {
+            rawMaterialName.val("");
+            remarks.val('');
+            //expairDate.val('');
+            ddlOrganization.val('');
+            ddlDepotName.val('');
+            hdmaterialId.val('0');
+
+        }
+
+
+
+
+    </script>
+
+}
+
+

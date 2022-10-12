@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  erpweb:
+    image: ${DOCKER_REGISTRY-}erpweb
+    build:
+      context: .\ERPWeb
+      dockerfile: Dockerfile

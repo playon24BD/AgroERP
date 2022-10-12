@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ERPBO.ControlPanel.ViewModels.OrganizationViewModel>
+@{ 
+    int sl = 0;
+    string badge = string.Empty;
+}
+
+<div class="row">
+    <div class="col-md-12" style="overflow-y:scroll">
+        <table class="table table-bordered table-sm table-striped table-responsive-lg tblOraganizationData" id="tblOraganizationData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th class="vertialHeader" style="width:5%">#SL</th>
+                    <th class="vertialHeader" style="width:10%">Organization</th>
+                    <th class="vertialHeader" style="width:10%">Address</th>
+                    <th class="vertialHeader" style="width:8%">Phone Number</th>
+                    <th class="vertialHeader" style="width:8%">Mobile Number</th>
+                    <th class="vertialHeader" style="width:8%">Email</th>
+                    <th class="vertialHeader" style="width:8%">Website</th>
+                    <th class="vertialHeader" style="width:5%">StateStatus</th>
+                    <th class="vertialHeader" style="width:8%">Entry Date</th>
+                    <th class="vertialHeader" style="width:8%">Entry User</th>
+                    <th class="vertialHeader" style="width:8%">Update User</th>
+                    <th class="vertialHeader" style="width:8%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    sl += 1;
+                    badge = (item.StateStatus == "Active" ? "badge bg-success" : "badge bg-danger");
+                    <tr>
+                        <td class="text-center text-bold" style="width:5%">
+                            @sl
+                        </td>
+                        <td style="width:10%">@item.OrganizationName</td>
+                        <td style="width:10%">@item.Address</td>
+                        <td style="width:8%">@item.PhoneNumber</td>
+                        <td style="width:8%">@item.MobileNumber</td>
+                        <td style="width:8%;word-break:break-word">@item.Email</td>
+                        <td style="width:8%;word-break:break-word">@item.Website</td>
+                        <td style="width:5%" class="text-center" data-val="@item.StateStatus">
+                            <span class="@badge">@item.StateStatus</span>
+                        </td>
+                        <td style="width:8%">
+                            @item.EntryDate.Value.ToString("dd-MMM-yyyy")
+                        </td>
+                        <td class="text-center text-sm" style="width:5%">@item.EntryUser</td>
+                        <td class="text-center text-sm" style="width:5%">@item.UpdateUser</td>
+                        <td class="text-center" style="width:8%">
+                            <a href="@Url.Action("CreateOrganization","ControlPanel",new {oId=item.OrgId })" class="btn btn-sm btn-warning data-edit-item" data-edit-item="@item.OrgId"><i class="fa fa-pen"></i> Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

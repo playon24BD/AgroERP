@@ -1,0 +1,273 @@
+﻿
+@{
+    ViewBag.Title = "GetBankList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text-sm">
+    <div class="col-md-12">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h4 class="text-center">Bank Setup</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-navy">
+            <div class="card-header">
+                <div class="row">
+                    
+                        <h4 class="col-md-2">Search By</h4>
+                    
+
+                    <div class="col-md-3">
+                        <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By Any" />
+                    </div>
+                   
+                    <div class="col-7 ">
+                        <button class="btn btn-outline-primary btn-flat btn-sm float-right" id="clickButton"><i class="fa fa-plus"></i> Create New Bank</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12" id="dataContainer1">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal" id="bankModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 class="modal-title" id="modalHeading"><span id="spanModalHeading"></span></h4>
+                <button class="close" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="bankForm">
+                    <input type="hidden" id="hiddenBankId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+
+                            <label for="ddlOrganizationName" class="control-label">Organization Name</label>
+                            @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select OrgName--", new { @class = "form-control form-control-sm" })
+                            <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlBankName" class="control-label">Bank Name</label>
+                            <input type="text" id="ddlBankName" class="form-control form-control-sm" />
+                            <span class="error hide required-BankName font-weight-bold">Input Bank Name!</span>
+
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlAccountNumber" class="control-label">Account Number</label>
+                            <input type="text" id="ddlAccountNumber" class="form-control form-control-sm" />
+                            <span class="error hide required-AccountNumber font-weight-bold">Input AccountNumber!</span>
+
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlMobileNumber" class="control-label">Mobile Number</label>
+                            <input type="text" id="ddlMobileNumber" class="form-control form-control-sm" />
+                            <span class="error hide required-MobileNumber font-weight-bold">Input Mobile Number!</span>
+
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlEmailAddress" class="control-label">Email Address</label>
+                            <input type="text" id="ddlEmailAddress" class="form-control form-control-sm" />
+                            <span class="error hide required-EmailAddress font-weight-bold">Input Email Address!</span>
+
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="ddlStatus" class="control-label">Status</label>
+                            <select class="form-control form-control-sm" id="ddlStatus">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-default">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success float-right" id="bankSaveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextBank">Save</span> </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    
+<script type="text/javascript">
+
+    //BankSetup
+    var hiddenBankId = $("#hiddenBankId");
+    var ddlBankName = $("#ddlBankName");
+    var ddlStatus = $("#ddlStatus");
+    var ddlEmailAddress = $("#ddlEmailAddress");
+    var ddlMobileNumber = $("#ddlMobileNumber");
+    var ddlAccountNumber = $("#ddlAccountNumber");
+    var ddlOrganizationName = $("#ddlOrganizationName");
+    var SearchAny = $("#SearchAny");
+
+
+    $(document).ready(function () {
+        LoadBankDataTable()
+    });
+
+    function OpenModals() {
+        $("#spanModalHeading").text('Create New Bank');
+        $("#bankModal").modal('show');
+        $("#spanSaveTextBank").text('Save');
+        $(".error").addClass("hide");
+
+    }
+
+
+    $("#clickButton").click(function (e) {
+
+        e.preventDefault();
+
+        clearCtrlBank()
+        OpenModals()
+    });
+
+
+    SearchAny.keyup(function () {
+        LoadBankDataTable()
+    })
+
+    function LoadBankDataTable() {
+        var data = { flag: 'BankSetup', name: $.trim(SearchAny.val()) }
+        $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetBankList', data)).then(function (res, status) {
+            console.log(res);
+            if (status === "success") {
+                $("#dataContainer1").empty();
+                $("#dataContainer1").append(res);
+            }
+        }).fail(function (err) { console.log(err) })
+    }
+
+    $(document).on("click", "a.data-edit-item-Bank", function (e) {
+        e.preventDefault();
+
+        clearCtrlBank();
+
+        var row = $(this).parent().parents('tr');
+        var td1 = row.find('td:eq(1)').html();
+        var td2 = row.find('td:eq(2)').html();
+        var td4 = row.find('td:eq(4)').html();
+        var td5 = row.find('td:eq(5)').html();
+        var td6 = row.find('td:eq(6)').html();
+        var td7 = row.find('td:eq(7)').html();
+        var td9 = row.find('td:eq(9)').html();
+
+        hiddenBankId.val(td1);
+        ddlOrganizationName.val(td2);
+        ddlBankName.val(td4);
+        ddlAccountNumber.val(td5);
+        ddlEmailAddress.val(td6);
+        ddlMobileNumber.val(td7);
+        ddlStatus.val(td9);
+
+        OpenModals();
+        $("#spanModalHeading").text('Update Bank');
+        $("#spanSaveTextBank").text('Update');
+    });
+
+    $("#bankSaveButton").click(function (e) {
+
+        e.preventDefault();
+        $(".error").addClass("hide");
+
+        if (ValidationForm() == true) {
+            var data = JSON.stringify({ BankId: TryParseInt(hiddenBankId.val(), 0), OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), BankName: ddlBankName.val(), Status: ddlStatus.val(), AccountNumber: ddlAccountNumber.val(), MobileNumber: ddlMobileNumber.val(), Email: ddlEmailAddress.val() });
+            console.log(data);
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveBankInfo', data, getToken())).then(function (res, status) {
+                console.log(status);
+                console.log(res);
+                if (res == true) {
+                    $("#bankModal").modal("toggle");
+                    toastrSuccessAlert(execuStatus.successSave);
+                    LoadBankDataTable();
+                }
+                else {
+                    toastrErrorAlert(execuStatus.fail);
+                }
+                enable("#bankSaveButton");
+            }).fail(function (err) {
+                console.log(err);
+                enable("#bankSaveButton");
+            });
+
+        }
+
+    });
+
+    function ValidationForm() {
+        Isvalid = true;
+        $('.error').addClass("hide");
+        if ($.trim(ddlOrganizationName.val()) == 0) {
+            $('.required-OrganizationName').removeClass("hide");
+            Isvalid = false;
+        }
+        if ($.trim(ddlBankName.val()) == 0) {
+            $('.required-BankName').removeClass("hide");
+            Isvalid = false;
+        }
+        if ($.trim(ddlEmailAddress.val()) == '') {
+            $('.required-EmailAddress').removeClass("hide");
+            Isvalid = false;
+        }
+        if ($.trim(ddlMobileNumber.val()) == 0) {
+            $('.required-MobileNumber').removeClass("hide");
+            Isvalid = false;
+        }
+        if ($.trim(ddlAccountNumber.val()) == 0) {
+            $('.required-AccountNumber').removeClass("hide");
+            Isvalid = false;
+        }
+
+        return Isvalid
+
+    }
+
+    function clearCtrlBank() {
+        ddlBankName.val("");
+        ddlAccountNumber.val("");
+        ddlMobileNumber.val("");
+        ddlEmailAddress.val("");
+        ddlOrganizationName.val("");
+        hiddenBankId.val('0');
+
+    }
+
+    </script>
+    
+    }

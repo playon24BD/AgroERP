@@ -1,0 +1,374 @@
+﻿
+@{
+    ViewBag.Title = "App User Configuration";
+}
+<div class="row text-sm">
+    <div class="col-md-12">
+        <div class="card card-primary card-outline card-tabs">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-one-branch-tab" data-toggle="pill" href="#custom-tabs-one-branch" role="tab" aria-controls="custom-tabs-one-branch" aria-selected="true">Branch Informations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-two-role-tab" data-toggle="pill" href="#custom-tabs-two-role" role="tab" aria-controls="custom-tabs-two-role" aria-selected="false">Role Informations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-three-user-tab" data-toggle="pill" href="#custom-tabs-three-user" role="tab" aria-controls="custom-tabs-three-user" aria-selected="true">User Informations</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                @Html.AntiForgeryToken()
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    <div class="tab-pane fade show active" id="custom-tabs-one-branch" role="tabpanel" aria-labelledby="custom-tabs-one-branch-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-dark">
+                                    <div class="card-header text-center">
+                                       <h5>Branch Information</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="text" name="search" id="searchByBranch" class="form-control form-control-sm" placeholder="Search By Anything..." onkeyup="tableFilter('.tblBranchData tbody tr',this)" />
+                                            </div>
+                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4">
+                                                <button class="btn btn-outline-primary btn-sm btn-flat float-right" id="btnAddNewBranch"><i class="fa fa-plus"></i> Create Branch</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer1">
+                                           @{Html.RenderAction("AppUserConfiguration", "ControlPanel",new {flag="Branch" });}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="custom-tabs-two-role" role="tabpanel" aria-labelledby="custom-tabs-two-role-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-dark">
+                                    <div class="card-header text-center">
+                                        <h5>Role Information</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="text" name="search" id="searchByRole" class="form-control form-control-sm" placeholder="Search By Anything..." onkeyup="tableFilter('.tblRoles tbody tr',this)" />
+                                            </div>
+                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4">
+                                                <a href="@Url.Action("CreateAppRole","ControlPanel")" class="btn btn-sm btn-outline-primary btn-flat float-right"><i class="fas fa-plus"></i> Create New Role</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer2">
+                                            @{Html.RenderAction("AppUserConfiguration", "ControlPanel", new { flag = "Role" });}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show " id="custom-tabs-three-user" role="tabpanel" aria-labelledby="custom-tabs-three-user-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-dark">
+                                    <div class="card-header text-center">
+                                        <h5>User Information</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="text" name="search" id="searchByUser" class="form-control form-control-sm" placeholder="Search By Anything..." onkeyup="tableFilter('.tblAppUserData tbody tr',this)" />
+                                            </div>
+                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4">
+                                                <a href="@Url.Action("CreateAppUser","ControlPanel")" class="btn btn-sm btn-outline-primary btn-flat float-right"><i class="fas fa-plus"></i> Create New User</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer1">
+                                            @{Html.RenderAction("AppUserConfiguration", "ControlPanel", new { flag = "User" });}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalBranch" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead">Add New Branch</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmBranch">
+                    <input type="hidden" name="Id" id="hdfBranchId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="txtBranchName" class="control-label font-weight-bold">Branch Name</label>
+                            <input type="text" name="branchName" value="" id="txtBranchName" class="form-control form-control-sm" />
+                            <span class="error hide required-branchName font-weight-bold">Input Branch Name!</span>
+                            <span class="error hide duplicate-branchName font-weight-bold">Already Branch Exist!</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtShortName" class="control-label font-weight-bold">Short Name</label>
+                            <input type="text" name="shortName" value="" id="txtShortName" class="form-control form-control-sm" />
+                            <span class="error hide required-shortName font-weight-bold">Input Short Name!</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtAddress" class="control-label font-weight-bold">Address</label>
+                            <input type="text" name="address" value="" id="txtAddress" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="txtMobileNo" class="control-label font-weight-bold">MobileNo</label>
+                            <input type="text" name="mobileNumber" value="" id="txtMobileNo" class="form-control form-control-sm" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtEmail" class="control-label font-weight-bold">Email</label>
+                            <input type="text" name="remarks" value="" id="txtEmail" class="form-control form-control-sm" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtPhoneNo" class="control-label font-weight-bold">PhoneNo</label>
+                            <input type="text" name="phoneNo" value="" id="txtPhoneNo" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="txtFax" class="control-label font-weight-bold">Fax</label>
+                            <input type="text" name="fax" value="" id="txtFax" class="form-control form-control-sm" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtRemarks" class="control-label font-weight-bold">Remarks</label>
+                            <input type="text" name="remarks" value="" id="txtRemarks" class="form-control form-control-sm" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="ddlOrganizationName" class="control-label font-weight-bold">Organization Name</label>
+                            @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm" })
+                            <span class="error hide required-org font-weight-bold">Input Org!</span>
+                            
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <div class="form-control form-control-sm">
+                                <input type="checkbox" id="chkStatestatus" /> <b>Is Active?</b>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer alert-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-sm btn-success float-right" id="btnSubmitBranch"><i class="far fa-save"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var hdfBranchId = $("#hdfBranchId");
+        var txtBranchName = $("#txtBranchName");
+        var txtShortName = $("#txtShortName");
+        var txtMobileNo = $("#txtMobileNo");
+        var txtEmail = $("#txtEmail");
+        var txtPhoneNo = $("#txtPhoneNo");
+        var txtFax = $("#txtFax");
+        var txtRemarks = $("#txtRemarks");
+        var ddlOrganizationName = $("#ddlOrganizationName");
+        var chkStatestatus = $("#chkStatestatus");
+        var txtAddress = $("#txtAddress");
+
+        $(document).ready(function () {
+            //$('#tblBranchData').DataTable({
+            //    "paging": false,
+            //    "lengthChange": false,
+            //    "searching": false,
+            //    "ordering": true,
+            //    "info": false,
+            //    "autoWidth": false,
+            //});
+        })
+
+        function OpenModal() {
+            $("#spanModalHead").text('Add New Branch');
+            $("#spanSaveText").text('Save');
+            $("#modalBranch").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        $("#btnAddNewBranch").click(function (e) {
+            e.preventDefault();
+            clearCtrl();
+            OpenModal();
+        })
+
+        //edit
+        $(document).on("click", "a.data-edit-item", function (e) {
+            e.preventDefault()
+            clearCtrl();
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td5 = row.find('td:eq(4)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+            var td8 = row.find('td:eq(8)').html();
+            var td9 = row.find('td:eq(9)').html();
+            var td10 = row.find('td:eq(10)').html();
+            var td11 = row.find('td:eq(11)').attr("data-val");
+            var td12 = row.find('td:eq(12)').html();
+
+            hdfBranchId.val(td1);
+            txtBranchName.val(td2);
+            txtShortName.val(td3);
+            ddlOrganizationName.val(td5);
+            txtAddress.val(td6);
+            txtMobileNo.val(td7);
+            txtEmail.val(td8);
+            txtPhoneNo.val(td9);
+            txtFax.val(td10);
+            chkStatestatus.prop("checked", false);
+            if (td11 === 'Active') {
+                chkStatestatus.prop("checked", true);
+            }
+            txtRemarks.val(td12);
+            OpenModal();
+            $("#spanModalHead").text("Update Branch");
+            $("#spanSaveText").text('Save');
+        })
+
+        function validateForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if (TryParseInt(ddlOrganizationName.val(), 0) <=0) {
+                $(".required-org").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(txtBranchName.val()) == "") {
+                $(".required-branchName").removeClass("hide");
+                isValid = false;
+            }
+            else {
+                //string branchName, long branchId, long orgId
+                var id = TryParseInt(hdfBranchId.val(), 0);
+                if (ajaxBooleanChecker(JSON.stringify({ branchName: txtBranchName.val().trim(), branchId: id, orgId: TryParseInt(ddlOrganizationName.val(),0) }), '/Common/IsDuplicateBrachName', getToken()) == true) {
+                    $(".duplicate-branchName").removeClass("hide");
+                    isValid = false;
+                }
+            }
+            if ($.trim(txtShortName.val()) == "") {
+                $(".required-shortName").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        function clearCtrl() {
+            hdfBranchId.val('0');
+            txtBranchName.val('');
+            txtShortName.val('');
+            txtAddress.val('');
+            ddlOrganizationName.val('');
+            txtMobileNo.val('');
+            txtEmail.val('');
+            txtPhoneNo.val('');
+            txtFax.val('');
+            txtRemarks.val('');
+            chkStatestatus.prop("checked", false);
+        }
+
+        $("#btnSubmitBranch").click(function (e) {
+            e.preventDefault();
+            $(".error").addClass("hide");
+            if (validateForm() == true) {
+                var data = JSON.stringify({
+                    BranchId: TryParseInt(hdfBranchId.val(), 0),
+                    BranchName: txtBranchName.val(),
+                    ShortName: txtShortName.val(),
+                    MobileNo: txtMobileNo.val(),
+                    Email: txtEmail.val(),
+                    PhoneNo: txtPhoneNo.val(),
+                    Address: txtAddress.val(),
+                    Fax: txtFax.val(),
+                    OrgId: TryParseInt(ddlOrganizationName.val(), 0),
+                    Remarks: txtRemarks.val(),
+                    IsActive: chkStatestatus.is(":checked")
+                });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/ControlPanel/SaveBranch', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        message("#msg1", "#modalBranch");
+                    }
+                    else {
+                        message("#msg2");
+                    }
+                    enable("#btnSubmit");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmit");
+                });
+            }
+
+        })
+    </script>
+}

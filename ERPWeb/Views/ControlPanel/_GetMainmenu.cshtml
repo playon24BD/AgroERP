@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ERPBO.ControlPanel.ViewModels.MainMenuViewModel>
+@{ 
+    int sl = 0;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm table-striped table-responsive-lg table-valign-middle tblMainMenuData" id="tblMainMenuData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th>#SL</th>
+                    <th class="hide"></th>
+                    <th>MenuName</th>
+                    <th class="hide"></th>
+                    <th>ModuleName</th>
+                    <th>Entry User</th>
+                    <th>Update User</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var mainmenu in Model)
+                {
+                    sl = sl + 1;
+                    <tr>
+                        <td class="text-center text-bold" width="5%">@sl</td>
+                        <td class="hide">@mainmenu.MMId</td>
+                        <td>@mainmenu.MenuName</td>
+                        <td class="hide">@mainmenu.MId</td>
+                        <td>@mainmenu.ModuleName</td>
+                        <td class="text-center text-sm">@mainmenu.EntryUser</td>
+                        <td class="text-center text-sm">@mainmenu.UpdateUser</td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-warning btn-sm data-mainmenu-item" data-mainmenu-item="@mainmenu.MMId"><i class="fa fa-pen"></i> Edit</a>
+                        </td>
+                    </tr>
+                }
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="6">
+                            No Rows Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ERPBO.ControlPanel.ViewModels.AppUserViewModel>
+@{
+    int sl = 0;
+    string badge = string.Empty;
+    string badge1 = string.Empty;
+}
+<div class="row">
+    <div class="col-md-12" style="overflow-y:scroll">
+        <table class="table table-bordered table-sm table-striped table-responsive-lg tblAppUserData" id="tblAppUserData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">#SL</th>
+                    <th class="hide"></th>
+                    <th style="vertical-align:middle">Employee Id</th>
+                    <th style="vertical-align:middle">Full Name</th>
+                    <th style="vertical-align:middle" class="hide">Mobile No</th>
+                    <th style="vertical-align:middle" class="hide">Address</th>
+                    <th style="vertical-align:middle">Email</th>
+                    <th style="vertical-align:middle" class="hide">Desigation</th>
+                    <th style="vertical-align:middle">User Name</th>
+                    <th style="vertical-align:middle">Password</th>
+                    <th style="vertical-align:middle">User Status</th>
+                    <th style="vertical-align:middle">Role Status</th>
+                    <th class="hide"></th>
+                    <th style="vertical-align:middle">Organization</th>
+                    <th class="hide"></th>
+                    <th style="vertical-align:middle">Branch</th>
+                    <th class="hide"></th>
+                    <th style="vertical-align:middle">Role</th>
+                    <th style="vertical-align:middle">Entry User</th>
+                    <th style="vertical-align:middle" class="hide">Update User</th>
+                    <th style="vertical-align:middle">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    sl += 1;
+                    badge = (user.StateStatus == "Active" ? "badge bg-success" : "badge bg-danger");
+                    badge1 = (user.StateStatusRole == "Active" ? "badge bg-success" : "badge bg-danger");
+                    <tr>
+                        <td class="text-center">
+                            <b>@sl</b>
+                        </td>
+                        <td class="hide">@user.UserId</td>
+                        <td>@user.EmployeeId</td>
+                        <td>@user.FullName</td>
+                        <td class="hide">@user.MobileNo</td>
+                        <td class="hide">@user.Address</td>
+                        <td>@user.Email</td>
+                        <td class="hide">@user.Desigation</td>
+                        <td>@user.UserName</td>
+                        <td>@user.Password</td>
+                        <td class="text-center" data-val="@user.StateStatus">
+                            <span class="@badge">@user.StateStatus</span>
+                        </td>
+                        <td class="text-center" data-val="@user.StateStatusRole">
+                            <span class="@badge1">@user.StateStatusRole</span>
+                        </td>
+                        <td class="hide">@user.OrganizationId</td>
+                        <td>@user.OrganizationName</td>
+                        <td class="hide">@user.BranchId</td>
+                        <td>@user.BranchName</td>
+                        <td class="hide">@user.RoleId</td>
+                        <td class="text-center">
+                            <span class="badge badge-info">@user.RoleName</span>
+                        </td>
+                        <td class="text-sm">@user.EntryUser</td>
+                        <td class="hide">@user.UpdateUser</td>
+                        <td class="text-center">
+                            @if (ViewBag.OPFor == "System")
+                            {
+                                <a href="@Url.Action("CreateAppUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
+                            }
+                            @if (ViewBag.OPFor == "Client")
+                            {
+                                <a href="@Url.Action("CreateClientUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
+                            }
+                        </td>
+                    </tr>
+                }
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="20">
+                            No data found in the table
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

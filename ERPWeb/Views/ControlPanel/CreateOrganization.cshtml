@@ -1,0 +1,203 @@
+﻿@model ERPBO.ControlPanel.ViewModels.OrganizationViewModel
+@using ERPBLL.Common;
+@{
+    ViewBag.Title = "Create Organization";
+    string orgLogo = string.Empty;
+    string rptLogo = string.Empty;
+    orgLogo = string.Format(@"/Content/Images/noImage.jpg");
+    rptLogo = string.Format(@"/Content/Images/noImage.jpg");
+    if (Model != null)
+    {
+        if (!string.IsNullOrEmpty(Model.OrgLogoPath))
+        {
+            orgLogo = Utility.GetImage(Model.OrgLogoPath);
+        }
+        if (!string.IsNullOrEmpty(Model.ReportLogoPath))
+        {
+            rptLogo = Utility.GetImage(Model.ReportLogoPath);
+        }
+    }
+}
+
+<div class="row text-sm">
+    <div class="col-md-12">
+        <div class="card card-dark">
+            <div class="card-header">
+                <a href="/ControlPanel/OrgConfiguration" class="float-left" title="Back To List">
+                    <i class="fa fa-arrow-alt-circle-left fa-2x"></i>
+                </a>
+                <h4 class="text-center">@ViewBag.PageTitle</h4>
+            </div>
+            <form>
+                <div class="card-body">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.OrgId)
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="col-form-label" for="OrganizationName">Organization Name</label>
+                            @Html.TextBoxFor(model => model.OrganizationName, new { @class = "form-control form-control-sm", @maxlength = "150" })
+                            <span class="error hide req-OrgName">Organization name is required</span>
+                            <span class="error hide dup-OrgName">Dulicate Organization</span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-form-label" for="Address">Address</label>
+                            @Html.TextAreaFor(model => model.Address, new { @class = "form-control form-control-sm", @maxlength = "150", @row = 1 })
+                            <span class="error hide req-addess">Address name is required</span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-form-label" for="PhoneNumber">Phone Number</label>
+                            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control form-control-sm", @maxlength = "50" })
+                            <span class="error hide req-phone">Phone number is required</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="col-form-label" for="MobileNumber">Mobile Number</label>
+                            @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control form-control-sm", @maxlength = "50" })
+                            <span class="error hide req-mobile">Mobile Number is required</span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-form-label" for="Email">Email</label>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-sm", type = "email", @maxlength = "150" })
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-form-label" for="Fax">Fax</label>
+                            @Html.TextBoxFor(model => model.Fax, new { @class = "form-control form-control-sm", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="Website" class="col-form-label">Website</label>
+                            @Html.TextBoxFor(model => model.Website, new { @class = "form-control form-control-sm", @maxlength = "100" })
+                        </div>
+                        <div class="col-md-4">
+                            <label for="Short Name" class="col-form-label">Short Name</label>
+                            @Html.TextBoxFor(model => model.ShortName, new { @class = "form-control form-control-sm", @maxlength = "50" })
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-form-label" for="" style="visibility:hidden">Is Active?</label>
+                            <div class="form-control form-control-sm">
+                                @Html.CheckBoxFor(model => model.IsActive, new { @class = "" }) <b>Is Active?</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <label class="col-form-label" for="">Organization Logo</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input form-control-sm" id="OrgImage" name="OrgImage" />
+                                <label class="custom-file-label" for="OrgImage"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <img src="@orgLogo" id="imgOrgImage" name="imgOrgImage" alt="Org Img" class="img-bordered-sm" width="120" height="100" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-form-label" for="">Report Logo</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input form-control-sm" id="ReportImage" name="ReportImage" />
+                                <label class="custom-file-label" for="ReportImage"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <img src="@rptLogo" id="imgReportImage" name="imgReportImage" alt="Org Img" class="img-bordered-sm" width="120" height="100" />
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-lg btn-primary" id="btnSubmit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+
+        var hdfOrgId = $("#OrgId");
+        var txtOrganizationName = $("#OrganizationName");
+        var txtAddress = $("#Address");
+        var txtPhoneNumber = $("#PhoneNumber")
+        var txtMobileNumber = $("#MobileNumber");
+        var txtEmail = $("#Email");
+        var txtFax = $("#Fax");
+        var txtWebsite = $("#Website");
+        var txtShortName = $("#ShortName");
+        var chkIsActive = $("#IsActive");
+        var OrgImage = $("#OrgImage");
+        var imgOrgImage = $("#imgOrgImage");
+        var ReportImage = $("#ReportImage");
+        var imgReportImage = $("#imgReportImage");
+
+        function validateForm()
+        {
+            var isValid = true;
+            $(".error").addClass('hide');
+            if (txtOrganizationName.val().trim() == '')
+            {
+                $('.req-OrgName').removeClass('hide');
+                isValid = false;
+            }
+            // Org Duplicate //
+            if (txtAddress.val().trim() == '')
+            {
+                $('.req-addess').removeClass('hide');
+                isValid = false;
+            }
+            if (txtMobileNumber.val().trim() == '')
+            {
+                $('.req-mobile').removeClass('hide');
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        OrgImage.change(function () {
+            readImg(this, imgOrgImage);
+        })
+
+        ReportImage.change(function () {
+            readImg(this, imgReportImage);
+        })
+
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            if (validateForm() === true)
+            {
+                var orgId = hdfOrgId.val() == '' ? '0' : hdfOrgId.val();
+                var isChecked = chkIsActive.is(":checked");
+                var orgLogo = $('#OrgImage').prop('files')[0];
+                var reportLogo = $('#ReportImage').prop('files')[0];
+                var formData = new FormData();
+                formData.append("OrgId", orgId);
+                formData.append("OrganizationName", txtOrganizationName.val());
+                formData.append("ShortName", txtShortName.val());
+                formData.append("Address", txtAddress.val());
+                formData.append("Email", txtEmail.val());
+                formData.append("PhoneNumber", txtPhoneNumber.val());
+                formData.append("MobileNumber", txtMobileNumber.val());
+                formData.append("Fax", txtFax.val());
+                formData.append("Website", txtWebsite.val());
+                formData.append("IsActive", isChecked);
+                formData.append("Fax", txtFax.val());
+                formData.append("OrgImage", orgLogo);
+                formData.append("ReportImage", reportLogo);
+                $.when(postReqWithFile(dataType.json, type.post, '/ControlPanel/SaveOrganization', formData, getToken())).then(function (res,status) {
+                    consoleLog(res);
+                    consoleLog(status);
+                    if (res === true && status ==='success') {
+                        $('.toastrDefaultSuccess').trigger('click');
+                        setTimeout(function () {
+                            redirectPage('@Url.Action("OrgConfiguration")');
+                        }, 1000);
+                    }
+                })
+            }
+        })
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+    </script>    
+}

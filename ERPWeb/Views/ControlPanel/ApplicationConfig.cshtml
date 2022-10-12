@@ -1,0 +1,723 @@
+﻿
+@{
+    ViewBag.Title = "Application Config";
+}
+
+
+<div class="row text-sm">
+    <div class="col-md-12" style="margin-top:-15px">
+        <div class="card card-primary card-outline card-tabs">
+            @Html.AntiForgeryToken()
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-one-module-tab" data-toggle="pill" href="#custom-tabs-one-module" role="tab" aria-controls="custom-tabs-one-module" aria-selected="true">Modules</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-two-mainmenu-tab" data-toggle="pill" href="#custom-tabs-two-mainmenu" role="tab" aria-controls="custom-tabs-two-mainmenu" aria-selected="true">Main Menus</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-three-submenu-tab" data-toggle="pill" href="#custom-tabs-three-submenu" role="tab" aria-controls="custom-tabs-three-submenu" aria-selected="false">Submenus</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    <div class="tab-pane fade show active" id="custom-tabs-one-module" role="tabpanel" aria-labelledby="custom-tabs-one-module-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    List Of Module
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="text" name="search" id="searchByModule" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('.tblModuleData tbody tr',this)" />
+                                            </div>
+                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4">
+                                                <button class="btn btn-outline-primary btn-flat btn-sm float-right" id="btnAddNewModule"><i class="fa fa-plus"></i> Create Module</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer1">
+                                            @*@{Html.RenderAction("ApplicationConfig", "ControlPanel", new { @flag = "Module" }); }*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="custom-tabs-two-mainmenu" role="tabpanel" aria-labelledby="custom-tabs-two-mainmenu-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    List Of Mainmenu
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="text" name="search" id="searchByMainmenu" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('.tblMainMenuData tbody tr',this)" />
+                                            </div>
+                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4">
+                                                <button class="btn btn-outline-primary btn-sm btn-flat float-right" id="btnAddNewMainmenu">
+                                                    <i class="fa fa-plus"></i> Create MainMenu
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer2">
+                                            @*@{Html.RenderAction("ApplicationConfig", "ControlPanel", new { @flag = "Mainmenu" }); }*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade " id="custom-tabs-three-submenu" role="tabpanel" aria-labelledby="custom-tabs-three-submenu-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    List Of Submenu
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="text" name="search" id="searchBySubmenu" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('.tblSubMenuData tbody tr',this)" />
+                                            </div>
+                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4">
+                                                <button class="btn btn-outline-primary btn-sm btn-flat float-right" id="btnAddNewSubmenu">
+                                                    <i class="fa fa-plus"></i> Create Submenu
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer3">
+                                            @*@{Html.RenderAction("ApplicationConfig", "ControlPanel", new { @flag = "Submenu" }); }*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalModule" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModuleModalHead">Add New Module</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmModule">
+                    <input type="hidden" name="Id" id="hdfMId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtModuleName" class="control-label font-weight-bold">Module Name</label>
+                            <input type="text" name="module" value="" id="txtModuleName" class="form-control form-control-sm" />
+                            <span class="error hide required-moduleName font-weight-bold">Input Module Name!</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtIconName" class="control-label font-weight-bold">Icon Name</label>
+                            <input type="text" name="icon" value="" id="txtIconName" class="form-control form-control-sm" />
+                            <span class="error hide required-iconName font-weight-bold">Input Icon Name!</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtIconColour" class="control-label font-weight-bold">Icon Colour</label>
+                            <input type="text" name="iconColour" value="" id="txtIconColour" class="form-control form-control-sm" />
+                            <span class="error hide required-iconColour font-weight-bold">Input Icon Colour!</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-flat btn-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-flat btn-success float-right" id="btnSubmitModule"><i class="far fa-save"></i> <span id="spanModuleSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalMainMenu" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanMainmenuModalHead">Add New MainMenu</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmMainmenu">
+                    <input type="hidden" name="Id" id="hdfMMId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtMenuName" class="control-label font-weight-bold">Menu Name</label>
+                            <input type="text" name="menuName" value="" id="txtMenuName" class="form-control form-control-sm" />
+                            <span class="error hide required-menuName font-weight-bold">Input Menu Name!</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="ddlModuleName" class="control-label font-weight-bold">ModuleName</label>
+                            @Html.DropDownList("ddlModuleName", (IEnumerable<SelectListItem>)ViewBag.ddlModuleName, "--Select ModuleName--", new { @class = "form-control form-control-sm" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-light">
+                <button type="button" class="btn btn-flat btn-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-flat btn-success float-right" id="btnSubmitMainmenu"><i class="far fa-save"></i> <span id="spanMainmenuSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSubMenu" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead">Add New SubMenu</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmSubmenu">
+                    <input type="hidden" name="Id" id="hdfSubMenuId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtSubMenuName" class="control-label font-weight-bold">Submenu Name</label>
+                            <input type="text" id="txtSubMenuName" class="form-control form-control-sm" />
+                            <span class="error hide required-submenuName font-weight-bold">Input SubMenu Name!</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtController" class="control-label font-weight-bold">Controller Name</label>
+                            <input type="text" id="txtController" class="form-control form-control-sm" />
+                            <span class="error hide required-controllerName font-weight-bold">Input Controller Name!</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtActionName" class="control-label font-weight-bold">Action Name</label>
+                            <input type="text" value="" id="txtActionName" class="form-control form-control-sm" />
+                            <span class="error hide required-actionName font-weight-bold">Input Action Name!</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtIconName" class="control-label font-weight-bold">Icon Name</label>
+                            <input type="text" value="" id="txtIconName" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <div class="form-control form-control-sm">
+                                <input type="checkbox" id="chkIsViewable" /> <b>Is Viewable?</b>
+                            </div>
+                            <span class="error hide req-chkViewable">Check Viewable</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="form-control form-control-sm">
+                                <input type="checkbox" id="chkIsActAsParent" /> <b>Is Act as Parent?</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="ddlParentSubMenu" class="control-label font-weight-bold">Parent Submenu</label>
+                            @Html.DropDownList("ddlParentSubMenu", (IEnumerable<SelectListItem>)ViewBag.ddlParentSubMenu, "--Select SubMenuName--", new { @class = "form-control form-control-sm" })
+                            <span class="error hide invalid-submenu">A parent submenu cannot be child of another parent submenu.</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="ddlMainMenu" class="control-label font-weight-bold">Mainmenu</label>
+                            @Html.DropDownList("ddlMainMenu", (IEnumerable<SelectListItem>)ViewBag.ddlMainMenu, "--Select MainMenu--", new { @class = "form-control form-control-sm" })
+                            <span class="error hide req-mainmenu">Mainmenu is required</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer btn-light">
+                <button type="button" class="btn btn-danger btn-flat float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-success btn-flat float-right" id="btnSubmitSubmenu"><i class="far fa-save"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        // Module
+        var hdfMId = $("#hdfMId");
+        var txtModuleName = $("#txtModuleName");
+        var txtIconName = $("#txtIconName");
+        var txtIconColour = $("#txtIconColour");
+
+        // Mainmenu
+        var hdfMMId = $("#hdfMMId");
+        var txtMenuName = $("#txtMenuName");
+        var ddlModuleName = $("#ddlModuleName");
+
+        // Submenu
+        var hdfSubMenuId = $("#hdfSubMenuId");
+        var txtSubMenuName = $("#txtSubMenuName");
+        var txtController = $("#txtController");
+        var txtActionName = $("#txtActionName");
+        var txtIconName = $("#txtIconName");
+        var chkIsViewable = $("#chkIsViewable");
+        var chkIsActAsParent = $("#chkIsActAsParent");
+        var ddlParentSubMenu = $("#ddlParentSubMenu");
+        var ddlMainMenu = $("#ddlMainMenu");
+
+        $(document).ready(function () {
+            loadDataInitializer();
+        })
+
+        function loadDataInitializer() {
+            loadModuleDataTable();
+            loadMainmenuDataTable();
+            loadSubmenuDataTable();
+        }
+
+        function loadModuleDataTable() {
+            var data = { flag: 'Module' };
+            $.when(getReqWithData(dataType.html, 'POST', '/ControlPanel/ApplicationConfig', data)).then(function (res, status) {
+                if (status === "success") {
+                    $("#dataContainer1").fadeOut('500', function () {
+                        $("#dataContainer1").empty();
+                        $("#dataContainer1").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (err) {
+                console.log(err);
+            });
+        }
+
+        function loadMainmenuDataTable() {
+            var data = { flag: 'Mainmenu' };
+            $.when(getReqWithData(dataType.html, 'POST', '/ControlPanel/ApplicationConfig', data)).then(function (res, status) {
+                if (status === "success") {
+                    $("#dataContainer2").fadeOut('500', function () {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (err) {
+                console.log(err);
+            });
+        }
+
+        function loadSubmenuDataTable() {
+            var data = { flag: 'Submenu' };
+            $.when(getReqWithData(dataType.html, 'POST', '/ControlPanel/ApplicationConfig', data)).then(function (res, status) {
+                if (status === "success") {
+                    $("#dataContainer3").fadeOut('500', function () {
+                        $("#dataContainer3").empty();
+                        $("#dataContainer3").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (err) {
+                console.log(err);
+            });
+        }
+
+        function OpenModuleModal() {
+            clearModuleCtrl();
+            $("#spanModuleModalHead").text('Add New Module');
+            $("#spanModuleSaveText").text('Save');
+            $("#modalModule").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        $("#btnAddNewModule").click(function (e) {
+            e.preventDefault();
+            OpenModuleModal();
+            clearModuleCtrl();
+        })
+
+        function validateModuleForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if ($.trim(txtModuleName.val()) == "") {
+                $(".required-moduleName").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(txtIconName.val()) == "") {
+                $(".required-iconName").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(txtIconColour.val()) == "") {
+                $(".required-iconColour").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        //Data add
+        $("#btnSubmitModule").click(function (e) {
+            e.preventDefault();
+            $(".error").addClass("hide");
+            if (validateModuleForm() == true) {
+                disable("#btnSubmitModule");
+                var data = JSON.stringify({
+                    MId: TryParseInt(hdfMId.val(), 0),
+                    ModuleName: txtModuleName.val(),
+                    IconName: txtIconName.val(),
+                    IconColor: txtIconColour.val(),
+                });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/ControlPanel/SaveModule', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        clearModuleCtrl();
+                        toastrSuccessAlert(execuStatus.successSave);
+                        $("#modalModule").modal("toggle");
+                        loadModuleDataTable();
+                        LoadDropdownForPage("module");
+                    }
+                    else {
+                        toastrErrorAlert(execuStatus.fail);
+                    }
+                    enable("#btnSubmitModule");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmitModule");
+                });
+            }
+        })
+
+        $(document).on("click", "a.data-module-item", function (e) {
+            e.preventDefault();
+            OpenModuleModal();
+            $("#spanModuleModalHead").text('Update Module');
+            $("#spanModuleSaveText").text('Update');
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+
+            hdfMId.val(td1);
+            txtModuleName.val(td2);
+            txtIconName.val(td3);
+            txtIconColour.val(td4);
+
+        })
+
+        function clearModuleCtrl() {
+            hdfMId.val('0');
+            txtModuleName.val('');
+            txtIconName.val('');
+            txtIconColour.val('');
+
+        }
+
+        // Main menu//
+        function OpenMainmenuModal() {
+            $("#spanMainmenuModalHead").text('Add New MainMenu');
+            $("#spanMainmenuSaveText").text('Save');
+            $("#modalMainMenu").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        $("#btnAddNewMainmenu").click(function (e) {
+            clearMainmenuCtrl();
+            e.preventDefault();
+            OpenMainmenuModal();
+            clearMainmenuCtrl();
+        })
+
+        function validateMainmenuForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if ($.trim(txtMenuName.val()) == "") {
+                $(".required-menuName").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        //Data add
+        $("#btnSubmitMainmenu").click(function (e) {
+            e.preventDefault();
+            $(".error").addClass("hide");
+            if (validateMainmenuForm() == true) {
+                var data = JSON.stringify({
+                    MMId: TryParseInt(hdfMMId.val(), 0),
+                    MenuName: txtMenuName.val(),
+                    MId: TryParseInt(ddlModuleName.val(), 0),
+                });
+                disable("#btnSubmitMainmenu");
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/ControlPanel/SaveMainMenu', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        clearMainmenuCtrl();
+                        toastrSuccessAlert(execuStatus.successSave);
+                        $("#modalMainMenu").modal("toggle");
+                        loadMainmenuDataTable();
+                        LoadDropdownForPage("mainmenu");
+                    }
+                    else {
+                        toastrErrorAlert(execuStatus.fail);
+                    }
+                    enable("#btnSubmitMainmenu");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmitMainmenu");
+                });
+            }
+        })
+
+        $(document).on("click", "a.data-mainmenu-item", function (e) {
+            e.preventDefault()
+            OpenMainmenuModal()
+            $("#spanMainmenuModalHead").text('Update MainMenu');
+            $("#spanMainmenuSaveText").text('Update');
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+
+            hdfMMId.val(td1);
+            txtMenuName.val(td2);
+            ddlModuleName.val(td3);
+        })
+
+        function clearMainmenuCtrl() {
+            hdfMMId.val('0');
+            txtMenuName.val('');
+            ddlModuleName.val('');
+        }
+
+        // Submenu
+        function OpenSubmenuModal() {
+            $("#spanSubmenuModalHead").text('Add New Submenu');
+            $("#spanSubmenuSaveText").text('Save');
+            $("#modalSubMenu").modal("show");
+            clearSubmenuCtrl();
+            $(".error").addClass("hide");
+        }
+
+        $("#btnAddNewSubmenu").click(function (e) {
+            e.preventDefault();
+            OpenSubmenuModal();
+        })
+
+        function validateSubmenuForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+
+            if ($.trim(txtSubMenuName.val()) == "") {
+                $(".required-submenuName").removeClass("hide");
+                isValid = false;
+            }
+            if (TryParseInt(ddlMainMenu.val(), 0) === 0) {
+                $('.req-mainmenu').removeClass("hide");
+                isValid = false;
+            }
+            if (chkIsActAsParent.is(":checked") === true) {
+
+                if (chkIsViewable.is(":checked") === false) {
+                    $('.req-chkViewable').removeClass("hide");
+                    isValid = false;
+                }
+                if (ddlParentSubMenu.val() !== "") {
+                    $(".invalid-submenu").removeClass('hide');
+                    isValid = false;
+                }
+            }
+            else {
+                if (txtController.val().trim() === '') {
+                    $('.required-controllerName').removeClass("hide");
+                    isValid = false;
+                }
+                if (txtActionName.val().trim() === '') {
+                    $('.required-actionName').removeClass("hide");
+                    isValid = false;
+                }
+            }
+            return isValid;
+        }
+
+        $("#btnSubmitSubmenu").click(function (e) {
+            e.preventDefault();
+            $(".error").addClass("hide");
+            if (validateSubmenuForm() == true) {
+                disable("#btnSubmitSubmenu")
+                var data = JSON.stringify({
+                    SubMenuId: TryParseInt(hdfSubMenuId.val(), 0),
+                    SubMenuName: txtSubMenuName.val(),
+                    ControllerName: txtController.val(),
+                    ActionName: txtActionName.val(),
+                    IconClass: txtIconName.val(),
+                    IsViewable: chkIsViewable.is(":checked"),
+                    IsActAsParent: chkIsActAsParent.is(":checked"),
+                    ParentSubMenuId: TryParseInt(ddlParentSubMenu.val(), 0),
+                    MMId: TryParseInt(ddlMainMenu.val(), 0),
+                });
+
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/ControlPanel/SaveSubMenu', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        clearSubmenuCtrl();
+                        toastrSuccessAlert(execuStatus.successSave);
+                        $("#modalSubMenu").modal("toggle");
+                        loadSubmenuDataTable();
+                        LoadDropdownForPage("submenu");
+                    }
+                    else {
+                        toastrErrorAlert(execuStatus.fail);
+                    }
+                    enable("#btnSubmitSubmenu")
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmitSubmenu")
+                });
+            }
+        })
+
+        $(document).on("click", "a.data-submenu-item", function (e) {
+            e.preventDefault()
+            OpenSubmenuModal();
+            $("#spanSubmenuModalHead").text('Update Submenu');
+            $("#spanSubmenuSaveText").text('Update');
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(5)').html();
+            var td5 = row.find('td:eq(6)').html();
+            var td6 = row.find('td:eq(7)').html();
+            var td7 = row.find('td:eq(8)').attr("data-val");
+            var td8 = row.find('td:eq(9)').attr("data-val");
+            var td9 = row.find('td:eq(10)').html();
+
+            hdfSubMenuId.val(td1);
+            txtSubMenuName.val(td2);
+            ddlMainMenu.val(td3);
+            txtController.val(td4);
+            txtActionName.val(td5);
+            txtIconName.val(td6);
+            chkIsViewable.prop("checked", false);
+            if (td7 === 'Yes') {
+                chkIsViewable.prop("checked", true);
+            }
+            chkIsActAsParent.prop("checked", false);
+            if (td8 === 'Yes') {
+                chkIsActAsParent.prop("checked", true);
+               
+            }
+            if (TryParseInt(td9, 0) > 0) {
+                ddlParentSubMenu.val(td9);
+            }
+        })
+
+        function clearSubmenuCtrl() {
+            hdfSubMenuId.val('0');
+            txtSubMenuName.val('');
+            txtController.val('');
+            txtActionName.val('');
+            txtIconName.val('');
+            chkIsViewable.prop("checked", false);
+            chkIsActAsParent.prop("checked", false);
+            ddlParentSubMenu.val('');
+            ddlMainMenu.val('');
+        }
+
+        function LoadDropdownForPage(flag) {
+            if (flag === 'module') {
+                clearDropdown("ddlModuleName");
+                LoadDropDown('/Common/GetModules', type.post, ddlModuleName);
+            }
+            else if (flag === 'mainmenu') {
+                clearDropdown("ddlMainMenu");
+                LoadDropDown('/Common/GetMainmenus', type.post, ddlMainMenu);
+            }
+            if (flag === 'submenu') {
+                clearDropdown("ddlParentSubMenu");
+                LoadDropDown('/Common/GetParentSubmenus', type.post, ddlParentSubMenu);
+            }
+        }
+        
+    </script>
+}

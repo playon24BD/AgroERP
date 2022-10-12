@@ -1,0 +1,477 @@
+﻿
+@{
+    ViewBag.Title = "Customer & Supplier";
+    string tab = Request.QueryString["tab"] != null ? Request.QueryString["tab"].ToString() : "";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow card-primary card-outline card-tabs" style="margin-top:-20px">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs nav-pills" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-two-customerList-tab" data-toggle="pill" href="#custom-tabs-two-customerList" role="tab" aria-controls="custom-tabs-two-customerList" aria-selected="true">Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-two-supplierList-tab" data-toggle="pill" href="#custom-tabs-two-supplierList" role="tab" aria-controls="custom-tabs-two-supplierList" aria-selected="false">Suppliers</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body shadow">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-two-customerList" role="tabpanel" aria-labelledby="custom-tabs-two-customerList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card shadow card-gray shadow">
+                                    <div class="card-header shadow">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    Customers
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn btn-primary btn-flat btn-sm float-right font-weight-bold" id="btnCustomerAddNew"><i class="fas fa-plus"></i> New Customer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row text-sm">
+                            <div class="col-md-12" style="margin-top:-15px">
+                                <div class="card card-navy">
+                                    <div class="card-body">
+                                        <div class="col-md-12 text-sm mb-2" id="dataContainer" style="overflow-y:scroll">
+                                            @{Html.RenderAction("GetAllCustomerAndSupplier", new { @flag = "customer" });}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="custom-tabs-two-supplierList" role="tabpanel" aria-labelledby="custom-tabs-two-supplierList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card shadow card-gray shadow">
+                                    <div class="card-header shadow">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    Suppliers
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn btn-primary btn-flat btn-sm float-right font-weight-bold" id="btnSupplierAddNew"><i class="fas fa-plus"></i> New Supplier</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-sm">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card shadow">
+                                    <div class="card-body shadow">
+                                        <div class="col-md-12 text-sm text-sm" id="dataContainer2" style="overflow-y:scroll">
+                                            @{Html.RenderAction("GetAllCustomerAndSupplier", new { @flag = "supplier" });}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCustomers" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead">New Customer Entry</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmItem">
+                    <input type="hidden" name="Id" id="hdfCustomerId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtCustomerName" class="control-label font-weight-bold">Name</label>
+                            <input type="text" name="remarks" value="" id="txtCustomerName" class="form-control form-control-sm" />
+                            <span class="error hide required-customerName font-weight-bold">Required Customer Name!</span>
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                            <label for="txtCustomerMobileNo" class="control-label font-weight-bold">Mobile No</label>
+                            <input type="text" name="remarks" value="" id="txtCustomerMobileNo" class="form-control form-control-sm" />
+                            <span class="error hide required-customermobileNo font-weight-bold">Required Mobile No!</span>
+                            <span class="error hide duplicate-customermobileNo font-weight-bold">Already Exits!</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtCustomerPhoneNumber" class="control-label font-weight-bold">Phone</label>
+                            <input type="text" name="remarks" value="" id="txtCustomerPhoneNumber" class="form-control form-control-sm" />
+                            <span class="error hide required-CustomerPhoneNumber font-weight-bold">Required Phone No!</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtCustomerAddress" class="control-label font-weight-bold">Address</label>
+                            <input type="text" name="remarks" value="" id="txtCustomerAddress" class="form-control form-control-sm" />
+                            <span class="error hide required-customerAddress font-weight-bold">Required Address !</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtCustomerEmail" class="control-label font-weight-bold">Email</label>
+                            <input type="text" name="remarks" value="" id="txtCustomerEmail" class="form-control form-control-sm" />
+                            <span class="error hide required-customerEmail font-weight-bold">Required Email !</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtCustomerRemarks" class="control-label font-weight-bold">Remarks</label>
+                            <input type="text" name="remarks" value="" id="txtCustomerRemarks" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-success btn-sm float-right" id="btnCustomerSubmit"><i class="far fa-save"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSuppliers" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead2">Entry New Supplier</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmItem">
+                    <input type="hidden" name="Id" id="hdfSupplierId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtSupplierName" class="control-label font-weight-bold">Name</label>
+                            <input type="text" name="remarks" value="" id="txtSupplierName" class="form-control form-control-sm" />
+                            <span class="error hide required-supplierName font-weight-bold">Required Supplier Name!</span>
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                            <label for="txtSupplierMobileNo" class="control-label font-weight-bold">Mobile No</label>
+                            <input type="text" name="remarks" value="" id="txtSupplierMobileNo" class="form-control form-control-sm" />
+                            <span class="error hide required-supplierMobileNo font-weight-bold">Required Mobile No!</span>
+                            <span class="error hide duplicate-suppliermobileNo font-weight-bold">Already Exits!</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtSupplierPhoneNumber" class="control-label font-weight-bold">Phone</label>
+                            <input type="text" name="remarks" value="" id="txtSupplierPhoneNumber" class="form-control form-control-sm" />
+                            <span class="error hide required-supplierPhoneNumber font-weight-bold">Required Phone No!</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtSupplierAddress" class="control-label font-weight-bold">Address</label>
+                            <input type="text" name="remarks" value="" id="txtSupplierAddress" class="form-control form-control-sm" />
+                            <span class="error hide required-supplierAddress font-weight-bold">Required Address !</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtSupplierEmail" class="control-label font-weight-bold">Email</label>
+                            <input type="text" name="remarks" value="" id="txtSupplierEmail" class="form-control form-control-sm" />
+                            <span class="error hide required-supplierEmail font-weight-bold">Required Email !</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtSupplierRemarks" class="control-label font-weight-bold">Remarks</label>
+                            <input type="text" name="remarks" value="" id="txtSupplierRemarks" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-success btn-sm float-right" id="btnSupplierSubmit"><i class="far fa-save"></i> <span id="spanSaveText2">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        //Customers
+        var searchByCustomers = $("#searchByCustomers");
+        var hdfCustomerId = $("#hdfCustomerId");
+        var txtCustomerName = $("#txtCustomerName");
+        var txtCustomerPhoneNumber = $("#txtCustomerPhoneNumber");
+        var txtCustomerMobileNo = $("#txtCustomerMobileNo");
+        var txtCustomerAddress = $("#txtCustomerAddress");
+        var txtCustomerEmail = $("#txtCustomerEmail");
+        var txtCustomerRemarks = $("#txtCustomerRemarks");
+
+        //Supplier
+        var hdfSupplierId = $("#hdfSupplierId");
+        var searchBySupplier = $("#searchBySupplier");
+        var txtSupplierName = $("#txtSupplierName");
+        var txtSupplierPhoneNumber = $("#txtSupplierPhoneNumber");
+        var txtSupplierMobileNo = $("#txtSupplierMobileNo");
+        var txtSupplierAddress = $("#txtSupplierAddress");
+        var txtSupplierEmail = $("#txtSupplierEmail");
+        var txtSupplierRemarks = $("#txtSupplierRemarks");
+        $(document).ready(function () {
+            if ('@tab' == "suppliers") {
+                $("#custom-tabs-two-supplierList-tab").trigger('click');
+            }
+        });
+
+        function OpenModalCustomer() {
+            clearCtrlCustomer();
+            $("#spanModalHead2").text('Entry New Supplier');
+            $("#spanSaveText").text('Save');
+            $("#modalCustomers").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        $("#btnCustomerAddNew").click(function (e) {
+            e.preventDefault();
+            clearCtrlCustomer();
+            OpenModalCustomer();
+        })
+        function clearCtrlCustomer() {
+            hdfCustomerId.val('0');
+            txtCustomerName.val('');
+            txtCustomerPhoneNumber.val('');
+            txtCustomerMobileNo.val('');
+            txtCustomerAddress.val('');
+            txtCustomerEmail.val('');
+            txtCustomerRemarks.val('');
+        }
+        function validateCustomerForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if ($.trim(txtCustomerName.val()) == "") {
+                $(".required-customerName").removeClass("hide");
+                isValid = false;
+            }
+            //if ($.trim(txtCustomerPhoneNumber.val()) == "") {
+            //    $(".required-supplierPhoneNumber").removeClass("hide");
+            //    isValid = false;
+            //}
+            if ($.trim(txtCustomerMobileNo.val()) == "") {
+                $(".required-customermobileNo").removeClass("hide");
+                isValid = false;
+            }
+            else {
+                var id = TryParseInt(hdfCustomerId.val(), 0);
+                if (ajaxBooleanChecker(JSON.stringify({ id: id, mobile: txtCustomerMobileNo.val().trim() }), '/Common2/IsDuplicateCustomerMobile', getToken()) == true) {
+                    $(".duplicate-customermobileNo").removeClass("hide");
+                    isValid = false;
+                }
+            }
+            if ($.trim(txtCustomerAddress.val()) == "") {
+                $(".required-customerAddress").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+        $("#btnCustomerSubmit").click(function (e) {
+            e.preventDefault();
+            $(".error").addClass("hide");
+            if (validateCustomerForm() == true) {
+
+                var data = JSON.stringify({
+                    CustomerId: TryParseInt(hdfCustomerId.val(),0),
+                    CustomerName: txtCustomerName.val(),
+                    Email: txtCustomerEmail.val(),
+                    Address: txtCustomerAddress.val(),
+                    PhoneNumber: txtCustomerPhoneNumber.val(),
+                    MobileNumber: txtCustomerMobileNo.val(),
+                    Remarks: txtCustomerRemarks.val()
+                });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/Accounts/SaveAccountsCustomer', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetAllCustomerAndSupplier")');
+                                }, 500);
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                    enable("#btnSubmit");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmit");
+                });
+            }
+
+        })
+        $(document).on("click", "a.data-edit-customer", function (e) {
+            e.preventDefault()
+            OpenModalCustomer()
+            $("#spanModalHead").text('Update Customer Info');
+            $("#spanSaveText").text('Update');
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+
+            hdfCustomerId.val(td1);
+            txtCustomerName.val(td2);
+            txtCustomerPhoneNumber.val(td3);
+            txtCustomerMobileNo.val(td4)
+            txtCustomerAddress.val(td5);
+            txtCustomerEmail.val(td6);
+            txtCustomerRemarks.val(td7);
+
+        })
+
+        ///Supplier
+        function OpenModalSupplier() {
+            clearCtrlSupplier();
+            $("#spanModalHead").text('Entry New Supplier');
+            $("#spanSaveText").text('Save');
+            $("#modalSuppliers").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        $("#btnSupplierAddNew").click(function (e) {
+            e.preventDefault();
+            clearCtrlSupplier();
+            OpenModalSupplier();
+        })
+        function clearCtrlSupplier() {
+            hdfSupplierId.val('0');
+            txtSupplierName.val('');
+            txtSupplierPhoneNumber.val('');
+            txtSupplierMobileNo.val('');
+            txtSupplierAddress.val('');
+            txtSupplierEmail.val('');
+            txtSupplierRemarks.val('');
+        }
+        function validateSupplierForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if ($.trim(txtSupplierName.val()) == "") {
+                $(".required-supplierName").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(txtSupplierMobileNo.val()) == "") {
+                $(".required-supplierMobileNo").removeClass("hide");
+                isValid = false;
+            }
+            else {
+                var id = TryParseInt(hdfSupplierId.val(), 0);
+                if (ajaxBooleanChecker(JSON.stringify({ id: id, mobile: txtSupplierMobileNo.val().trim() }), '/Common2/IsDuplicateSupplierMobile', getToken()) == true) {
+                    $(".duplicate-suppliermobileNo").removeClass("hide");
+                    isValid = false;
+                }
+            }
+            //if ($.trim(txtSupplierEmail.val()) == "") {
+            //    $(".required-customerEmail").removeClass("hide");
+            //    isValid = false;
+            //}
+            if ($.trim(txtSupplierAddress.val()) == "") {
+                $(".required-supplierAddress").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+        $("#btnSupplierSubmit").click(function (e) {
+            e.preventDefault();
+            $(".error").addClass("hide");
+            if (validateSupplierForm() == true) {
+
+                var data = JSON.stringify({
+                    SupplierId: TryParseInt(hdfSupplierId.val(),0),
+                    SupplierName: txtSupplierName.val(),
+                    Email: txtSupplierEmail.val(),
+                    Address: txtSupplierAddress.val(),
+                    PhoneNumber: txtSupplierPhoneNumber.val(),
+                    MobileNumber: txtSupplierMobileNo.val(),
+                    Remarks: txtSupplierRemarks.val()
+                });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/Accounts/SaveAccountsSupplier', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetAllCustomerAndSupplier", new { tab = "suppliers" })');
+                                }, 500);
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                    enable("#btnSubmit");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmit");
+                });
+            }
+
+        })
+        $(document).on("click", "a.data-edit-supplier", function (e) {
+            e.preventDefault()
+            OpenModalSupplier()
+            $("#spanModalHead2").text('Update Supplier Info');
+            $("#spanSaveText2").text('Update');
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+
+            hdfSupplierId.val(td1);
+            txtSupplierName.val(td2);
+            txtSupplierPhoneNumber.val(td3);
+            txtSupplierMobileNo.val(td4)
+            txtSupplierAddress.val(td5);
+            txtSupplierEmail.val(td6);
+            txtSupplierRemarks.val(td7);
+
+        })
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+    </script>
+    }

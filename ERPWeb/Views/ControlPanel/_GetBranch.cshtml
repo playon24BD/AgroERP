@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ERPBO.ControlPanel.ViewModels.BranchViewModel>
+@{
+    int sl = 0;
+    string badge = string.Empty;
+}
+
+<div class="row">
+    <div class="col-md-12" style="overflow-y:scroll">
+        <table class="table table-bordered table-sm table-striped table-responsive-lg table-valign-middle tblBranchData" id="tblBranchData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th>#SL</th>
+                    <th class="hide"></th>
+                    <th>Branch</th>
+                    <th>Short Name</th>
+                    <th class="hide"></th>
+                    <th>Organization</th>
+                    <th>Address</th>
+                    <th>MobileNo</th>
+                    <th>Email</th>
+                    <th>PhoneNo</th>
+                    <th>Fax</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                    <th>Entry User</th>
+                    <th>Update User</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var br in Model)
+                {
+                    sl = sl + 1;
+                    badge = br.StateStatus.ToLower() == "active" ? "badge bg-success" : "badge bg-danger";
+                    <tr>
+                        <td class="text-center text-bold" width="5%">@sl</td>
+                        <td class="hide">@br.BranchId</td>
+                        <td>@br.BranchName</td>
+                        <td>@br.ShortName</td>
+                        <td class="hide">@br.OrgId</td>
+                        <td>@br.OrganizationName</td>
+                        <td>@br.Address</td>
+                        <td>@br.MobileNo</td>
+                        <td style="word-break:break-word">@br.Email</td>
+                        <td>@br.PhoneNo</td>
+                        <td>@br.Fax</td>
+                        <td class="text-center" data-val="@br.StateStatus">
+                            <span class="@badge">@br.StateStatus</span>
+                        </td>
+                        <td>@br.Remarks</td>
+                        <td class="text-center text-sm">@br.EntryUser</td>
+                        <td class="text-center text-sm">@br.UpdateUser</td>
+
+                        <td class="text-center">
+                            <a href="#" class="btn btn-warning btn-sm data-edit-item" data-edit-item="@br.BranchId"><i class="fa fa-pen"></i> Edit</a>
+                        </td>
+                    </tr>
+                }
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="14">
+                            No Rows Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

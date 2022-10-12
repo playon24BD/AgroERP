@@ -1,0 +1,122 @@
+﻿@model IEnumerable<ERPBO.Accounts.ViewModels.JournalViewModel>
+@{
+    int sl = 0;
+    double debit = 0;
+    double credit = 0;
+    double d = 0;
+    double c = 0;
+    double totalD = 0;
+    double totalC = 0;
+    double g = 0;
+
+    Layout = null;
+}
+<div class="col-md-12 text-sm">
+    <table class="table table-bordered table-sm table-striped" id="tblPartsReturnList">
+        <thead class="btn-dark">
+            <tr class="text-center">
+                <th style="vertical-align:middle">#SL</th>
+                <th style="vertical-align:middle">Journal Date</th>
+                <th style="vertical-align:middle">V No</th>
+                <th style="vertical-align:middle">Narration</th>
+                <th style="vertical-align:middle" class="hide"></th>
+                <th style="vertical-align:middle" class="hide">Account Name</th>
+                <th style="vertical-align:middle">Dr.</th>
+                <th style="vertical-align:middle">Cr.</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var jor in Model)
+            {
+                sl = sl + 1;
+                debit += jor.Debit;
+                credit += jor.Credit;
+                d = debit - credit;
+                c = credit - debit;
+                totalD = debit + c;
+                totalC = credit + d;
+                string journaldate = jor.JournalDate != null ? jor.JournalDate.Value.ToString("dd-MMM-yyy") : "";
+            <tr>
+                <td class="text-center">@sl</td>
+                <td>@journaldate</td>
+                <td class="hide">@jor.AccountId</td>
+                <td>@jor.VoucherNo</td>
+                <td>@jor.Narration</td>
+                <td class="hide">@jor.AccountName</td>
+                <td class="text-center">@jor.Debit</td>
+                <td class="text-center">@jor.Credit</td>
+            </tr>
+            }
+            @if (Model.Count() == 0)
+            {
+                <tr class="text-center empty-row">
+                    <td colspan="6">
+                        No Rows Found
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot style="background-color:#bfbfbf">
+            <tr class="">
+                <th colspan="4" class="text-right">Total</th>
+                <td class="text-center font-weight-bold">
+                    @if (debit <= totalD)
+                    {
+                        @totalD;
+                    }
+                    else
+                    {
+                        @debit;
+                    }
+
+                </td>
+                <td class="text-center font-weight-bold">
+                    @if (credit <= totalC)
+                    {
+                        @totalC;
+                    }
+                    else
+                    {
+                        @credit;
+                    }
+
+                </td>
+            </tr>
+        </tfoot>
+        <tfoot style="background-color:#bfbfbf">
+            <tr class="">
+                <th colspan="4" class="text-right"></th>
+                <td class="text-center font-weight-bold">@debit</td>
+                <td class="text-center font-weight-bold">@credit</td>
+            </tr>
+        </tfoot>
+        <tfoot style="background-color:#bfbfbf">
+            <tr class="">
+                <th colspan="4" class="text-right">Closing Balance</th>
+                <td class="text-center font-weight-bold">
+                    @if (c > 0)
+                    {
+                        @c;
+                    }
+                    else
+                    {
+                        @g;
+                    }
+
+                </td>
+                <td class="text-center font-weight-bold">
+                    @if (d > 0)
+                    {
+                        @d;
+                    }
+                    else
+                    {
+                        @g;
+                    }
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+

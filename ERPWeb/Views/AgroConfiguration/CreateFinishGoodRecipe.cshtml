@@ -1,0 +1,411 @@
+﻿
+@{
+    ViewBag.Title = "CreateFinishGoodRecipe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text-sm" style="margin-top:-15px">
+    <div class="col-md-12">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                            <a href="/AgroConfiguration/GetFinishGoodRecipeList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                                <i class="fas fa-arrow-alt-circle-left"></i>
+                            </a>
+                        </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">Create Finish Good Recipe</h5>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5" style="border-right:2px solid #efefef">
+                        <h5 style="border-bottom:2px solid #f6eaaa">
+                            Target Product
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="ddlProductName" class="col-form-label">
+                                    Product Name
+                                </label>
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="txtQty" class="col-form-label">ProductQty <span id="unitName" class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
+                                <input type="number" placeholder="Qty" name="quantity" id="txtProductQty" class="form-control form-control-sm" />
+                                <span class="error hide req-src-Productqty text-bold">ProductQty is required!</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="ddlProductunit" class="col-form-label">Product Unit</label>
+                                @Html.DropDownList("ddlProductunit", (IEnumerable<SelectListItem>)ViewBag.ddlProductunit, "--Select Product unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-preparation text-bold">Unit is required</span>
+                            </div>
+                            <div class="form-row col-6">
+                                <label for="ddlStatus" class="control-label">Status</label>
+                                <select class="form-control form-control-sm" id="ddlStatus">
+                                    <option value="Active">Active</option>
+                                    <option value="InActive">InActive</option>
+                                </select>
+                            </div>
+                            @*<div class="col-md-4">
+            <label class="col-form-label" for="model">Product Unit</label>
+            <input type="text" id="txtProductunit" name="unit" class="form-control form-control-sm">
+        </div>*@
+                        </div>
+
+                    </div>
+                    <div class="col-md-7">
+                        <h5 style="border-bottom:2px solid #f87878">Source Raw Material</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="ddlRawMaterialName" class="col-form-label">Raw Material Name</label>
+                                @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select RawMaterial Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-src-RawMaterialName font-weight-bold">RawMaterial Name is required !</span>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label for="txtRawMaterialQty" class="col-form-label">RawMaterial Qty <span id="unitName" class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
+                                <input type="text" placeholder="Qty" name="quantity" id="txtRawMaterialQty" class="form-control form-control-sm" />
+                                <span class="error hide req-src-RawMaterialqty text-bold">RawMaterial Qty is required!</span>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="ddlRawMaterial" class="col-form-label">Product Unit</label>
+                                @Html.DropDownList("ddlRawMaterialunit", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialunit, "--Select RawMaterial unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @*<input type="text" id="ddlRawMaterialunit" name="ddlRawMaterialunit" class="form-control form-control-sm" readonly />*@
+                                <span class="error hide req-preparation text-bold">Unit is required</span>
+                            </div>
+                            @*<div class="col-md-3">
+            <label class="col-form-label" for="model">RawMaterial Unit</label>
+            <input type="text" id="txtRawMaterialunit" name="unit" class="form-control form-control-sm">
+        </div>*@
+                            <div class="col-md-2">
+                                <label for="" class="col-form-label" style="visibility:hidden"> Add To List</label>
+                                <div class="clearfix">
+                                    <button type="submit" class="btn btn-sm btn-warning text-bold float-right" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        @Html.AntiForgeryToken()
+                        <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg" id="tblList">
+                            <thead>
+                                <tr>
+                                    <th colspan="11" class="text-center">
+                                        <span class="error hide no-items">Please load the table first.</span>
+                                        <button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-left">
+                                            <i class="fas fa-paper-plane"></i> Save
+                                        </button>
+                                    </th>
+                                </tr>
+                                <tr class="text-center btn-dark">
+                                    <th style="width:8%">#SL</th>
+                                    <th style="width:40%">RawMaterial Name</th>
+                                    <th style="width:10%">RawMaterial Qty.</th>
+                                    <th style="width:10%">RawMaterial Unit</th>
+                                    <th style="width:12%">Action</th>
+                                    <th class="hide RawMaterialId"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="FinishGoodRecipeModal" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <input type="hidden" id="hdfRowIndex" />
+                <h4 id="modalHeading" class="modal-title">Edit Finish Qty</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <table id="tblEdit" class="table table-sm table-bordered table-striped table-responsive-lg">
+                    <tbody>
+                        <tr>
+                            <td class="alert-secondary" style="width:15%">RawMaterial Name</td>
+                            <td style="width:35%; background-color:#e1dada"></td>
+                            <td class="alert-secondary" style="width:15%">RawMaterial Qty</td>
+                            <td style="width:35%; background-color:#e1dada"> <input type="number" class="form-control form-control-sm" id="txtRawMaterialUpdateQty" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-sm btn-flat btn-danger">Cancel</button>
+                <button type="button" id="btnSubmit" class="btn btn-sm btn-flat btn-success">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var ddlProductName = $("#ddlProductName");
+        var txtProductQty = $("#txtProductQty");
+       // var txtProductunit = $("#txtProductunit");
+        var ddlProductunit = $("#ddlProductunit");
+
+        var ddlRawMaterialName = $("#ddlRawMaterialName");
+        var txtRawMaterialQty = $("#txtRawMaterialQty");
+        var ddlRawMaterialunit = $("#ddlRawMaterialunit");
+        var ddlStatus = $("#ddlStatus");
+
+        var hdfRowIndex = $("#hdfRowIndex");
+        var txtRawMaterialUpdateQty = $("#txtRawMaterialUpdateQty");
+        var RawMaterialId = '';
+
+
+        $(document).ready(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+        })
+
+        //ddlRawMaterialName.change(function () {
+        //    debugger;
+
+        //    var data = { RawMaterialId: ddlRawMaterialName.val() };
+
+        //    $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", data)).then(function (res, status) {
+        //        // debugger;
+        //        consoleLog(res.replace(/['"]+/g, ''));
+        //        var unit = res.replace(/['"]+/g, '');
+        //        ddlUnit.val(unit);
+        //        //targetQty.val();
+        //    });
+
+        //})
+        var rawMetarialList = [];
+
+        $("#btnAddToList").click(function (e) {
+            e.preventDefault();
+            if (validateAddToList()) {
+                var IsExistRawMetarial = rawMetarialList.includes(ddlRawMaterialName.val());
+                if (IsExistRawMetarial) {
+
+                    alert("This metarial is already Exist");
+                }
+                else
+                {
+                    addToList();
+                    rawMetarialList.push(ddlRawMaterialName.val());
+
+                }
+
+
+
+            }
+        })
+
+        function validateAddToList() {
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlProductName.val()) == 0)  {
+                $(".req-ProductName").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(txtProductQty.val(), 0) <= 0) {
+                $(".req-src-Productqty").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlRawMaterialName.val() === "") {
+                $(".req-src-RawMaterialName").removeClass('hide');
+                isValid = false;
+            }
+            //if (TryParseInt(txtRawMaterialQty.val(), 0) <= 0) {
+            //    $(".req-src-RawMaterialqty").removeClass('hide');
+            //    isValid = false;
+            //}
+
+            return isValid;
+        }
+
+        function addToList()
+        {
+            debugger;
+            //disable("#ddlWarehouseSource");
+            var sl = $("#tblList tbody tr").length;
+
+           // getSourceItemAndItemType();
+            var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
+            var td2 = "<td>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
+            var td3 = "<td class='text-center text-bold'>" + txtRawMaterialQty.val() + "</td>";
+            var td4 = "<td class='text-center text-bold'>" + dropDownSelectedText("ddlRawMaterialunit") + "</td>";
+            var td5 = "<td class='text-center'> <a href='#' class='btn btn-sm btn-danger btn-flat data-onfly-del'><i class='far fa-trash-alt'></i></a></td>";
+            var td6 = "<td class='hide RawMaterialId'>" + ddlRawMaterialName.val()+"</td>";
+            //var td8 = "<td class='hide itemType'>" + itemTypeSrc+"</td>";
+            //var td9 = "<td class='hide warehouse'>" + ddlWarehouseSource.val() + "</td>";
+
+            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 +"</tr>";
+            if ($("#tblList tbody tr").length == 0) {
+                $("#tblList tbody").append(tr);
+            }
+            else {
+                $("#tblList tbody tr").eq(0).before(tr);
+            }
+           // ddlItemSrc.val("");
+            txtRawMaterialQty.val('0');
+            disable("#ddlProductName");
+        }
+
+
+
+        // Edit ....
+        $(document).on('click', 'a.data-onfly-edit', function (e) {
+            e.preventDefault();
+            var row = $(this).parent().parents('tr');
+            $("#FinishGoodRecipeModal").modal("show");
+            hdfRowIndex.val('');
+            txtRawMaterialUpdateQty.val('0')
+            hdfRowIndex.val(row.index());
+            var RawMaterialName = row.children('td').eq(1).html();
+            var RawMaterialqty = row.children('td').eq(2).html();
+            //alert(row.index());
+
+            var tblEdit = $('#tblEdit tbody');
+            var itemRows = tblEdit.children('tr');
+            var itemRows1 = itemRows.eq('0');
+            itemRows1.children('td').eq(1).html(RawMaterialName);
+            txtUpdateQty.val(RawMaterialqty);
+        })
+
+        $("#btnUpdateQty").click(function (e) {
+            e.preventDefault();
+            if (hdfRowIndex.val() !== "") {
+                if (TryParseInt(txtRawMaterialUpdateQty.val(), 0) > 0) {
+                    $("#tblList tbody tr").eq(hdfRowIndex.val()).children('td').eq(2).html(txtRawMaterialUpdateQty.val());
+                    $("#FinishGoodRecipeModal").modal("toggle");
+                    $('.toastrDefaultUpdateOnFlayData').trigger('click').fadeOut(1000);
+                }
+                else {
+                    bootbox.alert("Quantity cannot be zero");
+                }
+            }
+        })
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+            e.preventDefault();
+            if (true === true) {
+
+                bootbox.confirm("Are you sure you want to Save this Recipe", function (result) {
+                    if (result) {
+                        debugger;
+                        //disable("#btnSubmit");
+                        //getTargetItemAndItemTypeAndWarehouse();
+                        var info = { FGRId: 0, FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), FGRQty: txtProductQty.val(), FGRUnit: ddlProductunit.val(), Status: ddlStatus.val(), RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), FGRRawMaterQty: txtRawMaterialQty.val(), FGRRawMaterUnit: ddlRawMaterialunit.val() };
+
+                        var details = [];
+                        details.length = 0;
+
+                        $.each($("#tblList tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+                                FGRDetailsId:0,
+                                RawMaterialId: tds.eq(5).html(),
+                                FGRRawMaterQty: tds.eq(2).html(),
+                                FGRRawMaterUnit: tds.eq(3).html()
+
+                            });
+                        })
+
+                        console.log('Info');
+                        console.log(info);
+                        console.log('Detail');
+                        console.log(details);
+                        var data = JSON.stringify({ info: info, details: details });
+                        //return;
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveFinishGoodRecipe', data , getToken())).then(function (res, status)
+                        {
+                            if (res === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetFinishGoodRecipeList")');
+                                }, 1000);
+                                //resetUI();
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+                    }
+                })
+            }
+        })
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var td = $(this).parent().parents('tbody tr').children("td");
+            var rawMaterialId = td.eq(5).html();
+            var indexRawMaterial = rawMetarialList.indexOf(rawMaterialId);
+            rawMetarialList.splice(indexRawMaterial, 1);
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+
+
+
+                    removeTableRow("#tblList tbody", index);
+                    fnFixTheTbodyRowSerialInDecsOrder("#tblList", index);
+                };
+            }));
+        })
+
+        $("#btnReset").click(function (e) {
+            e.preventDefault();
+            resetUI();
+        })
+
+        //function resetUI() {
+        //    enable("#ddlModelName");
+        //    ddlModelName.val("");
+        //    ddlModelName.trigger("change");
+        //    enable("#ddlWarehouseSource");
+        //    ddlWarehouseSource.val("");
+        //    enable("#ddlItemTgt");
+        //    clearDropdown("ddlItemSrc");
+        //    //clearDropdown("ddlItemTgt");
+        //    txtQty.val("0");
+        //    txtRemarks.val("");
+        //    $("#tblList tbody").empty();
+        //    ddlItemPreparationType.val('');
+        //    ddlItemPreparationType.trigger("change");
+        //    ddlItemTgt.val('');
+        //    ddlItemTgt.trigger("change");
+        //}
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+
+
+    </script>
+}
+

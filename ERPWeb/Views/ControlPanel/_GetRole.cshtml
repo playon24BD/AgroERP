@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ERPBO.ControlPanel.ViewModels.RoleViewModel>
+@{
+    int sl = 0;
+}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped table-sm table-responsive-lg tblRoles" id="tblRoles"> 
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th>#SL</th>
+                    <th class="hide"></th>
+                    <th>RoleName</th>
+                    <th class="hide"></th>
+                    <th>Organization Name</th>
+                    <th>Entry User</th>
+                    <th>Update User</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model)
+                {
+                    sl = sl + 1;
+                    <tr>
+                        <td class="text-center text-bold">@sl</td>
+                        <td class="hide">@role.RoleId</td>
+                        <td>@role.RoleName</td>
+                        <td class="hide">@role.OrganizationId</td>
+                        <td>@role.OrganizationName</td>
+                        <td class="text-center text-sm">@role.EntryUser</td>
+                        <td class="text-center text-sm">@role.UpdateUser</td>
+                        <td class="text-center">
+                            @if (ViewBag.OPFor == "System")
+                            {
+                                <a href="@Url.Action("CreateAppRole","ControlPanel", new { id=role.RoleId})" class="btn btn-sm btn-warning btn-flat"><i class="fas fa-pen"></i> Edit</a>
+                            }
+                            @if (ViewBag.OPFor == "Client")
+                            {
+                                <a href="@Url.Action("CreateUserRole","ControlPanel", new { id=role.RoleId})" class="btn btn-sm btn-warning btn-flat"><i class="fas fa-pen"></i> Edit</a>
+                            }
+                        </td>
+                    </tr>
+                }
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="8">
+                            No Rows Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
