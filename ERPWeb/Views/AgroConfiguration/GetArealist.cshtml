@@ -10,7 +10,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="/AgroConfiguration/GetArealist" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                        <a href="/AgroConfiguration/AreaList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
                             <i class="fas fa-arrow-alt-circle-left"></i>
                         </a>
                     </div>
@@ -94,16 +94,10 @@
     <script type="text/javascript">
 
 
-        //value asign
-        //var hdzonetId = $("#hdzonetId");
+
         var ddlorgname = $("#ddlorgname");
-        //var ddlZonename = $("#ddlZonename");
-        //var ddlDivisionname = $("#ddlDivisionname");
         var ddlRegionname = $("#ddlRegionname");
         var ddlAreaName = $("#ddlAreaName");
-
-        //var hdzonetId = '';
-        //var hddivisionId = '';
         var hdregionId = '';
         var AreaId = '';
         var hdOrgId = '';
@@ -121,29 +115,53 @@
         })
 
 
+        function Validationss() {
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlOrganizationName.val()) == 0) {
+                $('.required-ddlOrganization').removeClass("hide");
+                Isvalid = false;
+            }
 
+            if ($.trim(ddlAreaName.val()) == "") {
+                $('.required-AreaName').removeClass("hide");
+                Isvalid = false;
+            }
+
+
+            return Isvalid
+
+        }
 
 
         //add
         $("#addButton").click(function (e) {
-            //alert();
             debugger;
             e.preventDefault();
+            if (Validationss() == true) {
 
-                        var sl = $("#tblSingleItems tbody tr").length;
-                        var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-                        var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlorgname") + "</td>";
-                        var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlRegionname") + "</td>";
-                        var td4 = "<td class='text-center'>" + ddlAreaName.val() + "</td>";
-                        var td5 = "<td class='hide hdOrgId'>" + ddlorgname.val() + "</td>";
-                        var td6 = "<td class='hide hdregionId'>" + ddlRegionname.val() + "</td>";
-                        var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                if (AreaNameList.includes(ddlAreaName.val())) {
+                    toastrErrorAlert("Area Name Already Exist");
+                }
+                else {
+                    var sl = $("#tblSingleItems tbody tr").length;
+                    var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlorgname") + "</td>";
+                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlRegionname") + "</td>";
+                    var td4 = "<td class='text-center'>" + ddlAreaName.val() + "</td>";
+                    var td5 = "<td class='hide hdOrgId'>" + ddlorgname.val() + "</td>";
+                    var td6 = "<td class='hide hdregionId'>" + ddlRegionname.val() + "</td>";
+                    var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
 
-            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 +"</tr>";
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + "</tr>";
 
-                        $("#tblSingleItems tbody").append(tr);
+                    $("#tblSingleItems tbody").append(tr);
+                    AreaNameList.push(ddlAreaName.val());
+                }
 
+
+            }
 
 
         })
@@ -196,7 +214,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                      //  redirectPage('@Url.Action("Zonelist")');
+                          redirectPage('@Url.Action("AreaList")');
                     }, 1000);
                 }
                 else {
@@ -206,7 +224,9 @@
             }).fail(function (error) {
                 alert(execuStatus.fail);
                 enable("#saveButton");
-            })
+            });
+
+
 
             function redirectPage(page) {
                 window.location.replace(page);

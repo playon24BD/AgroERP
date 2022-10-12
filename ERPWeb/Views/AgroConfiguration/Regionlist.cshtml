@@ -204,7 +204,7 @@
 
             hdregiontId.val(td1);
             ddldivname.val(td2);
-            //ddlorgname.trigger("change");
+            ddldivname.trigger("change");
             ddlRegionName.val(td3);
             ddlstatus.val(td5);
 
@@ -234,7 +234,7 @@
                     if (res == true) {
                         $("#zonemodal").modal("toggle");
                         toastrSuccessAlert(execuStatus.successSave);
-                        LoadZoneDataTable();
+                        LoadRegionDataTable();
                     }
                     else {
                         message("#msg2");
