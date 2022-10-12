@@ -165,7 +165,7 @@
         })
 
         function LoadTerritoryDataTable() {
-            debugger
+            //debugger
            // alert("here me 2");
             var data = { flag: "View", name: $.trim(searchByAny.val()) }
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Territorylist', data)).then(function (res, status) {
@@ -193,7 +193,7 @@
         //editbuttun
         $(document).on("click", "a.data-edit-item-Territory", function (e) {
             //alert();
-            debugger;
+           // debugger;
             e.preventDefault()
 
             var row = $(this).parent().parents('tr');
@@ -218,20 +218,20 @@
 
 
             OpenModal();
-            $("#spanModalHead").text('Update Region');
-            $("#spanSaveTextRegion").text('Update');
+            $("#spanModalHead").text('Update Territory');
+            $("#spanSaveTextTerritory").text('Update');
             //spanSaveTextRegion
         })
 
 
         //savemodal
         $("#saveButton").click(function (e) {
-            alert();
-            debugger;
+           //alert();
+            //debugger;
             e.preventDefault();
             $(".error").addClass("hide");
 
-            //if (ValidationForm() == true) {
+            if (ValidationForm() == true) {
                 var edetails = JSON.stringify({ TerritoryId: TryParseInt(hdterritoryId.val(), 0), AreaId: TryParseInt(ddlareaname.val(), 0), TerritoryName: ddlTerritoryName.val(), Status: ddlstatus.val() });
                 console.log(edetails);
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveTerritoryInfo', edetails, getToken())).then(function (res, status) {
@@ -254,32 +254,33 @@
                     }
                     // enable("#saveButton");
                 })
-            //}
+            }
         });
 
 
 
         //validationform
-        //function ValidationForm() {
-        //    //debugger;
-        //    Isvalid = true;
-        //    $('.error').addClass("hide");
-        //    if ($.trim(ddlareaname.val()) == 0) {
-        //        $('.required-AreaName').removeClass("hide");
-        //        Isvalid = false;
-        //    }
-        //    if ($.trim(ddlTerritoryName.val()) == 0) {
-        //        $('.required-TerritoryName').removeClass("hide");
-        //        Isvalid = false;
-        //    }
-        //    if ($.trim(ddlstatus.val()) == 0) {
-        //        $('.required-status').removeClass("hide");
-        //        Isvalid = false;
-        //    }
 
-        //    return Isvalid
+        function ValidationForm() {
+            //debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlareaname.val()) == 0) {
+                $('.required-AreaName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlTerritoryName.val()) == 0) {
+                $('.required-TerritoryName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlstatus.val()) == 0) {
+                $('.required-status').removeClass("hide");
+                Isvalid = false;
+            }
 
-        //}
+            return Isvalid
+
+        }
 
         function redirectPage(page) {
             window.location.replace(page);

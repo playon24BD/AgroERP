@@ -87,11 +87,11 @@
                 <form id="formzone">
                     <input type="hidden" id="hdzonetId" />
                     <div class="form-row">
-                        <div class="form-group col-md-12">
+                        @*<div class="form-group col-md-12">
                             <label for="ddlorgname" class="control-label">OrganizationName</label>
                             @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
-                        </div>
+                        </div>*@
                         <div class="form-group col-md-12">
                             <label for="ddlZoneName" class="control-label">ZoneName</label>
                             <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
@@ -217,7 +217,7 @@
             $(".error").addClass("hide");
 
             if (ValidationForm() == true) {
-            var edetails = JSON.stringify({ ZoneId: TryParseInt(hdzonetId.val(), 0), OrganizationId: TryParseInt(ddlorgname.val(), 0), ZoneName: ddlZoneName.val(), Status: ddlstatus.val() });
+            var edetails = JSON.stringify({ ZoneId: TryParseInt(hdzonetId.val(), 0),  ZoneName: ddlZoneName.val(), Status: ddlstatus.val() });
             console.log(edetails);
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveZonetInfo', edetails, getToken())).then(function (res, status) {
                 //alert("hitme");
@@ -250,10 +250,10 @@
             //debugger;
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlorgname.val()) == 0) {
-                $('.required-OrganizationName').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlorgname.val()) == 0) {
+            //    $('.required-OrganizationName').removeClass("hide");
+            //    Isvalid = false;
+            //}
             if ($.trim(ddlZoneName.val()) == 0) {
                 $('.required-ZoneName').removeClass("hide");
                 Isvalid = false;

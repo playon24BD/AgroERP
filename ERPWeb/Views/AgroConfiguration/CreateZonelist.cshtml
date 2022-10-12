@@ -22,11 +22,11 @@
 
             <div class="card-body text-sm">
                 <div class="row " style="margin-top:-8px;">
-                    <div class="col-md-2">
+                    @*<div class="col-md-2">
                         <label for="ddlorgname" class="control-label">OrganizationName</label>
                         @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                         <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
-                    </div>
+                    </div>*@
                     <div class="col-md-2">
                         <label for="ddlZoneName" class="control-label">ZoneName</label>
                         <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
@@ -54,7 +54,7 @@
 
                                 <tr class="text-center btn-dark">
                                     <th style="width:5%">#SL</th>
-                                    <th style="width:15%">ORGNAME</th>
+                                    <th class="hide" style="width:15%">ORGNAME</th>
                                     <th style="width:15%">Zone Name</th>
                                     <th style="width:10%">Action</th>
                                     @*<th class="hide hdzonetId"></th>*@
@@ -120,7 +120,7 @@
             else {
                 var sl = $("#tblSingleItems tbody tr").length;
                 var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlorgname") + "</td>";
+                var td2 = "<td class='hide'>" + dropDownSelectedText("ddlorgname") + "</td>";
                 var td3 = "<td class='text-center'>" + ddlZoneName.val() + "</td>";               
                 var td4 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
@@ -215,10 +215,10 @@
             //debugger;
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlorgname.val()) == 0) {
-                $('.required-OrganizationName').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlorgname.val()) == 0) {
+            //    $('.required-OrganizationName').removeClass("hide");
+            //    Isvalid = false;
+            //}
             if ($.trim(ddlZoneName.val()) == 0) {
                 $('.required-ZoneName').removeClass("hide");
                 Isvalid = false;

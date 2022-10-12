@@ -106,8 +106,8 @@
 
         //add
         $("#addButton").click(function (e) {
-            alert();
-            debugger;
+            //alert();
+            //debugger;
             e.preventDefault();
 
 
@@ -138,7 +138,7 @@
 
         //remove
         $(document).on("click", "a.data-onfly-del", function (e) {
-            debugger;
+            //debugger;
             e.preventDefault();
             var index = $(this).parent().parents('tbody tr').index();
             var tds = $(this).parent().parents('tbody tr').children('td');
@@ -158,8 +158,8 @@
 
         //save
         $("#saveButton").click(function (e) {
-            alert();
-            debugger;
+            //alert();
+            //debugger;
             e.preventDefault();
 
             var details = [];
@@ -208,13 +208,13 @@
 
         //validation
         function ValidationForm() {
-            debugger;
+           // debugger;
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlorgname.val()) == 0) {
-                $('.required-OrganizationName').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlorgname.val()) == 0) {
+            //    $('.required-OrganizationName').removeClass("hide");
+            //    Isvalid = false;
+            //}
             if ($.trim(ddlareaname.val()) == 0) {
                 $('.required-AreaName').removeClass("hide");
                 Isvalid = false;
