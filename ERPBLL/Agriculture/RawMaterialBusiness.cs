@@ -46,6 +46,7 @@ namespace ERPBLL.Agriculture
                     RawMaterialName = rawMaterial.RawMaterialName,
                     //ExpireDate = rawMaterial.ExpireDate,
                     DepotId = rawMaterial.DepotId,
+                    Status=rawMaterial.Status,
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
                 };
@@ -59,6 +60,7 @@ namespace ERPBLL.Agriculture
                 material.RawMaterialName = rawMaterial.RawMaterialName;
                 material.DepotId = rawMaterial.DepotId;
                 //material.ExpireDate = rawMaterial.ExpireDate;
+                material.Status = rawMaterial.Status;
                 material.UpdateDate = rawMaterial.UpdateDate;
                 material.UpdateUserId = rawMaterial.UpdateUserId;
                 _rawMaterialRepository.Update(material);

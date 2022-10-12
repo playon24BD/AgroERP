@@ -22,5 +22,7 @@ namespace ERPBO.Agriculture.DTOModels
         public long DepotId { get; set; }
         public string DepotName { get; set; }
         public DateTime? ExpireDate { get; set; }
+        public string Status { get; set; }
+        public string UserName { get; set; }
     }
 }

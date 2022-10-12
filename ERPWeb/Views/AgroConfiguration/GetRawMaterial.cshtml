@@ -109,9 +109,11 @@
                             <span class="error hide required-expairDate"> Date is Required</span>
                         </div>*@
                     <div class="col-md-12">
-                        <label class="control-label font-weight-bold" for="remarks">Remarks</label>
-                        <input type="text" id="remarks" class="form-control form-control-sm" />
-
+                        <label for="ddlStatus" class="control-label">Status</label>
+                        <select class="form-control form-control-sm" id="ddlStatus">
+                            <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
+                        </select>
                     </div>
 
                 </form>
@@ -144,6 +146,7 @@
         var rawMaterialName = $("#rawMaterialName");
         var ddlRawMaterial = $("#ddlRawMaterial");
         var ddlDepotNameforSearch = $("#ddlDepotNameforSearch");
+        var ddlStatus = $("#ddlStatus");
 
 
 
@@ -218,29 +221,19 @@
         $("#btnSave").click(function (e) {
 
             e.preventDefault();
-            var data = { depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val() }
+            var data = { depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val(), Status: ddlStatus.val()  }
             if (formValidation() == true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
                     //console.log('respons' + JSON.parse( res));
                     console.log(status);
                     if (res == true) {
                         message("#msg1", "#rawmetarialModal");
-
-
-
-
                     }
                     else {
                         message("#msg2");
                     }
 
                 })
-
-
-
-
-
-
 
             }
 
@@ -272,6 +265,8 @@
 
             ddlDepotName.val(td2);
             ddlDepotName.trigger("change");
+
+            //ddlStatus.val(td6);
 
             hdmaterialId.val(td1);
 
