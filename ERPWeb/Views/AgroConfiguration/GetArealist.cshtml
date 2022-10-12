@@ -118,10 +118,15 @@
         function Validationss() {
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlOrganizationName.val()) == 0) {
-                $('.required-ddlOrganization').removeClass("hide");
+            if ($.trim(ddlorgname.val()) == 0) {
+                $('.required-OrganizationName').removeClass("hide");
                 Isvalid = false;
             }
+            if ($.trim(ddlRegionname.val()) == 0) {
+                $('.required-RegionName').removeClass("hide");
+                Isvalid = false;
+            }
+
 
             if ($.trim(ddlAreaName.val()) == "") {
                 $('.required-AreaName').removeClass("hide");

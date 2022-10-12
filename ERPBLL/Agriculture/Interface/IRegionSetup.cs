@@ -12,7 +12,7 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<RegionSetup> GetAllRegionSetup(long OrgId);
 
-        IEnumerable<RegionSetupDTO> GetRegionInfos(long orgId, long? regionId, long? divisionId);
+        IEnumerable<RegionSetupDTO> GetRegionInfos(long orgId, string name, long? regionId, long? divisionId);
        
 
         IEnumerable<RegionSetupDTO> GetAllRegionDetails(long DivisionId, long orgId);

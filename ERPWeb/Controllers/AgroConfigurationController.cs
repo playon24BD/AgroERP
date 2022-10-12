@@ -1391,7 +1391,7 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                var dto = _regionSetup.GetRegionInfos(User.OrgId, regionId ?? 0, divisionId ?? 0);
+                var dto = _regionSetup.GetRegionInfos(User.OrgId, name ?? null, regionId ?? 0, divisionId ?? 0);
 
 
 
@@ -1466,7 +1466,7 @@ namespace ERPWeb.Controllers
         public ActionResult SaveAreaInfo(List<AreaSetupViewModel> details, AreaSetupViewModel dto)
         {
             bool IsSuccess = false;
-            if (details!=null && dto==null)
+            if (details!=null && details.Count > 0 && dto.AreaId==0)
             {
                 List<AreaSetupDTO> detailsDTO = new List<AreaSetupDTO>();
                 AutoMapper.Mapper.Map(details, detailsDTO);
