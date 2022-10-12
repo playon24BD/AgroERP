@@ -1,0 +1,268 @@
+﻿
+@{
+    ViewBag.Title = "GetStockiestList";
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
+
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-StockiestInfoList-tab" data-toggle="pill" role="tab" aria-selected="true" href="#custom-tabs-StockiestInfoList" aria-controls="custom-tabs-StockiestInfoList">StockiestInfo List</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-StockiestInfoList" aria-labelledby="custom-tabs-StockiestInfoList-tab" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h4 class="text-center text-bold">Stockiest List</h4>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="/AgroConfiguration/CreateStockiestList" class="btn btn-outline-primary btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Stockiest</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-5px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Search By</h4>
+                                    </div>
+
+                                    <div class="card-body text-sm">
+                                        <div class="row" style="margin-top:-15px">
+                                            <div class="col-md-3">
+                                                <label for="ddlStockiestName" class="control-label">Stockiest Name</label>
+                                                @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label for="ddlTerritoryName" class="control-label">Territory Name</label>
+                                                @Html.DropDownList("ddlTerritoryName1", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal" id="StockiestModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formStockiest">
+                    <input type="hidden" id="hdstockiestId" />
+                    <div class="col-md-10">
+                        <label for="ddlTerritoryName" class="control-label">TerritoryName</label>
+                        @Html.DropDownList("ddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                    </div>
+
+                    
+
+                    <div class="col-md-10">
+                        <label for="txtStockiestName" class="control-label">StockiestName</label>
+                        <input type="text" id="txtStockiestName" class="form-control form-control-sm" />
+                        
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="ddlStatus" class="control-label">Status</label>
+
+                        <select id="ddlStatus" class="form-control form-control-sm select2">
+                            <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
+                        </select>
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been Successfully Saved
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been faild to Save
+                    </div>
+                </div>
+                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
+                <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+
+    <script type="text/javascript">
+
+        var ddlStockiestName = $("#ddlStockiestName");
+        var ddlTerritoryName = $("#ddlTerritoryName");
+        var ddlTerritoryName1 = $("#ddlTerritoryName1");
+        var txtStockiestName = $("#txtStockiestName");
+        var ddlStatus = $("#ddlStatus");
+        var hdstockiestId = $("#hdstockiestId");
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadStockiestList();
+        })
+
+        ddlStockiestName.change(function () {
+
+            LoadStockiestList();
+        })
+
+        ddlTerritoryName1.change(function () {
+
+            LoadStockiestList();
+        })
+
+        function LoadStockiestList() {
+
+            var data = { flag: "View", stockiestId: TryParseInt(ddlStockiestName.val(), 0), territoryId: TryParseInt(ddlTerritoryName1.val(), 0), id: 0 };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetStockiestList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+        }
+
+
+        function OpenModal() {
+
+            $("#spanSaveText").text('Save');
+            $("#StockiestModal").modal("show");
+
+
+        }
+
+
+        $("#btnSave").click(function (e) {
+
+            e.preventDefault();
+            debugger;
+            var data = { stockiestId: TryParseInt(hdstockiestId.val(), 0), territoryId: TryParseInt(ddlTerritoryName.val(), 0), stockiestName: txtStockiestName.val(), Status: ddlStatus.val() }
+
+            if (true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/UpdateStockiestList", JSON.stringify(data), getToken())).then(function (res, status) {
+
+                    console.log(status);
+                    if (res == true) {
+                        message("#msg1", "#StockiestModal");
+
+                    }
+                    else {
+                        message("#msg2");
+                    }
+
+                })
+
+            }
+
+        })
+
+        $(document).on("click", "a.data-edit-item-StockiestId", function (e) {
+
+
+            e.preventDefault()
+            debugger;
+
+
+
+            var row = $(this).parent().parents('tr');
+
+            console.log(row);
+            var stockiestId = row.find('td:eq(4)').html();
+            var territoryId = row.find('td:eq(2)').html();
+            var hid = row.find('td:eq(1)').html();
+            var Status = row.find('td:eq(5)').html();
+
+
+
+            ddlStatus.val(Status);
+            ddlStatus.trigger("change");
+            hdstockiestId.val(hid);
+            console.log(hdstockiestId.val());
+            console.log(hid);
+            txtStockiestName.val(stockiestId);
+            txtStockiestName.trigger("change");
+
+            ddlTerritoryName.val(territoryId);
+            console.log(territoryId);
+            ddlTerritoryName.trigger("change");
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update Stockiest');
+            $("#spanSaveText").text('Update');
+        })
+
+
+    </script>
+}

@@ -19,7 +19,7 @@ namespace ERPWeb.Controllers
         private readonly ITerritorySetup _territorySetup;//e
 
 
-
+        private readonly IStockiestInfo _stockiestInfo;
         public readonly IDivisionInfo _divisionInfo;
         public readonly IZone _zone;
         private readonly IZoneDetail _zoneDetail;
@@ -47,12 +47,13 @@ namespace ERPWeb.Controllers
         private readonly IFinishGoodProductionDetailsBusiness _finishGoodProductionDetailsBusiness;
 
 
-        public AgroConfigurationController(ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
+        public AgroConfigurationController(IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
 
         ////public AgroConfigurationController(IStockiestInfo stockiestInfo,IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
 
         {
-  
+
+            this._stockiestInfo = stockiestInfo;
             this._zoneSetup = zoneSetup;//e
             this._territorySetup = territorySetup;//e
             this._regionSetup = regionSetup;//e
@@ -1568,6 +1569,76 @@ namespace ERPWeb.Controllers
         //}
 
         //Area
+        #endregion
+
+        #region Stockiest List
+
+        public ActionResult GetStockiestList(string flag, long? stockiestId, long? territoryId, long? id)
+        {
+            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetStockiestList");
+
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName, Value = stock.StockiestId.ToString() }).ToList();
+
+                ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
+
+                return View();
+
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _stockiestInfo.GetStockiestInfos(stockiestId ?? 0, territoryId ?? 0, User.OrgId);
+
+                List<StockiestInfoViewModel> viewModels = new List<StockiestInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetStockiestPartialView", viewModels);
+
+
+            }
+
+            return View();
+        }
+
+        public ActionResult CreateStockiestList(long? id)
+        {
+            ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+            ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
+
+            return View();
+        }
+
+        public ActionResult SaveStockiestList(List<StockiestInfoViewModel> details)
+        {
+            bool IsSuccess = false;
+            if (details.Count > 0)
+            {
+                List<StockiestInfoDTO> dto = new List<StockiestInfoDTO>();
+
+                AutoMapper.Mapper.Map(details, dto);
+                IsSuccess = _stockiestInfo.SaveStockiestList(dto, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
+
+        }
+
+        public ActionResult UpdateStockiestList(StockiestInfoViewModel update)
+        {
+            bool IsSuccess = false;
+            StockiestInfoDTO updateDTO = new StockiestInfoDTO();
+            AutoMapper.Mapper.Map(update, updateDTO);
+            IsSuccess = _stockiestInfo.UpdateStockiestList(updateDTO, User.UserId, User.OrgId);
+
+            return Json(IsSuccess);
+        }
+
+
         #endregion
 
         #endregion

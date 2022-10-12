@@ -1,0 +1,222 @@
+﻿
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/GetStockiestList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">Create Stockiest</h5>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body text-sm">
+                <div class="row " style="margin-top:-8px;">
+                    <div class="col-md-2">
+                        <label for="ddlOrganizationName" class="control-label">Organization Name</label>
+
+                        @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                        <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ddlTerritoryName" class="control-label">TerritoryName</label>
+                        @*<select id="ddlTerritoryName" class="form-control form-control-sm select2" >
+                            <option value="1">T1</option>
+                            <option value="2">T2</option>
+                            <option value="3">T3</option>
+                        </select>*@
+                        @Html.DropDownList("ddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide required-TerritoryName font-weight-bold">Select Territory Name!</span>
+                        <span class="error hide duplicate-TerritoryName font-weight-bold">Already Territory Exist!</span>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtStockiestName" class="control-label">StockiestName</label>
+                        <input type="text" id="txtStockiestName" class="form-control form-control-sm" />
+                        <span class="error hide required-StockiestName font-weight-bold">Input Stockiest Name!</span>
+                        <span class="error hide duplicate-StockiestName font-weight-bold">Already Stockiest Exist!</span>
+                    </div>
+
+                    <div class="col-md-1 " style="margin-top:5px;">
+                        <label for="addButton" class="control-label"></label>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblMargeItems">
+                            <thead>
+                                <tr>
+                                    <th colspan="9">
+                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                    </th>
+                                </tr>
+
+                                <tr class="text-center btn-dark">
+                                    <th style="width:5%">#SL</th>
+                                    <th style="width:15%">OrganizationName</th>
+                                    <th style="width:15%">Territory Name</th>
+                                    <th style="width:15%">Stockiest Name</th>
+                                    <th style="width:10%">Action</th>
+                                    <th class="hide OrganizationId"></th>
+                                    <th class="hide TerritoryId"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var ddlOrganizationName = $("#ddlOrganizationName");
+        var ddlTerritoryName = $("#ddlTerritoryName");
+        var txtStockiestName = $("#txtStockiestName");
+        var StockiestNameList = [];
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+        })
+
+        $("#addButton").click(function (e) {
+            e.preventDefault();
+
+            if (FormValidations() == true) {
+
+                if (StockiestNameList.includes(txtStockiestName.val())) {
+                    toastrErrorAlert("Stockiest Name Already Exist");
+                }
+                else {
+
+                    var sl = $("#tblMargeItems tbody tr").length;
+                    var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlOrganizationName") + "</td>";
+                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlTerritoryName") + "</td>";
+                    var td4 = "<td class='text-center'>" + txtStockiestName.val() + "</td>";
+
+                    var td5 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                    var td6 = "<td class='hide OrganizationId'>" + ddlOrganizationName.val() + "</td>";
+                    var td7 = "<td class='hide TerritoryId'>" + ddlTerritoryName.val() + "</td>";
+
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + "</tr>";
+
+                    $("#tblMargeItems tbody").append(tr);
+                    StockiestNameList.push(txtStockiestName.val());
+                }
+
+
+            }
+        })
+
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+            var stockiestId = tds.eq(5).html();
+            console.log("stockiestId :" + stockiestId);
+            const mid = StockiestNameList.indexOf(stockiestId);
+            StockiestNameList.splice(mid, 1);
+
+            removeTableRow("#tblMargeItems tbody", index);
+            fnFixTheTbodyRowSerial("#tblMargeItems tbody", index);
+        })
+
+
+
+        $("#saveButton").click(function (e) {
+            debugger;
+        e.preventDefault();
+
+            var details = [];
+            details.length = 0;
+        $.each($("#tblMargeItems tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+
+                    StockiestId: 0,
+                    TerritoryId: tds.eq(6).html(),
+                    StockiestName: tds.eq(3).html(),
+                    OrganizationId: tds.eq(1).html()
+
+                });
+            })
+            console.log(details);
+            var data = JSON.stringify({ details: details });
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveStockiestList', data, getToken())).then(function (res, status) {
+                if (res === true) {
+                    debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("GetStockiestList")');
+                    }, 1000);
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+        }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#saveButton");
+        })
+
+        
+
+    });
+
+        function FormValidations() {
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlOrganizationName.val()) == 0) {
+                $('.required-ddlOrganization').removeClass("hide");
+                Isvalid = false;
+            }
+
+            if ($.trim(txtStockiestName.val()) == "") {
+                $('.required-StockiestName').removeClass("hide");
+                Isvalid = false;
+            }
+
+
+            return Isvalid
+
+        }
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+    </script>
+}

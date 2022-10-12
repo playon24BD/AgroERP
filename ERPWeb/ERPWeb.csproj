@@ -491,6 +491,9 @@
     <Content Include="Views\AgroConfiguration\CreateTerritorylist.cshtml" />
     <Content Include="Views\AgroConfiguration\Territorylist.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetTerritoryPartialView.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetStockiestList.cshtml" />
+    <Content Include="Views\AgroConfiguration\CreateStockiestList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetStockiestPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
