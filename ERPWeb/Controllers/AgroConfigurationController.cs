@@ -15,6 +15,7 @@ namespace ERPWeb.Controllers
 {
     public class AgroConfigurationController : BaseController
     {
+        public readonly IStockiestInfo _stockiestInfo;
         public readonly IDivisionInfo _divisionInfo;
         public readonly IZone _zone;
         private readonly IZoneDetail _zoneDetail;
@@ -42,8 +43,9 @@ namespace ERPWeb.Controllers
         private readonly IFinishGoodProductionDetailsBusiness _finishGoodProductionDetailsBusiness;
 
 
-        public AgroConfigurationController(IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
+        public AgroConfigurationController(IStockiestInfo stockiestInfo,IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
         {
+            this._stockiestInfo = stockiestInfo;
             this._zoneSetup = zoneSetup;//e
             this._regionSetup = regionSetup;//e
             this._divisionInfo = divisionInfo;
@@ -1501,6 +1503,26 @@ namespace ERPWeb.Controllers
         //}
 
         //Area
+        #endregion
+
+        #region Stockiest List
+
+        public ActionResult GetStockiestList(string flag)
+        {
+                return View();
+        }
+
+        public ActionResult CreateStockiestList()
+        {
+            return View();
+        }
+
+        public ActionResult SaveStockiestList()
+        {
+            return View();
+        }
+
+
         #endregion
 
         #endregion
