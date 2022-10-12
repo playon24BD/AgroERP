@@ -40,7 +40,7 @@ namespace ERPBLL.Agriculture
             {
                 DepotSetup depot = new DepotSetup()
                 {
-                    OrganizationId = infoDTO.OrganizationId,
+                    OrganizationId = orgId,
                     DepotName = infoDTO.DepotName,
                     RoleId = infoDTO.RoleId,
                     UpdateDate = DateTime.Now,

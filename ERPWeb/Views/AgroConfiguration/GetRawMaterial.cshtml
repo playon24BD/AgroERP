@@ -79,7 +79,7 @@
             <div class="modal-body">
                 <form id="formRawMetarial">
                     <input type="hidden" id="hdmaterialId" />
-                    <div class="col-md-12">
+                    <div class="col-md-12 hide">
                         <label class="control-label font-weight-bold">Organization</label>
 
                         @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganization, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
@@ -138,7 +138,7 @@
     <script type="text/javascript">
         var hdmaterialId = $("#hdmaterialId");
         var ddlDepotName = $("#ddlDepotName");
-        var ddlOrganization = $("#ddlOrganization");
+       // var ddlOrganization = $("#ddlOrganization");
         //var expairDate = $("#expairDate");
         var remarks = $("#remarks");
         var rawMaterialName = $("#rawMaterialName");
@@ -218,7 +218,7 @@
         $("#btnSave").click(function (e) {
 
             e.preventDefault();
-            var data = { organizationId: TryParseInt(ddlOrganization.val(), 0), depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val() }
+            var data = { depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val() }
             if (formValidation() == true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
                     //console.log('respons' + JSON.parse( res));
@@ -249,7 +249,7 @@
         })
 
         $(document).on("click", "a.data-edit-item-rawMaterialId", function (e) {
-
+            debugger;
             e.preventDefault()
 
 
@@ -267,8 +267,8 @@
             rawMaterialName.val(td5);
             remarks.val('');
             //expairDate.val(td6);
-            ddlOrganization.val(td8);
-            ddlOrganization.trigger("change");
+            //ddlOrganization.val(td8);
+            //ddlOrganization.trigger("change");
 
             ddlDepotName.val(td2);
             ddlDepotName.trigger("change");
@@ -285,10 +285,10 @@
         function formValidation() {
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlOrganization.val()) == 0) {
-                $('.required-ddlOrganization').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlOrganization.val()) == 0) {
+            //    $('.required-ddlOrganization').removeClass("hide");
+            //    Isvalid = false;
+            //}
             if ($.trim(ddlDepotName.val()) == 0) {
                 $('.required-ddlDepotName').removeClass("hide");
                 Isvalid = false;
@@ -308,7 +308,7 @@
             rawMaterialName.val("");
             remarks.val('');
             //expairDate.val('');
-            ddlOrganization.val('');
+            //ddlOrganization.val('');
             ddlDepotName.val('');
             hdmaterialId.val('0');
 

@@ -42,7 +42,7 @@ namespace ERPBLL.Agriculture
             {
                 RawMaterial material = new RawMaterial()
                 {
-                    OrganizationId = rawMaterial.OrganizationId,
+                    OrganizationId = orgId,
                     RawMaterialName = rawMaterial.RawMaterialName,
                     //ExpireDate = rawMaterial.ExpireDate,
                     DepotId = rawMaterial.DepotId,
