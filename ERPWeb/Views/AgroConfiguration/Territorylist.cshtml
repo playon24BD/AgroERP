@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = "TerritoryList";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-two-TerritoryList-tab" data-toggle="pill" href="#custom-tabs-two-RegionList" role="tab" aria-controls="custom-tabs-two-TerritoryList" aria-selected="true">Existing Territory List</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-two-TerritoryList" role="tabpanel" aria-labelledby="custom-tabs-two-RegionList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    Territory List
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="/AgroConfiguration/CreateTerritorylist" class="btn btn-outline-primary btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Territory</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <h4 class="col-md-2">Search By</h4>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By Any" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@*modal*@
+<div class="modal" id="territorymodal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formterritory">
+                    <input type="hidden" id="hdterritoryId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="ddlareaname" class="control-label">DivisionName</label>
+                            @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select divName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            <span class="error hide required-AreaName font-weight-bold">Input AreaName!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlTerritoryName" class="control-label">TerritoryName</label>
+                            <input type="text" id="ddlTerritoryName" class="form-control form-control-sm" />
+                            <span class="error hide required-TerritoryName font-weight-bold">Input TerritoryName!</span>
+                            <span class="error hide duplicate-TerritoryName font-weight-bold">Already TerritoryName Exist!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlstatus" class="control-label">Status</label>
+                            <input type="text" id="ddlstatus" class="form-control form-control-sm" />
+                            <span class="error hide required-status font-weight-bold">Input status!</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="modal-footer btn-default">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextTerritory">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>

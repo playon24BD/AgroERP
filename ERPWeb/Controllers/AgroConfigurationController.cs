@@ -1493,6 +1493,42 @@ namespace ERPWeb.Controllers
         }
         #endregion
 
+        #region Teritory List
+
+        public ActionResult Territorylist(string flag, string name, long? divisionId, long? regionId)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
+
+                return View();
+            }
+            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            //{
+            //    var dto = _regionSetup.GetRegionInfos(User.OrgId, regionId ?? 0, divisionId ?? 0);
+
+
+
+            //    List<RegionSetupViewModel> viewModels = new List<RegionSetupViewModel>();
+            //    AutoMapper.Mapper.Map(dto, viewModels);
+            //    return PartialView("_GetRegionPartialView", viewModels);
+            //}
+
+            return View();
+        }
+
+        public ActionResult CreateTerritorylist(long? id)
+        {
+
+            ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+            ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
+            return View();
+        }
+
+        #endregion
+
         #region Extra Code
         //public ActionResult getdiv(long id)
 
