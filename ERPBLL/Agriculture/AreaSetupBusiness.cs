@@ -23,7 +23,7 @@ namespace ERPBLL.Agriculture
         }
 
         public IEnumerable<AreaSetupDTO> GetAllAreaSetup(long OrgId,string name)
-       {
+        {
             return this._agricultureUnitOfWork.Db.Database.SqlQuery<AreaSetupDTO>(QueryForRawAreaList(OrgId,name)).ToList();
         }
 

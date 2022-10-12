@@ -26,7 +26,9 @@ namespace ERPWeb.Controllers
 
         private readonly IZoneSetup _zoneSetup;//e
         private readonly IRegionSetup _regionSetup;//e
-        private readonly IAreaSetupBusiness _areaSetupBusiness;//e
+        private readonly ITerritorySetup _territorySetup;//e
+
+        private readonly IAreaSetupBusiness _areaSetupBusiness;
 
         private readonly IBankSetup _bankSetup;
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
@@ -43,11 +45,17 @@ namespace ERPWeb.Controllers
         private readonly IFinishGoodProductionDetailsBusiness _finishGoodProductionDetailsBusiness;
 
 
+<<<<<<< Updated upstream
         public AgroConfigurationController(IStockiestInfo stockiestInfo,IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
+=======
+        public AgroConfigurationController(ITerritorySetup territorySetup ,IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
+>>>>>>> Stashed changes
         {
             this._stockiestInfo = stockiestInfo;
             this._zoneSetup = zoneSetup;//e
             this._regionSetup = regionSetup;//e
+            this._territorySetup = territorySetup;//e
+
             this._divisionInfo = divisionInfo;
             this._areaSetupBusiness = areaSetupBusiness;
             this._zoneDetail = zoneDetail;
@@ -1483,6 +1491,40 @@ namespace ERPWeb.Controllers
             }
             return Json(IsSuccess);
         }
+        #endregion
+
+        #region Teritory List
+
+        public ActionResult Territorylist(string flag, string name, long? divisionId, long? regionId)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                return View();
+            }
+            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            //{
+            //    var dto = _regionSetup.GetRegionInfos(User.OrgId, regionId ?? 0, divisionId ?? 0);
+
+
+
+            //    List<RegionSetupViewModel> viewModels = new List<RegionSetupViewModel>();
+            //    AutoMapper.Mapper.Map(dto, viewModels);
+            //    return PartialView("_GetRegionPartialView", viewModels);
+            //}
+
+            return View();
+        }
+
+        public ActionResult CreateTerritorylist(long? id)
+        {
+
+            ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+           // ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+            return View();
+        }
+
         #endregion
 
         #region Extra Code

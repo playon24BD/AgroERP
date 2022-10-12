@@ -124,7 +124,11 @@
     <Compile Include="Agriculture\Interface\IRawMaterialStockDetail.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialStockInfo.cs" />
     <Compile Include="Agriculture\Interface\IRegionSetup.cs" />
+<<<<<<< Updated upstream
     <Compile Include="Agriculture\Interface\IStockiestInfo.cs" />
+=======
+    <Compile Include="Agriculture\Interface\ITerritorySetup.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Agriculture\Interface\IZone.cs" />
     <Compile Include="Agriculture\Interface\IZoneDetail.cs" />
     <Compile Include="Agriculture\Interface\IZoneSetup.cs" />
@@ -137,7 +141,11 @@
     <Compile Include="Agriculture\RawMaterialStockInfoBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialSupplierBusiness.cs" />
     <Compile Include="Agriculture\RegionSetupBusiness.cs" />
+<<<<<<< Updated upstream
     <Compile Include="Agriculture\StockiestInfoBusiness.cs" />
+=======
+    <Compile Include="Agriculture\TerritorySetupBusiness.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Agriculture\ZoneBusiness.cs" />
     <Compile Include="Agriculture\ZoneDetailBusiness.cs" />
     <Compile Include="Agriculture\ZoneSetupBusiness.cs" />

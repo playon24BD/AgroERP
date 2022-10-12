@@ -43,7 +43,8 @@ namespace ERPDAL.AgricultureDAL
         public DbSet<FinishGoodProductionDetails> tblFinishGoodProductionDetails { get; set; }
         public DbSet<ZoneSetup> tblZoneInfos { get; set; } //e
         public DbSet<RegionSetup> tblRegionInfos { get; set; } //e
-        public DbSet<AreaInfoSetup> tblAreaSetup { get; set; } //e
+        public DbSet<TerritorySetup> tblTerritoryInfos { get; set; } //e
+        public DbSet<AreaInfoSetup> tblAreaSetup { get; set; } 
 
 
 

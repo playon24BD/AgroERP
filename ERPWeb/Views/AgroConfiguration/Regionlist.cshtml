@@ -137,7 +137,7 @@
         var ddlRegionName = $("#ddlRegionName");
         var ddlstatus = $("#ddlstatus");
 
-        //var SearchAny = $("#SearchAny");
+        var SearchAny = $("#SearchAny");
 
        
 
@@ -155,13 +155,13 @@
             LoadRegionDataTable();
         }
 
-        //SearchAny.keyup(function () {
-        //    LoadRegionDataTable()
-        //})
+        SearchAny.keyup(function () {
+            LoadRegionDataTable()
+        })
 
         function LoadRegionDataTable() {
             debugger;
-            var data = { flag: "View"/*, name: $.trim(SearchAny.val())*/ }
+            var data = { flag: "View", name: $.trim(SearchAny.val()) }
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Regionlist', data)).then(function (res, status) {
                 console.log(res);
                 if (status == "success") {

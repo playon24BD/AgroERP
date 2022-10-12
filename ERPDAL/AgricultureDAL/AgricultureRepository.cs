@@ -63,6 +63,12 @@ namespace ERPDAL.AgricultureDAL
         public RegionSetupRepository(IAgricultureUnitOfWork AgricultureUnitOfWork) : base(AgricultureUnitOfWork) { }
     }
 
+    //e
+    public class TerritorySetupRepository : AgricultureBaseRepository<TerritorySetup>
+    {
+        public TerritorySetupRepository(IAgricultureUnitOfWork AgricultureUnitOfWork) : base(AgricultureUnitOfWork) { }
+    }
+
     public class RawMaterialRepository : AgricultureBaseRepository<RawMaterial>
     {
         public RawMaterialRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
