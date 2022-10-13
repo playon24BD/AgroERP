@@ -546,6 +546,8 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "Submenu")
             {
+
+           var subMenuDTOs = _subMenuBusiness.GetAllSubMenu().ToList();
                 IEnumerable<SubMenuDTO> subMenuDTO = _subMenuBusiness.GetAllSubMenu().Select(sub => new SubMenuDTO
                 {
                     SubMenuId = sub.SubMenuId,

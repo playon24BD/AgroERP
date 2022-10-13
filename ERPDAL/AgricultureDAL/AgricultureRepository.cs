@@ -146,5 +146,10 @@ namespace ERPDAL.AgricultureDAL
         public FinishGoodProductionDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
         { }
     }
+    public class UserAssignRepository : AgricultureBaseRepository<UserAssign>
+    {
+        public UserAssignRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
+        { }
+    }
 
 }

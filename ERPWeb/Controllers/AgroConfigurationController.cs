@@ -53,7 +53,9 @@ namespace ERPWeb.Controllers
 
         {
 
+
             this._stockiestInfo = stockiestInfo;
+
             this._zoneSetup = zoneSetup;//e
             this._territorySetup = territorySetup;//e
             this._regionSetup = regionSetup;//e
@@ -1244,7 +1246,7 @@ namespace ERPWeb.Controllers
 
         #region Sales and Distribution
 
-   
+
         #region Zone list
         public ActionResult Zonelist(string flag, string name)
         {
@@ -1332,7 +1334,7 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
 
-                var dto = _divisionInfo.GetDivisionInfos(  divisionId ?? 0, zoneId ?? 0, User.OrgId);
+                var dto = _divisionInfo.GetDivisionInfos(divisionId ?? 0, zoneId ?? 0, User.OrgId);
 
                 //IEnumerable<DivisionInfoDTO> dto = _divisionInfo.GetAllDivisionSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.DivisionName.Contains(name))).Select(o => new DivisionInfoDTO
                 //{
@@ -1357,7 +1359,7 @@ namespace ERPWeb.Controllers
 
             }
             return View();
-        }    
+        }
         public ActionResult CreateDivisionInfo(long? id)
         {
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
@@ -1420,7 +1422,7 @@ namespace ERPWeb.Controllers
         {
 
             ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
-      
+
             ViewBag.ddldivname = _divisionInfo.GetAllDivisionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
             return View();
         }
@@ -1457,7 +1459,7 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "AreaSetup")
             {
-                var dto = _areaSetupBusiness.GetAllAreaSetup(User.OrgId,name ?? null);
+                var dto = _areaSetupBusiness.GetAllAreaSetup(User.OrgId, name ?? null);
 
                 List<AreaSetupViewModel> viewModel = new List<AreaSetupViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModel);
@@ -1480,14 +1482,14 @@ namespace ERPWeb.Controllers
         public ActionResult SaveAreaInfo(List<AreaSetupViewModel> details, AreaSetupViewModel dto)
         {
             bool IsSuccess = false;
-            if (details!=null && details.Count > 0 && dto.AreaId==0)
+            if (details != null && details.Count > 0 && dto.AreaId == 0)
             {
                 List<AreaSetupDTO> detailsDTO = new List<AreaSetupDTO>();
                 AutoMapper.Mapper.Map(details, detailsDTO);
                 IsSuccess = _areaSetupBusiness.SaveAreaInfo(detailsDTO, User.UserId, User.OrgId);
 
             }
-            else if(details==null && dto!=null)
+            else if (details == null && dto != null)
             {
                 AreaSetupDTO detailsDTO = new AreaSetupDTO();
                 AutoMapper.Mapper.Map(dto, detailsDTO);
@@ -1641,6 +1643,17 @@ namespace ERPWeb.Controllers
 
         #endregion
 
+        #endregion
+
+        #region
+        public ActionResult GetUserAssignInformation()
+        {
+            return View();
+        }
+        public ActionResult SaveUserAssignInformation()
+        {
+            return View();
+        }
         #endregion
     }
 }

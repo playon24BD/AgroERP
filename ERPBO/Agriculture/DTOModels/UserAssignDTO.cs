@@ -10,6 +10,7 @@ namespace ERPBO.Agriculture.DTOModels
     {
         public long UserAssignId { get; set; }
         public long UserId { get; set; }
+        public long OrganizationId { get; set; }
         public string UserName { get; set; }
         public long ZoneId { get; set; }
         public string ZoneName { get; set; }

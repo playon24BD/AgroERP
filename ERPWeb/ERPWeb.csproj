@@ -490,10 +490,16 @@
     <Content Include="Views\AgroConfiguration\_GetAreaPartialView.cshtml" />
     <Content Include="Views\AgroConfiguration\CreateTerritorylist.cshtml" />
     <Content Include="Views\AgroConfiguration\Territorylist.cshtml" />
+
     <Content Include="Views\AgroConfiguration\_GetTerritoryPartialView.cshtml" />
     <Content Include="Views\AgroConfiguration\GetStockiestList.cshtml" />
     <Content Include="Views\AgroConfiguration\CreateStockiestList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetStockiestPartialView.cshtml" />
+
+    <Content Include="Views\AgroConfiguration\GetUserAssignInformation.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetUserAssignInformation.cshtml" />
+    <Content Include="Views\AgroConfiguration\SaveUserAssignInformation.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
