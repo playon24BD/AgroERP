@@ -100,7 +100,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="ddlstatus" class="control-label">Status</label>
-                            <select class="form-control form-control-sm" id="ddlstatus">
+                            <select class="form-control form-control-sm select2" id="ddlstatus">
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
@@ -145,6 +145,12 @@
 
 
         $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
 
             LoadZoneDataTable()
         })
@@ -200,6 +206,7 @@
             ddlorgname.trigger("change");
             ddlZoneName.val(td4);
             ddlstatus.val(td5);
+            ddlstatus.trigger("change");
 
 
 

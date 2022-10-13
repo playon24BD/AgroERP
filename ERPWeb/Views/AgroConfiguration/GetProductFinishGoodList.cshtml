@@ -93,15 +93,14 @@
                                     <div class="row">
                                         <input type="hidden" id="hdMeasurementId" />
                                         <input type="hidden" id="hdTargetValue" />
-                                        <div class="col-md-3">
+                                        @*<div class="col-md-3">
                                             <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
                                             <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
                                                 <option value="">Select One</option>
                                                 <option value="9">Agro Farm</option>
                                             </select>
                                             <span class="error hide req-ddlOrganiation">Organization is required</span>
-
-                                        </div>
+                                        </div>*@
                                         <div class="col-md-3">
                                             <label class="control-label" for="ddlProduct">Product</label>
                                             @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct,"-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
@@ -114,19 +113,19 @@
                                             <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
 
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label for="qty"> Qty</label>
                                             <input  type="number" id="qty" name="qty" class="form-control form-control-sm" readonly/>
                                             <span class="error hide req-qty">Qty Is Required</span>
 
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label  for="targetQty" class="control-label"> Target Qty</label>
                                             <input type="number" id="targetQty" class="form-control form-control-sm"/>
                                             <span class="error hide req-targetQty"></span>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
                                             <div class="clearfix">
                                                 <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolist"><i class="fas fa-plus"></i> &nbsp; ADD TO LIST </button>
@@ -324,7 +323,7 @@
         $("#btnSubmit").click(function (e) {
             e.preventDefault();
             var data = {};
-            var finishGoodProduction = { organizationId: ddlOrganiation.val(), finishGoodProductId: ddlProduct.val(), quanity: qty.val(), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
+            var finishGoodProduction = {finishGoodProductId: ddlProduct.val(), quanity: qty.val(), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
 
             var details = [];
             details.length = 0;

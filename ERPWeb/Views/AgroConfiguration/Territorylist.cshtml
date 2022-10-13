@@ -99,7 +99,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="ddlstatus" class="control-label">Status</label>
-                            <select class="form-control form-control-sm" id="ddlstatus">
+                            <select class="form-control form-control-sm select2" id="ddlstatus">
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
@@ -214,6 +214,7 @@
             ddlareaname.trigger("change");
             ddlTerritoryName.val(td3);
             ddlstatus.val(td5);
+            ddlstatus.trigger("change");
 
 
 

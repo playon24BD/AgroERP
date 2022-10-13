@@ -23,13 +23,11 @@
 
             <div class="card-body text-sm">
                 <div class="row " style="margin-top:-8px;">
-                    <div class="col-md-2">
+                    @*<div class="col-md-2">
                         <label for="ddlOrganizationName" class="control-label">Organization Name</label>
-
                         @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
-                    </div>
+                    </div>*@
 
                     <div class="col-md-2">
                         <label for="ddlRawMaterialSupplierName" class="control-label">Supplier Name</label>
@@ -311,7 +309,7 @@
             //if (true) {
             //bootbox.confirm("Are you sure you want to Save Database", function (result) {
             //    if (result) {
-            var info = { RawMaterialStockId: 0, OrganizationId: ddlOrganizationName.val(), RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val(), RawMaterialSupplierId: ddlRawMaterialSupplierName.val(),ExpireDate:ExpireDate.val() };
+            var info = { RawMaterialStockId: 0,RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val(), RawMaterialSupplierId: ddlRawMaterialSupplierName.val(),ExpireDate:ExpireDate.val() };
 
             var details = [];
             details.length = 0;

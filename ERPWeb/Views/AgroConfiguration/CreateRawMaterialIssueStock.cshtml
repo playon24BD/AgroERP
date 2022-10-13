@@ -25,13 +25,13 @@
 
             <div class="card-body text-sm">
                 <div class="row " style="margin-top:-8px;">
-                    <div class="col-md-2">
+                    @*<div class="col-md-2">
                         <label for="ddlOrganizationName" class="control-label">Organization Name</label>
 
                         @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
-                    </div>
+                    </div>*@
                     @*<div class="col-md-2">
                             <label for="ddlOrganizationName" class="control-label">Product Name</label>
 
@@ -145,7 +145,7 @@
 
     <script type="text/javascript">
 
-        var ddlOrganizationName = $("#ddlOrganizationName");
+        //var ddlOrganizationName = $("#ddlOrganizationName");
         var ddlRawMaterialName = $("#ddlRawMaterialName");
         var ddlProductName = $("#ddlProductName");
         var ddlBatchCode = $("#ddlBatchCode");
@@ -275,10 +275,10 @@
             var isValid = true;
             $(".error").addClass('hide');
 
-            if (ddlOrganizationName.val() === "") {
-                $(".required-ddlOrganization").removeClass('hide');
-                isValid = false;
-            }
+            //if (ddlOrganizationName.val() === "") {
+            //    $(".required-ddlOrganization").removeClass('hide');
+            //    isValid = false;
+            //}
             if (ddlRawMaterialName.val() === "") {
                 $(".required-RawMaterialName").removeClass('hide');
                 isValid = false;
@@ -320,7 +320,7 @@
             //if (true) {
             //bootbox.confirm("Are you sure you want to Save Database", function (result) {
             //    if (result) {
-            var info = { RawMaterialIssueStockId: 0, OrganizationId: ddlOrganizationName.val(), RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val() };
+            var info = { RawMaterialIssueStockId: 0, RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val() };
 
             var details = [];
             details.length = 0;

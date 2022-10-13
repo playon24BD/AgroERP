@@ -108,7 +108,7 @@
             <div class="modal-body">
                 <form id="formDivision">
                     <input type="hidden" id="hdAreaId" />
-                    
+
                     <div class="col-md-10">
                         <label for="ddlRegionname" class="control-label">RegionName</label>
                         @Html.DropDownList("ddlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "Select Region Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
@@ -123,8 +123,7 @@
                     </div>
                     <div class="col-md-10">
                         <label for="ddlStatus" class="control-label">Status</label>
-
-                        <select class="form-control form-control-sm" id="ddlStatus">
+                        <select class="form-control form-control-sm select2" id="ddlStatus">
                             <option value="Active">Active</option>
                             <option value="InActive">InActive</option>
                         </select>
@@ -143,9 +142,9 @@
                         Data has been faild to Save
                     </div>
                 </div>
-                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
-                <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
-            </div>
+                <button id="btnCancel" type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="btnSave"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
+            </div>   
         </div>
     </div>
 </div>
@@ -241,7 +240,8 @@
             ddlRegionname.val(td2);
             ddlRegionname.trigger("change");
             ddlAreaName.val(td4);
-            //ddlStatus.val(td5);
+            ddlStatus.val(td5);
+            ddlStatus.trigger("change");
             hdAreaId.val(td1);
 
 

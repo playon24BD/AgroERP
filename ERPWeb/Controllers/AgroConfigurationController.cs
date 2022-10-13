@@ -405,14 +405,14 @@ namespace ERPWeb.Controllers
         public ActionResult SaveMeasurement(List<MeasurementSetupViewModel> models)
         {
             bool IsSuccess = false;
-            if (ModelState.IsValid)
-            {
+        
+         
                 List<MeasurementSetupDTO> measurementSetupDTOs = new List<MeasurementSetupDTO>();
                 AutoMapper.Mapper.Map(models, measurementSetupDTOs);
-                IsSuccess = _measuremenBusiness.SaveMeasureMent(measurementSetupDTOs, User.OrgId);
+                IsSuccess = _measuremenBusiness.SaveMeasureMent(measurementSetupDTOs, User.UserId, User.OrgId);
 
 
-            }
+         
 
 
             return Json(IsSuccess);

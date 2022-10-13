@@ -64,12 +64,12 @@
                 <form id="formdepot">
                     <input type="hidden" id="hdRawmaterialSupplierId" />
                     <div class="form-row">
-                        <div class="form-group col-md-12">
+                        @*<div class="form-group col-md-12">
                             <label for="ddlOrganizationName" class="control-label">OrganizationName</label>
                             @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             <span class="error hide required-organizatinName font-weight-bold">Input OrganizatinName!</span>
                             <span class="error hide duplicate-organizatinName font-weight-bold">Already OrganizatinName Exist!</span>
-                        </div>
+                        </div>*@
                         <div class="form-group col-md-12">
                             <label for="ddlSupplierName" class="control-label">Supplier Name</label>
                             <input type="text" id="ddlSupplierName" class="form-control form-control-sm" />
@@ -169,7 +169,7 @@
             $(".error").addClass("hide");
             if (formValidation() == true) {
                 debugger;
-                var data = JSON.stringify({ RawMaterialSupplierId: TryParseInt(hdRawmaterialSupplierId.val(), 0), OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), RawMaterialSupplierName: ddlSupplierName.val(), MobileNumber: ddlMobileNumber.val(), Address: ddlAddress.val(), Status: ddlStatus.val() });
+                var data = JSON.stringify({ RawMaterialSupplierId: TryParseInt(hdRawmaterialSupplierId.val(), 0), RawMaterialSupplierName: ddlSupplierName.val(), MobileNumber: ddlMobileNumber.val(), Address: ddlAddress.val(), Status: ddlStatus.val() });
                 console.log(data);
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialSupplier', data, getToken())).then(function (res, status) {
                     console.log(status);
@@ -194,6 +194,8 @@
         })
 
         $(document).on("click", "a.data-edit-item-Supplier", function (e) {
+            //alert();
+            //debugger;
             e.preventDefault()
             ClearCtrl();
             var row = $(this).parent().parents('tr');
@@ -208,7 +210,7 @@
 
             hdRawmaterialSupplierId.val(td1);
             ddlOrganizationName.val(td2);
-            disable(ddlOrganizationName.val(td2));
+            //disable(ddlOrganizationName.val(td2));
             ddlSupplierName.val(td4);
             ddlMobileNumber.val(td5);
             ddlAddress.val(td6);
@@ -225,14 +227,7 @@
         })
 
 
-        //function OpenModal() {
-        //    $("#spanModalHead").text("Add New Depot");
-        //    $("#saveButton").text('Save');
-        //    $("#depotmodal").modal("show");
-        //    $(".error").addClass("hide");
 
-
-        //}
 
         function OpenModal() {
             $("#spanModalHeadRawmaterialSupplier").text('Add New Raw Material Supplier');
@@ -245,16 +240,16 @@
             e.preventDefault();
             ClearCtrl();
             OpenModal();
-            enable("#ddlOrganizationName");
+            //enable("#ddlOrganizationName");
         })
 
         function formValidation() {
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlOrganizationName.val()) == 0) {
-                $('.required-ddlOrganization').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlOrganizationName.val()) == 0) {
+            //    $('.required-ddlOrganization').removeClass("hide");
+            //    Isvalid = false;
+            //}
             if ($.trim(ddlSupplierName.val()) == "") {
                 $('.required-SupplierName').removeClass("hide");
                 Isvalid = false;
@@ -269,7 +264,7 @@
         }
         function ClearCtrl() {
             ddlSupplierName.val("");
-            ddlOrganizationName.val('');
+            //ddlOrganizationName.val('');
             hdRawmaterialSupplierId.val('0');
             ddlMobileNumber.val("");
             ddlAddress.val("");

@@ -62,12 +62,11 @@
                 <form id="bankForm">
                     <input type="hidden" id="hiddenBankId" />
                     <div class="form-row">
-                        <div class="form-group col-md-12">
-
+                        @*<div class="form-group col-md-12">
                             <label for="ddlOrganizationName" class="control-label">Organization Name</label>
                             @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select OrgName--", new { @class = "form-control form-control-sm" })
                             <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
-                        </div>
+                        </div>*@
                         <div class="form-group col-md-12">
                             <label for="ddlBankName" class="control-label">Bank Name</label>
                             <input type="text" id="ddlBankName" class="form-control form-control-sm" />
@@ -189,7 +188,7 @@
         var td9 = row.find('td:eq(9)').html();
 
         hiddenBankId.val(td1);
-        ddlOrganizationName.val(td2);
+        //ddlOrganizationName.val(td2);
         ddlBankName.val(td4);
         ddlAccountNumber.val(td5);
         ddlEmailAddress.val(td6);
@@ -207,7 +206,7 @@
         $(".error").addClass("hide");
 
         if (ValidationForm() == true) {
-            var data = JSON.stringify({ BankId: TryParseInt(hiddenBankId.val(), 0), OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), BankName: ddlBankName.val(), Status: ddlStatus.val(), AccountNumber: ddlAccountNumber.val(), MobileNumber: ddlMobileNumber.val(), Email: ddlEmailAddress.val() });
+            var data = JSON.stringify({ BankId: TryParseInt(hiddenBankId.val(), 0),BankName: ddlBankName.val(), Status: ddlStatus.val(), AccountNumber: ddlAccountNumber.val(), MobileNumber: ddlMobileNumber.val(), Email: ddlEmailAddress.val() });
             console.log(data);
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveBankInfo', data, getToken())).then(function (res, status) {
                 console.log(status);
@@ -233,10 +232,10 @@
     function ValidationForm() {
         Isvalid = true;
         $('.error').addClass("hide");
-        if ($.trim(ddlOrganizationName.val()) == 0) {
-            $('.required-OrganizationName').removeClass("hide");
-            Isvalid = false;
-        }
+        //if ($.trim(ddlOrganizationName.val()) == 0) {
+        //    $('.required-OrganizationName').removeClass("hide");
+        //    Isvalid = false;
+        //}
         if ($.trim(ddlBankName.val()) == 0) {
             $('.required-BankName').removeClass("hide");
             Isvalid = false;
@@ -263,7 +262,7 @@
         ddlAccountNumber.val("");
         ddlMobileNumber.val("");
         ddlEmailAddress.val("");
-        ddlOrganizationName.val("");
+        //ddlOrganizationName.val("");
         hiddenBankId.val('0');
 
     }

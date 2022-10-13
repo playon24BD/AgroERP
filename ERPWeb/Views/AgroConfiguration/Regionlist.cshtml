@@ -102,7 +102,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="ddlstatus" class="control-label">Status</label>
-                            <select class="form-control form-control-sm" id="ddlstatus">
+                            <select class="form-control form-control-sm select2" id="ddlstatus">
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
@@ -215,6 +215,7 @@
             ddldivname.trigger("change");
             ddlRegionName.val(td3);
             ddlstatus.val(td5);
+            ddlstatus.trigger("change");
 
 
 
@@ -236,20 +237,20 @@
                 var edetails = JSON.stringify({ RegionId: TryParseInt(hdregiontId.val(), 0), DivisionId: TryParseInt(ddldivname.val(), 0), RegionName: ddlRegionName.val(), Status: ddlstatus.val() });
                 console.log(edetails);
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRegionInfo', edetails, getToken())).then(function (res, status) {
-                    //alert("hitme");
+
                     debugger;
                     console.log(status);
                     console.log(res);
                     if (res == true) {
-                        //$("#zonemodal").modal("toggle");
+
                         toastrSuccessAlert(execuStatus.successSave);
-                        //alert("Here Me");
+
                         $("#regionmodal").modal("hide");
 
                         LoadRegionDataTable();
                     }
                     else {
-                        //message("#msg2");
+
                         toastrErrorAlert(execuStatus.fail);
                         alert("This Zone Already Exist");
                     }

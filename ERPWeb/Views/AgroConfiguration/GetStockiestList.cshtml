@@ -108,12 +108,12 @@
 
                     </div>
 
-                    
+
 
                     <div class="col-md-10">
                         <label for="txtStockiestName" class="control-label">StockiestName</label>
                         <input type="text" id="txtStockiestName" class="form-control form-control-sm" />
-                        
+
                     </div>
                     <div class="form-group col-md-5">
                         <label for="ddlStatus" class="control-label">Status</label>
@@ -137,12 +137,14 @@
                         Data has been faild to Save
                     </div>
                 </div>
-                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
-                <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
+                <button id="btnCancel" type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="btnSave"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
             </div>
         </div>
     </div>
 </div>
+
+
 
 @section scripts{
 
@@ -215,7 +217,7 @@
                     console.log(status);
                     if (res == true) {
                         message("#msg1", "#StockiestModal");
-
+                        
                     }
                     else {
                         message("#msg2");

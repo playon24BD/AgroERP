@@ -21,20 +21,13 @@
 
             <div class="card-body text-sm">
                 <div class="row " style="margin-top:-8px;">
-                    <div class="col-md-2">
+                    @*<div class="col-md-2">
                         <label for="ddlOrganizationName" class="control-label">Organization Name</label>
-
                         @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
-                    </div>
+                    </div>*@
                     <div class="col-md-2">
                         <label for="ddlTerritoryName" class="control-label">TerritoryName</label>
-                        @*<select id="ddlTerritoryName" class="form-control form-control-sm select2" >
-                            <option value="1">T1</option>
-                            <option value="2">T2</option>
-                            <option value="3">T3</option>
-                        </select>*@
                         @Html.DropDownList("ddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                         <span class="error hide required-TerritoryName font-weight-bold">Select Territory Name!</span>
                         <span class="error hide duplicate-TerritoryName font-weight-bold">Already Territory Exist!</span>
@@ -67,7 +60,7 @@
 
                                 <tr class="text-center btn-dark">
                                     <th style="width:5%">#SL</th>
-                                    <th style="width:15%">OrganizationName</th>
+                                    <th class="hide" style="width:15%">OrganizationName</th>
                                     <th style="width:15%">Territory Name</th>
                                     <th style="width:15%">Stockiest Name</th>
                                     <th style="width:10%">Action</th>
@@ -119,7 +112,7 @@
 
                     var sl = $("#tblMargeItems tbody tr").length;
                     var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlOrganizationName") + "</td>";
+                    var td2 = "<td class='hide'>" + dropDownSelectedText("ddlOrganizationName") + "</td>";
                     var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlTerritoryName") + "</td>";
                     var td4 = "<td class='text-center'>" + txtStockiestName.val() + "</td>";
 
@@ -198,10 +191,10 @@
         function FormValidations() {
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlOrganizationName.val()) == 0) {
-                $('.required-ddlOrganization').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlOrganizationName.val()) == 0) {
+            //    $('.required-ddlOrganization').removeClass("hide");
+            //    Isvalid = false;
+            //}
 
             if ($.trim(txtStockiestName.val()) == "") {
                 $('.required-StockiestName').removeClass("hide");

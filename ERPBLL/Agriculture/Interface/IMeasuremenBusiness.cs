@@ -12,7 +12,8 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<MeasurementSetup> GetMeasurementSetups(long orgId);
         MeasurementSetup GetMeasurementById(long measureMentId, long orgId);
-        bool SaveMeasureMent(List<MeasurementSetupDTO> measurementDTO,  long orgId);
+        //bool SaveMeasureMent(List<MeasurementSetupDTO> measurementDTO,  long orgId);
+        bool SaveMeasureMent(List<MeasurementSetupDTO> measurementDTO, long userId, long orgId);
         bool UpdateMeasureMent( MeasurementSetupDTO measurementSetup,long userId, long orgId);
 
 

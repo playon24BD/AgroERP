@@ -64,12 +64,12 @@
                 <form id="formdepot">
                     <input type="hidden" id="hdproductId" />
                     <div class="form-row">
-                        <div class="form-group col-md-12">
+                        @*<div class="form-group col-md-12">
                             <label for="ddlOrganizationName" class="control-label">OrganizationName</label>
                             @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             <span class="error hide required-organizatinName font-weight-bold">Input OrganizatinName!</span>
                             <span class="error hide duplicate-organizatinName font-weight-bold">Already OrganizatinName Exist!</span>
-                        </div>
+                        </div>*@
                         <div class="form-group col-md-12">
                             <label for="ddlProductName" class="control-label">Product Name</label>
                             <input type="text" id="ddlProductName" class="form-control form-control-sm" />
@@ -157,7 +157,7 @@
             $(".error").addClass("hide");
             if (formValidation() == true) {
                 debugger;
-                var data = JSON.stringify({ FinishGoodProductId: TryParseInt(hdproductId.val(), 0),OrganizationId: TryParseInt(ddlOrganizationName.val(), 0), FinishGoodProductName: ddlProductName.val(), Status: ddlStatus.val() });
+                var data = JSON.stringify({ FinishGoodProductId: TryParseInt(hdproductId.val(), 0), FinishGoodProductName: ddlProductName.val(), Status: ddlStatus.val() });
                 console.log(data);
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveFinishGoodProduct', data, getToken())).then(function (res, status) {
                     console.log(status);
@@ -193,7 +193,7 @@
             var td6 = row.find('td:eq(6)').html();
 
             hdproductId.val(td1);
-            ddlOrganizationName.val(td2);
+            //ddlOrganizationName.val(td2);
             ddlProductName.val(td4);
             ddlStatus.val(td6);
             //ddlStatus.prop("checked", false);
@@ -233,10 +233,10 @@
         function formValidation() {
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlOrganizationName.val()) == 0) {
-                $('.required-ddlOrganization').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlOrganizationName.val()) == 0) {
+            //    $('.required-ddlOrganization').removeClass("hide");
+            //    Isvalid = false;
+            //}
             if ($.trim(ddlProductName.val()) == 0) {
                 $('.required-ProductName').removeClass("hide");
                 Isvalid = false;
@@ -247,7 +247,7 @@
         }
         function ClearCtrl() {
             ddlProductName.val("");
-            ddlOrganizationName.val('');
+            //ddlOrganizationName.val('');
             hdproductId.val('0');
 
         }

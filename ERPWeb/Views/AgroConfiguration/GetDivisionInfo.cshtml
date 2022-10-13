@@ -108,10 +108,10 @@
                     </div>
 
                     @*<div class="col-md-10">
-            <label for="ddlDivisionName" class="control-label">Division Name</label>
-            @Html.DropDownList("ddlDivisionNameInput", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    <label for="ddlDivisionName" class="control-label">Division Name</label>
+                    @Html.DropDownList("ddlDivisionNameInput", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
-        </div>*@
+                </div>*@
 
                     <div class="col-md-10">
                         <label for="txtDivisionName" class="control-label">DivisionName</label>
@@ -127,10 +127,9 @@
                     </div>
 
                 </form>
-
-
             </div>
-            <div class="modal-footer btn-light">
+
+            <div class="modal-footer btn-default">
                 <div class="col-md-6">
                     <div id="msg1" class="alert alert-success hide float-left">
                         Data has been Successfully Saved
@@ -139,8 +138,8 @@
                         Data has been faild to Save
                     </div>
                 </div>
-                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
-                <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
+                <button id="btnCancel" type="button" class="btn btn-outline-danger btn-sm float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
+                <button type="submit" id="btnSave" class="btn btn-outline-success btn-sm float-rightt"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
             </div>
         </div>
     </div>
@@ -253,6 +252,7 @@
 
 
             ddlStatus.val(Status);
+            ddlStatus.trigger("change");
             hddivisionId.val(hid);
             txtDivisionName.val(divisionId);
             txtDivisionName.trigger("change");

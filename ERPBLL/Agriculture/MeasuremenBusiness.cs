@@ -32,14 +32,50 @@ namespace ERPBLL.Agriculture
             return _measurmentRepository.GetAll();
         }
 
-        public bool SaveMeasureMent(List<MeasurementSetupDTO> measurementDTO, long orgId)
+        //public bool SaveMeasureMent(List<MeasurementSetupDTO> measurementDTO, long orgId)
+        //{
+        //    bool IsSuccess = false;
+
+        //    List<MeasurementSetup> measurements = new List<MeasurementSetup>();
+        //    if (measurementDTO.Count()> 0)
+        //    {
+        //        foreach(var item in measurementDTO)
+        //        {
+        //            MeasurementSetup measurement = new MeasurementSetup
+        //            {
+        //                MeasurementName = item.MeasurementName,
+        //                OrganizationId = orgId,
+        //                MasterCarton = item.MasterCarton,
+        //                InnerBox = item.InnerBox,
+        //                PackSize = item.PackSize,
+        //                Unit = item.Unit,
+        //                Status="Active",
+                        
+                        
+
+        //            };
+        //            measurements.Add(measurement);
+
+
+
+        //        }
+        //        _measurmentRepository.InsertAll(measurements);
+        //    }
+
+        //    IsSuccess = _measurmentRepository.Save();
+
+        //    return IsSuccess;
+
+        //}
+
+        public bool SaveMeasureMent(List<MeasurementSetupDTO> measurementDTO, long userId, long orgId)
         {
             bool IsSuccess = false;
 
             List<MeasurementSetup> measurements = new List<MeasurementSetup>();
-            if (measurementDTO.Count()> 0)
+            if (measurementDTO.Count() > 0)
             {
-                foreach(var item in measurementDTO)
+                foreach (var item in measurementDTO)
                 {
                     MeasurementSetup measurement = new MeasurementSetup
                     {
@@ -49,8 +85,10 @@ namespace ERPBLL.Agriculture
                         InnerBox = item.InnerBox,
                         PackSize = item.PackSize,
                         Unit = item.Unit,
-                        Status="Active"
-
+                        Status = "Active",
+                        EntryUserId = userId,
+                        EntryDate= DateTime.Now
+                        
 
                     };
                     measurements.Add(measurement);
@@ -64,7 +102,6 @@ namespace ERPBLL.Agriculture
             IsSuccess = _measurmentRepository.Save();
 
             return IsSuccess;
-
         }
 
         public bool UpdateMeasureMent(MeasurementSetupDTO measurementSetup,long userId, long orgId)
@@ -74,7 +111,6 @@ namespace ERPBLL.Agriculture
             if (measurementSetup.MeasurementId>0)
             {
 
-
                 measurement = GetMeasurementById(measurementSetup.MeasurementId, orgId);
                 measurement.MeasurementName = measurementSetup.MeasurementName;
                 measurement.MasterCarton = measurementSetup.MasterCarton;
@@ -82,8 +118,8 @@ namespace ERPBLL.Agriculture
                 measurement.PackSize = measurementSetup.PackSize;
                 measurement.Unit = measurementSetup.Unit;
                 measurement.Status = measurementSetup.Status;
-                measurementSetup.UpdateDate = measurementSetup.UpdateDate;
-                measurementSetup.UpdateUserId = userId;
+                measurement.UpdateDate = DateTime.Now;
+                measurement.UpdateUserId = userId;
 
             }
             _measurmentRepository.Update(measurement);

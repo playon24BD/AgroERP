@@ -24,13 +24,11 @@
 
             <div class="card-body text-sm">
                 <div class="row " style="margin-top:-8px;">
-                    <div class="col-md-2">
+                    @*<div class="col-md-2">
                         <label for="ddlOrganizationName" class="control-label">Organization Name</label>
-
                         @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
-                    </div>
+                    </div>*@
                     <div class="col-md-2">
                         <label for="ddlZoneName" class="control-label">ZoneName</label>
                         @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
@@ -65,7 +63,7 @@
 
                                 <tr class="text-center btn-dark">
                                     <th style="width:5%">#SL</th>
-                                    <th style="width:15%">OrganizationName</th>
+                                    <th class="hide" style="width:15%">OrganizationName</th>
                                     <th style="width:15%">Zone Name</th>
                                     <th style="width:15%">Division Name</th>
                                     <th style="width:10%">Action</th>
@@ -120,7 +118,7 @@
 
             var sl = $("#tblMargeItems tbody tr").length;
             var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-            var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlOrganizationName") + "</td>";
+            var td2 = "<td class='hide'>" + dropDownSelectedText("ddlOrganizationName") + "</td>";
             var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlZoneName") + "</td>";
             var td4 = "<td class='text-center'>" + txtDivisionName.val() + "</td>";
             
@@ -205,10 +203,10 @@
     function Validations() {
         Isvalid = true;
         $('.error').addClass("hide");
-        if ($.trim(ddlOrganizationName.val()) == 0) {
-            $('.required-ddlOrganization').removeClass("hide");
-            Isvalid = false;
-        }
+        //if ($.trim(ddlOrganizationName.val()) == 0) {
+        //    $('.required-ddlOrganization').removeClass("hide");
+        //    Isvalid = false;
+        //}
         
         if ($.trim(txtDivisionName.val()) == "") {
             $('.required-DivisionName').removeClass("hide");

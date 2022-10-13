@@ -33,7 +33,7 @@ namespace ERPBLL.Agriculture
             {
                 RawMaterialSupplier rawMaterialSupplierInfo = new RawMaterialSupplier()
                 {
-                    OrganizationId = rawMaterialSupplier.OrganizationId,
+                    OrganizationId = orgId,
                     RawMaterialSupplierName = rawMaterialSupplier.RawMaterialSupplierName,
                     MobileNumber = rawMaterialSupplier.MobileNumber,
                     Address = rawMaterialSupplier.Address,
@@ -52,10 +52,10 @@ namespace ERPBLL.Agriculture
                 rawMaterialSupplierInfo.RawMaterialSupplierName = rawMaterialSupplier.RawMaterialSupplierName;
                 rawMaterialSupplierInfo.MobileNumber = rawMaterialSupplier.MobileNumber;
                 rawMaterialSupplierInfo.Address = rawMaterialSupplier.Address;
-                rawMaterialSupplierInfo.OrganizationId = rawMaterialSupplier.OrganizationId;
+                rawMaterialSupplierInfo.OrganizationId = orgId;
                 rawMaterialSupplierInfo.Status = rawMaterialSupplier.Status;
-                rawMaterialSupplierInfo.UpdateDate = rawMaterialSupplier.UpdateDate;
-                rawMaterialSupplierInfo.UpdateUserId = rawMaterialSupplier.UpdateUserId;
+                rawMaterialSupplierInfo.UpdateDate = DateTime.Now;
+                rawMaterialSupplierInfo.UpdateUserId = userId;
                 _rawMaterialSupplierRepository.Update(rawMaterialSupplierInfo);
             }
             IsSuccess = _rawMaterialSupplierRepository.Save();
