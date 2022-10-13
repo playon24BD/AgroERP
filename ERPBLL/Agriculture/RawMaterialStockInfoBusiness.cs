@@ -56,26 +56,26 @@ namespace ERPBLL.Agriculture
             query = string.Format(@"
 SELECT distinct rmd.RawMaterialId,rm.RawMaterialName,rmd.Unit,rmd.Status,
  
-  CASE WHEN Status = 'StockIn' 
+  CASE WHEN rmd.Status = 'StockIn' 
                      THEN CAST(rmd.ExpireDate as date)
                   ELSE ''
              END  as ExpireDate,
 
- CASE WHEN Status = 'StockIn' 
+ CASE WHEN rmd.Status = 'StockIn' 
                      THEN CAST(rmd.StockDate as date)
                   ELSE ''
              END  as StockDate,
-CASE WHEN Status = 'StockOut' 
+CASE WHEN rmd.Status = 'StockOut' 
 					 THEN CAST(rmd.StockIssueDate as date)
                   ELSE ''
              END  as StockIssueDate,
 
-CASE WHEN Status = 'StockIn' 
+CASE WHEN rmd.Status = 'StockIn' 
                      THEN SUM(Quantity) 
                   ELSE 0
              END  as StockIn,
 
-CASE WHEN Status = 'StockOut' 
+CASE WHEN rmd.Status = 'StockOut' 
                      THEN SUM(Quantity) 
                   ELSE 0
              END  as StockOut
