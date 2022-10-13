@@ -127,6 +127,7 @@
     <Compile Include="Agriculture\Interface\IStockiestInfo.cs" />
     <Compile Include="Agriculture\Interface\ITerritorySetup.cs" />
     <Compile Include="Agriculture\Interface\IUserAssignBussiness.cs" />
+    <Compile Include="Agriculture\Interface\IUserInfo.cs" />
     <Compile Include="Agriculture\Interface\IZone.cs" />
     <Compile Include="Agriculture\Interface\IZoneDetail.cs" />
     <Compile Include="Agriculture\Interface\IZoneSetup.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Agriculture\StockiestInfoBusiness.cs" />
     <Compile Include="Agriculture\TerritorySetupBusiness.cs" />
     <Compile Include="Agriculture\UserAssignBussiness.cs" />
+    <Compile Include="Agriculture\UserInfoBusiness.cs" />
     <Compile Include="Agriculture\ZoneBusiness.cs" />
     <Compile Include="Agriculture\ZoneDetailBusiness.cs" />
     <Compile Include="Agriculture\ZoneSetupBusiness.cs" />
