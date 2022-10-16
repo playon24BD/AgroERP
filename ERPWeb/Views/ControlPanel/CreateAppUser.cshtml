@@ -105,6 +105,42 @@
                                     <span class="error hide req-branch">Branch is required</span>
                                 </div>
 
+                                <div class="col-md-2" id="zoneDiv">
+                                    <label for="ddlZoneName" class="control-label">Zone Name</label>
+                                    @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+                                    <span class="error hide required-ddlZoneName font-weight-bold">Zone Name is Required</span>
+                                </div>
+                                <div class="col-md-2" style="margin-left:-5px" id="divisionDiv">
+                                    <label for="ddlDivisionName" class="control-label">Division Name</label>
+                                    
+                            
+                                    <select id="ddlDivisionName" class="form-control form-control-sm select2 select2-danger" , multiple="multiple" name="DivisionName[]"></select>
+
+                                    <span class="error hide required-ddldivisionName font-weight-bold">Division Name is Required</span>
+                                </div>
+
+                                <div class="col-md-2" id="regionDiv">
+                                    <label for="ddlRegionName" class="control-label">Region Name</label>
+                                    @Html.DropDownList("ddlRegionName", (IEnumerable<SelectListItem>)ViewBag.ddlRegionName, "--Select Region Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+
+
+                                </div>
+                                <div class="col-md-2" id="areaDiv">
+                                    <label for="ddlAreaName" class="control-label"> Area Name</label>
+                                    @Html.DropDownList("ddlAreaName", (IEnumerable<SelectListItem>)ViewBag.ddlAreaName, "--Select Area Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+
+                                </div>
+                                <div class="col-md-2" id="territoryDiv">
+                                    <label for="ddlTerritoryName" class="control-label">Territory Name</label>
+                                    @Html.DropDownList("ddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+                                </div>
+
+                                <div class="col-md-2" id="stockiestDiv">
+                                    <label for="ddlStockiestName" class="control-label">Stockiest Name</label>
+                                    @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+
+                                </div>
+
                             </div>
                             <div class="form-row">
                                 @*<div class="form-group col-md-3">
@@ -122,6 +158,11 @@
                     </div>
                 </div>
             </div>
+
+
+
+
+
             <div class="card-body">
                 <div class="col-md-12" style="max-height:500px;overflow-y:scroll">
                     <table class="table table-sm table-avatar table-responsive-lg" id="tblMenuData">
@@ -165,10 +206,250 @@
             </div>
         </div>
     </div>
+ 
 </div>
 
 @section scripts{
     <script type="text/javascript">
+
+
+
+        var ddlSalesAndDistributionType = $("#ddlSalesAndDistributionType");
+        var ddlZoneName = $("#ddlZoneName");
+        var ddlDivisionName = $("#ddlDivisionName");
+        var ddlRegionName = $("#ddlRegionName");
+        var ddlAreaName = $("#ddlAreaName");
+        var ddlTerritoryName = $("#ddlTerritoryName")
+        var ddlStockiestName = $("#ddlStockiestName")
+
+        var ddlUserName = $("#ddlUserName");
+
+        $(document).ready(function () {
+
+            disable(ddlZoneName)
+            disable(ddlDivisionName)
+            disable(ddlRegionName)
+            disable(ddlAreaName)
+            disable(ddlTerritoryName)
+            disable(ddlStockiestName);
+            //disable(ddlUserName)
+            $("#zoneDiv").hide();
+            $("#divisionDiv").hide();
+            $("#regionDiv").hide();
+            $("#areaDiv").hide();
+            $("#territoryDiv").hide();
+            $("#stockiestDiv").hide();
+            $("#userNameDiv").hide();
+
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
+            $("#ddlDivisionName").attr("data-placeholder", "Select Division");
+
+        });
+
+        ddlSalesAndDistributionType.change(function () {
+
+            if (ddlSalesAndDistributionType.val() == 0) {
+                disable(ddlZoneName)
+                disable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlAreaName)
+                disable(ddlTerritoryName)
+                disable(ddlStockiestName)
+                ddlZoneName.val("");
+                ddlDivisionName.val("");
+                ddlRegionName.val("");
+                ddlAreaName.val("");
+                ddlTerritoryName.val("");
+                ddlStockiestName.val("");
+
+                $("#zoneDiv").hide();
+                $("#divisionDiv").hide();
+                $("#regionDiv").hide();
+                $("#areaDiv").hide();
+                $("#territoryDiv").hide();
+                $("#userNameDiv").hide();
+                $("#stockiestDiv").hide();
+
+
+            }
+            if (ddlSalesAndDistributionType.val() == 1) {
+
+                $("#zoneDiv").show();
+
+                $("#divisionDiv").hide();
+                $("#regionDiv").hide();
+                $("#areaDiv").hide();
+                $("#territoryDiv").hide();
+                $("#stockiestDiv").hide();
+                $("#userNameDiv").show();
+
+                enable(ddlZoneName)
+                disable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlAreaName)
+                disable(ddlTerritoryName)
+                disable(ddlStockiestName)
+
+                ddlDivisionName.val("");
+                ddlRegionName.val("");
+                ddlAreaName.val("");
+                ddlTerritoryName.val("");
+                ddlStockiestName.val("");
+            }
+            if (ddlSalesAndDistributionType.val() == 2) {
+
+                $("#zoneDiv").hide();
+                $("#divisionDiv").show();
+                $("#regionDiv").hide();
+                $("#areaDiv").hide();
+                $("#territoryDiv").hide();
+                $("#stockiestDiv").hide();
+                $("#userNameDiv").show();
+                disable(ddlZoneName)
+                enable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlAreaName)
+                disable(ddlTerritoryName)
+
+                ddlZoneName.val("");
+                ddlRegionName.val("");
+                ddlAreaName.val("");
+                ddlTerritoryName.val("");
+                ddlStockiestName.val("");
+            }
+            if (ddlSalesAndDistributionType.val() == 3) {
+                $("#zoneDiv").hide();
+                $("#divisionDiv").hide();
+                $("#regionDiv").show();
+                $("#areaDiv").hide();
+                $("#territoryDiv").hide();
+                $("#stockiestDiv").hide();
+                $("#userNameDiv").show();
+                disable(ddlZoneName)
+                disable(ddlDivisionName)
+                enable(ddlRegionName)
+                disable(ddlAreaName)
+                disable(ddlTerritoryName)
+
+                ddlZoneName.val("");
+                ddlDivisionName.val("");
+                ddlAreaName.val("");
+                ddlTerritoryName.val("");
+                ddlStockiestName.val("");
+
+
+            }
+            if (ddlSalesAndDistributionType.val() == 4) {
+                $("#zoneDiv").hide();
+                $("#divisionDiv").hide();
+                $("#regionDiv").hide();
+                $("#areaDiv").show();
+                $("#territoryDiv").hide();
+                $("#stockiestDiv").hide();
+                $("#userNameDiv").show();
+                disable(ddlZoneName)
+                disable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlTerritoryName)
+                enable(ddlAreaName)
+
+                ddlZoneName.val("");
+                ddlDivisionName.val("");
+                ddlRegionName.val("");
+
+                ddlTerritoryName.val("");
+                ddlStockiestName.val("");
+
+            }
+            if (ddlSalesAndDistributionType.val() == 5) {
+
+                $("#zoneDiv").hide();
+                $("#divisionDiv").hide();
+                $("#regionDiv").hide();
+                $("#areaDiv").hide();
+                $("#territoryDiv").show();
+                $("#stockiestDiv").hide();
+                $("#userNameDiv").show();
+                disable(ddlZoneName)
+                disable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlAreaName)
+                enable(ddlTerritoryName)
+
+                ddlZoneName.val("");
+                ddlDivisionName.val("");
+                ddlRegionName.val("");
+                ddlAreaName.val("");
+                ddlStockiestName.val("");
+
+
+
+            }
+
+            if (ddlSalesAndDistributionType.val() == 6) {
+
+                $("#zoneDiv").hide();
+                $("#divisionDiv").hide();
+                $("#regionDiv").hide();
+                $("#areaDiv").hide();
+                $("#territoryDiv").hide();
+                $("#stockiestDiv").show();
+                $("#userNameDiv").show();
+                disable(ddlZoneName)
+                disable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlAreaName)
+                enable(ddlTerritoryName)
+                enable(ddlStockiestName)
+
+                ddlZoneName.val("");
+                ddlDivisionName.val("");
+                ddlRegionName.val("");
+                ddlAreaName.val("");
+                ddlTerritoryName.val("");
+
+
+
+            }
+
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         var hdfUserId = $("#hdfUserId");
         var txtEmployeeId = $("#txtEmployeeId");
         var txtFullName = $("#txtFullName");
@@ -324,7 +605,173 @@
 
         ddlRoleName.change(function () {
             if (TryParseInt(ddlRoleName.val(), 0) > 0) {
-                loadMenuByRole(ddlOrganizationName.val(),ddlRoleName.val());
+                loadMenuByRole(ddlOrganizationName.val(), ddlRoleName.val());
+                if (ddlRoleName.val() == 0) {
+                    disable(ddlZoneName)
+                    disable(ddlDivisionName)
+                    disable(ddlRegionName)
+                    disable(ddlAreaName)
+                    disable(ddlTerritoryName)
+                    disable(ddlStockiestName)
+                    ddlZoneName.val("");
+                    ddlDivisionName.val("");
+                    ddlRegionName.val("");
+                    ddlAreaName.val("");
+                    ddlTerritoryName.val("");
+                    ddlStockiestName.val("");
+
+                    $("#zoneDiv").hide();
+                    $("#divisionDiv").hide();
+                    $("#regionDiv").hide();
+                    $("#areaDiv").hide();
+                    $("#territoryDiv").hide();
+                    $("#userNameDiv").hide();
+                    $("#stockiestDiv").hide();
+
+
+                }
+                if (ddlRoleName.val() == 29) {
+
+                    $("#zoneDiv").show();
+
+                    $("#divisionDiv").hide();
+                    $("#regionDiv").hide();
+                    $("#areaDiv").hide();
+                    $("#territoryDiv").hide();
+                    $("#stockiestDiv").hide();
+                    $("#userNameDiv").show();
+
+                    enable(ddlZoneName)
+                    disable(ddlDivisionName)
+                    disable(ddlRegionName)
+                    disable(ddlAreaName)
+                    disable(ddlTerritoryName)
+                    disable(ddlStockiestName)
+
+                    ddlDivisionName.val("");
+                    ddlRegionName.val("");
+                    ddlAreaName.val("");
+                    ddlTerritoryName.val("");
+                    ddlStockiestName.val("");
+                }
+                if (ddlRoleName.val() == 30) {
+                    LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
+                    $("#ddlDivisionName").attr("data-placeholder", "Select Division");
+
+
+                    $("#zoneDiv").hide();
+                    $("#divisionDiv").show();
+                    $("#regionDiv").hide();
+                    $("#areaDiv").hide();
+                    $("#territoryDiv").hide();
+                    $("#stockiestDiv").hide();
+                    $("#userNameDiv").show();
+                    disable(ddlZoneName)
+                    enable(ddlDivisionName)
+                    disable(ddlRegionName)
+                    disable(ddlAreaName)
+                    disable(ddlTerritoryName)
+
+                    ddlZoneName.val("");
+                    ddlRegionName.val("");
+                    ddlAreaName.val("");
+                    ddlTerritoryName.val("");
+                    ddlStockiestName.val("");
+                }
+                if (ddlRoleName.val() == 31) {
+                    $("#zoneDiv").hide();
+                    $("#divisionDiv").hide();
+                    $("#regionDiv").show();
+                    $("#areaDiv").hide();
+                    $("#territoryDiv").hide();
+                    $("#stockiestDiv").hide();
+                    $("#userNameDiv").show();
+                    disable(ddlZoneName)
+                    disable(ddlDivisionName)
+                    enable(ddlRegionName)
+                    disable(ddlAreaName)
+                    disable(ddlTerritoryName)
+
+                    ddlZoneName.val("");
+                    ddlDivisionName.val("");
+                    ddlAreaName.val("");
+                    ddlTerritoryName.val("");
+                    ddlStockiestName.val("");
+
+
+                }
+                if (ddlRoleName.val() == 32) {
+                    $("#zoneDiv").hide();
+                    $("#divisionDiv").hide();
+                    $("#regionDiv").hide();
+                    $("#areaDiv").show();
+                    $("#territoryDiv").hide();
+                    $("#stockiestDiv").hide();
+                    $("#userNameDiv").show();
+                    disable(ddlZoneName)
+                    disable(ddlDivisionName)
+                    disable(ddlRegionName)
+                    disable(ddlTerritoryName)
+                    enable(ddlAreaName)
+
+                    ddlZoneName.val("");
+                    ddlDivisionName.val("");
+                    ddlRegionName.val("");
+
+                    ddlTerritoryName.val("");
+                    ddlStockiestName.val("");
+
+                }
+                if (ddlRoleName.val() == 33) {
+
+                    $("#zoneDiv").hide();
+                    $("#divisionDiv").hide();
+                    $("#regionDiv").hide();
+                    $("#areaDiv").hide();
+                    $("#territoryDiv").show();
+                    $("#stockiestDiv").hide();
+                    $("#userNameDiv").show();
+                    disable(ddlZoneName)
+                    disable(ddlDivisionName)
+                    disable(ddlRegionName)
+                    disable(ddlAreaName)
+                    enable(ddlTerritoryName)
+
+                    ddlZoneName.val("");
+                    ddlDivisionName.val("");
+                    ddlRegionName.val("");
+                    ddlAreaName.val("");
+                    ddlStockiestName.val("");
+
+
+
+                }
+
+                if (ddlRoleName.val() == 34) {
+
+                    $("#zoneDiv").hide();
+                    $("#divisionDiv").hide();
+                    $("#regionDiv").hide();
+                    $("#areaDiv").hide();
+                    $("#territoryDiv").hide();
+                    $("#stockiestDiv").show();
+                    $("#userNameDiv").show();
+                    disable(ddlZoneName)
+                    disable(ddlDivisionName)
+                    disable(ddlRegionName)
+                    disable(ddlAreaName)
+                    enable(ddlTerritoryName)
+                    enable(ddlStockiestName)
+
+                    ddlZoneName.val("");
+                    ddlDivisionName.val("");
+                    ddlRegionName.val("");
+                    ddlAreaName.val("");
+                    ddlTerritoryName.val("");
+
+
+
+                }
 
             } else {
                 loadMenu();

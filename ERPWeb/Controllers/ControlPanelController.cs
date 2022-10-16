@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ERPBLL.Agriculture.Interface;
+using ERPBO.Common;
 
 namespace ERPWeb.Controllers
 {
@@ -28,7 +29,17 @@ namespace ERPWeb.Controllers
         private readonly IUserAuthorizationBusiness _userAuthorizationBusiness;
         private readonly IRoleAuthorizationBusiness _roleAuthorizationBusiness;
 
-        public ControlPanelController(IOrganizationBusiness               organizationBusiness,IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness)
+        private readonly IUserInfo _userInfo;
+        private readonly IStockiestInfo _stockiestInfo;
+        public readonly IDivisionInfo _divisionInfo;
+        public readonly IZone _zone;
+
+        private readonly IZoneSetup _zoneSetup;//e
+        private readonly IRegionSetup _regionSetup;//e
+        private readonly IAreaSetupBusiness _areaSetupBusiness;//e
+        private readonly ITerritorySetup _territorySetup;//e
+
+        public ControlPanelController(IOrganizationBusiness               organizationBusiness,IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness, IZoneSetup zoneSetup,IDivisionInfo divisionInfo,IRegionSetup regionSetup, IAreaSetupBusiness areaSetupBusiness, ITerritorySetup territorySetup,IStockiestInfo stockiestInfo)
         {
             this._depotSetup = depotSetup;
             this._organizationBusiness = organizationBusiness;
@@ -41,6 +52,12 @@ namespace ERPWeb.Controllers
             this._organizationAuthBusiness = organizationAuthBusiness;
             this._userAuthorizationBusiness = userAuthorizationBusiness;
             this._roleAuthorizationBusiness = roleAuthorizationBusiness;
+            this._zoneSetup = zoneSetup;
+            this._divisionInfo = divisionInfo;
+            this._regionSetup = regionSetup;
+            this._areaSetupBusiness = areaSetupBusiness;
+            this._territorySetup = territorySetup;
+            this._stockiestInfo = stockiestInfo;
         }
         // GET: ControlPanel
 
@@ -499,6 +516,8 @@ namespace ERPWeb.Controllers
         }
         #endregion
 
+
+
         #region App Config
         public ActionResult ApplicationConfig(string flag)
         {
@@ -698,6 +717,15 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Select(br => new SelectListItem { Text = br.OrganizationName, Value = br.OrganizationId.ToString() });
                 ViewBag.Id = id;
                 ViewBag.PageHead = id > 0 ? "Update Application User" : "Create Application User";
+
+
+                ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+                ViewBag.ddlDivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+                ViewBag.ddlRegionName = _regionSetup.GetAllRegionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
+                ViewBag.ddlAreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
+                ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
+     
+                ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.StockiestName, Value = terr.StockiestId.ToString() }).ToList();
                 return View();
             }
             else
@@ -712,6 +740,16 @@ namespace ERPWeb.Controllers
             }
         }
 
+
+        //dropDown
+        [HttpPost]
+        public ActionResult GetDivision()
+        {
+            var data = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new Dropdown { value = org.DivisionId.ToString(), text = org.DivisionName}).ToList();
+
+          
+            return Json(data);
+        }
         public ActionResult CreateClientUser(string flag, long id = 0)
         {
             if (string.IsNullOrEmpty(flag))

@@ -26,17 +26,19 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<UserAssign> GetAllUserAssignInfo(long orgId)
         {
-            return _userAssignRepository.GetAll();
+            return _userAssignRepository.GetAll(u=>u.OrganizationId==orgId);
         }
 
-        public UserAssign GetUserAssignById(long orgId)
+        public UserAssign GetUserAssignById(long userAssignId , long orgId)
         {
-            throw new NotImplementedException();
+            return _userAssignRepository.GetOneByOrg(u => u.UserAssignId == userAssignId && u.OrganizationId == orgId);
         }
 
         public bool SaveUserAssignInformation(UserAssignDTO userAssignDTO, long userId, long orgId)
         {
-            throw new NotImplementedException();
+            bool isSuccess = false;
+
+            return isSuccess;
         }
 
         public bool SaveUserAssignInformation(List<UserAssignDTO> userAssignDTO, long userId, long orgId)

@@ -3,5 +3,391 @@
     ViewBag.Title = "SaveUserAssignInformation";
 }
 
-<h2>SaveUserAssignInformation</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/GetUserAssignInformation" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">Assign User </h5>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-body text-sm">
+                <div class="row " style="margin-top:-8px;">
+                    <div class="col-md-2">
+                        <label for="ddlSalesAndDistributionType" class="control-label">Distribution Type</label>
+                        <select class="form-control form-control-sm" id="ddlSalesAndDistributionType">
+                            <option value="0">Select Type</option>
+                            <option value="1">Zone</option>
+                            <option value="2">Division</option>
+                            <option value="3">Region</option>
+                            <option value="4">Area</option>
+                            <option value="5">Territory</option>
+                            <option value="6">Stockiest</option>
+
+
+
+                        </select>
+
+                        <span class="error hide required-ddlSalesAndDistributionType font-weight-bold">SalesAndDistributionType is Required</span>
+                    </div>
+                    <div class="col-md-2" id="zoneDiv">
+                        <label for="ddlZoneName" class="control-label">Zone Name</label>
+                        @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+                        <span class="error hide required-ddlZoneName font-weight-bold">Zone Name is Required</span>
+                    </div>
+                    <div class="col-md-2" style="margin-left:-5px" id="divisionDiv">
+                        <label for="ddlDivisionName" class="control-label">Division Name</label>
+                        @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Division Name", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+
+                        <span class="error hide required-ddldivisionName font-weight-bold">Division Name is Required</span>
+                    </div>
+
+                    <div class="col-md-2" id="regionDiv">
+                        <label for="ddlRegionName" class="control-label">Region Name</label>
+                        @Html.DropDownList("ddlRegionName", (IEnumerable<SelectListItem>)ViewBag.ddlRegionName, "--Select Region Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+
+
+                    </div>
+                    <div class="col-md-2" id="areaDiv">
+                        <label for="ddlAreaName" class="control-label"> Area Name</label>
+                        @Html.DropDownList("ddlAreaName", (IEnumerable<SelectListItem>)ViewBag.ddlAreaName, "--Select Area Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+
+                    </div>
+                    <div class="col-md-2" id="territoryDiv">
+                        <label for="ddlTerritoryName" class="control-label">Territory Name</label>
+                        @Html.DropDownList("ddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+                    </div>
+
+                    <div class="col-md-3" id="stockiestDiv">
+            <label for="ddlStockiestName" class="control-label">Stockiest Name</label>
+            @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+
+        </div>
+                    <div class="col-md-3" id="userNameDiv">
+                        <label for="ddlUserName" class="control-label">User Name</label>
+                        @Html.DropDownList("ddlUserName", (IEnumerable<SelectListItem>)ViewBag.ddlUserName, "--Select User Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select-danger" })
+
+                    </div>
+
+                    <div class="col-md-1 " style="margin-top:5px;">
+                        <label for="addButton" class="control-label"></label>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblUserAssignInformation">
+                            <thead>
+                                <tr>
+                                    <th colspan="9">
+                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                    </th>
+                                </tr>
+
+                                <tr class="text-center btn-dark">
+                                    <th style="width:5%">#SL</th>
+                                    <th style="width:15%">Zone Name</th>
+                                    <th style="width:10%">Division Name</th>
+                                    <th style="width:10%">Region Name</th>
+                                    <th style="width:10%">Area Name</th>
+                                    <th style="width:10%">Territory Name</th>
+                                    <th style="width:10%">Stokist Name</th>
+                                    <th style="width:10%">User Name</th>
+                                    <th style="width:10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var ddlSalesAndDistributionType = $("#ddlSalesAndDistributionType");
+        var ddlZoneName = $("#ddlZoneName");
+        var ddlDivisionName = $("#ddlDivisionName");
+        var ddlRegionName = $("#ddlRegionName");
+        var ddlAreaName = $("#ddlAreaName");
+        var ddlTerritoryName = $("#ddlTerritoryName")
+        var ddlStockiestName = $("#ddlStockiestName")
+
+        var ddlUserName = $("#ddlUserName");
+
+        $(document).ready(function () {
+
+            disable(ddlZoneName)
+            disable(ddlDivisionName)
+            disable(ddlRegionName)
+            disable(ddlAreaName)
+            disable(ddlTerritoryName)
+            disable(ddlStockiestName);
+            //disable(ddlUserName)
+            $("#zoneDiv").hide();
+            $("#divisionDiv").hide();
+            $("#regionDiv").hide();
+            $("#areaDiv").hide();
+            $("#territoryDiv").hide();
+            $("#stockiestDiv").hide();
+            $("#userNameDiv").hide();
+
+        });
+        
+        ddlSalesAndDistributionType.change(function () {
+
+            if (ddlSalesAndDistributionType.val() == 0) {
+                disable(ddlZoneName)
+                disable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlAreaName)
+                disable(ddlTerritoryName)
+                disable(ddlStockiestName)
+                ddlZoneName.val("");
+                ddlDivisionName.val("");
+                ddlRegionName.val("");
+                ddlAreaName.val("");
+                ddlTerritoryName.val("");
+                ddlStockiestName.val("");
+
+                $("#zoneDiv").hide();
+                $("#divisionDiv").hide();
+                $("#regionDiv").hide();
+                $("#areaDiv").hide();
+                $("#territoryDiv").hide();
+                $("#userNameDiv").hide();
+                $("#stockiestDiv").hide();
+                
+
+            }
+            if (ddlSalesAndDistributionType.val() == 1) {
+
+                $("#zoneDiv").show();
+
+                $("#divisionDiv").hide();
+                $("#regionDiv").hide();
+                $("#areaDiv").hide();
+                $("#territoryDiv").hide();
+                $("#stockiestDiv").hide();
+                $("#userNameDiv").show();
+
+                enable(ddlZoneName)
+                disable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlAreaName)
+                disable(ddlTerritoryName)
+                disable(ddlStockiestName)
+
+                ddlDivisionName.val("");
+                ddlRegionName.val("");
+                ddlAreaName.val("");
+                ddlTerritoryName.val("");
+                ddlStockiestName.val("");
+            }
+            if (ddlSalesAndDistributionType.val() == 2) {
+
+                $("#zoneDiv").hide();
+                $("#divisionDiv").show();
+                $("#regionDiv").hide();
+                $("#areaDiv").hide();
+                $("#territoryDiv").hide();
+                $("#stockiestDiv").hide();
+                $("#userNameDiv").show();
+                disable(ddlZoneName)
+                enable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlAreaName)
+                disable(ddlTerritoryName)
+
+                ddlZoneName.val("");
+                ddlRegionName.val("");
+                ddlAreaName.val("");
+                ddlTerritoryName.val("");
+                ddlStockiestName.val("");
+            }
+            if (ddlSalesAndDistributionType.val() == 3) {
+                $("#zoneDiv").hide();
+                $("#divisionDiv").hide();
+                $("#regionDiv").show();
+                $("#areaDiv").hide();
+                $("#territoryDiv").hide();
+                $("#stockiestDiv").hide();
+                $("#userNameDiv").show();
+                disable(ddlZoneName)
+                disable(ddlDivisionName)
+                enable(ddlRegionName)
+                disable(ddlAreaName)
+                disable(ddlTerritoryName)
+
+                ddlZoneName.val("");
+                ddlDivisionName.val("");
+                ddlAreaName.val("");
+                ddlTerritoryName.val("");
+                ddlStockiestName.val("");
+
+
+            }
+            if (ddlSalesAndDistributionType.val() == 4) {
+                $("#zoneDiv").hide();
+                $("#divisionDiv").hide();
+                $("#regionDiv").hide();
+                $("#areaDiv").show();
+                $("#territoryDiv").hide();
+                $("#stockiestDiv").hide();
+                $("#userNameDiv").show();
+                disable(ddlZoneName)
+                disable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlTerritoryName)
+                enable(ddlAreaName)
+
+                ddlZoneName.val("");
+                ddlDivisionName.val("");
+                ddlRegionName.val("");
+
+                ddlTerritoryName.val("");
+                ddlStockiestName.val("");
+
+            }
+            if (ddlSalesAndDistributionType.val() == 5) {
+
+                $("#zoneDiv").hide();
+                $("#divisionDiv").hide();
+                $("#regionDiv").hide();
+                $("#areaDiv").hide();
+                $("#territoryDiv").show();
+                $("#stockiestDiv").hide();
+                $("#userNameDiv").show();
+                disable(ddlZoneName)
+                disable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlAreaName)
+                enable(ddlTerritoryName)
+
+                ddlZoneName.val("");
+                ddlDivisionName.val("");
+                ddlRegionName.val("");
+                ddlAreaName.val("");
+                ddlStockiestName.val("");
+
+
+
+            }
+
+            if (ddlSalesAndDistributionType.val() == 6) {
+
+                $("#zoneDiv").hide();
+                $("#divisionDiv").hide();
+                $("#regionDiv").hide();
+                $("#areaDiv").hide();
+                $("#territoryDiv").hide();
+                $("#stockiestDiv").show();
+                $("#userNameDiv").show();
+                disable(ddlZoneName)
+                disable(ddlDivisionName)
+                disable(ddlRegionName)
+                disable(ddlAreaName)
+                enable(ddlTerritoryName)
+                enable(ddlStockiestName)
+
+                ddlZoneName.val("");
+                ddlDivisionName.val("");
+                ddlRegionName.val("");
+                ddlAreaName.val("");
+                ddlTerritoryName.val("");
+
+
+
+            }
+
+
+        })
+
+
+        $("#addButton").click(function (e) {
+            e.preventDefault();
+            console.log("Index: " + ddlDivisionName.prop('selectedIndex'));
+            if (true) {
+                var index = $("#tblUserAssignInformation  tbody tr").length;
+                var sl = "<td>" + (index + 1) + "</td>";
+                var zoneId = "<td class='hide'>" + ddlZoneName.val(); + "</td>";
+                var z = ddlZoneName.prop('selectedIndex') > 0 ? dropDownSelectedText("ddlZoneName") : 'N/A';
+                var zoneName = "<td class=''>" + z + "</td>";
+
+                
+                var divisionId = "<td class='hide'>" + ddlDivisionName.val(); + "</td>";
+                var d= ddlDivisionName.prop('selectedIndex') >0 ? dropDownSelectedText('ddlDivisionName') : 'N/A'  ;
+                 var divisionName = "<td>" +  d  + "</td>";
+       
+                var regionId = "<td class='hide'>" + ddlRegionName.val() + "</td>";
+                var r = ddlRegionName.prop('selectedIndex') > 0 ? dropDownSelectedText('ddlRegionName') : 'N/A';
+                var regionName = "<td class=''>" + r + "</td>";
+          
+                var areaId = "<td class='hide'>" + ddlAreaName.val(); + "</td>";
+                var a = ddlAreaName.prop('selectedIndex') > 0 ? dropDownSelectedText('ddlAreaName') : 'N/A';
+                var areaName = "<td class=''>" + a + "</td>";
+                var territoryId = "<td class='hide'>" + ddlTerritoryName.val(); + "</td>";
+                var t = ddlTerritoryName.prop('selectedIndex') > 0 ? dropDownSelectedText('ddlTerritoryName') : 'N/A';
+                var territoryName = "<td class=''>" + t + "</td>";
+
+                var stockiestId = "<td class='hide'>" + ddlStockiestName.val(); + "</td>";
+                var s = ddlStockiestName.prop('selectedIndex') > 0 ? dropDownSelectedText('ddlStockiestName') : 'N/A';
+                var stockiestName = "<td class=''>" +s+ "</td>";
+                var userId = "<td class='hide'>" + ddlUserName.val(); + "</td>";
+                var userName = "<td class=''>" + dropDownSelectedText("ddlUserName"); + "</td>";
+               
+                var action = "<td><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
+
+                console.log(divisionName);
+
+                var tr = "<tr>" + sl + zoneId + zoneName + divisionId + divisionName + regionId + regionName + areaId + areaName + territoryId + territoryName + stockiestId + stockiestName + userId+ userName+ action + "</tr>";
+
+                $("#tblUserAssignInformation tbody").append(tr);
+      
+
+            }
+
+
+
+
+        })
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            removeTableRow("#tblMeasurement tbody", index);
+            fnFixTheTbodyRowSerial("#tblMeasurement", index);
+        })
+
+
+
+
+       
+
+    </script>
+    
+    
+    
+}
 
