@@ -246,6 +246,10 @@
     <Compile Include="AgricultureContextMigrations\202210131051435_Agriculture_UserInfoMigration.Designer.cs">
       <DependentUpon>202210131051435_Agriculture_UserInfoMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202210161126453_Agriculture_RawMaterialAddProperty.cs" />
+    <Compile Include="AgricultureContextMigrations\202210161126453_Agriculture_RawMaterialAddProperty.Designer.cs">
+      <DependentUpon>202210161126453_Agriculture_RawMaterialAddProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -402,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202210131051435_Agriculture_UserInfoMigration.resx">
       <DependentUpon>202210131051435_Agriculture_UserInfoMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210161126453_Agriculture_RawMaterialAddProperty.resx">
+      <DependentUpon>202210161126453_Agriculture_RawMaterialAddProperty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

@@ -32,24 +32,32 @@ namespace ERPBLL.Agriculture
             return _userInfoRepository.GetOneByOrg(r => r.UserId == userId && r.OrganizationId == orgId);
         }
 
-        public IEnumerable<UserInfoDTO> GetUserInfos(long? userId, long orgId)
+        public IEnumerable<UserInfoDTO> GetUserInfos(long? userId, string departmentName, string designation, long orgId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<UserInfoDTO>(QueryForUserInfoss(userId, orgId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<UserInfoDTO>(QueryForUserInfoss(userId,departmentName,designation, orgId)).ToList();
         }
 
-        private string QueryForUserInfoss(long? userId, long orgId)
+        private string QueryForUserInfoss(long? userId, string departmentName, string designation, long orgId)
         {
             string query = string.Empty;
             string param = string.Empty;
 
-            param += string.Format(@" and OrganizationId={0}", orgId);
+            //param += string.Format(@"OrganizationId={0}", orgId);
             if (userId != null && userId > 0)
             {
                 param += string.Format(@" and UserId={0}", userId);
             }
+            if (departmentName != "")
+            {
+                param += string.Format(@" and DepartmentName like'%{0}%'", departmentName);
+            }
+            if (designation != "")
+            {
+                param += string.Format(@"and Designation like'%{0}%'", designation);
+            }
 
             query = string.Format(@"
-           
+           select UserId, UserName,DepartmentName,Designation,Status from tblUserInfo
             where 1=1  {0}",
             Utility.ParamChecker(param));
             return query;
@@ -78,6 +86,24 @@ namespace ERPBLL.Agriculture
                 };
                 _userInfoRepository.Insert(userInfo);
             }
+
+            isSuccess = _userInfoRepository.Save();
+            return isSuccess;
+        }
+
+        public bool UpdateUserInfoList(UserInfoDTO updateDTOs, long userId, long orgId)
+        {
+            bool isSuccess = false;
+
+            UserInfo info = new UserInfo();
+            info = GetUserInfoById(updateDTOs.UserId, orgId);
+            info.UserName = updateDTOs.UserName;
+            info.DepartmentName = updateDTOs.DepartmentName;
+            info.Designation = updateDTOs.Designation;
+            info.Status = updateDTOs.Status;
+            info.UpdateDate = DateTime.Now;
+            info.UpdateUserId = userId;
+            _userInfoRepository.Update(info);
 
             isSuccess = _userInfoRepository.Save();
             return isSuccess;
