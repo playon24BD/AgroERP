@@ -1699,7 +1699,12 @@ namespace ERPWeb.Controllers
 
 #endregion
 
+<<<<<<< Updated upstream
         #region user
+=======
+
+        #region
+>>>>>>> Stashed changes
         public ActionResult GetUserAssignInformation()
         {
             ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
