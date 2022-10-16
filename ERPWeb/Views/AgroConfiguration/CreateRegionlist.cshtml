@@ -42,6 +42,8 @@
                         <span class="error hide required-RegionName font-weight-bold">Input Region Name!</span>
                         <span class="error hide required-RegionName font-weight-bold">Already RegionName Exist!</span>
                     </div>
+
+
                     
                     <div class="col-md-1 " style="margin-top:5px;">
                         <label for="addButton" class="control-label"></label>
@@ -170,6 +172,8 @@
                 regionNameList.push(ddlRegionName.val());
                 }
             }
+
+            clearCtrlRegion();
         })
 
 
@@ -266,6 +270,15 @@
 
             return Isvalid
 
+        }
+
+        //clear
+        function clearCtrlRegion() {
+            debugger;
+            ddldivname.val('0');
+            
+            ddlRegionName.val("");
+       
         }
 
     </script>

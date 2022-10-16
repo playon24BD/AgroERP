@@ -1,4 +1,9 @@
-﻿<div class="row">
+﻿@{
+    ViewBag.Title = "GetMeasurment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
     <div class="col-md-12">
         <div class="card shadow card-primary card-outline card-tabs" style="margin-top:-20px">
             <div class="card-header p-0 pt-1 border-bottom-0">
@@ -42,13 +47,13 @@
                                         <div class="row">
                                             <input type="hidden" id="hdMeasurementId" />
                                             @*<div class="col-md-3">
-                                                <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
-                                                <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
-                                                    <option value="">Select One</option>
-                                                    <option value="9">Agro Farm</option>
-                                                </select>
-                                                <span class="error hide req-ddlOrganiation">Organization is required</span>
-                                            </div>*@
+                                                    <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
+                                                    <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
+                                                        <option value="">Select One</option>
+                                                        <option value="9">Agro Farm</option>
+                                                    </select>
+                                                    <span class="error hide req-ddlOrganiation">Organization is required</span>
+                                                </div>*@
                                             <div class="col-md-3">
                                                 <label class="control-label font-weight-bold " for="measurementName">Measurement Name</label>
                                                 <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" />
@@ -322,7 +327,7 @@
 
 
             }
-           
+
         });
 
         $(document).on("click", "a.data-onfly-del", function (e) {
@@ -412,7 +417,7 @@
 
 
             }
-           
+
 
 
         });

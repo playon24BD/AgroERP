@@ -1,4 +1,7 @@
-﻿
+﻿@{
+    ViewBag.Title = "GetProductFinishGoodList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <div class="row">
     <div class="col-md-12">
@@ -59,7 +62,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
-                                           @{Html.RenderAction("GetProductFinishGoodList", new { @flag = "Initial" });}
+                                            @{Html.RenderAction("GetProductFinishGoodList", new { @flag = "Initial" });}
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +83,7 @@
                                         <div class="col-md-6">
                                             <h5 class="text-center text-bold">
 
-                                               Finish Good Production
+                                                Finish Good Production
                                             </h5>
                                         </div>
                                         <div class="col-md-3">
@@ -94,34 +97,34 @@
                                         <input type="hidden" id="hdMeasurementId" />
                                         <input type="hidden" id="hdTargetValue" />
                                         @*<div class="col-md-3">
-                                            <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
-                                            <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
-                                                <option value="">Select One</option>
-                                                <option value="9">Agro Farm</option>
-                                            </select>
-                                            <span class="error hide req-ddlOrganiation">Organization is required</span>
-                                        </div>*@
+                                                <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
+                                                <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
+                                                    <option value="">Select One</option>
+                                                    <option value="9">Agro Farm</option>
+                                                </select>
+                                                <span class="error hide req-ddlOrganiation">Organization is required</span>
+                                            </div>*@
                                         <div class="col-md-3">
                                             <label class="control-label" for="ddlProduct">Product</label>
-                                            @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct,"-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                                             <span class="error hide req-ddlProduct">Product Name is Required</span>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label" for="ddlReceipBatchCode">BatchCode</label>
-                                            @Html.DropDownList("ddlReceipBatchCode",(IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode,"--Select Batch--",new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, "--Select Batch--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
 
                                         </div>
                                         <div class="col-md-2">
                                             <label for="qty"> Qty</label>
-                                            <input  type="number" id="qty" name="qty" class="form-control form-control-sm" readonly/>
+                                            <input type="number" id="qty" name="qty" class="form-control form-control-sm" readonly />
                                             <span class="error hide req-qty">Qty Is Required</span>
 
                                         </div>
                                         <div class="col-md-2">
-                                            <label  for="targetQty" class="control-label"> Target Qty</label>
-                                            <input type="number" id="targetQty" class="form-control form-control-sm"/>
+                                            <label for="targetQty" class="control-label"> Target Qty</label>
+                                            <input type="number" id="targetQty" class="form-control form-control-sm" />
                                             <span class="error hide req-targetQty"></span>
                                         </div>
 
@@ -149,12 +152,12 @@
                                                             </th>
                                                         </tr>
                                                         <tr class="btn-dark">
-                                             
+
                                                             <th>Raw Material</th>
                                                             <th>Per Qty</th>
                                                             <th>Total Production Qty</th>
                                                             <th>Required Qty</th>
-                                          
+
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -210,7 +213,7 @@
             $("#btnSubmit").hide();
         })
 
-   
+
 
         ddlReceipBatchCode.change(function () {
 
@@ -225,7 +228,7 @@
             e.preventDefault();
             $("#dataContainer2").empty();
             var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(2).html();
-      
+
                 var data = { flag: "Detail", finishGoodProductionBatch: finishGoodProductionBatch };
                 $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
                     console.log(status);
@@ -237,28 +240,28 @@
                 }).fail(function (error) {
                     console.log(error);
                 })
-       
+
         })
 
 
         ddlProduct.change(function () {
-            
+
             //debugger;
             clearDropdown("ddlReceipBatchCode");
             if (ddlProduct.val() != "") {
-           
+
                 LoadDropDown('/AgroConfiguration/GetReceipyCodeByProductionId', 'POST', ddlReceipBatchCode, JSON.stringify({ finishGoodProductId: ddlProduct.val() }));
             }
            // $("#ddlRequesition option:not(:first)").remove();
 
-          
+
         })
 
 
 
         function LoadQuantityData() {
             var data = { receipeBatchCode: ddlReceipBatchCode.val() };
-  
+
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
                 debugger;
                 qty.val(res);
@@ -358,8 +361,8 @@
             })
 
         });
-       
-  
+
+
 
         function redirectPage(page) {
             window.location.replace(page);
