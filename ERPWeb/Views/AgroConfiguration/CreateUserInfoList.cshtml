@@ -121,7 +121,7 @@
         var txtMobileNumber = $("#txtMobileNumber");
         var txtAddress = $("#txtAddress");
         var txtEmail = $("#txtEmail");
-
+        var UserNameList = [];
 
         $(document).ready(function () {
 
@@ -137,27 +137,30 @@
             debugger;
             if (validation()==true) {
 
+                if (UserNameList.includes(txtUserName.val())) {
+                    toastrErrorAlert("User Name Already Exist");
+                }
+                else {
+
+                    var sl = $("#tblMargeItems tbody tr").length;
+                    var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                    var td2 = "<td class='text-center'>" + txtUserName.val() + "</td>";
+                    var td3 = "<td class='text-center'>" + txtDepartMentName.val() + "</td>";
+                    var td4 = "<td class='text-center'>" + txtDesignationName.val() + "</td>";
+                    var td5 = "<td class='text-center'>" + txtMobileNumber.val() + "</td>";
+                    var td6 = "<td class='text-center'>" + txtAddress.val() + "</td>";
+                    var td7 = "<td class='text-center'>" + txtEmail.val() + "</td>";
+
+                    var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                    //var td9 = "<td class='hide UserId'>" + txtUserName.val() + "</td>";
 
 
-                var sl = $("#tblMargeItems tbody tr").length;
-                var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-                var td2 = "<td class='text-center'>" + txtUserName.val() + "</td>";
-                var td3 = "<td class='text-center'>" + txtDepartMentName.val() + "</td>";
-                var td4 = "<td class='text-center'>" + txtDesignationName.val() + "</td>";
-                var td5 = "<td class='text-center'>" + txtMobileNumber.val() + "</td>";
-                var td6 = "<td class='text-center'>" + txtAddress.val() + "</td>";
-                var td7 = "<td class='text-center'>" + txtEmail.val() + "</td>";
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + "</tr>";
 
-                var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
-                //var td9 = "<td class='hide UserId'>" + txtUserName.val() + "</td>";
+                    $("#tblMargeItems tbody").append(tr);
+                    UserNameList.push(txtUserName.val());
 
-
-                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + "</tr>";
-
-                $("#tblMargeItems tbody").append(tr);
-
-
-
+                }
 
             }
         })
@@ -166,7 +169,12 @@
         $(document).on("click", "a.data-onfly-del", function (e) {
             e.preventDefault();
             var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
 
+            var userId = tds.eq(5).html();
+            console.log("userId :" + userId);
+            const mid = UserNameList.indexOf(userId);
+            UserNameList.splice(mid, 1);
 
             removeTableRow("#tblMargeItems tbody", index);
             fnFixTheTbodyRowSerial("#tblMargeItems tbody", index);
@@ -220,7 +228,7 @@
                     UserId: 0,
                     UserName: tds.eq(1).html(),
                     DepartMentName: tds.eq(2).html(),
-                    DesignationName: tds.eq(3).html(),
+                    Designation: tds.eq(3).html(),
                     MobileNumber: tds.eq(4).html(),
                     Address: tds.eq(5).html(),
                     Email: tds.eq(6).html(),

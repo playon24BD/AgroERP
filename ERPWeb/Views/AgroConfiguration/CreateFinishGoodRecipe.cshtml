@@ -75,7 +75,8 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="ddlRawMaterial" class="col-form-label">Product Unit</label>
-                                @Html.DropDownList("ddlRawMaterialunit", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialunit, "--Select RawMaterial unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <input type="text" id="ddlUnit" name="ddlUnit" class="form-control form-control-sm" readonly />
+                                @*@Html.DropDownList("ddlRawMaterialunit", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialunit, "--Select RawMaterial unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
                                 @*<input type="text" id="ddlRawMaterialunit" name="ddlRawMaterialunit" class="form-control form-control-sm" readonly />*@
                                 <span class="error hide req-preparation text-bold">Unit is required</span>
                             </div>
@@ -165,6 +166,7 @@
         var txtRawMaterialQty = $("#txtRawMaterialQty");
         var ddlRawMaterialunit = $("#ddlRawMaterialunit");
         var ddlStatus = $("#ddlStatus");
+        var ddlUnit = $("#ddlUnit");
 
         var hdfRowIndex = $("#hdfRowIndex");
         var txtRawMaterialUpdateQty = $("#txtRawMaterialUpdateQty");
@@ -181,20 +183,24 @@
             });
         })
 
-        //ddlRawMaterialName.change(function () {
-        //    debugger;
 
-        //    var data = { RawMaterialId: ddlRawMaterialName.val() };
+        ddlRawMaterialName.change(function () {
+            debugger;
 
-        //    $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialIssueStockLoadUnit", data)).then(function (res, status) {
-        //        // debugger;
-        //        consoleLog(res.replace(/['"]+/g, ''));
-        //        var unit = res.replace(/['"]+/g, '');
-        //        ddlUnit.val(unit);
-        //        //targetQty.val();
-        //    });
+            var data = { RawMaterialId: ddlRawMaterialName.val() };
 
-        //})
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialFinishGoodRecipeLoadProductUnit", data)).then(function (res, status) {
+                // debugger;
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnit.val(unit);
+                //targetQty.val();
+            });
+
+        })
+
+
+        
         var rawMetarialList = [];
 
         $("#btnAddToList").click(function (e) {

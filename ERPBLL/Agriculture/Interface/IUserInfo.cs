@@ -13,8 +13,10 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<UserInfo> GetAllUserInfo(long OrgId);
 
         UserInfo GetUserInfoById(long userId, long orgId);
-        IEnumerable<UserInfoDTO> GetUserInfos(long? userId,long orgId);
+        IEnumerable<UserInfoDTO> GetUserInfos(long? userId, string departmentName, string designation, long orgId);
         
         bool SaveUserInfoList(List<UserInfoDTO> infoDTO, long userId, long orgId);
+        
+        bool UpdateUserInfoList(UserInfoDTO updateDTOs, long userId, long orgId);
     }
 }

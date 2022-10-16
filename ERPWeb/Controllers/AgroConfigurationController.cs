@@ -505,7 +505,7 @@ namespace ERPWeb.Controllers
 
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-                ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+                ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Where(o=>o.Status=="Active").Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
 
                 return View();
             }
@@ -610,7 +610,9 @@ namespace ERPWeb.Controllers
         {
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+            //ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+
+            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Where(o => o.Status == "Active").Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
 
             ViewBag.ddlRawMaterialSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(suplier => new SelectListItem { Text = suplier.RawMaterialSupplierName, Value = suplier.RawMaterialSupplierId.ToString() }).ToList();
 
@@ -631,6 +633,15 @@ namespace ERPWeb.Controllers
                 IsSuccess = _rawMaterialStockInfo.SaveRawMaterialStock(infoDTO, detailDTOs, User.UserId, User.OrgId);
             }
             return Json(IsSuccess);
+        }
+
+        public ActionResult GetRawMaterialStockLoadUnitName(long RawMaterialId)
+        {
+            var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).Unit;
+            
+
+            return Json(Unit, JsonRequestBehavior.AllowGet);
+
         }
 
         public ActionResult GetFinishGoodRecipeList(string flag, long? ProductId, long? id)
@@ -736,7 +747,9 @@ namespace ERPWeb.Controllers
         public ActionResult CreateFinishGoodRecipe(long? id)
         {
             ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).Select(r => new SelectListItem { Text = r.RawMaterialName, Value = r.RawMaterialId.ToString() }).ToList();
+            //ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).Select(r => new SelectListItem { Text = r.RawMaterialName, Value = r.RawMaterialId.ToString() }).ToList();
+
+            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Where(o => o.Status == "Active").Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
 
             ViewBag.ddlProductunit = new List<SelectListItem>()
             {
@@ -768,6 +781,15 @@ namespace ERPWeb.Controllers
                 IsSuccess = _finishGoodRecipeInfoBusiness.SaveFinishGoodRecipe(infoDTO, detailDTOs, User.UserId, User.OrgId);
             }
             return Json(IsSuccess);
+        }
+
+        public ActionResult GetRawMaterialFinishGoodRecipeLoadProductUnit(long RawMaterialId)
+        {
+            var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).Unit;
+
+
+            return Json(Unit, JsonRequestBehavior.AllowGet);
+
         }
 
         #endregion
@@ -855,13 +877,17 @@ namespace ERPWeb.Controllers
 
             //ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
-            ViewBag.ddlRawMaterialName = _rawMaterialStockInfo.GetCheckExpairDatewiseRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+            //ViewBag.ddlRawMaterialName = _rawMaterialStockInfo.GetCheckExpairDatewiseRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+
+            //ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+
+            ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Where(o => o.Status == "Active").Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
 
             return View();
         }
         public ActionResult GetRawMaterialIssueStockLoadUnit(long RawMaterialId)
         {
-            var Unit = _rawMaterialStockInfo.GetRawMaterialIssueStockUnitById(RawMaterialId, User.OrgId).Unit;
+            var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).Unit;
             //var Unit = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockUnitById(RawMaterialId, User.OrgId).Unit;
             //var AllUnit = Regex.Replace(Unit, @"(\[|""|\])", "");
             //string AllUnit = Unit.Replace("[", "")
@@ -1644,14 +1670,20 @@ namespace ERPWeb.Controllers
         #endregion
 
 
-        #region UserInfo
+        #region ExtraCode
 
-        public ActionResult GetUserInfoList(string flag,long? userId, long? id)
+        public ActionResult GetUserInfoList(string flag,long? userId,string departmentName,string designation, long? id)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetUserInfoList");
 
             if (string.IsNullOrEmpty(flag))
             {
+
+                ViewBag.ddlUserName = _userInfo.GetAllUserInfo(User.OrgId).Select(user => new SelectListItem { Text = user.UserName, Value = user.UserId.ToString() }).ToList();
+
+                ViewBag.ddlDepartMentName = _userInfo.GetAllUserInfo(User.OrgId).Select(user => new SelectListItem { Text = user.DepartmentName, Value = user.UserId.ToString() }).ToList();
+
+                ViewBag.ddlDesignationName = _userInfo.GetAllUserInfo(User.OrgId).Select(user => new SelectListItem { Text = user.Designation, Value = user.UserId.ToString() }).ToList();
 
                 return View();
 
@@ -1660,7 +1692,7 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
 
-                var dto = _userInfo.GetUserInfos(userId ?? 0,User.OrgId);
+                var dto = _userInfo.GetUserInfos(userId ?? 0,departmentName,designation,User.OrgId);
 
                 List<UserInfoViewModel> viewModels = new List<UserInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
@@ -1691,13 +1723,23 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
         }
 
+        public ActionResult UpdateUserInfoList(UserInfoViewModel update)
+        {
+            bool IsSuccess = false;
+            UserInfoDTO updateDTO = new UserInfoDTO();
+            AutoMapper.Mapper.Map(update, updateDTO);
+            IsSuccess = _userInfo.UpdateUserInfoList(updateDTO, User.UserId, User.OrgId);
+
+            return Json(IsSuccess);
+        }
+
         #endregion
 
 
-        
 
 
-#endregion
+
+        #endregion
 
 <<<<<<< Updated upstream
         #region user

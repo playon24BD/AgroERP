@@ -58,13 +58,14 @@
                     </div>
                     <div class="col-md-2">
                         <label for="ddlUnit" class="control-label">Unit</label>
-                        <select id="ddlUnit" class="form-control form-control-sm">
-                            <option value="">Select Unit</option>
-                            <option value="Kg">Kg</option>
-                            <option value="Gram">Gram</option>
-                            <option value="hg">hg</option>
-                            <option value="dag">dag</option>
-                        </select>
+                        @*<select id="ddlUnit" class="form-control form-control-sm" readonly>
+            <option value="">Select Unit</option>
+            <option value="Kg">Kg</option>
+            <option value="Gram">Gram</option>
+            <option value="hg">hg</option>
+            <option value="dag">dag</option>
+        </select>*@
+                        <input type="text" id="ddlUnit" name="ddlUnit" class="form-control form-control-sm" readonly />
                         <span class="error hide req-unitName">Unit is required</span>
                     </div>
 
@@ -197,6 +198,24 @@
             //})
 
         })
+
+        ddlRawMaterialName.change(function () {
+            debugger;
+
+            var data = { RawMaterialId: ddlRawMaterialName.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialStockLoadUnitName", data)).then(function (res, status) {
+                // debugger;
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnit.val(unit);
+                //targetQty.val();
+            });
+
+        })
+
+
+
         $(document).on('click', 'div.remove-date', function () {
             if ($(this).hasClass("ExpireDate")) {
                 if (ExpireDate.val() !== '') {
