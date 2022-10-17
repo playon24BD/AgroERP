@@ -71,10 +71,22 @@ namespace ERPBLL.Agriculture
             else
             {
                 AgroUnitInfo unitInfo = new AgroUnitInfo();
+                unitInfo = GetAgroInfoById(infoDTO.UnitId, orgId);
+                unitInfo.UnitName = infoDTO.UnitName;
+                unitInfo.Status = infoDTO.Status;
+                unitInfo.UpdateDate = DateTime.Now;
+                unitInfo.UpdateUserId = userId;
+                _agroUnitInfoRepository.Update(unitInfo);
+
 
             }
             IsSuccess = _agroUnitInfoRepository.Save();
             return IsSuccess;
+        }
+
+        public AgroUnitInfo GetAgroInfoById(long unitId, long orgId)
+        {
+            return _agroUnitInfoRepository.GetOneByOrg(r => r.UnitId == unitId && r.OrganizationId == orgId);
         }
     }
 }

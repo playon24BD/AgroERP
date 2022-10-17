@@ -109,17 +109,24 @@
             <input type="text" id="expairDate" class="form-control form-control-sm datepicker ctr-changed" />
             <span class="error hide required-expairDate"> Date is Required</span>
         </div>*@
+                    @*<div class="col-md-12">
+            <label for="ddlUnit" class="control-label">UnitName</label>
+            <select class="form-control form-control-sm" id="ddlUnit">
+                <option value="">--Select Unit--</option>
+                <option value="Kg">Kg</option>
+                <option value="Gram">Gram</option>
+                <option value="Litter">Litter</option>
+                <option value="MiliLitter">MiliLitter</option>
+                <option value="Miter">Miter</option>
+            </select>
+        </div>*@
                     <div class="col-md-12">
-                        <label for="ddlUnit" class="control-label">UnitName</label>
-                        <select class="form-control form-control-sm" id="ddlUnit">
-                            <option value="">--Select Unit--</option>
-                            <option value="Kg">Kg</option>
-                            <option value="Gram">Gram</option>
-                            <option value="Litter">Litter</option>
-                            <option value="MiliLitter">MiliLitter</option>
-                            <option value="Miter">Miter</option>
-                        </select>
+                        <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
+                        @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                        <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
                     </div>
+
                     <div class="col-md-12">
                         <label for="ddlStatus" class="control-label">Status</label>
                         <select class="form-control form-control-sm" id="ddlStatus">

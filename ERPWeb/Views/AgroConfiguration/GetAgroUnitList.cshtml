@@ -109,6 +109,7 @@
         var ddlStatus = $("#ddlStatus");
         var txtUnitName = $("#txtUnitName");
         var hdAgroUnitId = $("#hdAgroUnitId");
+        var searchByAny = $("#searchByAny");
 
 
         $(document).ready(function () {
@@ -118,7 +119,16 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
+            LoadAgroUnitList()
+        })
 
+        //txtUnitName.change(function () {
+
+        //    LoadAgroUnitList();
+        //})
+
+        searchByAny.keyup(function () {
+            LoadAgroUnitList()
         })
 
         $("#addButton").click(function (e) {
@@ -155,6 +165,7 @@
 
         $("#saveButton").click(function (e) {
             e.preventDefault();
+            
             debugger;
 
             $(".error").addClass("hide");
@@ -168,7 +179,7 @@
                     if (res == true) {
                         $("#modalAgroUnit").modal("toggle");
                         toastrSuccessAlert(execuStatus.successSave);
-                        
+                        LoadAgroUnitList()
                     }
                     else {
                         toastrErrorAlert(execuStatus.fail);
@@ -180,6 +191,54 @@
                 });
             }
 
+        })
+
+        function LoadAgroUnitList() {
+            debugger;
+            var data = { flag: 'Search', name: $.trim(searchByAny.val()),Status:ddlStatus.val()}
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetAgroUnitList', data)).then(function (res, status) {
+                console.log(res);
+                if (status === "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+
+        function ClearCtrl() {
+            txtUnitName.val("");
+            ddlStatus.val("");
+            
+            
+
+        }
+
+        //Edit AgroUnit
+
+        $(document).on("click", "a.data-edit-item-UnitId", function (e) {
+
+            debugger;
+            e.preventDefault()
+            //ClearCtrl();
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            
+
+            hdAgroUnitId.val(td1);
+            txtUnitName.val(td2);
+            ddlStatus.val(td3);
+            ddlStatus.trigger("change");
+            
+
+
+            OpenModals();
+            $("#spanModalAgroUnit").text('Update Unit');
+            $("#spanSaveTextAgroUnit").text('Update');
+
+            LoadAgroUnitList()
         })
 
     </script>

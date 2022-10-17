@@ -3166,6 +3166,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\AgroConfiguration\CreateAgroSalesProduct.cshtml" />
     <Content Include="Views\AgroConfiguration\GetAgroUnitList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetAgroUnitPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

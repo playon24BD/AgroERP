@@ -10,6 +10,8 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAgroUnitInfo
     {
+        AgroUnitInfo GetAgroInfoById(long unitId, long orgId);
+
         IEnumerable<AgroUnitInfoDTO> GetAgroUnitInfos(long? unitId, long orgId);
 
         IEnumerable<AgroUnitInfo> GetAllAgroUnitInfo(long OrgId);
