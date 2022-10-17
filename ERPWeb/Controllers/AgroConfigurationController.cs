@@ -254,6 +254,11 @@ namespace ERPWeb.Controllers
                     MobileNumber = o.MobileNumber,
                     Address = o.Address,
                     Status = o.Status,
+
+                    TradeLicense = o.TradeLicense,
+                    TIN = o.TIN,
+                    BIN= o.BIN,
+
                     RoleId = o.RoleId,
                     //EntryUserId=o.EntryUserId.ToString(),
                     UserName = UserForEachRecord(o.EntryUserId.Value).UserName,

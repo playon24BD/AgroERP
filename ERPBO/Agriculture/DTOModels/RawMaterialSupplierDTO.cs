@@ -23,5 +23,9 @@ namespace ERPBO.Agriculture.DTOModels
         public string Status { get; set; }
         public string UserName { get; set; }
         public string OrganizationName { get; set; }
+
+        public string TradeLicense { get; set; }
+        public string TIN { get; set; }
+        public string BIN { get; set; }
     }
 }

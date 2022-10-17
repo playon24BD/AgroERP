@@ -24,5 +24,9 @@ namespace ERPBO.Agriculture.DomainModels
         public long? EntryUserId { get; set; }
         public string Status { get; set; }
 
+        public string TradeLicense { get; set; }
+        public string TIN { get; set; }
+        public string BIN { get; set; }
+
     }
 }

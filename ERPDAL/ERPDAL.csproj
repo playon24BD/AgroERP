@@ -270,6 +270,10 @@
     <Compile Include="AgricultureContextMigrations\202210170836262_Agriculture_addedSomecolumnusertbl.Designer.cs">
       <DependentUpon>202210170836262_Agriculture_addedSomecolumnusertbl.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202210171042183_RM_suppadd.cs" />
+    <Compile Include="AgricultureContextMigrations\202210171042183_RM_suppadd.Designer.cs">
+      <DependentUpon>202210171042183_RM_suppadd.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -452,6 +456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202210170836262_Agriculture_addedSomecolumnusertbl.resx">
       <DependentUpon>202210170836262_Agriculture_addedSomecolumnusertbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210171042183_RM_suppadd.resx">
+      <DependentUpon>202210171042183_RM_suppadd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
