@@ -35,5 +35,13 @@ namespace ERPBO.ControlPanel.DomainModels
         public string Desigation { get; set; }
         public string ConfirmPassword { get; set; }
         public long OrganizationId { get; set; }
+
+        //public string UserName { get; set; }
+        public long? ZoneId { get; set; }
+        public long? DivisionId { get; set; }
+        public long? RegionId { get; set; }
+        public long? AreaId { get; set; }
+        public long? TerritoryId { get; set; }
+        public long? StockiestId { get; set; }
     }
 }

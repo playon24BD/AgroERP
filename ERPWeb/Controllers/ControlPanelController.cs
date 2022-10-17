@@ -740,8 +740,17 @@ namespace ERPWeb.Controllers
             }
         }
 
-
         //dropDown
+
+        [HttpPost]
+        public ActionResult GetZone()
+        {
+            var data = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new Dropdown { value = org.ZoneId.ToString(), text = org.ZoneName }).ToList();
+
+
+            return Json(data);
+        }
+   
         [HttpPost]
         public ActionResult GetDivision()
         {
@@ -750,6 +759,44 @@ namespace ERPWeb.Controllers
           
             return Json(data);
         }
+
+
+        [HttpPost]
+        public ActionResult GetRegion()
+        {
+            var data = _regionSetup.GetAllRegionSetup(User.OrgId).Select(org => new Dropdown { value = org.RegionId.ToString(), text = org.RegionName }).ToList();
+
+
+            return Json(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetArea()
+        {
+            var data = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).Select(org => new Dropdown { value = org.AreaId.ToString(), text = org.AreaName }).ToList();
+
+
+            return Json(data);
+        }
+
+
+        [HttpPost]
+        public ActionResult GetTerritory()
+        {
+            var data = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(org => new Dropdown { value = org.TerritoryId.ToString(), text = org.TerritoryName }).ToList();
+
+            return Json(data);
+        }
+        [HttpPost]
+        public ActionResult GetStockiest()
+        {
+            var data = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(s => new Dropdown { value = s.StockiestId.ToString(), text = s.StockiestName }).ToList();
+
+            return Json(data);
+        }
+
+
+
         public ActionResult CreateClientUser(string flag, long id = 0)
         {
             if (string.IsNullOrEmpty(flag))

@@ -266,6 +266,10 @@
     <Compile Include="AgricultureContextMigrations\202210170823314_Agriculture_AgroUnitInfo.Designer.cs">
       <DependentUpon>202210170823314_Agriculture_AgroUnitInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202210170836262_Agriculture_addedSomecolumnusertbl.cs" />
+    <Compile Include="AgricultureContextMigrations\202210170836262_Agriculture_addedSomecolumnusertbl.Designer.cs">
+      <DependentUpon>202210170836262_Agriculture_addedSomecolumnusertbl.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -279,6 +283,14 @@
     <Compile Include="ControlPanelContextMigrations\202008050953442_ControlPanel_BranchAddress.cs" />
     <Compile Include="ControlPanelContextMigrations\202008050953442_ControlPanel_BranchAddress.designer.cs">
       <DependentUpon>202008050953442_ControlPanel_BranchAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlPanelContextMigrations\202210170839090_ControlPanelDbInitializeaddedSomeColumntouserbranch.cs" />
+    <Compile Include="ControlPanelContextMigrations\202210170839090_ControlPanelDbInitializeaddedSomeColumntouserbranch.Designer.cs">
+      <DependentUpon>202210170839090_ControlPanelDbInitializeaddedSomeColumntouserbranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlPanelContextMigrations\202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.cs" />
+    <Compile Include="ControlPanelContextMigrations\202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.Designer.cs">
+      <DependentUpon>202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.cs</DependentUpon>
     </Compile>
     <Compile Include="ControlPanelContextMigrations\Configuration.cs" />
     <Compile Include="ControlPanelDAL\ControlPanelDbContext.cs" />
@@ -438,11 +450,20 @@
     <EmbeddedResource Include="AgricultureContextMigrations\202210170823314_Agriculture_AgroUnitInfo.resx">
       <DependentUpon>202210170823314_Agriculture_AgroUnitInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210170836262_Agriculture_addedSomecolumnusertbl.resx">
+      <DependentUpon>202210170836262_Agriculture_addedSomecolumnusertbl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202008050953442_ControlPanel_BranchAddress.resx">
       <DependentUpon>202008050953442_ControlPanel_BranchAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlPanelContextMigrations\202210170839090_ControlPanelDbInitializeaddedSomeColumntouserbranch.resx">
+      <DependentUpon>202210170839090_ControlPanelDbInitializeaddedSomeColumntouserbranch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlPanelContextMigrations\202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.resx">
+      <DependentUpon>202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
