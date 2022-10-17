@@ -140,29 +140,30 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
                 ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialName });
 
-                ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitName }).ToList();
+                ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitName}).ToList();
 
                 return View();
             }
 
-            else if (flag == "Search" && rawmaterialName != "" && depotId != 0)
+            else if (flag == "Search" && rawmaterialName != "")
             {
 
                 IEnumerable<RawMaterialDTO> dto = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
                 {
-                    OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
-                    DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
+                    //OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
+                   // DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
                     RawMaterialName = a.RawMaterialName,
                     Status = a.Status,
                     //ExpireDate = a.ExpireDate,
-                    DepotId = a.DepotId,
+                    //DepotId = a.DepotId,
                     RawMaterialId = a.RawMaterialId,
-                    OrganizationId = a.OrganizationId,
+                    Unit = a.Unit,
+                   // OrganizationId = a.OrganizationId,
                     //UserName = UserForEachRecord(a.EntryUserId).UserName
 
 
 
-                }).Where(a => (a.DepotId == depotId && a.RawMaterialName == rawmaterialName) && (a.DepotId == depotId || a.RawMaterialName == rawmaterialName)).ToList();
+                }).Where(a => (a.RawMaterialName == rawmaterialName) && (a.RawMaterialName == rawmaterialName)).ToList();
 
                 //dto.Where(a =>a.DepotId == depotId).ToList();
                 //dto.Where(a => (a.DepotId == depotId || a.DepotId == 0) && (a.RawMaterialName == rawmaterialName || a.RawMaterialName == "")).ToList();
@@ -203,13 +204,14 @@ namespace ERPWeb.Controllers
                 IEnumerable<RawMaterialDTO> dto1 = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
                 {
                     OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
-                    DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
+                    //DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
                     RawMaterialName = a.RawMaterialName,
                     Status = a.Status,
                     //ExpireDate = a.ExpireDate,
-                    DepotId = a.DepotId,
+                   // DepotId = a.DepotId,
                     RawMaterialId = a.RawMaterialId,
                     OrganizationId = a.OrganizationId,
+                    Unit=a.Unit,
                     //UserName = UserForEachRecord(a.EntryUserId).UserName
 
 

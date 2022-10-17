@@ -40,6 +40,9 @@ namespace ERPBLL.Agriculture
                     RoleId = rawMaterialSupplier.RoleId,
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
+                    TradeLicense = rawMaterialSupplier.TradeLicense,
+                    TIN= rawMaterialSupplier.TIN,
+                    BIN = rawMaterialSupplier.BIN,
                     Status = rawMaterialSupplier.Status
                 };
 
@@ -52,6 +55,9 @@ namespace ERPBLL.Agriculture
                 rawMaterialSupplierInfo.RawMaterialSupplierName = rawMaterialSupplier.RawMaterialSupplierName;
                 rawMaterialSupplierInfo.MobileNumber = rawMaterialSupplier.MobileNumber;
                 rawMaterialSupplierInfo.Address = rawMaterialSupplier.Address;
+                rawMaterialSupplierInfo.TradeLicense = rawMaterialSupplier.TradeLicense;
+                rawMaterialSupplierInfo.TIN = rawMaterialSupplier.TIN;
+                rawMaterialSupplierInfo.BIN = rawMaterialSupplier.BIN;
                 rawMaterialSupplierInfo.OrganizationId = orgId;
                 rawMaterialSupplierInfo.Status = rawMaterialSupplier.Status;
                 rawMaterialSupplierInfo.UpdateDate = DateTime.Now;
