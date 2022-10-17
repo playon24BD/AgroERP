@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Agriculture\AgroProductSalesDetailsBusiness.cs" />
     <Compile Include="Agriculture\AgroProductSalesInfoBusiness.cs" />
+    <Compile Include="Agriculture\AgroUnitInfoBusiness.cs" />
     <Compile Include="Agriculture\AreaSetupBusiness.cs" />
     <Compile Include="Agriculture\BankSetupBusiness.cs" />
     <Compile Include="Agriculture\DivisionInfoBusiness.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Agriculture\FinishGoodRecipeInfoBusiness.cs" />
     <Compile Include="Agriculture\Interface\IAgroProductSalesDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IAgroProductSalesInfoBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IAgroUnitInfo.cs" />
     <Compile Include="Agriculture\Interface\IAreaSetupBusiness.cs" />
     <Compile Include="Agriculture\Interface\IDivisionInfo.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductionDetailsBusiness.cs" />

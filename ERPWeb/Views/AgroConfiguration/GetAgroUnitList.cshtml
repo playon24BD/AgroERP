@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewBag.Title = "GetAgroUnitList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <h4>AgroUnit List</h4>
+                
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-navy shadow">
+            <div class="card-header">
+                <div class="row text-sm">
+                    <div class="col-md-2">
+                        <h4>Search by:</h4>
+                    </div>
+                    <div class="col-md-3 float-right">
+                        <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+                    </div>
+                    <div class="col-7">
+                        <button class="btn btn-outline-primary btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Unit</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div class="col-md-12" style="margin-top:-10px">
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-12" id="dataContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalAgroUnit" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalAgroUnit"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAgroUnit">
+                    <input type="hidden" id="hdAgroUnitId" />
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <label for="txtUnitName" class="control-label">Unit Name</label>
+                            <input type="text" id="txtUnitName" class="form-control form-control-sm" />
+                            @*<span class="error hide required-UnitName font-weight-bold">Input Unit Name!</span>*@
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="ddlStatus" class="control-label">Status</label>
+                            <select class="form-control form-control-sm select2" id="ddlStatus">
+                                <option value="">--Select Status--</option>
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+
+            <div class="modal-footer btn-default">
+                @*<div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>*@
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextAgroUnit">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var ddlStatus = $("#ddlStatus");
+        var txtUnitName = $("#txtUnitName");
+        var hdAgroUnitId = $("#hdAgroUnitId");
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+        })
+
+        $("#addButton").click(function (e) {
+            e.preventDefault();
+            OpenModals();
+        })
+
+        function OpenModals() {
+            $("#spanModalAgroUnit").text('Add New AgroUnit');
+            //$("#spanSaveTextAgroUnit").text('Save');
+            $("#modalAgroUnit").modal("show");
+            $(".error").addClass("hide");
+
+        }
+
+
+        function Validation() {
+            Isvalid = true;
+            $('.error').addClass("hide");
+            
+            if ($.trim(txtUnitName.val()) == "") {
+                $('.required-UnitName').removeClass("hide");
+                Isvalid = false;
+            }
+            //if ($.trim(ddlStatus.val()) == "") {
+            //    $('.required-Status').removeClass("hide");
+            //    Isvalid = false;
+            //}
+
+            return Isvalid
+
+        }
+
+
+        $("#saveButton").click(function (e) {
+            e.preventDefault();
+            debugger;
+
+            $(".error").addClass("hide");
+            if (Validation() == true) {
+                debugger;
+                var data = JSON.stringify({ UnitId: TryParseInt(hdAgroUnitId.val(), 0), UnitName: txtUnitName.val(), Status: ddlStatus.val() });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAgroUnitList', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        $("#modalAgroUnit").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        
+                    }
+                    else {
+                        toastrErrorAlert(execuStatus.fail);
+                    }
+                    enable("#saveButton");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#saveButton");
+                });
+            }
+
+        })
+
+    </script>
+
+}

@@ -258,6 +258,14 @@
     <Compile Include="AgricultureContextMigrations\202210161355007_Agriculture_AgroSalesProductffrryuj.Designer.cs">
       <DependentUpon>202210161355007_Agriculture_AgroSalesProductffrryuj.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202210170822186_Agriculture_AgroUnit.cs" />
+    <Compile Include="AgricultureContextMigrations\202210170822186_Agriculture_AgroUnit.Designer.cs">
+      <DependentUpon>202210170822186_Agriculture_AgroUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgricultureContextMigrations\202210170823314_Agriculture_AgroUnitInfo.cs" />
+    <Compile Include="AgricultureContextMigrations\202210170823314_Agriculture_AgroUnitInfo.Designer.cs">
+      <DependentUpon>202210170823314_Agriculture_AgroUnitInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -423,6 +431,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202210161355007_Agriculture_AgroSalesProductffrryuj.resx">
       <DependentUpon>202210161355007_Agriculture_AgroSalesProductffrryuj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210170822186_Agriculture_AgroUnit.resx">
+      <DependentUpon>202210170822186_Agriculture_AgroUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210170823314_Agriculture_AgroUnitInfo.resx">
+      <DependentUpon>202210170823314_Agriculture_AgroUnitInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

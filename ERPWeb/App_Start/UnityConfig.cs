@@ -47,6 +47,7 @@ namespace ERPWeb
 
             // Configuration Database
             #region Agriculture
+            container.RegisterType<IAgroUnitInfo, AgroUnitInfoBusiness>();
             container.RegisterType<IUserInfo, UserInfoBusiness>();
             container.RegisterType<IStockiestInfo, StockiestInfoBusiness>();
             container.RegisterType<IDivisionInfo, DivisionInfoBusiness>();
