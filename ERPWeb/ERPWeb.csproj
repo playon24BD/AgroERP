@@ -3164,6 +3164,7 @@
     <Content Include="Views\AgroConfiguration\_GetUserInfoPartialView.cshtml" />
     <Content Include="Views\Shared\_AdminDashboard.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\AgroConfiguration\CreateAgroSalesProduct.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

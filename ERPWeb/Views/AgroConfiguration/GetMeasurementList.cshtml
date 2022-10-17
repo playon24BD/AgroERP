@@ -308,6 +308,7 @@
         $("#addTolist").click(function (e) {
             e.preventDefault();
             if (validate() == true) {
+                debugger;
                 var index = $("#tblMeasurement  tbody tr").length;
                 var sl = "<td>" + (index + 1) + "</td>";
                 var org = "<td class='hide'>" + ddlOrganiation.val(); + "</td>";
@@ -316,7 +317,28 @@
                 var innerBox = "<td class='hide'>" + txtinnerBox.val(); + "</td>";
                 var packSize = "<td class='hide'>" + txtpackSize.val(); + "</td>";
                 var unit = "<td>" + txtunit.val(); + "</td>";
-                var item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
+                if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
+                    item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
+                }
+                else if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() == "") {
+                    item = txtmasterBox.val().concat("X", txtinnerBox.val())
+                }
+                else if (txtmasterBox.val() != "" && txtinnerBox.val() == "" && txtpackSize.val() != "") {
+                    item = txtmasterBox.val().concat("X", txtpackSize.val())
+                }
+                else if (txtmasterBox.val() == "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
+                    item = txtinnerBox.val().concat("X", txtpackSize.val())
+                }
+                else if (txtmasterBox.val() != "" && txtinnerBox.val() == "" && txtpackSize.val() == "") {
+                    item = txtmasterBox.val()
+                }
+                else if (txtmasterBox.val() == "" && txtinnerBox.val() == "" && txtpackSize.val() != "") {
+                    item = txtpackSize.val()
+                }
+                else if (txtmasterBox.val() == "" && txtinnerBox.val() != "" && txtpackSize.val() == "") {
+                    item = txtinnerBox.val()
+                }
+
                 var measurementItem = "<td>" + item + "</td>";
                 var action = "<td><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
 
@@ -502,22 +524,22 @@
                 isValid = false;
             }
 
-            if (txtmasterBox.val() === "" ) {
-                $(".req-txtmasterBox").removeClass('hide');
-                isValid = false;
-            }
-            if (txtinnerBox.val() === "") {
-                $(".req-txtinnerBox").removeClass('hide');
-                isValid = false;
-            }
+            //if (txtmasterBox.val() === "" ) {
+            //    $(".req-txtmasterBox").removeClass('hide');
+            //    isValid = false;
+            //}
+            //if (txtinnerBox.val() === "") {
+            //    $(".req-txtinnerBox").removeClass('hide');
+            //    isValid = false;
+            //}
             if (txtunit.val() === "") {
                 $(".req-txtunit").removeClass('hide');
                 isValid = false;
             }
-            if (TryParseInt(txtpackSize.val(), 0) <= 0) {
-                $(".req-txtpackSize").removeClass('hide');
-                isValid = false;
-            }
+            //if (TryParseInt(txtpackSize.val(), 0) <= 0) {
+            //    $(".req-txtpackSize").removeClass('hide');
+            //    isValid = false;
+            //}
 
             return isValid;
         }

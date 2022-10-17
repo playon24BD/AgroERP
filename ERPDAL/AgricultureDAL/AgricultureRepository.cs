@@ -157,4 +157,13 @@ namespace ERPDAL.AgricultureDAL
         { }
     }
 
+    public class AgroProductSalesInfoRepository : AgricultureBaseRepository<AgroProductSalesInfo>
+    {
+        public AgroProductSalesInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class AgroProductSalesDetailsRepository : AgricultureBaseRepository<AgroProductSalesDetails>
+    {
+        public AgroProductSalesDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
 }

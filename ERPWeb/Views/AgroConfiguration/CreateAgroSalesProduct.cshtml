@@ -1,0 +1,223 @@
+﻿
+@{
+    ViewBag.Title = "CreateAgroSalesProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text-sm" style="margin-top:-15px">
+    <div class="col-md-12">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/GetFinishGoodRecipeList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">Challan & Invoice Posting</h5>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12" style="border-right:2px solid #efefef">
+                        <h5 style="border-bottom:2px solid #f6eaaa">
+                            Challan & Invoice Product 
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label for="ddlClient" class="col-form-label">
+                                    Client Name
+                                </label>
+                                @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ClientName, "--Select ClientName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
+                            </div>
+                            <div class="col-md-8">
+                                <label for="ddlDepotName" class="col-form-label">Depot</label>
+                                <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ddlChallanNo" class="col-form-label">Challan No.</label>
+                                <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="col-form-label font-weight-bold">Challan Date</label>
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker-ChallanDate ctrl-changed" id="ChallanDate" />
+                                    <div class="input-group-prepend cursor-pointer remove-date ChallanDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
+                                <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="col-form-label font-weight-bold">Invoice Date</label>
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker-InvoiceDate ctrl-changed" id="InvoiceDate" />
+                                    <div class="input-group-prepend cursor-pointer remove-date InvoiceDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="ddlPaymentMode" class="col-form-label">Mode Of Payment</label>
+                                <select class="form-control form-control-sm" id="ddlPaymentMode">
+                                    <option value="Credit">Credit</option>
+                                    <option value="Cash">Cash</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="model">Vehicle Type</label>
+                                <input type="text" id="txtVehicleType" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="model">Vehicle No.</label>
+                                <input type="text" id="txtVehicleNumber" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="model">Driver Name</label>
+                                <input type="text" id="txtDriverName" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="model">Delivery Place</label>
+                                <input type="text" id="txtDeliveryPlace" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="model">Do/ADO/DA</label>
+                                <input type="text" id="txtDo_ADO_DA" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="model">DOADO_Name</label>
+                                <input type="text" id="txtDoADO_Name" class="form-control form-control-sm">
+                            </div>
+
+                            
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                        <h5 style="border-bottom:2px solid #f87878">Product Salse</h5>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="ddlProductName" class="col-form-label">
+                                    Product Name
+                                </label>
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ddlProductName" class="col-form-label">
+                                    Product Name
+                                </label>
+                                @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.MeasurementName, "--Select MeasurementName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ddlRawMaterial" class="col-form-label">Measurement Size</label>
+                                @Html.DropDownList("ddlMeasurementSize", (IEnumerable<SelectListItem>)ViewBag.MeasurementSize, "--Select Measurement Size--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                            </div>
+                            <div class="col-md-1">
+                                <label for="ddlQuanity" class="col-form-label">Quanity</label>
+                                <input type="text" id="txtQuanity" class="form-control form-control-sm" />
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ddlPrice" class="col-form-label">Rate</label>
+                                <input type="text" id="txtPrice" class="form-control form-control-sm" />
+                            </div>
+                            <div class="col-md-1">
+                                <label for="ddlPrice" class="col-form-label">Discount</label>
+                                <input type="text" id="txtDiscount" class="form-control form-control-sm" />
+                            </div>
+
+                            @*<div class="col-md-2 " style="margin-top:5px;">
+                                <label for="addButton" class="control-label"></label>
+                                <div class="clearfix">
+                                    <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                                </div>
+                            </div>*@
+
+                            <div class="col-md-2" style="margin-top:5px;">
+                                <label for="" class="control-label" style="visibility:hidden"> Add To List</label>
+                                <div class="clearfix">
+                                    <button type="submit" class="btn btn-sm btn-warning text-bold float-left" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        @Html.AntiForgeryToken()
+                        <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg" id="tblList">
+                            <thead>
+                                <tr>
+                                    <th colspan="11" class="text-center">
+                                        <span class="error hide no-items">Please load the table first.</span>
+                                        <button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-left">
+                                            <i class="fas fa-paper-plane"></i> Save
+                                        </button>
+                                    </th>
+                                </tr>
+                                <tr class="text-center btn-dark">
+                                    <th style="width:5%">#SL</th>
+                                    <th style="width:30%">Product Name</th>
+                                    <th style="width:30%">Measurement Desc</th>
+                                    <th style="width:5%">Quanity</th>
+                                    <th style="width:5%">Rate</th>
+                                    <th style="width:5%">Discount</th>
+                                    <th style="width:10%">Amount(Tk.)</th>
+                                    <th style="width:10%">Action</th>
+                                    <th class="hide RawMaterialId"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="FinishGoodRecipeModal" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <input type="hidden" id="hdfRowIndex" />
+                <h4 id="modalHeading" class="modal-title">Edit Finish Qty</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <table id="tblEdit" class="table table-sm table-bordered table-striped table-responsive-lg">
+                    <tbody>
+                        <tr>
+                            <td class="alert-secondary" style="width:15%">RawMaterial Name</td>
+                            <td style="width:35%; background-color:#e1dada"></td>
+                            <td class="alert-secondary" style="width:15%">RawMaterial Qty</td>
+                            <td style="width:35%; background-color:#e1dada"> <input type="number" class="form-control form-control-sm" id="txtRawMaterialUpdateQty" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-sm btn-flat btn-danger">Cancel</button>
+                <button type="button" id="btnSubmit" class="btn btn-sm btn-flat btn-success">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
