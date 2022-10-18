@@ -15,7 +15,7 @@ namespace ERPBO.Agriculture.ViewModels
         public int MasterCarton { get; set; }
         public int InnerBox { get; set; }
         public double PackSize { get; set; }
-        public string Unit { get; set; }
+        public long UnitId { get; set; }
         public long RoleId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public long UpdateUserId { get; set; }

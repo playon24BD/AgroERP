@@ -15,6 +15,8 @@ namespace ERPWeb.Controllers
 {
     public class AgroConfigurationController : BaseController
     {
+        private readonly IPRawMaterialStockInfo _pRawMaterialStockInfo;//e
+        private readonly IPRawMaterialStockIDetails _pRawMaterialStockIDetails;//e
 
         private readonly ITerritorySetup _territorySetup;//e
 
@@ -49,7 +51,7 @@ namespace ERPWeb.Controllers
         private readonly IAppUserBusiness _appUserBusiness;
 
 
-        public AgroConfigurationController(IAgroUnitInfo agroUnitInfo,IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness)
+        public AgroConfigurationController(IPRawMaterialStockInfo pRawMaterialStockInfo,IPRawMaterialStockIDetails pRawMaterialStockIDetails,IAgroUnitInfo agroUnitInfo,IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness)
 
 
 
@@ -57,6 +59,9 @@ namespace ERPWeb.Controllers
             this._agroUnitInfo = agroUnitInfo;
             this._userInfo = userInfo;
             this._stockiestInfo = stockiestInfo;
+
+            this._pRawMaterialStockInfo = pRawMaterialStockInfo;//e
+            this._pRawMaterialStockIDetails = pRawMaterialStockIDetails;//e
 
             this._zoneSetup = zoneSetup;//e
             this._territorySetup = territorySetup;//e
@@ -157,7 +162,7 @@ namespace ERPWeb.Controllers
                     //ExpireDate = a.ExpireDate,
                     //DepotId = a.DepotId,
                     RawMaterialId = a.RawMaterialId,
-                    Unit = a.Unit,
+                    UnitId = a.UnitId,
                    // OrganizationId = a.OrganizationId,
                     //UserName = UserForEachRecord(a.EntryUserId).UserName
 
@@ -215,7 +220,7 @@ namespace ERPWeb.Controllers
                    // DepotId = a.DepotId,
                     RawMaterialId = a.RawMaterialId,
                     OrganizationId = a.OrganizationId,
-                    Unit=a.Unit,
+                    UnitId=a.UnitId,
                     //UserName = UserForEachRecord(a.EntryUserId).UserName
 
 
@@ -635,7 +640,7 @@ namespace ERPWeb.Controllers
                         RawMaterialName = RawMaterialNames.FirstOrDefault(it => it.RawMaterialId == info.RawMaterialId).RawMaterialName,
 
                         Quantity = info.Quantity,
-                        Unit = info.Unit
+                        UnitId = info.UnitId
                     };
 
                     details =
@@ -644,7 +649,7 @@ namespace ERPWeb.Controllers
                             //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
                             RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                             Quantity = i.Quantity,
-                            Unit = i.Unit
+                            UnitId = i.UnitId
                         }).ToList();
                 }
                 else
@@ -700,7 +705,7 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetRawMaterialStockLoadUnitName(long RawMaterialId)
         {
-            var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).Unit;
+            var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).UnitId;
 
 
             return Json(Unit, JsonRequestBehavior.AllowGet);
@@ -742,13 +747,13 @@ namespace ERPWeb.Controllers
                         FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
 
                         FGRQty = info.FGRQty,
-                        FGRUnit = info.FGRUnit
+                        UnitId = info.UnitId
                     };
                     details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
                     {
                         RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                         FGRRawMaterQty = i.FGRRawMaterQty,
-                        FGRRawMaterUnit = i.FGRRawMaterUnit
+                        UnitId = i.UnitId
                     }).ToList();
                 }
                 else
@@ -772,7 +777,7 @@ namespace ERPWeb.Controllers
                         FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
                         FGRId = info.FGRId,
                         FGRQty = info.FGRQty,
-                        FGRUnit = info.FGRUnit,
+                        UnitId = info.UnitId,
                         FinishGoodProductId = info.FinishGoodProductId,
                         Status = info.Status,
                     };
@@ -780,7 +785,7 @@ namespace ERPWeb.Controllers
                     {
                         RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                         FGRRawMaterQty = i.FGRRawMaterQty,
-                        FGRRawMaterUnit = i.FGRRawMaterUnit,
+                        UnitId = i.UnitId,
                         FGRDetailsId = i.FGRDetailsId,
 
                     }).ToList();
@@ -848,7 +853,7 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetRawMaterialFinishGoodRecipeLoadProductUnit(long RawMaterialId)
         {
-            var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).Unit;
+            var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).UnitId;
 
 
             return Json(Unit, JsonRequestBehavior.AllowGet);
@@ -895,7 +900,7 @@ namespace ERPWeb.Controllers
                         RawMaterialName = RawMaterialNames.FirstOrDefault(it => it.RawMaterialId == info.RawMaterialId).RawMaterialName,
 
                         Quantity = info.Quantity,
-                        Unit = info.Unit
+                        UnitId = info.UnitId
                     };
 
                     details =
@@ -904,7 +909,7 @@ namespace ERPWeb.Controllers
                             //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
                             RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                             Quantity = i.Quantity,
-                            Unit = i.Unit,
+                            UnitId = i.UnitId,
                             Status = i.Status,
                             EntryDate = i.EntryDate
 
@@ -950,7 +955,7 @@ namespace ERPWeb.Controllers
         }
         public ActionResult GetRawMaterialIssueStockLoadUnit(long RawMaterialId)
         {
-            var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).Unit;
+            var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).UnitId;
             //var Unit = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockUnitById(RawMaterialId, User.OrgId).Unit;
             //var AllUnit = Regex.Replace(Unit, @"(\[|""|\])", "");
             //string AllUnit = Unit.Replace("[", "")
@@ -983,11 +988,11 @@ namespace ERPWeb.Controllers
             var checkRawMaterialStockValue = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(RawMaterialId, User.OrgId);
 
             double itemStock = 0;
-            string unit = "";
+            long unit = 0;
             if (checkRawMaterialStockValue != null)
             {
                 itemStock = (checkRawMaterialStockValue.Quantity);
-                unit = (checkRawMaterialStockValue.Unit);
+                unit = (checkRawMaterialStockValue.UnitId);
             }
             return Json(new { RawMaterialStockQty = itemStock, RawMaterialStockUnit = unit });
 
@@ -1845,6 +1850,10 @@ namespace ERPWeb.Controllers
 
             return View();
         }
+        #endregion
+
+        #region Purchase & RawmaterialStock
+
         #endregion
     }
 }

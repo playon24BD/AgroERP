@@ -63,8 +63,13 @@ namespace ERPWeb
             container.RegisterType<IZoneSetup, ZoneSetupBusiness>();
             //e
             container.RegisterType<IRegionSetup, RegionSetupBusiness>();
-            container.RegisterType<IAreaSetupBusiness, AreaSetupBusiness>();
 
+            //e
+            container.RegisterType<IPRawMaterialStockInfo, PRawMaterialStockInfoBusiness>();
+            //e
+            container.RegisterType<IPRawMaterialStockIDetails, PRawMaterialStockIDetailsBusiness>();
+
+            container.RegisterType<IAreaSetupBusiness, AreaSetupBusiness>();
             container.RegisterType<IRawMaterialBusiness,RawMaterialBusiness>();
             container.RegisterType<IFinishGoodProductBusiness, FinishGoodProductBusiness>();
             container.RegisterType<IFinishGoodProductSupplierBusiness, FinishGoodProductSupplierBusiness>();
