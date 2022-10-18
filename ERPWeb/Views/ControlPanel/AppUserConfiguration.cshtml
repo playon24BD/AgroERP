@@ -260,10 +260,13 @@
             OpenModal();
         })
 
-        //edit
+        //edit branch Information
         $(document).on("click", "a.data-edit-item", function (e) {
+       
             e.preventDefault()
             clearCtrl();
+
+
             var row = $(this).parent().parents('tr');
             var td1 = row.find('td:eq(1)').html();
             var td2 = row.find('td:eq(2)').html();

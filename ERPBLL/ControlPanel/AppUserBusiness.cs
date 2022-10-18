@@ -182,6 +182,12 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.OrganizationId = appUserDTO.OrganizationId;
                 appUser.BranchId = appUserDTO.BranchId;
                 appUser.RoleId = appUserDTO.RoleId;
+                appUser.ZoneId = appUserDTO.ZoneId;
+                appUser.DivisionId = appUserDTO.DivisionId;
+                appUser.RegionId = appUserDTO.RegionId;
+                appUser.AreaId = appUserDTO.AreaId;
+                appUser.TerritoryId = appUserDTO.TerritoryId;
+                appUser.StockiestId = appUserDTO.StockiestId;
                 appUserRepository.Insert(appUser);
 
             }
@@ -204,6 +210,12 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.OrganizationId = appUserDTO.OrganizationId;
                 appUser.BranchId = appUserDTO.BranchId;
                 appUser.RoleId = appUserDTO.RoleId;
+                appUser.ZoneId = appUserDTO.ZoneId;
+                appUser.DivisionId = appUserDTO.DivisionId;
+                appUser.RegionId = appUserDTO.RegionId;
+                appUser.AreaId = appUserDTO.AreaId;
+                appUser.TerritoryId = appUserDTO.TerritoryId;
+                appUser.StockiestId = appUserDTO.StockiestId;
                 appUserRepository.Update(appUser);
             }
             execution.isSuccess = appUserRepository.Save();

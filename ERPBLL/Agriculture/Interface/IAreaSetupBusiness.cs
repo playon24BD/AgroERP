@@ -12,6 +12,7 @@ namespace ERPBLL.Agriculture.Interface
     {
         bool SaveAreaInfo(List<AreaSetupDTO> detailsDTO, long userId, long orgId);
         bool SaveAreaInfoUpdate(AreaSetupDTO detailsDTO, long userId, long orgId);
+        AreaInfoSetup GetAreaById(long areaId, long orgId);
         IEnumerable<AreaSetupDTO> GetAllAreaSetup(long OrgId,string name);
 
         IEnumerable<AreaInfoSetup> GetAllAreaSetupV(long OrgId);
