@@ -84,7 +84,7 @@ namespace ERPBLL.Agriculture
                         MasterCarton = item.MasterCarton,
                         InnerBox = item.InnerBox,
                         PackSize = item.PackSize,
-                        Unit = item.Unit,
+                        UnitId = item.UnitId,
                         Status = "Active",
                         EntryUserId = userId,
                         EntryDate= DateTime.Now
@@ -116,7 +116,7 @@ namespace ERPBLL.Agriculture
                 measurement.MasterCarton = measurementSetup.MasterCarton;
                 measurement.InnerBox = measurementSetup.InnerBox;
                 measurement.PackSize = measurementSetup.PackSize;
-                measurement.Unit = measurementSetup.Unit;
+                measurement.UnitId = measurementSetup.UnitId;
                 measurement.Status = measurementSetup.Status;
                 measurement.UpdateDate = DateTime.Now;
                 measurement.UpdateUserId = userId;

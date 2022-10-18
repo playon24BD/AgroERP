@@ -88,7 +88,7 @@ namespace ERPBLL.Agriculture
 
                         var rawMaterialStockInfoId = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockByMeterialId(item.RawMaterialId, orgId);
 
-                        List<RawMaterialIssueStockDetailsDTO> issuedetails = new List<RawMaterialIssueStockDetailsDTO> { new RawMaterialIssueStockDetailsDTO { RawMaterialIssueStockId = rawMaterialStockInfoId.RawMaterialIssueStockId ,RawMaterialId=item.RawMaterialId,OrganizationId=orgId,EntryUserId=userId,Quantity=item.RequiredQuantity,Unit= rawMaterialStockInfoId.Unit} };
+                        List<RawMaterialIssueStockDetailsDTO> issuedetails = new List<RawMaterialIssueStockDetailsDTO> { new RawMaterialIssueStockDetailsDTO { RawMaterialIssueStockId = rawMaterialStockInfoId.RawMaterialIssueStockId ,RawMaterialId=item.RawMaterialId,OrganizationId=orgId,EntryUserId=userId,Quantity=item.RequiredQuantity,UnitId= rawMaterialStockInfoId.UnitId} };
                         rawMaterialIssueStockDetailsDTOList.AddRange(issuedetails);
 
                         List<RawMaterialIssueStockInfoDTO> rawMaterialIssueStockInfos = new List<RawMaterialIssueStockInfoDTO>() { new RawMaterialIssueStockInfoDTO { RawMaterialIssueStockId= rawMaterialStockInfoId.RawMaterialIssueStockId,RawMaterialId=item.RawMaterialId,Quantity=item.RequiredQuantity,UpdateUserId=userId,OrganizationId=orgId } };

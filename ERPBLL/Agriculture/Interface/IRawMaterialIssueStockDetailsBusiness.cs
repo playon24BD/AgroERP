@@ -12,7 +12,7 @@ namespace ERPBLL.Agriculture.Interface
     {
 
         IEnumerable<RawMaterialIssueStockDetails> GetRawMaterialIssueStockDetailsById(long infoId, long orgId);
-        bool SaveIssuerawMaterialStockDetail(long OrganizationId, long RawMaterialId, double Quantity, string Unit, DateTime? IssueDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, long? UpdateUserId, string Status, long RawMaterialIssueStockId);
+        bool SaveIssuerawMaterialStockDetail(long OrganizationId, long RawMaterialId, double Quantity, long UnitId, DateTime? IssueDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, long? UpdateUserId, string Status, long RawMaterialIssueStockId);
         bool SaveRawMaterialIssueDetails(List<RawMaterialIssueStockDetailsDTO> finishGoodProductionDetailsDTOs,  long userId, long orgId);
     }
 }

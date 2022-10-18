@@ -42,7 +42,7 @@ namespace ERPBLL.Agriculture
             return _rawMaterialStockDetailRepository.GetAll(i => i.OrganizationId == orgId && i.RawMaterialStockId == infoId).ToList();
         }
 
-        public bool SaverawMaterialStockDetail(long OrganizationId, long RawMaterialId, long SupplierId, double Quantity, string Unit, DateTime? StockDate, DateTime? StockIssueDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, DateTime? ExpireDate, long? UpdateUserId, string Status, long RawMaterialStockId)
+        public bool SaverawMaterialStockDetail(long OrganizationId, long RawMaterialId, long SupplierId, double Quantity, long UnitId, DateTime? StockDate, DateTime? StockIssueDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, DateTime? ExpireDate, long? UpdateUserId, string Status, long RawMaterialStockId)
         {
             List<RawMaterialStockDetail> RawMaterialStockDetail = new List<RawMaterialStockDetail>();
 
@@ -54,7 +54,7 @@ namespace ERPBLL.Agriculture
             stockDetails.RawMaterialSupplierId = SupplierId;
             //  var RawMaterialId = item.RawMaterialId;
             stockDetails.Quantity = Quantity;
-            stockDetails.Unit = Unit;
+            stockDetails.UnitId = UnitId;
             stockDetails.StockDate = StockDate;
             stockDetails.EntryDate = DateTime.Now;
             stockDetails.ExpireDate = ExpireDate;
@@ -69,7 +69,7 @@ namespace ERPBLL.Agriculture
             return _rawMaterialStockDetailRepository.Save();
         }
 
-        public bool updateRawmaterialstockdetails(long id, double UpdateRawMaterialStock, double IssueRawMaterialStockQty, long orgId, string Unit, DateTime? EntryDate, long? EntryUserId)
+        public bool updateRawmaterialstockdetails(long id, double UpdateRawMaterialStock, double IssueRawMaterialStockQty, long orgId, long UnitId, DateTime? EntryDate, long? EntryUserId)
         {
             bool IsSuccess = false;
             int b = 0;
@@ -100,7 +100,7 @@ namespace ERPBLL.Agriculture
             stockDetails.RawMaterialSupplierId = 0;
             //  var RawMaterialId = item.RawMaterialId;
             stockDetails.Quantity = IssueRawMaterialStockQty;
-            stockDetails.Unit = Unit;
+            stockDetails.UnitId = UnitId;
             stockDetails.StockIssueDate = DateTime.Now;
             stockDetails.EntryDate = EntryDate;
             stockDetails.EntryUserId = EntryUserId;

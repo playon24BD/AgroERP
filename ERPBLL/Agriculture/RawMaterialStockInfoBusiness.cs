@@ -125,7 +125,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
             return query;
         }
 
-        public bool UpdateRawmaterialstockInfo(long id, double UpdateRawMaterialStock, double IssueRawMaterialStockQty, long orgId, string Unit, DateTime? EntryDate, long? EntryUserId)
+        public bool UpdateRawmaterialstockInfo(long id, double UpdateRawMaterialStock, double IssueRawMaterialStockQty, long orgId, long UnitId, DateTime? EntryDate, long? EntryUserId)
         {
             bool IsSuccess = false;
 
@@ -143,7 +143,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
             if (IsSuccess)
             {
 
-                var rawMaterialStockDetailsUpdate = _rawMaterialStockDetail.updateRawmaterialstockdetails(id, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId, Unit, EntryDate, EntryUserId);
+                var rawMaterialStockDetailsUpdate = _rawMaterialStockDetail.updateRawmaterialstockdetails(id, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId, UnitId, EntryDate, EntryUserId);
 
             }
             return IsSuccess;
@@ -175,7 +175,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
                             OrganizationId = orgId,
                             RawMaterialId = item.RawMaterialId,
                             Quantity = item.Quantity,
-                            Unit = item.Unit,
+                            UnitId = item.UnitId,
                             StockDate = DateTime.Now,
                             EntryDate = DateTime.Now,
                             EntryUserId = userId,
@@ -203,7 +203,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
                             RawMaterialId = item.RawMaterialId,
                             OrganizationId = orgId,
                             Quantity = item.Quantity,
-                            Unit = item.Unit,
+                            UnitId = item.UnitId,
                             EntryDate = DateTime.Now,
                             EntryUserId = userId,
                             ExpireDate=item.ExpireDate,
@@ -218,7 +218,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
                             OrganizationId = orgId,
                             RawMaterialId = item.RawMaterialId,
                             Quantity = item.Quantity,
-                            Unit = item.Unit,
+                            UnitId = item.UnitId,
                             StockDate = DateTime.Now,
                             EntryDate = DateTime.Now,
                             EntryUserId = userId,
@@ -244,7 +244,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
 
                         var RawMaterialStockInfoid = RawMaterialStockInfoIdGet(items.OrganizationId, items.RawMaterialId);
 
-                        isSuccess = _rawMaterialStockDetail.SaverawMaterialStockDetail(items.OrganizationId, items.RawMaterialId,items.RawMaterialSupplierId, items.Quantity, items.Unit, items.StockDate,items.StockIssueDate, items.EntryDate, items.EntryUserId, items.UpdateDate,items.ExpireDate,items.UpdateUserId, items.Status, RawMaterialStockInfoid.RawMaterialStockId);
+                        isSuccess = _rawMaterialStockDetail.SaverawMaterialStockDetail(items.OrganizationId, items.RawMaterialId,items.RawMaterialSupplierId, items.Quantity, items.UnitId, items.StockDate,items.StockIssueDate, items.EntryDate, items.EntryUserId, items.UpdateDate,items.ExpireDate,items.UpdateUserId, items.Status, RawMaterialStockInfoid.RawMaterialStockId);
                     }
 
 

@@ -28,7 +28,7 @@ namespace ERPBLL.Agriculture
             return _rawMaterialIssueStockDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.RawMaterialIssueStockId == infoId).ToList();
         }
 
-        public bool SaveIssuerawMaterialStockDetail(long OrganizationId, long RawMaterialId, double Quantity, string Unit, DateTime? IssueDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, long? UpdateUserId, string Status, long RawMaterialIssueStockId)
+        public bool SaveIssuerawMaterialStockDetail(long OrganizationId, long RawMaterialId, double Quantity, long UnitId, DateTime? IssueDate, DateTime? EntryDate, long? EntryUserId, DateTime? UpdateDate, long? UpdateUserId, string Status, long RawMaterialIssueStockId)
         {
             List<RawMaterialIssueStockDetails> IssueRawMaterialStockDetail = new List<RawMaterialIssueStockDetails>();
 
@@ -39,7 +39,7 @@ namespace ERPBLL.Agriculture
             IssuestockDetails.RawMaterialId = RawMaterialId;
             //  var RawMaterialId = item.RawMaterialId;
             IssuestockDetails.Quantity = Quantity;
-            IssuestockDetails.Unit = Unit;
+            IssuestockDetails.UnitId = UnitId;
             IssuestockDetails.IssueDate = IssueDate;
             IssuestockDetails.EntryDate = DateTime.Now;
             IssuestockDetails.EntryUserId = UpdateUserId;
@@ -70,7 +70,7 @@ namespace ERPBLL.Agriculture
                         rawMaterialIssueStockDetail.Quantity = row.Quantity;
                         rawMaterialIssueStockDetail.EntryUserId = row.EntryUserId;
                         rawMaterialIssueStockDetail.OrganizationId = orgId;
-                    rawMaterialIssueStockDetail.Unit = row.Unit;
+                    rawMaterialIssueStockDetail.UnitId = row.UnitId;
 
                     rawMaterialIssueStockDetail.EntryDate = DateTime.Now;
                         rawMaterialIssueStockDetail.RawMaterialIssueStockId = row.RawMaterialIssueStockId;

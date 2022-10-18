@@ -378,7 +378,7 @@
                                 MasterCarton: td.eq(5).html(),
                                 InnerBox: td.eq(6).html(),
                                 PackSize: td.eq(7).html(),
-                                Unit: td.eq(3).html()
+                                UnitId: td.eq(3).html()
 
 
                             })
@@ -416,7 +416,7 @@
             if (validateUpdate() == true) {
 
                  var data = {
-                measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(), Unit: unit.val(), Status: ddlStatus.val()
+                    measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(),UnitId: TryParseInt(ddlUnit.val(), 0), Status: ddlStatus.val()
             }
           //  var models = JSON.stringify(data);
 

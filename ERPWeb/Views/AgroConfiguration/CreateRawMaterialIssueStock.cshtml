@@ -320,7 +320,7 @@
             //if (true) {
             //bootbox.confirm("Are you sure you want to Save Database", function (result) {
             //    if (result) {
-            var info = { RawMaterialIssueStockId: 0, RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val() };
+            var info = { RawMaterialIssueStockId: 0, RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), UnitId: TryParseInt(ddlUnit.val(), 0) };
 
             var details = [];
             details.length = 0;

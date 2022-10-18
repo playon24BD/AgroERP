@@ -69,7 +69,7 @@ namespace ERPBLL.Agriculture
                     FinishGoodProductId = info.FinishGoodProductId,
                     ReceipeBatchCode= ReceipeBatchCodes,
                     FGRQty = info.FGRQty,
-                    FGRUnit = info.FGRUnit,
+                    UnitId = info.UnitId,
                     OrganizationId = orgId,
                     Status=info.Status,
                     EUserId = userId,
@@ -85,7 +85,7 @@ namespace ERPBLL.Agriculture
                         RawMaterialId = item.RawMaterialId,
                         ReceipeBatchCode= ReceipeBatchCodes,
                         FGRRawMaterQty = item.FGRRawMaterQty,
-                        FGRRawMaterUnit = item.FGRRawMaterUnit,
+                        UnitId = item.UnitId,
                         OrganizationId = orgId,
                         EUserId = userId,
                         EntryDate = DateTime.Now

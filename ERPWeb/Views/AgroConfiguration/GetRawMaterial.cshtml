@@ -239,7 +239,7 @@
         $("#btnSave").click(function (e) {
 
             e.preventDefault();
-            var data = { RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val(), Status: ddlStatus.val(), Unit: ddlUnit.val() }
+            var data = { RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val(), Status: ddlStatus.val(), UnitId: TryParseInt(ddlUnit.val(), 0) }
             if (formValidation() == true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
                     //console.log('respons' + JSON.parse( res));
