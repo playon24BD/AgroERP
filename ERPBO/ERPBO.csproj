@@ -81,6 +81,8 @@
     <Compile Include="Agriculture\DomainModels\DivisionInfo.cs" />
     <Compile Include="Agriculture\DomainModels\FinishGoodProductionDetails.cs" />
     <Compile Include="Agriculture\DomainModels\FinishGoodProductionInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\PRawMaterialStockIDetails.cs" />
+    <Compile Include="Agriculture\DomainModels\PRawMaterialStockInfo.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialIssueStockDetails.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialIssueStockInfo.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialStock.cs" />
@@ -100,6 +102,8 @@
     <Compile Include="Agriculture\DTOModels\DivisionInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\FinishGoodProductionDetailsDTO.cs" />
     <Compile Include="Agriculture\DTOModels\FinishGoodProductionInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\PRawMaterialStockIDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\PRawMaterialStockInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialIssueStockDetailsDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialIssueStockInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialStockDetailDTO.cs" />
@@ -119,6 +123,8 @@
     <Compile Include="Agriculture\ViewModels\DivisionInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionDetailViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\PRawMaterialStockIDetailsViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\PRawMaterialStockInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialIssueStockDetailsViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialIssueStockInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialStockDetailViewModel.cs" />
