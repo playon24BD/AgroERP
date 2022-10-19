@@ -1835,16 +1835,29 @@ namespace ERPWeb.Controllers
         {
 
 
-            ViewBag.ClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
+            ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
 
-            ViewBag.ProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
-            ViewBag.MeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
+            ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
 
-            ViewBag.MeasurementSize = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MasterCarton.ToString() + "*" + d.InnerBox.ToString() + "*" + d.PackSize.ToString(), Value = d.MeasurementId.ToString() }).ToList();
+            ViewBag.ddlMeasurementSize = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MasterCarton.ToString() + "*" + d.InnerBox.ToString() + "*" + d.PackSize.ToString() + "(" + d.UnitId + ")" , Value = d.MeasurementId.ToString() }).ToList();
+
 
 
             return View();
+        }
+
+        public ActionResult GetMeasurementIdWiseSize(long MeasurementId)
+        {
+            var MasterCarton = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).MasterCarton;
+            var InnerBox = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).InnerBox;
+            var PackSize = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).PackSize;
+            var Unit = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).UnitId;
+            var MeasurementSize = MasterCarton + "*" + InnerBox + "*" + pageSize + "(" + Unit + ")";
+
+            return Json(MeasurementSize, JsonRequestBehavior.AllowGet);
+
         }
         #endregion
 

@@ -115,7 +115,7 @@
                                     <th style="width:10%">RawMaterial Unit</th>
                                     <th style="width:12%">Action</th>
                                     <th class="hide RawMaterialId"></th>
-
+                                     
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -320,7 +320,7 @@
                         debugger;
                         //disable("#btnSubmit");
                         //getTargetItemAndItemTypeAndWarehouse();
-                        var info = { FGRId: 0, FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), FGRQty: txtProductQty.val(), UnitId: TryParseInt(ddlUnit.val(), 0), Status: ddlStatus.val(), RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), FGRRawMaterQty: txtRawMaterialQty.val(), UnitId: TryParseInt(ddlUnit.val(), 0) };
+                        var info = { FGRId: 0, FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), FGRQty: txtProductQty.val(), FGRUnit: ddlProductunit.val(), Status: ddlStatus.val(), RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), FGRRawMaterQty: txtRawMaterialQty.val(), FGRRawMaterUnit: ddlRawMaterialunit.val() };
 
                         var details = [];
                         details.length = 0;
@@ -331,7 +331,7 @@
                                 FGRDetailsId:0,
                                 RawMaterialId: tds.eq(5).html(),
                                 FGRRawMaterQty: tds.eq(2).html(),
-                                UnitId: tds.eq(3).html()
+                                FGRRawMaterUnit: tds.eq(3).html()
 
                             });
                         })
