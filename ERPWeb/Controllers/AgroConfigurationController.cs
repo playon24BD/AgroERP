@@ -702,11 +702,15 @@ namespace ERPWeb.Controllers
         public ActionResult GetRawMaterialStockLoadUnitName(long RawMaterialId)
         {
             var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).UnitId;
+            var unitname = _agroUnitInfo.GetAgroInfoById(Unit, User.OrgId).UnitName;
 
+           // var divlist = _divisionInfo.GetAllDivisionSetup(User.OrgId).Where(x => x.ZoneId == id).Select(divv => new SelectListItem { Text = divv.DivisionName, Value = divv.DivisionId.ToString() }).ToList();
 
-            return Json(Unit, JsonRequestBehavior.AllowGet);
+            return Json(unitname, JsonRequestBehavior.AllowGet);
 
         }
+
+
 
         public ActionResult GetFinishGoodRecipeList(string flag, long? ProductId, long? id)
         {
@@ -1866,7 +1870,6 @@ namespace ERPWeb.Controllers
         public ActionResult GetPRawmaterialStockList(string flag)
         {
 
-
             if (string.IsNullOrEmpty(flag))
             {
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
@@ -1879,8 +1882,42 @@ namespace ERPWeb.Controllers
             }
             return View();
 
+        }
+
+
+
+        [HttpPost]
+        public ActionResult SaveRawmaterialPurchaseStock(PRawMaterialStockInfoViewModel info, List<PRawMaterialStockIDetailsViewModel> details)
+        {
+            bool IsSuccess = false;
+
+                PRawMaterialStockInfoDTO infoDTO = new PRawMaterialStockInfoDTO();
+                List<PRawMaterialStockIDetailsDTO> detailDTOs = new List<PRawMaterialStockIDetailsDTO>();
+                AutoMapper.Mapper.Map(info, infoDTO);
+                AutoMapper.Mapper.Map(details, detailDTOs);
+                IsSuccess = _pRawMaterialStockInfo.SaveRawMaterialPurchaseStock(infoDTO, detailDTOs, User.UserId, User.OrgId);
+
+               
+
+            return Json(IsSuccess);
+        }
+
+
+        public ActionResult RawMaterialStockLoadUnitName(long RawMaterialId)
+        {
+            var Unit = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).UnitId;
+            var unitname = _agroUnitInfo.GetAgroInfoById(Unit, User.OrgId).UnitName;
+            return Json(unitname, JsonRequestBehavior.AllowGet);
 
         }
+        public ActionResult RawMaterialStockLoadUnitID(long RawMaterialId)
+        {
+            var UnitIDd = _rawMaterialBusiness.GetRawMaterialById(RawMaterialId, User.OrgId).UnitId;
+            return Json(UnitIDd, JsonRequestBehavior.AllowGet);
+
+        }
+
+
 
         #endregion
     }

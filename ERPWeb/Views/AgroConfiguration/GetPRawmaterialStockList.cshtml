@@ -104,6 +104,7 @@
                                             <div class="card" style="background-color:#e7f1f6 ">
                                                 <div class="row justify-content-center">
                                                     <div class="col-md-6">
+
                                                         <div class="row">
                                                             <div class="col-md-8">
                                                                 <label for="ddlSupplierName" class="col-form-label">Supplier Name</label>
@@ -112,59 +113,60 @@
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="AsignDate">Asign Date</label>
-                                                                    <input type="date" class="form-control" id="AsignDate" placeholder="Asign Date" asp-for="WorkAsignDate">
+                                                                    <label for="ddlInvoiceDate">Invoice Date</label>
+                                                                    <input type="date" class="form-control" id="ddlInvoiceDate" placeholder="Asign Date">
+                                                                    <span class="error hide req-ddlInvoiceDate font-weight-bold">date requered!</span>
                                                                 </div>
                                                             </div>
-                                                            @*<div class="col-md-4">
-            <label class="col-form-label font-weight-bold">Invoice Date</label>
-            <div class="input-group input-group-sm ">
-                <input type="text" class="form-control form-control-sm date-datePicker-InvoiceDate ctrl-changed" id="ddlInvoiceDate" />
-                <div class="input-group-prepend cursor-pointer remove-date InvoiceDate" style="cursor:pointer">
-                    <span class="input-group-text">&#10008;</span>
-                </div>
-            </div>
-        </div>*@
                                                         </div>
+
                                                         <div class="row">
                                                             <div class="col-md-8">
                                                                 <label for="ddlChallanNo" class="col-form-label">Challan No.</label>
                                                                 <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
+                                                                <span class="error hide req-ddlChallanNo font-weight-bold">Chalan No is required!</span>
+
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
                                                                 <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
+                                                                <span class="error hide req-ddlInvoiceNo font-weight-bold">Invoice No is required!</span>
                                                             </div>
                                                         </div>
 
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
 
                                         <div class="col-12">
                                             <h5 style="border-bottom:2px solid #f87878">RawMaterial</h5>
                                             <div class="row">
-                                                
+
                                                 <div class="col-md-2">
                                                     <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
                                                     @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                                     <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
                                                 </div>
+
                                                 <div class="col-md-2">
                                                     <label for="ddlUnitName">Unit</label>
                                                     <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
+                                                </div>
+                                                <div class="hide">
+                                                    <label for="ddlUnitID">UnitID</label>
+                                                    <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    <label for="ddluprice">Unit Price</label>
+                                                    <input type="number" id="ddluprice" name="uprice" class="form-control form-control-sm" />
+                                                    <span class="error hide req-uprice">Unit Price Is Required</span>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label for="ddlqty"> Qty</label>
                                                     <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
                                                     <span class="error hide req-qty">Qty Is Required</span>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label for="ddluprice">Unit Price</label>
-                                                    <input type="number" id="ddluprice" name="uprice" class="form-control form-control-sm" />
-                                                    <span class="error hide req-uprice">Unit Price Is Required</span>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="ddlttprice">SubTotal</label>
@@ -203,13 +205,13 @@
                                                                 <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
                                                             </th>
                                                         </tr>
-                                                        <tr class="btn-dark">
+                                                        <tr class="text-center btn-dark">
+
                                                             <th style="width:5%">#SL</th>
-                                                            <th class="hide">Depot</th>
                                                             <th>Raw Material</th>
-                                                            <th>QTY</th>
                                                             <th>Unit</th>
                                                             <th>Unit Price</th>
+                                                            <th>QTY</th>
                                                             <th>Subtotal</th>
                                                             <th style="width:5%">Action</th>
                                                             <th class="hide DepotlId"></th>
@@ -247,6 +249,7 @@
         var ddlInvoiceDate = $("#ddlInvoiceDate");
         var ddlInvoiceNo = $("#ddlInvoiceNo");
         var ddlChallanNo = $("#ddlChallanNo");
+        var ddlInvoiceDate = $("#ddlInvoiceDate");
 
 
         var ddlDepotName = $("#ddlDepotName");
@@ -256,6 +259,10 @@
         var ddlUnitName = $("#ddlUnitName");
         var ddluprice = $("#ddluprice");
         var ddlttprice = $("#ddlttprice");
+
+        var ddlUnitID = $("#ddlUnitID");
+
+        var ddlRawMaterialList = [];
 
 
         $(document).ready(function () {
@@ -268,85 +275,111 @@
             $("#btnSubmit").hide();
         })
 
-        $("#addTolist").click(function (e) {
-            alert();
-            debugger;
-            e.preventDefault();
-
-            
 
 
-                    var sl = $("#tblPstockrawmaterial tbody tr").length;
-                    var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-                    var td2 = "<td class='hide'>" + dropDownSelectedText("ddlDepotName") + "</td>";
-                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterial") + "</td>";
-                    
-                    var td4 = "<td class='text-center'>" + ddlqty.val() + "</td>";
-                    var td5 = "<td class='text-center'>" + dropDownSelectedText("ddlUnitName") + "</td>";
-                    var td6 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+        //change
+        ddlRawMaterial.change(function () {
+            //debugger;
 
-                    var td7 = "<td class='text-center'>" + ddlttprice.val() + "</td>";
-                    var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+            var data = { RawMaterialId: ddlRawMaterial.val() };
 
-                    var td9 = "<td class='text-center hide'>" + ddlDepotName.val() + "</td>";
-                    var td10 = "<td class='text-center hide'>" + ddlRawMaterial.val() + "</td>";
-                    var td11 = "<td class='text-center hide'>" + ddlUnitName.val() + "</td>";
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitName", data)).then(function (res, status) {
+               // debugger;
 
-                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 +"</tr>";
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnitName.val(res.UnitName);
+                ddlUnitName.val(unit);
 
-                    $("#tblPstockrawmaterial tbody").append(tr);
+            });
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitID", data)).then(function (res, status) {
+              //  debugger;
 
-                    //regionNameList.push(ddlRegionName.val());
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnitID.val(res.UnitIDd);
+                ddlUnitID.val(unit);
 
+            });
 
-            clearCtrlRegion();
         })
+
+
+
+        $("#addTolist").click(function (e) {
+            //alert();
+            //debugger;
+            e.preventDefault();
+            if (validateAddToList()) {
+
+            if (ddlRawMaterialList.includes(ddlRawMaterial.val())) {
+                toastrErrorAlert("Material Already Exist");
+            }
+            else {
+                var sl = $("#tblPstockrawmaterial tbody tr").length;
+                var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterial") + "</td>";
+                var td3 = "<td class='text-center'>" + ddlUnitName.val() + "</td>";
+                var td4 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                var td5 = "<td class='text-center'>" + ddlqty.val() + "</td>";
+                var td6 = "<td class='text-center'>" + ddlttprice.val() + "</td>";
+                var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
+                var td8 = "<td class='text-center hide'>" + ddlRawMaterial.val() + "</td>";
+                var td9 = "<td class='text-center hide'>" + ddlUnitID.val() + "</td>";
+
+                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + "</tr>";
+
+                $("#tblPstockrawmaterial tbody").append(tr);
+                ddlRawMaterialList.push(ddlRawMaterial.val());
+            }
+        }
+            clearCtrlStk();
+        })
+
 
         //save
         $("#saveButton").click(function (e) {
-            alert();
+            //alert();
             debugger
             e.preventDefault();
 
+            if (validatesave()) {
 
-              if (true === true) {
+            if (true === true) {
 
                 bootbox.confirm("Are you sure you want to Save this", function (result) {
                     if (result) {
-                        alert("ok");
+                        //alert("ok");
                         debugger;
                         var info = { RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0), ChalanNo: ddlChallanNo.val(), InvoiceNo: ddlInvoiceNo.val(), InvoiceDate: ddlInvoiceDate.val() };
+                        var details = [];
+                        details.length = 0;
+
+                        $.each($("#tblPstockrawmaterial tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+                                PRawMaterialStockDetailId: 0,
+                                RawMaterialId: tds.eq(7).html(),
+                                UnitID: tds.eq(8).html(),
+                                UnitPrice: tds.eq(3).html(),
+                                Quantity: tds.eq(4).html(),
+                                SubTotal: tds.eq(5).html(),
+
+                            });
+                        })
+
+
                         console.log(info);
-                        
+                        console.log(details);
 
-                       // var info = { PRawMaterialStockId: 0, RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0), ChalanNo: ddlChallanNo.val(), InvoiceNo: ddlInvoiceNo.val() };
-
-                        //var details = [];
-                        //details.length = 0;
-
-                        //$.each($("#tblList tbody tr"), function (index, item) {
-                        //    var tds = $(this).children('td');
-                        //    details.push({
-                        //        FGRDetailsId:0,
-                        //        RawMaterialId: tds.eq(5).html(),
-                        //        FGRRawMaterQty: tds.eq(2).html(),
-                        //        UnitId: tds.eq(3).html()
-
-                        //    });
-                        //})
-
-                        //console.log('Info');
-                        //console.log(info);
-                        //console.log('Detail');
-                        //console.log(details);
-                        //var data = JSON.stringify({ info: info, details: details });
-                        //return;
-                        @*$.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveFinishGoodRecipe', data , getToken())).then(function (res, status)
-                        {
+                        var data = JSON.stringify({ info: info, details: details });
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawmaterialPurchaseStock', data, getToken())).then(function (res, status) {
                             if (res === true) {
+                                debugger;
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
-                                    redirectPage('@Url.Action("GetFinishGoodRecipeList")');
+                                    redirectPage('@Url.Action("GetPRawmaterialStockList")');
                                 }, 1000);
                                 //resetUI();
                             }
@@ -357,10 +390,11 @@
                         }).fail(function (error) {
                             alert(execuStatus.fail);
                             enable("#btnSubmit");
-                        })*@
+                        })
                     }
                 })
             }
+        }
         })
 
 
@@ -400,30 +434,89 @@
             var index = $(this).parent().parents('tbody tr').index();
             var tds = $(this).parent().parents('tbody tr').children('td');
 
-            //var rId = tds.eq(7).html();
-            //console.log("rId :" + rId);
-            //const mid = regionNameList.indexOf(rId);
-            ////regionNameList.splice(mid, 1);
+            var rId = tds.eq(7).html();
+            console.log("rId :" + rId);
+            const mid = ddlRawMaterialList.indexOf(rId);
+            ddlRawMaterialList.splice(mid, 1);
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
 
 
 
+                    removeTableRow("#tblPstockrawmaterial tbody", index);
+                    fnFixTheTbodyRowSerial("#tblPstockrawmaterial tbody", index);
+                };
+            }));
 
-            removeTableRow("#tblPstockrawmaterial tbody", index);
-            fnFixTheTbodyRowSerial("#tblPstockrawmaterial tbody", index);
         })
 
 
 
         //clear
-        function clearCtrlRegion() {
-            debugger;
-            ddlRawMaterial.val('');
-            ddlDepotName.val("");
+        function clearCtrlStk() {
+            //debugger;
+            ddlRawMaterial.val("");
             ddlqty.val("");
             ddlUnitName.val("");
+            ddlUnitID.val("");
             ddlttprice.val("");
             ddluprice.val("");
+        }
 
+
+        //validationadd
+        function validateAddToList() {
+            //debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlRawMaterial.val()) == 0) {
+                $(".req-ddlRawMaterial").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(ddlqty.val(), 0) <= 0) {
+                $(".req-qty").removeClass('hide');
+                isValid = false;
+            }
+            if (ddluprice.val() === "") {
+                $(".req-uprice").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        //validationsave
+        function validatesave() {
+            debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlRawMaterial.val()) == 0) {
+                $(".req-SupplierName").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(ddlqty.val(), 0) <= 0) {
+                $(".req-ddlInvoiceDate").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlChallanNo.val() === "") {
+                $(".req-ddlChallanNo").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlInvoiceNo.val() === "") {
+                $(".req-ddlInvoiceNo").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
         }
 
 
