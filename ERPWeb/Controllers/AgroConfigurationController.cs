@@ -1858,7 +1858,9 @@ namespace ERPWeb.Controllers
             var InnerBox = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).InnerBox;
             var PackSize = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).PackSize;
             var Unit = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).UnitId;
-            var MeasurementSize = MasterCarton + "*" + InnerBox + "*" + pageSize + "(" + Unit + ")";
+            var UnitName = _agroUnitInfo.GetAgroInfoById(Unit, User.OrgId).UnitName;
+
+            var MeasurementSize = MasterCarton + "*" + InnerBox + "*" + pageSize + "(" + UnitName + ")";
 
             return Json(MeasurementSize, JsonRequestBehavior.AllowGet);
 

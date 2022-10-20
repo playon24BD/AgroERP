@@ -14,8 +14,9 @@ namespace ERPBO.Agriculture.ViewModels
         public double Quanity { get; set; }
         public double Price { get; set; }
         public long MeasurementId { get; set; }
+        public string MeasurementSize { get; set; }
         public double Discount { get; set; }
-
+        public double DiscountTk { get; set; }
         public long OrganizationId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }

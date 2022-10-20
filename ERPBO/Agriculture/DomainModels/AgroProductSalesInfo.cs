@@ -40,7 +40,7 @@ namespace ERPBO.Agriculture.DomainModels
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
 
-
+        public ICollection<AgroProductSalesDetails> AgroProductSalesDetails { get; set; }
 
     }
 }

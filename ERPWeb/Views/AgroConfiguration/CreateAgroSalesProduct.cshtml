@@ -178,7 +178,8 @@
                                             <th style="width:5%">Discount(Tk.)</th>
                                             <th style="width:10%">Amount(Tk.)</th>
                                             <th style="width:10%">Action</th>
-                                            <th style="width:1%" class="hide RawMaterialId"></th>
+                                            <th style="width:1%" class="hide ProductId"></th>
+                                            <th style="width:1%" class="hide MeasurementId"></th>
 
                                         </tr>
                                     </thead>
@@ -232,6 +233,7 @@
         var ClientId = '';
         var MeasurementId = '';
         var ProductId = '';
+        var UnitId = '';
 
 
         $(document).ready(function () {
@@ -324,22 +326,14 @@
                     var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + +td11 + "</tr>";
                     // Total
 
-
-              
-                  
-
-                 
-
-
-
                     if ($("#tblList tbody tr").length == 0) {
 
 
                         $("#tblList tbody").append(tr);
                         //addTotal();
                         var tdT1 = "<td class='text-sm'></td>";
-                        var tdT2 = "<td class='text-sm'></td>";
-                        var tdT3 = "<td class='text-sm'style='float: right;'>Total :</td>";
+                        var tdT2 = "<td class='text-sm'>Total :</td>";
+                        var tdT3 = "<td class='text-sm'style='float: right;'></td>";
                         //var tdT4 = "<td class='text-sm'>" + totalAmount + "</td>";
                         var tdT4 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Quentity' readonly /> </td>";
                         var tdT5 = "<td class='text-sm'></td>";
@@ -409,20 +403,6 @@
 
                     }
 
-
-
-                    //$("tdT4").val(totalAmount);
-
-                    //$('#tblList tr').each(function (index, tr) {
-                    //    $(tr).find('td').each(function (index, td) {
-                    //        console.log(td)
-                    //    });
-                    //})
-                    // ddlItemSrc.val("");
-                    //txtRawMaterialQty.val('0');
-                    //disable("#ddlProductName");
-
-                    //$("#tblSingleItems tbody").append(tr);
                     SalesProductNameList.push(ddlProductName.val());
 
 
@@ -461,77 +441,103 @@
         }
 
 
-        //$(document).on("click", "a.data-onfly-del", function (e) {
-        //    e.preventDefault();
-        //    var index = $(this).parent().parents('tbody tr').index();
-        //    var tds = $(this).parent().parents('tbody tr').children('td');
-
-        //    var rawMaterialId = tds.eq(5).html();
-        //    console.log("rawMaterialId :"+ rawMaterialId);
-        //    const mid = materialNameList.indexOf(rawMaterialId);
-        //    materialNameList.splice(mid, 1);
-
-
-
-
-        //    removeTableRow("#tblSingleItems tbody", index);
-        //    fnFixTheTbodyRowSerial("#tblSingleItems tbody", index);
-        //})
-
-
-
-
-
-
-        @*$("#saveButton").click(function (e) {
+        $(document).on("click", "a.data-onfly-del", function (e) {
             e.preventDefault();
             debugger;
-            //if (true) {
-            //bootbox.confirm("Are you sure you want to Save Database", function (result) {
-            //    if (result) {
-            var info = { RawMaterialStockId: 0,RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val(), RawMaterialSupplierId: ddlRawMaterialSupplierName.val(),ExpireDate:ExpireDate.val() };
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
 
-            var details = [];
-            details.length = 0;
+            var ProductId = tds.eq(9).html();
 
-            $.each($("#tblSingleItems tbody tr"), function (index, item) {
-                var tds = $(this).children('td');
-                details.push({
+            var RawQuentity = tds.eq(3).html();
+            var totalQty = document.getElementById('Quentity').value
+            var CurrentQty = totalQty - RawQuentity;
 
-                    RawMaterialStockDetailId: 0,
-                    RawMaterialId: tds.eq(7).html(),
-                    Quantity: tds.eq(4).html(),
-                    Unit: tds.eq(3).html(),
-                    ExpireDate: tds.eq(5).html(),
-                    RawMaterialSupplierId: tds.eq(8).html()
+            var RawDiscountTk = tds.eq(6).html();
+            var totalDiscountTk = document.getElementById('Discount').value
+            var CurrentDiscountTk = totalDiscountTk - RawDiscountTk;
 
-                });
-            })
+            var RawAmountTk = tds.eq(7).html();
+            var totalAmountTk = document.getElementById('Total').value
+            var CurrentAmountTk = totalAmountTk - RawAmountTk;
 
-            console.log(info);
-            console.log(details);
-            var data = JSON.stringify({ info: info, details: details });
+            console.log("ProductId :" + ProductId);
+            const mid = SalesProductNameList.indexOf(ProductId);
+            SalesProductNameList.splice(mid, 1);
 
-            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialStock', data, getToken())).then(function (res, status) {
-                if (res === true) {
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
                     debugger;
-                    $('.toastrDefaultSuccess').trigger('click');
-                     setTimeout(function () {
-                                    redirectPage('@Url.Action("GetRawMaterialStock")');
+                    removeTableRow("#tblList tbody", index);
+                    fnFixTheTbodyRowSerialInDecsOrder("#tblList", index);
+                    
+                };
+            }));
+
+            $("#Quentity").val(CurrentQty);
+            $("#Discount").val(CurrentDiscountTk);
+            $("#Total").val(CurrentAmountTk);
+        })
+
+
+
+
+
+
+             $("#btnSubmit").click(function (e) {
+            debugger
+            e.preventDefault();
+            if (true === true) {
+
+                bootbox.confirm("Are you sure you want to Save this Sales", function (result) {
+                    if (result) {
+                        debugger;
+                        //disable("#btnSubmit");
+                        //getTargetItemAndItemTypeAndWarehouse();
+                        var info = { ProductSalesInfoId: 0, StockiestId: TryParseInt(ddlClientName.val(), 0), Depot: ddlDepotName.val(), InvoiceDate: InvoiceDate.val(), ChallanDate: ChallanDate.val(), VehicleType: txtVehicleType.val(), VehicleNumber: txtVehicleNumber.val(), DriverName: txtDriverName.val(), DeliveryPlace: txtDeliveryPlace.val(), Do_ADO_DA: txtDo_ADO_DA.val(), DoADO_Name: txtDoADO_Name.val(), PaymentMode: ddlPaymentMode.val() };
+
+                        var details = [];
+                        details.length = 0;
+
+                        $.each($("#tblList tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+                                ProductSalesDetailsId:0,
+                                RawMaterialId: tds.eq(5).html(),
+                                FGRRawMaterQty: tds.eq(2).html(),
+                                FGRRawMaterUnit: tds.eq(3).html()
+
+                            });
+                        })
+
+                        console.log('Info');
+                        console.log(info);
+                        console.log('Detail');
+                        console.log(details);
+                        var data = JSON.stringify({ info: info, details: details });
+                        //return;
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveFinishGoodRecipe', data , getToken())).then(function (res, status)
+                        {
+                            if (res === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetFinishGoodRecipeList")');
                                 }, 1000);
-                }
-                else {
-                    $('.toastrDefaultError').trigger('click');
-                }
-                enable("#saveButton");
-            }).fail(function (error) {
-                alert(execuStatus.fail);
-                enable("#saveButton");
-            })
-            //}
-            //})
-            //}
-        })*@
+                                //resetUI();
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+                    }
+                })
+            }
+        }) 
 
 
 
