@@ -89,13 +89,7 @@
 
                     </div>
 
-                    @*<div class="col-md-12">
-
-            <label class="control-label font-weight-bold">Depot Name</label>
-            @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "Select Depot Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
-            <span class="error hide required-ddlDepotName font-weight-bold">Depot Name is Required</span>
-        </div>*@
+               
 
                     <div class="col-md-12">
                         <label class="control-label font-weight-bold">Raw Material Name</label>
@@ -104,22 +98,7 @@
 
 
                     </div>
-                    @*<div class="form-row">
-            <label class="control-label font-weight-bold">Expiry Date</label>
-            <input type="text" id="expairDate" class="form-control form-control-sm datepicker ctr-changed" />
-            <span class="error hide required-expairDate"> Date is Required</span>
-        </div>*@
-                    @*<div class="col-md-12">
-            <label for="ddlUnit" class="control-label">UnitName</label>
-            <select class="form-control form-control-sm" id="ddlUnit">
-                <option value="">--Select Unit--</option>
-                <option value="Kg">Kg</option>
-                <option value="Gram">Gram</option>
-                <option value="Litter">Litter</option>
-                <option value="MiliLitter">MiliLitter</option>
-                <option value="Miter">Miter</option>
-            </select>
-        </div>*@
+                   
                     <input type="hidden" id="hdunitId" />
                     <div class="col-md-12">
                         <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
@@ -237,8 +216,10 @@
         }
 
         $("#btnSave").click(function (e) {
-
+            var ee = ddlUnit.val();
+            console.log(ee);
             e.preventDefault();
+            debugger;
             var data = { RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val(), Status: ddlStatus.val(), UnitId: TryParseInt(ddlUnit.val(), 0) }
             if (formValidation() == true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
@@ -274,9 +255,10 @@
             var td5 = row.find('td:eq(5)').html();
             //var td6 = row.find('td:eq(6)').html();
             var td8 = row.find('td:eq(6)').html();
+            var td9 = row.find('td:eq(7)').html();
 
             rawMaterialName.val(td3);
-            ddlUnit.val(td4);
+            ddlUnit.val(td9);
             ddlUnit.trigger("change");
             ddlStatus.val(td5);
             ddlStatus.trigger("change");

@@ -25,5 +25,6 @@ namespace ERPBO.Agriculture.DTOModels
         public string Status { get; set; }
         public string UserName { get; set; }
         public long UnitId { get; set; }
+        public string UnitName { get; set; }
     }
 }

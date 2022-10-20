@@ -16,6 +16,7 @@
             <th style="vertical-align:middle">Product Name</th>
             <th style="vertical-align:middle">Product Qty</th>
             <th style="vertical-align:middle">Product Unit</th>
+            <th style="vertical-align:middle" class="hide"></th>
             <th style="vertical-align:middle">Action</th>
         </tr>
     </thead>
@@ -28,7 +29,8 @@
                 <td class="hide">@item.FGRId</td>
                 <td class="text-center">@item.FinishGoodProductName</td>
                 <td class="text-center">@item.FGRQty</td>
-                <td class="text-center">@item.FGRUnit</td>
+                <td class="text-center">@item.UnitName</td>
+                <td class="hide">@item.UnitId</td>
 
                 <td class="text-center">
                     @*@if (privilege != null && privilege.Detail)

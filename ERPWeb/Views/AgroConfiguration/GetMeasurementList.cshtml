@@ -47,13 +47,13 @@
                                         <div class="row">
                                             <input type="hidden" id="hdMeasurementId" />
                                             @*<div class="col-md-3">
-                                                    <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
-                                                    <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
-                                                        <option value="">Select One</option>
-                                                        <option value="9">Agro Farm</option>
-                                                    </select>
-                                                    <span class="error hide req-ddlOrganiation">Organization is required</span>
-                                                </div>*@
+            <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
+            <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
+                <option value="">Select One</option>
+                <option value="9">Agro Farm</option>
+            </select>
+            <span class="error hide req-ddlOrganiation">Organization is required</span>
+        </div>*@
                                             <div class="col-md-3">
                                                 <label class="control-label font-weight-bold " for="measurementName">Measurement Name</label>
                                                 <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" />
@@ -74,17 +74,24 @@
                                                 <input type="number" id="txtpackSize" name="packSize" class="form-control form-control-sm">
                                                 <span class="error hide req-txtpackSize">Pack Size is required</span>
                                             </div>
-                                            <div class="col-md-2">
+                                            @*<div class="col-md-2">
 
-                                                <label for="txtunit" class="control-label">Unit</label>
-                                                <select id="txtunit" class="form-control form-control-sm">
-                                                    <option value="">Select Unit</option>
-                                                    <option value="Kg">Kg</option>
-                                                    <option value="Gram">Gram</option>
-                                                    <option value="hg">hg</option>
-                                                    <option value="dag">dag</option>
-                                                </select>
-                                                <span class="error hide req-txtunit">Unit is required</span>
+            <label for="txtunit" class="control-label">Unit</label>
+            <select id="txtunit" class="form-control form-control-sm">
+                <option value="">Select Unit</option>
+                <option value="Kg">Kg</option>
+                <option value="Gram">Gram</option>
+                <option value="hg">hg</option>
+                <option value="dag">dag</option>
+            </select>
+            <span class="error hide req-txtunit">Unit is required</span>
+        </div>*@
+
+                                            <div class="col-md-12">
+                                                <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
+                                                @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                                <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
@@ -239,19 +246,24 @@
                             <span class="error hide required-packSize font-weight-bold">Input packSize!</span>
 
                         </div>
+                        <div class="col-md-12">
+                            <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
+                            @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
-                        <div class="form-group col-md-12">
-                            <label for="unit" class="control-label">Unit</label>
-                            <select id="unit" class="form-control form-control-sm">
-                                <option value="">Select Unit</option>
-                                <option value="Kg">Kg</option>
-                                <option value="Gram">Gram</option>
-                                <option value="hg">hg</option>
-                                <option value="dag">dag</option>
-                            </select>
-                            <span class="error hide required-unit font-weight-bold">Unit Is Required</span>
-
+                            <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
                         </div>
+                        @*<div class="form-group col-md-12">
+            <label for="unit" class="control-label">Unit</label>
+            <select id="unit" class="form-control form-control-sm">
+                <option value="">Select Unit</option>
+                <option value="Kg">Kg</option>
+                <option value="Gram">Gram</option>
+                <option value="hg">hg</option>
+                <option value="dag">dag</option>
+            </select>
+            <span class="error hide required-unit font-weight-bold">Unit Is Required</span>
+
+        </div>*@
 
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
@@ -303,6 +315,8 @@
         var unit = $("#unit");
         var hiddenMeasureMentId = $("#hiddenMeasureMentId");
         var ddlStatus = $("#ddlStatus");
+        var ddlUnit = $("#ddlUnit");
+        var unitName = $("#unitName");
 
 
         $("#addTolist").click(function (e) {
@@ -316,7 +330,9 @@
                 var masterBox = "<td class='hide'>" + txtmasterBox.val(); + "</td>";
                 var innerBox = "<td class='hide'>" + txtinnerBox.val(); + "</td>";
                 var packSize = "<td class='hide'>" + txtpackSize.val(); + "</td>";
-                var unit = "<td>" + txtunit.val(); + "</td>";
+                //var unit = "<td>" + ddlUnit.val(); + "</td>";
+                var unitName = "<td>"+ dropDownSelectedText("ddlUnit") + "</td>";
+                var unitId = "<td class='hide UnitId'>" + ddlUnit.val() + "</td>";
                 if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
                     item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
                 }
@@ -342,7 +358,7 @@
                 var measurementItem = "<td>" + item + "</td>";
                 var action = "<td><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
 
-                var tr = "<tr>" + sl + measurementName + measurementItem + unit + org + masterBox + innerBox + packSize + action + "</tr>";
+                var tr = "<tr>" + sl + measurementName + measurementItem + unitName + unitId + org + masterBox + innerBox + packSize + action  +"</tr>";
 
                 $("#tblMeasurement tbody").append(tr);
                 clearCtrl();
@@ -363,22 +379,34 @@
 
 
         $("#btnSubmit").click(function (e) {
+            debugger;
             e.preventDefault();
             var tblTRLeangth = $("#tblMeasurement tbody tr").length;
             if (tblTRLeangth > 0) {
                 bootbox.confirm("Are You Sure To Save These?", function (result) {
                     if (result == true) {
                         var measureMentData = [];
-
+                        debugger;
                         $.each($("#tblMeasurement tbody tr"), function (index, item) {
                             var td = $(this).children('td');
                             measureMentData.push({
-                                OrganizationId: td.eq(4).html(),
-                                MeasurementName: td.eq(1).html(),
-                                MasterCarton: td.eq(5).html(),
-                                InnerBox: td.eq(6).html(),
-                                PackSize: td.eq(7).html(),
-                                UnitId: td.eq(3).html()
+                                //OrganizationId: td.eq(4).html(),
+                                //MeasurementName: td.eq(1).html(),
+                                //MasterCarton: td.eq(5).html(),
+                                //InnerBox: td.eq(6).html(),
+                                //PackSize: td.eq(7).html(),
+                                //UnitId: td.eq(9).html()
+                                measurementName: td.eq(1).html(),
+                                measurementItem: td.eq(2).html(),
+                                unitName: td.eq(3).html(),
+                                unitId: td.eq(4).html(),
+
+                                //OrganizationId5: td.eq(5).html(),
+                                masterCarton: td.eq(6).html(),
+                                InnerBox: td.eq(7).html(),
+                                packSize: td.eq(8).html()
+                                //OrganizationId9: td.eq(9).html(),
+                                //OrganizationId10: td.eq(10).html()
 
 
                             })
@@ -414,7 +442,7 @@
         $("#btnUpdate").click(function (e) {
             e.preventDefault();
             if (validateUpdate() == true) {
-
+                debugger;
                  var data = {
                     measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(),UnitId: TryParseInt(ddlUnit.val(), 0), Status: ddlStatus.val()
             }
@@ -487,13 +515,13 @@
             var row = $(this).parent().parents("tr");
             var td1 = row.find("td:eq(1)").html();
             var td2 = row.find("td:eq(2)").html();
-
+            //var td3 = row.find("td:eq(3)").html();
             var td4 = row.find("td:eq(4)").html();
             var td5 = row.find("td:eq(5)").html();
             var td6 = row.find("td:eq(6)").html();
             var td7 = row.find("td:eq(7)").html();
             var td8 = row.find("td:eq(8)").html();
-
+            //var td9 = row.find("td:eq(9)").html();
 
 
             hiddenMeasureMentId.val(td1);
@@ -501,8 +529,30 @@
             masterCartoonBox.val(td4);
             innerBox.val(td5);
             packSize.val(td6);
-            unit.val(td7);
+            unitName.val(td7);
             ddlStatus.val(td8);
+
+            //hiddenMeasureMentId.val(td1);
+            ////measureMentName.val(td2);
+            ////masterCartoonBox.val(td4);
+            ////innerBox.val(td5);
+            ////packSize.val(td6);
+            ////unitName.val(td3);
+            ////unitName.val(td7);
+            ////unitName.trigger("change");
+            ////measureMentName.val(td4);
+            ////measureMentName.val(td5);
+            ////measureMentName.val(td6);
+            
+            //measureMentName.val(td2);
+            ////measureMentName.val(td3);
+            //masterCartoonBox.val(td4);
+            //innerBox.val(td5);
+            //packSize.val(td6);
+            //unitName.val(td7);
+            //ddlStatus.val(td8);
+            ////unitName.val(td9);
+            ////unitName.trigger("change");
 
         })
         function OpenModal() {

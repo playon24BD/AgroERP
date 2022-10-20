@@ -54,7 +54,7 @@ namespace ERPBLL.Agriculture
                 param += string.Format(@" and rmd.Status='{0}'", Status);
             }
             query = string.Format(@"
-SELECT distinct rmd.RawMaterialId,rm.RawMaterialName,rmd.Unit,rmd.Status,
+SELECT distinct rmd.RawMaterialId,rm.RawMaterialName,rmd.UnitId,rmd.Status,
  
   CASE WHEN rmd.Status = 'StockIn' 
                      THEN CAST(rmd.ExpireDate as date)
@@ -84,7 +84,7 @@ CASE WHEN rmd.Status = 'StockOut'
    
     FROM [Agriculture].dbo.tblRawMaterialStockDetail rmd
 	inner join [Agriculture].dbo.tblRawMaterialInfo rm on   rmd.RawMaterialId=rm.RawMaterialId
-            where 1=1  {0} group by rmd.RawMaterialId,rm.RawMaterialName,rmd.Unit,rmd.StockDate,rmd.Status,rmd.ExpireDate,rmd.StockIssueDate",
+            where 1=1  {0} group by rmd.RawMaterialId,rm.RawMaterialName,rmd.UnitId,rmd.StockDate,rmd.Status,rmd.ExpireDate,rmd.StockIssueDate",
             Utility.ParamChecker(param));
             return query;
         }
@@ -106,7 +106,7 @@ CASE WHEN rmd.Status = 'StockOut'
             }
             
             query = string.Format(@"
-SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockDate,
+SELECT distinct rm.RawMaterialName,rmd.UnitId,CONVERT(date,rm.EntryDate) AS StockDate,
 
  
   StockIn = isnull((SELECT sum(wsd.Quantity) FROM [Agriculture].[dbo].[tblRawMaterialStockDetail] wsd where wsd.RawMaterialId=rm.RawMaterialId and Status='StockIn'),0),
@@ -120,7 +120,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
    
     FROM [Agriculture].dbo. tblRawMaterialStockInfo rmd
 	INNER join [Agriculture].dbo.tblRawMaterialInfo rm on   rm.RawMaterialId=rmd.RawMaterialId
-            where 1=1  {0} group by rm.EntryDate,rm.RawMaterialId,rm.RawMaterialName,rmd.Unit",
+            where 1=1  {0} group by rm.EntryDate,rm.RawMaterialId,rm.RawMaterialName,rmd.UnitId",
             Utility.ParamChecker(param));
             return query;
         }

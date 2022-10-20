@@ -14,6 +14,7 @@ namespace ERPBO.Agriculture.DTOModels
         public string ReceipeBatchCode { get; set; }
         public int FGRQty { get; set; }
         public long UnitId { get; set; }
+        public string UnitName { get; set; }
         public long OrganizationId { get; set; }
         public long? EUserId { get; set; }
         public Nullable<DateTime> EntryDate { get; set; }

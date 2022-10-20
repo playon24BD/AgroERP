@@ -145,7 +145,7 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
                 ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialName });
 
-                ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitName}).ToList();
+                ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
 
                 return View();
             }
@@ -163,7 +163,8 @@ namespace ERPWeb.Controllers
                     //DepotId = a.DepotId,
                     RawMaterialId = a.RawMaterialId,
                     UnitId = a.UnitId,
-                   // OrganizationId = a.OrganizationId,
+                    
+                    // OrganizationId = a.OrganizationId,
                     //UserName = UserForEachRecord(a.EntryUserId).UserName
 
 
@@ -217,6 +218,7 @@ namespace ERPWeb.Controllers
                     RawMaterialId = a.RawMaterialId,
                     OrganizationId = a.OrganizationId,
                     UnitId=a.UnitId,
+                    UnitName = _agroUnitInfo.GetAgroInfoById(a.UnitId, User.OrgId).UnitName,
                     //UserName = UserForEachRecord(a.EntryUserId).UserName
 
 
@@ -400,23 +402,47 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Measurement Setup
-        public ActionResult GetMeasurementList(string flag)
+        public ActionResult GetMeasurementList(string flag,string name)
         {
             if (string.IsNullOrEmpty(flag))
             {
                 //ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == User.OrgId).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
+
                 return View();
             }
-            else
+            else if(!string.IsNullOrEmpty(flag) && flag == "list")
             {
-                var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
+                //var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
+
+                IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Where(s => (name == "" || name == null) || (s.MeasurementName.Contains(name))).Select(o => new MeasurementSetupDTO
+                {
+                    MeasurementId = o.MeasurementId,
+                    OrganizationId = o.OrganizationId,
+                    MeasurementName = o.MeasurementName,
+                    Status = o.Status,
+                    RoleId = o.RoleId,
+                    UnitId=o.UnitId,
+                    InnerBox=o.InnerBox,
+                    MasterCarton=o.MasterCarton,
+                    PackSize=o.PackSize,
+                    //EntryUserId=o.EntryUserId.ToString(),
+                    //UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
+                    EntryDate = o.EntryDate,
+                    UpdateUserId = o.UpdateUserId,
+                    UpdateDate = o.UpdateDate,
+                    UnitName = _agroUnitInfo.GetAgroInfoById(o.UnitId, User.OrgId).UnitName,
+                }).ToList();
+
+
                 List<MeasurementSetupViewModel> viewModels = new List<MeasurementSetupViewModel>();
-                AutoMapper.Mapper.Map(measureMent, viewModels);
+                AutoMapper.Mapper.Map(dto, viewModels);
 
 
                 return PartialView("_GetMeasurementList", viewModels);
             }
-            //return View();
+            return View();
 
         }
         public ActionResult SaveMeasurement(List<MeasurementSetupViewModel> models)
@@ -591,36 +617,7 @@ namespace ERPWeb.Controllers
                 List<RawMaterialStockInfoViewModel> viewModels = new List<RawMaterialStockInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_GetRawMaterialStockList", viewModels);
-                //var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
-
-                //var info = _rawMaterialStockInfo.GetRawMaterialStockById(id.Value, User.OrgId);
-                //List<RawMaterialStockDetailViewModel> details = new List<RawMaterialStockDetailViewModel>();
-
-                //if (info != null)
-                //{
-                //    ViewBag.Info = new RawMaterialStockInfoViewModel
-                //    {
-                //        RawMaterialName = RawMaterialNames.FirstOrDefault(it => it.RawMaterialId == info.RawMaterialId).RawMaterialName,
-
-                //        Quantity = info.Quantity,
-                //        Unit = info.Unit
-                //    };
-
-                //    details =
-                //        _rawMaterialStockDetail.GetRawMaterialStockDetailsById(id.Value, User.OrgId).Select(i => new RawMaterialStockDetailViewModel
-                //        {
-                //            //RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == rawMaterialId).RawMaterialName,
-                //            RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
-                //            Quantity = i.Quantity,
-                //            Unit = i.Unit,
-                //            Status=i.Status,
-                //        }).ToList();
-                //}
-                //else
-                //{
-                //    ViewBag.Info = new RawMaterialStockInfoViewModel();
-                //}
-                //return PartialView("_GetRawMaterialStockDetail", details);
+                
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Edit)
             {
@@ -721,6 +718,9 @@ namespace ERPWeb.Controllers
 
                 ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
+                
+
+
                 return View();
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
@@ -747,13 +747,15 @@ namespace ERPWeb.Controllers
                         FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
 
                         FGRQty = info.FGRQty,
-                        UnitId = info.UnitId
+                        UnitId = info.UnitId,
+                        UnitName = _agroUnitInfo.GetAgroInfoById(info.UnitId, User.OrgId).UnitName
                     };
                     details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
                     {
                         RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                         FGRRawMaterQty = i.FGRRawMaterQty,
-                        UnitId = i.UnitId
+                        UnitId = i.UnitId,
+                        UnitName = _agroUnitInfo.GetAgroInfoById(i.UnitId, User.OrgId).UnitName
                     }).ToList();
                 }
                 else
@@ -778,6 +780,7 @@ namespace ERPWeb.Controllers
                         FGRId = info.FGRId,
                         FGRQty = info.FGRQty,
                         UnitId = info.UnitId,
+                        UnitName = _agroUnitInfo.GetAgroInfoById(info.UnitId, User.OrgId).UnitName,
                         FinishGoodProductId = info.FinishGoodProductId,
                         Status = info.Status,
                     };
@@ -786,6 +789,7 @@ namespace ERPWeb.Controllers
                         RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
                         FGRRawMaterQty = i.FGRRawMaterQty,
                         UnitId = i.UnitId,
+                        UnitName = _agroUnitInfo.GetAgroInfoById(i.UnitId, User.OrgId).UnitName,
                         FGRDetailsId = i.FGRDetailsId,
 
                     }).ToList();
@@ -818,6 +822,8 @@ namespace ERPWeb.Controllers
             //ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).Select(r => new SelectListItem { Text = r.RawMaterialName, Value = r.RawMaterialId.ToString() }).ToList();
 
             ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Where(o => o.Status == "Active").Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
+
+            ViewBag.ddlUnit1 = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
 
             ViewBag.ddlProductunit = new List<SelectListItem>()
             {
@@ -1839,9 +1845,11 @@ namespace ERPWeb.Controllers
         {
 
 
-            ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
+            ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Where(o=>o.RoleId==34).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
 
-            ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            //ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+            ViewBag.ddlProductName =_finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName, Value = f.FinishGoodProductId.ToString() }).ToList();
 
             ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
 

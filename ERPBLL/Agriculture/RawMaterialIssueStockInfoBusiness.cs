@@ -71,7 +71,7 @@ namespace ERPBLL.Agriculture
             rms.RawMaterialId,
             rm.RawMaterialName,
             rms.Quantity,
-            rms.Unit,
+            rms.UnitId,
             rms.OrganizationId
             from [Agriculture].dbo.tblRawMaterialIssueStockInfo rms
             inner join [Agriculture].dbo.tblRawMaterialInfo rm on   rms.RawMaterialId=rm.RawMaterialId

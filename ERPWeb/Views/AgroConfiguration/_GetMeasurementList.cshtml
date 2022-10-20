@@ -9,7 +9,7 @@
                 <th>SL</th>
                 <th>MeasureMent Name</th>
                 <th>MeasureMent Item</th>
-                <th>Unit</th>
+                <th>UnitName</th>
                 <th>Status</th>
                 <td>Action</td>
             </tr>
@@ -26,7 +26,8 @@
                     <td class="hide">@item.MasterCarton</td>
                     <td class="hide">@item.InnerBox</td>
                     <td class="hide">@item.PackSize</td>
-                    <td class="">@item.Unit</td>
+                    <td class="">@item.UnitName</td>
+                    <td class="hide">@item.UnitId</td>
                     <td>@item.Status</td>
                     <td>
                         <a href="#"  class="btn btn-warning btn-sm data-edit-item-measurement" data-edit-item-measurement="@item.MeasurementId"><i class="fa fa-pen"></i>Edit</a>

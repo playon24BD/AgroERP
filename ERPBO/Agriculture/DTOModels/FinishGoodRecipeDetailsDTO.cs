@@ -15,6 +15,7 @@ namespace ERPBO.Agriculture.DTOModels
         public double FGRRawMaterQty { get; set; }
         //public string FGRRawMaterUnit { get; set; }
         public long UnitId { get; set; }
+        public string UnitName { get; set; }
         public long OrganizationId { get; set; }
         public long? EUserId { get; set; }
         public Nullable<DateTime> EntryDate { get; set; }

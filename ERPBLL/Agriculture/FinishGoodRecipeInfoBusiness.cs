@@ -50,9 +50,11 @@ namespace ERPBLL.Agriculture
                 param += string.Format(@" and fgr.FinishGoodProductId={0}", productId);
             }
             query = string.Format(@"SELECT fgr.FGRId,fgr.FinishGoodProductId,fg.FinishGoodProductName,
-                  fgr.FGRQty,fgr.FGRUnit,fgr.OrganizationId 
+                  fgr.FGRQty,fgr.UnitId,unit.UnitName,fgr.OrganizationId 
                  FROM [Agriculture].dbo.tblFinishGoodRecipeInfo fgr
-                 INNER JOIN [Agriculture].dbo.tblFinishGoodProductInfo fg on fgr.FinishGoodProductId=fg.FinishGoodProductId Where 1=1 {0}", Utility.ParamChecker(param));
+                 INNER JOIN [Agriculture].dbo.tblFinishGoodProductInfo fg on fgr.FinishGoodProductId=fg.FinishGoodProductId 
+inner join tblAgroUnitInfo unit on unit.UnitId=fgr.UnitId	
+Where 1=1 {0}", Utility.ParamChecker(param));
 
             return query;
         }
