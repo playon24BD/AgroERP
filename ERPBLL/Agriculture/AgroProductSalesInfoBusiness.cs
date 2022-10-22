@@ -70,10 +70,10 @@ namespace ERPBLL.Agriculture
 
                     var stockeiestId = _appUserBusiness.GetId(agroSalesInfoDTO.StockiestId, orgId).StockiestId;
 
-                    var territoryId = _stockiestInfo.GetStockiestInfoById(stockeiestId.Value, orgId).TerritoryId;
+                    var territoryId = _stockiestInfo.GetStockiestInfoById(1, orgId).TerritoryId;
 
-                var divisionId = _divisionInfo.GetDivisionInfoById(stockeiestId.Value, orgId).DivisionId;
-                var regionId = _regionSetup.GetRegionNamebyId(stockeiestId.Value, orgId).RegionId;
+                var divisionId = _divisionInfo.GetDivisionInfoById(1, orgId).DivisionId;
+                var regionId = _regionSetup.GetRegionNamebyId(1, orgId).RegionId;
 
                 //var userAssignId = _userAssignBussiness.GetUserAssignById(stockeiestId.Value, orgId).UserAssignId;
 
@@ -81,7 +81,7 @@ namespace ERPBLL.Agriculture
                 
                 //var zoneId = _zoneSetup.GetZoneNamebyId(stockeiestId.Value, orgId).ZoneId;
 
-                var areaId = _areaSetupBusiness.GetAreaInfoById(stockeiestId.Value, orgId).AreaId;
+                var areaId = _areaSetupBusiness.GetAreaInfoById(1, orgId).AreaId;
 
 
                 AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo
@@ -97,7 +97,7 @@ namespace ERPBLL.Agriculture
                     PaymentMode = agroSalesInfoDTO.PaymentMode,
                     VehicleType = agroSalesInfoDTO.VehicleType,
                     //UserAssignId = agroSalesInfoDTO.UserAssignId,
-                    StockiestId = stockeiestId.Value,
+                    StockiestId = 1,
                     TerritoryId = territoryId,
                     DivisionId = divisionId,
                     RegionId = regionId,
