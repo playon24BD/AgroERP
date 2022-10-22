@@ -10,6 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAreaSetupBusiness
     {
+        AreaInfoSetup GetAreaInfoById(long areaId, long orgId);
         bool SaveAreaInfo(List<AreaSetupDTO> detailsDTO, long userId, long orgId);
         bool SaveAreaInfoUpdate(AreaSetupDTO detailsDTO, long userId, long orgId);
         AreaInfoSetup GetAreaById(long areaId, long orgId);

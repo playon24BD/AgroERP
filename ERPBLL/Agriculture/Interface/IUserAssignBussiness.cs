@@ -10,6 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
    public interface IUserAssignBussiness
     {
+        //UserAssign GetUserAssignInfoById(long userAssignId, long orgId);
         IEnumerable<UserAssign> GetAllUserAssignInfo(long orgId);
         UserAssign GetUserAssignById(long userAssignId,long orgId);
         bool SaveUserAssignInformation(UserAssignDTO userAssignDTO ,long userId,long orgId);

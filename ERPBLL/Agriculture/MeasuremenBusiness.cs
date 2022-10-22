@@ -29,8 +29,11 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<MeasurementSetup> GetMeasurementSetups(long orgId)
         {
-            return _measurmentRepository.GetAll();
+            return _measurmentRepository.GetAll(a => a.OrganizationId == orgId);
+            //return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForCheckUnit(orgId)).ToList();
         }
+
+        
 
         //public bool SaveMeasureMent(List<MeasurementSetupDTO> measurementDTO, long orgId)
         //{
@@ -50,8 +53,8 @@ namespace ERPBLL.Agriculture
         //                PackSize = item.PackSize,
         //                Unit = item.Unit,
         //                Status="Active",
-                        
-                        
+
+
 
         //            };
         //            measurements.Add(measurement);

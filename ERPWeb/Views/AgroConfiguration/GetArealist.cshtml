@@ -172,6 +172,7 @@
         })
 
         $(document).on("click", "a.data-onfly-del", function (e) {
+            debugger;
             e.preventDefault();
             var index = $(this).parent().parents('tbody tr').index();
             var tds = $(this).parent().parents('tbody tr').children('td');

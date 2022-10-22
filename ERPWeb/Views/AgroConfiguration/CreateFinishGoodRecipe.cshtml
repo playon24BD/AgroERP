@@ -41,9 +41,10 @@
                                 <span class="error hide req-src-Productqty text-bold">ProductQty is required!</span>
                             </div>
                             <div class="col-md-4">
-                                <label for="ddlProductunit" class="col-form-label">Product Unit</label>
-                                @Html.DropDownList("ddlProductunit", (IEnumerable<SelectListItem>)ViewBag.ddlProductunit, "--Select Product unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                <span class="error hide req-preparation text-bold">Unit is required</span>
+                                <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
+                                @Html.DropDownList("ddlUnit1", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
                             </div>
                             <div class="form-row col-6">
                                 <label for="ddlStatus" class="control-label">Status</label>
@@ -73,13 +74,22 @@
                                 <input type="text" placeholder="Qty" name="quantity" id="txtRawMaterialQty" class="form-control form-control-sm" />
                                 <span class="error hide req-src-RawMaterialqty text-bold">RawMaterial Qty is required!</span>
                             </div>
-                            <div class="col-md-3">
-                                <label for="ddlRawMaterial" class="col-form-label">Product Unit</label>
-                                <input type="text" id="ddlUnit" name="ddlUnit" class="form-control form-control-sm" readonly />
-                                @*@Html.DropDownList("ddlRawMaterialunit", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialunit, "--Select RawMaterial unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
-                                @*<input type="text" id="ddlRawMaterialunit" name="ddlRawMaterialunit" class="form-control form-control-sm" readonly />*@
-                                <span class="error hide req-preparation text-bold">Unit is required</span>
+
+                            <div class="col-md-2">
+                                <label for="ddlUnitName" class="col-form-label">UnitName</label>
+                                <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
                             </div>
+                            <div class="hide">
+                                <label for="ddlUnitID">UnitID</label>
+                                <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
+                            </div>
+
+                            @*<div class="col-md-3">
+            <label for="ddlUnit" class="col-form-label"> Unit Name</label>
+            <input type="text" id="ddlUnit" name="ddlUnit" class="form-control form-control-sm" readonly />*@
+
+            <span class="error hide req-preparation text-bold">Unit is required</span>
+        </div>
                             @*<div class="col-md-3">
             <label class="col-form-label" for="model">RawMaterial Unit</label>
             <input type="text" id="txtRawMaterialunit" name="unit" class="form-control form-control-sm">
@@ -115,7 +125,8 @@
                                     <th style="width:10%">RawMaterial Unit</th>
                                     <th style="width:12%">Action</th>
                                     <th class="hide RawMaterialId"></th>
-
+                                    <th class="hide UnitId"></th>
+                                     
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -167,6 +178,10 @@
         var ddlRawMaterialunit = $("#ddlRawMaterialunit");
         var ddlStatus = $("#ddlStatus");
         var ddlUnit = $("#ddlUnit");
+        var ddlUnit1 = $("#ddlUnit1");
+
+        var ddlUnitName = $("#ddlUnitName");
+        var ddlUnitID = $("#ddlUnitID");
 
         var hdfRowIndex = $("#hdfRowIndex");
         var txtRawMaterialUpdateQty = $("#txtRawMaterialUpdateQty");
@@ -189,15 +204,35 @@
 
             var data = { RawMaterialId: ddlRawMaterialName.val() };
 
-            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialFinishGoodRecipeLoadProductUnit", data)).then(function (res, status) {
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitName", data)).then(function (res, status) {
                 // debugger;
+
                 consoleLog(res.replace(/['"]+/g, ''));
                 var unit = res.replace(/['"]+/g, '');
-                ddlUnit.val(unit);
-                //targetQty.val();
+                ddlUnitName.val(res.UnitName);
+                ddlUnitName.val(unit);
+
+            });
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitID", data)).then(function (res, status) {
+                //  debugger;
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnitID.val(res.UnitIDd);
+                ddlUnitID.val(unit);
+
             });
 
         })
+        //    $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialFinishGoodRecipeLoadProductUnit", data)).then(function (res, status) {
+        //        // debugger;
+        //        consoleLog(res.replace(/['"]+/g, ''));
+        //        var unit = res.replace(/['"]+/g, '');
+        //        ddlUnit.val(unit);
+        //        //targetQty.val();
+        //    });
+
+        //})
 
 
         
@@ -257,13 +292,13 @@
             var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
             var td2 = "<td>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
             var td3 = "<td class='text-center text-bold'>" + txtRawMaterialQty.val() + "</td>";
-            var td4 = "<td class='text-center text-bold'>" + dropDownSelectedText("ddlRawMaterialunit") + "</td>";
+            var td4 = "<td class='text-center text-bold'>" + ddlUnitName.val() + "</td>";
             var td5 = "<td class='text-center'> <a href='#' class='btn btn-sm btn-danger btn-flat data-onfly-del'><i class='far fa-trash-alt'></i></a></td>";
             var td6 = "<td class='hide RawMaterialId'>" + ddlRawMaterialName.val()+"</td>";
-            //var td8 = "<td class='hide itemType'>" + itemTypeSrc+"</td>";
+            var td7 = "<td class='hide UnitId'>" + ddlUnitID.val()+"</td>";
             //var td9 = "<td class='hide warehouse'>" + ddlWarehouseSource.val() + "</td>";
 
-            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 +"</tr>";
+            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 +"</tr>";
             if ($("#tblList tbody tr").length == 0) {
                 $("#tblList tbody").append(tr);
             }
@@ -313,14 +348,14 @@
         $("#btnSubmit").click(function (e) {
             debugger
             e.preventDefault();
-            if (true === true) {
+            if (true) {
 
-                bootbox.confirm("Are you sure you want to Save this Recipe", function (result) {
-                    if (result) {
+                //bootbox.confirm("Are you sure you want to Save this Recipe", function (result) {
+                //    if (result) {
                         debugger;
                         //disable("#btnSubmit");
                         //getTargetItemAndItemTypeAndWarehouse();
-                        var info = { FGRId: 0, FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), FGRQty: txtProductQty.val(), UnitId: TryParseInt(ddlUnit.val(), 0), Status: ddlStatus.val(), RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), FGRRawMaterQty: txtRawMaterialQty.val(), UnitId: TryParseInt(ddlUnit.val(), 0) };
+                var info = { FGRId: 0, FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), FGRQty: txtProductQty.val(), UnitId: ddlUnit1.val(), Status: ddlStatus.val(), RawMaterialId: TryParseInt(ddlRawMaterialName.val(), 0), FGRRawMaterQty: txtRawMaterialQty.val() };
 
                         var details = [];
                         details.length = 0;
@@ -331,7 +366,7 @@
                                 FGRDetailsId:0,
                                 RawMaterialId: tds.eq(5).html(),
                                 FGRRawMaterQty: tds.eq(2).html(),
-                                UnitId: tds.eq(3).html()
+                                UnitId: tds.eq(6).html()
 
                             });
                         })
@@ -359,8 +394,8 @@
                             alert(execuStatus.fail);
                             enable("#btnSubmit");
                         })
-                    }
-                })
+                //    }
+                //})
             }
         })
 

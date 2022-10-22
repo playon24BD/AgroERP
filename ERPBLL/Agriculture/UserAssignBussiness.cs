@@ -34,6 +34,11 @@ namespace ERPBLL.Agriculture
             return _userAssignRepository.GetOneByOrg(u => u.UserAssignId == userAssignId && u.OrganizationId == orgId);
         }
 
+        //public UserAssign GetUserAssignInfoById(long userAssignId, long orgId)
+        //{
+        //    return _userAssignRepository.GetOneByOrg(r => r.UserAssignId == userAssignId && r.OrganizationId == orgId);
+        //}
+
         public bool SaveUserAssignInformation(UserAssignDTO userAssignDTO, long userId, long orgId)
         {
             bool isSuccess = false;

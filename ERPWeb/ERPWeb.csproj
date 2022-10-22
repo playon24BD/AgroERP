@@ -3167,6 +3167,9 @@
     <Content Include="Views\AgroConfiguration\CreateAgroSalesProduct.cshtml" />
     <Content Include="Views\AgroConfiguration\GetAgroUnitList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAgroUnitPartial.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetPRawmaterialStockList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetRawMaterialStockpurchaseList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_RawmatiralPurchaseDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

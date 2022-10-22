@@ -203,6 +203,7 @@
 
         $(document).on('click', 'a.data-item-edit', function (e) {
             e.preventDefault();
+            debugger;
             $("#dataContainer3").empty();
             var id = $(this).parent().parents('tr').children('td').eq(1).html();
 

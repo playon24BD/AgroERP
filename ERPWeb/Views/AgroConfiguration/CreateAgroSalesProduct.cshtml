@@ -23,28 +23,28 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12" style="border-right:2px solid #efefef">
+                    <div class="col-md-5" style="border-right:2px solid #efefef">
                         <h5 style="border-bottom:2px solid #f6eaaa">
-                            Challan & Invoice Product 
+                            Challan & Invoice Product
                         </h5>
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <label for="ddlClient" class="col-form-label">
                                     Client Name
                                 </label>
-                                @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ClientName, "--Select ClientName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "--Select ClientName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <label for="ddlDepotName" class="col-form-label">Depot</label>
-                                <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
+                                <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
                             </div>
-                            <div class="col-md-6">
-                                <label for="ddlChallanNo" class="col-form-label">Challan No.</label>
-                                <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
-                            </div>
+                            @*<div class="col-md-6">
+                                    <label for="ddlChallanNo" class="col-form-label">Challan No.</label>
+                                    <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
+                                </div>*@
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="col-form-label font-weight-bold">Challan Date</label>
                                 <div class="input-group input-group-sm ">
                                     <input type="text" class="form-control form-control-sm date-datePicker-ChallanDate ctrl-changed" id="ChallanDate" />
@@ -54,10 +54,10 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
-                                <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
-                            </div>
+                            @*<div class="col-md-4">
+                                    <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
+                                    <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
+                                </div>*@
 
                             <div class="col-md-4">
                                 <label class="col-form-label font-weight-bold">Invoice Date</label>
@@ -76,148 +76,549 @@
                                     <option value="Cash">Cash</option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="col-form-label" for="model">Vehicle Type</label>
                                 <input type="text" id="txtVehicleType" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="col-form-label" for="model">Vehicle No.</label>
                                 <input type="text" id="txtVehicleNumber" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="col-form-label" for="model">Driver Name</label>
                                 <input type="text" id="txtDriverName" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="col-form-label" for="model">Delivery Place</label>
                                 <input type="text" id="txtDeliveryPlace" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="col-form-label" for="model">Do/ADO/DA</label>
                                 <input type="text" id="txtDo_ADO_DA" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="col-form-label" for="model">DOADO_Name</label>
                                 <input type="text" id="txtDoADO_Name" class="form-control form-control-sm">
                             </div>
 
-                            
+
                         </div>
 
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-7">
                         <h5 style="border-bottom:2px solid #f87878">Product Salse</h5>
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <label for="ddlProductName" class="col-form-label">
                                     Product Name
                                 </label>
-                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
                             </div>
-                            <div class="col-md-2">
-                                <label for="ddlProductName" class="col-form-label">
-                                    Product Name
+                            <div class="col-md-4">
+                                <label for="ddlMeasurementName" class="col-form-label">
+                                    Measurement Name
                                 </label>
-                                @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.MeasurementName, "--Select MeasurementName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "--Select MeasurementName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <label for="ddlRawMaterial" class="col-form-label">Measurement Size</label>
-                                @Html.DropDownList("ddlMeasurementSize", (IEnumerable<SelectListItem>)ViewBag.MeasurementSize, "--Select Measurement Size--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @*@Html.DropDownList("ddlMeasurementSize", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementSize, "--Select Measurement Size--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
+                                <input type="text" id="ddlMeasurementSize" class="form-control form-control-sm" readonly />
 
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-3">
                                 <label for="ddlQuanity" class="col-form-label">Quanity</label>
                                 <input type="text" id="txtQuanity" class="form-control form-control-sm" />
+                                <label for="ddlQuantity" class="control-label font-weight-bold">
+                                    Finish Good Qty
+                                    <span id="FinishGoodStockQty"></span>
+                                    @*<input type="number" id="stockQty" />*@
+                                </label>
+                                <span class="error hide req-Quanity">Quantity is required</span>
+                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal Product Qty</span>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label for="ddlPrice" class="col-form-label">Rate</label>
                                 <input type="text" id="txtPrice" class="form-control form-control-sm" />
                             </div>
-                            <div class="col-md-1">
-                                <label for="ddlPrice" class="col-form-label">Discount</label>
+                            <div class="col-md-3">
+                                <label for="ddlPrice" class="col-form-label">Discount %</label>
                                 <input type="text" id="txtDiscount" class="form-control form-control-sm" />
                             </div>
-
-                            @*<div class="col-md-2 " style="margin-top:5px;">
-                                <label for="addButton" class="control-label"></label>
-                                <div class="clearfix">
-                                    <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
-                                </div>
-                            </div>*@
 
                             <div class="col-md-2" style="margin-top:5px;">
                                 <label for="" class="control-label" style="visibility:hidden"> Add To List</label>
                                 <div class="clearfix">
                                     <button type="submit" class="btn btn-sm btn-warning text-bold float-left" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
+
+
                                 </div>
+
                             </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                @Html.AntiForgeryToken()
+                                <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg" id="tblList">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="10" class="text-center">
+                                                <span class="error hide no-items">Please load the table first.</span>
+                                                <button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-left">
+                                                    <i class="fas fa-paper-plane"></i> Save
+                                                </button>
+                                            </th>
+                                        </tr>
+                                        <tr class="text-center btn-dark">
+                                            <th style="width:5%">#SL</th>
+                                            <th style="width:10%">Name</th>
+                                            <th style="width:10%">Measurement Desc</th>
+                                            <th style="width:5%">Quanity</th>
+                                            <th style="width:5%">Rate</th>
+                                            <th style="width:5%">Discount%</th>
+                                            <th style="width:5%">Discount(Tk.)</th>
+                                            <th style="width:10%">Amount(Tk.)</th>
+                                            <th style="width:10%">Action</th>
+                                            <th style="width:1%" class="hide ProductId"></th>
+                                            <th style="width:1%" class="hide MeasurementId"></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                
+                            </div>
+
+
+
+                            @*<div class="col-md-12">
+                <label>Total: <input type="text" name="total" id="total" readonly /></label>
+            </div>*@
 
                         </div>
 
                     </div>
+                   
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-12">
-                        @Html.AntiForgeryToken()
-                        <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg" id="tblList">
-                            <thead>
-                                <tr>
-                                    <th colspan="11" class="text-center">
-                                        <span class="error hide no-items">Please load the table first.</span>
-                                        <button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-left">
-                                            <i class="fas fa-paper-plane"></i> Save
-                                        </button>
-                                    </th>
-                                </tr>
-                                <tr class="text-center btn-dark">
-                                    <th style="width:5%">#SL</th>
-                                    <th style="width:30%">Product Name</th>
-                                    <th style="width:30%">Measurement Desc</th>
-                                    <th style="width:5%">Quanity</th>
-                                    <th style="width:5%">Rate</th>
-                                    <th style="width:5%">Discount</th>
-                                    <th style="width:10%">Amount(Tk.)</th>
-                                    <th style="width:10%">Action</th>
-                                    <th class="hide RawMaterialId"></th>
 
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="FinishGoodRecipeModal" role="dialog" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header alert-primary">
-                <input type="hidden" id="hdfRowIndex" />
-                <h4 id="modalHeading" class="modal-title">Edit Finish Qty</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <table id="tblEdit" class="table table-sm table-bordered table-striped table-responsive-lg">
-                    <tbody>
-                        <tr>
-                            <td class="alert-secondary" style="width:15%">RawMaterial Name</td>
-                            <td style="width:35%; background-color:#e1dada"></td>
-                            <td class="alert-secondary" style="width:15%">RawMaterial Qty</td>
-                            <td style="width:35%; background-color:#e1dada"> <input type="number" class="form-control form-control-sm" id="txtRawMaterialUpdateQty" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-sm btn-flat btn-danger">Cancel</button>
-                <button type="button" id="btnSubmit" class="btn btn-sm btn-flat btn-success">Update</button>
-            </div>
-        </div>
-    </div>
-</div>
 
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var ddlClientName = $("#ddlClientName");
+        var ddlDepotName = $("#ddlDepotName");
+        var ChallanDate = $("#ChallanDate");
+        var InvoiceDate = $("#InvoiceDate");
+        var ddlPaymentMode = $("#ddlPaymentMode");
+        var txtVehicleType = $("#txtVehicleType");
+        var txtVehicleNumber = $("#txtVehicleNumber");
+        var txtDriverName = $("#txtDriverName");
+        var txtDeliveryPlace = $("#txtDeliveryPlace");
+        var txtDo_ADO_DA = $("#txtDo_ADO_DA");
+        var txtDoADO_Name = $("#txtDoADO_Name");
+        var ddlProductName = $("#ddlProductName");
+        var ddlMeasurementName = $("#ddlMeasurementName");
+        var ddlMeasurementSize = $("#ddlMeasurementSize");
+        var txtQuanity = $("#txtQuanity");
+        var txtPrice = $("#txtPrice");
+        var txtDiscount = $("#txtDiscount");
+        var FinishGoodProductInfoId = '';
+        var FinishGoodStockQty = $("#FinishGoodStockQty");
+        //var QuantityCheck = $("#QuantityCheck");
+        
+
+        var ClientId = '';
+        var MeasurementId = '';
+        var ProductId = '';
+        var UnitId = '';
+
+
+        $(document).ready(function () {
+
+            //Initialize Select2 Elements
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            InvoiceDate.prop('readonly', true);
+            InvoiceDate.css("background-color", "#fff");
+            $('#InvoiceDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true
+            });
+
+            ChallanDate.prop('readonly', true);
+            ChallanDate.css("background-color", "#fff");
+            $('#ChallanDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true
+            });
+
+            //ExpireDate.prop('readonly', true);
+            //ExpireDate.css("background-color", "#fff");
+            //$('#ExpireDateExpireDate').datepicker({
+            //    format: "dd MM yyyy",
+            //    orientation: "bottom auto",
+            //    todayHighlight: true
+            //})
+
+        })
+
+        ddlMeasurementName.change(function () {
+            debugger;
+            //alert("test");
+            var data = { MeasurementId: ddlMeasurementName.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetMeasurementIdWiseSize", data)).then(function (res, status) {
+                // debugger;
+                console.log(res);
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var measurement = res.replace(/['"]+/g, '');
+                ddlMeasurementSize.val(measurement);
+                console.log(ddlMeasurementSize.val());
+
+            });
+
+        })
+        var SalesProductNameList = [];
+
+
+        ddlProductName.change(function () {
+
+            LoadFinishGoodStock();
+
+        })
+
+        function LoadFinishGoodStock() {
+            debugger;
+
+            $("#txtQuanity").text('(0)');
+            var FinishGoodProductInfoId = ddlProductName.val();
+            if (FinishGoodProductInfoId != "") {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetFinishGoodstockCheck', JSON.stringify({ FinishGoodProductInfoId: TryParseInt(ddlProductName.val(), 0) }), getToken())).then(function (res, status) {
+                    console.log(res);
+                    console.log(status);
+                    if (status == "success") {
+                        disable("#FinishGoodStockQty");
+                        
+                        
+                        FinishGoodStockQty.text('(' + res.FinishGoodStockQty + ')');
+                        //RawMaterialStockUnit.text('(' + res.RawMaterialStockUnit + ')');
+
+                    }
+                }).fail(function (error) {
+                    consoleLog(error);
+                })
+            }
+        }
+
+
+
+        $("#btnAddToList").click(function (e) {
+            e.preventDefault();
+
+            var totalAmount = 0;
+            var totalQuentity = 0;
+            var totalDiscount = 0;
+            debugger;
+            if (validates() == true) {
+                //console.log(materialNameList);
+                //if (SalesProductNameList.includes(ddlProductName.val()))
+
+                if (false) {
+                    toastrErrorAlert("Product Name Already Exist");
+                }
+                else {
+                    var sl = $("#tblList tbody tr").length;
+
+                    var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
+                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "  " + ddlMeasurementSize.val() +"</td>";
+                    var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
+                    var td5 = "<td class='text-center' >" + txtPrice.val() + "</td>";
+                    var td6 = "<td class='text-center'>" + txtDiscount.val() + "</td>";
+
+                    var td7 = "<td class='text-center DiscountIDCell'>" + txtQuanity.val() * txtPrice.val() / txtDiscount.val() + "</td>";
+                    var td8 = "<td class='text-center TotalIDCell'>" + txtQuanity.val() * txtPrice.val() + "</td>";
+
+                    var td9 = "<td class='text-center'> <a href='#' class='btn btn-sm btn-danger btn-flat data-onfly-del'><i class='far fa-trash-alt'></i></a></td>";
+
+                    var td10 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
+                    var td11 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
+
+                    var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + +td11 + "</tr>";
+                    // Total
+
+                    if ($("#tblList tbody tr").length == 0) {
+
+
+                        $("#tblList tbody").append(tr);
+                        //addTotal();
+                        var tdT1 = "<td class='text-sm'></td>";
+                        var tdT2 = "<td class='text-sm'>Total :</td>";
+                        var tdT3 = "<td class='text-sm'style='float: right;'></td>";
+                        //var tdT4 = "<td class='text-sm'>" + totalAmount + "</td>";
+                        var tdT4 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Quentity' readonly /> </td>";
+                        var tdT5 = "<td class='text-sm'></td>";
+                        var tdT6 = "<td class='text-sm'></td>";
+                        var tdT7 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Discount' readonly /> </td>";
+                        var tdT8 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Total' readonly /> </td>";
+                        //var tdT8 = "<td class='text-sm'>" + totalAmount + "</td>";
+                        var total = "<tr class='text-sm'>" + tdT1 + tdT2 + tdT3 + tdT4 + tdT5 + tdT6 + tdT7 + tdT8 + "</tr>";
+                        $("#tblList tbody").append(total);
+                    }
+                    else {
+                        $("#tblList tbody tr").eq(0).before(tr);
+
+                        addTotal1();
+
+                    }
+
+                    //function addTotal() {
+                    //    $('#tblList tr').each(function () {
+                    //        var customerId = $(this).find(".customerIDCell").html();
+                    //        var t = parseInt(customerId)
+                    //        if (t > 0) {
+
+                    //            totalAmount = totalAmount + t;
+                    //            console.log(totalAmount);
+                    //            alert(totalAmount);
+                    //            $("#t1").val(totalAmount);
+                    //        }
+
+                    //    });
+
+                    //}
+                    function addTotal1() {
+                        $('#tblList tr').each(function () {
+                            var QuanityIDCell = $(this).find(".QuanityIDCell").html();
+                            var DiscountIDCell = $(this).find(".DiscountIDCell").html();
+                            var TotalIDCell = $(this).find(".TotalIDCell").html();
+                            var Q = parseInt(QuanityIDCell)
+                            var D = parseInt(DiscountIDCell)
+                            var T = parseInt(TotalIDCell)
+
+
+                            if (T > 0) {
+
+                                totalAmount = totalAmount + T;
+                                console.log(totalAmount);
+                               // alert(totalAmount);
+                                $("#Total").val(totalAmount);
+
+                            }
+                            if (Q > 0) {
+                                totalQuentity = totalQuentity + Q;
+                                $("#Quentity").val(totalQuentity);
+
+                            }
+
+                             if (D > 0) {
+                                totalDiscount = totalDiscount + D;
+                                $("#Discount").val(totalDiscount);
+
+                            }
+
+
+
+
+                        });
+
+                    }
+
+                    SalesProductNameList.push(ddlProductName.val());
+
+
+
+                }
+
+
+            }
+
+            //ClearData();
+        })
+
+
+
+        function validates() {
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (ddlProductName.val() === "") {
+                $(".required-ProductName").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlMeasurementName.val() === "") {
+                $(".required-MeasurementName").removeClass('hide');
+                isValid = false;
+            }
+            if (txtQuanity.val() === "") {
+                $(".req-req-Quanity").removeClass('hide');
+                isValid = false;
+            }
+            if (QuantityCheck() == true) {
+                $(".req-qtyChecking").removeClass('hide');
+                isValid = false;
+            }
+
+
+
+
+            return isValid;
+        }
+
+        function QuantityCheck() {
+            var isValid = false;
+            var originalQty = FinishGoodStockQty.text();
+            var qty = originalQty.replace(/\(|\)/g, '');
+            console.log(qty);
+            if (TryParseInt(txtQuanity.val()) > qty) {
+                isValid = true
+            }
+            return isValid;
+        }
+
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+            debugger;
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+            var ProductId = tds.eq(9).html();
+
+            var RawQuentity = tds.eq(3).html();
+            var totalQty = document.getElementById('Quentity').value
+            var CurrentQty = totalQty - RawQuentity;
+
+            var RawDiscountTk = tds.eq(6).html();
+            var totalDiscountTk = document.getElementById('Discount').value
+            var CurrentDiscountTk = totalDiscountTk - RawDiscountTk;
+
+            var RawAmountTk = tds.eq(7).html();
+            var totalAmountTk = document.getElementById('Total').value
+            var CurrentAmountTk = totalAmountTk - RawAmountTk;
+
+            console.log("ProductId :" + ProductId);
+            const mid = SalesProductNameList.indexOf(ProductId);
+            SalesProductNameList.splice(mid, 1);
+
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    debugger;
+                    removeTableRow("#tblList tbody", index);
+                    fnFixTheTbodyRowSerialInDecsOrder("#tblList", index);
+                    
+                };
+            }));
+
+            $("#Quentity").val(CurrentQty);
+            $("#Discount").val(CurrentDiscountTk);
+            $("#Total").val(CurrentAmountTk);
+        })
+
+
+
+
+
+
+             $("#btnSubmit").click(function (e) {
+            debugger
+            e.preventDefault();
+            if (true === true) {
+
+                bootbox.confirm("Are you sure you want to Save this Sales", function (result) {
+                    if (result) {
+                        debugger;
+                        //disable("#btnSubmit");
+                        //getTargetItemAndItemTypeAndWarehouse();
+                        var info = { ProductSalesInfoId: 0, StockiestId: TryParseInt(ddlClientName.val(), 0), Depot: ddlDepotName.val(), InvoiceDate: InvoiceDate.val(), ChallanDate: ChallanDate.val(), VehicleType: txtVehicleType.val(), VehicleNumber: txtVehicleNumber.val(), DriverName: txtDriverName.val(), DeliveryPlace: txtDeliveryPlace.val(), Do_ADO_DA: txtDo_ADO_DA.val(), DoADO_Name: txtDoADO_Name.val(), PaymentMode: ddlPaymentMode.val() };
+
+                        var details = [];
+                        details.length = 0;
+
+                        $.each($("#tblList tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            debugger;
+                            details.push({
+                                ProductSalesDetailsId: 0,
+                                //MeasurementId: tds.eq(10).html(),
+                                ////Quanity: tds.eq(3).html(),
+                                //Price: tds.eq(4).html(),
+                                //Discount: tds.eq(5).html(),
+                                ////ProductId: tds.eq(9).html(),
+                                //MeasurementSize: tds.eq(2).html(),
+
+
+                                
+
+                            });
+                        })
+
+                        console.log('Info');
+                        console.log(info);
+                        console.log('Detail');
+                        console.log(details);
+                        var data = JSON.stringify({ info: info, details: details });
+                        //return;
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAgroProductSalesInfo', data , getToken())).then(function (res, status)
+                        {
+                            if (res === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                @*setTimeout(function () {
+                                    redirectPage('@Url.Action("")');
+                                }, 1000);*@
+                                //resetUI();
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+                    }
+                })
+            }
+        }) 
+
+
+
+
+        //function ClearData() {
+        //    ddlRawMaterialName.val("");
+        //    ddlQuantity.val("");
+        //    ddlUnit.val("");
+
+        //}
+
+
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+    </script>
+
+}

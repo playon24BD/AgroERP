@@ -10,6 +10,8 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IZoneSetup
     {
+
+        //ZoneSetup GetZoneInfoById(long zoneId, long orgId);
         IEnumerable<ZoneSetup> GetAllZoneSetup(long OrgId);
         ZoneSetup GetZoneNamebyId(long zoneId, long orgId);
        
