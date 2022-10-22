@@ -1877,7 +1877,7 @@ namespace ERPWeb.Controllers
 
         #region Purchase & RawmaterialStock
 
-        public ActionResult GetPRawmaterialStockList(string flag)
+        public ActionResult GetPRawmaterialStockList(string flag, string name, long? rsupid, long? id)
         {
 
             if (string.IsNullOrEmpty(flag))
@@ -1890,6 +1890,54 @@ namespace ERPWeb.Controllers
                 return View();
 
             }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _pRawMaterialStockInfo.GetAllPRawMaterialStockInfo(User.OrgId, name ?? null, rsupid ?? 0);
+
+                List<PRawMaterialStockInfoViewModel> viewModels = new List<PRawMaterialStockInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetRawMaterialStockpurchaseList", viewModels);
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+
+                var SupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).ToList();
+                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
+
+                var info = _pRawMaterialStockInfo.GetRawmaterialPuschaseInfoOneById(id.Value, User.OrgId);
+                List<PRawMaterialStockIDetailsViewModel> details = new List<PRawMaterialStockIDetailsViewModel>();
+
+                if(info != null)
+                {
+                    ViewBag.Info = new PRawMaterialStockInfoViewModel
+                    {
+                        RawMaterialSupplierName = SupplierName.FirstOrDefault(x => x.RawMaterialSupplierId == info.RawMaterialSupplierId).RawMaterialSupplierName,
+                        BatchCode =info.BatchCode,
+                        EntryDate = info.EntryDate,
+                        TotalAmount = info.TotalAmount, 
+                    };
+
+                    details = _pRawMaterialStockIDetails.GetRawMatwrialPurchaseDetailsByInfoId(id.Value).Select(i => new PRawMaterialStockIDetailsViewModel
+                    {
+                        RawMaterialName = RawMaterialNames.FirstOrDefault(x=>x.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                        UnitName =Unitsname.FirstOrDefault(x=>x.UnitId == i.UnitID).UnitName,
+                        Quantity = i.Quantity,
+                        UnitPrice = i.UnitPrice,
+                        SubTotal = i.SubTotal,
+                        StockDate = i.StockDate
+
+                    }).ToList();
+                }
+                else
+                {
+                    ViewBag.Info = new PRawMaterialStockInfoViewModel();
+                }
+                return PartialView("_RawmatiralPurchaseDetails", details);
+
+            }
+
             return View();
 
         }

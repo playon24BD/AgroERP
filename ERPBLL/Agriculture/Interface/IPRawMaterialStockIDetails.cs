@@ -10,5 +10,7 @@ namespace ERPBLL.Agriculture.Interface
     public interface IPRawMaterialStockIDetails
     {
         IEnumerable<PRawMaterialStockIDetails> GetAllPRawMaterialStockIDetails(long OrgId);
+
+        IEnumerable<PRawMaterialStockIDetails> GetRawMatwrialPurchaseDetailsByInfoId(long infoId);
     }
 }
