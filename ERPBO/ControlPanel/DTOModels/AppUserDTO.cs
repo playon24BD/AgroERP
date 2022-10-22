@@ -41,17 +41,17 @@ namespace ERPBO.ControlPanel.DTOModels
         public string EntryUser { get; set; }
         public string UpdateUser { get; set; }
 
-        public long? ZoneId { get; set; }
+        public string ZoneId { get; set; }
         public string ZoneName { get; set; }
-        public long? DivisionId { get; set; }
+        public string DivisionId { get; set; }
         public string DivisionName { get; set; }
-        public long? RegionId { get; set; }
+        public string RegionId { get; set; }
         public string RegionName { get; set; }
-        public long? AreaId { get; set; }
+        public string AreaId { get; set; }
         public string AreaName { get; set; }
-        public long? TerritoryId { get; set; }
+        public string TerritoryId { get; set; }
         public string TerritoryName { get; set; }
-        public long? StockiestId { get; set; }
+        public string StockiestId { get; set; }
         public string StockiestName { get; set; }
     }
 }

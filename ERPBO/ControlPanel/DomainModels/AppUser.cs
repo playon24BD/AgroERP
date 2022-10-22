@@ -37,11 +37,11 @@ namespace ERPBO.ControlPanel.DomainModels
         public long OrganizationId { get; set; }
 
         //public string UserName { get; set; }
-        public long? ZoneId { get; set; }
-        public long? DivisionId { get; set; }
-        public long? RegionId { get; set; }
-        public long? AreaId { get; set; }
-        public long? TerritoryId { get; set; }
-        public long? StockiestId { get; set; }
+        public string ZoneId { get; set; }
+        public string DivisionId { get; set; }
+        public string RegionId { get; set; }
+        public string AreaId { get; set; }
+        public string TerritoryId { get; set; }
+        public string StockiestId { get; set; }
     }
 }

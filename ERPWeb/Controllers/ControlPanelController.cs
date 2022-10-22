@@ -331,7 +331,13 @@ namespace ERPWeb.Controllers
                     RoleId = user.RoleId,
                     RoleName = (_roleBusiness.GetRoleOneById(user.RoleId, user.OrganizationId).RoleName),
                     EntryUser = UserForEachRecord(user.EUserId.Value).UserName,
-                    UpdateUser = !user.UpUserId.HasValue ? "" : UserForEachRecord(user.UpUserId.Value).UserName
+                    UpdateUser = !user.UpUserId.HasValue ? "" : UserForEachRecord(user.UpUserId.Value).UserName,
+                    //ZoneName=_zoneSetup.GetZoneNamebyId(user.ZoneId.Value,User.OrgId).ZoneName,
+                    //DivisionName=_divisionInfo.GetDivisionInfoById(user.DivisionId.Value,User.OrgId).DivisionName,
+                    //RegionName=_regionSetup.GetRegionNamebyId(user.RegionId.Value,User.OrgId).RegionName,
+                    //AreaName=_areaSetupBusiness.GetAreaById(user.AreaId.Value,User.OrgId).AreaName,
+                    //TerritoryName=_territorySetup.GetTerritoryNamebyId(user.TerritoryId.Value,User.OrgId).TerritoryName,
+                    //StockiestName=_stockiestInfo.GetStockiestInfoById(user.StockiestId.Value,User.OrgId).StockiestName
                 }).OrderBy(user => user.UserId).ToList();
                 return PartialView("_GetUsers", appUserViewModels);
             }

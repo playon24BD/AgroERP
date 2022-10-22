@@ -312,6 +312,10 @@
     <Compile Include="ControlPanelContextMigrations\202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.Designer.cs">
       <DependentUpon>202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="ControlPanelContextMigrations\202210220638118_ControlPanel_changelongtostring.cs" />
+    <Compile Include="ControlPanelContextMigrations\202210220638118_ControlPanel_changelongtostring.Designer.cs">
+      <DependentUpon>202210220638118_ControlPanel_changelongtostring.cs</DependentUpon>
+    </Compile>
     <Compile Include="ControlPanelContextMigrations\Configuration.cs" />
     <Compile Include="ControlPanelDAL\ControlPanelDbContext.cs" />
     <Compile Include="ControlPanelDAL\ControlPanelRepository.cs" />
@@ -499,6 +503,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.resx">
       <DependentUpon>202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlPanelContextMigrations\202210220638118_ControlPanel_changelongtostring.resx">
+      <DependentUpon>202210220638118_ControlPanel_changelongtostring.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
