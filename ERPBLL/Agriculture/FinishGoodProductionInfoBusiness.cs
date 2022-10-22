@@ -26,6 +26,11 @@ namespace ERPBLL.Agriculture
             this._rawMaterialIssueStockDetailsBusiness = rawMaterialIssueStockDetailsBusiness;
         }
 
+        public FinishGoodProductionInfo GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId)
+        {
+            return _finishGoodProductionInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.FinishGoodProductInfoId == FinishGoodProductInfoId);
+        }
+
         public FinishGoodProductionInfo GetFinishGoodProductionByAny(string any, long orgId)
         {
             throw new NotImplementedException();

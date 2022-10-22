@@ -15,6 +15,9 @@ namespace ERPWeb.Controllers
 {
     public class AgroConfigurationController : BaseController
     {
+        private readonly IAgroProductSalesInfoBusiness _agroProductSalesInfoBusiness;
+        private readonly IAgroProductSalesDetailsBusiness _agroProductSalesDetailsBusiness;
+
         private readonly IPRawMaterialStockInfo _pRawMaterialStockInfo;//e
         private readonly IPRawMaterialStockIDetails _pRawMaterialStockIDetails;//e
 
@@ -56,6 +59,8 @@ namespace ERPWeb.Controllers
         ////public AgroConfigurationController(IStockiestInfo stockiestInfo,IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
 
         {
+            this._agroProductSalesInfoBusiness = agroProductSalesInfoBusiness;
+            this._agroProductSalesDetailsBusiness = agroProductSalesDetailsBusiness;
             this._agroUnitInfo = agroUnitInfo;
             this._userInfo = userInfo;
             this._stockiestInfo = stockiestInfo;
@@ -1849,7 +1854,7 @@ namespace ERPWeb.Controllers
 
             //ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
-            ViewBag.ddlProductName =_finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName, Value = f.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProductName =_finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName.ToString()+ " (Quantity)", Value = f.FinishGoodProductId.ToString() }).ToList();
 
             ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
 
@@ -1873,6 +1878,38 @@ namespace ERPWeb.Controllers
             return Json(MeasurementSize, JsonRequestBehavior.AllowGet);
 
         }
+
+        public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId)
+        {
+            var checkFinishGoodStockValue = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(FinishGoodProductInfoId, User.OrgId);
+
+            double itemStock = 0;
+           
+            if (checkFinishGoodStockValue != null)
+            {
+                itemStock = (checkFinishGoodStockValue.Quanity);
+                
+            }
+            return Json(new { FinishGoodStockQty = itemStock });
+
+
+        }
+
+        public ActionResult SaveAgroProductSalesInfo(AgroProductSalesInfoViewModel info, List<AgroProductSalesDetailsViewModel> details)
+        {
+
+            bool isSucccess = false;
+            if (ModelState.IsValid && details.Count() > 0)
+            {
+                AgroProductSalesInfoDTO agroSalesInfoDTO = new AgroProductSalesInfoDTO();
+                List<AgroProductSalesDetailsDTO> agroSalesDetailsDTOs = new List<AgroProductSalesDetailsDTO>();
+                AutoMapper.Mapper.Map(info, agroSalesInfoDTO);
+                AutoMapper.Mapper.Map(details, agroSalesDetailsDTOs);
+                isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
+            }
+            return Json(isSucccess);
+        }
+
         #endregion
 
         #region Purchase & RawmaterialStock

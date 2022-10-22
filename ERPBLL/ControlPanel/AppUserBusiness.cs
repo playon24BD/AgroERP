@@ -47,6 +47,11 @@ namespace ERPBLL.ControlPanel
             return appUserRepository.GetAll().ToList();
         }
 
+        public AppUser GetId(long userId,long orgId)
+        {
+            return appUserRepository.GetOneByOrg(a => a.UserId == userId && a.OrganizationId == orgId);
+        }
+
         public AppUserDTO GetAppUserInfoById(long id, long orgId,string flag)
         {
             if(flag == "System")

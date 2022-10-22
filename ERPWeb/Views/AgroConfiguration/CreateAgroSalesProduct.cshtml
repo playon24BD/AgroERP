@@ -131,7 +131,13 @@
                             <div class="col-md-3">
                                 <label for="ddlQuanity" class="col-form-label">Quanity</label>
                                 <input type="text" id="txtQuanity" class="form-control form-control-sm" />
+                                <label for="ddlQuantity" class="control-label font-weight-bold">
+                                    Finish Good Qty
+                                    <span id="FinishGoodStockQty"></span>
+                                    @*<input type="number" id="stockQty" />*@
+                                </label>
                                 <span class="error hide req-Quanity">Quantity is required</span>
+                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal Product Qty</span>
                             </div>
                             <div class="col-md-3">
                                 <label for="ddlPrice" class="col-form-label">Rate</label>
@@ -229,6 +235,10 @@
         var txtQuanity = $("#txtQuanity");
         var txtPrice = $("#txtPrice");
         var txtDiscount = $("#txtDiscount");
+        var FinishGoodProductInfoId = '';
+        var FinishGoodStockQty = $("#FinishGoodStockQty");
+        //var QuantityCheck = $("#QuantityCheck");
+        
 
         var ClientId = '';
         var MeasurementId = '';
@@ -289,6 +299,37 @@
 
         })
         var SalesProductNameList = [];
+
+
+        ddlProductName.change(function () {
+
+            LoadFinishGoodStock();
+
+        })
+
+        function LoadFinishGoodStock() {
+            debugger;
+
+            $("#txtQuanity").text('(0)');
+            var FinishGoodProductInfoId = ddlProductName.val();
+            if (FinishGoodProductInfoId != "") {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetFinishGoodstockCheck', JSON.stringify({ FinishGoodProductInfoId: TryParseInt(ddlProductName.val(), 0) }), getToken())).then(function (res, status) {
+                    console.log(res);
+                    console.log(status);
+                    if (status == "success") {
+                        disable("#FinishGoodStockQty");
+                        
+                        
+                        FinishGoodStockQty.text('(' + res.FinishGoodStockQty + ')');
+                        //RawMaterialStockUnit.text('(' + res.RawMaterialStockUnit + ')');
+
+                    }
+                }).fail(function (error) {
+                    consoleLog(error);
+                })
+            }
+        }
+
 
 
         $("#btnAddToList").click(function (e) {
@@ -433,10 +474,25 @@
                 $(".req-req-Quanity").removeClass('hide');
                 isValid = false;
             }
+            if (QuantityCheck() == true) {
+                $(".req-qtyChecking").removeClass('hide');
+                isValid = false;
+            }
 
 
 
 
+            return isValid;
+        }
+
+        function QuantityCheck() {
+            var isValid = false;
+            var originalQty = FinishGoodStockQty.text();
+            var qty = originalQty.replace(/\(|\)/g, '');
+            console.log(qty);
+            if (TryParseInt(txtQuanity.val()) > qty) {
+                isValid = true
+            }
             return isValid;
         }
 
@@ -502,11 +558,18 @@
 
                         $.each($("#tblList tbody tr"), function (index, item) {
                             var tds = $(this).children('td');
+                            debugger;
                             details.push({
-                                ProductSalesDetailsId:0,
-                                RawMaterialId: tds.eq(5).html(),
-                                FGRRawMaterQty: tds.eq(2).html(),
-                                FGRRawMaterUnit: tds.eq(3).html()
+                                ProductSalesDetailsId: 0,
+                                //MeasurementId: tds.eq(10).html(),
+                                ////Quanity: tds.eq(3).html(),
+                                //Price: tds.eq(4).html(),
+                                //Discount: tds.eq(5).html(),
+                                ////ProductId: tds.eq(9).html(),
+                                //MeasurementSize: tds.eq(2).html(),
+
+
+                                
 
                             });
                         })
@@ -517,13 +580,13 @@
                         console.log(details);
                         var data = JSON.stringify({ info: info, details: details });
                         //return;
-                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveFinishGoodRecipe', data , getToken())).then(function (res, status)
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAgroProductSalesInfo', data , getToken())).then(function (res, status)
                         {
                             if (res === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
-                                setTimeout(function () {
-                                    redirectPage('@Url.Action("GetFinishGoodRecipeList")');
-                                }, 1000);
+                                @*setTimeout(function () {
+                                    redirectPage('@Url.Action("")');
+                                }, 1000);*@
                                 //resetUI();
                             }
                             else {
