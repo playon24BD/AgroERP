@@ -11,6 +11,25 @@ using System.Threading.Tasks;
 namespace ERPDAL.AgricultureDAL
 {
     //e
+    public class RawMaterialTrackInfoRepository : AgricultureBaseRepository<RawMaterialTrack>
+    {
+        public RawMaterialTrackInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    //e
+    public class MRawMaterialIssueStockInfoRepository : AgricultureBaseRepository<MRawMaterialIssueStockInfo>
+    {
+        public MRawMaterialIssueStockInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    //e
+    public class MRawMaterialIssueStockDetailsRepository : AgricultureBaseRepository<MRawMaterialIssueStockDetails>
+    {
+        public MRawMaterialIssueStockDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+
+    //e
     public class PRawMaterialStockInfoRepository : AgricultureBaseRepository<PRawMaterialStockInfo>
     {
         public PRawMaterialStockInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }

@@ -286,6 +286,10 @@
     <Compile Include="AgricultureContextMigrations\202210200417325_Agriculture_SalesProductUpdate.Designer.cs">
       <DependentUpon>202210200417325_Agriculture_SalesProductUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202210220920524_Agriculture_Depo3.cs" />
+    <Compile Include="AgricultureContextMigrations\202210220920524_Agriculture_Depo3.Designer.cs">
+      <DependentUpon>202210220920524_Agriculture_Depo3.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -480,6 +484,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202210200417325_Agriculture_SalesProductUpdate.resx">
       <DependentUpon>202210200417325_Agriculture_SalesProductUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210220920524_Agriculture_Depo3.resx">
+      <DependentUpon>202210220920524_Agriculture_Depo3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

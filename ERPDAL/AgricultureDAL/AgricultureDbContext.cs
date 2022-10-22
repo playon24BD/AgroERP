@@ -21,6 +21,9 @@ namespace ERPDAL.AgricultureDAL
         //    modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
         //}
 
+        public DbSet<MRawMaterialIssueStockDetails> tblMRawMaterialIssueStockDetails { get; set; } //e
+        public DbSet<MRawMaterialIssueStockInfo> tblMRawMaterialIssueStockInfo { get; set; } //e
+        public DbSet<RawMaterialTrack> tblRawMaterialTrackInfo { get; set; } //e
 
         public DbSet<PRawMaterialStockInfo> tblPRawMaterialStockInfo { get; set; } //e
         public DbSet<PRawMaterialStockIDetails> tblPRawMaterialStockDetail { get; set; }//e

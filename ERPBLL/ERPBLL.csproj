@@ -124,6 +124,8 @@
     <Compile Include="Agriculture\Interface\IFinishGoodRecipeDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodRecipeInfoBusiness.cs" />
     <Compile Include="Agriculture\Interface\IMeasuremenBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IMRawMaterialIssueStockDetails.cs" />
+    <Compile Include="Agriculture\Interface\IMRawMaterialIssueStockInfo.cs" />
     <Compile Include="Agriculture\Interface\IPRawMaterialStockIDetails.cs" />
     <Compile Include="Agriculture\Interface\IPRawMaterialStockInfo.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialBusiness.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="Agriculture\Interface\IRawMaterialIssueStockInfoBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialStockDetail.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialStockInfo.cs" />
+    <Compile Include="Agriculture\Interface\IRawMaterialTrack.cs" />
     <Compile Include="Agriculture\Interface\IRegionSetup.cs" />
     <Compile Include="Agriculture\Interface\IStockiestInfo.cs" />
     <Compile Include="Agriculture\Interface\ITerritorySetup.cs" />
@@ -141,6 +144,8 @@
     <Compile Include="Agriculture\Interface\IZoneSetup.cs" />
     <Compile Include="Agriculture\MeasuremenBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialSupplier.cs" />
+    <Compile Include="Agriculture\MRawMaterialIssueStockDetailsBusiness.cs" />
+    <Compile Include="Agriculture\MRawMaterialIssueStockInfoBusisness.cs" />
     <Compile Include="Agriculture\PRawMaterialStockIDetailsBusiness.cs" />
     <Compile Include="Agriculture\PRawMaterialStockInfoBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialBusiness.cs" />
@@ -149,6 +154,7 @@
     <Compile Include="Agriculture\RawMaterialStockDetailBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialStockInfoBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialSupplierBusiness.cs" />
+    <Compile Include="Agriculture\RawMaterialTrackBusiness.cs" />
     <Compile Include="Agriculture\RegionSetupBusiness.cs" />
     <Compile Include="Agriculture\StockiestInfoBusiness.cs" />
     <Compile Include="Agriculture\TerritorySetupBusiness.cs" />
