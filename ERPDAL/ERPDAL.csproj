@@ -298,6 +298,11 @@
     <Compile Include="AgricultureContextMigrations\202210230534492_Agriculture_DivisionUserOrgAduserr.Designer.cs">
       <DependentUpon>202210230534492_Agriculture_DivisionUserOrgAduserr.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="AgricultureContextMigrations\202210230558109_Agriculture_DivisionUserUpdate.cs" />
+    <Compile Include="AgricultureContextMigrations\202210230558109_Agriculture_DivisionUserUpdate.Designer.cs">
+      <DependentUpon>202210230558109_Agriculture_DivisionUserUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\202210230724199_MM.cs" />
     <Compile Include="AgricultureContextMigrations\202210230724199_MM.Designer.cs">
       <DependentUpon>202210230724199_MM.cs</DependentUpon>
@@ -305,6 +310,7 @@
     <Compile Include="AgricultureContextMigrations\202210230734117_upstring.cs" />
     <Compile Include="AgricultureContextMigrations\202210230734117_upstring.Designer.cs">
       <DependentUpon>202210230734117_upstring.cs</DependentUpon>
+
     </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
@@ -514,6 +520,9 @@
     <EmbeddedResource Include="AgricultureContextMigrations\202210230534492_Agriculture_DivisionUserOrgAduserr.resx">
       <DependentUpon>202210230534492_Agriculture_DivisionUserOrgAduserr.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210230558109_Agriculture_DivisionUserUpdate.resx">
+      <DependentUpon>202210230558109_Agriculture_DivisionUserUpdate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202210230724199_MM.resx">
       <DependentUpon>202210230724199_MM.cs</DependentUpon>
     </EmbeddedResource>
@@ -544,4 +553,5 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

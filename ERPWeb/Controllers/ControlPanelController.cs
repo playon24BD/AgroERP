@@ -917,7 +917,10 @@ namespace ERPWeb.Controllers
                 {
                     List<UserAuthorizationDTO> userAuthorizationDTOs = new List<UserAuthorizationDTO>();
                     models.FirstOrDefault().UserId = Convert.ToInt64(appExecuation.text);
+
+
                     AutoMapper.Mapper.Map(models, userAuthorizationDTOs);
+
                     isSuccess = _userAuthorizationBusiness.SaveUserAuthorization(userAuthorizationDTOs, User.UserId, User.OrgId);
                 }
             }

@@ -1,4 +1,5 @@
-﻿using ERPBLL.Common;
+﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBLL.ControlPanel.Interface;
 using ERPBO.Common;
 using ERPBO.ControlPanel.DomainModels;
@@ -17,10 +18,12 @@ namespace ERPBLL.ControlPanel
     {
         private readonly IControlPanelUnitOfWork _controlPanelUnitOfWork; // database
         private readonly AppUserRepository appUserRepository; // repo
-        public AppUserBusiness(IControlPanelUnitOfWork controlPanelUnitOfWork)
+        private readonly IDivisionUserBusiness _divisionUserBusiness; // repo
+        public AppUserBusiness(IControlPanelUnitOfWork controlPanelUnitOfWork,IDivisionUserBusiness divisionUserBusiness)
         {
             this._controlPanelUnitOfWork = controlPanelUnitOfWork;
             appUserRepository = new AppUserRepository(this._controlPanelUnitOfWork);
+            this._divisionUserBusiness = divisionUserBusiness;
         }
 
         public bool ChangePassword(ChangePasswordDTO dto, long userId, long orgId)
@@ -213,7 +216,24 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.AreaId = appUserDTO.AreaId;
                 appUser.TerritoryId = appUserDTO.TerritoryId;
                 appUser.StockiestId = appUserDTO.StockiestId;
+
                 appUserRepository.Insert(appUser);
+
+                execution.isSuccess = appUserRepository.Save();
+
+
+                execution.text = appUser.UserId.ToString();
+
+                if (execution.isSuccess==true)
+                {
+                    if (appUserDTO.DivisionId.Count() > 0)
+                    {
+                        _divisionUserBusiness.SaveDivisionsUser( appUserDTO.DivisionId, appUser.UserId, userId, orgId);
+                    }
+
+
+                }
+
 
             }
             else
@@ -242,9 +262,15 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.TerritoryId = appUserDTO.TerritoryId;
                 appUser.StockiestId = appUserDTO.StockiestId;
                 appUserRepository.Update(appUser);
+
+                execution.isSuccess = appUserRepository.Save();
+
+
+                execution.text = appUser.UserId.ToString();
             }
-            execution.isSuccess = appUserRepository.Save();
-            execution.text = appUser.UserId.ToString();
+
+
+ 
             return execution;
         }
 

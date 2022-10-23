@@ -21,30 +21,30 @@ namespace ERPBLL.Agriculture
         }
         public DivisionUser GetAllDivisionsByUserIdAndDivisionId(long userId, long divisionId, long orgId)
         {
-            throw new NotImplementedException();
+            return divisionUserBusinessRepository.GetOneByOrg(s => s.UserId == userId /*&& s.DivisionId == divisionId*/ && s.OrganizationId == orgId);
         }
 
-        public bool SaveDivisionsUser(List<long> divisions, long userId, long suserId, long orgId)
+        public bool SaveDivisionsUser(List<string> divisions, long userId, long suserId, long orgId)
         {
             bool isSuccess = false;
             List<DivisionUser> divisionsUser = new List<DivisionUser>();
-            //foreach (var item in divisions)
-            //{
-            //    DivisionUser du = new DivisionUser()
-            //    {
-            //        DivisionId = item,
-            //        EntryDate = DateTime.Now,
-            //        EntryUserId = suserId,
-            //        UserId = userId,
-            //         = orgId,
-            //    };
-            //    rSMDivisions.Add(rSM);
-            //}
-            //if (rSMDivisions.Count() > 0)
-            //{
-            //    _rSMDivisionsRepository.InsertAll(rSMDivisions);
-            //    isSuccess = _rSMDivisionsRepository.Save();
-            //}
+            foreach (var item in divisions)
+            {
+                DivisionUser du = new DivisionUser()
+                {
+                    DivisionId =Convert.ToInt64(item),
+                    EntryDate = DateTime.Now,
+                    EntryUserId = suserId,
+                    UserId = userId,
+                    OrganizationId = orgId,
+                };
+                divisionsUser.Add(du);
+            }
+            if (divisionsUser.Count() > 0)
+            {
+                divisionUserBusinessRepository.InsertAll(divisionsUser);
+                isSuccess = divisionUserBusinessRepository.Save();
+            }
 
             return isSuccess;
         }
