@@ -2041,52 +2041,64 @@ namespace ERPWeb.Controllers
                 return View();
             }
 
-            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
-            //{
-            //    var dto = _pRawMaterialStockInfo.GetAllPRawMaterialStockInfo(User.OrgId, name ?? null, rsupid ?? 0);
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                IEnumerable<MRawMaterialIssueStockInfoDTO> dto = _mRawMaterialIssueStockInfo.GetAllRawMaterialIssue(User.OrgId).Where(s => (name == "" || name == null) || (s.ProductBatchCode.Contains(name))).Select(o => new MRawMaterialIssueStockInfoDTO
+                {
+                    RawMaterialIssueStockId = o.RawMaterialIssueStockId,
+                    ProductBatchCode = o.ProductBatchCode,
+                    EntryDate = o.EntryDate,
+                    Status = o.Status,
+                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
 
-            //    List<PRawMaterialStockInfoViewModel> viewModels = new List<PRawMaterialStockInfoViewModel>();
-            //    AutoMapper.Mapper.Map(dto, viewModels);
-            //    return PartialView("_GetRawMaterialStockpurchaseList", viewModels);
-            //}
-            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            //{
 
-            //    var SupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).ToList();
-            //    var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
-            //    var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
+                }).ToList();
 
-            //    var info = _pRawMaterialStockInfo.GetRawmaterialPuschaseInfoOneById(id.Value, User.OrgId);
-            //    List<PRawMaterialStockIDetailsViewModel> details = new List<PRawMaterialStockIDetailsViewModel>();
+                List<MRawMaterialIssueStockInfoViewModel> viewModels = new List<MRawMaterialIssueStockInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetRawMaterialIssuePartialView", viewModels);
+            }
 
-            //    if (info != null)
-            //    {
-            //        ViewBag.Info = new PRawMaterialStockInfoViewModel
-            //        {
-            //            RawMaterialSupplierName = SupplierName.FirstOrDefault(x => x.RawMaterialSupplierId == info.RawMaterialSupplierId).RawMaterialSupplierName,
-            //            BatchCode = info.BatchCode,
-            //            EntryDate = info.EntryDate,
-            //            TotalAmount = info.TotalAmount,
-            //        };
 
-            //        details = _pRawMaterialStockIDetails.GetRawMatwrialPurchaseDetailsByInfoId(id.Value).Select(i => new PRawMaterialStockIDetailsViewModel
-            //        {
-            //            RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
-            //            UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
-            //            Quantity = i.Quantity,
-            //            UnitPrice = i.UnitPrice,
-            //            SubTotal = i.SubTotal,
-            //            StockDate = i.StockDate
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
 
-            //        }).ToList();
-            //    }
-            //    else
-            //    {
-            //        ViewBag.Info = new PRawMaterialStockInfoViewModel();
-            //    }
-            //    return PartialView("_RawmatiralPurchaseDetails", details);
+                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
 
-            //}
+                var info = _mRawMaterialIssueStockInfo.GetRawmaterialIssueInfoOneById(id.Value, User.OrgId);
+
+                List<MRawMaterialIssueStockDetailsViewModel> details = new List<MRawMaterialIssueStockDetailsViewModel>();
+
+                if (info != null)
+                {
+                    ViewBag.Info = new MRawMaterialIssueStockInfoViewModel
+                    {
+
+                        ProductBatchCode = info.ProductBatchCode,
+                        EntryDate = info.EntryDate,
+                        Status = info.Status,
+
+
+                    };
+
+                    details = _mRawMaterialIssueStockDetails.GetRawMatwrialissueDetailsByInfoId(id.Value).Select(i=> new MRawMaterialIssueStockDetailsViewModel
+                    {
+                        RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                        UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
+                        Quantity =i.Quantity,
+                        IssueStatus = i.IssueStatus,
+                        EntryDate = i.EntryDate
+                    }).ToList();
+
+                }
+                else
+                {
+                    ViewBag.Info = new MRawMaterialIssueStockInfoViewModel();
+                }
+                return PartialView("_RawmatiralIssueDetails", details);
+
+            }
 
             return View();
 
@@ -2105,6 +2117,22 @@ namespace ERPWeb.Controllers
 
 
             return Json(rmnqty, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SaveRawmaterialPIssueStock(MRawMaterialIssueStockInfoViewModel info, List<MRawMaterialIssueStockDetailsViewModel> details)
+        {
+            bool IsSuccess = false;
+
+            MRawMaterialIssueStockInfoDTO infoDTO = new MRawMaterialIssueStockInfoDTO();
+            List<MRawMaterialIssueStockDetailsDTO> detailDTOs = new List<MRawMaterialIssueStockDetailsDTO>();
+            AutoMapper.Mapper.Map(info, infoDTO);
+            AutoMapper.Mapper.Map(details, detailDTOs);
+            IsSuccess = _mRawMaterialIssueStockInfo.SaveRawMaterialIssueStock(infoDTO, detailDTOs, User.UserId, User.OrgId);
+
+
+
+            return Json(IsSuccess);
         }
 
         #endregion

@@ -132,14 +132,14 @@
                                                             </div>
 
                                                             @*<div class="col-md-1">
-                                                                <label for="ddlrmnqty">Remain Qty</label>
-                                                                <input type="text" id="ddlrmnqty" name="ddlrmnqty" class="form-control form-control-sm" readonly />
-                                                            </div>*@
+                                                                    <label for="ddlrmnqty">Remain Qty</label>
+                                                                    <input type="text" id="ddlrmnqty" name="ddlrmnqty" class="form-control form-control-sm" readonly />
+                                                                </div>*@
                                                             <div class="col-md-1">
                                                                 <label for="ddlqty"> Qty</label>
                                                                 <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
                                                                 <span class="error hide req-qty">Qty Is Required</span>
-                                                                <span>RQTY: <span id="RawMaterialStockQty">0</span> </span>
+                                                                <span>Stock: <span id="RawMaterialStockQty">0</span> </span>
                                                                 <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
                                                             </div>
                                                             <div class="col-md-1">
@@ -201,6 +201,21 @@
     </div>
 </div>
 
+@*Modal*@
+<div class="modal fade" id="PurchaseDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title">Raw Material Issue Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section scripts{
     <script type="text/javascript">
@@ -211,7 +226,6 @@
         var ddlqty = $("#ddlqty");
         var ddlUnitName = $("#ddlUnitName");
         var ddlUnitID = $("#ddlUnitID");
-        
         var ddlRawMaterialList = [];
         var searchByAny = $("#searchByAny");
 
@@ -229,13 +243,13 @@
             });
             $("#btnSubmit").hide();
 
-           // LoadDataTable();
+            LoadDataTable();
         })
 
 
         //material change
         ddlRawMaterial.change(function () {
-            
+
 
             var data = { RawMaterialId: ddlRawMaterial.val() };
 
@@ -271,6 +285,32 @@
             });
 
         })
+
+
+        //src
+        searchByAny.keyup(function () {
+            LoadDataTable()
+        })
+
+        //load
+        function LoadDataTable() {
+            //debugger;
+
+            var data = { flag: "View", name: $.trim(searchByAny.val()) };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetMRawmaterialIssueList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+            //pageNo = 1;
+        }
 
 
         //add
@@ -309,6 +349,30 @@
         })
 
 
+
+        //remove
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            debugger;
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+
+            var rId = tds.eq(5).html();
+            console.log("rId :" + rId);
+            const mid = ddlRawMaterialList.indexOf(rId);
+
+            ddlRawMaterialList.splice(mid, 1);
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    removeTableRow("#tblPstockrawmaterial tbody", index);
+                    fnFixTheTbodyRowSerial("#tblPstockrawmaterial tbody", index);
+
+                };
+            }));
+
+        })
 
         //quantityCheck function
         function QuantityCheck() {
@@ -357,5 +421,96 @@
             RawMaterialStockQty.text("");
         }
 
+
+        //save
+        $("#saveButton").click(function (e) {
+            //alert();
+            //debugger
+            e.preventDefault();
+
+
+            if (true === true) {
+
+                bootbox.confirm("Are you sure you want to Save this", function (result) {
+                    if (result) {
+                        //alert("ok");
+                       //debugger;
+                        var totalsub = $('.totalsub').text();//initilize class total
+
+                        //var info = { RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0), ChalanNo: ddlChallanNo.val(), InvoiceNo: ddlInvoiceNo.val(), InvoiceDate: ddlInvoiceDate.val(), TotalAmount: totalsub };
+                        var details = [];
+                        details.length = 0;
+
+                        $.each($("#tblPstockrawmaterial tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+                                RawMaterialIssueStockDetailId: 0,
+                                RawMaterialId: tds.eq(5).html(),
+                                UnitID: tds.eq(6).html(),
+                                Quantity: tds.eq(3).html(),
+                            });
+                        })
+
+
+                        //console.log(info);
+                        console.log(details);
+
+                        //var data = JSON.stringify({ info: info, details: details });
+                        var data = JSON.stringify({ details: details });
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawmaterialPIssueStock', data, getToken())).then(function (res, status) {
+                            if (res === true) {
+                                //debugger;
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetMRawmaterialIssueList")');
+                                }, 1000);
+                                //resetUI();
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+                    }
+                    //clearCtrlSv();
+                })
+            }
+
+
+        })
+
+
+        //details
+        $(document).on('click', 'a.data-item-detail', function (e) {
+            //alert();
+            //debugger;
+
+            e.preventDefault();
+            $("#dataContainer2").empty();
+            //$("#PurchaseDetails").modal('show');
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+            if (TryParseInt(id, 0) > 0) {
+                debugger;
+                var data = { flag: "Detail",id: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetMRawmaterialIssueList', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res);
+                        $("#PurchaseDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+
+        //reload
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
     </script>
 }
