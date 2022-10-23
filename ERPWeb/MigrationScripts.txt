@@ -9,4 +9,3 @@ Add-Migration:
  Update-Database:
  Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
 
-  Add-Migration 'Rawm issue details tableup' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration

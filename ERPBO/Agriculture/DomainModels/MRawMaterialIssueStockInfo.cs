@@ -14,7 +14,7 @@ namespace ERPBO.Agriculture.DomainModels
         [Key]
         public long RawMaterialIssueStockId { get; set; }
         public string ProductBatchCode { get; set; }
-        public string Status { get; set; }
+        public long IssueStatus { get; set; }
 
 
 

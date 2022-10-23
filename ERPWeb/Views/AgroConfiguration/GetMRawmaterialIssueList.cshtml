@@ -310,30 +310,6 @@
 
 
 
-        //remove
-        $(document).on("click", "a.data-onfly-del", function (e) {
-            debugger;
-            e.preventDefault();
-            var index = $(this).parent().parents('tbody tr').index();
-            var tds = $(this).parent().parents('tbody tr').children('td');
-
-
-            var rId = tds.eq(5).html();
-            console.log("rId :" + rId);
-            const mid = ddlRawMaterialList.indexOf(rId);
-
-            ddlRawMaterialList.splice(mid, 1);
-
-            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
-                if (result === true) {
-                    removeTableRow("#tblPstockrawmaterial tbody", index);
-                    fnFixTheTbodyRowSerial("#tblPstockrawmaterial tbody", index);
-
-                };
-            }));
-
-        })
-
         //quantityCheck function
         function QuantityCheck() {
             debugger;

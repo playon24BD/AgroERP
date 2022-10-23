@@ -2107,27 +2107,6 @@ namespace ERPWeb.Controllers
             return Json(rmnqty, JsonRequestBehavior.AllowGet);
         }
 
-
-
-
-        [HttpPost]
-        public ActionResult SaveRawmaterialPIssueStock(MRawMaterialIssueStockInfoViewModel info, List<MRawMaterialIssueStockDetailsViewModel> details)
-        {
-            bool IsSuccess = false;
-
-            MRawMaterialIssueStockInfoDTO infoDTO = new MRawMaterialIssueStockInfoDTO();
-            List<MRawMaterialIssueStockDetailsDTO> detailDTOs = new List<MRawMaterialIssueStockDetailsDTO>();
-            AutoMapper.Mapper.Map(info, infoDTO);
-            AutoMapper.Mapper.Map(details, detailDTOs);
-            IsSuccess = _mRawMaterialIssueStockInfo.SaveRawMaterialIssueStock(infoDTO, detailDTOs, User.UserId, User.OrgId);
-
-
-
-            return Json(IsSuccess);
-        }
-
-
-
         #endregion
     }
 }

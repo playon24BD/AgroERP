@@ -290,7 +290,6 @@
     <Compile Include="AgricultureContextMigrations\202210220920524_Agriculture_Depo3.Designer.cs">
       <DependentUpon>202210220920524_Agriculture_Depo3.cs</DependentUpon>
     </Compile>
-<<<<<<< Updated upstream
     <Compile Include="AgricultureContextMigrations\202210230504375_Agriculture_DivisionUserTableAdded.cs" />
     <Compile Include="AgricultureContextMigrations\202210230504375_Agriculture_DivisionUserTableAdded.Designer.cs">
       <DependentUpon>202210230504375_Agriculture_DivisionUserTableAdded.cs</DependentUpon>
@@ -298,11 +297,6 @@
     <Compile Include="AgricultureContextMigrations\202210230534492_Agriculture_DivisionUserOrgAduserr.cs" />
     <Compile Include="AgricultureContextMigrations\202210230534492_Agriculture_DivisionUserOrgAduserr.Designer.cs">
       <DependentUpon>202210230534492_Agriculture_DivisionUserOrgAduserr.cs</DependentUpon>
-=======
-    <Compile Include="AgricultureContextMigrations\202210230541244_Rawm issue details tableup.cs" />
-    <Compile Include="AgricultureContextMigrations\202210230541244_Rawm issue details tableup.Designer.cs">
-      <DependentUpon>202210230541244_Rawm issue details tableup.cs</DependentUpon>
->>>>>>> Stashed changes
     </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
@@ -506,16 +500,11 @@
     <EmbeddedResource Include="AgricultureContextMigrations\202210220920524_Agriculture_Depo3.resx">
       <DependentUpon>202210220920524_Agriculture_Depo3.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< Updated upstream
     <EmbeddedResource Include="AgricultureContextMigrations\202210230504375_Agriculture_DivisionUserTableAdded.resx">
       <DependentUpon>202210230504375_Agriculture_DivisionUserTableAdded.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202210230534492_Agriculture_DivisionUserOrgAduserr.resx">
       <DependentUpon>202210230534492_Agriculture_DivisionUserOrgAduserr.cs</DependentUpon>
-=======
-    <EmbeddedResource Include="AgricultureContextMigrations\202210230541244_Rawm issue details tableup.resx">
-      <DependentUpon>202210230541244_Rawm issue details tableup.cs</DependentUpon>
->>>>>>> Stashed changes
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

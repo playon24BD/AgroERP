@@ -13,7 +13,7 @@ namespace ERPBO.Agriculture.ViewModels
         public long RawMaterialId { get; set; }
         public double Quantity { get; set; }
         public long UnitID { get; set; }
-        public string IssueStatus { get; set; }
+        public long IssueStatus { get; set; }
 
 
 
