@@ -2030,6 +2030,82 @@ namespace ERPWeb.Controllers
 
         #region RawmaterialIssue
 
+        public ActionResult GetMRawmaterialIssueList(string flag, string name,long? id)
+        {
+
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+                return View();
+            }
+
+            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            //{
+            //    var dto = _pRawMaterialStockInfo.GetAllPRawMaterialStockInfo(User.OrgId, name ?? null, rsupid ?? 0);
+
+            //    List<PRawMaterialStockInfoViewModel> viewModels = new List<PRawMaterialStockInfoViewModel>();
+            //    AutoMapper.Mapper.Map(dto, viewModels);
+            //    return PartialView("_GetRawMaterialStockpurchaseList", viewModels);
+            //}
+            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            //{
+
+            //    var SupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).ToList();
+            //    var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+            //    var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
+
+            //    var info = _pRawMaterialStockInfo.GetRawmaterialPuschaseInfoOneById(id.Value, User.OrgId);
+            //    List<PRawMaterialStockIDetailsViewModel> details = new List<PRawMaterialStockIDetailsViewModel>();
+
+            //    if (info != null)
+            //    {
+            //        ViewBag.Info = new PRawMaterialStockInfoViewModel
+            //        {
+            //            RawMaterialSupplierName = SupplierName.FirstOrDefault(x => x.RawMaterialSupplierId == info.RawMaterialSupplierId).RawMaterialSupplierName,
+            //            BatchCode = info.BatchCode,
+            //            EntryDate = info.EntryDate,
+            //            TotalAmount = info.TotalAmount,
+            //        };
+
+            //        details = _pRawMaterialStockIDetails.GetRawMatwrialPurchaseDetailsByInfoId(id.Value).Select(i => new PRawMaterialStockIDetailsViewModel
+            //        {
+            //            RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
+            //            UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
+            //            Quantity = i.Quantity,
+            //            UnitPrice = i.UnitPrice,
+            //            SubTotal = i.SubTotal,
+            //            StockDate = i.StockDate
+
+            //        }).ToList();
+            //    }
+            //    else
+            //    {
+            //        ViewBag.Info = new PRawMaterialStockInfoViewModel();
+            //    }
+            //    return PartialView("_RawmatiralPurchaseDetails", details);
+
+            //}
+
+            return View();
+
+        }
+
+
+        public ActionResult GetStockQty(long RawMaterialId)
+        {
+            var StockInRMID = _rawMaterialTrack.GetAllRawMaterialTruck().Where(x => x.RawMaterialId == RawMaterialId && x.IssueStatus == "StockIn").ToList();
+            var Stockinqty = StockInRMID.Sum(c => c.Quantity);
+
+            var StockoutRMID = _rawMaterialTrack.GetAllRawMaterialTruck().Where(w => w.RawMaterialId == RawMaterialId && w.IssueStatus == "StockOut").ToList();
+            var Stockoutqty = StockoutRMID.Sum(d => d.Quantity);
+
+            var rmnqty = Stockinqty - Stockoutqty;
+
+
+            return Json(rmnqty, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
     }
 }
