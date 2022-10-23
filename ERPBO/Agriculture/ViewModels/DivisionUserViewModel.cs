@@ -8,8 +8,10 @@ namespace ERPBO.Agriculture.ViewModels
 {
   public  class DivisionUserViewModel
     {
+        public long DivisionUserId { get; set; }
         public long UserId { get; set; }
         public long DivisionId { get; set; }
+        public long OrganizationId { get; set; }
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
