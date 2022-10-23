@@ -235,9 +235,6 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 }
 
 
-
-
-
             }
             else
             {
