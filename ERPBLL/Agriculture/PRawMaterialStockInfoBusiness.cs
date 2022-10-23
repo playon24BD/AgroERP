@@ -16,6 +16,7 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly PRawMaterialStockInfoRepository  _pRawMaterialStockInfoRepository;
+        private readonly RawMaterialTrackInfoRepository _rawMaterialTrackInfoRepository;
 
 
         //contractor
@@ -23,6 +24,7 @@ namespace ERPBLL.Agriculture
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._pRawMaterialStockInfoRepository = new PRawMaterialStockInfoRepository(this._agricultureUnitOfWork);
+            this._rawMaterialTrackInfoRepository = new RawMaterialTrackInfoRepository(this._agricultureUnitOfWork);
         }
 
 
@@ -81,6 +83,7 @@ Utility.ParamChecker(param));
 
                 };
                 List<PRawMaterialStockIDetails> modelDetails = new List<PRawMaterialStockIDetails>();
+                List<RawMaterialTrack> modeltrk = new List<RawMaterialTrack>();//RawMaterialTrackInfo table update
 
                 foreach (var item in details)
                 {
@@ -102,11 +105,30 @@ Utility.ParamChecker(param));
 
                     };
                     modelDetails.Add(PRawMaterialStockIDetails);
+
+
+                    //RawMaterialTrackInfo table update
+                    RawMaterialTrack rawMaterialTrack = new RawMaterialTrack()
+                    {
+                        RawMaterialId = item.RawMaterialId,
+                        Quantity = item.Quantity,
+                        IssueDate = DateTime.Now,
+                        EntryDate = DateTime.Now,
+                        IssueStatus = "StockIn",
+                        EntryUserId = userId
+                    };
+                    modeltrk.Add(rawMaterialTrack);
+                    
                 }
+                
                 model.PRawMaterialStockIDetails = modelDetails;
 
                 _pRawMaterialStockInfoRepository.Insert(model);
                 IsSuccess = _pRawMaterialStockInfoRepository.Save();
+
+                _rawMaterialTrackInfoRepository.InsertAll(modeltrk);
+                IsSuccess = _rawMaterialTrackInfoRepository.Save();
+
             }
             //else
             //{

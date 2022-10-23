@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBO.Agriculture.DomainModels;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,11 @@ namespace ERPBLL.Agriculture
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._rawMaterialTrackInfoRepository = new RawMaterialTrackInfoRepository(this._agricultureUnitOfWork);
+        }
+
+        public IEnumerable<RawMaterialTrack> GetAllRawMaterialTruck()
+        {
+            return _rawMaterialTrackInfoRepository.GetAll().ToList();
         }
     }
 }

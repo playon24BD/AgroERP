@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ERPBO.Agriculture.DomainModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IRawMaterialTrack
     {
+        IEnumerable<RawMaterialTrack> GetAllRawMaterialTruck();
     }
 }

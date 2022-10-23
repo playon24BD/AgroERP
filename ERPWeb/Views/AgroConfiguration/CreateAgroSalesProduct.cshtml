@@ -364,7 +364,7 @@
                     var td10 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
                     var td11 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
 
-                    var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + +td11 + "</tr>";
+                    var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + "</tr>";
                     // Total
 
                     if ($("#tblList tbody tr").length == 0) {
@@ -551,7 +551,7 @@
                         debugger;
                         //disable("#btnSubmit");
                         //getTargetItemAndItemTypeAndWarehouse();
-                        var info = { ProductSalesInfoId: 0, StockiestId: TryParseInt(ddlClientName.val(), 0), Depot: ddlDepotName.val(), InvoiceDate: InvoiceDate.val(), ChallanDate: ChallanDate.val(), VehicleType: txtVehicleType.val(), VehicleNumber: txtVehicleNumber.val(), DriverName: txtDriverName.val(), DeliveryPlace: txtDeliveryPlace.val(), Do_ADO_DA: txtDo_ADO_DA.val(), DoADO_Name: txtDoADO_Name.val(), PaymentMode: ddlPaymentMode.val() };
+                        var info = { ProductSalesInfoId: 0, UserId: TryParseInt(ddlClientName.val(), 0), Depot: ddlDepotName.val(), InvoiceDate: InvoiceDate.val(), ChallanDate: ChallanDate.val(), VehicleType: txtVehicleType.val(), VehicleNumber: txtVehicleNumber.val(), DriverName: txtDriverName.val(), DeliveryPlace: txtDeliveryPlace.val(), Do_ADO_DA: txtDo_ADO_DA.val(), DoADO_Name: txtDoADO_Name.val(), PaymentMode: ddlPaymentMode.val() };
 
                         var details = [];
                         details.length = 0;
@@ -560,15 +560,15 @@
                             var tds = $(this).children('td');
                             debugger;
                             details.push({
-                                ProductSalesDetailsId: 0,
-                                //MeasurementId: tds.eq(10).html(),
-                                ////Quanity: tds.eq(3).html(),
-                                //Price: tds.eq(4).html(),
-                                //Discount: tds.eq(5).html(),
-                                ////ProductId: tds.eq(9).html(),
-                                //MeasurementSize: tds.eq(2).html(),
-
-
+                               ProductSalesDetailsId: 0,
+                               MeasurementId: tds.eq(10).html(),
+                               Quanity: tds.eq(3).html(),
+                               Price: tds.eq(4).html(),
+                               Discount: tds.eq(5).html(),
+                               FinishGoodProductInfoId: tds.eq(9).html(),
+                               MeasurementSize: tds.eq(2).html(),
+                               DiscountTk:tds.eq(6).html()
+                               
                                 
 
                             });

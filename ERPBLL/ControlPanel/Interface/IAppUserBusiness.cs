@@ -14,6 +14,7 @@ namespace ERPBLL.ControlPanel.Interface
     {
         IEnumerable<AppUser> GetAllAppUserByOrgId(long orgId);
         AppUser GetId(long userId, long orgId);
+        //AppUser GetIds(string userId, long orgId);
         bool SaveAppUser(AppUserDTO appUserDTO, long userId, long orgId);
         bool SaveSRAppUser(AppUserDTO appUserDTO, long userId, long orgId, string role,out string srUserId);
         AppUser GetAppUserOneById(long id, long orgId);
