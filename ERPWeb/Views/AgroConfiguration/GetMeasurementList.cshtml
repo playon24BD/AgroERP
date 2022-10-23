@@ -205,6 +205,8 @@
     </div>
 </div>
 
+
+
 <div class="modal" id="modalMeasurementSetup" role="dialog">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
@@ -247,10 +249,11 @@
 
                         </div>
                         <div class="col-md-12">
-                            <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
-                            @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            <label for="ddlUnits" class="control-label font-weight-bold">Unit Name</label>
+                            @*<input type="number" id="ddlUnits" class="form-control form-control-sm" />*@
+                            @Html.DropDownList("ddlUnits", (IEnumerable<SelectListItem>)ViewBag.ddlUnits, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
-                            <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
+        <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
                         </div>
                         @*<div class="form-group col-md-12">
             <label for="unit" class="control-label">Unit</label>
@@ -280,6 +283,8 @@
                 </form>
 
             </div>
+
+
             <div class="modal-footer btn-default">
                 <div class="col-md-6">
                     <div id="msg1" class="alert alert-success hide float-left">
@@ -317,6 +322,8 @@
         var ddlStatus = $("#ddlStatus");
         var ddlUnit = $("#ddlUnit");
         var unitName = $("#unitName");
+        var unitId = $("#unitId");
+        var ddlUnits = $("#ddlUnits");
 
 
         $("#addTolist").click(function (e) {
@@ -443,8 +450,8 @@
             e.preventDefault();
             if (validateUpdate() == true) {
                 debugger;
-                 var data = {
-                    measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(),UnitId: TryParseInt(ddlUnit.val(), 0), Status: ddlStatus.val()
+                var data = {
+                    measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(), UnitId: TryParseInt(ddlUnits.val(), 0), Status: ddlStatus.val()
             }
           //  var models = JSON.stringify(data);
 
@@ -516,13 +523,13 @@
             var row = $(this).parent().parents("tr");
             var td1 = row.find("td:eq(1)").html();
             var td2 = row.find("td:eq(2)").html();
-            //var td3 = row.find("td:eq(3)").html();
+            var td3 = row.find("td:eq(3)").html();
             var td4 = row.find("td:eq(4)").html();
             var td5 = row.find("td:eq(5)").html();
             var td6 = row.find("td:eq(6)").html();
             var td7 = row.find("td:eq(7)").html();
             var td8 = row.find("td:eq(8)").html();
-            //var td9 = row.find("td:eq(9)").html();
+            var td9 = row.find("td:eq(9)").html();
             
             //UnitId.val();
             hiddenMeasureMentId.val(td1);
@@ -530,10 +537,13 @@
             masterCartoonBox.val(td4);
             innerBox.val(td5);
             packSize.val(td6);
-            unitName.val(td7);
-            unitName.trigger("Change");
-            ddlStatus.val(td8);
+            ddlUnits.val(td8);
+            ddlUnits.trigger("Change");
+           // unitId.val(td8);
+            ddlStatus.val(td9);
             ddlStatus.trigger("Change");
+
+
             //hiddenMeasureMentId.val(td1);
             ////measureMentName.val(td2);
             ////masterCartoonBox.val(td4);
@@ -546,15 +556,7 @@
             ////measureMentName.val(td5);
             ////measureMentName.val(td6);
             
-            //measureMentName.val(td2);
-            ////measureMentName.val(td3);
-            //masterCartoonBox.val(td4);
-            //innerBox.val(td5);
-            //packSize.val(td6);
-            //unitName.val(td7);
-            //ddlStatus.val(td8);
-            ////unitName.val(td9);
-            ////unitName.trigger("change");
+            
 
         })
         function OpenModal() {

@@ -427,6 +427,8 @@ namespace ERPWeb.Controllers
 
                 ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
 
+                ViewBag.ddlUnits = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
+
                 return View();
             }
             else if(!string.IsNullOrEmpty(flag) && flag == "list")
@@ -1865,6 +1867,7 @@ namespace ERPWeb.Controllers
             ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Where(o=>o.RoleId==34).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
 
             //ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
 
             ViewBag.ddlProductName =_finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName.ToString()+ " ()", Value = f.FinishGoodProductId.ToString() }).ToList();
 
