@@ -11,7 +11,7 @@ namespace ERPBO.Agriculture.DTOModels
     {
         public long RawMaterialIssueStockId { get; set; }
         public string ProductBatchCode { get; set; }
-        public long IssueStatus { get; set; }
+        public string Status { get; set; }
 
 
 
