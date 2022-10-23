@@ -13,6 +13,7 @@ namespace ERPBO.ControlPanel.DomainModels
     {
         [Key]
         public long UserId { get; set; }
+       // public string UserIds { get; set; }
         [StringLength(150)]
         public string FullName { get; set; }
         [StringLength(50)]

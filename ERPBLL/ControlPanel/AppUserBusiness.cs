@@ -49,9 +49,13 @@ namespace ERPBLL.ControlPanel
 
         public AppUser GetId(long userId,long orgId)
         {
+            //string userid = userId.ToString();
             return appUserRepository.GetOneByOrg(a => a.UserId == userId && a.OrganizationId == orgId);
         }
-
+        //public AppUser GetIds(string userId, long orgId)
+        //{
+        //    return appUserRepository.GetOneByOrg(a => a.UserId == userId && a.OrganizationId == orgId);
+        //}
         public AppUserDTO GetAppUserInfoById(long id, long orgId,string flag)
         {
             if(flag == "System")

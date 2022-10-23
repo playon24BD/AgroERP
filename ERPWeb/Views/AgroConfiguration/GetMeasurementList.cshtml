@@ -330,8 +330,8 @@
                 var masterBox = "<td class='hide'>" + txtmasterBox.val(); + "</td>";
                 var innerBox = "<td class='hide'>" + txtinnerBox.val(); + "</td>";
                 var packSize = "<td class='hide'>" + txtpackSize.val(); + "</td>";
-                //var unit = "<td>" + ddlUnit.val(); + "</td>";
-                var unitName = "<td>"+ dropDownSelectedText("ddlUnit") + "</td>";
+                var unitName = "<td>" + ddlUnit.val(); + "</td>";
+                //var unitName = "<td>"+ dropDownSelectedText("ddlUnit") + "</td>";
                 var unitId = "<td class='hide UnitId'>" + ddlUnit.val() + "</td>";
                 if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
                     item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
@@ -512,6 +512,7 @@
         $(document).on("click", "a.data-edit-item-measurement", function () {
 
             OpenModal();
+            debugger;
             var row = $(this).parent().parents("tr");
             var td1 = row.find("td:eq(1)").html();
             var td2 = row.find("td:eq(2)").html();
@@ -522,16 +523,17 @@
             var td7 = row.find("td:eq(7)").html();
             var td8 = row.find("td:eq(8)").html();
             //var td9 = row.find("td:eq(9)").html();
-
-
+            
+            //UnitId.val();
             hiddenMeasureMentId.val(td1);
             measureMentName.val(td2);
             masterCartoonBox.val(td4);
             innerBox.val(td5);
             packSize.val(td6);
             unitName.val(td7);
+            unitName.trigger("Change");
             ddlStatus.val(td8);
-
+            ddlStatus.trigger("Change");
             //hiddenMeasureMentId.val(td1);
             ////measureMentName.val(td2);
             ////masterCartoonBox.val(td4);

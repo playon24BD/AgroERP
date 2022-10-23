@@ -19,18 +19,20 @@ namespace ERPBLL.Agriculture
         //private readonly AppUserRepository appUserRepository; // repo
         private readonly IAppUserBusiness _appUserBusiness;
         private readonly IStockiestInfo _stockiestInfo;
+        private readonly ITerritorySetup _territorySetup;
         private readonly IAreaSetupBusiness _areaSetupBusiness;
         private readonly IDivisionInfo _divisionInfo;
         private readonly IRegionSetup _regionSetup;
         private readonly IZoneSetup _zoneSetup;
         private readonly IUserAssignBussiness _userAssignBussiness;
         private readonly IUserInfo _userInfo;
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo)
+        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
             this._appUserBusiness = appUserBusiness;
             this._stockiestInfo = stockiestInfo;
+            this._territorySetup = territorySetup;
             this._areaSetupBusiness = areaSetupBusiness;
             this._divisionInfo = divisionInfo;
             this._regionSetup = regionSetup;
@@ -61,34 +63,43 @@ namespace ERPBLL.Agriculture
 
             var ChallanNo = "CHA-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
-            var VehicleNumber = "VEH-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            var InvoiceNo = "INV-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
             
 
             if (agroSalesInfoDTO.ProductSalesInfoId == 0)
             {
 
-                    var stockeiestId = _appUserBusiness.GetId(agroSalesInfoDTO.StockiestId, orgId).StockiestId;
+                    var stockeiestId = _appUserBusiness.GetId(agroSalesInfoDTO.UserId, orgId).StockiestId;
+                long stockId =Convert.ToInt32( stockeiestId);
 
-                    var territoryId = _stockiestInfo.GetStockiestInfoById(1, orgId).TerritoryId;
+                    var territoryId = _stockiestInfo.GetStockiestInfoById(stockId, orgId).TerritoryId;
 
-                var divisionId = _divisionInfo.GetDivisionInfoById(1, orgId).DivisionId;
-                var regionId = _regionSetup.GetRegionNamebyId(1, orgId).RegionId;
+                var areaId =_territorySetup.GetTerritoryNamebyId(stockId, orgId).AreaId;
 
-                //var userAssignId = _userAssignBussiness.GetUserAssignById(stockeiestId.Value, orgId).UserAssignId;
+                var regionId = _areaSetupBusiness.GetAreaInfoById(stockId, orgId).RegionId;
+
+                var divisionId = _regionSetup.GetRegionNamebyId(stockId, orgId).DivisionId;
+
+                var zoneId = _divisionInfo.GetDivisionInfoById(stockId, orgId).ZoneId;
+
+                
+
+                //var userAssignId = _userAssignBussiness.GetUserAssignById(stockId, orgId).UserAssignId;
 
                 //var userInfo = _userInfo.GetUserInfoById(stockeiestId.Value, orgId).UserId;
-                
-                //var zoneId = _zoneSetup.GetZoneNamebyId(stockeiestId.Value, orgId).ZoneId;
 
-                var areaId = _areaSetupBusiness.GetAreaInfoById(1, orgId).AreaId;
+
+
+
 
 
                 AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo
                 {
 
                     ChallanNo = ChallanNo,
-                    VehicleNumber = VehicleNumber,
+                    InvoiceNo=InvoiceNo,
+                    VehicleNumber = agroSalesInfoDTO.VehicleNumber,
                     ProductSalesInfoId = agroSalesInfoDTO.ProductSalesInfoId,
                     DeliveryPlace = agroSalesInfoDTO.DeliveryPlace,
                     DoADO_Name = agroSalesInfoDTO.DoADO_Name,
@@ -96,20 +107,21 @@ namespace ERPBLL.Agriculture
                     InvoiceDate = agroSalesInfoDTO.InvoiceDate,
                     PaymentMode = agroSalesInfoDTO.PaymentMode,
                     VehicleType = agroSalesInfoDTO.VehicleType,
-                    //UserAssignId = agroSalesInfoDTO.UserAssignId,
-                    StockiestId = 1,
+                    UserAssignId = agroSalesInfoDTO.UserAssignId,
+                    UserId = agroSalesInfoDTO.UserId,
+                    StockiestId = stockId,
                     TerritoryId = territoryId,
+                    AreaId = areaId,
                     DivisionId = divisionId,
                     RegionId = regionId,
                     //UserAssignId=userAssignId,
-                   //UserId = userInfo,
-                    AreaId = areaId,
-                    //ZoneId=zoneId,
-                    ChallanDate =DateTime.Now,
+                    //UserId = userInfo,
+                    ZoneId=zoneId,
+                    ChallanDate = DateTime.Now,
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
                     OrganizationId = orgId,
-                     InvoiceNo=agroSalesInfoDTO.InvoiceNo,
+                     //InvoiceNo=agroSalesInfoDTO.InvoiceNo,
                      Depot=agroSalesInfoDTO.Depot,
                      Do_ADO_DA=agroSalesInfoDTO.Do_ADO_DA
 
@@ -133,7 +145,7 @@ namespace ERPBLL.Agriculture
                                 Quanity=item.Quanity,
                                  FinishGoodProductInfoId=item.FinishGoodProductInfoId,
                                   ProductSalesDetailsId=item.ProductSalesDetailsId
-                            
+                                  
 
 
                     };

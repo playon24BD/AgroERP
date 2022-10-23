@@ -1866,7 +1866,8 @@ namespace ERPWeb.Controllers
 
             //ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
-            ViewBag.ddlProductName =_finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName.ToString()+ " (Quantity)", Value = f.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProductName =_finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName.ToString()+ " ()", Value = f.FinishGoodProductId.ToString() }).ToList();
+
 
             ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
 
@@ -1899,7 +1900,7 @@ namespace ERPWeb.Controllers
            
             if (checkFinishGoodStockValue != null)
             {
-                itemStock = (checkFinishGoodStockValue.Quanity);
+                itemStock = (checkFinishGoodStockValue.TargetQuantity);
                 
             }
             return Json(new { FinishGoodStockQty = itemStock });
@@ -1911,14 +1912,14 @@ namespace ERPWeb.Controllers
         {
 
             bool isSucccess = false;
-            if (ModelState.IsValid && details.Count() > 0)
-            {
+            //if (ModelState.IsValid && details.Count() > 0)
+            //{
                 AgroProductSalesInfoDTO agroSalesInfoDTO = new AgroProductSalesInfoDTO();
                 List<AgroProductSalesDetailsDTO> agroSalesDetailsDTOs = new List<AgroProductSalesDetailsDTO>();
                 AutoMapper.Mapper.Map(info, agroSalesInfoDTO);
                 AutoMapper.Mapper.Map(details, agroSalesDetailsDTOs);
                 isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
-            }
+            //}
             return Json(isSucccess);
         }
 
