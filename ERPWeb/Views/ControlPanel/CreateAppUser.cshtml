@@ -946,7 +946,30 @@
 
         $("#btnSubmit").click(function (e) {
             e.preventDefault();
+
+
             if (validateUserForm()) {
+
+                var division = '';
+                var divisions = []; divisions.length = 0;
+
+                if (ddlRoleName.val() == 29) {
+                    if (ddlZoneName.val().length > 0) {
+                        $.each(ddlDivisionForSR.val(), function (index, item) {
+                            rsmDivisions.push(item);
+                        })
+                    }
+                }
+                if (ddlRoleName.val() == 30) {
+                   
+                    if (ddlDivisionName.val().length > 0) {
+                        $.each(ddlDivisionName.val(), function (index, item) {
+                            divisions.push(item);
+                        })
+                    }
+                }
+
+
                 disable("#btnSubmit");
                 var userData ={
                     UserId: TryParseInt(hdfUserId.val(), 0),
@@ -965,7 +988,7 @@
                     IsActive: chkStatestatus.is(":checked"),
                     IsRoleActive: chkStatestatusRole.is(":checked"),
                     ZoneId: TryParseInt(ddlZoneName.val(), 0),
-                    DivisionId: TryParseInt(ddlDivisionName.val(), 0),
+                    DivisionId: divisions,
                     RegionId: TryParseInt(ddlRegionName.val(), 0),
                     AreaId: TryParseInt(ddlAreaName.val(), 0),
                     TerritoryId: TryParseInt(ddlTerritoryName.val(), 0),

@@ -105,6 +105,7 @@
     <Compile Include="Agriculture\AreaSetupBusiness.cs" />
     <Compile Include="Agriculture\BankSetupBusiness.cs" />
     <Compile Include="Agriculture\DivisionInfoBusiness.cs" />
+    <Compile Include="Agriculture\DivisionUserBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductDetailsBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductionInfoBusiness.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Agriculture\Interface\IAgroUnitInfo.cs" />
     <Compile Include="Agriculture\Interface\IAreaSetupBusiness.cs" />
     <Compile Include="Agriculture\Interface\IDivisionInfo.cs" />
+    <Compile Include="Agriculture\Interface\IDivisionUserBusiness.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductionDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IBankSetup.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductBusiness.cs" />

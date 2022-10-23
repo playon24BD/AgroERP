@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using ERPBLL.Agriculture.Interface;
 using ERPBO.Common;
+using ERPBO.Agriculture.ViewModels;
 
 namespace ERPWeb.Controllers
 {
@@ -39,7 +40,7 @@ namespace ERPWeb.Controllers
         private readonly IAreaSetupBusiness _areaSetupBusiness;//e
         private readonly ITerritorySetup _territorySetup;//e
 
-        public ControlPanelController(IOrganizationBusiness               organizationBusiness,IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness, IZoneSetup zoneSetup,IDivisionInfo divisionInfo,IRegionSetup regionSetup, IAreaSetupBusiness areaSetupBusiness, ITerritorySetup territorySetup,IStockiestInfo stockiestInfo)
+        public ControlPanelController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness, IZoneSetup zoneSetup, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IAreaSetupBusiness areaSetupBusiness, ITerritorySetup territorySetup, IStockiestInfo stockiestInfo)
         {
             this._depotSetup = depotSetup;
             this._organizationBusiness = organizationBusiness;
@@ -271,6 +272,7 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Select(br => new SelectListItem { Text = br.OrganizationName, Value = br.OrganizationId.ToString() });
                 return View();
             }
+
             else if (!string.IsNullOrEmpty(flag) && flag == "Branch")
             {
 
@@ -309,10 +311,63 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "User")
             {
+                //var div="";
                 ViewBag.OPFor = "System";
-                var data = _appUserBusiness.GetAllAppUsers();
-                IEnumerable<AppUserViewModel> appUserViewModels = data.Select(user => new AppUserViewModel
+
+                //var data = _appUserBusiness.GetAllAppUsers().Select(a=>a.DivisionId).ToList();
+                var data = _appUserBusiness.GetAllAppUsers().ToList();
+                var data2 = string.Join(",", data.Where(x => x != null).Select(x => x.DivisionId));
+                //if (data.con>0)
+                //{
+                //    if(data[0]!==null)
+
+                //}
+                var div = data2.Split(',');
+
+                long divisionId = 0;
+                List<DivisionInfoViewModel> Divisions = new List<DivisionInfoViewModel>();
+                List<DivisionInfoViewModel> DivisionName = new List<DivisionInfoViewModel>();
+         
+                var Division = "";
+
+
+                if (div.Count() > 0)
                 {
+                    foreach (var d in div)
+                    {
+                        if (d != null && d != "0" && d != "")
+                        {
+                            divisionId = Convert.ToInt32(d);
+                            //var   Division = _divisionInfo.GetDivisionInfoById(divisionId, User.OrgId).DivisionName;
+                            //var Division = _divisionInfo.GetDivisionInfoById(divisionId, User.OrgId).DivisionName;
+                         DivisionName = _divisionInfo.GetAllDivisionSetup( User.OrgId).Where(a=>a.DivisionId==divisionId).Select(b=>new DivisionInfoViewModel {
+                                DivisionName=b.DivisionName,
+                                DivisionId=b.DivisionId
+
+                            }).ToList();
+
+                            Divisions.AddRange(DivisionName);
+                        }
+                     
+
+
+
+
+                    }
+
+                }
+
+
+
+                //var data3 = _appUserBusiness.GetAllAppUsers().Select(a=>a.ZoneId);
+                //var data4 = _appUserBusiness.GetAllAppUsers().Select(a=>a.AreaId);
+                //var data5 = _appUserBusiness.GetAllAppUsers().Select(a=>a.RegionId);
+
+                var data1 = _appUserBusiness.GetAllAppUsers();
+
+                IEnumerable<AppUserViewModel> appUserViewModels = data1.Select(user => new AppUserViewModel
+                {
+
                     UserId = user.UserId,
                     EmployeeId = user.EmployeeId,
                     FullName = user.FullName,
@@ -333,7 +388,8 @@ namespace ERPWeb.Controllers
                     EntryUser = UserForEachRecord(user.EUserId.Value).UserName,
                     UpdateUser = !user.UpUserId.HasValue ? "" : UserForEachRecord(user.UpUserId.Value).UserName,
                     //ZoneName=_zoneSetup.GetZoneNamebyId(user.ZoneId.Value,User.OrgId).ZoneName,
-                    //DivisionName=_divisionInfo.GetDivisionInfoById(user.DivisionId.Value,User.OrgId).DivisionName,
+
+                    DivisionName = Divisions,
                     //RegionName=_regionSetup.GetRegionNamebyId(user.RegionId.Value,User.OrgId).RegionName,
                     //AreaName=_areaSetupBusiness.GetAreaById(user.AreaId.Value,User.OrgId).AreaName,
                     //TerritoryName=_territorySetup.GetTerritoryNamebyId(user.TerritoryId.Value,User.OrgId).TerritoryName,
@@ -572,7 +628,7 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == "Submenu")
             {
 
-           var subMenuDTOs = _subMenuBusiness.GetAllSubMenu().ToList();
+                var subMenuDTOs = _subMenuBusiness.GetAllSubMenu().ToList();
                 IEnumerable<SubMenuDTO> subMenuDTO = _subMenuBusiness.GetAllSubMenu().Select(sub => new SubMenuDTO
                 {
                     SubMenuId = sub.SubMenuId,
@@ -730,7 +786,7 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlRegionName = _regionSetup.GetAllRegionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
                 ViewBag.ddlAreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
                 ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
-     
+
                 ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.StockiestName, Value = terr.StockiestId.ToString() }).ToList();
                 return View();
             }
@@ -756,13 +812,13 @@ namespace ERPWeb.Controllers
 
             return Json(data);
         }
-   
+
         [HttpPost]
         public ActionResult GetDivision()
         {
-            var data = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new Dropdown { value = org.DivisionId.ToString(), text = org.DivisionName}).ToList();
+            var data = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new Dropdown { value = org.DivisionId.ToString(), text = org.DivisionName }).ToList();
 
-          
+
             return Json(data);
         }
 
@@ -1149,7 +1205,7 @@ namespace ERPWeb.Controllers
             ///var pre = UserPrivilege("ControlPanel", "SetUserCustomAuthorization");
             //var permission = ((pre.Edit) || (pre.Add));
             //&& permission
-            if (models.Count > 0 )
+            if (models.Count > 0)
             {
                 List<UserAuthorizationDTO> userAuthorizationDTOs = new List<UserAuthorizationDTO>();
                 AutoMapper.Mapper.Map(models, userAuthorizationDTOs);
@@ -1224,7 +1280,7 @@ namespace ERPWeb.Controllers
             bool IsSuccess = false;
             //var pre = UserPrivilege("ControlPanel", "SetUserRoleAuthorization");
             //var permission = ((pre.Edit) || (pre.Add)); && permission
-            if (models.Count > 0 )
+            if (models.Count > 0)
             {
                 List<RoleAuthorizationDTO> roleAuthorizationDTOs = new List<RoleAuthorizationDTO>();
                 AutoMapper.Mapper.Map(models, roleAuthorizationDTOs);

@@ -79,6 +79,7 @@
     <Compile Include="Agriculture\DomainModels\AgroUnitInfo.cs" />
     <Compile Include="Agriculture\DomainModels\AreaInfoSetup.cs" />
     <Compile Include="Agriculture\DomainModels\DivisionInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\DivisionUser.cs" />
     <Compile Include="Agriculture\DomainModels\FinishGoodProductionDetails.cs" />
     <Compile Include="Agriculture\DomainModels\FinishGoodProductionInfo.cs" />
     <Compile Include="Agriculture\DomainModels\MRawMaterialIssueStockDetails.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Agriculture\DomainModels\RawMaterialStockDetail.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialTrack.cs" />
     <Compile Include="Agriculture\DomainModels\RegionSetup.cs" />
+    <Compile Include="Agriculture\DomainModels\RegionUser.cs" />
     <Compile Include="Agriculture\DomainModels\StockiestInfo.cs" />
     <Compile Include="Agriculture\DomainModels\TerritorySetup.cs" />
     <Compile Include="Agriculture\DomainModels\UserAssign.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Agriculture\DTOModels\AgroUnitInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\AreaSetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\DivisionInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\DivisionUserDTO.cs" />
     <Compile Include="Agriculture\DTOModels\FinishGoodProductionDetailsDTO.cs" />
     <Compile Include="Agriculture\DTOModels\FinishGoodProductionInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\MRawMaterialIssueStockDetailsDTO.cs" />
@@ -115,6 +118,7 @@
     <Compile Include="Agriculture\DTOModels\RawMaterialStockDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialTrackDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RegionSetupDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RegionUserDTO.cs" />
     <Compile Include="Agriculture\DTOModels\StockiestInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\TerritorySetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\UserAssignDTO.cs" />
@@ -127,6 +131,7 @@
     <Compile Include="Agriculture\ViewModels\AgroUnitInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AreaSetupViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\DivisionInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\DivisionUserViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionDetailViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\MRawMaterialIssueStockDetailsViewModel.cs" />
@@ -145,6 +150,7 @@
     <Compile Include="Agriculture\ViewModels\FinishGoodRecipeInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialTrackViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RegionSetupViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RegionUserViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\StockiestInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\TerritorySetupViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\UserAssignViewModel.cs" />

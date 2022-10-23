@@ -168,9 +168,25 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
         public ExecutionStateWithText SaveAppUser2(AppUserDTO appUserDTO, long userId, long orgId)
         {
             ExecutionStateWithText execution = new ExecutionStateWithText();
+            string srUserId = "0";
+            var division = string.Empty;
+            var district = string.Empty;
+            var zone = string.Empty;
             AppUser appUser = new AppUser();
             if (appUserDTO.UserId == 0)
             {
+
+                if (appUserDTO.DivisionId.Count() > 0)
+                {
+                    foreach (var div in appUserDTO.DivisionId)
+                    {
+                        division += div + ",";
+                    }
+                    division = division.Substring(0, division.Length - 1);
+                    district = null;
+                    zone = null;
+                }
+
                 appUser.EmployeeId = appUserDTO.EmployeeId;
                 appUser.FullName = appUserDTO.FullName;
                 appUser.MobileNo = appUserDTO.MobileNo;
@@ -188,7 +204,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.BranchId = appUserDTO.BranchId;
                 appUser.RoleId = appUserDTO.RoleId;
                 appUser.ZoneId = appUserDTO.ZoneId;
-                appUser.DivisionId = appUserDTO.DivisionId;
+                appUser.DivisionId = division;
                 appUser.RegionId = appUserDTO.RegionId;
                 appUser.AreaId = appUserDTO.AreaId;
                 appUser.TerritoryId = appUserDTO.TerritoryId;
@@ -216,7 +232,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.BranchId = appUserDTO.BranchId;
                 appUser.RoleId = appUserDTO.RoleId;
                 appUser.ZoneId = appUserDTO.ZoneId;
-                appUser.DivisionId = appUserDTO.DivisionId;
+                appUser.DivisionId = division;
                 appUser.RegionId = appUserDTO.RegionId;
                 appUser.AreaId = appUserDTO.AreaId;
                 appUser.TerritoryId = appUserDTO.TerritoryId;

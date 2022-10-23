@@ -39,48 +39,52 @@
                     sl += 1;
                     badge = (user.StateStatus == "Active" ? "badge bg-success" : "badge bg-danger");
                     badge1 = (user.StateStatusRole == "Active" ? "badge bg-success" : "badge bg-danger");
-                    <tr>
-                        <td class="text-center">
-                            <b>@sl</b>
-                        </td>
-                        <td class="hide">@user.UserId</td>
-                        <td>@user.EmployeeId</td>
-                        <td>@user.FullName</td>
-                        <td class="hide">@user.MobileNo</td>
-                        <td class="hide">@user.Address</td>
-                        <td>@user.Email</td>
-                        <td class="hide">@user.Desigation</td>
-                        <td>@user.UserName</td>
-                        <td>@user.Password</td>
-                        <td class="text-center" data-val="@user.StateStatus">
-                            <span class="@badge">@user.StateStatus</span>
-                        </td>
-                        <td class="text-center" data-val="@user.StateStatusRole">
-                            <span class="@badge1">@user.StateStatusRole</span>
-                        </td>
-                        <td class="hide">@user.OrganizationId</td>
-                        <td>@user.OrganizationName</td>
-                        <td class="hide">@user.BranchId</td>
-                    
-                        <td>@user.DivisionName</td>
-                        <td class="hide">@user.RoleId</td>
+                <tr>
+                    <td class="text-center">
+                        <b>@sl</b>
+                    </td>
+                    <td class="hide">@user.UserId</td>
+                    <td>@user.EmployeeId</td>
+                    <td>@user.FullName</td>
+                    <td class="hide">@user.MobileNo</td>
+                    <td class="hide">@user.Address</td>
+                    <td>@user.Email</td>
+                    <td class="hide">@user.Desigation</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Password</td>
+                    <td class="text-center" data-val="@user.StateStatus">
+                        <span class="@badge">@user.StateStatus</span>
+                    </td>
+                    <td class="text-center" data-val="@user.StateStatusRole">
+                        <span class="@badge1">@user.StateStatusRole</span>
+                    </td>
+                    <td class="hide">@user.OrganizationId</td>
+                    <td>@user.OrganizationName</td>
+                    <td class="hide">@user.BranchId</td>
 
-                        <td class="text-center">
-                            <span class="badge badge-info">@user.RoleName</span>
-                        </td>
-                        <td class="text-sm">@user.EntryUser</td>
-                        <td class="hide">@user.UpdateUser</td>
-                        <td class="text-center">
-                            @if (ViewBag.OPFor == "System")
-                            {
-                                <a href="@Url.Action("CreateAppUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
-                            }
-                            @if (ViewBag.OPFor == "Client")
-                            {
-                                <a href="@Url.Action("CreateClientUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
-                            }
-                        </td>
-                    </tr>
+                    <td>@user.BranchName</td>
+                    <td class="hide">@user.RoleId</td>
+
+                    <td class="text-center">
+                        <span class="badge badge-info">@user.RoleName</span>
+                    </td>
+                    <td class="text-sm">@user.EntryUser</td>
+                    <td class="hide">@user.UpdateUser</td>
+
+                  
+
+
+                    <td class="text-center">
+                        @if (ViewBag.OPFor == "System")
+                        {
+                            <a href="@Url.Action("CreateAppUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
+                        }
+                        @if (ViewBag.OPFor == "Client")
+                        {
+                            <a href="@Url.Action("CreateClientUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
+                        }
+                    </td>
+                </tr>
                 }
                 @if (Model.Count() == 0)
                 {

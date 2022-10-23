@@ -203,4 +203,9 @@ namespace ERPDAL.AgricultureDAL
         public AgroProductSalesDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
     }
 
+    public class DivisionUserBusinessRepository : AgricultureBaseRepository<DivisionUser>
+    {
+        public DivisionUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
 }
