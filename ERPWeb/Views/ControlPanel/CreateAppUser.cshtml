@@ -317,6 +317,10 @@
                     ddlOrganizationName.val(res.OrganizationId);
                     role = res.RoleId;
                     branch = res.BranchId;
+                    var Divisions = res.Division.split(',');
+                    ddlDivisionName.val(Divisions);
+
+
                     ddlOrganizationName.trigger("change");
                     ddlBranchName.val(res.BranchId);
         
@@ -351,7 +355,7 @@
 
         function dropdownValue(role) {
             alert(role);
-          var  ddlRoleName = TryParseInt(role);
+  
 
             if (role == 0) {
                 disable(ddlZoneName)
@@ -404,8 +408,8 @@
                 ddlStockiestName.val("");
             }
             if (role == 30) {
-                    LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
-                    $("#ddlDivisionName").attr("data-placeholder", "Select Division");
+                    //LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
+                    //$("#ddlDivisionName").attr("data-placeholder", "Select Division");
 
 
                     $("#zoneDiv").hide();
@@ -414,7 +418,8 @@
                     $("#areaDiv").hide();
                     $("#territoryDiv").hide();
                     $("#stockiestDiv").hide();
-                    $("#userNameDiv").show();
+                $("#userNameDiv").show();
+                $("#ddlDivisionName").trigger("change");
                     disable(ddlZoneName)
                     enable(ddlDivisionName)
                     disable(ddlRegionName)
