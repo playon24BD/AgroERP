@@ -263,6 +263,10 @@
             LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
             $("#ddlDivisionName").attr("data-placeholder", "Select Division");
 
+            $("#ddlDivisionName").select2({
+                placeholder: "Select Divisions..."
+            });
+
         });
 
 
@@ -337,7 +341,7 @@
             if (TryParseInt(ddlOrganizationName.val(), 0) > 0) {
                 LoadDropDown4('/Common/GetBranchesByOrgId', type.post, ddlBranchName, JSON.stringify({ orgId: ddlOrganizationName.val() }),branch);
                 LoadDropDown4('/Common/GetRolesByOrgId', type.post, ddlRoleName, JSON.stringify({ orgId: ddlOrganizationName.val() }), role);
-                ddlRoleName.val(role);
+                //ddlRoleName.val(role);
                 dropdownValue(role);
                 alert("from ddl Organization" + ddlRoleName.val() + role)
                 loadMenu();
@@ -349,7 +353,7 @@
             alert(role);
           var  ddlRoleName = TryParseInt(role);
 
-                if (ddlRoleName == 0) {
+            if (role == 0) {
                 disable(ddlZoneName)
                 disable(ddlDivisionName)
                 disable(ddlRegionName)
@@ -373,7 +377,7 @@
 
 
             }
-                if (ddlRoleName == 29) {
+            if (role == 29) {
                 //LoadDropDown('/ControlPanel/GetZone', type.post, ddlZoneName, null);
                 //$("#ddlZoneName").attr("data-placeholder", "Select Zone");
 
@@ -399,7 +403,7 @@
                 ddlTerritoryName.val("");
                 ddlStockiestName.val("");
             }
-                if (ddlRoleName == 30) {
+            if (role == 30) {
                     LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
                     $("#ddlDivisionName").attr("data-placeholder", "Select Division");
 
@@ -423,7 +427,7 @@
                     ddlTerritoryName.val("");
                     ddlStockiestName.val("");
                 }
-                if (ddlRoleName == 31) {
+            if (role == 31) {
 
                     LoadDropDown('/ControlPanel/GetRegion', type.post, ddlRegionName, null);
                     $("#ddlRegionName").attr("data-placeholder", "Select Region");
@@ -449,7 +453,7 @@
 
 
                 }
-                if (ddlRoleName == 32) {
+            if (role == 32) {
 
                     LoadDropDown('/ControlPanel/GetArea', type.post, ddlAreaName, null);
                     $("#ddlAreaName").attr("data-placeholder", "Select Area");
@@ -474,7 +478,7 @@
                     ddlStockiestName.val("");
 
                 }
-                if (ddlRoleName == 33) {
+            if (role == 33) {
 
                     LoadDropDown('/ControlPanel/GetTerritory', type.post, ddlTerritoryName, null);
                     $("#ddlTerritoryName").attr("data-placeholder", "Select Territory");
@@ -501,7 +505,7 @@
 
 
                 }
-                if (ddlRoleName == 34) {
+            if (role == 34) {
                     LoadDropDown('/ControlPanel/GetStockiest', type.post, ddlStockiestName, null);
                     $("#ddlStockiestName").attr("data-placeholder", "Select Stockiest");
 
@@ -535,7 +539,7 @@
         }
 
 
-
+        //for Create
         ddlRoleName.change(function () {
      
 

@@ -39,8 +39,9 @@ namespace ERPWeb.Controllers
         private readonly IRegionSetup _regionSetup;//e
         private readonly IAreaSetupBusiness _areaSetupBusiness;//e
         private readonly ITerritorySetup _territorySetup;//e
+        private readonly IDivisionUserBusiness _divisionUserBusiness;
 
-        public ControlPanelController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness, IZoneSetup zoneSetup, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IAreaSetupBusiness areaSetupBusiness, ITerritorySetup territorySetup, IStockiestInfo stockiestInfo)
+        public ControlPanelController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness, IZoneSetup zoneSetup, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IAreaSetupBusiness areaSetupBusiness, ITerritorySetup territorySetup, IStockiestInfo stockiestInfo,IDivisionUserBusiness divisionUserBusiness)
         {
             this._depotSetup = depotSetup;
             this._organizationBusiness = organizationBusiness;
@@ -59,6 +60,7 @@ namespace ERPWeb.Controllers
             this._areaSetupBusiness = areaSetupBusiness;
             this._territorySetup = territorySetup;
             this._stockiestInfo = stockiestInfo;
+            this._divisionUserBusiness = divisionUserBusiness;
         }
         // GET: ControlPanel
 
@@ -389,7 +391,7 @@ namespace ERPWeb.Controllers
                     UpdateUser = !user.UpUserId.HasValue ? "" : UserForEachRecord(user.UpUserId.Value).UserName,
                     //ZoneName=_zoneSetup.GetZoneNamebyId(user.ZoneId.Value,User.OrgId).ZoneName,
 
-                    DivisionName = Divisions,
+                    DivisionName =_divisionUserBusiness.GetAllDiv(user.UserId,User.OrgId),
                     //RegionName=_regionSetup.GetRegionNamebyId(user.RegionId.Value,User.OrgId).RegionName,
                     //AreaName=_areaSetupBusiness.GetAreaById(user.AreaId.Value,User.OrgId).AreaName,
                     //TerritoryName=_territorySetup.GetTerritoryNamebyId(user.TerritoryId.Value,User.OrgId).TerritoryName,
