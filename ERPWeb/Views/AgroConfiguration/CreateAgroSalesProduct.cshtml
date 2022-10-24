@@ -40,9 +40,9 @@
                                 <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
                             </div>
                             @*<div class="col-md-6">
-                                    <label for="ddlChallanNo" class="col-form-label">Challan No.</label>
-                                    <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
-                                </div>*@
+                    <label for="ddlChallanNo" class="col-form-label">Challan No.</label>
+                    <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
+                </div>*@
 
                             <div class="col-md-4">
                                 <label class="col-form-label font-weight-bold">Challan Date</label>
@@ -55,9 +55,9 @@
                             </div>
 
                             @*<div class="col-md-4">
-                                    <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
-                                    <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
-                                </div>*@
+                    <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
+                    <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
+                </div>*@
 
                             <div class="col-md-4">
                                 <label class="col-form-label font-weight-bold">Invoice Date</label>
@@ -161,7 +161,7 @@
 
                         </div>
 
-                        <div class="row">
+                        @*<div class="row">
                             <div class="col-md-8">
                                 @Html.AntiForgeryToken()
                                 <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg" id="tblList">
@@ -191,19 +191,67 @@
                                     </thead>
                                     <tbody></tbody>
                                 </table>
-                                
+
                             </div>
 
+                        </div>*@
 
-
-                            @*<div class="col-md-12">
-                <label>Total: <input type="text" name="total" id="total" readonly /></label>
-            </div>*@
-
-                        </div>
 
                     </div>
-                   
+
+
+
+
+
+                    @*e*@
+                    <div class="card-body">
+
+                        <div class="card-body table-responsive p-0 shadow" style="height: 200px;">
+                            <table class="table table-head-fixed text-nowrap tadd" id="tblList">
+                                <thead>
+                                    <tr class="text-center" style="color:black">
+
+                                        <th style="width:5%">#SL</th>
+                                        <th style="width:10%">Name</th>
+                                        <th style="width:10%">Measurement Desc</th>
+                                        <th style="width:5%">Quanity</th>
+                                        <th style="width:5%">Rate</th>
+                                        <th style="width:5%">Discount%</th>
+                                        <th style="width:5%">Discount(Tk.)</th>
+                                        <th style="width:10%">Amount(Tk.)</th>
+                                        <th style="width:10%">Action</th>
+                                        <th style="width:1%" class="hide ProductId"></th>
+                                        <th style="width:1%" class="hide MeasurementId"></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-gradient-gray"></tbody>
+                            </table>
+                        </div>
+
+                        @*Total*@
+                        <table class="table table-head-fixed text-nowrap tablesubtotal">
+                            <thead>
+                                <tr class="text-center">
+
+                                    <th>Total</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="totalqty">0</th>
+                                    <th class="totalsub">0</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-gradient-gray"></tbody>
+                        </table>
+                        @*Total*@
+                    </div>
+                    @*E*@
+
+
+
+
                 </div>
 
             </div>
@@ -237,6 +285,8 @@
         var txtDiscount = $("#txtDiscount");
         var FinishGoodProductInfoId = '';
         var FinishGoodStockQty = $("#FinishGoodStockQty");
+
+        var ddlRawMaterialList = [];
         //var QuantityCheck = $("#QuantityCheck");
         
 
@@ -340,13 +390,11 @@
             var totalDiscount = 0;
             debugger;
             if (validates() == true) {
-                //console.log(materialNameList);
-                //if (SalesProductNameList.includes(ddlProductName.val()))
 
-                if (false) {
-                    toastrErrorAlert("Product Name Already Exist");
-                }
-                else {
+
+
+
+
                     var sl = $("#tblList tbody tr").length;
 
                     var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
@@ -367,88 +415,70 @@
                     var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + "</tr>";
                     // Total
 
-                    if ($("#tblList tbody tr").length == 0) {
+                    //if ($("#tblList tbody tr").length == 0) {
 
 
-                        $("#tblList tbody").append(tr);
-                        //addTotal();
-                        var tdT1 = "<td class='text-sm'></td>";
-                        var tdT2 = "<td class='text-sm'>Total :</td>";
-                        var tdT3 = "<td class='text-sm'style='float: right;'></td>";
-                        //var tdT4 = "<td class='text-sm'>" + totalAmount + "</td>";
-                        var tdT4 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Quentity' readonly /> </td>";
-                        var tdT5 = "<td class='text-sm'></td>";
-                        var tdT6 = "<td class='text-sm'></td>";
-                        var tdT7 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Discount' readonly /> </td>";
-                        var tdT8 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Total' readonly /> </td>";
-                        //var tdT8 = "<td class='text-sm'>" + totalAmount + "</td>";
-                        var total = "<tr class='text-sm'>" + tdT1 + tdT2 + tdT3 + tdT4 + tdT5 + tdT6 + tdT7 + tdT8 + "</tr>";
-                        $("#tblList tbody").append(total);
-                    }
-                    else {
-                        $("#tblList tbody tr").eq(0).before(tr);
+                    //    $("#tblList tbody").append(tr);
+                    //    //addTotal();
+                    //    var tdT1 = "<td class='text-sm'></td>";
+                    //    var tdT2 = "<td class='text-sm'>Total :</td>";
+                    //    var tdT3 = "<td class='text-sm'style='float: right;'></td>";
+                    //    //var tdT4 = "<td class='text-sm'>" + totalAmount + "</td>";
+                    //    var tdT4 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Quentity' readonly /> </td>";
+                    //    var tdT5 = "<td class='text-sm'></td>";
+                    //    var tdT6 = "<td class='text-sm'></td>";
+                    //    var tdT7 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Discount' readonly /> </td>";
+                    //    var tdT8 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Total' readonly /> </td>";
+                    //    //var tdT8 = "<td class='text-sm'>" + totalAmount + "</td>";
+                    //    var total = "<tr class='text-sm'>" + tdT1 + tdT2 + tdT3 + tdT4 + tdT5 + tdT6 + tdT7 + tdT8 + "</tr>";
+                    //    $("#tblList tbody").append(total);
+                    //}
+                    //else {
+                    //    $("#tblList tbody tr").eq(0).before(tr);
 
-                        addTotal1();
+                    //    addTotal1();
 
-                    }
+                    //}
 
-                    //function addTotal() {
+
+                    //function addTotal1() {
                     //    $('#tblList tr').each(function () {
-                    //        var customerId = $(this).find(".customerIDCell").html();
-                    //        var t = parseInt(customerId)
-                    //        if (t > 0) {
+                    //        var QuanityIDCell = $(this).find(".QuanityIDCell").html();
+                    //        var DiscountIDCell = $(this).find(".DiscountIDCell").html();
+                    //        var TotalIDCell = $(this).find(".TotalIDCell").html();
+                    //        var Q = parseInt(QuanityIDCell)
+                    //        var D = parseInt(DiscountIDCell)
+                    //        var T = parseInt(TotalIDCell)
 
-                    //            totalAmount = totalAmount + t;
+
+                    //        if (T > 0) {
+
+                    //            totalAmount = totalAmount + T;
                     //            console.log(totalAmount);
-                    //            alert(totalAmount);
-                    //            $("#t1").val(totalAmount);
+                    //           // alert(totalAmount);
+                    //            $("#Total").val(totalAmount);
+
                     //        }
+                    //        if (Q > 0) {
+                    //            totalQuentity = totalQuentity + Q;
+                    //            $("#Quentity").val(totalQuentity);
+
+                    //        }
+
+                    //         if (D > 0) {
+                    //            totalDiscount = totalDiscount + D;
+                    //            $("#Discount").val(totalDiscount);
+
+                    //        }
+
+
+
 
                     //    });
 
                     //}
-                    function addTotal1() {
-                        $('#tblList tr').each(function () {
-                            var QuanityIDCell = $(this).find(".QuanityIDCell").html();
-                            var DiscountIDCell = $(this).find(".DiscountIDCell").html();
-                            var TotalIDCell = $(this).find(".TotalIDCell").html();
-                            var Q = parseInt(QuanityIDCell)
-                            var D = parseInt(DiscountIDCell)
-                            var T = parseInt(TotalIDCell)
+                    $("#tblList tbody").append(tr);
 
-
-                            if (T > 0) {
-
-                                totalAmount = totalAmount + T;
-                                console.log(totalAmount);
-                               // alert(totalAmount);
-                                $("#Total").val(totalAmount);
-
-                            }
-                            if (Q > 0) {
-                                totalQuentity = totalQuentity + Q;
-                                $("#Quentity").val(totalQuentity);
-
-                            }
-
-                             if (D > 0) {
-                                totalDiscount = totalDiscount + D;
-                                $("#Discount").val(totalDiscount);
-
-                            }
-
-
-
-
-                        });
-
-                    }
-
-                    SalesProductNameList.push(ddlProductName.val());
-
-
-
-                }
 
 
             }
@@ -503,23 +533,32 @@
             var index = $(this).parent().parents('tbody tr').index();
             var tds = $(this).parent().parents('tbody tr').children('td');
 
-            var ProductId = tds.eq(9).html();
 
-            var RawQuentity = tds.eq(3).html();
-            var totalQty = document.getElementById('Quentity').value
-            var CurrentQty = totalQty - RawQuentity;
+            var rId = tds.eq(9).html();
+            console.log("rId :" + rId);
+            const mid = ddlRawMaterialList.indexOf(rId);
 
-            var RawDiscountTk = tds.eq(6).html();
-            var totalDiscountTk = document.getElementById('Discount').value
-            var CurrentDiscountTk = totalDiscountTk - RawDiscountTk;
+            ddlRawMaterialList.splice(mid, 1);
+            //var index = $(this).parent().parents('tbody tr').index();
+            //var tds = $(this).parent().parents('tbody tr').children('td');
 
-            var RawAmountTk = tds.eq(7).html();
-            var totalAmountTk = document.getElementById('Total').value
-            var CurrentAmountTk = totalAmountTk - RawAmountTk;
+            //var ProductId = tds.eq(9).html();
 
-            console.log("ProductId :" + ProductId);
-            const mid = SalesProductNameList.indexOf(ProductId);
-            SalesProductNameList.splice(mid, 1);
+            //var RawQuentity = tds.eq(3).html();
+            //var totalQty = document.getElementById('Quentity').value
+            //var CurrentQty = totalQty - RawQuentity;
+
+            //var RawDiscountTk = tds.eq(6).html();
+            //var totalDiscountTk = document.getElementById('Discount').value
+            //var CurrentDiscountTk = totalDiscountTk - RawDiscountTk;
+
+            //var RawAmountTk = tds.eq(7).html();
+            //var totalAmountTk = document.getElementById('Total').value
+            //var CurrentAmountTk = totalAmountTk - RawAmountTk;
+
+            //console.log("ProductId :" + ProductId);
+            //const mid = SalesProductNameList.indexOf(ProductId);
+            //SalesProductNameList.splice(mid, 1);
 
 
             if (bootbox.confirm("Are you sure you want to delete?", function (result) {
@@ -531,11 +570,52 @@
                 };
             }));
 
-            $("#Quentity").val(CurrentQty);
-            $("#Discount").val(CurrentDiscountTk);
-            $("#Total").val(CurrentAmountTk);
+            //$("#Quentity").val(CurrentQty);
+            //$("#Discount").val(CurrentDiscountTk);
+            //$("#Total").val(CurrentAmountTk);
         })
 
+
+
+
+
+
+        //er
+        //remove
+        //$(document).on("click", "a.data-onfly-del", function (e) {
+        //    //debugger;
+        //    e.preventDefault();
+        //    var index = $(this).parent().parents('tbody tr').index();
+        //    var tds = $(this).parent().parents('tbody tr').children('td');
+
+        //    //tt
+        //    var subtotal = $(this).data("subtotal");
+        //    var row = $(this).data("quentaty");
+        //    console.log(row);
+        //    //tt
+
+        //    var rId = tds.eq(7).html();
+        //    console.log("rId :" + rId);
+        //    //const mid = ddlRawMaterialList.indexOf(rId);
+
+        //    //ddlRawMaterialList.splice(mid, 1);
+
+        //    if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+        //        if (result === true) {
+        //            removeTableRow("#tblPstockrawmaterial tbody", index);
+        //            fnFixTheTbodyRowSerial("#tblPstockrawmaterial tbody", index);
+
+
+        //            var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal);
+        //            $('.totalsub').text(totals);
+
+        //            var totalsq = parseFloat($(".totalqty").text()) - parseFloat(row);
+        //            $('.totalqty').text(totalsq);
+        //        };
+        //    }));
+
+        //})
+        //er
 
 
 

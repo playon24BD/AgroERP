@@ -42,5 +42,9 @@ namespace ERPBO.Agriculture.DomainModels
 
         public ICollection<AgroProductSalesDetails> AgroProductSalesDetails { get; set; }
 
+        public double PaidAmount { get; set; }
+        public double DueAmount { get; set; }
+
+
     }
 }

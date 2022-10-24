@@ -9,4 +9,4 @@ Add-Migration:
  Update-Database:
  Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
 
-  Add-Migration 'upstring' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
+  Add-Migration 'SalesTableUP' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
