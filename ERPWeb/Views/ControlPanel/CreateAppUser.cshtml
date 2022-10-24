@@ -238,6 +238,9 @@
 
         $(document).ready(function () {
 
+            LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
+            $("#ddlDivisionName").attr("data-placeholder", "Select Division");
+
             disable(ddlZoneName)
             disable(ddlDivisionName)
             disable(ddlRegionName)
@@ -260,12 +263,15 @@
                 theme: 'bootstrap4'
             });
 
-            LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
-            $("#ddlDivisionName").attr("data-placeholder", "Select Division");
+
 
             $("#ddlDivisionName").select2({
                 placeholder: "Select Divisions..."
             });
+
+            if (TryParseInt(hdfUserId.val(), 0) > 0) {
+                loadAppUserInfo(TryParseInt(hdfUserId.val(), 0));
+            }
 
         });
 
@@ -292,11 +298,9 @@
         var role = "";
         var branch = "";
 
-        $(document).ready(function () {
-            if (TryParseInt(hdfUserId.val(), 0) > 0) {
-                loadAppUserInfo(TryParseInt(hdfUserId.val(), 0));
-            }
-        })
+        //$(document).ready(function () {
+
+        //})
 
         function loadAppUserInfo(id) {
             var data = JSON.stringify({ flag: "load", id: id });
@@ -603,10 +607,8 @@
                     ddlStockiestName.val("");
                 }
                 if (ddlRoleName.val() == 30) {
-                    LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
-                    $("#ddlDivisionName").attr("data-placeholder", "Select Division");
 
-
+                    clearDropdown2("ddlDivisionName");
                     $("#zoneDiv").hide();
                     $("#divisionDiv").show();
                     $("#regionDiv").hide();
@@ -614,6 +616,8 @@
                     $("#territoryDiv").hide();
                     $("#stockiestDiv").hide();
                     $("#userNameDiv").show();
+                    LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
+                    $("#ddlDivisionName").attr("data-placeholder", "Select Division");
                     disable(ddlZoneName)
                     enable(ddlDivisionName)
                     disable(ddlRegionName)
