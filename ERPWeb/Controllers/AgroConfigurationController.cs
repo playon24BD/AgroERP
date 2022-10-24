@@ -1868,8 +1868,9 @@ namespace ERPWeb.Controllers
 
             //ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
+            //var quantity = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId);
 
-            ViewBag.ddlProductName =_finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName.ToString()+ " ()", Value = f.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProductName =_finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName.ToString()+ "()", Value = f.FinishGoodProductId.ToString() }).ToList();
 
 
             ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
