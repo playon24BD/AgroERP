@@ -238,6 +238,17 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
             }
             else
             {
+
+                if (appUserDTO.DivisionId.Count() > 0)
+                {
+                    foreach (var div in appUserDTO.DivisionId)
+                    {
+                        division += div + ",";
+                    }
+                    division = division.Substring(0, division.Length - 1);
+                    district = null;
+                    zone = null;
+                }
                 appUser = GetAppUserOneById(appUserDTO.UserId, appUserDTO.OrganizationId);
                 appUser.EmployeeId = appUserDTO.EmployeeId;
                 appUser.FullName = appUserDTO.FullName;
@@ -268,7 +279,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 execution.text = appUser.UserId.ToString();
                 if (execution.isSuccess)
                 {
-                    //_divisionUserBusiness.UpdateDivisions();
+                   _divisionUserBusiness.UpdateDivisions(appUserDTO.DivisionId, appUser.UserId, userId, orgId);
                 }
             }
 
