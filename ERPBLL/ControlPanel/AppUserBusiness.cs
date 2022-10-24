@@ -64,7 +64,7 @@ namespace ERPBLL.ControlPanel
             if(flag == "System")
             {
                 return _controlPanelUnitOfWork.Db.Database.SqlQuery<AppUserDTO>(string.Format(@"Select app.EmployeeId,app.UserId,app.FullName,app.MobileNo,app.[Address],app.Email,app.Desigation,app.UserName, 
-app.[Password],app.ConfirmPassword,app.OrganizationId,app.RoleId,app.BranchId,app.IsActive,app.IsRoleActive
+app.[Password],app.ConfirmPassword,app.OrganizationId,app.RoleId,app.BranchId,app.IsActive,app.IsRoleActive,app.DivisionId As Division
 From tblApplicationUsers app 
 Inner Join tblBranch b on app.BranchId = b.BranchId and app.OrganizationId = b.OrganizationId
 Inner Join tblRoles r on app.RoleId = r.RoleId and app.OrganizationId = r.OrganizationId
@@ -73,7 +73,7 @@ Where app.UserId={0}", id)).FirstOrDefault();
             else
 	        {
                 return _controlPanelUnitOfWork.Db.Database.SqlQuery<AppUserDTO>(string.Format(@"Select app.EmployeeId,app.UserId,app.FullName,app.MobileNo,app.[Address],app.Email,app.Desigation,app.UserName, 
-app.[Password],app.ConfirmPassword,app.OrganizationId,app.RoleId,app.BranchId,app.IsActive,app.IsRoleActive
+app.[Password],app.ConfirmPassword,app.OrganizationId,app.RoleId,app.BranchId,app.IsActive,app.IsRoleActive,app.DivisionId As Division
 From tblApplicationUsers app 
 Inner Join tblBranch b on app.BranchId = b.BranchId and app.OrganizationId = b.OrganizationId
 Inner Join tblRoles r on app.RoleId = r.RoleId and app.OrganizationId = r.OrganizationId
@@ -265,8 +265,11 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
 
                 execution.isSuccess = appUserRepository.Save();
 
-
                 execution.text = appUser.UserId.ToString();
+                if (execution.isSuccess)
+                {
+                    //_divisionUserBusiness.UpdateDivisions();
+                }
             }
 
 

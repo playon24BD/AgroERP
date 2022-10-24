@@ -1,5 +1,7 @@
 ﻿using ERPBLL.Agriculture.Interface;
 using ERPBO.Agriculture.DomainModels;
+using ERPBO.Agriculture.DTOModels;
+using ERPBO.Agriculture.ViewModels;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -19,10 +21,17 @@ namespace ERPBLL.Agriculture
             this._AgricultureUnitOfWork = AgricultureUnitOfWork;
             this.divisionUserBusinessRepository = new DivisionUserBusinessRepository(this._AgricultureUnitOfWork);
         }
-        public DivisionUser GetAllDivisionsByUserIdAndDivisionId(long userId, long divisionId, long orgId)
+        public IEnumerable<DivisionUser> GetAllDivisionsByUserIdAndDivisionId(long userId, long orgId)
         {
-            return divisionUserBusinessRepository.GetOneByOrg(s => s.UserId == userId /*&& s.DivisionId == divisionId*/ && s.OrganizationId == orgId);
+            return divisionUserBusinessRepository.GetAll(s => s.UserId == userId /*&& s.DivisionId == divisionId*/ && s.OrganizationId == orgId);
         }
+        public List<DivisionInfoViewModel> GetAllDiv(long userId, long orgId)
+        {
+
+            return _AgricultureUnitOfWork.Db.Database.SqlQuery<DivisionInfoViewModel>(string.Format(@"Select du.DivisionId,div.DivisionName From DivisionUsers du Inner Join tblDivisionInfo div on du.DivisionId = div.DivisionId Where du.UserId = {0} and du.OrganizationId= {1}", userId, orgId)).ToList();
+        }
+
+
 
         public bool SaveDivisionsUser(List<string> divisions, long userId, long suserId, long orgId)
         {
@@ -49,9 +58,32 @@ namespace ERPBLL.Agriculture
             return isSuccess;
         }
 
-        public bool UpdateDivisions(List<long> divisions, long userId, long suserId, long orgId)
+        public bool UpdateDivisions(List<string> divisions, long userId, long suserId, long orgId)
         {
-            throw new NotImplementedException();
+            bool isSuccess = false;
+
+            divisionUserBusinessRepository.DeleteAll(s => s.UserId == userId && s.OrganizationId == orgId);
+            divisionUserBusinessRepository.Save();
+            List<DivisionUser> divisionsUser = new List<DivisionUser>();
+            foreach (var item in divisions)
+            {
+                DivisionUser du = new DivisionUser()
+                {
+                    DivisionId = Convert.ToInt64(item),
+                    EntryDate = DateTime.Now,
+                    EntryUserId = suserId,
+                    UserId = userId,
+                    OrganizationId = orgId,
+                };
+                divisionsUser.Add(du);
+            }
+            if (divisionsUser.Count() > 0)
+            {
+                divisionUserBusinessRepository.InsertAll(divisionsUser);
+                isSuccess = divisionUserBusinessRepository.Save();
+            }
+
+            return isSuccess;
         }
     }
 }
