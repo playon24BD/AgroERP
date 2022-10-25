@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "GetAgroSalesProductList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-two-AgroSalesProductList-tab" data-toggle="pill" href="#custom-tabs-two-AgroSalesProductList" role="tab" aria-controls="custom-tabs-two-AgroSalesProductList" aria-selected="true">Agro Sales Product List</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-two-AgroSalesProductList" role="tabpanel" aria-labelledby="custom-tabs-two-AgroSalesProductList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    List Of Agro Sales Product
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <a href="/AgroConfiguration/CreateAgroSalesProduct" class="btn btn-outline-primary btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Sales Product</a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <h6 class="card-title">Search By</h6>
+                                    </div>
+                                    <div class="card-body text-sm">
+                                        <div class="row" style="margin-top:-15px">
+                                            <div class="col-md-3">
+                                                <label for="ddlProductName" class="col-form-label">Product Name</label>
+                                                @*@Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer">
+                                            @*@{Html.RenderAction("GetFinishGoodRecipeList", "AgroConfiguration", new { @flag = "View" });}*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="AgroSalesProductDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title">Agro Sales Product Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+         
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            LoadSalesProduct()
+        })
+
+        function LoadSalesProduct() {
+            debugger;
+
+            var data = { flag: "View", id: 0 };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAgroSalesProductList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+            
+        }
+
+        $(document).on('click', 'a.data-item-detail-ProductionSalesInfoId', function (e) {
+            e.preventDefault();
+            debugger;
+            $("#dataContainer2").empty();
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+            if (TryParseInt(id, 0) > 0) {
+                var data = { flag: "Detail", ProductSalesInfoId: 0, id: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAgroSalesProductList', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res);
+                        $("#AgroSalesProductDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+
+    </script>
+
+}
