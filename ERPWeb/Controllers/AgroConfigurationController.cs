@@ -18,6 +18,8 @@ namespace ERPWeb.Controllers
         private readonly IAgroProductSalesInfoBusiness _agroProductSalesInfoBusiness;
         private readonly IAgroProductSalesDetailsBusiness _agroProductSalesDetailsBusiness;
 
+        private readonly ISalesPaymentRegister _salesPaymentRegister;//e
+
         private readonly IRawMaterialTrack _rawMaterialTrack;//e
         private readonly IMRawMaterialIssueStockInfo _mRawMaterialIssueStockInfo;//e
         private readonly IMRawMaterialIssueStockDetails _mRawMaterialIssueStockDetails;//e
@@ -58,11 +60,13 @@ namespace ERPWeb.Controllers
         private readonly IAppUserBusiness _appUserBusiness;
 
 
-        public AgroConfigurationController(IRawMaterialTrack rawMaterialTrack,IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo,IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails,IPRawMaterialStockInfo pRawMaterialStockInfo,IPRawMaterialStockIDetails pRawMaterialStockIDetails,IAgroUnitInfo agroUnitInfo,IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness)
+        public AgroConfigurationController(ISalesPaymentRegister salesPaymentRegister,IRawMaterialTrack rawMaterialTrack,IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo,IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails,IPRawMaterialStockInfo pRawMaterialStockInfo,IPRawMaterialStockIDetails pRawMaterialStockIDetails,IAgroUnitInfo agroUnitInfo,IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness)
 
 
 
         {
+            this._salesPaymentRegister = salesPaymentRegister;//e
+
             this._agroProductSalesInfoBusiness = agroProductSalesInfoBusiness;
             this._agroProductSalesDetailsBusiness = agroProductSalesDetailsBusiness;
             this._agroUnitInfo = agroUnitInfo;

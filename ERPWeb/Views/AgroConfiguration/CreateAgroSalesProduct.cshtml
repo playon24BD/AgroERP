@@ -3,7 +3,17 @@
     ViewBag.Title = "CreateAgroSalesProduct";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    table.tablesubtotal tr th {
+        background-color: black !important;
+        color: white !important;
+    }
 
+    table.tadd tr th {
+        background-color: darkcyan !important;
+        color: white !important;
+    }
+</style>
 <div class="row text-sm" style="margin-top:-15px">
     <div class="col-md-12">
         <div class="card card-gray shadow">
@@ -23,19 +33,19 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-5" style="border-right:2px solid #efefef">
+                    <div class="col-md-7" style="border-right:2px solid #f6eaaa">
                         <h5 style="border-bottom:2px solid #f6eaaa">
                             Challan & Invoice Product
                         </h5>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label for="ddlClient" class="col-form-label">
                                     Client Name
                                 </label>
                                 @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "--Select ClientName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label for="ddlDepotName" class="col-form-label">Depot</label>
                                 <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
                             </div>
@@ -44,7 +54,7 @@
                     <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
                 </div>*@
 
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label class="col-form-label font-weight-bold">Challan Date</label>
                                 <div class="input-group input-group-sm ">
                                     <input type="text" class="form-control form-control-sm date-datePicker-ChallanDate ctrl-changed" id="ChallanDate" />
@@ -52,6 +62,7 @@
                                         <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
+
                             </div>
 
                             @*<div class="col-md-4">
@@ -59,7 +70,7 @@
                     <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
                 </div>*@
 
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label class="col-form-label font-weight-bold">Invoice Date</label>
                                 <div class="input-group input-group-sm ">
                                     <input type="text" class="form-control form-control-sm date-datePicker-InvoiceDate ctrl-changed" id="InvoiceDate" />
@@ -69,34 +80,34 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="ddlPaymentMode" class="col-form-label">Mode Of Payment</label>
+                            <div class="col-md-2">
+                                <label for="ddlPaymentMode" class="col-form-label">Payment</label>
                                 <select class="form-control form-control-sm" id="ddlPaymentMode">
                                     <option value="Credit">Credit</option>
                                     <option value="Cash">Cash</option>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="col-form-label" for="model">Vehicle Type</label>
                                 <input type="text" id="txtVehicleType" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="col-form-label" for="model">Vehicle No.</label>
                                 <input type="text" id="txtVehicleNumber" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="col-form-label" for="model">Driver Name</label>
                                 <input type="text" id="txtDriverName" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="col-form-label" for="model">Delivery Place</label>
                                 <input type="text" id="txtDeliveryPlace" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="col-form-label" for="model">Do/ADO/DA</label>
                                 <input type="text" id="txtDo_ADO_DA" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="col-form-label" for="model">DOADO_Name</label>
                                 <input type="text" id="txtDoADO_Name" class="form-control form-control-sm">
                             </div>
@@ -105,7 +116,9 @@
                         </div>
 
                     </div>
-                    <div class="col-md-7">
+
+
+                    <div class="col-md-5" style="border-left:2px solid #f87878">
                         <h5 style="border-bottom:2px solid #f87878">Product Salse</h5>
                         <div class="row">
                             <div class="col-md-4">
@@ -146,6 +159,14 @@
                             <div class="col-md-3">
                                 <label for="ddlPrice" class="col-form-label">Discount %</label>
                                 <input type="text" id="txtDiscount" class="form-control form-control-sm" />
+                            </div>
+                            <div class="hide">
+                                <label>SubTotal</label>
+                                <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="hide">
+                                <label>Total Discount</label>
+                                <input type="number" id="ddlttdis" name="ddlttdis" class="form-control form-control-sm" readonly />
                             </div>
 
                             <div class="col-md-2" style="margin-top:5px;">
@@ -205,7 +226,6 @@
 
                     @*e*@
                     <div class="card-body">
-
                         <div class="card-body table-responsive p-0 shadow" style="height: 200px;">
                             <table class="table table-head-fixed text-nowrap tadd" id="tblList">
                                 <thead>
@@ -239,6 +259,7 @@
                                     <th></th>
                                     <th></th>
                                     <th class="totalqty">0</th>
+                                    <th class="totaldis">0</th>
                                     <th class="totalsub">0</th>
                                     <th></th>
                                 </tr>
@@ -253,6 +274,56 @@
 
 
                 </div>
+
+
+
+                    <div class="row ">
+                        
+                            <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
+                                @*<h5 style="border-bottom:2px solid #f87878">Payment</h5>*@
+                                <div class="row justify-content-center">
+
+                                    <div class="col-md-12 ">
+
+                                        <div class="row justify-content-center">
+
+
+                                            <div class="col-md-2">
+                                                <label>Payable Amount</label>
+                                                <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm" readonly />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="ddlpayment">Payment</label>
+                                                <input type="number" id="ddlpayment" name="ddlpayment" class="form-control form-control-sm" />
+                                                <span class="error hide req-uprice">Unit Price Is Required</span>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>Due Amount</label>
+                                                <input type="number" id="ddldueamount" name="ddldueamount" class="form-control form-control-sm" readonly />
+                                            </div>
+                                            <div class="col-md-2" style="margin-top:0px;">
+                                                <label for="" class="control-label" style="visibility:hidden"> Add To List</label>
+                                                <div class="clearfix">
+                                                    <button type="submit" class="btn btn-sm btn-success text-bold float-left" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
+                                                </div>
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                       
+
+                    </div>
+
+
+
 
             </div>
         </div>
@@ -286,7 +357,23 @@
         var FinishGoodProductInfoId = '';
         var FinishGoodStockQty = $("#FinishGoodStockQty");
 
+
+
+        var ddlttprice = $("#ddlttprice");
+        var ddlttdis = $("#ddlttdis");
+
+        var ddlpayableamount = $("#ddlpayableamount");
+        var ddlpayment = $("#ddlpayment");
+        var ddlpayment = $("#ddlpayment");
+        var ddldueamount = $("#ddldueamount");
+
         var ddlRawMaterialList = [];
+
+
+
+
+
+
         //var QuantityCheck = $("#QuantityCheck");
         
 
@@ -328,7 +415,7 @@
             //    orientation: "bottom auto",
             //    todayHighlight: true
             //})
-
+          
         })
 
         ddlMeasurementName.change(function () {
@@ -384,11 +471,8 @@
 
         $("#btnAddToList").click(function (e) {
             e.preventDefault();
-
-            var totalAmount = 0;
-            var totalQuentity = 0;
-            var totalDiscount = 0;
             debugger;
+
             if (validates() == true) {
 
 
@@ -404,79 +488,43 @@
                     var td5 = "<td class='text-center' >" + txtPrice.val() + "</td>";
                     var td6 = "<td class='text-center'>" + txtDiscount.val() + "</td>";
 
-                    var td7 = "<td class='text-center DiscountIDCell'>" + txtQuanity.val() * txtPrice.val() / txtDiscount.val() + "</td>";
-                    var td8 = "<td class='text-center TotalIDCell'>" + txtQuanity.val() * txtPrice.val() + "</td>";
+                    //var td7 = "<td class='text-center DiscountIDCell'>" + txtQuanity.val() * txtPrice.val() / txtDiscount.val() + "</td>";
+                     //var td7 = "<td class='text-center DiscountIDCell'>" + ddlttprice.val() * txtDiscount.val() / 100 + "</td>";
+                     var td7 = "<td class='text-center DiscountIDCell'>" + ddlttdis.val() + "</td>";
+                    //var td8 = "<td class='text-center TotalIDCell'>" + txtQuanity.val() * txtPrice.val() + "</td>";
+                    var td8 = "<td class='text-center TotalIDCell'>" + ddlttprice.val()  + "</td>";
 
-                    var td9 = "<td class='text-center'> <a href='#' class='btn btn-sm btn-danger btn-flat data-onfly-del'><i class='far fa-trash-alt'></i></a></td>";
+                   // var td9 = "<td class='text-center'> <a href='#' class='btn btn-sm btn-danger btn-flat data-onfly-del'><i class='far fa-trash-alt'></i></a></td>";
+                    var td9 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlttprice.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
 
                     var td10 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
                     var td11 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
 
                     var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + "</tr>";
-                    // Total
-
-                    //if ($("#tblList tbody tr").length == 0) {
-
-
-                    //    $("#tblList tbody").append(tr);
-                    //    //addTotal();
-                    //    var tdT1 = "<td class='text-sm'></td>";
-                    //    var tdT2 = "<td class='text-sm'>Total :</td>";
-                    //    var tdT3 = "<td class='text-sm'style='float: right;'></td>";
-                    //    //var tdT4 = "<td class='text-sm'>" + totalAmount + "</td>";
-                    //    var tdT4 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Quentity' readonly /> </td>";
-                    //    var tdT5 = "<td class='text-sm'></td>";
-                    //    var tdT6 = "<td class='text-sm'></td>";
-                    //    var tdT7 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Discount' readonly /> </td>";
-                    //    var tdT8 = "<td class='text-center' > <input type = 'text' style='width: 50px;' id='Total' readonly /> </td>";
-                    //    //var tdT8 = "<td class='text-sm'>" + totalAmount + "</td>";
-                    //    var total = "<tr class='text-sm'>" + tdT1 + tdT2 + tdT3 + tdT4 + tdT5 + tdT6 + tdT7 + tdT8 + "</tr>";
-                    //    $("#tblList tbody").append(total);
-                    //}
-                    //else {
-                    //    $("#tblList tbody tr").eq(0).before(tr);
-
-                    //    addTotal1();
-
-                    //}
-
-
-                    //function addTotal1() {
-                    //    $('#tblList tr').each(function () {
-                    //        var QuanityIDCell = $(this).find(".QuanityIDCell").html();
-                    //        var DiscountIDCell = $(this).find(".DiscountIDCell").html();
-                    //        var TotalIDCell = $(this).find(".TotalIDCell").html();
-                    //        var Q = parseInt(QuanityIDCell)
-                    //        var D = parseInt(DiscountIDCell)
-                    //        var T = parseInt(TotalIDCell)
-
-
-                    //        if (T > 0) {
-
-                    //            totalAmount = totalAmount + T;
-                    //            console.log(totalAmount);
-                    //           // alert(totalAmount);
-                    //            $("#Total").val(totalAmount);
-
-                    //        }
-                    //        if (Q > 0) {
-                    //            totalQuentity = totalQuentity + Q;
-                    //            $("#Quentity").val(totalQuentity);
-
-                    //        }
-
-                    //         if (D > 0) {
-                    //            totalDiscount = totalDiscount + D;
-                    //            $("#Discount").val(totalDiscount);
-
-                    //        }
 
 
 
+                    //totalprice
+                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                    $('.totalsub').text(to);
+                    console.log(to);
+                    //totalprice
+                    //tqty
+                to1 = parseFloat($('.totalqty').text()) + parseFloat(txtQuanity.val());
+                    $('.totalqty').text(to1);
+                    console.log(to1);
+                    //tqty
+                    //tdis
+                to2 = parseFloat($('.totaldis').text()) + parseFloat(ddlttdis.val());
+                 $('.totaldis').text(to2);
+                    console.log(to2);
+                    //tqty
 
-                    //    });
+                
+                var totalsu = $('.totalsub').text();//initilize class total
+                ddlpayableamount.val(totalsu);
 
-                    //}
                     $("#tblList tbody").append(tr);
 
 
@@ -485,6 +533,88 @@
 
             //ClearData();
         })
+
+
+
+        //calculatetotal
+        txtQuanity.keyup(function () {
+            if (txtQuanity.val() >= 0) {
+                calculateTotal();
+            }
+
+
+        });
+
+        txtPrice.keyup(function () {
+            if (txtPrice.val() >= 0) {
+                calculateTotal();
+
+            }
+
+        });
+
+        function calculateTotal() {
+
+            var sub = txtPrice.val() * txtQuanity.val();
+            ddlttprice.val(sub);
+
+        }
+        //calculateend
+
+        //calculatedis
+        txtDiscount.keyup(function () {
+            if (txtQuanity.val() >= 0) {
+                calculateTotalDis();
+            }
+
+
+        });
+
+        txtPrice.keyup(function () {
+            if (txtPrice.val() >= 0) {
+                calculateTotalDis();
+
+            }
+
+        });
+        txtQuanity.keyup(function () {
+            if (txtQuanity.val() >= 0) {
+                calculateTotalDis();
+            }
+
+
+        });
+
+        function calculateTotalDis() {
+
+            var sub1 = ddlttprice.val() * txtDiscount.val() / 100
+            ddlttdis.val(sub1);
+
+        }
+
+ 
+        //calculateend
+
+        //duecalculate
+        function caltulatedue() {
+            
+            
+            var dueamount = ddlpayableamount.val() - ddlpayment.val();
+            ddldueamount.val(dueamount);
+        }
+
+        //duecalculate end
+
+        ddlpayment.keyup(function () {
+            if (ddlpayment.val() >= 0) {
+
+                caltulatedue();
+            }
+
+
+        });
+
+
 
 
 
@@ -534,31 +664,24 @@
             var tds = $(this).parent().parents('tbody tr').children('td');
 
 
+
+            //tt
+            var subtotal = $(this).data("subtotal");
+            var row = $(this).data("quentaty");
+            var row1 = $(this).data("discount");
+            console.log(row);
+            console.log(subtotal);
+            console.log(row1);
+
+            
+            //tt
+
+
             var rId = tds.eq(9).html();
             console.log("rId :" + rId);
             const mid = ddlRawMaterialList.indexOf(rId);
 
             ddlRawMaterialList.splice(mid, 1);
-            //var index = $(this).parent().parents('tbody tr').index();
-            //var tds = $(this).parent().parents('tbody tr').children('td');
-
-            //var ProductId = tds.eq(9).html();
-
-            //var RawQuentity = tds.eq(3).html();
-            //var totalQty = document.getElementById('Quentity').value
-            //var CurrentQty = totalQty - RawQuentity;
-
-            //var RawDiscountTk = tds.eq(6).html();
-            //var totalDiscountTk = document.getElementById('Discount').value
-            //var CurrentDiscountTk = totalDiscountTk - RawDiscountTk;
-
-            //var RawAmountTk = tds.eq(7).html();
-            //var totalAmountTk = document.getElementById('Total').value
-            //var CurrentAmountTk = totalAmountTk - RawAmountTk;
-
-            //console.log("ProductId :" + ProductId);
-            //const mid = SalesProductNameList.indexOf(ProductId);
-            //SalesProductNameList.splice(mid, 1);
 
 
             if (bootbox.confirm("Are you sure you want to delete?", function (result) {
@@ -566,13 +689,26 @@
                     debugger;
                     removeTableRow("#tblList tbody", index);
                     fnFixTheTbodyRowSerialInDecsOrder("#tblList", index);
+
+
+
+                    var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal);
+                    $('.totalsub').text(totals);
+
+                    var totalsq = parseFloat($(".totalqty").text()) - parseFloat(row);
+                    $('.totalqty').text(totalsq);
+
+                    var totalsd = parseFloat($(".totaldis").text()) - parseFloat(row1);
+                    $('.totaldis').text(totalsd);
+
+
+                   // var totalsu = $('.totalsub').text();//initilize class total
+                    ddlpayableamount.val(totals);
                     
                 };
             }));
 
-            //$("#Quentity").val(CurrentQty);
-            //$("#Discount").val(CurrentDiscountTk);
-            //$("#Total").val(CurrentAmountTk);
+
         })
 
 
@@ -580,48 +716,12 @@
 
 
 
-        //er
-        //remove
-        //$(document).on("click", "a.data-onfly-del", function (e) {
-        //    //debugger;
-        //    e.preventDefault();
-        //    var index = $(this).parent().parents('tbody tr').index();
-        //    var tds = $(this).parent().parents('tbody tr').children('td');
-
-        //    //tt
-        //    var subtotal = $(this).data("subtotal");
-        //    var row = $(this).data("quentaty");
-        //    console.log(row);
-        //    //tt
-
-        //    var rId = tds.eq(7).html();
-        //    console.log("rId :" + rId);
-        //    //const mid = ddlRawMaterialList.indexOf(rId);
-
-        //    //ddlRawMaterialList.splice(mid, 1);
-
-        //    if (bootbox.confirm("Are you sure you want to delete?", function (result) {
-        //        if (result === true) {
-        //            removeTableRow("#tblPstockrawmaterial tbody", index);
-        //            fnFixTheTbodyRowSerial("#tblPstockrawmaterial tbody", index);
-
-
-        //            var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal);
-        //            $('.totalsub').text(totals);
-
-        //            var totalsq = parseFloat($(".totalqty").text()) - parseFloat(row);
-        //            $('.totalqty').text(totalsq);
-        //        };
-        //    }));
-
-        //})
-        //er
 
 
 
 
 
-             $("#btnSubmit").click(function (e) {
+        $("#saveButton").click(function (e) {
             debugger
             e.preventDefault();
             if (true === true) {
@@ -631,7 +731,8 @@
                         debugger;
                         //disable("#btnSubmit");
                         //getTargetItemAndItemTypeAndWarehouse();
-                        var info = { ProductSalesInfoId: 0, UserId: TryParseInt(ddlClientName.val(), 0), Depot: ddlDepotName.val(), InvoiceDate: InvoiceDate.val(), ChallanDate: ChallanDate.val(), VehicleType: txtVehicleType.val(), VehicleNumber: txtVehicleNumber.val(), DriverName: txtDriverName.val(), DeliveryPlace: txtDeliveryPlace.val(), Do_ADO_DA: txtDo_ADO_DA.val(), DoADO_Name: txtDoADO_Name.val(), PaymentMode: ddlPaymentMode.val() };
+                        var totalsub = $('.totalsub').text();//initilize class total
+                        var info = { ProductSalesInfoId: 0, UserId: TryParseInt(ddlClientName.val(), 0), Depot: ddlDepotName.val(), InvoiceDate: InvoiceDate.val(), ChallanDate: ChallanDate.val(), VehicleType: txtVehicleType.val(), VehicleNumber: txtVehicleNumber.val(), DriverName: txtDriverName.val(), DeliveryPlace: txtDeliveryPlace.val(), Do_ADO_DA: txtDo_ADO_DA.val(), DoADO_Name: txtDoADO_Name.val(), PaymentMode: ddlPaymentMode.val(), TotalAmount: totalsub, PaidAmount: ddlpayment.val() };
 
                         var details = [];
                         details.length = 0;

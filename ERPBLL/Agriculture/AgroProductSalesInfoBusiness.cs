@@ -123,7 +123,10 @@ namespace ERPBLL.Agriculture
                     OrganizationId = orgId,
                      //InvoiceNo=agroSalesInfoDTO.InvoiceNo,
                      Depot=agroSalesInfoDTO.Depot,
-                     Do_ADO_DA=agroSalesInfoDTO.Do_ADO_DA
+                     Do_ADO_DA=agroSalesInfoDTO.Do_ADO_DA,
+                     TotalAmount = agroSalesInfoDTO.TotalAmount,
+                     PaidAmount = agroSalesInfoDTO.PaidAmount,
+                     DueAmount = agroSalesInfoDTO.TotalAmount - agroSalesInfoDTO.PaidAmount
 
                 };
 
