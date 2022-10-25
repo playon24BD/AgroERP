@@ -1,6 +1,7 @@
 ﻿using ERPBLL.Agriculture.Interface;
 using ERPBLL.Common;
 using ERPBLL.ControlPanel.Interface;
+using ERPBO.Agriculture.DTOModels;
 using ERPBO.Common;
 using ERPBO.ControlPanel.DomainModels;
 using ERPBO.ControlPanel.DTOModels;
@@ -18,12 +19,14 @@ namespace ERPBLL.ControlPanel
     {
         private readonly IControlPanelUnitOfWork _controlPanelUnitOfWork; // database
         private readonly AppUserRepository appUserRepository; // repo
-        private readonly IDivisionUserBusiness _divisionUserBusiness; // repo
-        public AppUserBusiness(IControlPanelUnitOfWork controlPanelUnitOfWork,IDivisionUserBusiness divisionUserBusiness)
+        private readonly IDivisionUserBusiness _divisionUserBusiness; //
+        private readonly IDistributionUserBusiness _distributionUserBusiness; //
+        public AppUserBusiness(IControlPanelUnitOfWork controlPanelUnitOfWork,IDivisionUserBusiness divisionUserBusiness,IDistributionUserBusiness distributionUserBusiness)
         {
             this._controlPanelUnitOfWork = controlPanelUnitOfWork;
             appUserRepository = new AppUserRepository(this._controlPanelUnitOfWork);
             this._divisionUserBusiness = divisionUserBusiness;
+            this._distributionUserBusiness = distributionUserBusiness;
         }
 
         public bool ChangePassword(ChangePasswordDTO dto, long userId, long orgId)
@@ -180,6 +183,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
             var district = string.Empty;
             var zone = string.Empty;
             AppUser appUser = new AppUser();
+            List<DistributionUserDTO> distributionUserDTO = new List<DistributionUserDTO>();
             if (appUserDTO.UserId == 0)
             {
 
@@ -226,9 +230,36 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
 
                 if (execution.isSuccess==true)
                 {
+
+                    if (division.Count() > 0)
+                    {
+                        var divisions = division.Split(',');
+                        foreach (var id in divisions)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUser.UserId,
+                                DivisionId =Int64.Parse(id),
+                                DistributionType="Division",
+                                OrganizationId=orgId,
+                                EntryDate=DateTime.Now,
+                                EntryUserId =userId,
+                                Status="INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+                        }
+                        
+                        
+                    }
+
                     if (appUserDTO.DivisionId.Count() > 0)
                     {
                         _divisionUserBusiness.SaveDivisionsUser( appUserDTO.DivisionId, appUser.UserId, userId, orgId);
+                    }
+                    if (distributionUserDTO.Count()>0)
+                    {
+                        _distributionUserBusiness.SaveDistributionUser(distributionUserDTO,userId,orgId);
                     }
 
 

@@ -60,6 +60,7 @@ namespace ERPDAL.AgricultureDAL
         public DbSet<AgroProductSalesInfo> tblProductSalesInfo { get; set; }
         public DbSet<AgroProductSalesDetails> tblProductSalesDetails { get; set; }
         public DbSet<DivisionUser> tblDivisionUser { get; set; }
+        public DbSet<DistributionUser> tblDistributionUser { get; set; }
 
 
         //public DbSet<RawMaterial> tblRawMaterials { get; set; }
