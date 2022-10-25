@@ -50,8 +50,9 @@ namespace ERPBO.ControlPanel.ViewModels
         public string StateStatusRole { get; set; }
         public string EntryUser { get; set; }
         public string UpdateUser { get; set; }
-        public string ZoneId { get; set; }
-        public string ZoneName { get; set; }
+        public List<string> ZoneId { get; set; }
+        public List<ZoneSetupViewModel> ZoneName { get; set; }
+        public string Zone { get; set; }
         public List<string> DivisionId { get; set; }
         public List<DivisionInfoViewModel> DivisionName { get; set; }
         public string Division { get; set; }

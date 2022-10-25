@@ -20,13 +20,15 @@ namespace ERPBLL.ControlPanel
         private readonly IControlPanelUnitOfWork _controlPanelUnitOfWork; // database
         private readonly AppUserRepository appUserRepository; // repo
         private readonly IDivisionUserBusiness _divisionUserBusiness; //
+        private readonly IZoneUserBusiness _zoneUserBusiness; //
         private readonly IDistributionUserBusiness _distributionUserBusiness; //
-        public AppUserBusiness(IControlPanelUnitOfWork controlPanelUnitOfWork,IDivisionUserBusiness divisionUserBusiness,IDistributionUserBusiness distributionUserBusiness)
+        public AppUserBusiness(IControlPanelUnitOfWork controlPanelUnitOfWork,IDivisionUserBusiness divisionUserBusiness,IDistributionUserBusiness distributionUserBusiness,IZoneUserBusiness zoneUserBusiness)
         {
             this._controlPanelUnitOfWork = controlPanelUnitOfWork;
             appUserRepository = new AppUserRepository(this._controlPanelUnitOfWork);
             this._divisionUserBusiness = divisionUserBusiness;
             this._distributionUserBusiness = distributionUserBusiness;
+            this._zoneUserBusiness = zoneUserBusiness;
         }
 
         public bool ChangePassword(ChangePasswordDTO dto, long userId, long orgId)
@@ -67,7 +69,7 @@ namespace ERPBLL.ControlPanel
             if(flag == "System")
             {
                 return _controlPanelUnitOfWork.Db.Database.SqlQuery<AppUserDTO>(string.Format(@"Select app.EmployeeId,app.UserId,app.FullName,app.MobileNo,app.[Address],app.Email,app.Desigation,app.UserName, 
-app.[Password],app.ConfirmPassword,app.OrganizationId,app.RoleId,app.BranchId,app.IsActive,app.IsRoleActive,app.DivisionId As Division
+app.[Password],app.ConfirmPassword,app.OrganizationId,app.RoleId,app.BranchId,app.IsActive,app.IsRoleActive,app.DivisionId As Division,app.ZoneId As Zone
 From tblApplicationUsers app 
 Inner Join tblBranch b on app.BranchId = b.BranchId and app.OrganizationId = b.OrganizationId
 Inner Join tblRoles r on app.RoleId = r.RoleId and app.OrganizationId = r.OrganizationId
@@ -182,10 +184,23 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
             var division = string.Empty;
             var district = string.Empty;
             var zone = string.Empty;
+            string action = string.Empty;
+
+
+            if (appUserDTO.ZoneId.Count() > 0)
+            {
+                foreach (var zon in appUserDTO.ZoneId)
+                {
+                    zone += zon + ",";
+                }
+                zone = zone.Substring(0, zone.Length - 1);
+
+            }
             AppUser appUser = new AppUser();
             List<DistributionUserDTO> distributionUserDTO = new List<DistributionUserDTO>();
             if (appUserDTO.UserId == 0)
             {
+
 
                 if (appUserDTO.DivisionId.Count() > 0)
                 {
@@ -194,9 +209,11 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                         division += div + ",";
                     }
                     division = division.Substring(0, division.Length - 1);
-                    district = null;
-                    zone = null;
+     
                 }
+
+
+  
 
                 appUser.EmployeeId = appUserDTO.EmployeeId;
                 appUser.FullName = appUserDTO.FullName;
@@ -214,8 +231,10 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.OrganizationId = appUserDTO.OrganizationId;
                 appUser.BranchId = appUserDTO.BranchId;
                 appUser.RoleId = appUserDTO.RoleId;
-                appUser.ZoneId = appUserDTO.ZoneId;
+              
+                appUser.ZoneId = zone;
                 appUser.DivisionId = division;
+                
                 appUser.RegionId = appUserDTO.RegionId;
                 appUser.AreaId = appUserDTO.AreaId;
                 appUser.TerritoryId = appUserDTO.TerritoryId;
@@ -253,10 +272,41 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                         
                     }
 
+
+
+                    if (appUserDTO.ZoneId.Count() > 0)
+                    {
+                        _zoneUserBusiness.SaveZoneUser(appUserDTO.ZoneId, appUser.UserId, userId, orgId,action="Insert");
+                    }
+
                     if (appUserDTO.DivisionId.Count() > 0)
                     {
                         _divisionUserBusiness.SaveDivisionsUser( appUserDTO.DivisionId, appUser.UserId, userId, orgId);
                     }
+
+
+                    if (zone.Count() > 0)
+                    {
+                        var zones = zone.Split(',');
+                        foreach (var id in zones)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUser.UserId,
+                                ZoneId = Int64.Parse(id),
+                                DistributionType = "Zone",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+                        }
+
+
+                    }
+
                     if (distributionUserDTO.Count()>0)
                     {
                         _distributionUserBusiness.SaveDistributionUser(distributionUserDTO,userId,orgId);
@@ -270,6 +320,8 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
             else
             {
 
+
+
                 if (appUserDTO.DivisionId.Count() > 0)
                 {
                     foreach (var div in appUserDTO.DivisionId)
@@ -277,13 +329,64 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                         division += div + ",";
                     }
                     division = division.Substring(0, division.Length - 1);
-                    district = null;
-                    zone = null;
+        
                 }
-            var  preUserId=   this.GetAppUserOneById(appUserDTO.UserId,orgId);
+                var  preUserId=   this.GetAppUserOneById(appUserDTO.UserId,orgId);
 
                 if (preUserId !=null)
                 {
+
+                    if (zone.Count() > 0)
+                    {
+     
+                        string[] splitInDB = preUserId.ZoneId.Split(',');
+                        string[] splitInDTO = zone.Split(',');
+
+                        var eq = (from c in splitInDTO
+                                  where splitInDB == null || splitInDB.Any(x => x == c)
+                                  select c).ToList();
+
+                        splitInDB = splitInDB.Except(eq).ToArray();
+                        splitInDTO = splitInDTO.Except(eq).ToArray();
+
+                        foreach (var item in splitInDB)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                ZoneId = Int64.Parse(item),
+                                DistributionType = "Zone",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "DELETE",
+                            };
+
+                            distributionUserDTO.Add(du);
+
+                        }
+                        foreach (var item in splitInDTO)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                ZoneId = Int64.Parse(item),
+                                DistributionType = "Zone",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+
+                        }
+                        if (distributionUserDTO.Count() > 0)
+                        {
+                            _distributionUserBusiness.SaveDistributionUser(distributionUserDTO, userId, orgId);
+                        }
+
+                    }
                     if (division.Count() > 0)
                     {
 
@@ -356,7 +459,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.OrganizationId = appUserDTO.OrganizationId;
                 appUser.BranchId = appUserDTO.BranchId;
                 appUser.RoleId = appUserDTO.RoleId;
-                appUser.ZoneId = appUserDTO.ZoneId;
+                appUser.ZoneId = zone;
                 appUser.DivisionId = division;
                 appUser.RegionId = appUserDTO.RegionId;
                 appUser.AreaId = appUserDTO.AreaId;
@@ -370,8 +473,18 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
 
                 if (execution.isSuccess)
                 {
-                    _divisionUserBusiness.UpdateDivisions(appUserDTO.DivisionId, appUser.UserId, userId, orgId);
+                    if (appUser.ZoneId.Count()>0)
+                    {
+                        _zoneUserBusiness.SaveZoneUser(appUserDTO.ZoneId, appUser.UserId, userId, orgId, action = "Update");
+                    }
+                    if (appUserDTO.DivisionId.Count()>0)
+                    {
+                        _divisionUserBusiness.UpdateDivisions(appUserDTO.DivisionId, appUser.UserId, userId, orgId);
+
+                    }
+            
                 }
+
            
                 
                     

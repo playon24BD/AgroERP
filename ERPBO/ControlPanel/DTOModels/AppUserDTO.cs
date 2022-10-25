@@ -43,9 +43,11 @@ namespace ERPBO.ControlPanel.DTOModels
         public string EntryUser { get; set; }
         public string UpdateUser { get; set; }
 
-        public string ZoneId { get; set; }
-        public string ZoneName { get; set; }
+        public List<string> ZoneId { get; set; }
+        public List<ZoneSetupViewModel> ZoneName { get; set; }
+        public string Zone { get; set; }
         public string Division { get; set; }
+
         public List<string> DivisionId { get; set; }
         public List<DivisionInfoViewModel> DivisionName { get; set; }
         public string RegionId { get; set; }

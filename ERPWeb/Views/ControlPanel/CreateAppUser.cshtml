@@ -240,6 +240,8 @@
 
             LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
             $("#ddlDivisionName").attr("data-placeholder", "Select Division");
+               LoadDropDown('/ControlPanel/GetZone', type.post, ddlZoneName, null);
+               $("#ddlZoneName").attr("data-placeholder", "Select Zone");
 
             disable(ddlZoneName)
             disable(ddlDivisionName)
@@ -263,7 +265,9 @@
                 theme: 'bootstrap4'
             });
 
-
+            $("#ddlZoneName").select2({
+                placeholder: "Select Zone..."
+            });
 
             $("#ddlDivisionName").select2({
                 placeholder: "Select Divisions..."
@@ -319,6 +323,9 @@
                     ddlOrganizationName.val(res.OrganizationId);
                     role = res.RoleId;
                     branch = res.BranchId;
+                    var Zones = res.Zone.split(',');
+                    ddlZoneName.val(Zones);
+
                     var Divisions = res.Division.split(',');
                     ddlDivisionName.val(Divisions);
 
@@ -356,7 +363,7 @@
 
 
         function dropdownValue(role) {
-            alert(role);
+            alert( "In Drop Down" + role);
   
 
             if (role == 0) {
@@ -395,6 +402,7 @@
                 $("#territoryDiv").hide();
                 $("#stockiestDiv").hide();
                 $("#userNameDiv").show();
+                $("#ddlZoneName").trigger("change")
 
                 enable(ddlZoneName)
                 disable(ddlDivisionName)
@@ -579,8 +587,7 @@
 
                 }
                 if (ddlRoleName.val() == 29) {
-                    LoadDropDown('/ControlPanel/GetZone', type.post, ddlZoneName, null);
-                    $("#ddlZoneName").attr("data-placeholder", "Select Zone");
+       
 
                     $("#zoneDiv").show();
 
@@ -590,6 +597,8 @@
                     $("#territoryDiv").hide();
                     $("#stockiestDiv").hide();
                     $("#userNameDiv").show();
+                    LoadDropDown('/ControlPanel/GetZone', type.post, ddlZoneName, null);
+                    $("#ddlZoneName").attr("data-placeholder", "Select Zone");
 
                     enable(ddlZoneName)
                     disable(ddlDivisionName)
@@ -961,13 +970,13 @@
 
             if (validateUserForm()) {
 
-                var division = '';
+                var zones = []; zones.length = 0;
                 var divisions = []; divisions.length = 0;
 
                 if (ddlRoleName.val() == 29) {
                     if (ddlZoneName.val().length > 0) {
-                        $.each(ddlDivisionForSR.val(), function (index, item) {
-                            rsmDivisions.push(item);
+                        $.each(ddlZoneName.val(), function (index, item) {
+                            zones.push(item);
                         })
                     }
                 }
@@ -998,7 +1007,7 @@
                     RoleId: TryParseInt(ddlRoleName.val(), 0),
                     IsActive: chkStatestatus.is(":checked"),
                     IsRoleActive: chkStatestatusRole.is(":checked"),
-                    ZoneId: TryParseInt(ddlZoneName.val(), 0),
+                    ZoneId: zones,
                     DivisionId: divisions,
                     RegionId: TryParseInt(ddlRegionName.val(), 0),
                     AreaId: TryParseInt(ddlAreaName.val(), 0),
