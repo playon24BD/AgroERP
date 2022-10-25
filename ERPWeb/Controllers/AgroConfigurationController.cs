@@ -1994,6 +1994,15 @@ namespace ERPWeb.Controllers
             return Json(isSucccess);
         }
 
+
+
+        #endregion
+
+        #region Payment
+        public ActionResult InvoicePayment(string flag, long id)
+        {
+            return View();
+        }
         #endregion
 
         #region Purchase & RawmaterialStock
