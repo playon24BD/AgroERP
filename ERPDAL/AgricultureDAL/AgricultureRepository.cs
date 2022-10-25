@@ -12,10 +12,15 @@ namespace ERPDAL.AgricultureDAL
 {
 
 
-    //e
     public class SalesPaymentRegisterRepository : AgricultureBaseRepository<SalesPaymentRegister>
     {
         public SalesPaymentRegisterRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+    }
+    //e
+    public class ReturnRawMaterialRepository : AgricultureBaseRepository<ReturnRawMaterial>
+    {
+        public ReturnRawMaterialRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
 
     }
     //e

@@ -3176,6 +3176,7 @@
     <Content Include="Views\AgroConfiguration\GetAgroSalesProductList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAgroSalesProductList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAgroSalesProductDetails.cshtml" />
+    <Content Include="Views\AgroConfiguration\RawMaterialReturnList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
