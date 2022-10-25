@@ -17,6 +17,7 @@ namespace ERPBO.Agriculture.DTOModels
         public long? TerritoryId { get; set; }
         public long? StockiestId { get; set; }
         public string DistributionType { get; set; }
+        public long OrganizationId { get; set; }
         public string Status { get; set; }
         public string Flag { get; set; }
         public DateTime? EntryDate { get; set; }
