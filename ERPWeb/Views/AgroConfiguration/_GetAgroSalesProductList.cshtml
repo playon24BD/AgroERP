@@ -35,24 +35,22 @@
                 @*<td class="hide">@item.UnitId</td>*@
 
                 <td class="text-center">
-                    @*@if (privilege != null && privilege.Detail)
-                        {*@
+
                     <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail-ProductionSalesInfoId" title="View Detail" data-item-detail-ProductionSalesInfoId="@item.ProductSalesInfoId" style="line-height:1">
                         <i class="fas fa-eye"></i>
                     </a>
-                    @*}
-                        @if (privilege != null && privilege.Edit)
-                        {*@
+
+                    <a href="#" class="btn btn-sm btn-outline-primary data-item-Payment-ProductionSalesInfoId" title="View Detail" data-item-Payment-ProductionSalesInfoId="@item.ProductSalesInfoId" style="line-height:1">
+                        <i class="fas fa-money-bill"></i>
+                    </a>
+
                     <a href="#" class="btn btn-sm btn-outline-success data-edit-item-download" title="Download" data-edit-item-download="@item.ProductSalesInfoId" style="line-height:1">
                         <i class="fas fa-download"></i>
                     </a>
-                    @*}
-                        @if (privilege != null && privilege.Delete)
-                        {*@
-                    <a href="#" class="btn btn-sm btn-outline-danger data-item-collection" title="Collection" data-item-collection="@item.ProductSalesInfoId" style="line-height:1">
-                        <i class="bi bi-collection"></i>
-                    </a>
-                    @*}*@
+
+
+
+
 
                 </td>
             </tr>
