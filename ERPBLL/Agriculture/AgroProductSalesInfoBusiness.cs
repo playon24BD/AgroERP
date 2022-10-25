@@ -67,7 +67,7 @@ namespace ERPBLL.Agriculture
             {
                 param += string.Format(@" and sales.ProductSalesInfoId={0}", ProductId);
             }
-            query = string.Format(@"	select sales.InvoiceNo,sales.InvoiceDate,stock.StockiestName
+            query = string.Format(@"	select sales.InvoiceNo,sales.ProductSalesInfoId,sales.InvoiceDate,stock.StockiestName
 from tblProductSalesInfo sales
 inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
 select sales.InvoiceNo,sales.InvoiceDate,stock.StockiestName

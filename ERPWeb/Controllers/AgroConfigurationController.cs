@@ -1889,7 +1889,7 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
             {
                 var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
-                //var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+               
                 var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
                 List<AgroProductSalesDetailsViewModel> details = new List<AgroProductSalesDetailsViewModel>();
                 if (info != null)
