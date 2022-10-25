@@ -78,6 +78,7 @@
     <Compile Include="Agriculture\DomainModels\AgroProductSalesInfo.cs" />
     <Compile Include="Agriculture\DomainModels\AgroUnitInfo.cs" />
     <Compile Include="Agriculture\DomainModels\AreaInfoSetup.cs" />
+    <Compile Include="Agriculture\DomainModels\DistributionUser.cs" />
     <Compile Include="Agriculture\DomainModels\DivisionInfo.cs" />
     <Compile Include="Agriculture\DomainModels\DivisionUser.cs" />
     <Compile Include="Agriculture\DomainModels\FinishGoodProductionDetails.cs" />
@@ -105,6 +106,8 @@
     <Compile Include="Agriculture\DTOModels\AgroProductSalesInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\AgroUnitInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\AreaSetupDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\DistributionUserDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\DistributionUserViewModel.cs" />
     <Compile Include="Agriculture\DTOModels\DivisionInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\DivisionUserDTO.cs" />
     <Compile Include="Agriculture\DTOModels\FinishGoodProductionDetailsDTO.cs" />
