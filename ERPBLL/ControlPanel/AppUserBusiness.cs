@@ -180,7 +180,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
         public ExecutionStateWithText SaveAppUser2(AppUserDTO appUserDTO, long userId, long orgId)
         {
             ExecutionStateWithText execution = new ExecutionStateWithText();
-            string srUserId = "0";
+    
             var division = string.Empty;
             var district = string.Empty;
             var zone = string.Empty;
@@ -250,27 +250,8 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 if (execution.isSuccess==true)
                 {
 
-                    if (division.Count() > 0)
-                    {
-                        var divisions = division.Split(',');
-                        foreach (var id in divisions)
-                        {
-                            DistributionUserDTO du = new DistributionUserDTO()
-                            {
-                                UserId = appUser.UserId,
-                                DivisionId =Int64.Parse(id),
-                                DistributionType="Division",
-                                OrganizationId=orgId,
-                                EntryDate=DateTime.Now,
-                                EntryUserId =userId,
-                                Status="INSERT",
-                            };
 
-                            distributionUserDTO.Add(du);
-                        }
-                        
-                        
-                    }
+
 
 
 
@@ -284,7 +265,6 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                         _divisionUserBusiness.SaveDivisionsUser( appUserDTO.DivisionId, appUser.UserId, userId, orgId);
                     }
 
-
                     if (zone.Count() > 0)
                     {
                         var zones = zone.Split(',');
@@ -295,6 +275,28 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                                 UserId = appUser.UserId,
                                 ZoneId = Int64.Parse(id),
                                 DistributionType = "Zone",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+                        }
+
+
+                    }
+
+                    if (division.Count() > 0)
+                    {
+                        var divisions = division.Split(',');
+                        foreach (var id in divisions)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUser.UserId,
+                                DivisionId = Int64.Parse(id),
+                                DistributionType = "Division",
                                 OrganizationId = orgId,
                                 EntryDate = DateTime.Now,
                                 EntryUserId = userId,
