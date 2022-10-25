@@ -35,6 +35,8 @@ namespace ERPBO.Agriculture.DTOModels
         public long? UpdateUserId { get; set; }
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
+        public string StockiestName { get; set; }
+        public string EntryUser { get; set; }
 
         public double PaidAmount { get; set; }
         public double DueAmount { get; set; }
