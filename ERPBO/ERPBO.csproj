@@ -99,6 +99,7 @@
     <Compile Include="Agriculture\DomainModels\StockiestInfo.cs" />
     <Compile Include="Agriculture\DomainModels\StockiestUser.cs" />
     <Compile Include="Agriculture\DomainModels\TerritorySetup.cs" />
+    <Compile Include="Agriculture\DomainModels\TerritoryUser.cs" />
     <Compile Include="Agriculture\DomainModels\UserAssign.cs" />
     <Compile Include="Agriculture\DomainModels\UserInfo.cs" />
     <Compile Include="Agriculture\DomainModels\Zone.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Agriculture\DTOModels\StockiestInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\StockiestUserDTO.cs" />
     <Compile Include="Agriculture\DTOModels\TerritorySetupDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\TerritoryUserDTO.cs" />
     <Compile Include="Agriculture\DTOModels\UserAssignDTO.cs" />
     <Compile Include="Agriculture\DTOModels\UserInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneDetailDTO.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="Agriculture\ViewModels\StockiestInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\StockiestUserViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\TerritorySetupViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\TerritoryUserViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\UserAssignViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\UserInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\ZoneDetailViewModel.cs" />
