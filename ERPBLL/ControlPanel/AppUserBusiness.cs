@@ -280,6 +280,65 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                     district = null;
                     zone = null;
                 }
+            var  preUserId=   this.GetAppUserOneById(appUserDTO.UserId,orgId);
+
+                if (preUserId !=null)
+                {
+                    if (division.Count() > 0)
+                    {
+
+
+
+
+                        string[] splitInDB = preUserId.DivisionId.Split(',');
+                        string[] splitInDTO = division.Split(',');
+                        var eq = (from c in splitInDTO
+                                  where splitInDB == null || splitInDB.Any(x => x == c)
+                                  select c).ToList();
+
+                        splitInDB = splitInDB.Except(eq).ToArray();
+                        splitInDTO = splitInDTO.Except(eq).ToArray();
+
+                        foreach (var item in splitInDB)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                DivisionId = Int64.Parse(item),
+                                DistributionType = "Division",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "DELETE",
+                            };
+
+                            distributionUserDTO.Add(du);
+
+                        }
+                        foreach (var item in splitInDTO)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                DivisionId = Int64.Parse(item),
+                                DistributionType = "Division",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+
+                        }
+                        if (distributionUserDTO.Count() > 0)
+                        {
+                            _distributionUserBusiness.SaveDistributionUser(distributionUserDTO, userId, orgId);
+                        }
+
+                    }
+                }
+
                 appUser = GetAppUserOneById(appUserDTO.UserId, appUserDTO.OrganizationId);
                 appUser.EmployeeId = appUserDTO.EmployeeId;
                 appUser.FullName = appUserDTO.FullName;
@@ -308,10 +367,15 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 execution.isSuccess = appUserRepository.Save();
 
                 execution.text = appUser.UserId.ToString();
+
                 if (execution.isSuccess)
                 {
-                   _divisionUserBusiness.UpdateDivisions(appUserDTO.DivisionId, appUser.UserId, userId, orgId);
+                    _divisionUserBusiness.UpdateDivisions(appUserDTO.DivisionId, appUser.UserId, userId, orgId);
                 }
+           
+                
+                    
+                
             }
 
 
