@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPBO.Agriculture.ViewModels
+namespace ERPBO.Agriculture.DTOModels
 {
-  public  class RegionUserViewModel
+   public class AreaUserDTO
     {
-        public long RegionUserId { get; set; }
+        public long AreaUserId { get; set; }
         public long UserId { get; set; }
-        public long RegionId { get; set; }
+        public long AreaId { get; set; }
+        public string DistributionType { get; set; }
         public long OrganizationId { get; set; }
         public string Status { get; set; }
         public string Flag { get; set; }

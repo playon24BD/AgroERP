@@ -1863,8 +1863,71 @@ namespace ERPWeb.Controllers
 
         #region Sales Invoice
 
+
+        public ActionResult GetAgroSalesProductList(string flag,long? ProductId,long? id)
+        {
+            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetAgroSalesProductList");
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                //ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+
+
+
+                return View();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _agroProductSalesInfoBusiness.GetAgroSalesInfos(User.OrgId, ProductId ?? 0);
+
+
+                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetAgroSalesProductList", viewModels);
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+                var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
+               
+                var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
+                List<AgroProductSalesDetailsViewModel> details = new List<AgroProductSalesDetailsViewModel>();
+                if (info != null)
+                {
+
+
+                    ViewBag.Info = new AgroProductSalesInfoViewModel
+                    {
+                        StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == info.StockiestId).StockiestName,
+                        InvoiceNo = info.InvoiceNo,
+                        InvoiceDate = info.InvoiceDate
+                        //StockiestName = _stockiestInfo.GetAllStockiestSetup(info.StockiestId, User.OrgId).StockiestName
+                    };
+               
+                 details = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(id.Value, User.OrgId).Select(i => new AgroProductSalesDetailsViewModel
+                   {
+                        Price=i.Price,
+                        Discount=i.Discount,
+                         Quanity=i.Quanity
+
+
+
+                 }).ToList();
+
+                }
+                else
+                {
+                    ViewBag.Info = new AgroProductSalesInfoViewModel();
+                }
+                return PartialView("_GetAgroSalesProductDetails", details);
+            }
+
+
+            return View();
+        }
+
         [HttpGet]
-        public ActionResult CreateAgroSalesProduct(long? id)
+        public ActionResult CreateAgroSalesProduct(long? id,long? finishGoodProductId)
         {
 
 
@@ -1872,10 +1935,10 @@ namespace ERPWeb.Controllers
 
             //ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
-            //var quantity = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId);
+            //var targetQuantity=_finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User)
 
-            ViewBag.ddlProductName =_finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName.ToString()+ "()", Value = f.FinishGoodProductId.ToString() }).ToList();
-
+            ViewBag.ddlProductName =_finishGoodProductionInfoBusiness.GetFinishGoodProductInfos( User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName+ "("+f.TargetQuantity+")", Value = f.FinishGoodProductId.ToString() }).ToList();
+             
 
             ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
 

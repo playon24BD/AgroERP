@@ -4,13 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPBO.Agriculture.ViewModels
+namespace ERPBO.Agriculture.DTOModels
 {
-  public  class RegionUserViewModel
+    public class DistributionUserViewModel
     {
-        public long RegionUserId { get; set; }
+        public long DistributionUserId { get; set; }
         public long UserId { get; set; }
-        public long RegionId { get; set; }
+        public long? ZoneId { get; set; }
+        public long? DivisionId { get; set; }
+        public long? RegionId { get; set; }
+        public long? AreaId { get; set; }
+        public long? TerritoryId { get; set; }
+        public long? StockiestId { get; set; }
+        public string DistributionType { get; set; }
         public long OrganizationId { get; set; }
         public string Status { get; set; }
         public string Flag { get; set; }

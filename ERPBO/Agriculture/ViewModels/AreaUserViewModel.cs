@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace ERPBO.Agriculture.ViewModels
 {
-  public  class RegionUserViewModel
+    public class AreaUserViewModel
     {
-        public long RegionUserId { get; set; }
+        public long AreaUserId { get; set; }
         public long UserId { get; set; }
-        public long RegionId { get; set; }
+        public long AreaId { get; set; }
+        public string DistributionType { get; set; }
         public long OrganizationId { get; set; }
         public string Status { get; set; }
         public string Flag { get; set; }

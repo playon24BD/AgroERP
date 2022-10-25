@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBLL.ControlPanel.Interface;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
@@ -50,6 +51,34 @@ namespace ERPBLL.Agriculture
         {
             return _agroProductSalesInfoRepository.GetAll(a => a.OrganizationId == orgId);
         }
+
+        public IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long orgId, long? ProductId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfoss(orgId, ProductId)).ToList();
+        }
+
+        private string QueryForAgroSalesInfoss(long orgId, long? ProductId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and sales.OrganizationId={0}", orgId);
+            if (ProductId != null && ProductId > 0)
+            {
+                param += string.Format(@" and sales.ProductSalesInfoId={0}", ProductId);
+            }
+            query = string.Format(@"	select sales.InvoiceNo,sales.ProductSalesInfoId,sales.InvoiceDate,stock.StockiestName
+from tblProductSalesInfo sales
+inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
+select sales.InvoiceNo,sales.InvoiceDate,stock.StockiestName
+from tblProductSalesInfo sales
+inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
+
+Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
 
         public IEnumerable<AgroProductSalesInfo> GetUserName(long orgId)
         {

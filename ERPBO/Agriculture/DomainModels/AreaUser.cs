@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPBO.Agriculture.ViewModels
+namespace ERPBO.Agriculture.DomainModels
 {
-  public  class RegionUserViewModel
+    [Table("tblAreaUser")]
+    public class AreaUser
     {
-        public long RegionUserId { get; set; }
+        [Key]
+        public long AreaUserId { get; set; }
         public long UserId { get; set; }
-        public long RegionId { get; set; }
+        public long AreaId { get; set; }
+        public string DistributionType { get; set; }
         public long OrganizationId { get; set; }
         public string Status { get; set; }
         public string Flag { get; set; }
@@ -18,5 +23,6 @@ namespace ERPBO.Agriculture.ViewModels
         public long? EntryUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public long UpdateUserId { get; set; }
+
     }
 }

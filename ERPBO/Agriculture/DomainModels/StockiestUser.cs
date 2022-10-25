@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPBO.Agriculture.ViewModels
+namespace ERPBO.Agriculture.DomainModels
 {
-  public  class RegionUserViewModel
+    [Table("tblStockiestUser")]
+    public class StockiestUser
     {
-        public long RegionUserId { get; set; }
+        [Key]
+        public long StockiestUserId { get; set; }
         public long UserId { get; set; }
-        public long RegionId { get; set; }
+        public long StockiestId { get; set; }
         public long OrganizationId { get; set; }
         public string Status { get; set; }
         public string Flag { get; set; }
