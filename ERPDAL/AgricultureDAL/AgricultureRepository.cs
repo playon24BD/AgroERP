@@ -216,4 +216,25 @@ namespace ERPDAL.AgricultureDAL
         public DivisionUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
     }
 
+    public class ZoneUserBusinessRepository : AgricultureBaseRepository<ZoneUser>
+    {
+        public ZoneUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class RegionUserBusinessRepository : AgricultureBaseRepository<RegionUser>
+    {
+        public RegionUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class AreaUserBusinessRepository : AgricultureBaseRepository<AreaUser>
+    {
+        public AreaUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class TerritoryUserBusinessRepository : AgricultureBaseRepository<TerritoryUser>
+    {
+        public TerritoryUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    public class StockiestUserBusinessRepository : AgricultureBaseRepository<StockiestUser>
+    {
+        public StockiestUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
 }
