@@ -10,7 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IZoneUserBusiness
     {
-        bool SaveZoneUser(List<string> zones, long userId, long suserId, long orgId);
+        bool SaveZoneUser(List<string> zones, long userId, long suserId, long orgId,string action);
         IEnumerable<ZoneUser> GetAllZoneByUserIdAndZoneId(long userId, long orgId);
         bool UpdateZone(List<string> zones, long userId, long suserId, long orgId);
         List<ZoneSetupViewModel> GetAllZone(long userId, long orgId);

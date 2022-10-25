@@ -73,8 +73,14 @@
                     <td class="hide">@user.UpdateUser</td>
                     @if (user.RoleId == 29)
                     {
-                        <td class="">N/A</td>
-     
+
+                        <td data-div="@user.ZoneName">
+                            @foreach (var zon in user.ZoneName)
+                            {
+                                <span class="badge badge-primary"> @zon.ZoneName</span>
+                            }
+                        </td>
+
                     }
                     @if (user.RoleId == 30)
                     {
