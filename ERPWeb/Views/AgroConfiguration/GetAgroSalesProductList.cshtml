@@ -131,8 +131,8 @@
             debugger;
             $("#dataContainer2").empty();
             var id = $(this).parent().parents('tr').children('td').eq(1).html();
-            if (TryParseInt(id, 0) > 0) {
-                var data = { flag: "Detail", ProductSalesInfoId: 0, id: id };
+            if (true) {
+                var data = { flag: "Detail", id: id };
                 $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAgroSalesProductList', data)).then(function (res, status) {
                     console.log(status);
                     if (status === "success") {
