@@ -210,6 +210,10 @@ namespace ERPDAL.AgricultureDAL
     {
         public AgroProductSalesDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
     }
+    public class DistributionUserBusinessRepository : AgricultureBaseRepository<DistributionUser>
+    {
+        public DistributionUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
 
     public class DivisionUserBusinessRepository : AgricultureBaseRepository<DivisionUser>
     {
