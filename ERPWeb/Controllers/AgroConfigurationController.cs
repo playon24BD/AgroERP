@@ -5,6 +5,7 @@ using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ViewModels;
 using ERPBO.Common;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -1998,6 +1999,7 @@ namespace ERPWeb.Controllers
 
 
 
+
         #endregion
 
         #region Payment
@@ -2005,6 +2007,41 @@ namespace ERPWeb.Controllers
         {
             return View();
         }
+        public ActionResult AgroProductSalesReport(long ProductSalesInfoId)
+        {
+            var data = _agroProductSalesInfoBusiness.GetProductSalesData();
+
+            LocalReport localReport = new LocalReport();
+
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptAgroProductSalesReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = "PDF";
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                "",
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
+
         #endregion
 
         #region Purchase & RawmaterialStock
