@@ -3,7 +3,7 @@ namespace ERPDAL.AgricultureContextMigrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Agriculture_AgroProductSales : DbMigration
+    public partial class Agriculture_test : DbMigration
     {
         public override void Up()
         {
