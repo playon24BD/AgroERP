@@ -26,7 +26,7 @@
                     <th class="hide"></th>
                     <th style="vertical-align:middle">Branch</th>
                     <th class="hide"></th>
-     
+
                     <th style="vertical-align:middle">Role</th>
                     <th style="vertical-align:middle">Entry User</th>
                     <th style="vertical-align:middle" class="hide">Update User</th>
@@ -40,101 +40,116 @@
                     sl += 1;
                     badge = (user.StateStatus == "Active" ? "badge bg-success" : "badge bg-danger");
                     badge1 = (user.StateStatusRole == "Active" ? "badge bg-success" : "badge bg-danger");
-                <tr>
-                    <td class="text-center">
-                        <b>@sl</b>
-                    </td>
-                    <td class="hide">@user.UserId</td>
-                    <td>@user.EmployeeId</td>
-                    <td>@user.FullName</td>
-                    <td class="hide">@user.MobileNo</td>
-                    <td class="hide">@user.Address</td>
-                    <td>@user.Email</td>
-                    <td class="hide">@user.Desigation</td>
-                    <td>@user.UserName</td>
-                    <td>@user.Password</td>
-                    <td class="text-center" data-val="@user.StateStatus">
-                        <span class="@badge">@user.StateStatus</span>
-                    </td>
-                    <td class="text-center" data-val="@user.StateStatusRole">
-                        <span class="@badge1">@user.StateStatusRole</span>
-                    </td>
-                    <td class="hide">@user.OrganizationId</td>
-                    <td>@user.OrganizationName</td>
-                    <td class="hide">@user.BranchId</td>
-
-                    <td>@user.BranchName</td>
-                    <td class="hide">@user.RoleId</td>
-
-                    <td class="text-center">
-                        <span class="badge badge-info">@user.RoleName</span>
-                    </td>
-                    <td class="text-sm">@user.EntryUser</td>
-                    <td class="hide">@user.UpdateUser</td>
-                    @if (user.RoleId == 29)
-                    {
-
-                        <td data-div="@user.ZoneName">
-                            @foreach (var zon in user.ZoneName)
-                            {
-                                <span class="badge badge-primary"> @zon.ZoneName</span>
-                            }
+                    <tr>
+                        <td class="text-center">
+                            <b>@sl</b>
                         </td>
-
-                    }
-                    @if (user.RoleId == 30)
-                    {
-
-
-                        <td data-div="@user.DivisionName">
-                            @foreach (var div in user.DivisionName)
-                            {
-                                <span class="badge badge-primary"> @div.DivisionName</span>
-                            }
+                        <td class="hide">@user.UserId</td>
+                        <td>@user.EmployeeId</td>
+                        <td>@user.FullName</td>
+                        <td class="hide">@user.MobileNo</td>
+                        <td class="hide">@user.Address</td>
+                        <td>@user.Email</td>
+                        <td class="hide">@user.Desigation</td>
+                        <td>@user.UserName</td>
+                        <td>@user.Password</td>
+                        <td class="text-center" data-val="@user.StateStatus">
+                            <span class="@badge">@user.StateStatus</span>
                         </td>
-
-                    }
-                    @if (user.RoleId == 31)
-                    {
-
-
-                        <td data-div="@user.RegionName">
-                            @foreach (var div in user.RegionName)
-                            {
-                                <span class="badge badge-primary"> @div.RegionName</span>
-                            }
+                        <td class="text-center" data-val="@user.StateStatusRole">
+                            <span class="@badge1">@user.StateStatusRole</span>
                         </td>
-                    }
-                    @if (user.RoleId == 32)
-                    {
+                        <td class="hide">@user.OrganizationId</td>
+                        <td>@user.OrganizationName</td>
+                        <td class="hide">@user.BranchId</td>
 
-                        <td class="">N/A</td>
-                    }
-                    @if (user.RoleId == 33)
-                    {
+                        <td>@user.BranchName</td>
+                        <td class="hide">@user.RoleId</td>
 
-                        <td class="">N/A</td>
-                    }
-                    @if (user.RoleId == 31)
-                    {
-
-                        <td class="">N/A</td>
-                    }
-
-
-
-
-                    <td class="text-center">
-                        @if (ViewBag.OPFor == "System")
+                        <td class="text-center">
+                            <span class="badge badge-info">@user.RoleName</span>
+                        </td>
+                        <td class="text-sm">@user.EntryUser</td>
+                        <td class="hide">@user.UpdateUser</td>
+                        @if (user.RoleId == 29)
                         {
-                            <a href="@Url.Action("CreateAppUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
+
+                            <td data-div="@user.ZoneName">
+                                @foreach (var zon in user.ZoneName)
+                                {
+                                    <span class="badge badge-primary"> @zon.ZoneName</span>
+                                }
+                            </td>
+
                         }
-                        @if (ViewBag.OPFor == "Client")
+                        @if (user.RoleId == 30)
                         {
-                            <a href="@Url.Action("CreateClientUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
+
+
+                            <td data-div="@user.DivisionName">
+                                @foreach (var div in user.DivisionName)
+                                {
+                                    <span class="badge badge-primary"> @div.DivisionName</span>
+                                }
+                            </td>
+
                         }
-                    </td>
-                </tr>
+                        @if (user.RoleId == 31)
+                        {
+
+
+                            <td data-div="@user.RegionName">
+                                @foreach (var div in user.RegionName)
+                                {
+                                    <span class="badge badge-primary"> @div.RegionName</span>
+                                }
+                            </td>
+                        }
+                        @if (user.RoleId == 32)
+                        {
+
+                            <td data-div="@user.AreaName">
+                                @foreach (var are in user.AreaName)
+                                {
+                                    <span class="badge badge-primary"> @are.AreaName</span>
+                                }
+                            </td>
+                        }
+                        @if (user.RoleId == 33)
+                        {
+
+                            <td data-div="@user.TerritoryName">
+                                @foreach (var terr in user.TerritoryName)
+                                {
+                                    <span class="badge badge-primary"> @terr.TerritoryName</span>
+                                }
+                            </td>
+                        }
+                        @if (user.RoleId == 34)
+                        {
+
+                            <td data-div="@user.StockiestName">
+                                @foreach (var st in user.StockiestName)
+                                {
+                                    <span class="badge badge-primary"> @st.StockiestName</span>
+                                }
+                            </td>
+                        }
+
+
+
+
+                        <td class="text-center">
+                            @if (ViewBag.OPFor == "System")
+                            {
+                                <a href="@Url.Action("CreateAppUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
+                            }
+                            @if (ViewBag.OPFor == "Client")
+                            {
+                                <a href="@Url.Action("CreateClientUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
+                            }
+                        </td>
+                    </tr>
                 }
                 @if (Model.Count() == 0)
                 {

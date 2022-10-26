@@ -10,7 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAreaUserBusiness
     {
-        bool SaveAreasUser(List<string> areas, long userId, long suserId, long orgId);
+        bool SaveAreasUser(List<string> areas, long userId, long suserId, long orgId,string action);
         IEnumerable<AreaUser> GetAllAreaByUserIdAndAreaId(long userId, long orgId);
         bool UpdateAreaUser(List<string> areas, long userId, long suserId, long orgId);
         List<AreaSetupViewModel> GetAllArea(long userId, long orgId);

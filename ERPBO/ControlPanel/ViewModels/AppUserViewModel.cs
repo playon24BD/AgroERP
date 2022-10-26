@@ -59,12 +59,15 @@ namespace ERPBO.ControlPanel.ViewModels
         public List<string> RegionId { get; set; }
         public string Region { get; set; }
         public List<RegionSetupViewModel> RegionName { get; set; }
-        public string AreaId { get; set; }
-        public string AreaName { get; set; }
-        public string TerritoryId { get; set; }
-        public string TerritoryName { get; set; }
-        public string StockiestId { get; set; }
-        public string StockiestName { get; set; }
+        public List<string> AreaId { get; set; }
+        public List<AreaSetupViewModel> AreaName { get; set; }
+        public string Area { get; set; }
+        public List<string> TerritoryId { get; set; }
+        public List<TerritorySetupViewModel> TerritoryName { get; set; }
+        public string Territory { get; set; }
+        public List<string> StockiestId { get; set; }
+        public List<StockiestInfoViewModel> StockiestName { get; set; }
+        public string Stockiest { get; set; }
     }
 
 }

@@ -10,7 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface ITerritoryUserBusiness
     {
-        bool SaveTerritoryUser(List<string> territories, long userId, long suserId, long orgId);
+        bool SaveTerritoryUser(List<string> territories, long userId, long suserId, long orgId,string action);
         IEnumerable<TerritoryUser> GetAllTerritoryByUserIdAndTerritory(long userId, long orgId);
         bool UpdateTerritoryUser(List<string> territories, long userId, long suserId, long orgId);
         List<TerritorySetupViewModel> GetAllTerritory(long userId, long orgId);

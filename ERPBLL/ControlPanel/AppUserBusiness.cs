@@ -23,7 +23,10 @@ namespace ERPBLL.ControlPanel
         private readonly IZoneUserBusiness _zoneUserBusiness; //
         private readonly IDistributionUserBusiness _distributionUserBusiness; //
         private readonly IRegionUserBusiness _regionUserBusiness;
-        public AppUserBusiness(IControlPanelUnitOfWork controlPanelUnitOfWork,IDivisionUserBusiness divisionUserBusiness,IDistributionUserBusiness distributionUserBusiness,IZoneUserBusiness zoneUserBusiness,IRegionUserBusiness regionUserBusiness)
+        private readonly IAreaUserBusiness _areaUserBusiness;
+        private readonly ITerritoryUserBusiness  _territoryUserBusiness;
+        private readonly IStockiestUserBusiness _stockiestUserBusiness;
+        public AppUserBusiness(IControlPanelUnitOfWork controlPanelUnitOfWork,IDivisionUserBusiness divisionUserBusiness,IDistributionUserBusiness distributionUserBusiness,IZoneUserBusiness zoneUserBusiness,IRegionUserBusiness regionUserBusiness, IAreaUserBusiness areaUserBusiness, IStockiestUserBusiness stockiestUserBusiness, ITerritoryUserBusiness territoryUserBusiness)
         {
             this._controlPanelUnitOfWork = controlPanelUnitOfWork;
             appUserRepository = new AppUserRepository(this._controlPanelUnitOfWork);
@@ -31,6 +34,9 @@ namespace ERPBLL.ControlPanel
             this._distributionUserBusiness = distributionUserBusiness;
             this._zoneUserBusiness = zoneUserBusiness;
             this._regionUserBusiness = regionUserBusiness;
+            this._areaUserBusiness = areaUserBusiness;
+            this._stockiestUserBusiness = stockiestUserBusiness;
+            this._territoryUserBusiness = territoryUserBusiness;
         }
 
         public bool ChangePassword(ChangePasswordDTO dto, long userId, long orgId)
@@ -71,7 +77,7 @@ namespace ERPBLL.ControlPanel
             if(flag == "System")
             {
                 return _controlPanelUnitOfWork.Db.Database.SqlQuery<AppUserDTO>(string.Format(@"Select app.EmployeeId,app.UserId,app.FullName,app.MobileNo,app.[Address],app.Email,app.Desigation,app.UserName, 
-app.[Password],app.ConfirmPassword,app.OrganizationId,app.RoleId,app.BranchId,app.IsActive,app.IsRoleActive,app.DivisionId As Division,app.ZoneId As Zone,app.RegionId As Region
+app.[Password],app.ConfirmPassword,app.OrganizationId,app.RoleId,app.BranchId,app.IsActive,app.IsRoleActive,app.DivisionId As Division,app.ZoneId As Zone,app.RegionId As Region, app.AreaId as Area, app.TerritoryId as Territory,app.StockiestId as Stockiest
 From tblApplicationUsers app 
 Inner Join tblBranch b on app.BranchId = b.BranchId and app.OrganizationId = b.OrganizationId
 Inner Join tblRoles r on app.RoleId = r.RoleId and app.OrganizationId = r.OrganizationId
@@ -187,6 +193,9 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
             var district = string.Empty;
             var zone = string.Empty;
             var region = string.Empty;
+            var territory = string.Empty;
+            var area = string.Empty;
+            var stockiest = string.Empty;
             string action = string.Empty;
 
 
@@ -208,6 +217,36 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                     region += reg + ",";
                 }
                 region = region.Substring(0, region.Length - 1);
+
+            }
+
+            if (appUserDTO.AreaId.Count() > 0)
+            {
+                foreach (var are in appUserDTO.AreaId)
+                {
+                    area += are + ",";
+                }
+                area = area.Substring(0, area.Length - 1);
+
+            }
+
+            if (appUserDTO.TerritoryId.Count() > 0)
+            {
+                foreach (var terri in appUserDTO.TerritoryId)
+                {
+                    territory += terri + ",";
+                }
+                territory = territory.Substring(0, territory.Length - 1);
+
+            }
+
+            if (appUserDTO.StockiestId.Count() > 0)
+            {
+                foreach (var stock in appUserDTO.StockiestId)
+                {
+                    stockiest += stock + ",";
+                }
+                stockiest = stockiest.Substring(0, stockiest.Length - 1);
 
             }
 
@@ -251,9 +290,9 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.DivisionId = division;
                 
                 appUser.RegionId = region;
-                appUser.AreaId = appUserDTO.AreaId;
-                appUser.TerritoryId = appUserDTO.TerritoryId;
-                appUser.StockiestId = appUserDTO.StockiestId;
+                appUser.AreaId = area;
+                appUser.TerritoryId = territory;
+                appUser.StockiestId = stockiest;
 
                 appUserRepository.Insert(appUser);
 
@@ -287,6 +326,23 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                         
                        
                     }
+                    if (appUserDTO.AreaId.Count() > 0)
+                    {
+
+                        _areaUserBusiness.SaveAreasUser(appUserDTO.AreaId, appUser.UserId, userId, orgId, action = "Insert");
+                    }
+
+                    if (appUserDTO.TerritoryId.Count() > 0)
+                    {
+                        _territoryUserBusiness.SaveTerritoryUser(appUserDTO.TerritoryId, appUser.UserId, userId, orgId, action = "Insert");
+                    }
+
+
+                    if (appUserDTO.StockiestId.Count() > 0)
+                    {
+                        _stockiestUserBusiness.SaveStockiestUser(appUserDTO.StockiestId, appUser.UserId, userId, orgId, action = "Insert");
+                    }
+
 
                     if (zone.Count() > 0)
                     {
@@ -352,6 +408,65 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                         }
 
 
+                    }
+
+                    if (area.Count()>0)
+                    {
+                        var areas = area.Split(',');
+                        foreach (var id in areas)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUser.UserId,
+                                RegionId = Int64.Parse(id),
+                                DistributionType = "Area",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+                        }
+
+                    }
+                    if (territory.Count()>0)
+                    {
+                        var territories = territory.Split(',');
+                        foreach (var id in territories)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUser.UserId,
+                                RegionId = Int64.Parse(id),
+                                DistributionType = "Territory",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+                        }
+                    }
+                    if (stockiest.Count()>0)
+                    {
+                        var stockiests = stockiest.Split(',');
+                        foreach (var id in stockiests)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUser.UserId,
+                                RegionId = Int64.Parse(id),
+                                DistributionType = "Stockiest",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+                        }
                     }
 
                     if (distributionUserDTO.Count()>0)
@@ -428,16 +543,11 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                             distributionUserDTO.Add(du);
 
                         }
-                        if (distributionUserDTO.Count() > 0)
-                        {
-                            _distributionUserBusiness.SaveDistributionUser(distributionUserDTO, userId, orgId);
-                        }
+
 
                     }
                     if (division.Count() > 0)
                     {
-
-
 
 
                         string[] splitInDB = preUserId.DivisionId.Split(',');
@@ -481,20 +591,15 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                             distributionUserDTO.Add(du);
 
                         }
-                        if (distributionUserDTO.Count() > 0)
-                        {
-                            _distributionUserBusiness.SaveDistributionUser(distributionUserDTO, userId, orgId);
-                        }
+         
 
                     }
-
-
                     if (region.Count() > 0)
                     {
 
                         string[] splitInDB = preUserId.RegionId.Split(',');
                         string[] splitInDTO = region.Split(',');
-                        
+
                         var eq = (from c in splitInDTO
                                   where splitInDB == null || splitInDB.Any(x => x == c)
                                   select c).ToList();
@@ -534,12 +639,161 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                             distributionUserDTO.Add(ru);
 
                         }
-                        if (distributionUserDTO.Count() > 0)
-                        {
-                            _distributionUserBusiness.SaveDistributionUser(distributionUserDTO, userId, orgId);
-                        }
 
                     }
+
+                    if (area.Count() > 0)
+                    {
+
+
+                        string[] splitInDB = preUserId.AreaId.Split(',');
+                        string[] splitInDTO = area.Split(',');
+                        var eq = (from c in splitInDTO
+                                  where splitInDB == null || splitInDB.Any(x => x == c)
+                                  select c).ToList();
+
+                        splitInDB = splitInDB.Except(eq).ToArray();
+                        splitInDTO = splitInDTO.Except(eq).ToArray();
+
+                        foreach (var item in splitInDB)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                AreaId = Int64.Parse(item),
+                                DistributionType = "Area",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "DELETE",
+                            };
+
+                            distributionUserDTO.Add(du);
+
+                        }
+                        foreach (var item in splitInDTO)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                AreaId = Int64.Parse(item),
+                                DistributionType = "Area",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+
+                        }
+
+
+                    }
+
+                    if (territory.Count() > 0)
+                    {
+
+
+                        string[] splitInDB = preUserId.TerritoryId.Split(',');
+                        string[] splitInDTO = territory.Split(',');
+                        var eq = (from c in splitInDTO
+                                  where splitInDB == null || splitInDB.Any(x => x == c)
+                                  select c).ToList();
+
+                        splitInDB = splitInDB.Except(eq).ToArray();
+                        splitInDTO = splitInDTO.Except(eq).ToArray();
+
+                        foreach (var item in splitInDB)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                TerritoryId = Int64.Parse(item),
+                                DistributionType = "Territory",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "DELETE",
+                            };
+
+                            distributionUserDTO.Add(du);
+
+                        }
+                        foreach (var item in splitInDTO)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                TerritoryId = Int64.Parse(item),
+                                DistributionType = "Territory",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+
+                        }
+
+
+                    }
+                    if (stockiest.Count() > 0)
+                    {
+
+
+                        string[] splitInDB = preUserId.StockiestId.Split(',');
+                        string[] splitInDTO = stockiest.Split(',');
+                        var eq = (from c in splitInDTO
+                                  where splitInDB == null || splitInDB.Any(x => x == c)
+                                  select c).ToList();
+
+                        splitInDB = splitInDB.Except(eq).ToArray();
+                        splitInDTO = splitInDTO.Except(eq).ToArray();
+
+                        foreach (var item in splitInDB)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                StockiestId = Int64.Parse(item),
+                                DistributionType = "Stockiest",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "DELETE",
+                            };
+
+                            distributionUserDTO.Add(du);
+
+                        }
+                        foreach (var item in splitInDTO)
+                        {
+                            DistributionUserDTO du = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                StockiestId = Int64.Parse(item),
+                                DistributionType = "Stockiest",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(du);
+
+                        }
+
+
+                    }
+
+                    if (distributionUserDTO.Count() > 0)
+                    {
+                         _distributionUserBusiness.SaveDistributionUser(distributionUserDTO, userId, orgId);
+                    }
+
+                    
                 }
 
                 appUser = GetAppUserOneById(appUserDTO.UserId, appUserDTO.OrganizationId);
@@ -562,9 +816,9 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.ZoneId = zone;
                 appUser.DivisionId = division;
                 appUser.RegionId = region;
-                appUser.AreaId = appUserDTO.AreaId;
-                appUser.TerritoryId = appUserDTO.TerritoryId;
-                appUser.StockiestId = appUserDTO.StockiestId;
+                appUser.AreaId = area;
+                appUser.TerritoryId = territory;
+                appUser.StockiestId = stockiest;
                 appUserRepository.Update(appUser);
 
                 execution.isSuccess = appUserRepository.Save();
@@ -585,6 +839,18 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                     if (appUser.RegionId.Count() > 0)
                     {
                         _regionUserBusiness.SaveRegionUser(appUserDTO.RegionId, appUser.UserId, userId, orgId, action = "Update");
+                    }
+                    if (appUser.AreaId.Count() > 0)
+                    {
+                        _areaUserBusiness.SaveAreasUser(appUserDTO.AreaId, appUser.UserId, userId, orgId, action = "Update");
+                    }
+                    if (appUser.TerritoryId.Count() > 0)
+                    {
+                        _territoryUserBusiness.SaveTerritoryUser(appUserDTO.TerritoryId, appUser.UserId, userId, orgId, action = "Update");
+                    }
+                    if (appUser.StockiestId.Count() > 0)
+                    {
+                        _stockiestUserBusiness.SaveStockiestUser(appUserDTO.StockiestId, appUser.UserId, userId, orgId, action = "Update");
                     }
 
                 }

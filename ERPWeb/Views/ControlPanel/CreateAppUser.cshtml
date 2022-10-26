@@ -246,6 +246,15 @@
             LoadDropDown('/ControlPanel/GetRegion', type.post, ddlRegionName, null);
             $("#ddlRegionName").attr("data-placeholder", "Select Region");
 
+            LoadDropDown('/ControlPanel/GetArea', type.post, ddlAreaName, null);
+            $("#ddlAreaName").attr("data-placeholder", "Select Area");
+
+            LoadDropDown('/ControlPanel/GetTerritory', type.post, ddlTerritoryName, null);
+            $("#ddlTerritoryName").attr("data-placeholder", "Select Territory");
+
+            LoadDropDown('/ControlPanel/GetStockiest', type.post, ddlStockiestName, null);
+            $("#ddlStockiestName").attr("data-placeholder", "Select Stockiest");
+
             disable(ddlZoneName)
             disable(ddlDivisionName)
             disable(ddlRegionName)
@@ -277,6 +286,15 @@
             });
             $("#ddlRegionName").select2({
                 placeholder: "Select Region..."
+            });
+            $("#ddlAreaName").select2({
+                placeholder: "Select Area..."
+            });
+            $("#ddlTerritoryName").select2({
+                placeholder: "Select Territory..."
+            });
+            $("#ddlStockiestName").select2({
+                placeholder: "Select Stockiest..."
             });
 
             if (TryParseInt(hdfUserId.val(), 0) > 0) {
@@ -336,6 +354,13 @@
                     ddlDivisionName.val(Divisions);
                     var Regions = res.Region.split(',');
                     ddlRegionName.val(Regions);
+
+                    var areas = res.Area.split(',');
+                    ddlAreaName.val(areas);
+                    var territories = res.Territory.split(',');
+                    ddlTerritoryName.val(territories);
+                    var stockiests = res.Stockiest.split(',');
+                    ddlStockiestName.val(stockiests);
 
 
                     ddlOrganizationName.trigger("change");
@@ -479,15 +504,15 @@
                 }
             if (role == 32) {
 
-                    LoadDropDown('/ControlPanel/GetArea', type.post, ddlAreaName, null);
-                    $("#ddlAreaName").attr("data-placeholder", "Select Area");
+ 
                     $("#zoneDiv").hide();
                     $("#divisionDiv").hide();
                     $("#regionDiv").hide();
                     $("#areaDiv").show();
                     $("#territoryDiv").hide();
                     $("#stockiestDiv").hide();
-                    $("#userNameDiv").show();
+                $("#userNameDiv").show();
+                $("#ddlAreaName").trigger("change");
                     disable(ddlZoneName)
                     disable(ddlDivisionName)
                     disable(ddlRegionName)
@@ -513,7 +538,8 @@
                     $("#areaDiv").hide();
                     $("#territoryDiv").show();
                     $("#stockiestDiv").hide();
-                    $("#userNameDiv").show();
+                $("#userNameDiv").show();
+                $("#ddlTerritoryName").trigger("change");
                     disable(ddlZoneName)
                     disable(ddlDivisionName)
                     disable(ddlRegionName)
@@ -530,8 +556,7 @@
 
                 }
             if (role == 34) {
-                    LoadDropDown('/ControlPanel/GetStockiest', type.post, ddlStockiestName, null);
-                    $("#ddlStockiestName").attr("data-placeholder", "Select Stockiest");
+
 
                     $("#zoneDiv").hide();
                     $("#divisionDiv").hide();
@@ -539,7 +564,8 @@
                     $("#areaDiv").hide();
                     $("#territoryDiv").hide();
                     $("#stockiestDiv").show();
-                    $("#userNameDiv").show();
+                $("#userNameDiv").show();
+                $("#ddlStockiestName").trigger("change");
                     disable(ddlZoneName)
                     disable(ddlDivisionName)
                     disable(ddlRegionName)
@@ -703,9 +729,6 @@
                 }
                 if (ddlRoleName.val() == 33) {
                     clearDropdown2("ddlTerritoryName");
-
-
-
                     $("#zoneDiv").hide();
                     $("#divisionDiv").hide();
                     $("#regionDiv").hide();
@@ -726,8 +749,6 @@
                     ddlRegionName.val("");
                     ddlAreaName.val("");
                     ddlStockiestName.val("");
-
-
 
                 }
 
@@ -990,6 +1011,9 @@
                 var zones = []; zones.length = 0;
                 var divisions = []; divisions.length = 0;
                 var regions = []; regions.length = 0;
+                var areas = []; areas.length = 0;
+                var territories = []; territories.length = 0;
+                var stockiests = []; stockiests.length = 0;
 
                 if (ddlRoleName.val() == 29) {
                     if (ddlZoneName.val().length > 0) {
@@ -1016,6 +1040,36 @@
                     }
                 }
 
+                if (ddlRoleName.val() == 32) {
+
+                    if (ddlAreaName.val().length > 0) {
+                        $.each(ddlAreaName.val(), function (index, item) {
+                            areas.push(item);
+                        })
+                    }
+                }
+
+                if (ddlRoleName.val() == 33) {
+
+                    if (ddlTerritoryName.val().length > 0) {
+                        $.each(ddlTerritoryName.val(), function (index, item) {
+                            territories.push(item);
+                        })
+                    }
+                }
+
+                if (ddlRoleName.val() == 34) {
+
+                    if (ddlStockiestName.val().length > 0) {
+                        $.each(ddlStockiestName.val(), function (index, item) {
+                            stockiests.push(item);
+                        })  
+                    }
+                }
+
+
+
+
 
                 disable("#btnSubmit");
                 var userData ={
@@ -1037,9 +1091,9 @@
                     ZoneId: zones,
                     DivisionId: divisions,
                     RegionId: regions,
-                    AreaId: TryParseInt(ddlAreaName.val(), 0),
-                    TerritoryId: TryParseInt(ddlTerritoryName.val(), 0),
-                    StockiestId: TryParseInt(ddlStockiestName.val(), 0),
+                    AreaId: areas,
+                    TerritoryId: territories,
+                    StockiestId: stockiests,
                 
 
                 };
