@@ -97,7 +97,13 @@
                     @if (user.RoleId == 31)
                     {
 
-                        <td class="">N/A</td>
+
+                        <td data-div="@user.RegionName">
+                            @foreach (var div in user.RegionName)
+                            {
+                                <span class="badge badge-primary"> @div.RegionName</span>
+                            }
+                        </td>
                     }
                     @if (user.RoleId == 32)
                     {

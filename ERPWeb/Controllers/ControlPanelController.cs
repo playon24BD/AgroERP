@@ -41,8 +41,9 @@ namespace ERPWeb.Controllers
         private readonly ITerritorySetup _territorySetup;//e
         private readonly IDivisionUserBusiness _divisionUserBusiness;
         private readonly IZoneUserBusiness _zoneUserBusiness;
+        private readonly IRegionUserBusiness _regionUserBusiness;
 
-        public ControlPanelController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness, IZoneSetup zoneSetup, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IAreaSetupBusiness areaSetupBusiness, ITerritorySetup territorySetup, IStockiestInfo stockiestInfo,IDivisionUserBusiness divisionUserBusiness,IZoneUserBusiness zoneUserBusiness)
+        public ControlPanelController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness, IZoneSetup zoneSetup, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IAreaSetupBusiness areaSetupBusiness, ITerritorySetup territorySetup, IStockiestInfo stockiestInfo,IDivisionUserBusiness divisionUserBusiness,IZoneUserBusiness zoneUserBusiness,IRegionUserBusiness regionUserBusiness)
         {
             this._depotSetup = depotSetup;
             this._organizationBusiness = organizationBusiness;
@@ -63,6 +64,7 @@ namespace ERPWeb.Controllers
             this._stockiestInfo = stockiestInfo;
             this._divisionUserBusiness = divisionUserBusiness;
             this._zoneUserBusiness = zoneUserBusiness;
+            this._regionUserBusiness = regionUserBusiness;
         }
         // GET: ControlPanel
 
@@ -394,7 +396,7 @@ namespace ERPWeb.Controllers
                     ZoneName=_zoneUserBusiness.GetAllZone(user.UserId,User.OrgId),
 
                     DivisionName =_divisionUserBusiness.GetAllDiv(user.UserId,User.OrgId),
-                    //RegionName=_regionSetup.GetRegionNamebyId(user.RegionId.Value,User.OrgId).RegionName,
+                    RegionName= _regionUserBusiness.GetAllRegion(user.UserId,User.OrgId),
                     //AreaName=_areaSetupBusiness.GetAreaById(user.AreaId.Value,User.OrgId).AreaName,
                     //TerritoryName=_territorySetup.GetTerritoryNamebyId(user.TerritoryId.Value,User.OrgId).TerritoryName,
                     //StockiestName=_stockiestInfo.GetStockiestInfoById(user.StockiestId.Value,User.OrgId).StockiestName
@@ -905,7 +907,7 @@ namespace ERPWeb.Controllers
             }
             return Json(isSuccess);
         }
-
+        // Working Area
         [HttpPost, ValidateJsonAntiForgeryToken]
         public ActionResult SaveApplicationUser(AppUserViewModel appUser, List<UserAuthorizationViewModel> models)
         {
