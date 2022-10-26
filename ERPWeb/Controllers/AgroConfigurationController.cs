@@ -2001,9 +2001,21 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Payment
-        public ActionResult InvoicePayment(string flag, long id)
+        public ActionResult SaveSalesPayment(SalesPaymentRegisterViewModel info)
         {
-            return View();
+
+            bool isSucccess = false;
+            var salesID = info.ProductSalesInfoId;
+
+
+            SalesPaymentRegisterDTO salesPaymentRegisterDTO = new SalesPaymentRegisterDTO();
+           
+            AutoMapper.Mapper.Map(info, salesPaymentRegisterDTO);
+            isSucccess = _salesPaymentRegister.SaveSalesPayment(salesPaymentRegisterDTO, User.UserId);
+          
+            //isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
+    
+            return Json(isSucccess);
         }
         #endregion
 

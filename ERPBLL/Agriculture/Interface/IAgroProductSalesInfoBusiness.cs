@@ -14,6 +14,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<AgroProductSalesInfo> GetUserName(long orgId);
         AgroProductSalesInfo GetAgroProductionInfoById(long id, long orgId);
         IEnumerable<AgroProductSalesInfo> GetAgroProductionSalesInfo(long orgId);
+        AgroProductSalesInfo CheckBYProductSalesInfoId(long? ProductSalesInfoId);
         bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId);
     }
 }

@@ -17,6 +17,8 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly AgroProductSalesInfoRepository _agroProductSalesInfoRepository;
+        private readonly SalesPaymentRegisterRepository _salesPaymentRegisterRepository;
+
         //private readonly AppUserRepository appUserRepository; // repo
         private readonly IAppUserBusiness _appUserBusiness;
         private readonly IStockiestInfo _stockiestInfo;
@@ -40,6 +42,14 @@ namespace ERPBLL.Agriculture
             this._zoneSetup = zoneSetup;
             this._userAssignBussiness = userAssignBussiness;
             this._userInfo = userInfo;
+            this._salesPaymentRegisterRepository = new SalesPaymentRegisterRepository(this._agricultureUnitOfWork);
+        }
+
+
+
+        public AgroProductSalesInfo CheckBYProductSalesInfoId(long? ProductSalesInfoId)
+        {
+            return _agroProductSalesInfoRepository.GetOneByOrg(i => i.ProductSalesInfoId == ProductSalesInfoId );
         }
 
         public AgroProductSalesInfo GetAgroProductionInfoById(long id, long orgId)
@@ -67,7 +77,7 @@ namespace ERPBLL.Agriculture
             {
                 param += string.Format(@" and sales.ProductSalesInfoId={0}", ProductId);
             }
-            query = string.Format(@"	select sales.InvoiceNo,sales.ProductSalesInfoId,sales.InvoiceDate,stock.StockiestName
+            query = string.Format(@"	select sales.TotalAmount,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,sales.InvoiceDate,stock.StockiestName
 from tblProductSalesInfo sales
 inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
 select sales.InvoiceNo,sales.InvoiceDate,stock.StockiestName
@@ -159,6 +169,9 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
                 };
 
+
+
+
                 List<AgroProductSalesDetails> agroDetails = new List<AgroProductSalesDetails>();
 
                 foreach (var item in details)
@@ -186,8 +199,23 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                 agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
                 _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
                 isSuccess = _agroProductSalesInfoRepository.Save();
+
+
+                //paymenttable
+                SalesPaymentRegister salesPayment = new SalesPaymentRegister
+                {
+                    PaymentDate = DateTime.Now,
+                    PaymentAmount = agroSalesInfoDTO.PaidAmount,
+                    ProductSalesInfoId = agroSalesProductionInfo.ProductSalesInfoId,
+                    Remarks = "SalesTime",
+                    EntryUserId = userId
+                };
+                //paymenttable
+                _salesPaymentRegisterRepository.Insert(salesPayment);
+                isSuccess = _salesPaymentRegisterRepository.Save();
+
             }
-            
+
             return isSuccess;
         }
     }
