@@ -22,13 +22,15 @@ namespace ERPBLL.ControlPanel
         private readonly IDivisionUserBusiness _divisionUserBusiness; //
         private readonly IZoneUserBusiness _zoneUserBusiness; //
         private readonly IDistributionUserBusiness _distributionUserBusiness; //
-        public AppUserBusiness(IControlPanelUnitOfWork controlPanelUnitOfWork,IDivisionUserBusiness divisionUserBusiness,IDistributionUserBusiness distributionUserBusiness,IZoneUserBusiness zoneUserBusiness)
+        private readonly IRegionUserBusiness _regionUserBusiness;
+        public AppUserBusiness(IControlPanelUnitOfWork controlPanelUnitOfWork,IDivisionUserBusiness divisionUserBusiness,IDistributionUserBusiness distributionUserBusiness,IZoneUserBusiness zoneUserBusiness,IRegionUserBusiness regionUserBusiness)
         {
             this._controlPanelUnitOfWork = controlPanelUnitOfWork;
             appUserRepository = new AppUserRepository(this._controlPanelUnitOfWork);
             this._divisionUserBusiness = divisionUserBusiness;
             this._distributionUserBusiness = distributionUserBusiness;
             this._zoneUserBusiness = zoneUserBusiness;
+            this._regionUserBusiness = regionUserBusiness;
         }
 
         public bool ChangePassword(ChangePasswordDTO dto, long userId, long orgId)
@@ -69,7 +71,7 @@ namespace ERPBLL.ControlPanel
             if(flag == "System")
             {
                 return _controlPanelUnitOfWork.Db.Database.SqlQuery<AppUserDTO>(string.Format(@"Select app.EmployeeId,app.UserId,app.FullName,app.MobileNo,app.[Address],app.Email,app.Desigation,app.UserName, 
-app.[Password],app.ConfirmPassword,app.OrganizationId,app.RoleId,app.BranchId,app.IsActive,app.IsRoleActive,app.DivisionId As Division,app.ZoneId As Zone
+app.[Password],app.ConfirmPassword,app.OrganizationId,app.RoleId,app.BranchId,app.IsActive,app.IsRoleActive,app.DivisionId As Division,app.ZoneId As Zone,app.RegionId As Region
 From tblApplicationUsers app 
 Inner Join tblBranch b on app.BranchId = b.BranchId and app.OrganizationId = b.OrganizationId
 Inner Join tblRoles r on app.RoleId = r.RoleId and app.OrganizationId = r.OrganizationId
@@ -184,6 +186,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
             var division = string.Empty;
             var district = string.Empty;
             var zone = string.Empty;
+            var region = string.Empty;
             string action = string.Empty;
 
 
@@ -196,6 +199,18 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 zone = zone.Substring(0, zone.Length - 1);
 
             }
+
+
+            if (appUserDTO.RegionId.Count() > 0)
+            {
+                foreach (var reg in appUserDTO.RegionId)
+                {
+                    region += reg + ",";
+                }
+                region = region.Substring(0, region.Length - 1);
+
+            }
+
             AppUser appUser = new AppUser();
             List<DistributionUserDTO> distributionUserDTO = new List<DistributionUserDTO>();
             if (appUserDTO.UserId == 0)
@@ -235,7 +250,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.ZoneId = zone;
                 appUser.DivisionId = division;
                 
-                appUser.RegionId = appUserDTO.RegionId;
+                appUser.RegionId = region;
                 appUser.AreaId = appUserDTO.AreaId;
                 appUser.TerritoryId = appUserDTO.TerritoryId;
                 appUser.StockiestId = appUserDTO.StockiestId;
@@ -263,6 +278,14 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                     if (appUserDTO.DivisionId.Count() > 0)
                     {
                         _divisionUserBusiness.SaveDivisionsUser( appUserDTO.DivisionId, appUser.UserId, userId, orgId);
+                    }
+
+
+                    if (appUserDTO.RegionId.Count() > 0)
+                    {
+                        _regionUserBusiness.SaveRegionUser(appUserDTO.RegionId, appUser.UserId, userId, orgId,action="Insert");
+                        
+                       
                     }
 
                     if (zone.Count() > 0)
@@ -304,6 +327,28 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                             };
 
                             distributionUserDTO.Add(du);
+                        }
+
+
+                    }
+
+                    if (region.Count() > 0)
+                    {
+                        var regions = region.Split(',');
+                        foreach (var id in regions)
+                        {
+                            DistributionUserDTO ru = new DistributionUserDTO()
+                            {
+                                UserId = appUser.UserId,
+                                RegionId = Int64.Parse(id),
+                                DistributionType = "Region",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(ru);
                         }
 
 
@@ -442,6 +487,59 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                         }
 
                     }
+
+
+                    if (region.Count() > 0)
+                    {
+
+                        string[] splitInDB = preUserId.RegionId.Split(',');
+                        string[] splitInDTO = region.Split(',');
+                        
+                        var eq = (from c in splitInDTO
+                                  where splitInDB == null || splitInDB.Any(x => x == c)
+                                  select c).ToList();
+
+                        splitInDB = splitInDB.Except(eq).ToArray();
+                        splitInDTO = splitInDTO.Except(eq).ToArray();
+
+                        foreach (var item in splitInDB)
+                        {
+                            DistributionUserDTO ru = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                RegionId = Int64.Parse(item),
+                                DistributionType = "Region",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "DELETE",
+                            };
+
+                            distributionUserDTO.Add(ru);
+
+                        }
+                        foreach (var item in splitInDTO)
+                        {
+                            DistributionUserDTO ru = new DistributionUserDTO()
+                            {
+                                UserId = appUserDTO.UserId,
+                                RegionId = Int64.Parse(item),
+                                DistributionType = "Region",
+                                OrganizationId = orgId,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                Status = "INSERT",
+                            };
+
+                            distributionUserDTO.Add(ru);
+
+                        }
+                        if (distributionUserDTO.Count() > 0)
+                        {
+                            _distributionUserBusiness.SaveDistributionUser(distributionUserDTO, userId, orgId);
+                        }
+
+                    }
                 }
 
                 appUser = GetAppUserOneById(appUserDTO.UserId, appUserDTO.OrganizationId);
@@ -463,7 +561,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                 appUser.RoleId = appUserDTO.RoleId;
                 appUser.ZoneId = zone;
                 appUser.DivisionId = division;
-                appUser.RegionId = appUserDTO.RegionId;
+                appUser.RegionId = region;
                 appUser.AreaId = appUserDTO.AreaId;
                 appUser.TerritoryId = appUserDTO.TerritoryId;
                 appUser.StockiestId = appUserDTO.StockiestId;
@@ -484,7 +582,11 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                         _divisionUserBusiness.UpdateDivisions(appUserDTO.DivisionId, appUser.UserId, userId, orgId);
 
                     }
-            
+                    if (appUser.RegionId.Count() > 0)
+                    {
+                        _regionUserBusiness.SaveRegionUser(appUserDTO.RegionId, appUser.UserId, userId, orgId, action = "Update");
+                    }
+
                 }
 
            

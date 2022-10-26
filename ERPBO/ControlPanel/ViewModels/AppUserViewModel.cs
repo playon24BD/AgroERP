@@ -56,8 +56,9 @@ namespace ERPBO.ControlPanel.ViewModels
         public List<string> DivisionId { get; set; }
         public List<DivisionInfoViewModel> DivisionName { get; set; }
         public string Division { get; set; }
-        public string RegionId { get; set; }
-        public string RegionName { get; set; }
+        public List<string> RegionId { get; set; }
+        public string Region { get; set; }
+        public List<RegionSetupViewModel> RegionName { get; set; }
         public string AreaId { get; set; }
         public string AreaName { get; set; }
         public string TerritoryId { get; set; }

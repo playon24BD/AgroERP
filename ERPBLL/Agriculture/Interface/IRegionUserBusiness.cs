@@ -10,7 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IRegionUserBusiness
     {
-        bool SaveRegionUser(List<string> regions, long userId, long suserId, long orgId);
+        bool SaveRegionUser(List<string> regions, long userId, long suserId, long orgId,string action);
         IEnumerable<RegionUser> GetAllRegionByUserIdAndRegionId(long userId, long orgId);
         bool UpdateRegion(List<string> regions, long userId, long suserId, long orgId);
         List<RegionSetupViewModel> GetAllRegion(long userId, long orgId);

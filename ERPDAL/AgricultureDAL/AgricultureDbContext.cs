@@ -64,6 +64,9 @@ namespace ERPDAL.AgricultureDAL
 
         public DbSet<ZoneUser> tblZoneUser { get; set; }
         public DbSet<RegionUser> tblRezoneUser { get; set; }
+        public DbSet<AreaUser> tblAreaUser { get; set; }
+        public DbSet<TerritoryUser> tblTerryUser { get; set; }
+        public DbSet<StockiestUser> tblStokiestUser { get; set; }
 
         public DbSet<ReturnRawMaterial> tblReturnRawMaterial { get; set; }
 
