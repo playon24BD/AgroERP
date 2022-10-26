@@ -74,11 +74,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
+
     <Compile Include="AgricultureContextMigrations\202210261053414_Agriculture_Agriculture.cs" />
     <Compile Include="AgricultureContextMigrations\202210261053414_Agriculture_Agriculture.Designer.cs">
       <DependentUpon>202210261053414_Agriculture_Agriculture.cs</DependentUpon>
-=======
+  </Compile>
     <Compile Include="AgricultureContextMigrations\202209111329214_Agriculture_Depo.cs" />
     <Compile Include="AgricultureContextMigrations\202209111329214_Agriculture_Depo.Designer.cs">
       <DependentUpon>202209111329214_Agriculture_Depo.cs</DependentUpon>
@@ -338,7 +338,7 @@
     <Compile Include="AgricultureContextMigrations\202210260640392_Agriculture_AreaTerrritoryStockies.cs" />
     <Compile Include="AgricultureContextMigrations\202210260640392_Agriculture_AreaTerrritoryStockies.Designer.cs">
       <DependentUpon>202210260640392_Agriculture_AreaTerrritoryStockies.cs</DependentUpon>
->>>>>>> 1c7cd6a79ecc6de6083f7a9f42ee72d550625be4
+
     </Compile>
     <Compile Include="AgricultureContextMigrations\202210260847297_Agriculture_AgroProductSales.cs" />
     <Compile Include="AgricultureContextMigrations\202210260847297_Agriculture_AgroProductSales.Designer.cs">
@@ -384,10 +384,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
+
     <EmbeddedResource Include="AgricultureContextMigrations\202210261053414_Agriculture_Agriculture.resx">
       <DependentUpon>202210261053414_Agriculture_Agriculture.cs</DependentUpon>
-=======
+    </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202209111329214_Agriculture_Depo.resx">
       <DependentUpon>202209111329214_Agriculture_Depo.cs</DependentUpon>
     </EmbeddedResource>
@@ -582,8 +582,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202210260640392_Agriculture_AreaTerrritoryStockies.resx">
       <DependentUpon>202210260640392_Agriculture_AreaTerrritoryStockies.cs</DependentUpon>
->>>>>>> 1c7cd6a79ecc6de6083f7a9f42ee72d550625be4
     </EmbeddedResource>
+ 
     <EmbeddedResource Include="AgricultureContextMigrations\202210260847297_Agriculture_AgroProductSales.resx">
       <DependentUpon>202210260847297_Agriculture_AgroProductSales.cs</DependentUpon>
     </EmbeddedResource>
