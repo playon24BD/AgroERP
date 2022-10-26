@@ -2623,6 +2623,17 @@
     <Content Include="wwwroot\lib\select2\js\select2.min.js" />
     <Content Include="wwwroot\mycss\login.css" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Reports\DataSets\dsAgroSalesReport.xsc">
+      <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsAgroSalesReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAgroSalesReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsAgroSalesReport.xss">
+      <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\download.js" />
@@ -3039,6 +3050,11 @@
     <Compile Include="Infrastructure\PagerData.cs" />
     <Compile Include="Infrastructure\PrintReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\DataSets\dsAgroSalesReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -3192,8 +3208,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Reports\Accounts\" />
-    <Folder Include="Reports\DataSets\" />
-    <Folder Include="Reports\ERPRpt\" />
     <Folder Include="Reports\ServiceRpt\Configuration\" />
     <Folder Include="wwwroot\images\Student\" />
   </ItemGroup>
@@ -3218,6 +3232,9 @@
       <Project>{c075def3-a65b-4b86-90fa-dd698b139db4}</Project>
       <Name>ERPDAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

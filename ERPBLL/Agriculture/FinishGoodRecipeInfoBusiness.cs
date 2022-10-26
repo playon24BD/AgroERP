@@ -110,8 +110,29 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
         public IEnumerable<FinishGoodRecipeInfo> GetAllFinishGoodReceif(long orgId)
         {
-            return _finishGoodRecipeInfoRepository.GetAll(f=>f.OrganizationId==orgId);
+            return _finishGoodRecipeInfoRepository.GetAll(f => f.OrganizationId == orgId);
         }
+        //public IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodReceif(long orgId)
+        //{
+        //    return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodProducts(orgId)).ToList();
+        //}
+
+        //        private string QueryForFinishGoodProducts(long orgId)
+        //        {
+        //            string query = string.Empty;
+        //            string param = string.Empty;
+
+        //            param += string.Format(@" and OrganizationId={0}", orgId);
+
+        //            query = string.Format(@"SELECT fgr.FGRId,fgr.FinishGoodProductId,fg.FinishGoodProductName,
+        //                  fgr.FGRQty,fgr.UnitId,unit.UnitName,fgr.OrganizationId 
+        //                 FROM [Agriculture].dbo.tblFinishGoodRecipeInfo fgr
+        //                 INNER JOIN [Agriculture].dbo.tblFinishGoodProductInfo fg on fgr.FinishGoodProductId=fg.FinishGoodProductId 
+        //inner join tblAgroUnitInfo unit on unit.UnitId=fgr.UnitId	
+        //Where 1=1 {0}", Utility.ParamChecker(param));
+
+        //            return query;
+        //        }
 
         public IEnumerable<FinishGoodRecipeInfo> GetAllFinishGoodReceipCode(long productId, long orgId)
         {

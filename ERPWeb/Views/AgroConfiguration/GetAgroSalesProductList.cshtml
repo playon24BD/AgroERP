@@ -50,10 +50,14 @@
                                     <div class="card-body text-sm">
                                         <div class="row" style="margin-top:-15px">
                                             <div class="col-md-3">
-                                                <label for="ddlProductName" class="col-form-label">Product Name</label>
+                                                <label for="ddlProductName" class="col-form-label">Invoice No </label>
                                                 @*@Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
                                             </div>
 
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control form-control-sm" id="SearchInvoiceNo" placeholder="search Invoice" />
                                         </div>
 
                                     </div>
@@ -221,6 +225,7 @@
 
     <script type="text/javascript">
 
+        var rptType = $("#rptType");
 
 
 
@@ -320,6 +325,38 @@
             $("#spanModalHead").text('Payment');
             $("#spanSaveTextZone").text('Payment Update');
         })
+
+
+
+
+        
+
+        $(document).on('click', 'a.data-item-download', function (e) {
+            e.preventDefault();
+            window.open("/AgroConfiguration/AgroProductSalesReport?ProductSalesInfoId=" + ProductSalesInfoId.val());
+        })
+
+
+        //$(document).on('click', 'a.data-item-download', function (e) {
+        //    e.preventDefault();
+        //    debugger;
+        //    $("#dataContainer2").empty();
+        //    var id = $(this).parent().parents('tr').children('td').eq(1).html();
+        //    if (true) {
+        //        var data = { id: id };
+        //        $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAgroSalesProductList', data)).then(function (res, status) {
+        //            console.log(status);
+        //            if (status === "success") {
+        //                $("#dataContainer2").empty();
+        //                $("#dataContainer2").append(res);
+        //                $("#AgroSalesProductDetails").modal('show');
+        //            }
+        //        }).fail(function (error) {
+        //            console.log(error);
+        //        })
+        //    }
+        //})
+
 
 
 

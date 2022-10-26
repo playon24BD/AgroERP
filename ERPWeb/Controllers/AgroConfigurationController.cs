@@ -5,6 +5,7 @@ using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ViewModels;
 using ERPBO.Common;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -1040,7 +1041,8 @@ namespace ERPWeb.Controllers
 
                 ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
 
-                ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                //ViewBag.ddlProduct = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
 
                 return View();
@@ -1138,8 +1140,16 @@ namespace ERPWeb.Controllers
                 foreach (var rawMaterial in recipeDetailsRawMaterials)
                 {
 
-                    issueQunatitys = _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
-                    // myList += string.Format("{0},", rawMaterial.RawMaterialId);
+                    //issueQunatitys = _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
+                    var StocInkqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    var SumStockinQty = StocInkqty.Sum(c => c.Quantity);
+
+
+                    var StockOutqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialidOut(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    var SumStockOutQty = StockOutqty.Sum(d => d.Quantity);
+
+                    issueQunatitys = SumStockinQty - SumStockOutQty;
+                    //myList += string.Format("{0},", rawMaterial.RawMaterialId);
 
 
                     perRecepQuantitys = rawMaterial.FGRRawMaterQty;//0.3
@@ -1996,6 +2006,41 @@ namespace ERPWeb.Controllers
             return Json(isSucccess);
         }
 
+        public ActionResult AgroProductSalesReport(long ProductSalesInfoId)
+        {
+            var data = _agroProductSalesInfoBusiness.GetProductSalesData(ProductSalesInfoId);
+
+            LocalReport localReport = new LocalReport();
+
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptAgroProductSalesReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = "PDF";
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                "",
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
+
 
 
         #endregion
@@ -2018,6 +2063,8 @@ namespace ERPWeb.Controllers
     
             return Json(isSucccess);
         }
+        
+
         #endregion
 
         #region Purchase & RawmaterialStock

@@ -3,6 +3,7 @@ using ERPBLL.Common;
 using ERPBLL.ControlPanel.Interface;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
+using ERPBO.Agriculture.ReportModels;
 using ERPDAL.AgricultureDAL;
 using ERPDAL.ControlPanelDAL;
 using System;
@@ -15,6 +16,7 @@ namespace ERPBLL.Agriculture
 {
     public class AgroProductSalesInfoBusiness : IAgroProductSalesInfoBusiness
     {
+
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly AgroProductSalesInfoRepository _agroProductSalesInfoRepository;
         private readonly SalesPaymentRegisterRepository _salesPaymentRegisterRepository;
@@ -217,6 +219,85 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             }
 
             return isSuccess;
+        }
+
+        public IEnumerable<ProductSalesDataReport> GetProductSalesData(long ProductSalesInfoId)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport>(QueryProductSalesReport(ProductSalesInfoId));
+        }
+
+        private string QueryProductSalesReport(long ProductSalesInfoId)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+            //if (projectId > 0)
+            //{
+            //    param += string.Format(@"and projectId={0}", projectId);
+            //}
+            //if (!string.IsNullOrEmpty(TaskName))
+            //{
+            //    param += string.Format(@"and TaskName ='{0}'", TaskName);
+            //}
+            //if (!string.IsNullOrEmpty(status))
+            //{
+            //    param += string.Format(@"and Taskstatus ='{0}'", status);
+            //}
+
+            query = string.Format(@"select DISTINCT 
+sales.InvoiceNo,
+CONVERT(date,sales.InvoiceDate) as InvoiceDate,
+--sales.InvoiceDate,
+sales.ChallanNo,
+CONVERT(date,sales.ChallanDate) as ChallanDate,
+--sales.ChallanDate,
+sales.Depot,
+sales.VehicleType,
+sales.VehicleNumber,
+sales.DriverName,
+sales.DeliveryPlace,
+sales.Do_ADO_DA,
+sales.DoADO_Name,
+sales.PaymentMode,
+
+StockiestName= 
+(SELECT  U.UserName FROM  [ControlPanelAgro].[dbo].[tblApplicationUsers] U
+where U.UserId=sales.UserId ),
+
+ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
+
+DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
+
+RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
+
+AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
+
+TerritoryName=(select T.TerritoryName from [Agriculture].[dbo].[tblTerritoryInfos] T where T.TerritoryId=sales.TerritoryId),
+salesD.ProductSalesInfoId,
+salesD.FinishGoodProductInfoId,
+FGI.FinishGoodProductId,
+FGPN.FinishGoodProductName,
+
+salesD.Quanity,
+salesD.Price,
+salesD.MeasurementSize,
+salesD.Discount,
+salesD.DiscountTk,
+sales.PaidAmount,
+sales.DueAmount,
+sales.TotalAmount
+
+
+from [Agriculture].[dbo].[tblProductSalesInfo] sales
+INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
+on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
+INNER JOIN [Agriculture].[dbo].[FinishGoodProductionInfoes] FGI
+on FGI.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId
+INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+on FGPN.FinishGoodProductId=FGI.FinishGoodProductId
+
+Where sales.InvoiceNo='INV-221025071242'", Utility.ParamChecker(param));
+            return query;
         }
     }
 }

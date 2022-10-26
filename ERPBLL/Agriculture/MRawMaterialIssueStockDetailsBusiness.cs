@@ -1,5 +1,7 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
+using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -26,5 +28,18 @@ namespace ERPBLL.Agriculture
         {
             return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialIssueStockId == infoId).ToList();
         }
+
+        public IEnumerable<MRawMaterialIssueStockDetails> RawMaterialStockIssueInfobyRawMaterialid(long rawMaterialId, long orgId)
+        {
+            //return _mRawMaterialIssueStockDetailsRepository.GetAll(f => f.RawMaterialId == rawMaterialId);
+            return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialId == rawMaterialId && i.IssueStatus == "StockIn");
+        }
+        public IEnumerable<MRawMaterialIssueStockDetails> RawMaterialStockIssueInfobyRawMaterialidOut(long rawMaterialId, long orgId)
+        {
+            //return _mRawMaterialIssueStockDetailsRepository.GetAll(f => f.RawMaterialId == rawMaterialId);
+            return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialId == rawMaterialId && i.IssueStatus == "StockOut");
+        }
+
+
     }
 }
