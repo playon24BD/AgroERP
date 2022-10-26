@@ -238,23 +238,23 @@
 
         $(document).ready(function () {
             LoadDropDown('/ControlPanel/GetZone', type.post, ddlZoneName, null);
-            $("#ddlZoneName").attr("data-placeholder", "Select Zone");
+        
 
             LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
-            $("#ddlDivisionName").attr("data-placeholder", "Select Division");
+
 
 
             LoadDropDown('/ControlPanel/GetRegion', type.post, ddlRegionName, null);
-            $("#ddlRegionName").attr("data-placeholder", "Select Region");
+   
 
             LoadDropDown('/ControlPanel/GetArea', type.post, ddlAreaName, null);
-            $("#ddlAreaName").attr("data-placeholder", "Select Area");
+
 
             LoadDropDown('/ControlPanel/GetTerritory', type.post, ddlTerritoryName, null);
-            $("#ddlTerritoryName").attr("data-placeholder", "Select Territory");
+      
 
             LoadDropDown('/ControlPanel/GetStockiest', type.post, ddlStockiestName, null);
-            $("#ddlStockiestName").attr("data-placeholder", "Select Stockiest");
+        
 
             disable(ddlZoneName)
             disable(ddlDivisionName)
