@@ -15,6 +15,7 @@ namespace ERPBLL.Agriculture
 {
     public class AgroProductSalesInfoBusiness : IAgroProductSalesInfoBusiness
     {
+
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly AgroProductSalesInfoRepository _agroProductSalesInfoRepository;
         private readonly SalesPaymentRegisterRepository _salesPaymentRegisterRepository;
