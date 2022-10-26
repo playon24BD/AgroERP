@@ -96,12 +96,151 @@
 </div>
 
 
+
+@*modal*@
+<div class="modal" id="Paymentmodal" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="container-fluid" @*style="background-color:#e7f1f6"*@>
+                    @*border-right:4px solid #808080*@
+
+                    <div class="row justify-content-center">
+
+
+                        <div class="card">
+                            <div class="col-md-12">
+                                <h5 style="border-bottom:2px solid #08054e">Information</h5>
+                              
+                                <div class="row">
+                                    <input type="hidden" id="hdProductSalesInfoId" />
+                                    <div class="col-md-3">
+                                        <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
+                                        <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" readonly />
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="ddlTotalAmount" class="col-form-label">Total Amount</label>
+                                        <input type="text" id="ddlTotalAmount" class="form-control form-control-sm" readonly />
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="ddlPaidAmount" class="col-form-label">Paid AMount</label>
+                                        <input type="text" id="ddlPaidAmount" class="form-control form-control-sm" readonly />
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="ddlDueAmount" class="col-form-label">Due AMount</label>
+                                        <input type="text" id="ddlDueAmount" class="form-control form-control-sm" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="container" @*style="background-color:#e7f1f6"*@>
+                    @*border-right:4px solid #808080*@
+
+                    @*<div class="row justify-content-center">*@
+
+
+                        <div class="card">
+                            <div class="col-md-12">
+                                <h5 style="border-bottom:2px solid #ff0000">Payment</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="ddlAmount" class="col-form-label">Amount</label>
+                                        <input type="number" id="ddlAmount" class="form-control form-control-sm" />
+                                        <span class="error hide req-ddlAmount font-weight-bold">Amount is required!</span>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label for="ddlRemarks" class="col-form-label">Remarks.</label>
+                                        <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
+                                        <span class="error hide req-ddlRemarks font-weight-bold">Invoice No is required!</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+
+                    @*</div>*@
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="modal-footer btn-default">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextZone">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 @section scripts{
 
 
     <script type="text/javascript">
 
         var rptType = $("#rptType");
+
+
+
+        var ddlInvoiceNo = $("#ddlInvoiceNo");
+        var ddlTotalAmount = $("#ddlTotalAmount");
+        var ddlPaidAmount = $("#ddlPaidAmount");
+        var ddlDueAmount = $("#ddlDueAmount");
+
+        var ddlAmount = $("#ddlAmount");
+        var ddlRemarks = $("#ddlRemarks");
+
+        var hdProductSalesInfoId = $("#hdProductSalesInfoId");
+
+
+
 
         $(document).ready(function () {
          
@@ -152,40 +291,49 @@
             }
         })
 
+        //modal open
 
+        function OpenModal() {
+            $("#spanModalHead").text("Add New Zone");
+            $("#spanSaveTextZone").text('Save');
+            $("#Paymentmodal").modal("show");
+            $(".error").addClass("hide");
+        }
       
+        //payment
+        $(document).on("click", "a.data-item-Payment-ProductionSalesInfoId", function (e) {
+            //alert();
+            //debugger;
+            e.preventDefault()
 
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(3)').html();
+            var td2 = row.find('td:eq(6)').html();
+            var td3 = row.find('td:eq(7)').html();
+            var td4 = row.find('td:eq(8)').html();
+            var td5 = row.find('td:eq(1)').html();
+     
 
-        $(document).on('click', 'a.data-item-Payment-ProductionSalesInfoId', function (e) {
-            e.preventDefault();
-            debugger;
-           // $("#dataContainer2").empty();
-            var id = $(this).parent().parents('tr').children('td').eq(1).html();
-            if (TryParseInt(id, 0) > 0) {
-                var data = { flag: "Payment", ProductSalesInfoId: 0, id: id };
-                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/InvoicePayment', data)).then(function (res, status) {
-                    console.log(status);
-                    //if (status === "success") {
-                    //    $("#dataContainer2").empty();
-                    //    $("#dataContainer2").append(res);
-                    //    $("#AgroSalesProductDetails").modal('show');
-                    //}
-                }).fail(function (error) {
-                    console.log(error);
-                })
-            }
+            hdProductSalesInfoId.val(td5);
+            ddlInvoiceNo.val(td1);
+            ddlTotalAmount.val(td2);
+            ddlPaidAmount.val(td3);
+            ddlDueAmount.val(td4);
+          
+
+            OpenModal();
+            $("#spanModalHead").text('Payment');
+            $("#spanSaveTextZone").text('Payment Update');
         })
 
 
 
-        //$("#downloadButton").click(function () {
-        //    debugger;
-        //    window.open("/AgroConfiguration/AgroProductSalesReport?rptType=" + rptType.val());
-        //})
+
+        
 
         $(document).on('click', 'a.data-item-download', function (e) {
             e.preventDefault();
-            window.open("/AgroConfiguration/AgroProductSalesReport?rptType=" + rptType.val());
+            window.open("/AgroConfiguration/AgroProductSalesReport?ProductSalesInfoId=" + ProductSalesInfoId.val());
         })
 
 
@@ -211,6 +359,50 @@
 
 
 
+
+
+
+        //save
+        $("#saveButton").click(function (e) {
+            alert();
+            debugger;
+            e.preventDefault();
+            $(".error").addClass("hide");
+
+            var info = { ProductSalesInfoId: TryParseInt(hdProductSalesInfoId.val(), 0), PaymentAmount: ddlAmount.val(), Remarks: ddlRemarks.val() };
+
+            var data = JSON.stringify({ info: info });
+
+
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveSalesPayment', data, getToken())).then(function (res, status) {
+                            if (res === true) {
+                                //debugger;
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetAgroSalesProductList")');
+                                }, 1000);
+                                
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                })
+
+
+
+        });
+
+
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
     </script>
 
 }

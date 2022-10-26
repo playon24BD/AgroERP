@@ -1997,19 +1997,9 @@ namespace ERPWeb.Controllers
             return Json(isSucccess);
         }
 
-
-
-
-        #endregion
-
-        #region Payment
-        public ActionResult InvoicePayment(string flag, long id)
-        {
-            return View();
-        }
         public ActionResult AgroProductSalesReport(long ProductSalesInfoId)
         {
-            var data = _agroProductSalesInfoBusiness.GetProductSalesData();
+            var data = _agroProductSalesInfoBusiness.GetProductSalesData(ProductSalesInfoId);
 
             LocalReport localReport = new LocalReport();
 
@@ -2041,6 +2031,30 @@ namespace ERPWeb.Controllers
                 );
             return File(renderedBytes, mimeType);
         }
+
+
+
+        #endregion
+
+        #region Payment
+        public ActionResult SaveSalesPayment(SalesPaymentRegisterViewModel info)
+        {
+            //
+
+            bool isSucccess = false;
+            var salesID = info.ProductSalesInfoId;
+
+
+            SalesPaymentRegisterDTO salesPaymentRegisterDTO = new SalesPaymentRegisterDTO();
+           
+            AutoMapper.Mapper.Map(info, salesPaymentRegisterDTO);
+            isSucccess = _salesPaymentRegister.SaveSalesPayment(salesPaymentRegisterDTO, User.UserId);
+          
+            //isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
+    
+            return Json(isSucccess);
+        }
+        
 
         #endregion
 

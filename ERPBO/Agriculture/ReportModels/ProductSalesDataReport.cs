@@ -36,9 +36,9 @@ namespace ERPBO.Agriculture.ReportModels
         public double Discount { get; set; }
         public double DiscountTk { get; set; }
         public double Price { get; set; }
-        public float PaidAmount { get; set; }
-        public float DueAmount { get; set; }
-        public float TotalAmount { get; set; }
+        public double PaidAmount { get; set; }
+        public double DueAmount { get; set; }
+        public double TotalAmount { get; set; }
 
     }
 }

@@ -6,6 +6,7 @@
     var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
 }
 
+
 <table class="table table-bordered table-sm table-striped table-responsive-lg text-sm" id="tblAgroSalesProductList">
     <thead class="btn-dark">
         <tr class="text-center text-bold">
@@ -15,6 +16,9 @@
             <th style="vertical-align:middle">Invoice No</th>
             <th style="vertical-align:middle">Invoice Date</th>
             <th style="vertical-align:middle">StokiestName</th>
+            <th style="vertical-align:middle">Total Amount</th>
+            <th style="vertical-align:middle">PaidAmount</th>
+            <th style="vertical-align:middle">DueAmount</th>
             <th style="vertical-align:middle">EntryUser</th>
            @*<th style="vertical-align:middle" class="hide"></th>*@
             <th style="vertical-align:middle">Action</th>
@@ -31,6 +35,9 @@
                 <td class="text-center">@item.InvoiceNo</td>
                 <td class="text-center">@item.InvoiceDate</td>
                 <td class="text-center">@item.StockiestName</td>
+                <td class="text-center">@item.TotalAmount</td>
+                <td class="text-center">@item.PaidAmount</td>
+                <td class="text-center">@item.DueAmount</td>
                 <td class="text-center">@User.UserName</td>
                 @*<td class="hide">@item.UnitId</td>*@
 
