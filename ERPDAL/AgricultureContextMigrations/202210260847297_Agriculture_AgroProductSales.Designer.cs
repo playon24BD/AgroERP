@@ -7,13 +7,13 @@ namespace ERPDAL.AgricultureContextMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Agriculture_SalesProductUpdate : IMigrationMetadata
+    public sealed partial class Agriculture_AgroProductSales : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Agriculture_SalesProductUpdate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Agriculture_AgroProductSales));
         
         string IMigrationMetadata.Id
         {
-            get { return "202210200417325_Agriculture_SalesProductUpdate"; }
+            get { return "202210260847297_Agriculture_AgroProductSales"; }
         }
         
         string IMigrationMetadata.Source
