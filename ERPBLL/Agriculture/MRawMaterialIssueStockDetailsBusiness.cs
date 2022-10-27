@@ -24,9 +24,7 @@ namespace ERPBLL.Agriculture
             this._mRawMaterialIssueStockDetailsRepository = new MRawMaterialIssueStockDetailsRepository(this._agricultureUnitOfWork);
         }
 
-<<<<<<< Updated upstream
-        public IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId,string Status)
-=======
+
         public IEnumerable<MRawMaterialIssueStockDetails> GetAllRawMaterialIssueStock()
         {
             return _mRawMaterialIssueStockDetailsRepository.GetAll().ToList();
@@ -66,11 +64,15 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
             return query;
         }
 
-        public IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId)
->>>>>>> Stashed changes
+     
+        public IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId, string Status)
         {
             return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialIssueStockId == infoId && i.IssueStatus == "StockIn").ToList();
+
         }
+
+
+       
 
         public IEnumerable<MRawMaterialIssueStockDetails> RawMaterialStockIssueInfobyRawMaterialid(long rawMaterialId, long orgId)
         {
@@ -97,7 +99,7 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
                 {
                     rawMaterialIssueStockDetail.RawMaterialId = row.RawMaterialId;
                     rawMaterialIssueStockDetail.Quantity = row.Quantity;
-                   // rawMaterialIssueStockDetail.EntryUserId = row.EntryUserId;
+                    // rawMaterialIssueStockDetail.EntryUserId = row.EntryUserId;
                     //rawMaterialIssueStockDetail.OrganizationId = orgId;
                     rawMaterialIssueStockDetail.UnitID = row.UnitID;
 
@@ -118,7 +120,8 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
 
         public MRawMaterialIssueStockDetails GetRawMaterialIssueStockByMeterialId(long rawMaterialId, long orgId)
         {
-            return _mRawMaterialIssueStockDetailsRepository.GetOneByOrg(i => i.RawMaterialId == rawMaterialId );
+            return _mRawMaterialIssueStockDetailsRepository.GetOneByOrg(i => i.RawMaterialId == rawMaterialId);
         }
+
     }
 }

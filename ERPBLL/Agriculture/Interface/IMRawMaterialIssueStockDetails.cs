@@ -21,5 +21,7 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<MRawMaterialIssueStockDetailsDTO> GetIssueInOutInfos(string name);
 
+ 
+
     }
 }
