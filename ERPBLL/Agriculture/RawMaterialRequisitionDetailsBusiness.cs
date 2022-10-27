@@ -22,17 +22,20 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<RawMaterialRequisitionDetails> GetRawMaterialRequisitionDetails(long orgId)
         {
-            throw new NotImplementedException();
+            var requisitionDetails = _rawMaterialRequisitionDetailsBusinessRepository.GetAll(a=>a.OrganizationId==orgId);
+            return requisitionDetails.ToList();
         }
 
         public RawMaterialRequisitionDetails GetRawMaterialRequisitionDetailsbyId(long DetailsId, long orgId)
         {
-            throw new NotImplementedException();
+            var SingleRequisitonDetails = _rawMaterialRequisitionDetailsBusinessRepository.GetOneByOrg(d=>d.RawMaterialRequisitionDetailsId==DetailsId && d.OrganizationId==orgId);
+            return SingleRequisitonDetails;
         }
 
         public IEnumerable<RawMaterialRequisitionDetails> GetRawMaterialRequisitionDetailsbyInfo(long InfoId, long orgId)
         {
-            throw new NotImplementedException();
+            var requisitionDetailsbyInfo = _rawMaterialRequisitionDetailsBusinessRepository.GetAll(a=>a.RawMaterialRequisitionInfoId==InfoId && a.OrganizationId == orgId);
+            return requisitionDetailsbyInfo.ToList() ;
         }
 
         public bool SaveRawMaterialRequisitionDetails(List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO, long userId, long orgId)
