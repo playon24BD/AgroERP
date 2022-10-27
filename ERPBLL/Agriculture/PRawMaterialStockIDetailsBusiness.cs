@@ -1,5 +1,7 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
+using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,8 @@ namespace ERPBLL.Agriculture
         {
             throw new NotImplementedException();
         }
+
+
 
         public IEnumerable<PRawMaterialStockIDetails> GetRawMatwrialPurchaseDetailsByInfoId(long infoId)
         {

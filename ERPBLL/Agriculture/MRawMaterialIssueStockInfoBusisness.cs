@@ -79,7 +79,7 @@ namespace ERPBLL.Agriculture
                         RawMaterialId = item.RawMaterialId,
                         Quantity = item.Quantity,
                         UnitID = item.UnitID,
-                        IssueStatus = "StockOut",
+                        IssueStatus = "StockIn",
                         EntryDate = DateTime.Now,
 
                     };
