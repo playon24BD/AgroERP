@@ -101,6 +101,8 @@ namespace ERPWeb
             container.RegisterType<IAreaUserBusiness , AreaUserBusiness>();
             container.RegisterType<ITerritoryUserBusiness, TerritoryUserBusiness>();
             container.RegisterType<IStockiestUserBusiness, StockiestUserBusiness>();
+            container.RegisterType<IRawMaterialRequisitionDetailsBusiness, RawMaterialRequisitionDetailsBusiness>();
+            container.RegisterType<IRawMaterialRequisitionInfoBusiness, RawMaterialRequisitionInfoBusiness>();
             container.RegisterType<IAgricultureUnitOfWork, AgricultureUnitOfWork>();
             #endregion
             // FrontDesk Database

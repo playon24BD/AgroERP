@@ -246,4 +246,13 @@ namespace ERPDAL.AgricultureDAL
     {
         public StockiestUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
     }
+
+    public class RawMaterialRequisitionInfoBusinessRepository : AgricultureBaseRepository<RawMaterialRequisitionInfo>
+    {
+        public RawMaterialRequisitionInfoBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class RawMaterialRequisitionDetailsBusinessRepository : AgricultureBaseRepository<RawMaterialRequisitionDetails>
+    {
+        public RawMaterialRequisitionDetailsBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
 }

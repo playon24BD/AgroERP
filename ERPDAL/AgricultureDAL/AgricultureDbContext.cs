@@ -66,6 +66,8 @@ namespace ERPDAL.AgricultureDAL
         public DbSet<StockiestUser> tblStokiestUser { get; set; }
 
         public DbSet<ReturnRawMaterial> tblReturnRawMaterial { get; set; }
+        public DbSet<RawMaterialRequisitionInfo> tblRawMaterialRequisitionInfo { get; set; }
+        public DbSet<RawMaterialRequisitionDetails> tblRawMaterialRequisitionDetails { get; set; }
 
 
 

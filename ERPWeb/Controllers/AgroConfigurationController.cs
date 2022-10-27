@@ -2326,5 +2326,12 @@ namespace ERPWeb.Controllers
             return View();
         }
         #endregion
+
+        #region
+        public ActionResult GetRequisition()
+        {
+            return View();
+        }
+        #endregion
     }
 }

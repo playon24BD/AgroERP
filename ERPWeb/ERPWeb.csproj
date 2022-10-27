@@ -3197,6 +3197,7 @@
     <Content Include="Views\AgroConfiguration\InvoicePayment1.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRawMaterialIssueView.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRawMaterialMainView.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetRequisition.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
