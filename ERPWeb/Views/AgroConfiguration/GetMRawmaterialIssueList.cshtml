@@ -316,7 +316,7 @@
             $("#btnSubmit").hide();
 
             LoadDataTable();
-            LoadDataTableStock();
+          
         })
 
 
@@ -524,6 +524,15 @@
             RawMaterialStockQty.text("");
         }
 
+
+        //click
+        $("#custom-tabs-two-pstockrawmaterialqty-tab").click(function (e) {
+
+            alert();
+            debugger;
+            e.preventDefault();
+            LoadDataTableStock();
+        })
 
         //save
         $("#saveButton").click(function (e) {
