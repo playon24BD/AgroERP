@@ -11,6 +11,7 @@ namespace ERPBLL.Agriculture.Interface
     public interface IRawMaterialRequisitionDetailsBusiness
     {
         IEnumerable<RawMaterialRequisitionDetails> GetRawMaterialRequisitionDetails(long orgId);
+        IEnumerable<RawMaterialRequisitionDetails> GetRawMaterialRequisitionDetailsbyInfo(long InfoId,long orgId);
         RawMaterialRequisitionDetails GetRawMaterialRequisitionDetailsbyId(long DetailsId, long orgId);
         bool SaveRawMaterialRequisitionDetails(List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO ,long userId, long orgId);
     }

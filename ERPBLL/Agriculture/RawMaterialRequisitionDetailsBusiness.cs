@@ -30,6 +30,11 @@ namespace ERPBLL.Agriculture
             throw new NotImplementedException();
         }
 
+        public IEnumerable<RawMaterialRequisitionDetails> GetRawMaterialRequisitionDetailsbyInfo(long InfoId, long orgId)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool SaveRawMaterialRequisitionDetails(List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO, long userId, long orgId)
         {
             throw new NotImplementedException();
