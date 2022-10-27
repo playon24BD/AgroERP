@@ -122,6 +122,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+
     <EmbeddedResource Include="AgricultureContextMigrations\202210261053414_Agriculture_Agriculture.resx">
       <DependentUpon>202210261053414_Agriculture_Agriculture.cs</DependentUpon>
     </EmbeddedResource>

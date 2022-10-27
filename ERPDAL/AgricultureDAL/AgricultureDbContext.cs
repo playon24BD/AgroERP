@@ -12,6 +12,7 @@ namespace ERPDAL.AgricultureDAL
 {
     public class AgricultureDbContext : DbContext
     {
+
         public AgricultureDbContext() : base("Agriculture")
         {
 
