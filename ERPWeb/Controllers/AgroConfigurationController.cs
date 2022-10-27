@@ -2312,9 +2312,9 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region  InternalReturn
-        public ActionResult RawMaterialReturnList(string flag, long id)
+        public ActionResult RawMaterialReturnList(string flag, long? id)
         {
-            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "RawMaterialReturnList");
+           // ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "RawMaterialReturnList");
             if (string.IsNullOrEmpty(flag))
             {
 
