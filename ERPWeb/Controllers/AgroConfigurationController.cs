@@ -2213,6 +2213,16 @@ namespace ERPWeb.Controllers
             }
 
 
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
+            {
+                var dto = _mRawMaterialIssueStockDetails.GetIssueInOutInfos(name ?? null);
+
+                List<MRawMaterialIssueStockDetailsViewModel> viewModels = new List<MRawMaterialIssueStockDetailsViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetRawMaterialIssueView", viewModels);
+
+            }
+
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
             {
 

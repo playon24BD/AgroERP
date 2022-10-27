@@ -24,7 +24,50 @@ namespace ERPBLL.Agriculture
             this._mRawMaterialIssueStockDetailsRepository = new MRawMaterialIssueStockDetailsRepository(this._agricultureUnitOfWork);
         }
 
+<<<<<<< Updated upstream
         public IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId,string Status)
+=======
+        public IEnumerable<MRawMaterialIssueStockDetails> GetAllRawMaterialIssueStock()
+        {
+            return _mRawMaterialIssueStockDetailsRepository.GetAll().ToList();
+        }
+
+        public IEnumerable<MRawMaterialIssueStockDetailsDTO> GetIssueInOutInfos(string name)
+        {
+            //return this._agricultureUnitOfWork.Db.Database.SqlQuery<RegionSetupDTO>(QueryForRegion(orgId, name, regionId, divisionId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<MRawMaterialIssueStockDetailsDTO>(QueryForRawMaterialIssueINOUTQTY(name)).ToList();
+        }
+        private string QueryForRawMaterialIssueINOUTQTY(string name)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+         
+            if (name != null && name != "")
+            {
+                param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
+            }
+            query = string.Format(@"
+     SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,
+StockIN=(SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),
+StockOut=(SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),
+CurrentStock=(SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where t.IssueStatus ='StockIn'and t.RawMaterialId=RM.RawMaterialId)-(SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId)
+
+FROM  
+tblMRawMaterialIssueStockDetails t 
+INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
+inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
+      where 1=1  {0}",
+            Utility.ParamChecker(param));
+            return query;
+        }
+
+        public IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId)
+>>>>>>> Stashed changes
         {
             return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialIssueStockId == infoId && i.IssueStatus == "StockIn").ToList();
         }
