@@ -416,6 +416,8 @@
 
         $('input[type=radio][name=optradio]').change(function () {
             if (this.value == 'Requistion') {
+                $("#cardWithOutRequisition").hide();
+                $("#tblWithOutRequistion").hide();
         
             }
             else if (this.value == 'WithOutRequisition') {
