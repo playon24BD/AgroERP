@@ -18,7 +18,6 @@ namespace ERPDAL.AgricultureDAL
 
         }
        
-
         public DbSet<SalesPaymentRegister> tblProductSalesPaymentHistory { get; set; } //e
 
         public DbSet<MRawMaterialIssueStockDetails> tblMRawMaterialIssueStockDetails { get; set; } //e

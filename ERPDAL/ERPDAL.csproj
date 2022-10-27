@@ -74,12 +74,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="AgricultureContextMigrations\202210261114499_Agriculture_test.cs" />
     <Compile Include="AgricultureContextMigrations\202210261114499_Agriculture_test.Designer.cs">
       <DependentUpon>202210261114499_Agriculture_test.cs</DependentUpon>
     </Compile>
-
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -120,17 +118,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-
-<<<<<<< HEAD
-    <EmbeddedResource Include="AgricultureContextMigrations\202210261053414_Agriculture_Agriculture.resx">
-      <DependentUpon>202210261053414_Agriculture_Agriculture.cs</DependentUpon>
-    </EmbeddedResource>
-=======
->>>>>>> 0a9b299fbfe43e26717fbbca447e8717b52aca35
     <EmbeddedResource Include="AgricultureContextMigrations\202210261114499_Agriculture_test.resx">
       <DependentUpon>202210261114499_Agriculture_test.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
     </EmbeddedResource>
