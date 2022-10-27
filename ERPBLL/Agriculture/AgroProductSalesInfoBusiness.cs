@@ -221,24 +221,21 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return isSuccess;
         }
 
-        public IEnumerable<ProductSalesDataReport> GetProductSalesData(long ProductSalesInfoId)
+        public IEnumerable<ProductSalesDataReport> GetProductSalesData(string InvoiceNo)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport>(QueryProductSalesReport(ProductSalesInfoId));
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport>(QueryProductSalesReport(InvoiceNo));
         }
 
-        private string QueryProductSalesReport(long ProductSalesInfoId)
+        private string QueryProductSalesReport(string InvoiceNo)
         {
             string param = string.Empty;
             string query = string.Empty;
 
-            //if (projectId > 0)
-            //{
-            //    param += string.Format(@"and projectId={0}", projectId);
-            //}
-            //if (!string.IsNullOrEmpty(TaskName))
-            //{
-            //    param += string.Format(@"and TaskName ='{0}'", TaskName);
-            //}
+
+            if (!string.IsNullOrEmpty(InvoiceNo))
+            {
+                param += string.Format(@"and sales.InvoiceNo ='{0}'", InvoiceNo);
+            }
             //if (!string.IsNullOrEmpty(status))
             //{
             //    param += string.Format(@"and Taskstatus ='{0}'", status);
@@ -296,8 +293,13 @@ on FGI.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId
 INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
 on FGPN.FinishGoodProductId=FGI.FinishGoodProductId
 
-Where sales.InvoiceNo='INV-221025071242'", Utility.ParamChecker(param));
+Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
+        }
+
+        public AgroProductSalesInfo GetInvoiceProductionInfoById(long ProductSalesInfoId)
+        {
+            return _agroProductSalesInfoRepository.GetOneByOrg(f => f.ProductSalesInfoId == ProductSalesInfoId);
         }
     }
 }
