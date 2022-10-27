@@ -2102,6 +2102,17 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_GetRawMaterialStockpurchaseList", viewModels);
             }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
+            {
+                var dto = _rawMaterialTrack.GetMainStockInOutInfos(name ?? null);
+
+                List<RawMaterialTrackViewModel> viewModels = new List<RawMaterialTrackViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetRawMaterialMainView", viewModels);
+
+            }
+
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
             {
 

@@ -14,6 +14,7 @@ namespace ERPBO.Agriculture.DTOModels
         public double Quantity { get; set; }
         public long UnitId { get; set; }
         public string ReturnType { get; set; }
+        public string Status { get; set; }
         public long OrganizationId { get; set; }
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }

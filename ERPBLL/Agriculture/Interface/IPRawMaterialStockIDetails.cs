@@ -1,4 +1,5 @@
 ﻿using ERPBO.Agriculture.DomainModels;
+using ERPBO.Agriculture.DTOModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,8 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<PRawMaterialStockIDetails> GetAllPRawMaterialStockIDetails(long OrgId);
 
         IEnumerable<PRawMaterialStockIDetails> GetRawMatwrialPurchaseDetailsByInfoId(long infoId);
+
+
+
     }
 }
