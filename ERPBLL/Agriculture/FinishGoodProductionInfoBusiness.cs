@@ -31,7 +31,7 @@ namespace ERPBLL.Agriculture
 
         public FinishGoodProductionInfo GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId)
         {
-            return _finishGoodProductionInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.FinishGoodProductInfoId == FinishGoodProductInfoId);
+            return _finishGoodProductionInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.FinishGoodProductId == FinishGoodProductInfoId);
         }
 
         public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfos(long orgId)

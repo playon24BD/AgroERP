@@ -339,6 +339,14 @@ namespace ERPWeb.Reports.DataSets {
             
             private global::System.Data.DataColumn columnInvoiceDate;
             
+            private global::System.Data.DataColumn columnFullName;
+            
+            private global::System.Data.DataColumn columnAddress;
+            
+            private global::System.Data.DataColumn columnMobileNo;
+            
+            private global::System.Data.DataColumn columnTotal;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public dsAgroSalesReportDataTable() {
@@ -614,6 +622,38 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn FullNameColumn {
+                get {
+                    return this.columnFullName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn AddressColumn {
+                get {
+                    return this.columnAddress;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn MobileNoColumn {
+                get {
+                    return this.columnMobileNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn TotalColumn {
+                get {
+                    return this.columnTotal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -679,7 +719,11 @@ namespace ERPWeb.Reports.DataSets {
                         string FinishGoodProductId, 
                         string FinishGoodProductInfoId, 
                         string InvoiceNo, 
-                        string InvoiceDate) {
+                        string InvoiceDate, 
+                        string FullName, 
+                        string Address, 
+                        string MobileNo, 
+                        string Total) {
                 dsAgroSalesReportRow rowdsAgroSalesReportRow = ((dsAgroSalesReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FinishGoodProductName,
@@ -711,7 +755,11 @@ namespace ERPWeb.Reports.DataSets {
                         FinishGoodProductId,
                         FinishGoodProductInfoId,
                         InvoiceNo,
-                        InvoiceDate};
+                        InvoiceDate,
+                        FullName,
+                        Address,
+                        MobileNo,
+                        Total};
                 rowdsAgroSalesReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdsAgroSalesReportRow);
                 return rowdsAgroSalesReportRow;
@@ -764,6 +812,10 @@ namespace ERPWeb.Reports.DataSets {
                 this.columnFinishGoodProductInfoId = base.Columns["FinishGoodProductInfoId"];
                 this.columnInvoiceNo = base.Columns["InvoiceNo"];
                 this.columnInvoiceDate = base.Columns["InvoiceDate"];
+                this.columnFullName = base.Columns["FullName"];
+                this.columnAddress = base.Columns["Address"];
+                this.columnMobileNo = base.Columns["MobileNo"];
+                this.columnTotal = base.Columns["Total"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -829,6 +881,14 @@ namespace ERPWeb.Reports.DataSets {
                 base.Columns.Add(this.columnInvoiceNo);
                 this.columnInvoiceDate = new global::System.Data.DataColumn("InvoiceDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnInvoiceDate);
+                this.columnFullName = new global::System.Data.DataColumn("FullName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFullName);
+                this.columnAddress = new global::System.Data.DataColumn("Address", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAddress);
+                this.columnMobileNo = new global::System.Data.DataColumn("MobileNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMobileNo);
+                this.columnTotal = new global::System.Data.DataColumn("Total", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTotal);
                 this.ExtendedProperties.Add("Generator_TablePropName", "_dsAgroSalesReport");
                 this.ExtendedProperties.Add("Generator_UserTableName", "dsAgroSalesReport");
             }
@@ -1457,6 +1517,70 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string FullName {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsAgroSalesReport.FullNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FullName\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsAgroSalesReport.FullNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Address {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsAgroSalesReport.AddressColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Address\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsAgroSalesReport.AddressColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string MobileNo {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsAgroSalesReport.MobileNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MobileNo\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsAgroSalesReport.MobileNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Total {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsAgroSalesReport.TotalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Total\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsAgroSalesReport.TotalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFinishGoodProductNameNull() {
                 return this.IsNull(this.tabledsAgroSalesReport.FinishGoodProductNameColumn);
             }
@@ -1813,6 +1937,54 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetInvoiceDateNull() {
                 this[this.tabledsAgroSalesReport.InvoiceDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsFullNameNull() {
+                return this.IsNull(this.tabledsAgroSalesReport.FullNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetFullNameNull() {
+                this[this.tabledsAgroSalesReport.FullNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsAddressNull() {
+                return this.IsNull(this.tabledsAgroSalesReport.AddressColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetAddressNull() {
+                this[this.tabledsAgroSalesReport.AddressColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsMobileNoNull() {
+                return this.IsNull(this.tabledsAgroSalesReport.MobileNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetMobileNoNull() {
+                this[this.tabledsAgroSalesReport.MobileNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsTotalNull() {
+                return this.IsNull(this.tabledsAgroSalesReport.TotalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetTotalNull() {
+                this[this.tabledsAgroSalesReport.TotalColumn] = global::System.Convert.DBNull;
             }
         }
         
