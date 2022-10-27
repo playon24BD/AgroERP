@@ -11,9 +11,11 @@ namespace ERPBLL.Agriculture.Interface
     public interface IMRawMaterialIssueStockDetails
     {
         
-        IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId);
+        IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId,string Status);
         IEnumerable<MRawMaterialIssueStockDetails> RawMaterialStockIssueInfobyRawMaterialid(long rawMaterialId, long orgId);
         IEnumerable<MRawMaterialIssueStockDetails> RawMaterialStockIssueInfobyRawMaterialidOut(long rawMaterialId, long orgId);
+        bool SaveRawMaterialIssueDetails(List<MRawMaterialIssueStockDetailsDTO> finishGoodProductionDetailsDTOs, long userId, long orgId);
+        MRawMaterialIssueStockDetails GetRawMaterialIssueStockByMeterialId(long rawMaterialId, long orgId);
 
     }
 }

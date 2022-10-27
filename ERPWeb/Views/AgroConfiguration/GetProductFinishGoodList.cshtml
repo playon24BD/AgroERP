@@ -116,7 +116,7 @@
                                             <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
 
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 hide">
                                             <label for="qty"> Qty</label>
                                             <input type="number" id="qty" name="qty" class="form-control form-control-sm" readonly />
                                             <span class="error hide req-qty">Qty Is Required</span>
@@ -218,7 +218,7 @@
         ddlReceipBatchCode.change(function () {
 
 
-            LoadQuantityData();
+           // LoadQuantityData();
             LoadTergetQuantityData();
         })
 
@@ -326,7 +326,7 @@
         $("#btnSubmit").click(function (e) {
             e.preventDefault();
             var data = {};
-            var finishGoodProduction = {finishGoodProductId: ddlProduct.val(), quanity: qty.val(), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
+            var finishGoodProduction = {finishGoodProductId: ddlProduct.val(), quanity: 1, targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
 
             var details = [];
             details.length = 0;

@@ -74,10 +74,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgricultureContextMigrations\202210261053414_Agriculture_Agriculture.cs" />
-    <Compile Include="AgricultureContextMigrations\202210261053414_Agriculture_Agriculture.Designer.cs">
-      <DependentUpon>202210261053414_Agriculture_Agriculture.cs</DependentUpon>
-    </Compile>
     <Compile Include="AgricultureContextMigrations\202210261114499_Agriculture_test.cs" />
     <Compile Include="AgricultureContextMigrations\202210261114499_Agriculture_test.Designer.cs">
       <DependentUpon>202210261114499_Agriculture_test.cs</DependentUpon>
@@ -122,9 +118,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210261053414_Agriculture_Agriculture.resx">
-      <DependentUpon>202210261053414_Agriculture_Agriculture.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202210261114499_Agriculture_test.resx">
       <DependentUpon>202210261114499_Agriculture_test.cs</DependentUpon>
     </EmbeddedResource>
