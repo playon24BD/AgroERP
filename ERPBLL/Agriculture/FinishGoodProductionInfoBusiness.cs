@@ -16,15 +16,17 @@ namespace ERPBLL.Agriculture
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly FinishGoodProductionInfoRepository _finishGoodProductionInfoRepository;
         private readonly IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness;
-        private readonly IRawMaterialIssueStockInfoBusiness _rawMaterialIssueStockInfoBusiness;
-        private readonly IRawMaterialIssueStockDetailsBusiness _rawMaterialIssueStockDetailsBusiness;
-        public FinishGoodProductionInfoBusiness (IAgricultureUnitOfWork agricultureUnitOfWork,IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness)
+        private readonly IMRawMaterialIssueStockInfo _rawMaterialIssueStockInfoBusiness;
+        private readonly IMRawMaterialIssueStockDetails _rawMaterialIssueStockDetailsBusiness;
+        private readonly IRawMaterialStockInfo _rawMaterialStockInfo;
+        public FinishGoodProductionInfoBusiness (IAgricultureUnitOfWork agricultureUnitOfWork,IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IMRawMaterialIssueStockInfo rawMaterialIssueStockInfoBusiness, IMRawMaterialIssueStockDetails rawMaterialIssueStockDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._finishGoodProductionInfoRepository = new FinishGoodProductionInfoRepository(this._agricultureUnitOfWork);
             this.finishGoodProductionDetailsBusiness = finishGoodProductionDetailsBusiness;
             this._rawMaterialIssueStockInfoBusiness = rawMaterialIssueStockInfoBusiness;
             this._rawMaterialIssueStockDetailsBusiness = rawMaterialIssueStockDetailsBusiness;
+            this._rawMaterialStockInfo = rawMaterialStockInfo;
         }
 
         public FinishGoodProductionInfo GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId)
@@ -106,19 +108,24 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                 if (details.Count() > 0)
                 {
 
-                    List<RawMaterialIssueStockDetailsDTO> rawMaterialIssueStockDetailsDTOList = new List<RawMaterialIssueStockDetailsDTO>();
-                    List<RawMaterialIssueStockInfoDTO> rawMaterialIssueStockInfoList = new List<RawMaterialIssueStockInfoDTO>();
+                    List<MRawMaterialIssueStockDetailsDTO> rawMaterialIssueStockDetailsDTOList = new List<MRawMaterialIssueStockDetailsDTO>();
+                    List<MRawMaterialIssueStockInfoDTO> rawMaterialIssueStockInfoList = new List<MRawMaterialIssueStockInfoDTO>();
 
                     foreach (var item in details)
                     {
                         //Test!
 
-                        var rawMaterialStockInfoId = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockByMeterialId(item.RawMaterialId, orgId);
+                        var rawMaterialStockInfoId =_rawMaterialIssueStockDetailsBusiness.GetRawMaterialIssueStockByMeterialId(item.RawMaterialId, orgId);
 
-                        List<RawMaterialIssueStockDetailsDTO> issuedetails = new List<RawMaterialIssueStockDetailsDTO> { new RawMaterialIssueStockDetailsDTO { RawMaterialIssueStockId = rawMaterialStockInfoId.RawMaterialIssueStockId ,RawMaterialId=item.RawMaterialId,OrganizationId=orgId,EntryUserId=userId,Quantity=item.RequiredQuantity,UnitId= rawMaterialStockInfoId.UnitId} };
+                        var checkRawMaterialStockValue = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(item.RawMaterialId, orgId);
+                        //var rawMaterialStockInfoId = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockByMeterialId(item.RawMaterialId, orgId);
+
+                        List<MRawMaterialIssueStockDetailsDTO> issuedetails = new List<MRawMaterialIssueStockDetailsDTO> { new MRawMaterialIssueStockDetailsDTO { RawMaterialIssueStockId = rawMaterialStockInfoId.RawMaterialIssueStockId,RawMaterialId=item.RawMaterialId,Quantity=item.RequiredQuantity, UnitID =rawMaterialStockInfoId.UnitID
+
+                        } };
                         rawMaterialIssueStockDetailsDTOList.AddRange(issuedetails);
 
-                        List<RawMaterialIssueStockInfoDTO> rawMaterialIssueStockInfos = new List<RawMaterialIssueStockInfoDTO>() { new RawMaterialIssueStockInfoDTO { RawMaterialIssueStockId= rawMaterialStockInfoId.RawMaterialIssueStockId,RawMaterialId=item.RawMaterialId,Quantity=item.RequiredQuantity,UpdateUserId=userId,OrganizationId=orgId } };
+                        List<MRawMaterialIssueStockInfoDTO> rawMaterialIssueStockInfos = new List<MRawMaterialIssueStockInfoDTO>() { new MRawMaterialIssueStockInfoDTO { RawMaterialIssueStockId= rawMaterialStockInfoId.RawMaterialIssueStockId,RawMaterialId=item.RawMaterialId,Quantity=item.RequiredQuantity,OrganizationId=orgId } };
                         rawMaterialIssueStockInfoList.AddRange(rawMaterialIssueStockInfos); 
 
                     }
@@ -126,12 +133,12 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
                     isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveRawMaterialIssueDetails(rawMaterialIssueStockDetailsDTOList, userId, orgId);
 
-                    if (isSuccess)
-                    {
+                    //if (isSuccess)
+                    //{
 
-                        isSuccess = _rawMaterialIssueStockInfoBusiness.UpdateProductIssueRawMaterialStock(rawMaterialIssueStockInfoList);
+                    //    isSuccess = _rawMaterialIssueStockInfoBusiness.UpdateProductIssueRawMaterialStock(rawMaterialIssueStockInfoList);
 
-                    }
+                    //}
 
                 }
             }

@@ -1307,7 +1307,18 @@ namespace ERPWeb.Controllers
                 foreach (var rawMaterial in recipeDetailsRawMaterials)
                 {
 
-                    issueQunatity = _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
+                    //issueQunatity = _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
+
+                    var StocInkqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    var SumStockinQty = StocInkqty.Sum(c => c.Quantity);
+
+
+                    var StockOutqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialidOut(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    var SumStockOutQty = StockOutqty.Sum(d => d.Quantity);
+
+                    issueQunatity = SumStockinQty - SumStockOutQty;
+
+
                     perRecepQuantity = rawMaterial.FGRRawMaterQty;
                     requirdQuantity = (perRecepQuantity * targetQty);
                     if (requirdQuantity > issueQunatity)
@@ -2202,13 +2213,23 @@ namespace ERPWeb.Controllers
             }
 
 
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
+            {
+                var dto = _mRawMaterialIssueStockDetails.GetIssueInOutInfos(name ?? null);
+
+                List<MRawMaterialIssueStockDetailsViewModel> viewModels = new List<MRawMaterialIssueStockDetailsViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetRawMaterialIssueView", viewModels);
+
+            }
+
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
             {
 
                 var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
                 var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
-
-                var info = _mRawMaterialIssueStockInfo.GetRawmaterialIssueInfoOneById(id.Value, User.OrgId);
+                string Status = "StockIn";
+                var info = _mRawMaterialIssueStockInfo.GetRawmaterialIssueInfoOneById(id.Value,  User.OrgId);
 
                 List<MRawMaterialIssueStockDetailsViewModel> details = new List<MRawMaterialIssueStockDetailsViewModel>();
 
@@ -2224,7 +2245,7 @@ namespace ERPWeb.Controllers
 
                     };
 
-                    details = _mRawMaterialIssueStockDetails.GetRawMatwrialissueDetailsByInfoId(id.Value).Select(i=> new MRawMaterialIssueStockDetailsViewModel
+                    details = _mRawMaterialIssueStockDetails.GetRawMatwrialissueDetailsByInfoId(id.Value, Status).Select(i=> new MRawMaterialIssueStockDetailsViewModel
                     {
                         RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
                         UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,

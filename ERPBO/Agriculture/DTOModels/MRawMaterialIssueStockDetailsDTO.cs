@@ -29,5 +29,9 @@ namespace ERPBO.Agriculture.DTOModels
         //dto
         public string RawMaterialName { get; set; }
         public string UnitName { get; set; }
+
+        public double CurrentStock { get; set; }
+        public double StockOut { get; set; }
+        public double StockIN { get; set; }
     }
 }

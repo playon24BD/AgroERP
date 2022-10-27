@@ -28,9 +28,25 @@ namespace ERPBLL.Agriculture
         public IEnumerable<MRawMaterialIssueStockInfo> GetAllRawMaterialIssue(long OrgId)
         {
             return _mRawMaterialIssueStockInfoRepository.GetAll(x => x.OrganizationId == OrgId).ToList();
+            //return this._agricultureUnitOfWork.Db.Database.SqlQuery<MRawMaterialIssueStockInfoDTO>(QueryForFinishGoodProductInfoss(OrgId)).ToList();
         }
 
-        public MRawMaterialIssueStockInfo GetRawmaterialIssueInfoOneById(long id, long orgId)
+//        private string QueryForFinishGoodProductInfoss(long orgId)
+//        {
+//            string query = string.Empty;
+//            string param = string.Empty;
+
+//           // param += string.Format(@" and infos.OrganizationId={0}", orgId);
+
+//            query = string.Format(@"select infos.FinishGoodProductId, info.FinishGoodProductName,infos.TargetQuantity
+//from FinishGoodProductionInfoes infos 
+//inner join tblFinishGoodProductInfo info on infos.FinishGoodProductId=info.FinishGoodProductId	
+//Where 1=1 {0}", Utility.ParamChecker(param));
+
+//            return query;
+//        }
+
+        public MRawMaterialIssueStockInfo GetRawmaterialIssueInfoOneById(long id,  long orgId)
         {
             return _mRawMaterialIssueStockInfoRepository.GetOneByOrg(p => p.RawMaterialIssueStockId == id && p.OrganizationId == orgId);
         }
@@ -101,5 +117,12 @@ namespace ERPBLL.Agriculture
             //}
             return IsSuccess;
         }
+
+        public MRawMaterialIssueStockInfo GetRawMaterialIssueStockByMeterialId(long rawMaterialId, long orgId)
+        {
+            return _mRawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialIssueStockId == rawMaterialId && i.OrganizationId == orgId);
+        }
+
+      
     }
 }

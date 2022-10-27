@@ -418,7 +418,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                             DistributionUserDTO du = new DistributionUserDTO()
                             {
                                 UserId = appUser.UserId,
-                                RegionId = Int64.Parse(id),
+                                AreaId = Int64.Parse(id),
                                 DistributionType = "Area",
                                 OrganizationId = orgId,
                                 EntryDate = DateTime.Now,
@@ -438,7 +438,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                             DistributionUserDTO du = new DistributionUserDTO()
                             {
                                 UserId = appUser.UserId,
-                                RegionId = Int64.Parse(id),
+                                TerritoryId = Int64.Parse(id),
                                 DistributionType = "Territory",
                                 OrganizationId = orgId,
                                 EntryDate = DateTime.Now,
@@ -457,7 +457,7 @@ Where a.OrganizationId = {1} and a.UserId = {0}", userId,orgId)).FirstOrDefault(
                             DistributionUserDTO du = new DistributionUserDTO()
                             {
                                 UserId = appUser.UserId,
-                                RegionId = Int64.Parse(id),
+                                StockiestId = Int64.Parse(id),
                                 DistributionType = "Stockiest",
                                 OrganizationId = orgId,
                                 EntryDate = DateTime.Now,

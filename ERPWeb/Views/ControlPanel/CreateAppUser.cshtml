@@ -237,23 +237,24 @@
         var ddlUserName = $("#ddlUserName");
 
         $(document).ready(function () {
+            LoadDropDown('/ControlPanel/GetZone', type.post, ddlZoneName, null);
+        
 
             LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
-            $("#ddlDivisionName").attr("data-placeholder", "Select Division");
-               LoadDropDown('/ControlPanel/GetZone', type.post, ddlZoneName, null);
-            $("#ddlZoneName").attr("data-placeholder", "Select Zone");
+
+
 
             LoadDropDown('/ControlPanel/GetRegion', type.post, ddlRegionName, null);
-            $("#ddlRegionName").attr("data-placeholder", "Select Region");
+   
 
             LoadDropDown('/ControlPanel/GetArea', type.post, ddlAreaName, null);
-            $("#ddlAreaName").attr("data-placeholder", "Select Area");
+
 
             LoadDropDown('/ControlPanel/GetTerritory', type.post, ddlTerritoryName, null);
-            $("#ddlTerritoryName").attr("data-placeholder", "Select Territory");
+      
 
             LoadDropDown('/ControlPanel/GetStockiest', type.post, ddlStockiestName, null);
-            $("#ddlStockiestName").attr("data-placeholder", "Select Stockiest");
+        
 
             disable(ddlZoneName)
             disable(ddlDivisionName)
@@ -268,7 +269,7 @@
             $("#areaDiv").hide();
             $("#territoryDiv").hide();
             $("#stockiestDiv").hide();
-            $("#userNameDiv").hide();
+            //$("#userNameDiv").hide();
 
             $('.select2').select2();
 
@@ -347,8 +348,12 @@
                     ddlOrganizationName.val(res.OrganizationId);
                     role = res.RoleId;
                     branch = res.BranchId;
+
                     var Zones = res.Zone.split(',');
                     ddlZoneName.val(Zones);
+                    console.log("Zones");
+                    console.log(Zones);
+                    console.log("Zones");
 
                     var Divisions = res.Division.split(',');
                     ddlDivisionName.val(Divisions);
@@ -358,16 +363,21 @@
                     var areas = res.Area.split(',');
                     ddlAreaName.val(areas);
                     var territories = res.Territory.split(',');
+                    console.log("Territory");
+                    console.log(territories);
+                    console.log("Territory");
                     ddlTerritoryName.val(territories);
                     var stockiests = res.Stockiest.split(',');
                     ddlStockiestName.val(stockiests);
-
+                    console.log("Stockiest");
+                    console.log(stockiests);
+                    console.log("Stockiest");
 
                     ddlOrganizationName.trigger("change");
                     ddlBranchName.val(res.BranchId);
         
                     ddlRoleName.val(res.RoleId);
-                    alert("from data Role Id:" + ddlRoleName.val(role));
+          
           
                     
                     chkStatestatus.prop("checked", res.IsActive);
@@ -426,17 +436,18 @@
             if (role == 29) {
                 //LoadDropDown('/ControlPanel/GetZone', type.post, ddlZoneName, null);
                 //$("#ddlZoneName").attr("data-placeholder", "Select Zone");
-
-                $("#zoneDiv").show();
+     
+    
 
                 $("#divisionDiv").hide();
+                $("#zoneDiv").show();
                 $("#regionDiv").hide();
                 $("#areaDiv").hide();
                 $("#territoryDiv").hide();
                 $("#stockiestDiv").hide();
-                $("#userNameDiv").show();
+         
                 $("#ddlZoneName").trigger("change")
-
+                alert(" after trigger In 29")
                 enable(ddlZoneName)
                 disable(ddlDivisionName)
                 disable(ddlRegionName)
@@ -503,7 +514,7 @@
 
                 }
             if (role == 32) {
-
+                alert("In 32")
  
                     $("#zoneDiv").hide();
                     $("#divisionDiv").hide();
@@ -529,8 +540,7 @@
                 }
             if (role == 33) {
 
-                    LoadDropDown('/ControlPanel/GetTerritory', type.post, ddlTerritoryName, null);
-                    $("#ddlTerritoryName").attr("data-placeholder", "Select Territory");
+                alert("IN 33");
 
                     $("#zoneDiv").hide();
                     $("#divisionDiv").hide();
@@ -556,7 +566,7 @@
 
                 }
             if (role == 34) {
-
+                alert("IN 34");
 
                     $("#zoneDiv").hide();
                     $("#divisionDiv").hide();
@@ -566,6 +576,7 @@
                     $("#stockiestDiv").show();
                 $("#userNameDiv").show();
                 $("#ddlStockiestName").trigger("change");
+                alert("after triger change 34");
                     disable(ddlZoneName)
                     disable(ddlDivisionName)
                     disable(ddlRegionName)
@@ -622,7 +633,7 @@
 
                 }
                 if (ddlRoleName.val() == 29) {
-       
+                    clearDropdown2("ddlZoneName");
 
                     $("#zoneDiv").show();
 

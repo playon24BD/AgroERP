@@ -15,6 +15,9 @@ namespace ERPBLL.Agriculture.Interface
         bool SaveRawMaterialIssueStock(MRawMaterialIssueStockInfoDTO info, List<MRawMaterialIssueStockDetailsDTO> details, long userId, long orgId);
 
         MRawMaterialIssueStockInfo GetRawmaterialIssueInfoOneById(long id, long orgId);
+        MRawMaterialIssueStockInfo GetRawMaterialIssueStockByMeterialId(long rawMaterialId, long orgId);
+
+        //bool UpdateProductIssueRawMaterialStock(List<MRawMaterialIssueStockInfoDTO> issueStockInfoDTOs);
 
     }
 }
