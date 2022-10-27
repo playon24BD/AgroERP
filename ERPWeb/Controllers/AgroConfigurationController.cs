@@ -2019,7 +2019,8 @@ namespace ERPWeb.Controllers
 
         public ActionResult AgroProductSalesReport(long ProductSalesInfoId)
         {
-            var data = _agroProductSalesInfoBusiness.GetProductSalesData(ProductSalesInfoId);
+            var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
+            var data = _agroProductSalesInfoBusiness.GetProductSalesData(InvoiceNo);
 
             LocalReport localReport = new LocalReport();
 

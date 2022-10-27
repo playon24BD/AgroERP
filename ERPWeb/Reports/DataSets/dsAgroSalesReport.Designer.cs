@@ -335,6 +335,10 @@ namespace ERPWeb.Reports.DataSets {
             
             private global::System.Data.DataColumn columnFinishGoodProductInfoId;
             
+            private global::System.Data.DataColumn columnInvoiceNo;
+            
+            private global::System.Data.DataColumn columnInvoiceDate;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public dsAgroSalesReportDataTable() {
@@ -594,6 +598,22 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn InvoiceNoColumn {
+                get {
+                    return this.columnInvoiceNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn InvoiceDateColumn {
+                get {
+                    return this.columnInvoiceDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -657,7 +677,9 @@ namespace ERPWeb.Reports.DataSets {
                         string TotalAmount, 
                         string ProductSalesInfoId, 
                         string FinishGoodProductId, 
-                        string FinishGoodProductInfoId) {
+                        string FinishGoodProductInfoId, 
+                        string InvoiceNo, 
+                        string InvoiceDate) {
                 dsAgroSalesReportRow rowdsAgroSalesReportRow = ((dsAgroSalesReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FinishGoodProductName,
@@ -687,7 +709,9 @@ namespace ERPWeb.Reports.DataSets {
                         TotalAmount,
                         ProductSalesInfoId,
                         FinishGoodProductId,
-                        FinishGoodProductInfoId};
+                        FinishGoodProductInfoId,
+                        InvoiceNo,
+                        InvoiceDate};
                 rowdsAgroSalesReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdsAgroSalesReportRow);
                 return rowdsAgroSalesReportRow;
@@ -738,6 +762,8 @@ namespace ERPWeb.Reports.DataSets {
                 this.columnProductSalesInfoId = base.Columns["ProductSalesInfoId"];
                 this.columnFinishGoodProductId = base.Columns["FinishGoodProductId"];
                 this.columnFinishGoodProductInfoId = base.Columns["FinishGoodProductInfoId"];
+                this.columnInvoiceNo = base.Columns["InvoiceNo"];
+                this.columnInvoiceDate = base.Columns["InvoiceDate"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -799,6 +825,10 @@ namespace ERPWeb.Reports.DataSets {
                 base.Columns.Add(this.columnFinishGoodProductId);
                 this.columnFinishGoodProductInfoId = new global::System.Data.DataColumn("FinishGoodProductInfoId", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFinishGoodProductInfoId);
+                this.columnInvoiceNo = new global::System.Data.DataColumn("InvoiceNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnInvoiceNo);
+                this.columnInvoiceDate = new global::System.Data.DataColumn("InvoiceDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnInvoiceDate);
                 this.ExtendedProperties.Add("Generator_TablePropName", "_dsAgroSalesReport");
                 this.ExtendedProperties.Add("Generator_UserTableName", "dsAgroSalesReport");
             }
@@ -1395,6 +1425,38 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string InvoiceNo {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsAgroSalesReport.InvoiceNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'InvoiceNo\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsAgroSalesReport.InvoiceNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string InvoiceDate {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsAgroSalesReport.InvoiceDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'InvoiceDate\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsAgroSalesReport.InvoiceDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFinishGoodProductNameNull() {
                 return this.IsNull(this.tabledsAgroSalesReport.FinishGoodProductNameColumn);
             }
@@ -1727,6 +1789,30 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetFinishGoodProductInfoIdNull() {
                 this[this.tabledsAgroSalesReport.FinishGoodProductInfoIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsInvoiceNoNull() {
+                return this.IsNull(this.tabledsAgroSalesReport.InvoiceNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetInvoiceNoNull() {
+                this[this.tabledsAgroSalesReport.InvoiceNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsInvoiceDateNull() {
+                return this.IsNull(this.tabledsAgroSalesReport.InvoiceDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetInvoiceDateNull() {
+                this[this.tabledsAgroSalesReport.InvoiceDateColumn] = global::System.Convert.DBNull;
             }
         }
         
