@@ -242,12 +242,15 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             //}
 
             query = string.Format(@"select DISTINCT 
+AU.FullName,
+ST.StockiestName,
+TE.TerritoryName,
+AU.Address,
+AU.MobileNo,
 sales.InvoiceNo,
 CONVERT(date,sales.InvoiceDate) as InvoiceDate,
---sales.InvoiceDate,
 sales.ChallanNo,
 CONVERT(date,sales.ChallanDate) as ChallanDate,
---sales.ChallanDate,
 sales.Depot,
 sales.VehicleType,
 sales.VehicleNumber,
@@ -257,10 +260,6 @@ sales.Do_ADO_DA,
 sales.DoADO_Name,
 sales.PaymentMode,
 
-StockiestName= 
-(SELECT  U.UserName FROM  [ControlPanelAgro].[dbo].[tblApplicationUsers] U
-where U.UserId=sales.UserId ),
-
 ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
 
 DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
@@ -269,10 +268,8 @@ RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R wher
 
 AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
 
-TerritoryName=(select T.TerritoryName from [Agriculture].[dbo].[tblTerritoryInfos] T where T.TerritoryId=sales.TerritoryId),
 salesD.ProductSalesInfoId,
 salesD.FinishGoodProductInfoId,
-FGI.FinishGoodProductId,
 FGPN.FinishGoodProductName,
 
 salesD.Quanity,
@@ -282,18 +279,26 @@ salesD.Discount,
 salesD.DiscountTk,
 sales.PaidAmount,
 sales.DueAmount,
+(salesD.Price*salesD.Quanity) AS Total,
 sales.TotalAmount
+
 
 
 from [Agriculture].[dbo].[tblProductSalesInfo] sales
 INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
 on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
-INNER JOIN [Agriculture].[dbo].[FinishGoodProductionInfoes] FGI
-on FGI.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId
-INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
-on FGPN.FinishGoodProductId=FGI.FinishGoodProductId
 
-Where 1=1 {0}", Utility.ParamChecker(param));
+INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
+
+LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
+on AU.UserId=sales.UserId
+LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
+on ST.StockiestId=AU.StockiestId
+LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
+on TE.TerritoryId=ST.TerritoryId
+
+            Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
 

@@ -39,6 +39,10 @@ namespace ERPBO.Agriculture.ReportModels
         public double PaidAmount { get; set; }
         public double DueAmount { get; set; }
         public double TotalAmount { get; set; }
+        public string FullName { get; set; }
+        public string Address { get; set; }
+        public string MobileNo { get; set; }
+        public double Total { get; set; }
 
     }
 }
