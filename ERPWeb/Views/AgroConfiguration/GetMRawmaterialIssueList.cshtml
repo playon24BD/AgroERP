@@ -97,8 +97,17 @@
                                         <div class="col-md-12">
                                             <button class="btn btn-success btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
 
+                                            <h5 style="float: left; width: 50%; margin-left:-100px" class="text-sm">
+                                                Choose: <label class="radio-inline">
+                                                    <input type="radio" name="optradio" value="Requistion">With Requisition
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="optradio" value="WithOutRequisition">With Out Requisition
+                                                </label>
 
-                                            <h5 class="text-center text-bold">
+                                            </h5>
+
+                                            <h5 class="text-bold" style="display: inline-block;  margin-left:-200px">
                                                 Create Raw Material Issue
                                             </h5>
                                         </div>
@@ -110,7 +119,7 @@
 
 
                                 @*addbodey*@
-                                <div class="card-body shadow" @*style="background-color:#e7f1f6"*@>
+                                <div class="card-body shadow" @*style="background-color:#e7f1f6"*@ id="cardWithOutRequisition">
                                     <div class="row">
 
 
@@ -138,9 +147,67 @@
                                                             </div>
 
                                                             @*<div class="col-md-1">
-                                                        <label for="ddlrmnqty">Remain Qty</label>
-                                                        <input type="text" id="ddlrmnqty" name="ddlrmnqty" class="form-control form-control-sm" readonly />
-                                                    </div>*@
+                                                <label for="ddlrmnqty">Remain Qty</label>
+                                                <input type="text" id="ddlrmnqty" name="ddlrmnqty" class="form-control form-control-sm" readonly />
+                                            </div>*@
+                                                            <div class="col-md-1">
+                                                                <label for="ddlqty"> Qty</label>
+                                                                <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
+                                                                <span class="error hide req-qty">Qty Is Required</span>
+                                                                <span>Stock: <span id="RawMaterialStockQty">0</span> </span>
+                                                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                                                                <div class="clearfix">
+                                                                    <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                                <div class="card-body shadow" @*style="background-color:#e7f1f6"*@ id="cardWithRequisition">
+                                    <div class="row">
+
+
+                                        <div class="col-md-12">
+                                            <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
+                                                <h5 style="border-bottom:2px solid #f87878">RawMaterial</h5>
+                                                <div class="row justify-content-center">
+
+                                                    <div class="col-md-12">
+
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md-2">
+                                                                <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
+                                                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                                <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
+                                                            </div>
+
+                                                            <div class="col-md-1">
+                                                                <label for="ddlUnitName">Unit</label>
+                                                                <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
+                                                            </div>
+                                                            <div class="hide">
+                                                                <label for="ddlUnitID">UnitID</label>
+                                                                <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
+                                                            </div>
+
+                                                            @*<div class="col-md-1">
+                                                <label for="ddlrmnqty">Remain Qty</label>
+                                                <input type="text" id="ddlrmnqty" name="ddlrmnqty" class="form-control form-control-sm" readonly />
+                                            </div>*@
                                                             <div class="col-md-1">
                                                                 <label for="ddlqty"> Qty</label>
                                                                 <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
@@ -174,7 +241,30 @@
                         </div>
 
 
-                        <div class="card-body">
+                        <div class="card-body" id="tblWithOutRequistion">
+
+                            <div class="card-body table-responsive p-0 " style="height: 200px;">
+                                <table class="table table-head-fixed text-nowrap tadd" id="tblPstockrawmaterial">
+                                    <thead>
+
+                                        <tr class="text-center" style="color:black">
+
+                                            <th>#SL</th>
+                                            <th>Raw Material</th>
+                                            <th>Unit</th>
+                                            <th>QTY</th>
+                                            <th>Action</th>
+                                            <th class="hide RMId"></th>
+                                            <th class="hide unitId"></th>
+
+                                        </tr>
+
+                                    </thead>
+                                    <tbody class="bg-gradient-gray"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-body" id="tblWithRequistion">
 
                             <div class="card-body table-responsive p-0 " style="height: 200px;">
                                 <table class="table table-head-fixed text-nowrap tadd" id="tblPstockrawmaterial">
@@ -315,9 +405,25 @@
 
             LoadDataTableStock();
             LoadDataTable();
+
+            $("#cardWithOutRequisition").hide();
+            $("#cardWithRequisition").hide();
+            $("#tblWithOutRequistion").hide();
+            $("#tblWithRequistion").hide();
+
           
         })
 
+        $('input[type=radio][name=optradio]').change(function () {
+            if (this.value == 'Requistion') {
+        
+            }
+            else if (this.value == 'WithOutRequisition') {
+
+                $("#cardWithOutRequisition").show();
+                $("#tblWithOutRequistion").show();
+            }
+        });
 
         //material change
         ddlRawMaterial.change(function () {
