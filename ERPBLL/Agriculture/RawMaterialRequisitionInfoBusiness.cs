@@ -29,6 +29,19 @@ namespace ERPBLL.Agriculture
             return _rawMaterialRequisitionInfoRepoBusiness.GetAll(a =>a.OrganizationId == orgId).ToList();
         }
 
+        public IEnumerable<RawMaterialRequisitionInfoDTO> GetAllRawMaterialRequisitionInfos(string RequisitonCode, string fdate,string tdate,long orgId)
+        {
+
+            string query = string.Empty;
+            string param = string.Empty;
+
+            var allRequistion = _agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialRequisitionInfoDTO>(string.Format(""));
+
+            return allRequistion;
+        }
+
+
+
         public bool SaveRawMaterialRequisition(List<RawMaterialRequisitionInfoDTO> rawMaterialRequisitionInfoDTO, long userId, long orgId)
         {
             throw new NotImplementedException();

@@ -2329,9 +2329,17 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region
-        public ActionResult GetRequisition()
+        public ActionResult GetRequisition( string flag)
         {
-            return View();
+            if(string.IsNullOrEmpty(flag))
+            {
+                return View();
+            }
+
+            List<RawMaterialRequisitionInfoDTO> rawMaterialRequisitionInfoDTOs = new List<RawMaterialRequisitionInfoDTO>();
+            List<RawMaterialRequisitionInfoViewModel> rawMaterialRequisitionInfoViewModels = new List<RawMaterialRequisitionInfoViewModel>();
+            AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTOs, rawMaterialRequisitionInfoViewModels);
+            return PartialView("_GetRequisition", rawMaterialRequisitionInfoViewModels);
         }
         #endregion
     }
