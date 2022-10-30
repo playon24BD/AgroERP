@@ -336,6 +336,11 @@
             window.open("/AgroConfiguration/AgroProductSalesReport?ProductSalesInfoId=" + ProductSalesInfoId.val());
         })
 
+        $(document).on('click', 'a.data-item-download', function (e) {
+            e.preventDefault();
+            window.open("/AgroConfiguration/AgroProductSalesChallanReport?ProductSalesInfoId=" + ProductSalesInfoId.val());
+        })
+
 
         //$(document).on('click', 'a.data-item-download', function (e) {
         //    e.preventDefault();

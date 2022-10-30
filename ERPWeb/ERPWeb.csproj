@@ -2626,6 +2626,17 @@
     <Content Include="Reports\DataSets\dsAgroSalesReport.xsc">
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsAgroSalesChallanReport.xsc">
+      <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsAgroSalesChallanReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAgroSalesChallanReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsAgroSalesChallanReport.xss">
+      <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsAgroSalesReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3050,6 +3061,11 @@
     <Compile Include="Infrastructure\PagerData.cs" />
     <Compile Include="Infrastructure\PrintReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\DataSets\dsAgroSalesChallanReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsAgroSalesReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3198,11 +3214,15 @@
     <Content Include="Views\AgroConfiguration\_GetRawMaterialIssueView.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRawMaterialMainView.cshtml" />
     <Content Include="Views\AgroConfiguration\GetRequisition.cshtml" />
+
     <Content Include="Views\AgroConfiguration\CreateRawMaterialReturnList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetReturnRawMaterial.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetDueInvoicePartialView.cshtml" />
     <Content Include="Views\AgroConfiguration\SalesPaymentList.cshtml" />
     <Content Include="Views\AgroConfiguration\_PaymentHistoryDetails.cshtml" />
+
+    <Content Include="Views\AgroConfiguration\_GetRequisition.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3240,6 +3260,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERPBO.Agriculture.ReportModels
 {
-    public class ProductSalesDataReport
+    public class ProductSalesDataChallanReport
     {
         public long ProductSalesInfoId { get; set; }
         public long FinishGoodProductInfoId { get; set; }
@@ -44,6 +44,5 @@ namespace ERPBO.Agriculture.ReportModels
         public string MobileNo { get; set; }
         public double Total { get; set; }
         public string TotalAmountText { get; set; }
-
     }
 }

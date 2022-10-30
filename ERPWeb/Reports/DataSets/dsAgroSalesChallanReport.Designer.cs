@@ -20,17 +20,17 @@ namespace ERPWeb.Reports.DataSets {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("dsAgroSalesReport")]
+    [global::System.Xml.Serialization.XmlRootAttribute("dsAgroSalesChallanReport")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class dsAgroSalesReport : global::System.Data.DataSet {
+    public partial class dsAgroSalesChallanReport : global::System.Data.DataSet {
         
-        private dsAgroSalesReportDataTable tabledsAgroSalesReport;
+        private dsAgroSalesChallanReportDataTable tabledsAgroSalesChallanReport;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public dsAgroSalesReport() {
+        public dsAgroSalesChallanReport() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace ERPWeb.Reports.DataSets {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected dsAgroSalesReport(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected dsAgroSalesChallanReport(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace ERPWeb.Reports.DataSets {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["dsAgroSalesReport"] != null)) {
-                    base.Tables.Add(new dsAgroSalesReportDataTable(ds.Tables["dsAgroSalesReport"]));
+                if ((ds.Tables["dsAgroSalesChallanReport"] != null)) {
+                    base.Tables.Add(new dsAgroSalesChallanReportDataTable(ds.Tables["dsAgroSalesChallanReport"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace ERPWeb.Reports.DataSets {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public dsAgroSalesReportDataTable _dsAgroSalesReport {
+        public dsAgroSalesChallanReportDataTable _dsAgroSalesChallanReport {
             get {
-                return this.tabledsAgroSalesReport;
+                return this.tabledsAgroSalesChallanReport;
             }
         }
         
@@ -127,7 +127,7 @@ namespace ERPWeb.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            dsAgroSalesReport cln = ((dsAgroSalesReport)(base.Clone()));
+            dsAgroSalesChallanReport cln = ((dsAgroSalesChallanReport)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace ERPWeb.Reports.DataSets {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["dsAgroSalesReport"] != null)) {
-                    base.Tables.Add(new dsAgroSalesReportDataTable(ds.Tables["dsAgroSalesReport"]));
+                if ((ds.Tables["dsAgroSalesChallanReport"] != null)) {
+                    base.Tables.Add(new dsAgroSalesChallanReportDataTable(ds.Tables["dsAgroSalesChallanReport"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace ERPWeb.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tabledsAgroSalesReport = ((dsAgroSalesReportDataTable)(base.Tables["dsAgroSalesReport"]));
+            this.tabledsAgroSalesChallanReport = ((dsAgroSalesChallanReportDataTable)(base.Tables["dsAgroSalesChallanReport"]));
             if ((initTable == true)) {
-                if ((this.tabledsAgroSalesReport != null)) {
-                    this.tabledsAgroSalesReport.InitVars();
+                if ((this.tabledsAgroSalesChallanReport != null)) {
+                    this.tabledsAgroSalesChallanReport.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace ERPWeb.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "dsAgroSalesReport";
+            this.DataSetName = "dsAgroSalesChallanReport";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/dsAgroSalesReport.xsd";
+            this.Namespace = "http://tempuri.org/dsAgroSalesChallanReport.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tabledsAgroSalesReport = new dsAgroSalesReportDataTable();
-            base.Tables.Add(this.tabledsAgroSalesReport);
+            this.tabledsAgroSalesChallanReport = new dsAgroSalesChallanReportDataTable();
+            base.Tables.Add(this.tabledsAgroSalesChallanReport);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerialize_dsAgroSalesReport() {
+        private bool ShouldSerialize_dsAgroSalesChallanReport() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace ERPWeb.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            dsAgroSalesReport ds = new dsAgroSalesReport();
+            dsAgroSalesChallanReport ds = new dsAgroSalesChallanReport();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,14 +270,14 @@ namespace ERPWeb.Reports.DataSets {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void dsAgroSalesReportRowChangeEventHandler(object sender, dsAgroSalesReportRowChangeEvent e);
+        public delegate void dsAgroSalesChallanReportRowChangeEventHandler(object sender, dsAgroSalesChallanReportRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class dsAgroSalesReportDataTable : global::System.Data.TypedTableBase<dsAgroSalesReportRow> {
+        public partial class dsAgroSalesChallanReportDataTable : global::System.Data.TypedTableBase<dsAgroSalesChallanReportRow> {
             
             private global::System.Data.DataColumn columnFinishGoodProductName;
             
@@ -351,8 +351,8 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsAgroSalesReportDataTable() {
-                this.TableName = "dsAgroSalesReport";
+            public dsAgroSalesChallanReportDataTable() {
+                this.TableName = "dsAgroSalesChallanReport";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -360,7 +360,7 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal dsAgroSalesReportDataTable(global::System.Data.DataTable table) {
+            internal dsAgroSalesChallanReportDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -377,7 +377,7 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected dsAgroSalesReportDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected dsAgroSalesChallanReportDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -673,33 +673,33 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsAgroSalesReportRow this[int index] {
+            public dsAgroSalesChallanReportRow this[int index] {
                 get {
-                    return ((dsAgroSalesReportRow)(this.Rows[index]));
+                    return ((dsAgroSalesChallanReportRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event dsAgroSalesReportRowChangeEventHandler dsAgroSalesReportRowChanging;
+            public event dsAgroSalesChallanReportRowChangeEventHandler dsAgroSalesChallanReportRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event dsAgroSalesReportRowChangeEventHandler dsAgroSalesReportRowChanged;
+            public event dsAgroSalesChallanReportRowChangeEventHandler dsAgroSalesChallanReportRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event dsAgroSalesReportRowChangeEventHandler dsAgroSalesReportRowDeleting;
+            public event dsAgroSalesChallanReportRowChangeEventHandler dsAgroSalesChallanReportRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event dsAgroSalesReportRowChangeEventHandler dsAgroSalesReportRowDeleted;
+            public event dsAgroSalesChallanReportRowChangeEventHandler dsAgroSalesChallanReportRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void AdddsAgroSalesReportRow(dsAgroSalesReportRow row) {
+            public void AdddsAgroSalesChallanReportRow(dsAgroSalesChallanReportRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsAgroSalesReportRow AdddsAgroSalesReportRow(
+            public dsAgroSalesChallanReportRow AdddsAgroSalesChallanReportRow(
                         string FinishGoodProductName, 
                         string ChallanNo, 
                         string ChallanDate, 
@@ -735,7 +735,7 @@ namespace ERPWeb.Reports.DataSets {
                         string MobileNo, 
                         string Total, 
                         string TotalAmountText) {
-                dsAgroSalesReportRow rowdsAgroSalesReportRow = ((dsAgroSalesReportRow)(this.NewRow()));
+                dsAgroSalesChallanReportRow rowdsAgroSalesChallanReportRow = ((dsAgroSalesChallanReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FinishGoodProductName,
                         ChallanNo,
@@ -772,15 +772,15 @@ namespace ERPWeb.Reports.DataSets {
                         MobileNo,
                         Total,
                         TotalAmountText};
-                rowdsAgroSalesReportRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowdsAgroSalesReportRow);
-                return rowdsAgroSalesReportRow;
+                rowdsAgroSalesChallanReportRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowdsAgroSalesChallanReportRow);
+                return rowdsAgroSalesChallanReportRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                dsAgroSalesReportDataTable cln = ((dsAgroSalesReportDataTable)(base.Clone()));
+                dsAgroSalesChallanReportDataTable cln = ((dsAgroSalesChallanReportDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -788,7 +788,7 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new dsAgroSalesReportDataTable();
+                return new dsAgroSalesChallanReportDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -904,34 +904,34 @@ namespace ERPWeb.Reports.DataSets {
                 base.Columns.Add(this.columnTotal);
                 this.columnTotalAmountText = new global::System.Data.DataColumn("TotalAmountText", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTotalAmountText);
-                this.ExtendedProperties.Add("Generator_TablePropName", "_dsAgroSalesReport");
-                this.ExtendedProperties.Add("Generator_UserTableName", "dsAgroSalesReport");
+                this.ExtendedProperties.Add("Generator_TablePropName", "_dsAgroSalesChallanReport");
+                this.ExtendedProperties.Add("Generator_UserTableName", "dsAgroSalesChallanReport");
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsAgroSalesReportRow NewdsAgroSalesReportRow() {
-                return ((dsAgroSalesReportRow)(this.NewRow()));
+            public dsAgroSalesChallanReportRow NewdsAgroSalesChallanReportRow() {
+                return ((dsAgroSalesChallanReportRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new dsAgroSalesReportRow(builder);
+                return new dsAgroSalesChallanReportRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(dsAgroSalesReportRow);
+                return typeof(dsAgroSalesChallanReportRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.dsAgroSalesReportRowChanged != null)) {
-                    this.dsAgroSalesReportRowChanged(this, new dsAgroSalesReportRowChangeEvent(((dsAgroSalesReportRow)(e.Row)), e.Action));
+                if ((this.dsAgroSalesChallanReportRowChanged != null)) {
+                    this.dsAgroSalesChallanReportRowChanged(this, new dsAgroSalesChallanReportRowChangeEvent(((dsAgroSalesChallanReportRow)(e.Row)), e.Action));
                 }
             }
             
@@ -939,8 +939,8 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.dsAgroSalesReportRowChanging != null)) {
-                    this.dsAgroSalesReportRowChanging(this, new dsAgroSalesReportRowChangeEvent(((dsAgroSalesReportRow)(e.Row)), e.Action));
+                if ((this.dsAgroSalesChallanReportRowChanging != null)) {
+                    this.dsAgroSalesChallanReportRowChanging(this, new dsAgroSalesChallanReportRowChangeEvent(((dsAgroSalesChallanReportRow)(e.Row)), e.Action));
                 }
             }
             
@@ -948,8 +948,8 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.dsAgroSalesReportRowDeleted != null)) {
-                    this.dsAgroSalesReportRowDeleted(this, new dsAgroSalesReportRowChangeEvent(((dsAgroSalesReportRow)(e.Row)), e.Action));
+                if ((this.dsAgroSalesChallanReportRowDeleted != null)) {
+                    this.dsAgroSalesChallanReportRowDeleted(this, new dsAgroSalesChallanReportRowChangeEvent(((dsAgroSalesChallanReportRow)(e.Row)), e.Action));
                 }
             }
             
@@ -957,14 +957,14 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.dsAgroSalesReportRowDeleting != null)) {
-                    this.dsAgroSalesReportRowDeleting(this, new dsAgroSalesReportRowChangeEvent(((dsAgroSalesReportRow)(e.Row)), e.Action));
+                if ((this.dsAgroSalesChallanReportRowDeleting != null)) {
+                    this.dsAgroSalesChallanReportRowDeleting(this, new dsAgroSalesChallanReportRowChangeEvent(((dsAgroSalesChallanReportRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void RemovedsAgroSalesReportRow(dsAgroSalesReportRow row) {
+            public void RemovedsAgroSalesChallanReportRow(dsAgroSalesChallanReportRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -973,7 +973,7 @@ namespace ERPWeb.Reports.DataSets {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                dsAgroSalesReport ds = new dsAgroSalesReport();
+                dsAgroSalesChallanReport ds = new dsAgroSalesChallanReport();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -991,7 +991,7 @@ namespace ERPWeb.Reports.DataSets {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "dsAgroSalesReportDataTable";
+                attribute2.FixedValue = "dsAgroSalesChallanReportDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -1035,15 +1035,15 @@ namespace ERPWeb.Reports.DataSets {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class dsAgroSalesReportRow : global::System.Data.DataRow {
+        public partial class dsAgroSalesChallanReportRow : global::System.Data.DataRow {
             
-            private dsAgroSalesReportDataTable tabledsAgroSalesReport;
+            private dsAgroSalesChallanReportDataTable tabledsAgroSalesChallanReport;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal dsAgroSalesReportRow(global::System.Data.DataRowBuilder rb) : 
+            internal dsAgroSalesChallanReportRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tabledsAgroSalesReport = ((dsAgroSalesReportDataTable)(this.Table));
+                this.tabledsAgroSalesChallanReport = ((dsAgroSalesChallanReportDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1051,15 +1051,15 @@ namespace ERPWeb.Reports.DataSets {
             public string FinishGoodProductName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.FinishGoodProductNameColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.FinishGoodProductNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FinishGoodProductName\' in table \'dsAgroSalesReport\' is DBNu" +
-                                "ll.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'FinishGoodProductName\' in table \'dsAgroSalesChallanReport\' " +
+                                "is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.FinishGoodProductNameColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.FinishGoodProductNameColumn] = value;
                 }
             }
             
@@ -1068,14 +1068,14 @@ namespace ERPWeb.Reports.DataSets {
             public string ChallanNo {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.ChallanNoColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.ChallanNoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ChallanNo\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ChallanNo\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.ChallanNoColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.ChallanNoColumn] = value;
                 }
             }
             
@@ -1084,14 +1084,15 @@ namespace ERPWeb.Reports.DataSets {
             public string ChallanDate {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.ChallanDateColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.ChallanDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ChallanDate\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ChallanDate\' in table \'dsAgroSalesChallanReport\' is DBNull." +
+                                "", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.ChallanDateColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.ChallanDateColumn] = value;
                 }
             }
             
@@ -1100,14 +1101,15 @@ namespace ERPWeb.Reports.DataSets {
             public string StockiestName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.StockiestNameColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.StockiestNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'StockiestName\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'StockiestName\' in table \'dsAgroSalesChallanReport\' is DBNul" +
+                                "l.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.StockiestNameColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.StockiestNameColumn] = value;
                 }
             }
             
@@ -1116,14 +1118,14 @@ namespace ERPWeb.Reports.DataSets {
             public string ZoneName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.ZoneNameColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.ZoneNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ZoneName\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ZoneName\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.ZoneNameColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.ZoneNameColumn] = value;
                 }
             }
             
@@ -1132,14 +1134,15 @@ namespace ERPWeb.Reports.DataSets {
             public string DivisionName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.DivisionNameColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.DivisionNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DivisionName\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DivisionName\' in table \'dsAgroSalesChallanReport\' is DBNull" +
+                                ".", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.DivisionNameColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.DivisionNameColumn] = value;
                 }
             }
             
@@ -1148,14 +1151,14 @@ namespace ERPWeb.Reports.DataSets {
             public string RegionName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.RegionNameColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.RegionNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'RegionName\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'RegionName\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.RegionNameColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.RegionNameColumn] = value;
                 }
             }
             
@@ -1164,14 +1167,14 @@ namespace ERPWeb.Reports.DataSets {
             public string AreaName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.AreaNameColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.AreaNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'AreaName\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'AreaName\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.AreaNameColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.AreaNameColumn] = value;
                 }
             }
             
@@ -1180,14 +1183,15 @@ namespace ERPWeb.Reports.DataSets {
             public string TerritoryName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.TerritoryNameColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.TerritoryNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TerritoryName\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'TerritoryName\' in table \'dsAgroSalesChallanReport\' is DBNul" +
+                                "l.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.TerritoryNameColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.TerritoryNameColumn] = value;
                 }
             }
             
@@ -1196,14 +1200,14 @@ namespace ERPWeb.Reports.DataSets {
             public string Depot {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.DepotColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.DepotColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Depot\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Depot\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.DepotColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.DepotColumn] = value;
                 }
             }
             
@@ -1212,14 +1216,15 @@ namespace ERPWeb.Reports.DataSets {
             public string VehicleType {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.VehicleTypeColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.VehicleTypeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'VehicleType\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'VehicleType\' in table \'dsAgroSalesChallanReport\' is DBNull." +
+                                "", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.VehicleTypeColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.VehicleTypeColumn] = value;
                 }
             }
             
@@ -1228,14 +1233,15 @@ namespace ERPWeb.Reports.DataSets {
             public string VehicleNumber {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.VehicleNumberColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.VehicleNumberColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'VehicleNumber\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'VehicleNumber\' in table \'dsAgroSalesChallanReport\' is DBNul" +
+                                "l.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.VehicleNumberColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.VehicleNumberColumn] = value;
                 }
             }
             
@@ -1244,14 +1250,14 @@ namespace ERPWeb.Reports.DataSets {
             public string DriverName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.DriverNameColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.DriverNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DriverName\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DriverName\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.DriverNameColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.DriverNameColumn] = value;
                 }
             }
             
@@ -1260,14 +1266,15 @@ namespace ERPWeb.Reports.DataSets {
             public string DeliveryPlace {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.DeliveryPlaceColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.DeliveryPlaceColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DeliveryPlace\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DeliveryPlace\' in table \'dsAgroSalesChallanReport\' is DBNul" +
+                                "l.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.DeliveryPlaceColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.DeliveryPlaceColumn] = value;
                 }
             }
             
@@ -1276,14 +1283,14 @@ namespace ERPWeb.Reports.DataSets {
             public string Do_ADO_DA {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.Do_ADO_DAColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.Do_ADO_DAColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Do_ADO_DA\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Do_ADO_DA\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.Do_ADO_DAColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.Do_ADO_DAColumn] = value;
                 }
             }
             
@@ -1292,14 +1299,14 @@ namespace ERPWeb.Reports.DataSets {
             public string DoADO_Name {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.DoADO_NameColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.DoADO_NameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DoADO_Name\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DoADO_Name\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.DoADO_NameColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.DoADO_NameColumn] = value;
                 }
             }
             
@@ -1308,14 +1315,15 @@ namespace ERPWeb.Reports.DataSets {
             public string PaymentMode {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.PaymentModeColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.PaymentModeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PaymentMode\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'PaymentMode\' in table \'dsAgroSalesChallanReport\' is DBNull." +
+                                "", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.PaymentModeColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.PaymentModeColumn] = value;
                 }
             }
             
@@ -1324,14 +1332,14 @@ namespace ERPWeb.Reports.DataSets {
             public string Quanity {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.QuanityColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.QuanityColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Quanity\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Quanity\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.QuanityColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.QuanityColumn] = value;
                 }
             }
             
@@ -1340,14 +1348,15 @@ namespace ERPWeb.Reports.DataSets {
             public string MeasurementSize {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.MeasurementSizeColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.MeasurementSizeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'MeasurementSize\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'MeasurementSize\' in table \'dsAgroSalesChallanReport\' is DBN" +
+                                "ull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.MeasurementSizeColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.MeasurementSizeColumn] = value;
                 }
             }
             
@@ -1356,14 +1365,14 @@ namespace ERPWeb.Reports.DataSets {
             public string Discount {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.DiscountColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.DiscountColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Discount\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Discount\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.DiscountColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.DiscountColumn] = value;
                 }
             }
             
@@ -1372,14 +1381,14 @@ namespace ERPWeb.Reports.DataSets {
             public string DiscountTk {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.DiscountTkColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.DiscountTkColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DiscountTk\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DiscountTk\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.DiscountTkColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.DiscountTkColumn] = value;
                 }
             }
             
@@ -1388,14 +1397,14 @@ namespace ERPWeb.Reports.DataSets {
             public string Price {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.PriceColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.PriceColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Price\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Price\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.PriceColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.PriceColumn] = value;
                 }
             }
             
@@ -1404,14 +1413,14 @@ namespace ERPWeb.Reports.DataSets {
             public string PaidAmount {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.PaidAmountColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.PaidAmountColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PaidAmount\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'PaidAmount\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.PaidAmountColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.PaidAmountColumn] = value;
                 }
             }
             
@@ -1420,14 +1429,14 @@ namespace ERPWeb.Reports.DataSets {
             public string DueAmount {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.DueAmountColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.DueAmountColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DueAmount\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DueAmount\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.DueAmountColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.DueAmountColumn] = value;
                 }
             }
             
@@ -1436,14 +1445,15 @@ namespace ERPWeb.Reports.DataSets {
             public string TotalAmount {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.TotalAmountColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.TotalAmountColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TotalAmount\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'TotalAmount\' in table \'dsAgroSalesChallanReport\' is DBNull." +
+                                "", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.TotalAmountColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.TotalAmountColumn] = value;
                 }
             }
             
@@ -1452,15 +1462,15 @@ namespace ERPWeb.Reports.DataSets {
             public string ProductSalesInfoId {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.ProductSalesInfoIdColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.ProductSalesInfoIdColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ProductSalesInfoId\' in table \'dsAgroSalesReport\' is DBNull." +
-                                "", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ProductSalesInfoId\' in table \'dsAgroSalesChallanReport\' is " +
+                                "DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.ProductSalesInfoIdColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.ProductSalesInfoIdColumn] = value;
                 }
             }
             
@@ -1469,15 +1479,15 @@ namespace ERPWeb.Reports.DataSets {
             public string FinishGoodProductId {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.FinishGoodProductIdColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.FinishGoodProductIdColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FinishGoodProductId\' in table \'dsAgroSalesReport\' is DBNull" +
-                                ".", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'FinishGoodProductId\' in table \'dsAgroSalesChallanReport\' is" +
+                                " DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.FinishGoodProductIdColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.FinishGoodProductIdColumn] = value;
                 }
             }
             
@@ -1486,15 +1496,15 @@ namespace ERPWeb.Reports.DataSets {
             public string FinishGoodProductInfoId {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.FinishGoodProductInfoIdColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.FinishGoodProductInfoIdColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FinishGoodProductInfoId\' in table \'dsAgroSalesReport\' is DB" +
-                                "Null.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'FinishGoodProductInfoId\' in table \'dsAgroSalesChallanReport" +
+                                "\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.FinishGoodProductInfoIdColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.FinishGoodProductInfoIdColumn] = value;
                 }
             }
             
@@ -1503,14 +1513,14 @@ namespace ERPWeb.Reports.DataSets {
             public string InvoiceNo {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.InvoiceNoColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.InvoiceNoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'InvoiceNo\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'InvoiceNo\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.InvoiceNoColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.InvoiceNoColumn] = value;
                 }
             }
             
@@ -1519,14 +1529,15 @@ namespace ERPWeb.Reports.DataSets {
             public string InvoiceDate {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.InvoiceDateColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.InvoiceDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'InvoiceDate\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'InvoiceDate\' in table \'dsAgroSalesChallanReport\' is DBNull." +
+                                "", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.InvoiceDateColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.InvoiceDateColumn] = value;
                 }
             }
             
@@ -1535,14 +1546,14 @@ namespace ERPWeb.Reports.DataSets {
             public string FullName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.FullNameColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.FullNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FullName\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'FullName\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.FullNameColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.FullNameColumn] = value;
                 }
             }
             
@@ -1551,14 +1562,14 @@ namespace ERPWeb.Reports.DataSets {
             public string Address {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.AddressColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.AddressColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Address\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Address\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.AddressColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.AddressColumn] = value;
                 }
             }
             
@@ -1567,14 +1578,14 @@ namespace ERPWeb.Reports.DataSets {
             public string MobileNo {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.MobileNoColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.MobileNoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'MobileNo\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'MobileNo\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.MobileNoColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.MobileNoColumn] = value;
                 }
             }
             
@@ -1583,14 +1594,14 @@ namespace ERPWeb.Reports.DataSets {
             public string Total {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.TotalColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.TotalColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Total\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Total\' in table \'dsAgroSalesChallanReport\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.TotalColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.TotalColumn] = value;
                 }
             }
             
@@ -1599,435 +1610,436 @@ namespace ERPWeb.Reports.DataSets {
             public string TotalAmountText {
                 get {
                     try {
-                        return ((string)(this[this.tabledsAgroSalesReport.TotalAmountTextColumn]));
+                        return ((string)(this[this.tabledsAgroSalesChallanReport.TotalAmountTextColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TotalAmountText\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'TotalAmountText\' in table \'dsAgroSalesChallanReport\' is DBN" +
+                                "ull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsAgroSalesReport.TotalAmountTextColumn] = value;
+                    this[this.tabledsAgroSalesChallanReport.TotalAmountTextColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFinishGoodProductNameNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.FinishGoodProductNameColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.FinishGoodProductNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetFinishGoodProductNameNull() {
-                this[this.tabledsAgroSalesReport.FinishGoodProductNameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.FinishGoodProductNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsChallanNoNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.ChallanNoColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.ChallanNoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetChallanNoNull() {
-                this[this.tabledsAgroSalesReport.ChallanNoColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.ChallanNoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsChallanDateNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.ChallanDateColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.ChallanDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetChallanDateNull() {
-                this[this.tabledsAgroSalesReport.ChallanDateColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.ChallanDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsStockiestNameNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.StockiestNameColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.StockiestNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetStockiestNameNull() {
-                this[this.tabledsAgroSalesReport.StockiestNameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.StockiestNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsZoneNameNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.ZoneNameColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.ZoneNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetZoneNameNull() {
-                this[this.tabledsAgroSalesReport.ZoneNameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.ZoneNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDivisionNameNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.DivisionNameColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.DivisionNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDivisionNameNull() {
-                this[this.tabledsAgroSalesReport.DivisionNameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.DivisionNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsRegionNameNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.RegionNameColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.RegionNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetRegionNameNull() {
-                this[this.tabledsAgroSalesReport.RegionNameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.RegionNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsAreaNameNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.AreaNameColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.AreaNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetAreaNameNull() {
-                this[this.tabledsAgroSalesReport.AreaNameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.AreaNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsTerritoryNameNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.TerritoryNameColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.TerritoryNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetTerritoryNameNull() {
-                this[this.tabledsAgroSalesReport.TerritoryNameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.TerritoryNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDepotNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.DepotColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.DepotColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDepotNull() {
-                this[this.tabledsAgroSalesReport.DepotColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.DepotColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsVehicleTypeNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.VehicleTypeColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.VehicleTypeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetVehicleTypeNull() {
-                this[this.tabledsAgroSalesReport.VehicleTypeColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.VehicleTypeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsVehicleNumberNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.VehicleNumberColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.VehicleNumberColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetVehicleNumberNull() {
-                this[this.tabledsAgroSalesReport.VehicleNumberColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.VehicleNumberColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDriverNameNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.DriverNameColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.DriverNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDriverNameNull() {
-                this[this.tabledsAgroSalesReport.DriverNameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.DriverNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDeliveryPlaceNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.DeliveryPlaceColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.DeliveryPlaceColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDeliveryPlaceNull() {
-                this[this.tabledsAgroSalesReport.DeliveryPlaceColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.DeliveryPlaceColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDo_ADO_DANull() {
-                return this.IsNull(this.tabledsAgroSalesReport.Do_ADO_DAColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.Do_ADO_DAColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDo_ADO_DANull() {
-                this[this.tabledsAgroSalesReport.Do_ADO_DAColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.Do_ADO_DAColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDoADO_NameNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.DoADO_NameColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.DoADO_NameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDoADO_NameNull() {
-                this[this.tabledsAgroSalesReport.DoADO_NameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.DoADO_NameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsPaymentModeNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.PaymentModeColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.PaymentModeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetPaymentModeNull() {
-                this[this.tabledsAgroSalesReport.PaymentModeColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.PaymentModeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsQuanityNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.QuanityColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.QuanityColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetQuanityNull() {
-                this[this.tabledsAgroSalesReport.QuanityColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.QuanityColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsMeasurementSizeNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.MeasurementSizeColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.MeasurementSizeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetMeasurementSizeNull() {
-                this[this.tabledsAgroSalesReport.MeasurementSizeColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.MeasurementSizeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDiscountNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.DiscountColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.DiscountColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDiscountNull() {
-                this[this.tabledsAgroSalesReport.DiscountColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.DiscountColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDiscountTkNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.DiscountTkColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.DiscountTkColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDiscountTkNull() {
-                this[this.tabledsAgroSalesReport.DiscountTkColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.DiscountTkColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsPriceNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.PriceColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.PriceColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetPriceNull() {
-                this[this.tabledsAgroSalesReport.PriceColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.PriceColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsPaidAmountNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.PaidAmountColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.PaidAmountColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetPaidAmountNull() {
-                this[this.tabledsAgroSalesReport.PaidAmountColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.PaidAmountColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDueAmountNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.DueAmountColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.DueAmountColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDueAmountNull() {
-                this[this.tabledsAgroSalesReport.DueAmountColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.DueAmountColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsTotalAmountNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.TotalAmountColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.TotalAmountColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetTotalAmountNull() {
-                this[this.tabledsAgroSalesReport.TotalAmountColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.TotalAmountColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsProductSalesInfoIdNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.ProductSalesInfoIdColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.ProductSalesInfoIdColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetProductSalesInfoIdNull() {
-                this[this.tabledsAgroSalesReport.ProductSalesInfoIdColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.ProductSalesInfoIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFinishGoodProductIdNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.FinishGoodProductIdColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.FinishGoodProductIdColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetFinishGoodProductIdNull() {
-                this[this.tabledsAgroSalesReport.FinishGoodProductIdColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.FinishGoodProductIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFinishGoodProductInfoIdNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.FinishGoodProductInfoIdColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.FinishGoodProductInfoIdColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetFinishGoodProductInfoIdNull() {
-                this[this.tabledsAgroSalesReport.FinishGoodProductInfoIdColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.FinishGoodProductInfoIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsInvoiceNoNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.InvoiceNoColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.InvoiceNoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetInvoiceNoNull() {
-                this[this.tabledsAgroSalesReport.InvoiceNoColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.InvoiceNoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsInvoiceDateNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.InvoiceDateColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.InvoiceDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetInvoiceDateNull() {
-                this[this.tabledsAgroSalesReport.InvoiceDateColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.InvoiceDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFullNameNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.FullNameColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.FullNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetFullNameNull() {
-                this[this.tabledsAgroSalesReport.FullNameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.FullNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsAddressNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.AddressColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.AddressColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetAddressNull() {
-                this[this.tabledsAgroSalesReport.AddressColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.AddressColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsMobileNoNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.MobileNoColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.MobileNoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetMobileNoNull() {
-                this[this.tabledsAgroSalesReport.MobileNoColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.MobileNoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsTotalNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.TotalColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.TotalColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetTotalNull() {
-                this[this.tabledsAgroSalesReport.TotalColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.TotalColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsTotalAmountTextNull() {
-                return this.IsNull(this.tabledsAgroSalesReport.TotalAmountTextColumn);
+                return this.IsNull(this.tabledsAgroSalesChallanReport.TotalAmountTextColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetTotalAmountTextNull() {
-                this[this.tabledsAgroSalesReport.TotalAmountTextColumn] = global::System.Convert.DBNull;
+                this[this.tabledsAgroSalesChallanReport.TotalAmountTextColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2035,22 +2047,22 @@ namespace ERPWeb.Reports.DataSets {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class dsAgroSalesReportRowChangeEvent : global::System.EventArgs {
+        public class dsAgroSalesChallanReportRowChangeEvent : global::System.EventArgs {
             
-            private dsAgroSalesReportRow eventRow;
+            private dsAgroSalesChallanReportRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsAgroSalesReportRowChangeEvent(dsAgroSalesReportRow row, global::System.Data.DataRowAction action) {
+            public dsAgroSalesChallanReportRowChangeEvent(dsAgroSalesChallanReportRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsAgroSalesReportRow Row {
+            public dsAgroSalesChallanReportRow Row {
                 get {
                     return this.eventRow;
                 }
