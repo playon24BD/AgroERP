@@ -145,6 +145,7 @@
     <Compile Include="Agriculture\DTOModels\ZoneDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneSetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneUserDTO.cs" />
+    <Compile Include="Agriculture\ReportModels\ProductSalesDataChallanReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductSalesDataReport.cs" />
     <Compile Include="Agriculture\ViewModels\AgroProductSalesDetailsViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AgroProductSalesInfoViewModel.cs" />

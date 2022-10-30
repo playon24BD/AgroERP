@@ -2067,9 +2067,123 @@ namespace ERPWeb.Controllers
 
 
 
+        public ActionResult AgroProductSalesChallanReport(long ProductSalesInfoId)
+        {
+            var ChallanNo = _agroProductSalesInfoBusiness.GetChallanProductionInfoById(ProductSalesInfoId).ChallanNo;
+            var data = _agroProductSalesInfoBusiness.GetProductSalesChallanData(ChallanNo);
+
+            LocalReport localReport = new LocalReport();
+
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptAgroSalesChallanReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesChallanReport", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = "PDF";
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
+
         #endregion
 
         #region Payment
+
+        public ActionResult SalesPaymentList(string flag, string name, long? id)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                // ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+                ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                return View();
+
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                IEnumerable<AgroProductSalesInfoDTO> dto = _agroProductSalesInfoBusiness.GetAllDueSalesInvoice().Where(s => (name == "" || name == null) || (s.InvoiceNo.Contains(name))).Select(o => new AgroProductSalesInfoDTO
+                {
+                    ProductSalesInfoId = o.ProductSalesInfoId,
+                    InvoiceNo = o.InvoiceNo,
+                    InvoiceDate = o.InvoiceDate,
+                    TotalAmount= o.TotalAmount,
+                    PaidAmount = o.PaidAmount,
+                    DueAmount = o.DueAmount,
+
+                }).ToList();
+
+                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetDueInvoicePartialView", viewModels);
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+
+                var info = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(id.Value);
+                List<SalesPaymentRegisterViewModel> details = new List<SalesPaymentRegisterViewModel>();
+
+                if(info!= null){
+
+                    ViewBag.Info = new AgroProductSalesInfoViewModel
+                    {
+                        InvoiceNo = info.InvoiceNo,
+                        InvoiceDate = info.InvoiceDate,
+                        TotalAmount = info.TotalAmount,
+                        PaidAmount = info.PaidAmount,
+                        DueAmount = info.PaidAmount
+                        
+                    };
+                    details = _salesPaymentRegister.GetPaymentDetailsByInvoiceId(id.Value).Select(i => new SalesPaymentRegisterViewModel
+                    {
+                        PaymentDate = i.PaymentDate,
+                        Remarks=i.Remarks,
+                        PaymentAmount = i.PaymentAmount
+                    }).ToList();
+                }
+                else
+                {
+                    ViewBag.Info = new AgroProductSalesInfoViewModel();
+                }
+                return PartialView("_PaymentHistoryDetails", details);
+
+            }
+
+
+            return View();
+        }
+
+
         public ActionResult SaveSalesPayment(SalesPaymentRegisterViewModel info)
         {
             //
@@ -2325,18 +2439,65 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region  InternalReturn
-        public ActionResult RawMaterialReturnList(string flag, long? id)
+        public ActionResult RawMaterialReturnList(string flag, long? id, string name)
         {
-           // ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "RawMaterialReturnList");
             if (string.IsNullOrEmpty(flag))
             {
-
                 ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
 
                 return View();
-            }       
-            
+
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _returnRawMaterialBusiness.GetReturnRawMaterialInfos(name ?? null);
+                List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetReturnRawMaterial",viewModels);
+
+
+            }
             return View();
+         }
+
+        public ActionResult CreateRawMaterialReturnList(long? id)
+        {
+            ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+            return View();
+        }
+
+
+        public ActionResult GetReturnStockQty(long RawMaterialId)
+        {
+
+            var IssueStockInRMID = _mRawMaterialIssueStockDetails.GetAllRawMaterialIssueStock().Where(x => x.RawMaterialId == RawMaterialId && x.IssueStatus == "StockIn").ToList();
+            var IssueStockinqty = IssueStockInRMID.Sum(c => c.Quantity);
+
+            var IssueStockoutRMID = _mRawMaterialIssueStockDetails.GetAllRawMaterialIssueStock().Where(x => x.RawMaterialId == RawMaterialId && x.IssueStatus == "StockOut").ToList();
+            var IssueStockoutqty = IssueStockoutRMID.Sum(d => d.Quantity);
+
+            var IssueStockrmnqty = IssueStockinqty - IssueStockoutqty;
+
+
+            return Json(IssueStockrmnqty, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SaveRawMaterialReturnInfo(List<ReturnRawMaterialViewModel> details)
+        {
+            bool IsSuccess = false;
+
+
+            if (details.Count > 0)
+            {
+                List<ReturnRawMaterialDTO> detailsDTO = new List<ReturnRawMaterialDTO>();
+                AutoMapper.Mapper.Map(details, detailsDTO);
+                IsSuccess = _returnRawMaterialBusiness.SaveRawMaterialReturnInfo(detailsDTO, User.UserId, User.OrgId);
+                
+            }
+
+            return Json(IsSuccess);
         }
         #endregion
 

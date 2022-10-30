@@ -7,14 +7,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-two-AgroSalesProductList-tab" data-toggle="pill" href="#custom-tabs-two-AgroSalesProductList" role="tab" aria-controls="custom-tabs-two-AgroSalesProductList" aria-selected="true">Agro Sales Product List</a>
-                    </li>
-                </ul>
-            </div>
+
             <div class="card-body">
                 <div class="tab-content" id="custom-tabs-two-tabContent">
                     @Html.AntiForgeryToken()
@@ -28,14 +21,10 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <h5 class="text-center text-bold">
-                                                    List Of Agro Sales Product
+                                                    Collection List
                                                 </h5>
                                             </div>
-                                            <div class="col-md-3">
 
-                                                <a href="/AgroConfiguration/CreateAgroSalesProduct" class="btn btn-outline-primary btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Sales Product</a>
-
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -48,16 +37,17 @@
                                         <h6 class="card-title">Search By</h6>
                                     </div>
                                     <div class="card-body text-sm">
-                                        <div class="row" style="margin-top:-15px">
+                                        <!--<div class="row" style="margin-top:-15px">
                                             <div class="col-md-3">
-                                                <label for="ddlProductName" class="col-form-label">Invoice No </label>
+                                                <label for="ddlProductName" class="col-form-label">Invoice No </label>-->
                                                 @*@Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
-                                            </div>
+                                            <!--</div>
 
-                                        </div>
+                                        </div>-->
 
                                         <div class="col-md-2">
-                                            <input type="text" class="form-control form-control-sm" id="SearchInvoiceNo" placeholder="search Invoice" />
+                                            <label  class="col-form-label">InvoiceNo </label>
+                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
                                         </div>
 
                                     </div>
@@ -76,16 +66,16 @@
                     </div>
                 </div>
             </div>
-        </div>
+
     </div>
 </div>
 
 
-<div class="modal fade" id="AgroSalesProductDetails" role="dialog" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="PaymentDetails" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header alert-secondary">
-                <h4 id="modalHeading" class="modal-title">Agro Sales Product Details</h4>
+                <h4 id="modalHeading" class="modal-title">Payment Details</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body" id="dataContainer2">
@@ -117,7 +107,7 @@
                         <div class="card">
                             <div class="col-md-12">
                                 <h5 style="border-bottom:2px solid #08054e">Information</h5>
-                              
+
                                 <div class="row">
                                     <input type="hidden" id="hdProductSalesInfoId" />
                                     <div class="col-md-3">
@@ -159,25 +149,25 @@
                     @*<div class="row justify-content-center">*@
 
 
-                        <div class="card">
-                            <div class="col-md-12">
-                                <h5 style="border-bottom:2px solid #ff0000">Payment</h5>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="ddlAmount" class="col-form-label">Amount</label>
-                                        <input type="number" id="ddlAmount" class="form-control form-control-sm" />
-                                        <span class="error hide req-ddlAmount font-weight-bold">Amount is required!</span>
+                    <div class="card">
+                        <div class="col-md-12">
+                            <h5 style="border-bottom:2px solid #ff0000">Payment</h5>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="ddlAmount" class="col-form-label">Amount</label>
+                                    <input type="number" id="ddlAmount" class="form-control form-control-sm" />
+                                    <span class="error hide req-ddlAmount font-weight-bold">Amount is required!</span>
 
-                                    </div>
-                                    <div class="col-md-8">
-                                        <label for="ddlRemarks" class="col-form-label">Remarks.</label>
-                                        <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
-                                        <span class="error hide req-ddlRemarks font-weight-bold">Invoice No is required!</span>
-                                    </div>
                                 </div>
-
+                                <div class="col-md-8">
+                                    <label for="ddlRemarks" class="col-form-label">Remarks.</label>
+                                    <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
+                                    <span class="error hide req-ddlRemarks font-weight-bold">Invoice No is required!</span>
+                                </div>
                             </div>
+
                         </div>
+                    </div>
 
 
 
@@ -226,6 +216,7 @@
     <script type="text/javascript">
 
         var rptType = $("#rptType");
+        var searchByAny = $("#searchByAny");
 
 
 
@@ -243,7 +234,7 @@
 
 
         $(document).ready(function () {
-         
+
             $('.select2').select2();
 
             $('.select2bs4').select2({
@@ -252,12 +243,16 @@
             LoadSalesProduct()
         })
 
+        searchByAny.keyup(function () {
+            LoadSalesProduct()
+        })
+
         function LoadSalesProduct() {
             debugger;
 
-            var data = { flag: "View", id: 0 };
+            var data = { flag: "View", name: $.trim(searchByAny.val()) };
 
-            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAgroSalesProductList', data)).then(function (res, status) {
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesPaymentList', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {
                     $("#dataContainer").fadeOut('500', function () {
@@ -268,7 +263,7 @@
             }).fail(function (error) {
                 console.log(error);
             });
-            
+
         }
 
         $(document).on('click', 'a.data-item-detail-ProductionSalesInfoId', function (e) {
@@ -278,12 +273,12 @@
             var id = $(this).parent().parents('tr').children('td').eq(1).html();
             if (true) {
                 var data = { flag: "Detail", id: id };
-                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAgroSalesProductList', data)).then(function (res, status) {
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesPaymentList', data)).then(function (res, status) {
                     console.log(status);
                     if (status === "success") {
                         $("#dataContainer2").empty();
                         $("#dataContainer2").append(res);
-                        $("#AgroSalesProductDetails").modal('show');
+                        $("#PaymentDetails").modal('show');
                     }
                 }).fail(function (error) {
                     console.log(error);
@@ -299,27 +294,27 @@
             $("#Paymentmodal").modal("show");
             $(".error").addClass("hide");
         }
-      
+
         //payment
         $(document).on("click", "a.data-item-Payment-ProductionSalesInfoId", function (e) {
             //alert();
-            //debugger;
+            debugger;
             e.preventDefault()
 
             var row = $(this).parent().parents('tr');
-            var td1 = row.find('td:eq(3)').html();
-            var td2 = row.find('td:eq(6)').html();
-            var td3 = row.find('td:eq(7)').html();
-            var td4 = row.find('td:eq(8)').html();
+            var td1 = row.find('td:eq(2)').html();
+            var td2 = row.find('td:eq(4)').html();
+            var td3 = row.find('td:eq(5)').html();
+            var td4 = row.find('td:eq(6)').html();
             var td5 = row.find('td:eq(1)').html();
-     
+
 
             hdProductSalesInfoId.val(td5);
             ddlInvoiceNo.val(td1);
             ddlTotalAmount.val(td2);
             ddlPaidAmount.val(td3);
             ddlDueAmount.val(td4);
-          
+
 
             OpenModal();
             $("#spanModalHead").text('Payment');
@@ -329,38 +324,6 @@
 
 
 
-        
-
-        $(document).on('click', 'a.data-item-download', function (e) {
-            e.preventDefault();
-            window.open("/AgroConfiguration/AgroProductSalesReport?ProductSalesInfoId=" + ProductSalesInfoId.val());
-        })
-
-        $(document).on('click', 'a.data-item-download', function (e) {
-            e.preventDefault();
-            window.open("/AgroConfiguration/AgroProductSalesChallanReport?ProductSalesInfoId=" + ProductSalesInfoId.val());
-        })
-
-
-        //$(document).on('click', 'a.data-item-download', function (e) {
-        //    e.preventDefault();
-        //    debugger;
-        //    $("#dataContainer2").empty();
-        //    var id = $(this).parent().parents('tr').children('td').eq(1).html();
-        //    if (true) {
-        //        var data = { id: id };
-        //        $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAgroSalesProductList', data)).then(function (res, status) {
-        //            console.log(status);
-        //            if (status === "success") {
-        //                $("#dataContainer2").empty();
-        //                $("#dataContainer2").append(res);
-        //                $("#AgroSalesProductDetails").modal('show');
-        //            }
-        //        }).fail(function (error) {
-        //            console.log(error);
-        //        })
-        //    }
-        //})
 
 
 
@@ -369,7 +332,7 @@
 
         //save
         $("#saveButton").click(function (e) {
-            alert();
+           // alert();
             debugger;
             e.preventDefault();
             $(".error").addClass("hide");
@@ -385,9 +348,9 @@
                                 //debugger;
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
-                                    redirectPage('@Url.Action("GetAgroSalesProductList")');
+                                    redirectPage('@Url.Action("SalesPaymentList")');
                                 }, 1000);
-                                
+
                             }
                             else {
                                 $('.toastrDefaultError').trigger('click');

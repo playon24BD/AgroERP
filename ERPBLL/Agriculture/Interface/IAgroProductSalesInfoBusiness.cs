@@ -1,6 +1,7 @@
 ﻿using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ReportModels;
+using ERPBO.ControlPanel.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace ERPBLL.Agriculture.Interface
     public interface IAgroProductSalesInfoBusiness
     {
         IEnumerable<ProductSalesDataReport> GetProductSalesData(string InvoiceNo);
+
+        IEnumerable<ProductSalesDataChallanReport> GetProductSalesChallanData(string ChallanNo);
         IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long orgId, long? ProductId);
         IEnumerable<AgroProductSalesInfo> GetUserName(long orgId);
         AgroProductSalesInfo GetAgroProductionInfoById(long id, long orgId);
@@ -19,6 +22,14 @@ namespace ERPBLL.Agriculture.Interface
         AgroProductSalesInfo CheckBYProductSalesInfoId(long? ProductSalesInfoId);
         bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId);
 
+
+
+        IEnumerable<AgroProductSalesInfo> GetAllDueSalesInvoice();
+
+
         AgroProductSalesInfo GetInvoiceProductionInfoById(long ProductSalesInfoId);
+
+        AgroProductSalesInfo GetChallanProductionInfoById(long ProductSalesInfoId);
+
     }
 }
