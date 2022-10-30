@@ -74,12 +74,50 @@ namespace ERPBLL.Agriculture
         public bool SaveMeasureMent(List<MeasurementSetupDTO> measurementDTO, long userId, long orgId)
         {
             bool IsSuccess = false;
+            double UnitKG=0;
+            double MasterCarton;
+            double InnerBox ;
+            double PackSize;
 
             List<MeasurementSetup> measurements = new List<MeasurementSetup>();
             if (measurementDTO.Count() > 0)
             {
                 foreach (var item in measurementDTO)
                 {
+                    if (item.MasterCarton > 0)
+                    {
+                        MasterCarton = item.MasterCarton;
+                    }
+                    else
+                    {
+                        MasterCarton = 1;
+                    }
+                    if (item.InnerBox > 0)
+                    {
+                        InnerBox = item.InnerBox;
+                    }
+                    else
+                    {
+                        InnerBox = 1;
+                    }
+                    if (item.PackSize > 0)
+                    {
+                        PackSize = item.PackSize;
+                    }
+                    else
+                    {
+                        PackSize = 1;
+                    }
+
+                    if (item.UnitId == 1)
+                    {
+
+                        UnitKG =Convert.ToInt32( MasterCarton * InnerBox * PackSize);
+                    }
+                    if (item.UnitId == 2)
+                    {
+                        UnitKG = Convert.ToInt32(MasterCarton * InnerBox * PackSize / 1000);
+                    }
                     MeasurementSetup measurement = new MeasurementSetup
                     {
                         MeasurementName = item.MeasurementName,
@@ -90,8 +128,9 @@ namespace ERPBLL.Agriculture
                         UnitId = item.UnitId,
                         Status = "Active",
                         EntryUserId = userId,
-                        EntryDate= DateTime.Now
-                        
+                        EntryDate = DateTime.Now,
+                        UnitKG = UnitKG
+
 
                     };
                     measurements.Add(measurement);
@@ -110,9 +149,47 @@ namespace ERPBLL.Agriculture
         public bool UpdateMeasureMent(MeasurementSetupDTO measurementSetup,long userId, long orgId)
         {
             bool IsSuccess = false;
+            double UnitKG = 0;
+            double MasterCarton;
+            double InnerBox;
+            double PackSize;
             MeasurementSetup measurement = new MeasurementSetup();
             if (measurementSetup.MeasurementId>0)
             {
+                if (measurementSetup.MasterCarton > 0)
+                {
+                    MasterCarton = measurementSetup.MasterCarton;
+                }
+                else
+                {
+                    MasterCarton = 1;
+                }
+                if (measurementSetup.InnerBox > 0)
+                {
+                    InnerBox = measurementSetup.InnerBox;
+                }
+                else
+                {
+                    InnerBox = 1;
+                }
+                if (measurementSetup.PackSize > 0)
+                {
+                    PackSize = measurementSetup.PackSize;
+                }
+                else
+                {
+                    PackSize = 1;
+                }
+
+                if (measurementSetup.UnitId == 1)
+                {
+
+                    UnitKG = Convert.ToInt32(MasterCarton * InnerBox * PackSize);
+                }
+                if (measurementSetup.UnitId == 2)
+                {
+                    UnitKG = Convert.ToInt32(MasterCarton * InnerBox * PackSize / 1000);
+                }
 
                 measurement = GetMeasurementById(measurementSetup.MeasurementId, orgId);
                 measurement.MeasurementName = measurementSetup.MeasurementName;
@@ -123,6 +200,7 @@ namespace ERPBLL.Agriculture
                 measurement.Status = measurementSetup.Status;
                 measurement.UpdateDate = DateTime.Now;
                 measurement.UpdateUserId = userId;
+                measurement.UnitKG = measurementSetup.UnitKG;
 
             }
             _measurmentRepository.Update(measurement);

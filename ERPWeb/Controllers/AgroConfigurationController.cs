@@ -1982,7 +1982,7 @@ namespace ERPWeb.Controllers
             var Unit = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).UnitId;
             var UnitName = _agroUnitInfo.GetAgroInfoById(Unit, User.OrgId).UnitName;
 
-            var MeasurementSize = MasterCarton + "*" + InnerBox + "*" + pageSize + "(" + UnitName + ")";
+            var MeasurementSize = MasterCarton + "*" + InnerBox + "*" + PackSize + "(" + UnitName + ")";
 
             return Json(MeasurementSize, JsonRequestBehavior.AllowGet);
 
