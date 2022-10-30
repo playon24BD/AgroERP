@@ -492,10 +492,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox26</rd:DefaultName>
-        <Top>2.78695in</Top>
-        <Left>5.89218in</Left>
+        <Top>2.78in</Top>
+        <Left>5.98245in</Left>
         <Height>0.28472in</Height>
-        <Width>1.44245in</Width>
+        <Width>1.16468in</Width>
         <ZIndex>14</ZIndex>
         <Style>
           <Border>
@@ -636,7 +636,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value />
+                <Value>=Fields!ChallanNo.Value</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                 </Style>
@@ -1324,7 +1324,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Delivery Place   :</Value>
+                    <Value>Delivery Place     </Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -1338,7 +1338,7 @@
             <Top>0.13195in</Top>
             <Left>0.03958in</Left>
             <Height>0.25in</Height>
-            <Width>1in</Width>
+            <Width>1.05766in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1356,7 +1356,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Transport Type:</Value>
+                    <Value>Transport Type  </Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -1367,10 +1367,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox62</rd:DefaultName>
-            <Top>0.25686in</Top>
-            <Left>0.02779in</Left>
+            <Top>0.2847in</Top>
+            <Left>0.03958in</Left>
             <Height>0.25in</Height>
-            <Width>1in</Width>
+            <Width>1.05766in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -1389,7 +1389,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Driver                  :</Value>
+                    <Value>Driver                   </Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -1401,9 +1401,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox64</rd:DefaultName>
             <Top>0.59019in</Top>
-            <Left>0.02779in</Left>
+            <Left>0.03958in</Left>
             <Height>0.25in</Height>
-            <Width>1in</Width>
+            <Width>1.05766in</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -1421,6 +1421,13 @@
             <Paragraphs>
               <Paragraph>
                 <TextRuns>
+                  <TextRun>
+                    <Value>: </Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
                   <TextRun>
                     <Value>=Fields!DeliveryPlace.Value</Value>
                     <Style>
@@ -1455,6 +1462,13 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
+                    <Value>: </Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
                     <Value>=Fields!VehicleType.Value</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
@@ -1466,8 +1480,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox66</rd:DefaultName>
-            <Top>0.28464in</Top>
-            <Left>1.03958in</Left>
+            <Top>0.2847in</Top>
+            <Left>1.04168in</Left>
             <Height>0.25in</Height>
             <Width>1in</Width>
             <ZIndex>4</ZIndex>
@@ -1488,6 +1502,13 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
+                    <Value>: </Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
                     <Value>=Fields!Do_ADO_DA.Value</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
@@ -1499,7 +1520,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox67</rd:DefaultName>
-            <Top>0.40973in</Top>
+            <Top>0.43744in</Top>
             <Left>1.04168in</Left>
             <Height>0.25in</Height>
             <Width>1in</Width>
@@ -1521,6 +1542,13 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
+                    <Value>: </Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
                     <Value>=Fields!DriverName.Value</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
@@ -1533,7 +1561,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox68</rd:DefaultName>
             <Top>0.59019in</Top>
-            <Left>1.06945in</Left>
+            <Left>1.04168in</Left>
             <Height>0.25in</Height>
             <Width>1in</Width>
             <ZIndex>6</ZIndex>
@@ -1554,7 +1582,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>DO/ADO/DA        :</Value>
+                    <Value>DO/ADO/DA          </Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -1565,10 +1593,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox63</rd:DefaultName>
-            <Top>0.40973in</Top>
-            <Left>0.02569in</Left>
+            <Top>0.43744in</Top>
+            <Left>0.03958in</Left>
             <Height>0.25in</Height>
-            <Width>1in</Width>
+            <Width>1.05766in</Width>
             <ZIndex>7</ZIndex>
             <Style>
               <Border>
@@ -1590,7 +1618,7 @@
         <Style>
           <Border>
             <Style>Solid</Style>
-            <Width>1.25pt</Width>
+            <Width>0.25pt</Width>
           </Border>
         </Style>
       </Rectangle>
@@ -2005,7 +2033,7 @@
         <Top>4.63417in</Top>
         <Left>0.28455in</Left>
         <Height>0.75in</Height>
-        <Width>6.98758in</Width>
+        <Width>6.98757in</Width>
         <ZIndex>39</ZIndex>
         <Style>
           <Border>
