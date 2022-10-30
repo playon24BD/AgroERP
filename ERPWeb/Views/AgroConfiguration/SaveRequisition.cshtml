@@ -1,0 +1,305 @@
+﻿
+@{
+    ViewBag.Title = "SaveRequisition";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-navy">
+            <div class="card-header" style="text-align: center;">
+
+                <div class="row">
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">
+
+                            Raw Material Requistion
+                        </h5>
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <input type="text" id="hdrawMaterialRequisitionInfoId" class="hide" />
+                    <div class="col-md-2">
+                        <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
+                        @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="ddlUnitName">Unit</label>
+                        <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
+                    </div>
+                    <div class="hide">
+                        <label for="ddlUnitID">UnitID</label>
+                        <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="ddlqty">Requisition Qty</label>
+                        <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
+                        <span class="error hide req-qty">Qty Is Required</span>
+                        <span>Stock: <span id="RawMaterialStockQty">0</span> </span>
+                        <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtRemarks">Remarks</label>
+                        <input type="text" id="txtRemarks" name="txtRemarks" class="form-control form-control-sm" />
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolist"><i class="fas fa-plus"></i> &nbsp; ADD TO LIST </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="margin-top:-10px">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12" style="overflow-y:scroll">
+                            <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblRawMaterialRequisiton">
+                                <thead>
+                                    <tr>
+                                        <th colspan="6">
+                                            <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
+                                        </th>
+                                    </tr>
+                                    <tr class="btn-dark">
+                                        <th>#SL</th>
+                                        <th>Raw Material</th>
+                                        <th>Unit</th>
+                                        <th>Requisition Qty</th>
+                                        <th>Remarks</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var ddlRawMaterial = $("#ddlRawMaterial");
+        var hdrawMaterialRequisitionInfoId = $("#hdrawMaterialRequisitionInfoId");
+        //var ddlrmnqty = $("#ddlrmnqty");
+        var ddlqty = $("#ddlqty");
+        var txtRemarks = $("#txtRemarks");
+        var ddlUnitName = $("#ddlUnitName");
+        var ddlUnitID = $("#ddlUnitID");
+        var ddlRawMaterialList = [];
+        var searchByAny = $("#searchByAny");
+        var searchByAnyy = $("#searchByAnyy");
+        var RawMaterialStockQty = $("#RawMaterialStockQty");
+
+
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            $("#btnSubmit").hide();
+
+            //LoadDataTableStock();
+            //LoadDataTable();
+
+
+
+
+        })
+        ddlRawMaterial.change(function () {
+
+
+            var data = { RawMaterialId: ddlRawMaterial.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitName", data)).then(function (res, status) {
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnitName.val(res.UnitName);
+                ddlUnitName.val(unit);
+
+            });
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitID", data)).then(function (res, status) {
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnitID.val(res.UnitIDd);
+                ddlUnitID.val(unit);
+
+            });
+
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetStockQty", data)).then(function (res, status) {
+                consoleLog(res.replace(/['"]+/g, ''));
+                $('#RawMaterialStockQty').text(res);
+
+            });
+
+        })
+
+
+        $("#addTolist").click(function (e) {
+            //alert();
+            debugger;
+            e.preventDefault();
+
+
+            if (validateAddToList()) {
+
+                if (ddlRawMaterialList.includes(ddlRawMaterial.val())) {
+                    toastrErrorAlert("Material Already Exist");
+                }
+                else {
+                    var sl = $("#tblRawMaterialRequisiton tbody tr").length;
+                    var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterial") + "</td>";
+                    var td3 = "<td class='text-center'>" + ddlUnitName.val() + "</td>";
+                    var td4 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                    var td8 = "<td class='text-center' >" + txtRemarks.val() + "</td>";
+                    var td5 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
+                    var td6 = "<td class='text-center hide'>" + ddlRawMaterial.val() + "</td>";
+                    var td7 = "<td class='text-center hide'>" + ddlUnitID.val() + "</td>";
+
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 +td8+ td5 + td6 + td7 + "</tr>";
+
+
+                    $("#tblRawMaterialRequisiton tbody").append(tr);
+                    ddlRawMaterialList.push(ddlRawMaterial.val());
+                    $("#btnSubmit").show();
+
+                }
+
+            }
+
+        })
+
+        function validateAddToList() {
+            debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlRawMaterial.val()) == 0) {
+                $(".req-ddlRawMaterial").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(ddlqty.val(), 0) <= 0) {
+                $(".req-qty").removeClass('hide');
+                isValid = false;
+            }
+            if (QuantityCheck() == true) {
+                $(".req-qtyChecking").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function QuantityCheck() {
+            debugger;
+            var isValid = false;
+            var originalQty = RawMaterialStockQty.text();
+            var qty = originalQty.replace(/\(|\)/g, '');
+            console.log(qty);
+            if (TryParseInt(ddlqty.val()) > qty) {
+                isValid = true
+            }
+            return isValid;
+        }
+
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            debugger;
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+
+            var rId = tds.eq(5).html();
+            console.log("rId :" + rId);
+            const mid = ddlRawMaterialList.indexOf(rId);
+
+            ddlRawMaterialList.splice(mid, 1);
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    removeTableRow("#tblRawMaterialRequisiton tbody", index);
+                    fnFixTheTbodyRowSerial("#tblRawMaterialRequisiton tbody", index);
+
+                };
+            }));
+
+        })
+
+
+        $("#btnSubmit").click(function () {
+            var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0) };
+            var details = [];
+
+            $.each($("#tblRawMaterialRequisiton tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+                    RawMaterialIssueStockDetailId: 0,
+                    RawMaterialId: tds.eq(6).html(),
+                    UnitID: tds.eq(7).html(),
+                    RequisitionQuantity: tds.eq(3).html(),
+                    Remarks: tds.eq(4).html(),
+                });
+            })
+
+            var model = info.rawMaterialRequisitionDetailsDTO = details;
+            console.log(model);
+            var data = { model };
+             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisiton', data, getToken())).then(function (res, status) {
+                            if (res === true) {
+                                //debugger;
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetRequisition")');
+                                }, 1000);
+                                //resetUI();
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+
+
+
+
+        })
+
+    </script>
+
+}
+

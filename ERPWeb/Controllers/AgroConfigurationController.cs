@@ -60,9 +60,10 @@ namespace ERPWeb.Controllers
         private readonly IFinishGoodProductionInfoBusiness _finishGoodProductionInfoBusiness;
         private readonly IFinishGoodProductionDetailsBusiness _finishGoodProductionDetailsBusiness;
         private readonly IAppUserBusiness _appUserBusiness;
+        private readonly IRawMaterialRequisitionInfoBusiness _rawMaterialRequisitionInfoBusiness;
 
 
-        public AgroConfigurationController(IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister,IRawMaterialTrack rawMaterialTrack,IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo,IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails,IPRawMaterialStockInfo pRawMaterialStockInfo,IPRawMaterialStockIDetails pRawMaterialStockIDetails,IAgroUnitInfo agroUnitInfo,IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness)
+        public AgroConfigurationController(IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister,IRawMaterialTrack rawMaterialTrack,IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo,IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails,IPRawMaterialStockInfo pRawMaterialStockInfo,IPRawMaterialStockIDetails pRawMaterialStockIDetails,IAgroUnitInfo agroUnitInfo,IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness)
 
 
 
@@ -107,6 +108,7 @@ namespace ERPWeb.Controllers
             this._finishGoodProductionInfoBusiness = finishGoodProductionInfoBusiness;
             this._finishGoodProductionDetailsBusiness = finishGoodProductionDetailsBusiness;
             this._appUserBusiness = appUserBusiness;
+            this._rawMaterialRequisitionInfoBusiness = rawMaterialRequisitionInfoBusiness;
         }
         // GET: AgroConfiguration
 
@@ -2338,11 +2340,15 @@ namespace ERPWeb.Controllers
         }
         #endregion
 
-        #region
+        #region Requisition
+
+
+
         public ActionResult GetRequisition( string flag)
         {
             if(string.IsNullOrEmpty(flag))
             {
+               
                 return View();
             }
 
@@ -2351,6 +2357,37 @@ namespace ERPWeb.Controllers
             AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTOs, rawMaterialRequisitionInfoViewModels);
             return PartialView("_GetRequisition", rawMaterialRequisitionInfoViewModels);
         }
+        [HttpGet]
+        public ActionResult SaveRequisition(string flag)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+                return View();
+
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SaveRequisition(RawMaterialRequisitionInfoViewModel model)
+        {
+
+            bool IsSuccess = false;
+            if (ModelState.IsValid)
+            {
+                RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO = new RawMaterialRequisitionInfoDTO();
+                AutoMapper.Mapper.Map(model, rawMaterialRequisitionInfoDTO);
+              IsSuccess=  _rawMaterialRequisitionInfoBusiness.SaveRawMaterialRequisition(rawMaterialRequisitionInfoDTO,User.UserId,User.OrgId);
+
+            }
+
+            return Json(IsSuccess);
+        }
+
+
+
+
         #endregion
     }
 }

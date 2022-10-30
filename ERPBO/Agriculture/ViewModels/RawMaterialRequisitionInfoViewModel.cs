@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ERPBO.Agriculture.DTOModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +20,6 @@ namespace ERPBO.Agriculture.ViewModels
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
         public long OrganizationId { get; set; }
+        public List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO { get; set; }
     }
 }

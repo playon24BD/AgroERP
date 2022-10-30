@@ -38,9 +38,42 @@ namespace ERPBLL.Agriculture
             return requisitionDetailsbyInfo.ToList() ;
         }
 
-        public bool SaveRawMaterialRequisitionDetails(List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO, long userId, long orgId)
+        public bool SaveRawMaterialRequisitionDetails(List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO,long infoId, long userId, long orgId)
         {
-            throw new NotImplementedException();
+            bool IsSuccess = false;
+            if (rawMaterialRequisitionDetailsDTO.Count()>0 && infoId>0)
+            {
+              
+              List< RawMaterialRequisitionDetails> requisitionDetailList = new List<RawMaterialRequisitionDetails>();
+                foreach (var requisitionMaterial in rawMaterialRequisitionDetailsDTO)
+                {
+                    RawMaterialRequisitionDetails requisitionDetails = new RawMaterialRequisitionDetails
+                    {
+                        RawMaterialRequisitionInfoId = infoId,
+                        RawMaterialId = requisitionMaterial.RawMaterialId,
+                        RequisitionQuantity = requisitionMaterial.RequisitionQuantity,
+                        IssueQuantity = 0,
+                        Remarks = requisitionMaterial.Remarks,
+                        Status = "Pending",
+                        EntryDate = DateTime.Now,
+                        EntryUserId = userId,
+                        OrganizationId = orgId
+
+                    };
+
+
+                    requisitionDetailList.Add(requisitionDetails);
+                }
+                if (requisitionDetailList.Count()>0)
+                {
+                    _rawMaterialRequisitionDetailsBusinessRepository.InsertAll(requisitionDetailList);
+                  IsSuccess=  _rawMaterialRequisitionDetailsBusinessRepository.Save();
+                }
+
+            }
+
+
+            return IsSuccess;
         }
     }
 }
