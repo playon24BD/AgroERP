@@ -2626,6 +2626,17 @@
     <Content Include="Reports\DataSets\dsAgroSalesReport.xsc">
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsAgroSalesChallanReport.xsc">
+      <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsAgroSalesChallanReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAgroSalesChallanReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsAgroSalesChallanReport.xss">
+      <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsAgroSalesReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3050,6 +3061,11 @@
     <Compile Include="Infrastructure\PagerData.cs" />
     <Compile Include="Infrastructure\PrintReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\DataSets\dsAgroSalesChallanReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsAgroSalesReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3236,6 +3252,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

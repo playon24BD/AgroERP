@@ -308,5 +308,94 @@ on TE.TerritoryId=ST.TerritoryId
         {
             return _agroProductSalesInfoRepository.GetOneByOrg(f => f.ProductSalesInfoId == ProductSalesInfoId);
         }
+
+        public AgroProductSalesInfo GetChallanProductionInfoById(long ProductSalesInfoId)
+        {
+            return _agroProductSalesInfoRepository.GetOneByOrg(f => f.ProductSalesInfoId == ProductSalesInfoId);
+        }
+
+        public IEnumerable<ProductSalesDataChallanReport> GetProductSalesChallanData(string ChallanNo)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataChallanReport>(QueryProductSalesChallanReport(ChallanNo));
+        }
+
+        private string QueryProductSalesChallanReport(string ChallanNo)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+
+            if (!string.IsNullOrEmpty(ChallanNo))
+            {
+                param += string.Format(@"and sales.ChallanNo ='{0}'", ChallanNo);
+            }
+            //if (!string.IsNullOrEmpty(status))
+            //{
+            //    param += string.Format(@"and Taskstatus ='{0}'", status);
+            //}
+
+            query = string.Format(@"select DISTINCT 
+AU.FullName,
+ST.StockiestName,
+TE.TerritoryName,
+AU.Address,
+AU.MobileNo,
+sales.InvoiceNo,
+CONVERT(date,sales.InvoiceDate) as InvoiceDate,
+sales.ChallanNo,
+CONVERT(date,sales.ChallanDate) as ChallanDate,
+sales.Depot,
+sales.VehicleType,
+sales.VehicleNumber,
+sales.DriverName,
+sales.DeliveryPlace,
+sales.Do_ADO_DA,
+sales.DoADO_Name,
+sales.PaymentMode,
+
+ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
+
+DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
+
+RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
+
+AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
+
+salesD.ProductSalesInfoId,
+salesD.FinishGoodProductInfoId,
+FGPN.FinishGoodProductName,
+
+salesD.Quanity,
+salesD.Price,
+salesD.MeasurementSize,
+salesD.Discount,
+salesD.DiscountTk,
+sales.PaidAmount,
+sales.DueAmount,
+(salesD.Price*salesD.Quanity) AS Total,
+sales.TotalAmount,
+dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
+
+
+
+
+from [Agriculture].[dbo].[tblProductSalesInfo] sales
+INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
+on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
+
+INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
+
+LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
+on AU.UserId=sales.UserId
+LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
+on ST.StockiestId=AU.StockiestId
+LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
+on TE.TerritoryId=ST.TerritoryId
+
+            Where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+        }
+
     }
 }
