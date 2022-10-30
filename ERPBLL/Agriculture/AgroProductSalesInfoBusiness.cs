@@ -299,5 +299,10 @@ on FGPN.FinishGoodProductId=FGI.FinishGoodProductId
 Where sales.InvoiceNo='INV-221025071242'", Utility.ParamChecker(param));
             return query;
         }
+
+        public IEnumerable<AgroProductSalesInfo> GetAllDueSalesInvoice()
+        {
+            return _agroProductSalesInfoRepository.GetAll(z => z.PaidAmount < z.TotalAmount).ToList();
+        }
     }
 }

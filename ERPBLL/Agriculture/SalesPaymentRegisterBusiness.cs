@@ -28,6 +28,11 @@ namespace ERPBLL.Agriculture
             this._agroProductSalesInfoBusiness = agroProductSalesInfoBusiness;
         }
 
+        public IEnumerable<SalesPaymentRegister> GetPaymentDetailsByInvoiceId(long infoId)
+        {
+            return _salesPaymentRegisterRepository.GetAll(i => i.ProductSalesInfoId == infoId ).ToList();
+
+        }
 
         public bool SaveSalesPayment(SalesPaymentRegisterDTO info, long userId)
         {

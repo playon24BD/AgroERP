@@ -3198,6 +3198,11 @@
     <Content Include="Views\AgroConfiguration\_GetRawMaterialIssueView.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRawMaterialMainView.cshtml" />
     <Content Include="Views\AgroConfiguration\GetRequisition.cshtml" />
+    <Content Include="Views\AgroConfiguration\CreateRawMaterialReturnList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetReturnRawMaterial.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetDueInvoicePartialView.cshtml" />
+    <Content Include="Views\AgroConfiguration\SalesPaymentList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_PaymentHistoryDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
