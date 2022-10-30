@@ -2550,5 +2550,14 @@ namespace ERPWeb.Controllers
 
 
         #endregion
+
+        #region AgroReport
+        public ActionResult GetProductwisesalesReport()
+        {
+           
+            return View();
+        }
+        #endregion
+
     }
 }
