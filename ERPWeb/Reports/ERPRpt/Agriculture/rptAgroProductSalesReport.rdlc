@@ -621,7 +621,7 @@
         <Top>4.38416in</Top>
         <Left>0.27306in</Left>
         <Height>0.875in</Height>
-        <Width>7.17508in</Width>
+        <Width>7.17511in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -2034,6 +2034,66 @@
           </Border>
         </Style>
       </Image>
+      <Textbox Name="TotalAmountText">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!TotalAmountText.Value, "dsAgroSalesReport")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>TotalAmountText</rd:DefaultName>
+        <Top>5.43972in</Top>
+        <Left>1.18279in</Left>
+        <Height>0.25in</Height>
+        <Width>6.25146in</Width>
+        <ZIndex>42</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox6">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>In Word (TK.)</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox6</rd:DefaultName>
+        <Top>5.43972in</Top>
+        <Left>0.23912in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>43</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
     <Height>9.55778in</Height>
     <Style>
@@ -2042,7 +2102,7 @@
       </Border>
     </Style>
   </Body>
-  <Width>7.53147in</Width>
+  <Width>7.53148in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>
@@ -2203,6 +2263,10 @@
         </Field>
         <Field Name="Total">
           <DataField>Total</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TotalAmountText">
+          <DataField>TotalAmountText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

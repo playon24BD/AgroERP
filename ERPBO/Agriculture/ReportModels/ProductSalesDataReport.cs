@@ -43,6 +43,7 @@ namespace ERPBO.Agriculture.ReportModels
         public string Address { get; set; }
         public string MobileNo { get; set; }
         public double Total { get; set; }
+        public string TotalAmountText { get; set; }
 
     }
 }

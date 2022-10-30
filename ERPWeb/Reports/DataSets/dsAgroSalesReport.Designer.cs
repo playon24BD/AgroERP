@@ -347,6 +347,8 @@ namespace ERPWeb.Reports.DataSets {
             
             private global::System.Data.DataColumn columnTotal;
             
+            private global::System.Data.DataColumn columnTotalAmountText;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public dsAgroSalesReportDataTable() {
@@ -654,6 +656,14 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn TotalAmountTextColumn {
+                get {
+                    return this.columnTotalAmountText;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -723,7 +733,8 @@ namespace ERPWeb.Reports.DataSets {
                         string FullName, 
                         string Address, 
                         string MobileNo, 
-                        string Total) {
+                        string Total, 
+                        string TotalAmountText) {
                 dsAgroSalesReportRow rowdsAgroSalesReportRow = ((dsAgroSalesReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FinishGoodProductName,
@@ -759,7 +770,8 @@ namespace ERPWeb.Reports.DataSets {
                         FullName,
                         Address,
                         MobileNo,
-                        Total};
+                        Total,
+                        TotalAmountText};
                 rowdsAgroSalesReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdsAgroSalesReportRow);
                 return rowdsAgroSalesReportRow;
@@ -816,6 +828,7 @@ namespace ERPWeb.Reports.DataSets {
                 this.columnAddress = base.Columns["Address"];
                 this.columnMobileNo = base.Columns["MobileNo"];
                 this.columnTotal = base.Columns["Total"];
+                this.columnTotalAmountText = base.Columns["TotalAmountText"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -889,6 +902,8 @@ namespace ERPWeb.Reports.DataSets {
                 base.Columns.Add(this.columnMobileNo);
                 this.columnTotal = new global::System.Data.DataColumn("Total", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTotal);
+                this.columnTotalAmountText = new global::System.Data.DataColumn("TotalAmountText", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTotalAmountText);
                 this.ExtendedProperties.Add("Generator_TablePropName", "_dsAgroSalesReport");
                 this.ExtendedProperties.Add("Generator_UserTableName", "dsAgroSalesReport");
             }
@@ -1581,6 +1596,22 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string TotalAmountText {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsAgroSalesReport.TotalAmountTextColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TotalAmountText\' in table \'dsAgroSalesReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsAgroSalesReport.TotalAmountTextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFinishGoodProductNameNull() {
                 return this.IsNull(this.tabledsAgroSalesReport.FinishGoodProductNameColumn);
             }
@@ -1985,6 +2016,18 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetTotalNull() {
                 this[this.tabledsAgroSalesReport.TotalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsTotalAmountTextNull() {
+                return this.IsNull(this.tabledsAgroSalesReport.TotalAmountTextColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetTotalAmountTextNull() {
+                this[this.tabledsAgroSalesReport.TotalAmountTextColumn] = global::System.Convert.DBNull;
             }
         }
         

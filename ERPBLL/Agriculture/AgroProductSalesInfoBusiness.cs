@@ -280,7 +280,9 @@ salesD.DiscountTk,
 sales.PaidAmount,
 sales.DueAmount,
 (salesD.Price*salesD.Quanity) AS Total,
-sales.TotalAmount
+sales.TotalAmount,
+dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
+
 
 
 
