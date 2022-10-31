@@ -16,5 +16,10 @@ namespace ERPBO.Agriculture.ViewModels
         public long? EntryUserId { get; set; }
 
         public string UserName { get; set; }
+
+
+        public string PaymentMode { get; set; }
+        public string AccounrNumber { get; set; }
+
     }
 }

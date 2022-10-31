@@ -69,12 +69,15 @@ namespace ERPBLL.Agriculture
                 param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
             }
             query = string.Format(@"
-           select RR.ReturnRawMaterialId,RR.RawMaterialId,RM.RawMaterialName,RR.UnitId,UN.UnitName,RR.ReturnType,RR.EntryDate,RR.EntryUserId,RR.Status,RR.Quantity from tblReturnRawMaterial RR
-inner join tblRawMaterialInfo RM
-on RR.RawMaterialId=RM.RawMaterialId
-inner join tblAgroUnitInfo UN
-on RM.UnitId = UN.UnitId
-            where 1=1  {0}",
+           SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,t.Status,
+TQuantity=(SELECT sum(t.Quantity) FROM  tblReturnRawMaterial t
+where t.ReturnType='Damage' and t.Status='Pending' and t.RawMaterialId=RM.RawMaterialId)
+
+FROM  
+tblReturnRawMaterial t 
+INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
+inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
+where 1=1 and  t.ReturnType='Damage' and t.Status='Pending' {0}",
             Utility.ParamChecker(param));
             return query;
         }
@@ -108,6 +111,53 @@ on RM.UnitId = UN.UnitId
             IsSuccess = _returnRawMaterialRepository.Save();
             return IsSuccess;
             
+        }
+
+
+
+        public IEnumerable<ReturnRawMaterial> GetReturnRawMaterialBYRMId(long Id, string ReturnType, string Status)
+        {
+            return _returnRawMaterialRepository.GetAll(j => j.RawMaterialId == Id && j.ReturnType == ReturnType && j.Status == Status).ToList();
+        }
+
+        public bool updateReturnStatus(List<ReturnRawMaterialDTO> returnRawMaterialDTOs, long userId, long orgId)
+        {
+            bool IsSuccess = false;
+
+            List<ReturnRawMaterial> returnRawMaterials = new List<ReturnRawMaterial>();
+            ReturnRawMaterial returnRawMaterial = new ReturnRawMaterial();
+            foreach (var item in returnRawMaterialDTOs)
+            {
+                returnRawMaterial = GetReturnsById(item.ReturnRawMaterialId);
+                returnRawMaterial.Status = "Approved";
+                returnRawMaterials.Add(returnRawMaterial);
+            }
+            _returnRawMaterialRepository.UpdateAll(returnRawMaterials);
+            IsSuccess = _returnRawMaterialRepository.Save();
+
+            //List<FinishGoodRecipeDetails> finishGoodRecipeDetails = new List<FinishGoodRecipeDetails>();
+            //FinishGoodRecipeDetails finishGoodRecipeDetail = new FinishGoodRecipeDetails();
+            //foreach (var item in finishGoodRecipeDetailDTO)
+            //{
+            //    finishGoodRecipeDetail = GetFinishGoodRecipeDetailsById(item.FGRDetailsId, orgId);
+            //    finishGoodRecipeDetail.FGRRawMaterQty = item.FGRRawMaterQty;
+            //    finishGoodRecipeDetail.UpdateDate = DateTime.Now;
+            //    finishGoodRecipeDetail.UpUserId = userId;
+            //    finishGoodRecipeDetails.Add(finishGoodRecipeDetail);
+
+            //}
+            //_finishGoodRecipeDetailsRepository.UpdateAll(finishGoodRecipeDetails);
+            //IsSuccess = _finishGoodRecipeDetailsRepository.Save();
+
+            return IsSuccess;
+
+        }
+
+        public ReturnRawMaterial GetReturnsById(long ReturnRawMaterialId)
+        {
+
+            return _returnRawMaterialRepository.GetOneByOrg(a => a.ReturnRawMaterialId == ReturnRawMaterialId);
+
         }
     }
 }

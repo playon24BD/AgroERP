@@ -3227,6 +3227,8 @@
 
     <Content Include="Views\AgroConfiguration\GetProductwisesalesReport.cshtml" />
 
+    <Content Include="Views\AgroConfiguration\_ReturnDetails.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

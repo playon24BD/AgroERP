@@ -19,5 +19,17 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<ReturnRawMaterial> GetAllReturnRawMaterial();
 
         IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialInfos(string name);
+
+        IEnumerable<ReturnRawMaterial> GetReturnRawMaterialBYRMId(long Id, string ReturnType, string Status);
+
+        bool updateReturnStatus(List<ReturnRawMaterialDTO> returnRawMaterialDTOs, long userId, long orgId);
+
+
+        ReturnRawMaterial GetReturnsById(long ReturnRawMaterialId);
+
+
+
+
+
     }
 }

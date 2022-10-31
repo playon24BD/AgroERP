@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.ReturnRawMaterialViewModel>
+
+@{
+        ViewBag.Title = "Return Details";
+        int sl = 0;
+        //var info = (ERPBO.Agriculture.ViewModels.AgroProductSalesInfoViewModel)ViewBag.Info;
+    }
+
+@*<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm">
+        @if (info != null)
+        {
+            <tr>
+                <td style="width:13%">Invoice No</td>
+                <td style="width:15%"><b>@info.InvoiceNo</b></td>
+                <td style="width:18%">Invoice Date</td>
+                <td style="width:20%"><b>@info.InvoiceDate</b></td>
+                <td style="width:13%">Total Amount</td>
+                <td style="width:20%"><b>@info.TotalAmount</b></td>
+                <td style="width:13%">Paid Amount</td>
+                <td style="width:20%"><b>@info.PaidAmount</b></td>
+                <td style="width:13%">Due Amount</td>
+                <td style="width:20%"><b>@info.DueAmount</b></td>
+            </tr>
+        }
+    </table>*@
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" id="tblReturnItems">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th>#SL</th>
+            <th>Date</th>
+            <th>Quantity</th>
+            <th class="hide">ReturnID</th>
+            @*<th>Remarks</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+            <tr>
+                <td class="text-center">@sl</td>
+                <td class="text-center">@item.EntryDate</td>
+                <td class="text-center text-bold">@item.Quantity</td>
+                <td class="hide">@item.ReturnRawMaterialId</td>
+         
+            </tr>
+        }
+    </tbody>
+</table>
