@@ -1,7 +1,85 @@
 ﻿
+@model ERPBO.Agriculture.ViewModels.RawMaterialRequisitionInfoViewModel
+
 @{
     ViewBag.Title = "UpdateRequistion";
 }
+<div class="row" style="margin-top:-15px">
+    <div class="col-md-12">
+        <div class="card card-gray-dark">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
 
-<h2>UpdateRequistion</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">
+                            Issue Requisition
+                        </h5>
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row text-sm">
+    <div class="col-md-12" style="margin-top:-10px">
+        <div class="card card-navy">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h6 class="card-title">
+                            Requisition Information
+                        </h6>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <select class="form-control form-control-sm" id="ddlAction">
+                                <option value="Approved" selected>Approved</option>
+                                <option value="Rejected">Rejected</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                            <div class="input-group-append" style="cursor:pointer">
+                                <a id="btnSubmit" href="#" title="Submit Requisition" style="background-color:darkblue" class="input-group-text">
+                                    <i class="fas fa-paper-plane"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row" style="margin-top:-15px">
+                    <div class="col-md-12">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" id="hdfRequisitionId" value="@Model.RawMaterialRequisitionInfoId" />
+                        <input type="hidden" id="hdfRequisitionCode" value="@Model.RawMaterialRequisitionCode" />
+
+                        <table class="table table-bordered table-sm table-responsive-lg text-bold text-sm" id="tblInfo">
+                            <tbody>
+                                <tr>
+                                    <td class="alert-primary" style="width:10%">Req Code</td>
+                                    <td style="width:15%; background-color:#e1dada">@Model.RawMaterialRequisitionCode</td>
+                                    <td class="alert-primary" style="width:10%">Status</td>
+                                    <td style="width:15%; background-color:#e1dada">@Model.Status</td>
+                                    <td class="alert-primary" style="width:10%">Requsition Date</td>
+                                    <td style="width:12%; background-color:#e1dada">@Model.EntryDate</td>
+                                    <td class="alert-primary" style="width:10%">Requistion by</td>
+                                    <td style="width:12%; background-color:#e1dada">@Model.EntryUserId</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        @{Html.RenderAction("GetRequistionDetailsbyInfoId", new { @infoId = Model.RawMaterialRequisitionInfoId });}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 

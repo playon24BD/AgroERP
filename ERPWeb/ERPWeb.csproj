@@ -3221,12 +3221,10 @@
     <Content Include="Views\AgroConfiguration\_PaymentHistoryDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRequisition.cshtml" />
     <Content Include="Views\AgroConfiguration\SaveRequisition.cshtml" />
-
     <Content Include="Views\AgroConfiguration\UpdateRequistion.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRequisitionDetails.cshtml" />
-
     <Content Include="Views\AgroConfiguration\GetProductwisesalesReport.cshtml" />
-
+    <Content Include="Views\AgroConfiguration\_GetRequistionDetailsbyInfoId.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

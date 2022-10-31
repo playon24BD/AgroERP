@@ -2565,11 +2565,37 @@ namespace ERPWeb.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public ActionResult GetRequistionDetailsbyInfoId(long infoId)
+        {
+            var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+            {
+                RawMaterialId = d.RawMaterialId,
+                RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
+                RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
+                RequisitionQuantity = d.RequisitionQuantity,
+                IssueQuantity = d.IssueQuantity,
+                Status = d.Status,
+                Remarks = d.Remarks,
+                //EntryDate=d.EntryDate,
+                UnitID = d.UnitID,
+                UnitName = _agroUnitInfo.GetAgroInfoById(d.UnitID, User.OrgId).UnitName
+
+            }).ToList();
+
+            List<RawMaterialRequisitionDetailsViewModel> rawMaterialRequisitionDetailsViewModel = new List<RawMaterialRequisitionDetailsViewModel>();
+            AutoMapper.Mapper.Map(dto, rawMaterialRequisitionDetailsViewModel);
+            return PartialView("_GetRequistionDetailsbyInfoId", rawMaterialRequisitionDetailsViewModel);
+        }
 
         public ActionResult UpdateRequistion(string flag,long infoId)
         {
 
-            return View();
+            var rawMaterialRequisitionInfo = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfobyId(infoId, User.OrgId);
+
+            RawMaterialRequisitionInfoViewModel rawMaterialRequisitionInfoViewModels = new RawMaterialRequisitionInfoViewModel;
+            AutoMapper.Mapper.Map(rawMaterialRequisitionInfo, rawMaterialRequisitionInfoViewModels);
+            return View(rawMaterialRequisitionInfoViewModels);
         }
 
         [HttpPost]
