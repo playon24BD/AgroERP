@@ -51,6 +51,7 @@ namespace ERPBLL.Agriculture
                     {
                         RawMaterialRequisitionInfoId = infoId,
                         RawMaterialId = requisitionMaterial.RawMaterialId,
+                        UnitID= requisitionMaterial.UnitID,
                         RequisitionQuantity = requisitionMaterial.RequisitionQuantity,
                         IssueQuantity = 0,
                         Remarks = requisitionMaterial.Remarks,

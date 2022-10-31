@@ -12,7 +12,7 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<RawMaterialRequisitionInfo> GetRawMaterialRequisitionInfos(long orgId);
         RawMaterialRequisitionInfo GetRawMaterialRequisitionInfobyId(long infoId, long orgId);
-        IEnumerable<RawMaterialRequisitionInfoDTO> GetAllRawMaterialRequisitionInfos(string RequisitonCode, string fdate, string tdate, long orgId);
+        IEnumerable<RawMaterialRequisitionInfoDTO> GetAllRawMaterialRequisitionInfos(string RequisitonCode,string status, string fdate, string tdate, long orgId);
         bool SaveRawMaterialRequisition(RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO,long userId, long orgId);
     }
 }

@@ -61,9 +61,10 @@ namespace ERPWeb.Controllers
         private readonly IFinishGoodProductionDetailsBusiness _finishGoodProductionDetailsBusiness;
         private readonly IAppUserBusiness _appUserBusiness;
         private readonly IRawMaterialRequisitionInfoBusiness _rawMaterialRequisitionInfoBusiness;
+        private readonly IRawMaterialRequisitionDetailsBusiness _rawMaterialRequisitionDetailsBusiness;
 
 
-        public AgroConfigurationController(IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister,IRawMaterialTrack rawMaterialTrack,IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo,IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails,IPRawMaterialStockInfo pRawMaterialStockInfo,IPRawMaterialStockIDetails pRawMaterialStockIDetails,IAgroUnitInfo agroUnitInfo,IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness)
+        public AgroConfigurationController(IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister,IRawMaterialTrack rawMaterialTrack,IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo,IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails,IPRawMaterialStockInfo pRawMaterialStockInfo,IPRawMaterialStockIDetails pRawMaterialStockIDetails,IAgroUnitInfo agroUnitInfo,IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness)
 
 
 
@@ -109,6 +110,7 @@ namespace ERPWeb.Controllers
             this._finishGoodProductionDetailsBusiness = finishGoodProductionDetailsBusiness;
             this._appUserBusiness = appUserBusiness;
             this._rawMaterialRequisitionInfoBusiness = rawMaterialRequisitionInfoBusiness;
+            this._rawMaterialRequisitionDetailsBusiness = rawMaterialRequisitionDetailsBusiness;
         }
         // GET: AgroConfiguration
 
@@ -2505,17 +2507,51 @@ namespace ERPWeb.Controllers
 
 
 
-        public ActionResult GetRequisition( string flag)
+        public ActionResult GetRequisition( string flag, string RequisitonCode, long? infoId,  string status, string fdate, string tdate)
         {
             if(string.IsNullOrEmpty(flag))
             {
                
                 return View();
             }
+            else if (!string.IsNullOrEmpty(flag) && flag=="Details" && infoId>0 )
+            {
+                var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+                {
+                    RawMaterialId = d.RawMaterialId,
+                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId,User.OrgId).RawMaterialName,
+                    RawMaterialRequisitionInfoId=d.RawMaterialRequisitionInfoId,
+                    RequisitionQuantity=d.RequisitionQuantity,
+                    IssueQuantity=d.IssueQuantity,
+                    Status=d.Status,
+                    Remarks=d.Remarks,
+                    //EntryDate=d.EntryDate,
+                    UnitID=d.UnitID,
+                    UnitName=_agroUnitInfo.GetAgroInfoById(d.UnitID,User.OrgId).UnitName
 
-            List<RawMaterialRequisitionInfoDTO> rawMaterialRequisitionInfoDTOs = new List<RawMaterialRequisitionInfoDTO>();
+                }).ToList();
+
+                List<RawMaterialRequisitionDetailsViewModel> rawMaterialRequisitionDetailsViewModel = new List<RawMaterialRequisitionDetailsViewModel>();
+                AutoMapper.Mapper.Map(dto, rawMaterialRequisitionDetailsViewModel);
+                return PartialView("_GetRequisitionDetails", rawMaterialRequisitionDetailsViewModel);
+
+
+            }
+            
+            IEnumerable<RawMaterialRequisitionInfoDTO> rawMaterialRequisitionInfoDTO = _rawMaterialRequisitionInfoBusiness.GetAllRawMaterialRequisitionInfos(RequisitonCode, status, fdate, tdate, User.OrgId).Select(r => new RawMaterialRequisitionInfoDTO {
+                RawMaterialRequisitionInfoId = r.RawMaterialRequisitionInfoId,
+                RawMaterialRequisitionCode = r.RawMaterialRequisitionCode,
+                Status = r.Status,
+                Remarks = r.Remarks,
+                EntryDate = r.EntryDate,
+                EntryUserId = r.EntryUserId,
+                UpdateDate = r.UpdateDate,
+                UpdateUserId = r.UpdateUserId,
+ 
+            }).ToList();
+  
             List<RawMaterialRequisitionInfoViewModel> rawMaterialRequisitionInfoViewModels = new List<RawMaterialRequisitionInfoViewModel>();
-            AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTOs, rawMaterialRequisitionInfoViewModels);
+            AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
             return PartialView("_GetRequisition", rawMaterialRequisitionInfoViewModels);
         }
         [HttpGet]
@@ -2530,15 +2566,21 @@ namespace ERPWeb.Controllers
             return View();
         }
 
+        public ActionResult UpdateRequistion(string flag,long infoId)
+        {
+
+            return View();
+        }
+
         [HttpPost]
-        public ActionResult SaveRequisition(RawMaterialRequisitionInfoViewModel model)
+        public ActionResult SaveRequisition(RawMaterialRequisitionInfoViewModel info)
         {
 
             bool IsSuccess = false;
             if (ModelState.IsValid)
             {
                 RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO = new RawMaterialRequisitionInfoDTO();
-                AutoMapper.Mapper.Map(model, rawMaterialRequisitionInfoDTO);
+                AutoMapper.Mapper.Map(info, rawMaterialRequisitionInfoDTO);
               IsSuccess=  _rawMaterialRequisitionInfoBusiness.SaveRawMaterialRequisition(rawMaterialRequisitionInfoDTO,User.UserId,User.OrgId);
 
             }
