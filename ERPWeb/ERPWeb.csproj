@@ -3224,7 +3224,13 @@
     <Content Include="Views\AgroConfiguration\UpdateRequistion.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRequisitionDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\GetProductwisesalesReport.cshtml" />
+
     <Content Include="Views\AgroConfiguration\_GetRequistionDetailsbyInfoId.cshtml" />
+
+
+    <Content Include="Views\AgroConfiguration\_ReturnDetails.cshtml" />
+
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -11,7 +11,14 @@ using System.Threading.Tasks;
 namespace ERPDAL.AgricultureDAL
 {
 
+    public class SalesReturnRepository : AgricultureBaseRepository<SalesReturn>
+    {
+        public SalesReturnRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
 
+    }
+
+
+    //e
     public class SalesPaymentRegisterRepository : AgricultureBaseRepository<SalesPaymentRegister>
     {
         public SalesPaymentRegisterRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }

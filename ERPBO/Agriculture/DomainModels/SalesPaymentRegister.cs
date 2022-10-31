@@ -19,6 +19,9 @@ namespace ERPBO.Agriculture.DomainModels
         public long ProductSalesInfoId { get; set; }//foregin key
         public long? EntryUserId { get; set; }
 
-        
+        public string PaymentMode { get; set; }
+        public string AccounrNumber { get; set; }
+
+
     }
 }

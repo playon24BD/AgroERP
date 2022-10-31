@@ -48,21 +48,7 @@
                                     </div>
                                     <div class="card-body text-sm">
                                         <div class="row" style="margin-top:-15px">
-                                            @*<div class="col-md-3">
-                                                    <label for="ddlRawmaterialName" class="col-form-label">Raw material Name</label>
-                                                    @Html.DropDownList("ddlRawmaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawmaterialName, "--Select Raw material Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label for="ddlReturnType" class="control-label">Return Type</label>
-                                                    <select id="ddlReturnType" class="form-control form-control-sm" readonly>
-                                                        <option value="">Select Return Type</option>
-                                                        <option value="Good">Good</option>
-                                                        <option value="Damage">Damage</option>
-                                                    </select>
-                                                </div>*@
-                                            @*<div class="col-md-2">
-                                                <h4>Search by:</h4>
-                                            </div>*@
+
                                             <div class="col-md-3 float-right">
                                                 <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
@@ -90,6 +76,36 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="PaymentDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title">Return Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+            <div class="modal-footer btn-default">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="Accept"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextZone">Appreved</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 @section scripts{
@@ -140,6 +156,77 @@
             });
             //pageNo = 1;
         }
+
+
+
+        $(document).on('click', 'a.data-edit-item-Return', function (e) {
+            e.preventDefault();
+            debugger;
+            $("#dataContainer2").empty();
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+            if (true) {
+                var data = { flag: "Detail", id: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/RawMaterialReturnList', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res);
+                        $("#PaymentDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+
+
+
+        //update
+
+
+        $("#Accept").click(function (e) {
+            debugger
+            e.preventDefault();
+            if (true) {
+
+                        debugger;
+
+                        var details = [];
+                        details.length = 0;
+
+                $.each($("#tblReturnItems tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+                                ReturnRawMaterialId: tds.eq(3).html()
+                            });
+                        })
+
+
+                        console.log(details);
+                        var data = JSON.stringify({ details: details });
+                       
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/AcceptRawMaterialReturnInfo', data , getToken())).then(function (res, status)
+                        {
+                            if (res === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("RawMaterialReturnList")');
+                                }, 1000);
+                               
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+                function redirectPage(page) {
+                    window.location.replace(page);
+                }
+            }
+        })
 
     </script>
 

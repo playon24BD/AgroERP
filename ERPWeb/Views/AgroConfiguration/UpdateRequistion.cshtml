@@ -2,6 +2,7 @@
 @model ERPBO.Agriculture.ViewModels.RawMaterialRequisitionInfoViewModel
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "UpdateRequistion";
 }
 <div class="row" style="margin-top:-15px">
@@ -82,4 +83,71 @@
         </div>
     </div>
 </div>
+@section scripts{
+    <script type="text/javascript">
+        var ddlRawMaterial = $("#ddlRawMaterial");
+        var hdrawMaterialRequisitionInfoId = $("#hdrawMaterialRequisitionInfoId");
+        var numRequisitonQuantity = $("#numRequisitonQuantity");
+        var ddlAction = $("#ddlAction");
+        var txtRemarks = $("#txtRemarks");
+        var txtUnitName = $("#txtUnitName");
+        var hdUnitId = $("#hdUnitId");
+        var rawMaterialList = [];
+        var searchByAny = $("#searchByAny");
+        var searchByAnyy = $("#searchByAnyy");
+        var RawMaterialStockQty = $("#RawMaterialStockQty");
+
+
+
+         $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0) };
+            var details = [];
+
+            $.each($("#tblRawMaterialRequisiton tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+                    RawMaterialIssueStockDetailId: 0,
+                    RawMaterialId: tds.eq(6).html(),
+                    UnitID: tds.eq(7).html(),
+                    RequisitionQuantity: tds.eq(3).html(),
+                    Remarks: tds.eq(4).html(),
+                });
+            })
+
+           info.rawMaterialRequisitionDetailsDTO = details;
+            var data = JSON.stringify({ info });
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
+            ).then(function (res, status) {
+                            if (res === true) {
+                         
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetRequisition")');
+                                }, 1000);
+              
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+
+
+
+
+        })
+
+
+    </script>
+    
+    
+    
+}
+
+
+
 

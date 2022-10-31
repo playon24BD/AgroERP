@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.ReturnRawMaterialViewModel>
 
 @{
-    ViewBag.Title = "List of Rerurn RawMaterial";
+    ViewBag.Title = "List of Retrurn RawMaterial Pending List";
     var SL = 0;
 }
 <div class="row">
@@ -12,15 +12,10 @@
                     <th style="vertical-align:middle">#SL</th>
                     <th style="vertical-align:middle" class="hide"></th>
                     <th style="vertical-align:middle" class="hide"></th>
-                    @*<th style="vertical-align:middle" class="hide"></th>*@
                     <th style="vertical-align:middle">RawMaterialName</th>
                     <th style="vertical-align:middle">UnitName</th>
                     <th style="vertical-align:middle">Quantity</th>
-                    <th style="vertical-align:middle">ReturnType</th>
-                    <th style="vertical-align:middle">Status</th>
-                    <th style="vertical-align:middle">Return Date</th>
-                    @*<th style="vertical-align:middle">Etry User</th>*@
-                    @*<th style="vertical-align:middle">Action</th>*@
+                    <th style="vertical-align:middle">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,17 +27,12 @@
                         <td class="text-center text-bold">@SL</td>
                         <td class="hide">@item.RawMaterialId</td>
                         <td class="hide">@item.UnitId</td>
-                        @*<td class="hide">@item.OrganizationId</td>*@
                         <td class="text-center">@item.RawMaterialName</td>
                         <td class="text-center">@item.UnitName</td>
-                        <td class="text-center">@item.Quantity</td>
-                        <td class="text-center">@item.ReturnType</td>
-                        <td class="text-center">@item.Status</td>
-                        <td class="text-center">@item.EntryDate</td>
-                        @*<td class="text-center">@item.UserName</td>*@
-                        @*<td class="text-center">
-                            <a href="#" class="btn btn-warning btn-sm data-edit-item-Region" style="line-height:1" data-edit-item-Region="@item.RegionId"><i class="fa fa-pen"></i> Edit</a>
-                        </td>*@
+                        <td class="text-center">@item.TQuantity</td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-warning btn-sm data-edit-item-Return" style="line-height:1" data-edit-item-Return="@item.RawMaterialId"><i class="fa fa-pen"></i> Approve</a>
+                        </td>
                     </tr>
                 }
 
