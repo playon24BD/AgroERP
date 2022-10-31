@@ -403,6 +403,109 @@ on TE.TerritoryId=ST.TerritoryId
             return query;
         }
 
+        public IEnumerable<InvoiceWiseSalesReport> GetInvoiceWiseSalesReport(string fromDate, string toDate)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<InvoiceWiseSalesReport>(QueryForInvoiceWiseSalesReport(fromDate, toDate));
+        }
+        public string QueryForInvoiceWiseSalesReport(string fromDate,string toDate)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+
+           
+           
+           
+            if (!string.IsNullOrEmpty(fromDate))
+            {
+                param += string.Format(@" and fromDate = '{0}'", fromDate);
+            }
+            if (!string.IsNullOrEmpty(toDate))
+            {
+                param += string.Format(@" and toDate = '{0}'", toDate);
+            }
+
+            query = string.Format(@"
+
+--select * from tblProductSalesPaymentHistory
+
+
+select DISTINCT 
+AU.FullName,
+ST.StockiestName,
+TE.TerritoryName,
+AU.Address,
+AU.MobileNo,
+sales.InvoiceNo,
+CONVERT(date,sales.InvoiceDate) as InvoiceDate,
+sales.ChallanNo,
+CONVERT(date,sales.ChallanDate) as ChallanDate,
+sales.Depot,
+sales.VehicleType,
+sales.VehicleNumber,
+sales.DriverName,
+sales.DeliveryPlace,
+sales.Do_ADO_DA,
+sales.DoADO_Name,
+sales.PaymentMode,
+
+ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfos] Z where Z.ZoneId=sales.ZoneId),
+
+DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
+
+RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
+
+AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
+
+salesD.ProductSalesInfoId,
+salesD.FinishGoodProductInfoId,
+FGPN.FinishGoodProductName,
+PH.PaymentAmount,
+PH.PaymentDate,
+Ph.Remarks,
+--count(PH.ProductSalesInfoId),
+salesD.Quanity,
+salesD.Price,
+salesD.MeasurementSize,
+--salesD.Discount 'DiscountPercent',
+
+(select salesD.Discount/100.0) as 'DiscountPercent',
+
+salesD.DiscountTk as 'DiscountAmount',
+sales.PaidAmount,
+sales.DueAmount,
+(salesD.Price*salesD.Quanity) AS Total,
+sales.TotalAmount
+
+
+
+
+
+from [Agriculture].[dbo].[tblProductSalesInfo] sales
+INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
+on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
+
+INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
+
+LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
+on AU.UserId=sales.UserId
+LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
+on ST.StockiestId=AU.StockiestId
+LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
+on TE.TerritoryId=ST.TerritoryId
+inner join [Agriculture].[dbo].[tblProductSalesPaymentHistory] PH
+on sales.ProductSalesInfoId=PH.ProductSalesInfoId
+
+
+--select Discount,
+--(select Discount/100.0) as 'DiscountPercent'
+-- from tblProductSalesDetails
+-- group by Discount
+
+                 Where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+        }
 
     }
 }

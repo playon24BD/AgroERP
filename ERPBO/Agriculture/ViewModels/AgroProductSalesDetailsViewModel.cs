@@ -22,5 +22,7 @@ namespace ERPBO.Agriculture.ViewModels
         public long? UpdateUserId { get; set; }
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
+        public string MeasurementName { get; set; }
+        public string FinishGoodProductName { get; set; }
     }
 }

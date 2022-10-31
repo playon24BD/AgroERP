@@ -40,5 +40,6 @@ namespace ERPBO.Agriculture.ViewModels
 
         public double PaidAmount { get; set; }
         public double DueAmount { get; set; }
+        public string MeasurementName { get; set; }
     }
 }
