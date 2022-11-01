@@ -16,13 +16,15 @@ namespace ERPBLL.Agriculture
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly IRawMaterialRequisitionDetailsBusiness _rawMaterialRequisitionDetailsBusiness;
         private readonly RawMaterialRequisitionInfoBusinessRepository _rawMaterialRequisitionInfoRepoBusiness;
-        public RawMaterialRequisitionInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness)
+        private readonly IMRawMaterialIssueStockInfo _mRawMaterialIssueStockInfo;
+        public RawMaterialRequisitionInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             
             this._rawMaterialRequisitionInfoRepoBusiness = new RawMaterialRequisitionInfoBusinessRepository(this._agricultureUnitOfWork);
 
             this._rawMaterialRequisitionDetailsBusiness = rawMaterialRequisitionDetailsBusiness;
+            this._mRawMaterialIssueStockInfo = mRawMaterialIssueStockInfo;
         }
         public RawMaterialRequisitionInfo GetRawMaterialRequisitionInfobyId(long infoId, long orgId)
         {
@@ -158,6 +160,12 @@ namespace ERPBLL.Agriculture
                         if (rawMaterialRequisitionInfoDTO.flag == "RejectOrReceived")
                         {
                             isSuccess = _rawMaterialRequisitionDetailsBusiness.UpdateRawMaterialRequisitionDetailsbyProduction(rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO, rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId, userId, orgId);
+
+                            if (isSuccess && rawMaterialRequisitionInfoDTO.Status=="Received")
+                            {
+                                _mRawMaterialIssueStockInfo.SaveRawMaterialIssueStockWithRequistion(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO, userId, orgId);
+                            }
+   
 
                         }
                         else

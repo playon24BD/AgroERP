@@ -9,4 +9,4 @@ Add-Migration:
  Update-Database:
  Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
 
-  Add-Migration 'datedelReturnsale' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
+  Add-Migration 'msizelReturnsale' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration

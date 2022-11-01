@@ -62,6 +62,7 @@ namespace ERPBLL.Agriculture
                 MRawMaterialIssueStockInfo model = new MRawMaterialIssueStockInfo
                 {
                     ProductBatchCode = BatchCode,
+                    type = "NonRequisiton",
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
                     OrganizationId = orgId,
@@ -79,7 +80,7 @@ namespace ERPBLL.Agriculture
                         RawMaterialId = item.RawMaterialId,
                         Quantity = item.Quantity,
                         UnitID = item.UnitID,
-                        IssueStatus = "StockIn",
+                        IssueStatus = "StockIn",                  
                         EntryDate = DateTime.Now,
 
                     };
@@ -91,6 +92,71 @@ namespace ERPBLL.Agriculture
                     {
                         RawMaterialId = item.RawMaterialId,
                         Quantity = item.Quantity,
+                        IssueDate = DateTime.Now,
+                        EntryDate = DateTime.Now,
+                        IssueStatus = "StockOut",
+                        type="NonRequisiton",
+                        EntryUserId = userId
+                    };
+                    modeltrk.Add(rawMaterialTrack);
+
+                }
+
+                model.MRawMaterialIssueStockDetails = modelDetails;
+
+                _mRawMaterialIssueStockInfoRepository.Insert(model);
+                IsSuccess = _mRawMaterialIssueStockInfoRepository.Save();
+
+                _rawMaterialTrackInfoRepository.InsertAll(modeltrk);
+                IsSuccess = _rawMaterialTrackInfoRepository.Save();
+
+            }
+
+            return IsSuccess;
+        }
+
+        public bool SaveRawMaterialIssueStockWithRequistion(RawMaterialRequisitionInfoDTO info, List<RawMaterialRequisitionDetailsDTO> details, long userId, long orgId)
+        {
+            bool IsSuccess = false;
+            var BatchCode = "BPIS-" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("yy") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+
+
+            if (info.RawMaterialRequisitionInfoId > 0)
+            {
+                MRawMaterialIssueStockInfo model = new MRawMaterialIssueStockInfo
+                {
+                    ProductBatchCode = BatchCode,
+                    type="Requistion",
+                    EntryDate = DateTime.Now,
+                    EntryUserId = userId,
+                    OrganizationId = orgId,
+                    Status = "Active",
+
+                };
+                List<MRawMaterialIssueStockDetails> modelDetails = new List<MRawMaterialIssueStockDetails>();
+                List<RawMaterialTrack> modeltrk = new List<RawMaterialTrack>();//RawMaterialTrackInfo table update
+
+                foreach (var item in details)
+                {
+                    MRawMaterialIssueStockDetails materialIssueStockDetails = new MRawMaterialIssueStockDetails()
+                    {
+
+                        RawMaterialId = item.RawMaterialId,
+                        Quantity = item.IssueQuantity,
+                        UnitID = item.UnitID,
+                        IssueStatus = "StockIn",
+                        EntryDate = DateTime.Now,
+
+                    };
+                    modelDetails.Add(materialIssueStockDetails);
+
+
+                    //RawMaterialTrackInfo table update
+                    RawMaterialTrack rawMaterialTrack = new RawMaterialTrack()
+                    {
+                        RawMaterialId = item.RawMaterialId,
+                        Quantity = item.IssueQuantity,
+                        type = "Requistion",
                         IssueDate = DateTime.Now,
                         EntryDate = DateTime.Now,
                         IssueStatus = "StockOut",
@@ -109,12 +175,7 @@ namespace ERPBLL.Agriculture
                 IsSuccess = _rawMaterialTrackInfoRepository.Save();
 
             }
-            //else
-            //{
 
-            //    IsSuccess = _fDetail.updateFinishGoodRecipDetails(info, details, userId, orgId);
-
-            //}
             return IsSuccess;
         }
 
