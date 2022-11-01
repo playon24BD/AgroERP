@@ -12,7 +12,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAgroProductSalesInfoBusiness
     {
-        IEnumerable<InvoiceWiseSalesReport> GetInvoiceWiseSalesReport( string fromDate,string toDate);
+        IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport( string fromDate,string toDate);
         IEnumerable<ProductSalesDataReport> GetProductSalesData(string InvoiceNo);
 
         IEnumerable<ProductSalesDataChallanReport> GetProductSalesChallanData(string ChallanNo);

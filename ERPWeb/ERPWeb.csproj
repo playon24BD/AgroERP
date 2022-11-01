@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -2645,16 +2646,16 @@
     <Content Include="Reports\DataSets\dsAgroSalesReport.xss">
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Content>
-    <Content Include="Reports\DataSets\dsInvoiceWiseSalesReport.xsc">
-      <DependentUpon>dsInvoiceWiseSalesReport.xsd</DependentUpon>
+    <Content Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsc">
+      <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
     </Content>
-    <None Include="Reports\DataSets\dsInvoiceWiseSalesReport.xsd">
+    <None Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsInvoiceWiseSalesReport.Designer.cs</LastGenOutput>
+      <LastGenOutput>dsInvoiceWiseCollectionSalesReport.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Reports\DataSets\dsInvoiceWiseSalesReport.xss">
-      <DependentUpon>dsInvoiceWiseSalesReport.xsd</DependentUpon>
+    <Content Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xss">
+      <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
@@ -3082,10 +3083,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Reports\DataSets\dsInvoiceWiseSalesReport.Designer.cs">
+    <Compile Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>dsInvoiceWiseSalesReport.xsd</DependentUpon>
+      <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -3237,13 +3238,13 @@
     <Content Include="Views\AgroConfiguration\_PaymentHistoryDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRequisition.cshtml" />
     <Content Include="Views\AgroConfiguration\SaveRequisition.cshtml" />
-
     <Content Include="Views\AgroConfiguration\UpdateRequistion.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRequisitionDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\GetProductwisesalesReport.cshtml" />
     <Content Include="Views\AgroConfiguration\_ReturnDetails.cshtml" />
-
     <Content Include="Views\AgroConfiguration\GetInvoiceWiseSales.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetRequistionDetailsbyInfoId.cshtml" />
+    <Content Include="Views\AgroConfiguration\_ReturnDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
