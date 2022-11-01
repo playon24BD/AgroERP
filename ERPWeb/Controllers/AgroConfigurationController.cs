@@ -2801,6 +2801,7 @@ namespace ERPWeb.Controllers
         #region AgroReport
         public ActionResult GetProductwisesalesReport()
         {
+<<<<<<< Updated upstream
 
             return View();
         }
@@ -2846,6 +2847,55 @@ namespace ERPWeb.Controllers
 
 
 
+=======
+            return View();
+        }
+
+        public ActionResult GetProductwisesalesReportDownload( string fromDate, string toDate, string rptType)
+        {
+            var data = _agroProductSalesInfoBusiness.GetProductwisesalesReportDownloadRpt(fromDate, toDate);
+            LocalReport localReport = new LocalReport();
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/ProductwisesalesReportDownloadsReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+                ReportDataSource dataSource1 = new ReportDataSource("dsProductwisesalesReportDownloadReport", data);
+                localReport.DataSources.Clear();
+                localReport.DataSources.Add(dataSource1);
+                localReport.Refresh();
+                localReport.DisplayName = "Product Wise Sales Statement";
+
+                string mimeType;
+                string encoding;
+                string fileNameExtension;
+                Warning[] warnings;
+                string[] streams;
+                byte[] renderedBytes;
+                string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+                renderedBytes = localReport.Render(
+                    rptType,
+                     deviceInfo,
+                    out mimeType,
+                   
+                    out encoding,
+                    out fileNameExtension,
+                    out streams,
+                    out warnings);
+                return File(renderedBytes, mimeType);
+            }
+            return new EmptyResult();
+        }
+>>>>>>> Stashed changes
         #endregion
 
         #region  SalesReturn

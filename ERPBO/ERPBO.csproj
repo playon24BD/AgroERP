@@ -150,6 +150,7 @@
     <Compile Include="Agriculture\ReportModels\InvoiceWiseCollectionSalesReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductSalesDataChallanReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductSalesDataReport.cs" />
+    <Compile Include="Agriculture\ReportModels\ProductWiseSalesStementReport.cs" />
     <Compile Include="Agriculture\ViewModels\AgroProductSalesDetailsViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AgroProductSalesInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AgroUnitInfoViewModel.cs" />

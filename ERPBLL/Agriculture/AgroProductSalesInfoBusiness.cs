@@ -403,6 +403,7 @@ on TE.TerritoryId=ST.TerritoryId
             return query;
         }
 
+<<<<<<< Updated upstream
         public IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport(string fromDate, string toDate)
         {
             return _agricultureUnitOfWork.Db.Database.SqlQuery<InvoiceWiseCollectionSalesReport>(QueryForInvoiceWiseSalesReport(fromDate, toDate));
@@ -476,6 +477,57 @@ on TE.TerritoryId=ST.TerritoryId
                  where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
+=======
+        public IEnumerable<ProductWiseSalesStementReport> GetProductwisesalesReportDownloadRpt(string fromDate, string toDate)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductWiseSalesStementReport>(QueryProductWiseSalesStementReport(fromDate, toDate));
+        }
 
+        private string QueryProductWiseSalesStementReport(string fromDate, string toDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+>>>>>>> Stashed changes
+
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", tDate);
+            }
+
+            query = string.Format(@"select DISTINCT 
+              sales.EntryDate,
+              FGPN.FinishGoodProductName,
+              M.MeasurementName AS PackSize,
+              salesD.Quanity AS QtyCTN,
+              M.UnitKG,
+              salesD.Quanity*M.UnitKG AS QtyKG,
+              
+              (salesD.Price*salesD.Quanity) AS Total,
+              sales.TotalAmount
+              
+              
+              
+              from [Agriculture].[dbo].[tblProductSalesInfo] sales
+              INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
+              on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
+              INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+              on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
+              INNER JOIN [Agriculture].[dbo].[tblMeasurement] M
+              on salesD.MeasurementId=M.MeasurementId
+              Where 1=1{0}", Utility.ParamChecker(param));
+                          return query;
+        }
     }
 }
