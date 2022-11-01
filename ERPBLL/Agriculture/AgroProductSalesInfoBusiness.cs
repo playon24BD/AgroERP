@@ -487,6 +487,7 @@ on TE.TerritoryId=ST.TerritoryId
             string query = string.Empty;
             string param = string.Empty;
 
+
             if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
             {
                 string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");

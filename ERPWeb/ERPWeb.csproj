@@ -2646,7 +2646,6 @@
     <Content Include="Reports\DataSets\dsAgroSalesReport.xss">
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Content>
-
     <Content Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsc">
       <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
     </Content>
@@ -3273,6 +3272,10 @@
     <Content Include="Views\AgroConfiguration\SalesReturn.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAgroSalesReturn.cshtml" />
     <Content Include="Views\AgroConfiguration\SalesReturnList.cshtml" />
+    <Content Include="Views\_SalesReturnListview.cshtml" />
+    <Content Include="Views\AgroConfiguration\_SalesReturnListview.cshtml" />
+    <Content Include="Views\AgroConfiguration\RawMaterialReturnAllList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_ALLRawMaterialReturnListview.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

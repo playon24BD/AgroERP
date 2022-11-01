@@ -49,14 +49,20 @@ StockIN=(SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
 where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),
 StockOut=(SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
 where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),
+
+StockINReturn=(SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where rr.ReturnType ='Good' and rr.RawMaterialId=RM.RawMaterialId),
+
 CurrentStock=(SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
 where t.IssueStatus ='StockIn'and t.RawMaterialId=RM.RawMaterialId)-(SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
-where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId)
+where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId)+(SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where rr.ReturnType ='Good' and rr.RawMaterialId=RM.RawMaterialId)
 
 FROM  
 tblRawMaterialTrackInfo t 
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
+inner join tblReturnRawMaterial rr on RM.RawMaterialId=rr.RawMaterialId
       where 1=1  {0}",
             Utility.ParamChecker(param));
             return query;

@@ -31,5 +31,6 @@ namespace ERPBO.Agriculture.DTOModels
 
 
         public string MeasurementSize { get; set; }
+        public string FinishGoodProductName { get; set; }
     }
 }
