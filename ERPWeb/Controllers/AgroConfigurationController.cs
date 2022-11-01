@@ -2801,7 +2801,7 @@ namespace ERPWeb.Controllers
         #region AgroReport
         public ActionResult GetProductwisesalesReport()
         {
-<<<<<<< Updated upstream
+
 
             return View();
         }
@@ -2832,10 +2832,20 @@ namespace ERPWeb.Controllers
             string fileNameExtension;
             Warning[] warnings;
             string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
 
             var renderedBytes = localReport.Render(
                 reportType,
-                "",
+                deviceInfo,
                 out mimeType,
                 out encoding,
                 out fileNameExtension,
@@ -2847,9 +2857,6 @@ namespace ERPWeb.Controllers
 
 
 
-=======
-            return View();
-        }
 
         public ActionResult GetProductwisesalesReportDownload( string fromDate, string toDate, string rptType)
         {
@@ -2895,7 +2902,6 @@ namespace ERPWeb.Controllers
             }
             return new EmptyResult();
         }
->>>>>>> Stashed changes
         #endregion
 
         #region  SalesReturn

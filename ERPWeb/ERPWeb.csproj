@@ -2646,7 +2646,7 @@
     <Content Include="Reports\DataSets\dsAgroSalesReport.xss">
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Content>
-<<<<<<< Updated upstream
+
     <Content Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsc">
       <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
     </Content>
@@ -2657,7 +2657,7 @@
     </None>
     <Content Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xss">
       <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
-=======
+    </Content>
     <Content Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.xsc">
       <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
     </Content>
@@ -2668,7 +2668,6 @@
     </None>
     <Content Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.xss">
       <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
->>>>>>> Stashed changes
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
@@ -3096,17 +3095,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Compile>
-<<<<<<< Updated upstream
+
     <Compile Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
-=======
+    </Compile>
     <Compile Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
->>>>>>> Stashed changes
     </Compile>
   </ItemGroup>
   <ItemGroup>

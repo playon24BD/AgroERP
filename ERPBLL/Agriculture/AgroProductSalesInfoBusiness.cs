@@ -403,7 +403,6 @@ on TE.TerritoryId=ST.TerritoryId
             return query;
         }
 
-<<<<<<< Updated upstream
         public IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport(string fromDate, string toDate)
         {
             return _agricultureUnitOfWork.Db.Database.SqlQuery<InvoiceWiseCollectionSalesReport>(QueryForInvoiceWiseSalesReport(fromDate, toDate));
@@ -477,7 +476,7 @@ on TE.TerritoryId=ST.TerritoryId
                  where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
-=======
+
         public IEnumerable<ProductWiseSalesStementReport> GetProductwisesalesReportDownloadRpt(string fromDate, string toDate)
         {
             return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductWiseSalesStementReport>(QueryProductWiseSalesStementReport(fromDate, toDate));
@@ -487,7 +486,6 @@ on TE.TerritoryId=ST.TerritoryId
         {
             string query = string.Empty;
             string param = string.Empty;
->>>>>>> Stashed changes
 
             if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
             {
