@@ -14,5 +14,6 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<RawMaterialRequisitionDetails> GetRawMaterialRequisitionDetailsbyInfo(long InfoId,long orgId);
         RawMaterialRequisitionDetails GetRawMaterialRequisitionDetailsbyId(long DetailsId, long orgId);
         bool SaveRawMaterialRequisitionDetails(List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO ,long infoId,long userId, long orgId);
+      bool  UpdateRawMaterialRequisitionDetails(List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO, long infoId, long userId, long orgId);
     }
 }

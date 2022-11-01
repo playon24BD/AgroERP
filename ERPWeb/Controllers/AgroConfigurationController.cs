@@ -2594,6 +2594,8 @@ namespace ERPWeb.Controllers
             AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
             return PartialView("_GetRequisition", rawMaterialRequisitionInfoViewModels);
         }
+
+
         [HttpGet]
         public ActionResult SaveRequisition(string flag)
         {
@@ -2628,6 +2630,29 @@ namespace ERPWeb.Controllers
             return PartialView("_GetRequistionDetailsbyInfoId", rawMaterialRequisitionDetailsViewModel);
         }
 
+        [HttpGet]
+        public ActionResult GetRequistionDetailsbyInfoIdForProduction(long infoId)
+        {
+            var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+            {
+                RawMaterialId = d.RawMaterialId,
+                RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
+                RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
+                RequisitionQuantity = d.RequisitionQuantity,
+                IssueQuantity = d.IssueQuantity,
+                Status = d.Status,
+                Remarks = d.Remarks,
+                //EntryDate=d.EntryDate,
+                UnitID = d.UnitID,
+                UnitName = _agroUnitInfo.GetAgroInfoById(d.UnitID, User.OrgId).UnitName
+
+            }).ToList();
+
+            List<RawMaterialRequisitionDetailsViewModel> rawMaterialRequisitionDetailsViewModel = new List<RawMaterialRequisitionDetailsViewModel>();
+            AutoMapper.Mapper.Map(dto, rawMaterialRequisitionDetailsViewModel);
+            return PartialView("_GetRequistionDetailsbyInfoIdForProduction", rawMaterialRequisitionDetailsViewModel);
+        }
+
         public ActionResult UpdateRequistion(string flag,long infoId)
         {
 
@@ -2650,10 +2675,33 @@ namespace ERPWeb.Controllers
      
             return View(rawMaterialRequisitionInfoViewModels);
         }
+        public ActionResult ReceivedOrCanelIssuedRawMaterial(string flag, long infoId)
+        {
+
+            var rawMaterialRequisitionInfo = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfobyId(infoId, User.OrgId);
+
+            RawMaterialRequisitionInfoViewModel rawMaterialRequisitionInfoViewModels = new RawMaterialRequisitionInfoViewModel()
+            {
+
+                RawMaterialRequisitionInfoId = rawMaterialRequisitionInfo.RawMaterialRequisitionInfoId,
+                RawMaterialRequisitionCode = rawMaterialRequisitionInfo.RawMaterialRequisitionCode,
+                Status = rawMaterialRequisitionInfo.Status,
+                Type = rawMaterialRequisitionInfo.Type,
+                Remarks = rawMaterialRequisitionInfo.Remarks,
+                EntryDate = rawMaterialRequisitionInfo.EntryDate,
+                EntryUserId = rawMaterialRequisitionInfo.EntryUserId,
+                UpdateDate = rawMaterialRequisitionInfo.UpdateDate,
+                UpdateUserId = rawMaterialRequisitionInfo.UpdateUserId,
+
+            };
+
+            return View(rawMaterialRequisitionInfoViewModels);
+        }
 
         [HttpPost]
         public ActionResult SaveRequisition(RawMaterialRequisitionInfoViewModel info)
         {
+
 
             bool IsSuccess = false;
             if (ModelState.IsValid)
@@ -2667,7 +2715,54 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
         }
 
+        public ActionResult GetRequisitionProduction(string flag, string RequisitonCode, long? infoId, string status, string fdate, string tdate)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
 
+                return View();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == "Details" && infoId > 0)
+            {
+                var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+                {
+                    RawMaterialId = d.RawMaterialId,
+                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
+                    RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
+                    RequisitionQuantity = d.RequisitionQuantity,
+                    IssueQuantity = d.IssueQuantity,
+                    Status = d.Status,
+                    Remarks = d.Remarks,
+                    //EntryDate=d.EntryDate,
+                    UnitID = d.UnitID,
+                    UnitName = _agroUnitInfo.GetAgroInfoById(d.UnitID, User.OrgId).UnitName
+
+                }).ToList();
+
+                List<RawMaterialRequisitionDetailsViewModel> rawMaterialRequisitionDetailsViewModel = new List<RawMaterialRequisitionDetailsViewModel>();
+                AutoMapper.Mapper.Map(dto, rawMaterialRequisitionDetailsViewModel);
+                return PartialView("_GetRequisitionDetails", rawMaterialRequisitionDetailsViewModel);
+
+
+            }
+
+            IEnumerable<RawMaterialRequisitionInfoDTO> rawMaterialRequisitionInfoDTO = _rawMaterialRequisitionInfoBusiness.GetAllRawMaterialRequisitionInfos(RequisitonCode, status, fdate, tdate, User.OrgId).Select(r => new RawMaterialRequisitionInfoDTO
+            {
+                RawMaterialRequisitionInfoId = r.RawMaterialRequisitionInfoId,
+                RawMaterialRequisitionCode = r.RawMaterialRequisitionCode,
+                Status = r.Status,
+                Remarks = r.Remarks,
+                EntryDate = r.EntryDate,
+                EntryUserId = r.EntryUserId,
+                UpdateDate = r.UpdateDate,
+                UpdateUserId = r.UpdateUserId,
+
+            }).ToList();
+
+            List<RawMaterialRequisitionInfoViewModel> rawMaterialRequisitionInfoViewModels = new List<RawMaterialRequisitionInfoViewModel>();
+            AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
+            return PartialView("_GetRequisitionProduction", rawMaterialRequisitionInfoViewModels);
+        }
 
 
         #endregion

@@ -5,7 +5,7 @@
     int sl = 0;
 }
 <div class="col-md-12">
-    <table class="table table-responsive-lg">
+    <table class="table table-responsive-lg"  id="tblRequisitonDetails">
         <thead>
             <tr class="text-sm btn-dark">
                 <th>#SL</th>
@@ -39,6 +39,10 @@
                 </td>
                 <td>@item.Status</td>
                 <td>@item.Remarks</td>
+                <td class="hide">@item.UnitID</td>
+                <td class="hide">@item.RawMaterialRequisitionInfoId</td>
+                <td class="hide">@item.RawMaterialRequisitionDetailsId</td>
+                <td class="hide">@item.RawMaterialId</td>
                 <td>@item.EntryDate</td>
 
 

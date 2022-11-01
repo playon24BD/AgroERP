@@ -43,10 +43,13 @@ namespace ERPBLL.Agriculture
             bool IsSuccess = false;
             if (rawMaterialRequisitionDetailsDTO.Count()>0 && infoId>0)
             {
+
               
               List< RawMaterialRequisitionDetails> requisitionDetailList = new List<RawMaterialRequisitionDetails>();
                 foreach (var requisitionMaterial in rawMaterialRequisitionDetailsDTO)
                 {
+
+
                     RawMaterialRequisitionDetails requisitionDetails = new RawMaterialRequisitionDetails
                     {
                         RawMaterialRequisitionInfoId = infoId,
@@ -69,6 +72,42 @@ namespace ERPBLL.Agriculture
                 {
                     _rawMaterialRequisitionDetailsBusinessRepository.InsertAll(requisitionDetailList);
                   IsSuccess=  _rawMaterialRequisitionDetailsBusinessRepository.Save();
+                }
+
+            }
+
+
+            return IsSuccess;
+        }
+
+
+        public bool UpdateRawMaterialRequisitionDetails(List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO, long infoId, long userId, long orgId)
+        {
+            bool IsSuccess = false;
+            if (rawMaterialRequisitionDetailsDTO.Count() > 0 && infoId > 0)
+            {
+
+
+                List<RawMaterialRequisitionDetails> issueDetailList = new List<RawMaterialRequisitionDetails>();
+                foreach (var issue in rawMaterialRequisitionDetailsDTO)
+                {
+
+
+                    var rawMaterialDetails = this.GetRawMaterialRequisitionDetailsbyId(issue.RawMaterialRequisitionDetailsId,orgId);
+                    if (issue.Status=="Pending")
+                    {
+                        rawMaterialDetails.IssueQuantity = issue.IssueQuantity;
+                    }
+  
+                    rawMaterialDetails.UpdateDate = DateTime.Now;
+                    rawMaterialDetails.UpdateUserId = userId;
+                    rawMaterialDetails.Status = issue.Status ?? "Send";
+                    issueDetailList.Add(rawMaterialDetails);
+                }
+                if (issueDetailList.Count() > 0)
+                {
+                    _rawMaterialRequisitionDetailsBusinessRepository.UpdateAll(issueDetailList);
+                    IsSuccess = _rawMaterialRequisitionDetailsBusinessRepository.Save();
                 }
 
             }

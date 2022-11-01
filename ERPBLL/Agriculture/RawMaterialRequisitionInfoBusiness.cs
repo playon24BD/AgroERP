@@ -109,7 +109,7 @@ namespace ERPBLL.Agriculture
                         //    id.RawMaterialRequisitionInfoId = requistionInfoId;
                         //}
                         //detailsDTOs.Add();
-                        _rawMaterialRequisitionDetailsBusiness.SaveRawMaterialRequisitionDetails(rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO,requistionInfoId,userId,orgId);
+                    isSuccess=    _rawMaterialRequisitionDetailsBusiness.SaveRawMaterialRequisitionDetails(rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO,requistionInfoId,userId,orgId);
 
                     }
 
@@ -119,6 +119,53 @@ namespace ERPBLL.Agriculture
 
 
             }
+            if (rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId>0)
+            {
+
+                var Info = this.GetRawMaterialRequisitionInfobyId(rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId,orgId);
+                if (rawMaterialRequisitionInfoDTO.flag== "AcceptOrReceived")
+                {
+                    Info.Remarks = "RFP";
+                    Info.Status = rawMaterialRequisitionInfoDTO.Status;
+                    Info.UpdateDate = DateTime.Now;
+                    Info.Type = "Requistion";
+                    Info.UpdateUserId = userId;
+                    _rawMaterialRequisitionInfoRepoBusiness.Update(Info);
+                    isSuccess = _rawMaterialRequisitionInfoRepoBusiness.Save();
+
+                }
+                else
+                {
+                    Info.Remarks = "SFW";
+                    Info.Status = "Send";
+                    Info.UpdateDate = DateTime.Now;
+                    Info.Type = "Requistion";
+                    Info.UpdateUserId = userId;
+                    _rawMaterialRequisitionInfoRepoBusiness.Update(Info);
+                    isSuccess = _rawMaterialRequisitionInfoRepoBusiness.Save();
+
+                }
+   
+
+
+
+
+                if (isSuccess)
+                {
+                   
+                    if (rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO.Count() > 0 && rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId > 0)
+                    {
+                    isSuccess=    _rawMaterialRequisitionDetailsBusiness.UpdateRawMaterialRequisitionDetails(rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO, rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId, userId, orgId);
+
+                    }
+
+
+
+                }
+
+
+            }
+
 
 
             return isSuccess;
