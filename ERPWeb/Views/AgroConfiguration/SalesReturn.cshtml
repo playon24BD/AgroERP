@@ -11,10 +11,18 @@
             <div class="card-header" style="text-align: center;">
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-3">
+
+                        <a href="/AgroConfiguration/SalesReturnList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
                         <h5 class="text-center text-bold">
                             Create Sales Return
                         </h5>
+                    </div>
+                    <div class="col-md-3">
                     </div>
                 </div>
 
@@ -136,6 +144,8 @@
                     ReturnPerUnitPrice: tds.eq(7).html(),
                     FinishGoodProductInfoId: tds.eq(8).html(),
                     MeasurementId: tds.eq(9).html(),
+                    MeasurementSize: tds.eq(3).html(),
+                    
 
                 });
             })
@@ -147,7 +157,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                        redirectPage('@Url.Action("SalesReturn")');
+                        redirectPage('@Url.Action("SalesReturnList")');
                     }, 1000);
                 }
                 else {

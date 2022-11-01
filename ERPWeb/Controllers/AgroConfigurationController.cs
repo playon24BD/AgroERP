@@ -2485,7 +2485,6 @@ namespace ERPWeb.Controllers
                 }).ToList();
                 
                 return PartialView("_ReturnDetails", details);
-
             }
 
 
@@ -2786,7 +2785,7 @@ namespace ERPWeb.Controllers
 
         #region  SalesReturn
 
-        public ActionResult SalesReturnList(string flag, long? id, string name)
+        public ActionResult SalesReturnList(string flag, long? id, string name, long? ProductId)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -2798,12 +2797,15 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
 
-                var dto = _returnRawMaterialBusiness.GetReturnRawMaterialInfos(name ?? null);
-                List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
+                var dto = _salesReturn.GetSalesReturns( ProductId ?? 0, name ?? null);
+
+                List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetReturnRawMaterial", viewModels);
+                return PartialView("_SalesReturnListview", viewModels);
 
             }
+
+
 
             return View();
         }
@@ -2812,7 +2814,6 @@ namespace ERPWeb.Controllers
 
         public ActionResult SalesReturn(long? id)
         {
-           // ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
 
             ViewBag.ddlInvoiceNo = _agroProductSalesInfoBusiness.GetAgroProductionSalesInfo(User.OrgId).Select(inv => new SelectListItem { Text = inv.InvoiceNo, Value = inv.ProductSalesInfoId.ToString() });
             return View();

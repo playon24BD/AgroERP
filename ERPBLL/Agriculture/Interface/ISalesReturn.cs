@@ -11,5 +11,9 @@ namespace ERPBLL.Agriculture.Interface
     {
 
         bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId);
+
+
+        IEnumerable<SalesReturnDTO> GetSalesReturns(long? ProductId, string name);
+
     }
 }
