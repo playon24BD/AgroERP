@@ -27,5 +27,8 @@ namespace ERPBO.Agriculture.ViewModels
         public DateTime? ReturnDate { get; set; }
         public DateTime? AdjustmentDate { get; set; }
         public long? EntryUserId { get; set; }
+
+
+        public string MeasurementSize { get; set; }
     }
 }

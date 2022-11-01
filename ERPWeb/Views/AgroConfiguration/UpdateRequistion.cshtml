@@ -95,6 +95,28 @@
         var searchByAnyy = $("#searchByAnyy");
         var RawMaterialStockQty = $("#RawMaterialStockQty");
         var hdfRequisitionCode = $("#hdfRequisitionCode");
+        var issueQty = $(".issueQty");
+
+
+        issueQty.on('change', function () {
+            var availableQty = $(this).parent().parent().find("td:eq(4)").text();
+            var IssueQuntity = $(this).val();
+            if (IssueQuntity <= availableQty) {
+
+             //   $(".error").addClass("hide");
+
+                console.log($(this).parent().children("span"));
+                $(this).parent().children("span").addClass("hide");
+            }
+            else {
+             //   $('.error').removeClass("hide");
+                $(this).parent().children("span").removeClass("hide");
+            }
+
+    
+        });
+
+        //$("#tblRequisitonDetails tbody tr").
 
 
 
@@ -113,9 +135,8 @@
                     IssueQuantity: tds.eq(4).children('input[type="number"]').val(),
                     Status: tds.eq(5).html(),
                     Remarks: tds.eq(6).html(),
-                    RawMaterialRequisitionInfoId: tds.eq(7).html(),
-                    RawMaterialRequisitionDetailsId: tds.eq(8).html(),
-                    UnitID: tds.eq(9).html(),
+                    RawMaterialRequisitionInfoId: tds.eq(8).html(),
+                    RawMaterialRequisitionDetailsId: tds.eq(9).html(),  
                     RawMaterialId: tds.eq(10).html(),
                 });
             })

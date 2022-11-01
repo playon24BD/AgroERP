@@ -2585,6 +2585,7 @@ namespace ERPWeb.Controllers
                     RequisitionQuantity=d.RequisitionQuantity,
                     IssueQuantity=d.IssueQuantity,
                     Status=d.Status,
+
                     Remarks=d.Remarks,
                     //EntryDate=d.EntryDate,
                     UnitID=d.UnitID,
@@ -2633,11 +2634,14 @@ namespace ERPWeb.Controllers
         {
             var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
             {
+                RawMaterialRequisitionDetailsId=d.RawMaterialRequisitionDetailsId,
                 RawMaterialId = d.RawMaterialId,
                 RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
                 RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
                 RequisitionQuantity = d.RequisitionQuantity,
                 IssueQuantity = d.IssueQuantity,
+                AvailableQty = _rawMaterialTrack.GetAllRawMaterialTruck().Where(x => x.RawMaterialId == d.RawMaterialId && x.IssueStatus == "StockIn").Sum(c => c.Quantity)- _rawMaterialTrack.GetAllRawMaterialTruck().Where(w => w.RawMaterialId == d.RawMaterialId && w.IssueStatus == "StockOut").Sum(o=>o.Quantity),
+               
                 Status = d.Status,
                 Remarks = d.Remarks,
                 //EntryDate=d.EntryDate,
@@ -2656,6 +2660,7 @@ namespace ERPWeb.Controllers
         {
             var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
             {
+                RawMaterialRequisitionDetailsId = d.RawMaterialRequisitionDetailsId,
                 RawMaterialId = d.RawMaterialId,
                 RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
                 RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
@@ -2852,6 +2857,15 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
 
                 return View();
+
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _returnRawMaterialBusiness.GetReturnRawMaterialInfos(name ?? null);
+                List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetReturnRawMaterial", viewModels);
 
             }
 

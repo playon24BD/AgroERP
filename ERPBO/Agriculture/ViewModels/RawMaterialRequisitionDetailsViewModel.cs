@@ -26,5 +26,6 @@ namespace ERPBO.Agriculture.ViewModels
         //Custom:
         public string RawMaterialName { get; set; }
         public string UnitName { get; set; }
+        public double AvailableQty { get; set; }
     }
 }

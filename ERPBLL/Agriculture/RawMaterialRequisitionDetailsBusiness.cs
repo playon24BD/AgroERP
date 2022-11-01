@@ -87,26 +87,55 @@ namespace ERPBLL.Agriculture
             if (rawMaterialRequisitionDetailsDTO.Count() > 0 && infoId > 0)
             {
 
-
                 List<RawMaterialRequisitionDetails> issueDetailList = new List<RawMaterialRequisitionDetails>();
                 foreach (var issue in rawMaterialRequisitionDetailsDTO)
                 {
-
-
                     var rawMaterialDetails = this.GetRawMaterialRequisitionDetailsbyId(issue.RawMaterialRequisitionDetailsId,orgId);
-                    if (issue.Status=="Pending")
-                    {
-                        rawMaterialDetails.IssueQuantity = issue.IssueQuantity;
-                    }
-  
+
+                    rawMaterialDetails.IssueQuantity = issue.IssueQuantity;
                     rawMaterialDetails.UpdateDate = DateTime.Now;
                     rawMaterialDetails.UpdateUserId = userId;
-                    rawMaterialDetails.Status = issue.Status ?? "Send";
-                    issueDetailList.Add(rawMaterialDetails);
+                    rawMaterialDetails.Status = "Send";
+                    //_rawMaterialRequisitionDetailsBusinessRepository.Update(rawMaterialDetails);
+                    //IsSuccess = _rawMaterialRequisitionDetailsBusinessRepository.Save();
+
+                   issueDetailList.Add(rawMaterialDetails);
                 }
                 if (issueDetailList.Count() > 0)
                 {
                     _rawMaterialRequisitionDetailsBusinessRepository.UpdateAll(issueDetailList);
+                    IsSuccess = _rawMaterialRequisitionDetailsBusinessRepository.Save();
+                }
+
+            }
+
+
+            return IsSuccess;
+        }
+
+
+        public bool UpdateRawMaterialRequisitionDetailsbyProduction(List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO, long infoId, long userId, long orgId)
+        {
+            bool IsSuccess = false;
+            if (rawMaterialRequisitionDetailsDTO.Count() > 0 && infoId > 0)
+            {
+
+                List<RawMaterialRequisitionDetails> rawMaterialRequisitionDetails = new List<RawMaterialRequisitionDetails>();
+                foreach (var item in rawMaterialRequisitionDetailsDTO)
+                {
+                    var rawMaterialDetails = this.GetRawMaterialRequisitionDetailsbyId(item.RawMaterialRequisitionDetailsId, orgId);
+       
+                    rawMaterialDetails.UpdateDate = DateTime.Now;
+                    rawMaterialDetails.UpdateUserId = userId;
+                    rawMaterialDetails.Status = item.Status;
+                    //_rawMaterialRequisitionDetailsBusinessRepository.Update(rawMaterialDetails);
+                    //IsSuccess = _rawMaterialRequisitionDetailsBusinessRepository.Save();
+
+                    rawMaterialRequisitionDetails.Add(rawMaterialDetails);
+                }
+                if (rawMaterialRequisitionDetails.Count() > 0)
+                {
+                    _rawMaterialRequisitionDetailsBusinessRepository.UpdateAll(rawMaterialRequisitionDetails);
                     IsSuccess = _rawMaterialRequisitionDetailsBusinessRepository.Save();
                 }
 
