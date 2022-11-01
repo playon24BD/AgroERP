@@ -47,7 +47,9 @@ namespace ERPBLL.Agriculture
                     PaymentDate = DateTime.Now,
                     Remarks = info.Remarks,
                     ProductSalesInfoId = info.ProductSalesInfoId,
-                    EntryUserId = userId
+                    EntryUserId = userId,
+                    AccounrNumber = info.AccounrNumber,
+                    PaymentMode = info.PaymentMode
                     
 
                 };
@@ -60,22 +62,11 @@ namespace ERPBLL.Agriculture
                 salesPayment.DueAmount -= model.PaymentAmount;
                 _agroProductSalesInfoRepository.Update(salesPayment);
                 IsSuccess = _agroProductSalesInfoRepository.Save();
-                //var IssueRawMaterialStock = RawMaterialStockInfoCheckValues(item.RawMaterialId, orgId);
-
-                //IssueRawMaterialStock.Quantity += item.Quantity;
-                //_rawMaterialIssueStockInfoRepository.Update(IssueRawMaterialStock);
-
-                //var wrkmng = _context.NewWorks.Where(x => x.WorkId == newWork.WorkId).FirstOrDefault();
-
-                //var SalesID = info.ProductSalesInfoId;
-                //var mainsalesid = _agroProductSalesInfoBusiness.GetAgroProductionInfoById().where
-
 
             }
          
 
-            //_rawMaterialTrackInfoRepository.InsertAll(modeltrk);
-            //IsSuccess = _rawMaterialTrackInfoRepository.Save();
+
 
             return IsSuccess;
         }
