@@ -12,8 +12,6 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-success btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
-
                         <h5 class="text-center text-bold">
                             Create Sales Return
                         </h5>
@@ -22,109 +20,42 @@
 
             </div>
 
-            <div class="card-body shadow" @*style="background-color:#e7f1f6"*@ id="cardWithOutRequisition">
+            <div class="card-body  mb-5" @*style="background-color:#e7f1f6"*@ id="cardWithOutRequisition">
                 <div class="row">
 
-
-                    <div class="col-md-12">
-                        <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
-                            <h5 style="border-bottom:2px solid #f87878">Sales Return</h5>
-                            <div class="row justify-content-center">
-
-                                <div class="col-md-12">
-
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-2">
-                                            <label class="control-label" for="ddlInvoiceNo">Invoice No</label>
+                  
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <h6 class="card-title">Search By</h6>
+                                </div>
+                                <div class="card-body text-sm">
+                                    <div class="row" style="margin-top:-15px">
+                                        <div class="col-md-3">
+                                            <label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>
                                             @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                            <span class="error hide req-ddlInvoiceNo">Invoice Is Required</span>
                                         </div>
 
-                                        <div class="col-md-2">
-                                            <label class="control-label" for="ddlProduct">Product</label>
-                                            <select id="ddlProduct" class="form-control form-control-sm select2">
-                                                @*<option value="0">Select Product</option>*@
-                                            </select>
-                                            <span class="error hide req-ddlProduct">Product Is Required</span>
-                                        </div>
-
-
-                                        <div class="col-md-1">
-                                            <label class="control-label" for="ddlMeasurment">Measurment</label>
-                                            <select id="ddlMeasurment" class="form-control form-control-sm select2">
-                                                @*<option value="0">Select Measurment</option>*@
-                                            </select>
-                                            <span class="error hide req-ddlMeasurment">Measurment Is Required</span>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="ddlmeasurmentsize">Measurment Size</label>
-                                            <input type="text" id="ddlmeasurmentsize" name="ddlmeasurmentsize" class="form-control form-control-sm" readonly />
-                                        </div>
-
-                                        <div class="col-md-1">
-                                            <label for="ddltotalpurchaseprice">Total Price</label>
-                                            <input type="text" id="ddltotalpurchaseprice" name="ddltotalpurchaseprice" class="form-control form-control-sm" readonly />
-                                        </div>
-
-                                        <div class="col-md-1">
-                                            <label for="ddlreturnqty">Quantity</label>
-                                            <input type="number" id="ddlreturnqty" name="qty" class="form-control form-control-sm" />
-                                            <span class="error hide req-qty">Qty Is Required</span>
-                                            <span>Purchase Qty : <span id="productpurchaseqty">0</span> </span>
-                                            <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
-                                        </div>
-
-                                        <div class="col-md-1">
-                                            <label for="ddlunitprice">Unit Price</label>
-                                            <input type="number" id="ddlunitprice" name="ddlunitprice" class="form-control form-control-sm" />
-                                            <span class="error hide req-ddlunitprice">Qty Is Required</span>
-                                            <span>Purchase price: <span id="productpurchaseqty">0</span> </span>
-
-                                        </div>
-
-
-
-                                        <div class="col-md-1">
-                                            <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
-                                            <div class="clearfix">
-                                                <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
-                                            </div>
-                                        </div>
                                     </div>
 
                                 </div>
-
-
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="card-body" id="tblWithOutRequistion">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="dataContainer">
 
-                        <div class="card-body table-responsive p-0 " style="height: 200px;">
-                            <table class="table table-head-fixed text-nowrap tadd" id="tblPstockrawmaterial">
-                                <thead>
-
-                                    <tr class="text-center" style="color:black">
-
-                                        <th>#SL</th>
-                                        <th>Raw Material</th>
-                                        <th>Unit</th>
-                                        <th>QTY</th>
-                                        <th>Return Type</th>
-                                        <th>Action</th>
-                                        <th class="hide RMId"></th>
-                                        <th class="hide unitId"></th>
-
-                                    </tr>
-
-                                </thead>
-                                <tbody class="bg-gradient-gray"></tbody>
-                            </table>
+                                    </div>
+                                 
+                                        <button class="btn btn-success btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                    
+                                </div>
+                                
+                            </div>
                         </div>
-                    </div>
-
 
                 </div>
             </div>
@@ -132,11 +63,6 @@
         </div>
 
     </div>
-
-
-
-
-    @*addbodey*@
 
 
 </div>
@@ -147,13 +73,10 @@
 
     <script type="text/javascript">
 
-  
-        var ddlInvoiceNo = $("#ddlInvoiceNo");
-        var ddlProduct = $("#ddlProduct");
-        var ddlMeasurment = $("#ddlMeasurment");
-        var ddlMeasurmentID = $("#ddlMeasurmentID");
 
-        //var regionNameList = [];
+        var ddlInvoiceNo = $("#ddlInvoiceNo");
+
+
 
 
         $(document).ready(function () {
@@ -175,63 +98,106 @@
             debugger;
             var data = { id: TryParseInt(INVid,0) };
             console.log(data);
-            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/getproduct', data)).then(function (res,status) {
-
-                var res1 = JSON.parse(res);
-                console.log(res1.flag);
-                if (res1.flag === "1") {
-                    $('#ddlProduct').empty();
-                    $('#ddlMeasurment').empty();
-                    //alert("here me 2");
-                    $.each(res1.data, function (i, obj) {
-                        debugger;
-                        console.log(i);
-                        console.log(obj.Value);
-                        console.log(obj.Text);
-                        let s = '<option value="' + obj.Value + '">' + obj.Text + '</option>';
-                        $('#ddlProduct').append(s);
-                    });
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesReturncreate', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                    /*$("#AgroSalesProductDetails").modal('show');*/
                 }
-
             }).fail(function (error) {
                 console.log(error);
             })
 
 
+
         });
 
 
-        //change Product
-        $('#ddlProduct').change(function () {
 
-            let INVid = $("#ddlInvoiceNo option:selected").val();
-            let PROid = $("#ddlProduct option:selected").val();
+
+
+        //save
+         $("#saveButton").click(function (e) {
+            //alert();
             debugger;
-            var data = { Invoiceid: TryParseInt(INVid, 0), Productid: TryParseInt(PROid, 0) };
-            console.log(data);
-            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetMeasurment', data)).then(function (res, status) {
+            e.preventDefault();
 
-                var res1 = JSON.parse(res);
-                console.log(res1.flag);
-                if (res1.flag === "1") {
-                    $('#ddlMeasurment').empty();
-                    //alert("here me 2");
-                    $.each(res1.data, function (i, obj) {
-                        debugger;
-                        console.log(i);
-                        console.log(obj.Value);
-                        console.log(obj.Text);
-                        let s = '<option value="' + obj.Value + '">' + obj.Text + '</option>';
-                        $('#ddlMeasurment').append(s);
-                    });
+            var details = [];
+            details.length = 0;
+             $.each($("#tblReturnItems tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+                    ProductSalesInfoId: TryParseInt(ddlInvoiceNo.val(), 0),
+                    InvoiceNo:  dropDownSelectedText("ddlInvoiceNo"),
+                    InvoiceDate: ddlInvoiceNo.val(),
+
+                    ReturnQuanity: tds.eq(6).html(),
+                    ReturnPerUnitPrice: tds.eq(7).html(),
+                    FinishGoodProductInfoId: tds.eq(8).html(),
+                    MeasurementId: tds.eq(9).html(),
+
+                });
+            })
+            console.log(details);
+            var data = JSON.stringify({ details: details });
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveSalesReturn', data, getToken())).then(function (res, status) {
+                if (res === true) {
+                    debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("SalesReturn")');
+                    }, 1000);
                 }
-
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
             }).fail(function (error) {
-                console.log(error);
+                alert(execuStatus.fail);
+                enable("#saveButton");
             })
 
+            function redirectPage(page) {
+                window.location.replace(page);
+            }
 
         });
+
+
+
+        ////change Product
+        //$('#ddlProduct').change(function () {
+
+        //    let INVid = $("#ddlInvoiceNo option:selected").val();
+        //    let PROid = $("#ddlProduct option:selected").val();
+        //    debugger;
+        //    var data = { Invoiceid: TryParseInt(INVid, 0), Productid: TryParseInt(PROid, 0) };
+        //    console.log(data);
+        //    $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetMeasurment', data)).then(function (res, status) {
+
+        //        var res1 = JSON.parse(res);
+        //        console.log(res1.flag);
+        //        if (res1.flag === "1") {
+        //            $('#ddlMeasurment').empty();
+        //            //alert("here me 2");
+        //            $.each(res1.data, function (i, obj) {
+        //                debugger;
+        //                console.log(i);
+        //                console.log(obj.Value);
+        //                console.log(obj.Text);
+        //                let s = '<option value="' + obj.Value + '">' + obj.Text + '</option>';
+        //                $('#ddlMeasurment').append(s);
+        //            });
+        //        }
+
+        //    }).fail(function (error) {
+        //        console.log(error);
+        //    })
+
+
+        //});
 
 
 

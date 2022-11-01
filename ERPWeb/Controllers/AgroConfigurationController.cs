@@ -2791,37 +2791,6 @@ namespace ERPWeb.Controllers
 
             }
 
-            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
-            //{
-
-            //    var dto = _returnRawMaterialBusiness.GetReturnRawMaterialInfos(name ?? null);
-            //    List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
-            //    AutoMapper.Mapper.Map(dto, viewModels);
-            //    return PartialView("_GetReturnRawMaterial", viewModels);
-
-
-            //}
-            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            //{
-            //    string Status = "Pending";
-            //    string ReturnType = "Damage";
-
-            //    List<ReturnRawMaterialViewModel> details = new List<ReturnRawMaterialViewModel>();
-
-            //    details = _returnRawMaterialBusiness.GetReturnRawMaterialBYRMId(id.Value, ReturnType, Status).Select(i => new ReturnRawMaterialViewModel
-            //    {
-            //        EntryDate = i.EntryDate,
-            //        Quantity = i.Quantity,
-            //        ReturnRawMaterialId = i.ReturnRawMaterialId
-
-            //    }).ToList();
-
-            //    return PartialView("_ReturnDetails", details);
-
-            //}
-
-
-
             return View();
         }
 
@@ -2835,15 +2804,79 @@ namespace ERPWeb.Controllers
             return View();
         }
 
+        public ActionResult SalesReturncreate(long? id)
+        {
+            var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
 
+            var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
+            List<AgroProductSalesDetailsViewModel> details = new List<AgroProductSalesDetailsViewModel>();
+            if (info != null)
+            {
+
+
+                ViewBag.Info = new AgroProductSalesInfoViewModel
+                {
+                    ProductSalesInfoId= info.ProductSalesInfoId,
+                    StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == info.StockiestId).StockiestName,
+                    InvoiceNo = info.InvoiceNo,
+                    InvoiceDate = info.InvoiceDate,
+                    PaidAmount = info.PaidAmount,
+                    TotalAmount = info.TotalAmount,
+                    DueAmount= info.DueAmount  
+                   
+                };
+
+                details = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(id.Value, User.OrgId).Select(i => new AgroProductSalesDetailsViewModel
+                {
+                    ProductSalesDetailsId= i.ProductSalesDetailsId,
+                    ProductSalesInfoId = i.ProductSalesInfoId,
+                    Price = i.Price,
+                    Discount = i.Discount,
+                    Quanity = i.Quanity,
+                    FinishGoodProductInfoId = i.FinishGoodProductInfoId,
+                    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName,
+                    MeasurementId = i.MeasurementId,
+                    MeasurementName = _measuremenBusiness.GetMeasurementById(i.MeasurementId, User.OrgId).MeasurementName,
+                    MeasurementSize = i.MeasurementSize,
+                    
+                }).ToList();
+
+            }
+            else
+            {
+                ViewBag.Info = new AgroProductSalesInfoViewModel();
+            }
+            return PartialView("_GetAgroSalesReturn", details);
+        }
+
+
+        public ActionResult SaveSalesReturn(List<SalesReturnViewModel> details)
+        {
+            bool IsSuccess = false;
+
+
+            if (details.Count > 0)
+            {
+                List<SalesReturnDTO> detailsDTO = new List<SalesReturnDTO>();
+                AutoMapper.Mapper.Map(details, detailsDTO);
+                IsSuccess = _salesReturn.SaveSalesReturn(detailsDTO, User.UserId);
+
+            }
+
+            return Json(IsSuccess);
+        }
+
+
+        #region  extracode
         public ActionResult getproduct(long id)
 
         {
-            var product = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(id, User.OrgId).Select(a => new AgroProductSalesDetailsViewModel {
+            var product = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(id, User.OrgId).Select(a => new AgroProductSalesDetailsViewModel
+            {
 
-                FinishGoodProductInfoId=a.FinishGoodProductInfoId,
-                FinishGoodProductName=_finishGoodProductBusiness.GetFinishGoodProductById(a.FinishGoodProductInfoId,User.OrgId).FinishGoodProductName
-                
+                FinishGoodProductInfoId = a.FinishGoodProductInfoId,
+                FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(a.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName
+
             }).ToList();
 
             var ddlProductList = product.GroupBy(t => t.FinishGoodProductInfoId).Select(g => g.First()).Select(p => new SelectListItem { Text = p.FinishGoodProductName, Value = p.FinishGoodProductInfoId.ToString() }).ToList();
@@ -2856,7 +2889,7 @@ namespace ERPWeb.Controllers
             {
                 return Json(new { flag = "0", msg = "Product not found" }, JsonRequestBehavior.AllowGet);
             }
- 
+
         }
 
 
@@ -2866,7 +2899,7 @@ namespace ERPWeb.Controllers
             var ExactsalesInfodetails = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(Invoiceid, User.OrgId).Select(b => new AgroProductSalesDetailsViewModel
             {
                 MeasurementId = b.MeasurementId,
-                MeasurementName = _measuremenBusiness.GetMeasurementById(b.MeasurementId,User.OrgId).MeasurementName,
+                MeasurementName = _measuremenBusiness.GetMeasurementById(b.MeasurementId, User.OrgId).MeasurementName,
                 FinishGoodProductInfoId = b.FinishGoodProductInfoId
             }).ToList();
 
@@ -2885,8 +2918,10 @@ namespace ERPWeb.Controllers
                 return Json(new { flag = "0", msg = "Product not found" }, JsonRequestBehavior.AllowGet);
             }
 
-           
+
         }
+
+        #endregion
 
 
 
