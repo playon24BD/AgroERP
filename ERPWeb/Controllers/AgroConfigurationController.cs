@@ -2564,6 +2564,7 @@ namespace ERPWeb.Controllers
                     RequisitionQuantity=d.RequisitionQuantity,
                     IssueQuantity=d.IssueQuantity,
                     Status=d.Status,
+
                     Remarks=d.Remarks,
                     //EntryDate=d.EntryDate,
                     UnitID=d.UnitID,
@@ -2612,11 +2613,14 @@ namespace ERPWeb.Controllers
         {
             var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
             {
+                RawMaterialRequisitionDetailsId=d.RawMaterialRequisitionDetailsId,
                 RawMaterialId = d.RawMaterialId,
                 RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
                 RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
                 RequisitionQuantity = d.RequisitionQuantity,
                 IssueQuantity = d.IssueQuantity,
+                AvailableQty = _rawMaterialTrack.GetAllRawMaterialTruck().Where(x => x.RawMaterialId == d.RawMaterialId && x.IssueStatus == "StockIn").Sum(c => c.Quantity)- _rawMaterialTrack.GetAllRawMaterialTruck().Where(w => w.RawMaterialId == d.RawMaterialId && w.IssueStatus == "StockOut").Sum(o=>o.Quantity),
+               
                 Status = d.Status,
                 Remarks = d.Remarks,
                 //EntryDate=d.EntryDate,
@@ -2635,6 +2639,7 @@ namespace ERPWeb.Controllers
         {
             var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
             {
+                RawMaterialRequisitionDetailsId = d.RawMaterialRequisitionDetailsId,
                 RawMaterialId = d.RawMaterialId,
                 RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
                 RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,

@@ -84,7 +84,7 @@ namespace ERPBLL.Agriculture
         public bool SaveRawMaterialRequisition(RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO, long userId, long orgId)
         {
             bool isSuccess = false;
-            string requistionCode = "Req-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss"); ;
+            string requistionCode = "Req-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
             if (rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId==0)
             {
                 RawMaterialRequisitionInfo rawMaterialRequisitionInfo = new RawMaterialRequisitionInfo();
@@ -123,7 +123,7 @@ namespace ERPBLL.Agriculture
             {
 
                 var Info = this.GetRawMaterialRequisitionInfobyId(rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId,orgId);
-                if (rawMaterialRequisitionInfoDTO.flag== "AcceptOrReceived")
+                if (rawMaterialRequisitionInfoDTO.flag== "RejectOrReceived")
                 {
                     Info.Remarks = "RFP";
                     Info.Status = rawMaterialRequisitionInfoDTO.Status;
@@ -155,7 +155,18 @@ namespace ERPBLL.Agriculture
                    
                     if (rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO.Count() > 0 && rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId > 0)
                     {
-                    isSuccess=    _rawMaterialRequisitionDetailsBusiness.UpdateRawMaterialRequisitionDetails(rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO, rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId, userId, orgId);
+                        if (rawMaterialRequisitionInfoDTO.flag == "RejectOrReceived")
+                        {
+                            isSuccess = _rawMaterialRequisitionDetailsBusiness.UpdateRawMaterialRequisitionDetailsbyProduction(rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO, rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId, userId, orgId);
+
+                        }
+                        else
+                        {
+                            isSuccess = _rawMaterialRequisitionDetailsBusiness.UpdateRawMaterialRequisitionDetails(rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO, rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId, userId, orgId);
+
+                        }
+     
+
 
                     }
 

@@ -26,5 +26,7 @@ namespace ERPBO.Agriculture.DTOModels
         //Custom:
         public string RawMaterialName { get; set; }
         public string UnitName { get; set; }
+
+        public double AvailableQty { get; set; }
     }
 }

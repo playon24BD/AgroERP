@@ -100,7 +100,7 @@
 
         $("#btnSubmit").click(function (e) {
             e.preventDefault();
-            var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0), Status: ddlAction.val(), flag:"AcceptOrReceived" };
+            var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0), Status: ddlAction.val(), flag:"RejectOrReceived" };
             var details = [];
 
             $.each($("#tblRequisitonDetails tbody tr"), function (index, item) {
@@ -110,12 +110,11 @@
                     RawMaterialId: tds.eq(6).html(),
                     UnitID: tds.eq(7).html(),
                     RequisitionQuantity: tds.eq(3).html(),
-                    IssueQuantity: tds.eq(4).children('input[type="number"]').val(),
+                    IssueQuantity: tds.eq(4).html(),
                     Status: ddlAction.val(),
                     Remarks: tds.eq(6).html(),
-                    RawMaterialRequisitionInfoId: tds.eq(7).html(),
-                    RawMaterialRequisitionDetailsId: tds.eq(8).html(),
-                    UnitID: tds.eq(9).html(),
+                    RawMaterialRequisitionInfoId: tds.eq(8).html(),
+                    RawMaterialRequisitionDetailsId: tds.eq(9).html(),
                     RawMaterialId: tds.eq(10).html(),
                 });
             })
