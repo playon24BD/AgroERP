@@ -403,7 +403,6 @@ on TE.TerritoryId=ST.TerritoryId
             return query;
         }
 
-
         public IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport(string fromDate, string toDate)
         {
             return _agricultureUnitOfWork.Db.Database.SqlQuery<InvoiceWiseCollectionSalesReport>(QueryForInvoiceWiseSalesReport(fromDate, toDate));

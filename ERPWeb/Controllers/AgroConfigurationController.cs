@@ -2506,6 +2506,31 @@ namespace ERPWeb.Controllers
             return View();
         }
 
+
+        public ActionResult RawMaterialReturnAllList(string flag, long? id, string name)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+
+                return View();
+
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _returnRawMaterialBusiness.GetallReturns(name ?? null);
+
+                List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_ALLRawMaterialReturnListview", viewModels);
+
+            }
+
+            return View();
+        }
+
         public ActionResult CreateRawMaterialReturnList(long? id)
         {
             ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
@@ -2832,10 +2857,20 @@ namespace ERPWeb.Controllers
             string fileNameExtension;
             Warning[] warnings;
             string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
 
             var renderedBytes = localReport.Render(
                 reportType,
-                "",
+                deviceInfo,
                 out mimeType,
                 out encoding,
                 out fileNameExtension,
@@ -2846,10 +2881,6 @@ namespace ERPWeb.Controllers
         }
 
 
-
-
-            return View();
-        }
 
         public ActionResult GetProductwisesalesReportDownload( string fromDate, string toDate, string rptType)
         {
