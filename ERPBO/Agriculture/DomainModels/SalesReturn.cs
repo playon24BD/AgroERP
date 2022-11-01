@@ -33,6 +33,6 @@ namespace ERPBO.Agriculture.DomainModels
         public long? EntryUserId { get; set; }
 
 
-
+        public string MeasurementSize { get; set; }
     }
 }
