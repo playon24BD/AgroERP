@@ -3095,7 +3095,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Compile>
-
     <Compile Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
