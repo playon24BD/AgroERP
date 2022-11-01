@@ -2795,6 +2795,15 @@ namespace ERPWeb.Controllers
                 return View();
 
             }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _returnRawMaterialBusiness.GetReturnRawMaterialInfos(name ?? null);
+                List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetReturnRawMaterial", viewModels);
+
+            }
 
             return View();
         }
