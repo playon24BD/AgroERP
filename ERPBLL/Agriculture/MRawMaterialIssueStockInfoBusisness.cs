@@ -62,6 +62,7 @@ namespace ERPBLL.Agriculture
                 MRawMaterialIssueStockInfo model = new MRawMaterialIssueStockInfo
                 {
                     ProductBatchCode = BatchCode,
+                    type = "NonRequisiton",
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
                     OrganizationId = orgId,
@@ -79,7 +80,7 @@ namespace ERPBLL.Agriculture
                         RawMaterialId = item.RawMaterialId,
                         Quantity = item.Quantity,
                         UnitID = item.UnitID,
-                        IssueStatus = "StockIn",
+                        IssueStatus = "StockIn",                  
                         EntryDate = DateTime.Now,
 
                     };
@@ -94,6 +95,7 @@ namespace ERPBLL.Agriculture
                         IssueDate = DateTime.Now,
                         EntryDate = DateTime.Now,
                         IssueStatus = "StockOut",
+                        type="NonRequisiton",
                         EntryUserId = userId
                     };
                     modeltrk.Add(rawMaterialTrack);
@@ -124,6 +126,7 @@ namespace ERPBLL.Agriculture
                 MRawMaterialIssueStockInfo model = new MRawMaterialIssueStockInfo
                 {
                     ProductBatchCode = BatchCode,
+                    type="Requistion",
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
                     OrganizationId = orgId,
@@ -153,6 +156,7 @@ namespace ERPBLL.Agriculture
                     {
                         RawMaterialId = item.RawMaterialId,
                         Quantity = item.IssueQuantity,
+                        type = "Requistion",
                         IssueDate = DateTime.Now,
                         EntryDate = DateTime.Now,
                         IssueStatus = "StockOut",

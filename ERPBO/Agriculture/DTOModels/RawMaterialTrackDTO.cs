@@ -14,7 +14,7 @@ namespace ERPBO.Agriculture.DTOModels
         public double Quantity { get; set; }
         public DateTime? IssueDate { get; set; }
         public string IssueStatus { get; set; }
-
+        public string type { get; set; }
 
 
         public DateTime? EntryDate { get; set; }
