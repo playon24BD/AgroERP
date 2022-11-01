@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.AgroProductSalesDetailsViewModel>
+
+@{
+    ViewBag.Title = "_GetAgroSalesSalesReturn";
+    int sl = 0;
+    var info = (ERPBO.Agriculture.ViewModels.AgroProductSalesInfoViewModel)ViewBag.Info;
+}
+
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm">
+    @if (info != null)
+    {
+    <tr>
+        <td style="width:5%">Invoice</td>
+        <td style="width:10%"><b>@info.InvoiceNo</b></td>
+        <td style="width:5%">Date</td>
+        <td style="width:13%"><b>@info.InvoiceDate</b></td>
+        <td style="width:5%">StockiestName</td>
+        <td style="width:15%"><b>@info.StockiestName</b></td>
+        <td style="width:20%" class="hide"><b>@info.StockiestId</b></td>
+        <td style="width:5%">Total</td>
+        <td style="width:10%"><b>@info.TotalAmount</b></td>
+        <td style="width:5%">Paid</td>
+        <td style="width:10%"><b>@info.PaidAmount</b></td>
+        <td style="width:5%">Due</td>
+        <td style="width:10%"><b>@info.DueAmount</b></td>
+
+    </tr>
+    }
+</table>
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" id="tblReturnItems">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th>#SL</th>
+            <th>Product Name</th>
+            <th>Measurment Name</th>
+            <th>Measurment Size</th>
+            <th>Sales Quantity</th>
+            <th>Sales Unit Price</th>
+            <th>Return Qty</th>
+            <th>Return Unit Price</th>
+
+            @*<th>Total</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+        <tr>
+            <td class="text-center">@sl</td>
+            <td class="text-center">@item.FinishGoodProductName</td>
+            <td class="text-center">@item.MeasurementName</td>
+            <td class="text-center">@item.MeasurementSize</td>
+            <td class="text-center">@item.Quanity</td>
+            <td class="text-center">@item.Price</td>
+            <td class="text-center " contenteditable='true'></td>
+            <td class="text-center" contenteditable='true'></td>
+            @*<td class="text-center"><input type="number" /></td>
+            <td class="text-center"><input type="number" /></td>*@
+            @*<td class="hide"><input type="number" />@item.ProductSalesInfoId</td>*@
+            <td class="hide">@item.FinishGoodProductInfoId</td>
+            <td class="hide">@item.MeasurementId</td>
+     
+        </tr>
+        }
+    </tbody>
+</table>
+
+

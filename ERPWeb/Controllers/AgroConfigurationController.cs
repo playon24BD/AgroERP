@@ -2434,8 +2434,12 @@ namespace ERPWeb.Controllers
             var StockoutRMID = _rawMaterialTrack.GetAllRawMaterialTruck().Where(w => w.RawMaterialId == RawMaterialId && w.IssueStatus == "StockOut").ToList();
             var Stockoutqty = StockoutRMID.Sum(d => d.Quantity);
 
-            var rmnqty = Stockinqty - Stockoutqty;
+            var ReturnRMID = _returnRawMaterialBusiness.GetAllReturnRawMaterial().Where(g=> g.RawMaterialId == RawMaterialId && g.ReturnType == "Good").ToList();
+            var ReturnRMGoodQty = ReturnRMID.Sum(g => g.Quantity);//good return qty
 
+            var stkrmnqty = Stockinqty - Stockoutqty;//stock
+
+            var rmnqty = stkrmnqty + ReturnRMGoodQty;
 
             return Json(rmnqty, JsonRequestBehavior.AllowGet);
         }
@@ -2611,6 +2615,8 @@ namespace ERPWeb.Controllers
             AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
             return PartialView("_GetRequisition", rawMaterialRequisitionInfoViewModels);
         }
+
+
         [HttpGet]
         public ActionResult SaveRequisition(string flag)
         {
@@ -2645,6 +2651,29 @@ namespace ERPWeb.Controllers
             return PartialView("_GetRequistionDetailsbyInfoId", rawMaterialRequisitionDetailsViewModel);
         }
 
+        [HttpGet]
+        public ActionResult GetRequistionDetailsbyInfoIdForProduction(long infoId)
+        {
+            var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+            {
+                RawMaterialId = d.RawMaterialId,
+                RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
+                RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
+                RequisitionQuantity = d.RequisitionQuantity,
+                IssueQuantity = d.IssueQuantity,
+                Status = d.Status,
+                Remarks = d.Remarks,
+                //EntryDate=d.EntryDate,
+                UnitID = d.UnitID,
+                UnitName = _agroUnitInfo.GetAgroInfoById(d.UnitID, User.OrgId).UnitName
+
+            }).ToList();
+
+            List<RawMaterialRequisitionDetailsViewModel> rawMaterialRequisitionDetailsViewModel = new List<RawMaterialRequisitionDetailsViewModel>();
+            AutoMapper.Mapper.Map(dto, rawMaterialRequisitionDetailsViewModel);
+            return PartialView("_GetRequistionDetailsbyInfoIdForProduction", rawMaterialRequisitionDetailsViewModel);
+        }
+
         public ActionResult UpdateRequistion(string flag,long infoId)
         {
 
@@ -2667,10 +2696,33 @@ namespace ERPWeb.Controllers
      
             return View(rawMaterialRequisitionInfoViewModels);
         }
+        public ActionResult ReceivedOrCanelIssuedRawMaterial(string flag, long infoId)
+        {
+
+            var rawMaterialRequisitionInfo = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfobyId(infoId, User.OrgId);
+
+            RawMaterialRequisitionInfoViewModel rawMaterialRequisitionInfoViewModels = new RawMaterialRequisitionInfoViewModel()
+            {
+
+                RawMaterialRequisitionInfoId = rawMaterialRequisitionInfo.RawMaterialRequisitionInfoId,
+                RawMaterialRequisitionCode = rawMaterialRequisitionInfo.RawMaterialRequisitionCode,
+                Status = rawMaterialRequisitionInfo.Status,
+                Type = rawMaterialRequisitionInfo.Type,
+                Remarks = rawMaterialRequisitionInfo.Remarks,
+                EntryDate = rawMaterialRequisitionInfo.EntryDate,
+                EntryUserId = rawMaterialRequisitionInfo.EntryUserId,
+                UpdateDate = rawMaterialRequisitionInfo.UpdateDate,
+                UpdateUserId = rawMaterialRequisitionInfo.UpdateUserId,
+
+            };
+
+            return View(rawMaterialRequisitionInfoViewModels);
+        }
 
         [HttpPost]
         public ActionResult SaveRequisition(RawMaterialRequisitionInfoViewModel info)
         {
+
 
             bool IsSuccess = false;
             if (ModelState.IsValid)
@@ -2689,7 +2741,54 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
         }
 
+        public ActionResult GetRequisitionProduction(string flag, string RequisitonCode, long? infoId, string status, string fdate, string tdate)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
 
+                return View();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == "Details" && infoId > 0)
+            {
+                var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+                {
+                    RawMaterialId = d.RawMaterialId,
+                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
+                    RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
+                    RequisitionQuantity = d.RequisitionQuantity,
+                    IssueQuantity = d.IssueQuantity,
+                    Status = d.Status,
+                    Remarks = d.Remarks,
+                    //EntryDate=d.EntryDate,
+                    UnitID = d.UnitID,
+                    UnitName = _agroUnitInfo.GetAgroInfoById(d.UnitID, User.OrgId).UnitName
+
+                }).ToList();
+
+                List<RawMaterialRequisitionDetailsViewModel> rawMaterialRequisitionDetailsViewModel = new List<RawMaterialRequisitionDetailsViewModel>();
+                AutoMapper.Mapper.Map(dto, rawMaterialRequisitionDetailsViewModel);
+                return PartialView("_GetRequisitionDetails", rawMaterialRequisitionDetailsViewModel);
+
+
+            }
+
+            IEnumerable<RawMaterialRequisitionInfoDTO> rawMaterialRequisitionInfoDTO = _rawMaterialRequisitionInfoBusiness.GetAllRawMaterialRequisitionInfos(RequisitonCode, status, fdate, tdate, User.OrgId).Select(r => new RawMaterialRequisitionInfoDTO
+            {
+                RawMaterialRequisitionInfoId = r.RawMaterialRequisitionInfoId,
+                RawMaterialRequisitionCode = r.RawMaterialRequisitionCode,
+                Status = r.Status,
+                Remarks = r.Remarks,
+                EntryDate = r.EntryDate,
+                EntryUserId = r.EntryUserId,
+                UpdateDate = r.UpdateDate,
+                UpdateUserId = r.UpdateUserId,
+
+            }).ToList();
+
+            List<RawMaterialRequisitionInfoViewModel> rawMaterialRequisitionInfoViewModels = new List<RawMaterialRequisitionInfoViewModel>();
+            AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
+            return PartialView("_GetRequisitionProduction", rawMaterialRequisitionInfoViewModels);
+        }
 
 
         #endregion
@@ -2739,6 +2838,154 @@ namespace ERPWeb.Controllers
                 );
             return File(renderedBytes, mimeType);
         }
+
+
+
+        #endregion
+
+        #region  SalesReturn
+
+        public ActionResult SalesReturnList(string flag, long? id, string name)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+
+                return View();
+
+            }
+
+            return View();
+        }
+
+
+
+        public ActionResult SalesReturn(long? id)
+        {
+           // ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+
+            ViewBag.ddlInvoiceNo = _agroProductSalesInfoBusiness.GetAgroProductionSalesInfo(User.OrgId).Select(inv => new SelectListItem { Text = inv.InvoiceNo, Value = inv.ProductSalesInfoId.ToString() });
+            return View();
+        }
+
+        public ActionResult SalesReturncreate(long? id)
+        {
+            var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
+
+            var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
+            List<AgroProductSalesDetailsViewModel> details = new List<AgroProductSalesDetailsViewModel>();
+            if (info != null)
+            {
+
+
+                ViewBag.Info = new AgroProductSalesInfoViewModel
+                {
+                    ProductSalesInfoId= info.ProductSalesInfoId,
+                    StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == info.StockiestId).StockiestName,
+                    InvoiceNo = info.InvoiceNo,
+                    InvoiceDate = info.InvoiceDate,
+                    PaidAmount = info.PaidAmount,
+                    TotalAmount = info.TotalAmount,
+                    DueAmount= info.DueAmount  
+                   
+                };
+
+                details = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(id.Value, User.OrgId).Select(i => new AgroProductSalesDetailsViewModel
+                {
+                    ProductSalesDetailsId= i.ProductSalesDetailsId,
+                    ProductSalesInfoId = i.ProductSalesInfoId,
+                    Price = i.Price,
+                    Discount = i.Discount,
+                    Quanity = i.Quanity,
+                    FinishGoodProductInfoId = i.FinishGoodProductInfoId,
+                    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName,
+                    MeasurementId = i.MeasurementId,
+                    MeasurementName = _measuremenBusiness.GetMeasurementById(i.MeasurementId, User.OrgId).MeasurementName,
+                    MeasurementSize = i.MeasurementSize,
+                    
+                }).ToList();
+
+            }
+            else
+            {
+                ViewBag.Info = new AgroProductSalesInfoViewModel();
+            }
+            return PartialView("_GetAgroSalesReturn", details);
+        }
+
+
+        public ActionResult SaveSalesReturn(List<SalesReturnViewModel> details)
+        {
+            bool IsSuccess = false;
+
+
+            if (details.Count > 0)
+            {
+                List<SalesReturnDTO> detailsDTO = new List<SalesReturnDTO>();
+                AutoMapper.Mapper.Map(details, detailsDTO);
+                IsSuccess = _salesReturn.SaveSalesReturn(detailsDTO, User.UserId);
+
+            }
+
+            return Json(IsSuccess);
+        }
+
+
+        #region  extracode
+        public ActionResult getproduct(long id)
+
+        {
+            var product = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(id, User.OrgId).Select(a => new AgroProductSalesDetailsViewModel
+            {
+
+                FinishGoodProductInfoId = a.FinishGoodProductInfoId,
+                FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(a.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName
+
+            }).ToList();
+
+            var ddlProductList = product.GroupBy(t => t.FinishGoodProductInfoId).Select(g => g.First()).Select(p => new SelectListItem { Text = p.FinishGoodProductName, Value = p.FinishGoodProductInfoId.ToString() }).ToList();
+
+            if (ddlProductList.Count > 0 && ddlProductList != null)
+            {
+                return Json(new { flag = "1", msg = "Product found", data = ddlProductList }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { flag = "0", msg = "Product not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
+        public ActionResult GetMeasurment(long Invoiceid, long Productid)
+
+        {
+            var ExactsalesInfodetails = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(Invoiceid, User.OrgId).Select(b => new AgroProductSalesDetailsViewModel
+            {
+                MeasurementId = b.MeasurementId,
+                MeasurementName = _measuremenBusiness.GetMeasurementById(b.MeasurementId, User.OrgId).MeasurementName,
+                FinishGoodProductInfoId = b.FinishGoodProductInfoId
+            }).ToList();
+
+            //var ExactsalesInfodetails = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(Invoiceid, User.OrgId).ToList();
+
+            var ExactProduct = ExactsalesInfodetails.Where(x => x.FinishGoodProductInfoId == Productid).ToList();
+
+            var MeasurmentList = ExactProduct.Select(m => new SelectListItem { Text = m.MeasurementName, Value = m.MeasurementId.ToString() }).ToList();
+
+            if (MeasurmentList.Count > 0 && MeasurmentList != null)
+            {
+                return Json(new { flag = "1", msg = "Product found", data = MeasurmentList }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { flag = "0", msg = "Product not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
+        #endregion
 
 
 

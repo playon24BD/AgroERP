@@ -26,6 +26,7 @@ namespace ERPBLL.Agriculture
             return _agroProductSalesDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.ProductSalesInfoId == infoId).ToList();
         }
 
+
         public IEnumerable<AgroProductSalesDetailsDTO> GetAllAgroSalesDetailsInfos(long orgId)
         {
             return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForAgroSalesDetailsInfoss(orgId)).ToList();
@@ -105,5 +106,9 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
 
+        public IEnumerable<AgroProductSalesDetails> GetAgroSalesDetailsByinfoId(long infoId, long orgId)
+        {
+            return _agroProductSalesDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.ProductSalesInfoId == infoId).ToList();
+        }
     }
 }

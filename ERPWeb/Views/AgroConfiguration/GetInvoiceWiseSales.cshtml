@@ -98,12 +98,16 @@
                 orientation: "bottom auto",
                 todayHighlight: true,
                 autoclose: true
+            }).on('change', function () {
+                $('.datepicker').hide();
             });
             $('#dptToDate').datepicker({
                 format: "dd MM yyyy",
                 orientation: "bottom auto",
                 todayHighlight: true,
                 autoclose: true
+            }).on('change', function () {
+                $('.datepicker').hide();
             });
 
         })

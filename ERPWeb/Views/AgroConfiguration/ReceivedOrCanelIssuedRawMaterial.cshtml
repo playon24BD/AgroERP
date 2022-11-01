@@ -1,7 +1,7 @@
 ﻿@model ERPBO.Agriculture.ViewModels.RawMaterialRequisitionInfoViewModel
 @{
-   Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "UpdateRequistion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 <div class="row" style="margin-top:-15px">
     <div class="col-md-12">
@@ -37,9 +37,9 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <select class="form-control form-control-sm" id="ddlAction">
-                                <option value="Approved" selected>Approved</option>
+                                <option value="Received" selected>Received</option>
                                 <option value="Rejected">Rejected</option>
-                                <option value="Pending">Pending</option>
+                 
                             </select>
                             <div class="input-group-append" style="cursor:pointer">
                                 <a id="btnSubmit" href="#" title="Submit Requisition" style="background-color:darkblue" class="input-group-text">
@@ -74,7 +74,7 @@
                         </table>
                     </div>
                     <div class="col-md-12">
-                        @{Html.RenderAction("GetRequistionDetailsbyInfoId", new { @infoId = Model.RawMaterialRequisitionInfoId });}
+                        @{Html.RenderAction("GetRequistionDetailsbyInfoIdForProduction", new { @infoId = Model.RawMaterialRequisitionInfoId });}
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
 
         $("#btnSubmit").click(function (e) {
             e.preventDefault();
-            var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0), Status: ddlAction.val() };
+            var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0), Status: ddlAction.val(), flag:"AcceptOrReceived" };
             var details = [];
 
             $.each($("#tblRequisitonDetails tbody tr"), function (index, item) {
@@ -111,7 +111,7 @@
                     UnitID: tds.eq(7).html(),
                     RequisitionQuantity: tds.eq(3).html(),
                     IssueQuantity: tds.eq(4).children('input[type="number"]').val(),
-                    Status: tds.eq(5).html(),
+                    Status: ddlAction.val(),
                     Remarks: tds.eq(6).html(),
                     RawMaterialRequisitionInfoId: tds.eq(7).html(),
                     RawMaterialRequisitionDetailsId: tds.eq(8).html(),
@@ -125,12 +125,12 @@
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
             ).then(function (res, status) {
                             if (res === true) {
-                         
+
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetRequisition")');
                                 }, 1000);
-              
+
                             }
                             else {
                                 $('.toastrDefaultError').trigger('click');
@@ -148,10 +148,12 @@
 
 
     </script>
-    
-    
-    
+
+
+
 }
+
+
 
 
 
