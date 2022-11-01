@@ -16,6 +16,7 @@ namespace ERPBLL.Agriculture
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly IRawMaterialRequisitionDetailsBusiness _rawMaterialRequisitionDetailsBusiness;
         private readonly RawMaterialRequisitionInfoBusinessRepository _rawMaterialRequisitionInfoRepoBusiness;
+        private readonly IMRawMaterialIssueStockInfo _mRawMaterialIssueStockInfo;
         public RawMaterialRequisitionInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
@@ -158,6 +159,8 @@ namespace ERPBLL.Agriculture
                         if (rawMaterialRequisitionInfoDTO.flag == "RejectOrReceived")
                         {
                             isSuccess = _rawMaterialRequisitionDetailsBusiness.UpdateRawMaterialRequisitionDetailsbyProduction(rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO, rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId, userId, orgId);
+                            
+
 
                         }
                         else
