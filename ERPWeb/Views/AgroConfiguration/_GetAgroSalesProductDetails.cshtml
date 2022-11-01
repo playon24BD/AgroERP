@@ -24,6 +24,8 @@
     <thead class="thead-dark">
         <tr class="text-center">
             <th>#SL</th>
+            <th>ProductName</th>
+            <th>MeasurementSize</th>
             <th>Quantity</th>
             <th>Price</th>
             <th>Discount</th>
@@ -36,6 +38,8 @@
             sl = sl + 1;
             <tr>
                 <td class="text-center">@sl</td>
+                <td class="text-center">@item.FinishGoodProductName</td>
+                <td class="text-center">@item.MeasurementSize</td>
                 <td class="text-center">@item.Quanity</td>
                 <td class="text-center text-bold">@item.Price</td>
                 <td class="text-center">@item.Discount</td>

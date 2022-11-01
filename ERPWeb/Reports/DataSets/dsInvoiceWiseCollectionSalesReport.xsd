@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsInvoiceWiseSalesReport" targetNamespace="http://tempuri.org/dsInvoiceWiseSalesReport.xsd" xmlns:mstns="http://tempuri.org/dsInvoiceWiseSalesReport.xsd" xmlns="http://tempuri.org/dsInvoiceWiseSalesReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsInvoiceWiseSalesReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsInvoiceWiseSalesReport" msprop:Generator_UserDSName="dsInvoiceWiseSalesReport">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsInvoiceWiseCollectionSalesReport" msprop:Generator_TableClassName="dsInvoiceWiseCollectionSalesReportDataTable" msprop:Generator_TableVarName="tabledsInvoiceWiseCollectionSalesReport" msprop:Generator_TablePropName="dsInvoiceWiseCollectionSalesReport" msprop:Generator_RowDeletingName="dsInvoiceWiseCollectionSalesReportRowDeleting" msprop:Generator_RowChangingName="dsInvoiceWiseCollectionSalesReportRowChanging" msprop:Generator_RowEvHandlerName="dsInvoiceWiseCollectionSalesReportRowChangeEventHandler" msprop:Generator_RowDeletedName="dsInvoiceWiseCollectionSalesReportRowDeleted" msprop:Generator_UserTableName="dsInvoiceWiseCollectionSalesReport" msprop:Generator_RowChangedName="dsInvoiceWiseCollectionSalesReportRowChanged" msprop:Generator_RowEvArgName="dsInvoiceWiseCollectionSalesReportRowChangeEvent" msprop:Generator_RowClassName="dsInvoiceWiseCollectionSalesReportRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="StockiestName" msprop:Generator_ColumnVarNameInTable="columnStockiestName" msprop:Generator_ColumnPropNameInRow="StockiestName" msprop:Generator_ColumnPropNameInTable="StockiestNameColumn" msprop:Generator_UserColumnName="StockiestName" type="xs:string" minOccurs="0" />
+              <xs:element name="AreaName" msprop:Generator_ColumnVarNameInTable="columnAreaName" msprop:Generator_ColumnPropNameInRow="AreaName" msprop:Generator_ColumnPropNameInTable="AreaNameColumn" msprop:Generator_UserColumnName="AreaName" type="xs:string" minOccurs="0" />
+              <xs:element name="TerritoryName" msprop:Generator_ColumnVarNameInTable="columnTerritoryName" msprop:Generator_ColumnPropNameInRow="TerritoryName" msprop:Generator_ColumnPropNameInTable="TerritoryNameColumn" msprop:Generator_UserColumnName="TerritoryName" type="xs:string" minOccurs="0" />
+              <xs:element name="DiscountTk" msprop:Generator_ColumnVarNameInTable="columnDiscountTk" msprop:Generator_ColumnPropNameInRow="DiscountTk" msprop:Generator_ColumnPropNameInTable="DiscountTkColumn" msprop:Generator_UserColumnName="DiscountTk" type="xs:string" minOccurs="0" />
+              <xs:element name="DueAmount" msprop:Generator_ColumnVarNameInTable="columnDueAmount" msprop:Generator_ColumnPropNameInRow="DueAmount" msprop:Generator_ColumnPropNameInTable="DueAmountColumn" msprop:Generator_UserColumnName="DueAmount" type="xs:string" minOccurs="0" />
+              <xs:element name="ProductSalesInfoId" msprop:Generator_ColumnVarNameInTable="columnProductSalesInfoId" msprop:Generator_ColumnPropNameInRow="ProductSalesInfoId" msprop:Generator_ColumnPropNameInTable="ProductSalesInfoIdColumn" msprop:Generator_UserColumnName="ProductSalesInfoId" type="xs:string" minOccurs="0" />
+              <xs:element name="InvoiceNo" msprop:Generator_ColumnVarNameInTable="columnInvoiceNo" msprop:Generator_ColumnPropNameInRow="InvoiceNo" msprop:Generator_ColumnPropNameInTable="InvoiceNoColumn" msprop:Generator_UserColumnName="InvoiceNo" type="xs:string" minOccurs="0" />
+              <xs:element name="InvoiceDate" msprop:Generator_ColumnVarNameInTable="columnInvoiceDate" msprop:Generator_ColumnPropNameInRow="InvoiceDate" msprop:Generator_ColumnPropNameInTable="InvoiceDateColumn" msprop:Generator_UserColumnName="InvoiceDate" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" msprop:Generator_ColumnVarNameInTable="columnRemarks" msprop:Generator_ColumnPropNameInRow="Remarks" msprop:Generator_ColumnPropNameInTable="RemarksColumn" msprop:Generator_UserColumnName="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="PaymentDate" msprop:Generator_ColumnVarNameInTable="columnPaymentDate" msprop:Generator_ColumnPropNameInRow="PaymentDate" msprop:Generator_ColumnPropNameInTable="PaymentDateColumn" msprop:Generator_UserColumnName="PaymentDate" type="xs:string" minOccurs="0" />
+              <xs:element name="PaymentAmount" msprop:Generator_ColumnVarNameInTable="columnPaymentAmount" msprop:Generator_ColumnPropNameInRow="PaymentAmount" msprop:Generator_ColumnPropNameInTable="PaymentAmountColumn" msprop:Generator_UserColumnName="PaymentAmount" type="xs:string" minOccurs="0" />
+              <xs:element name="ZoneUserName" msprop:Generator_ColumnVarNameInTable="columnZoneUserName" msprop:Generator_ColumnPropNameInRow="ZoneUserName" msprop:Generator_ColumnPropNameInTable="ZoneUserNameColumn" msprop:Generator_UserColumnName="ZoneUserName" type="xs:string" minOccurs="0" />
+              <xs:element name="ZoneUserMobile" msprop:Generator_ColumnVarNameInTable="columnZoneUserMobile" msprop:Generator_ColumnPropNameInRow="ZoneUserMobile" msprop:Generator_ColumnPropNameInTable="ZoneUserMobileColumn" msprop:Generator_UserColumnName="ZoneUserMobile" type="xs:string" minOccurs="0" />
+              <xs:element name="TerritoryUserName" msprop:Generator_ColumnVarNameInTable="columnTerritoryUserName" msprop:Generator_ColumnPropNameInRow="TerritoryUserName" msprop:Generator_ColumnPropNameInTable="TerritoryUserNameColumn" msprop:Generator_UserColumnName="TerritoryUserName" type="xs:string" minOccurs="0" />
+              <xs:element name="TerritoryUserMobile" msprop:Generator_ColumnVarNameInTable="columnTerritoryUserMobile" msprop:Generator_ColumnPropNameInRow="TerritoryUserMobile" msprop:Generator_ColumnPropNameInTable="TerritoryUserMobileColumn" msprop:Generator_UserColumnName="TerritoryUserMobile" type="xs:string" minOccurs="0" />
+              <xs:element name="InvoiceTK" msprop:Generator_ColumnVarNameInTable="columnInvoiceTK" msprop:Generator_ColumnPropNameInRow="InvoiceTK" msprop:Generator_ColumnPropNameInTable="InvoiceTKColumn" msprop:Generator_UserColumnName="InvoiceTK" type="xs:string" minOccurs="0" />
+              <xs:element name="Collaction" msprop:Generator_ColumnVarNameInTable="columnCollaction" msprop:Generator_ColumnPropNameInRow="Collaction" msprop:Generator_ColumnPropNameInTable="CollactionColumn" msprop:Generator_UserColumnName="Collaction" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

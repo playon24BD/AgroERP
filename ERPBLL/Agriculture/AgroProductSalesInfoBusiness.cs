@@ -404,5 +404,130 @@ on TE.TerritoryId=ST.TerritoryId
         }
 
 
+        public IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport(string fromDate, string toDate)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<InvoiceWiseCollectionSalesReport>(QueryForInvoiceWiseSalesReport(fromDate, toDate));
+        }
+        public string QueryForInvoiceWiseSalesReport(string fromDate,string toDate)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+
+
+            if (!string.IsNullOrEmpty(fromDate))
+            {
+                param += string.Format(@" and CONVERT(date, SI.EntryDate) = '{0}'", fromDate);
+            }
+            if (!string.IsNullOrEmpty(toDate))
+            {
+                param += string.Format(@" and CONVERT(date, SI.EntryDate) = '{0}'", toDate);
+            }
+
+            if (!string.IsNullOrEmpty(fromDate) && !string.IsNullOrEmpty(toDate))
+            {
+                param += string.Format(@" and CONVERT(date, SI.EntryDate) Between '{0}' and '{0}'", fromDate, toDate);
+                //CONVERT(date, SI.EntryDate) Between CONVERT(date,'2022-10-27') And CONVERT(date,'2022-10-27')
+            }
+            
+
+            query = string.Format(@"
+                SELECT  SI.ProductSalesInfoId, A.AreaName,
+        ZoneUserName=( SELECT distinct AU.UserName FROM 
+        [Agriculture].[dbo].tblProductSalesInfo SI
+        INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId
+        INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId),
+        
+        ZoneUserMobile=( SELECT distinct AU.MobileNo FROM 
+        [Agriculture].[dbo].tblProductSalesInfo SI
+        INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId
+        INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId),
+        
+        TI.TerritoryName,
+        TerritoryUserName=(SELECT distinct AUT.UserName FROM 
+        [Agriculture].[dbo].tblProductSalesInfo SI
+        INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId
+        INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId=AUT.UserId ),
+        
+        TerritoryUserMobile=(SELECT distinct AUT.MobileNo FROM 
+        [Agriculture].[dbo].tblProductSalesInfo SI
+        INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId
+        INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId=AUT.UserId ),
+        STI.StockiestName,
+        SI.InvoiceNo,
+        CONVERT(date,SI.InvoiceDate) AS InvoiceDate,
+        SI.TotalAmount AS InvoiceTk,
+        Collaction=(SELECT Sum(PSPH.PaymentAmount) FROM tblProductSalesPaymentHistory PSPH Where        SI.ProductSalesInfoId=PSPH.ProductSalesInfoId),
+        SI.DueAmount,
+        DiscountTk=(SELECT Sum(PSD.DiscountTk) FROM tblProductSalesDetails PSD Where        SI.ProductSalesInfoId=PSD.ProductSalesInfoId),
+        
+        CONVERT(date,PsPH.PaymentDate) AS PaymentDate,
+        PsPH.Remarks, 
+        PsPH.PaymentAmount
+        --PaymentAmount=(SELECT Sum(PsPHs.PaymentAmount) From [Agriculture].        [dbo].tblProductSalesPaymentHistory PsPHs where         SI.ProductSalesInfoId=PsPHs.ProductSalesInfoId)
+        
+        
+        
+        
+        FROM [Agriculture].[dbo].tblProductSalesInfo SI
+        INNER JOIN [Agriculture].[dbo].tblAreaSetup A on SI.AreaId=A.AreaId
+        INNER JOIN [Agriculture].[dbo].tblTerritoryInfos TI on SI.TerritoryId=TI.TerritoryId
+        INNER JOIN [Agriculture].[dbo].tblStockiestInfo STI on SI.StockiestId=STI.StockiestId
+        INNER JOIN [Agriculture].[dbo].tblProductSalesPaymentHistory PsPH on        SI.ProductSalesInfoId=PsPH.ProductSalesInfoId
+                 where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+        }
+
+        public IEnumerable<ProductWiseSalesStementReport> GetProductwisesalesReportDownloadRpt(string fromDate, string toDate)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductWiseSalesStementReport>(QueryProductWiseSalesStementReport(fromDate, toDate));
+        }
+
+        private string QueryProductWiseSalesStementReport(string fromDate, string toDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", tDate);
+            }
+
+            query = string.Format(@"select DISTINCT 
+              sales.EntryDate,
+              FGPN.FinishGoodProductName,
+              M.MeasurementName AS PackSize,
+              salesD.Quanity AS QtyCTN,
+              M.UnitKG,
+              salesD.Quanity*M.UnitKG AS QtyKG,
+              
+              (salesD.Price*salesD.Quanity) AS Total,
+              sales.TotalAmount
+              
+              
+              
+              from [Agriculture].[dbo].[tblProductSalesInfo] sales
+              INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
+              on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
+              INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+              on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
+              INNER JOIN [Agriculture].[dbo].[tblMeasurement] M
+              on salesD.MeasurementId=M.MeasurementId
+              Where 1=1{0}", Utility.ParamChecker(param));
+                          return query;
+        }
     }
 }

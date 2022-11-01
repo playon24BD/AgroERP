@@ -26,5 +26,9 @@ namespace ERPBO.Agriculture.DTOModels
         public long? EntryUserId { get; set; }
 
        
+
+        //public string MeasurementName { get; set; }
+        //public string FinishGoodProductName { get; set; }
+
     }
 }
