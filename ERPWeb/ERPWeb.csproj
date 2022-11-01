@@ -3224,6 +3224,7 @@
     <Content Include="Views\AgroConfiguration\UpdateRequistion.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRequisitionDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\GetProductwisesalesReport.cshtml" />
+<<<<<<< Updated upstream
     <Content Include="Views\AgroConfiguration\_GetRequistionDetailsbyInfoId.cshtml" />
     <Content Include="Views\AgroConfiguration\_ReturnDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\GetRequisitionProduction.cshtml" />
@@ -3231,6 +3232,10 @@
     <Content Include="Views\AgroConfiguration\_GetRequistionDetailsbyInfoIdForProduction.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRequisitionProduction.cshtml" />
     <Content Include="Views\AgroConfiguration\ReceivedOrCanelIssuedRawMaterial.cshtml" />
+=======
+    <Content Include="Views\AgroConfiguration\_ReturnDetails.cshtml" />
+    <Content Include="Views\AgroConfiguration\SalesReturn.cshtml" />
+>>>>>>> Stashed changes
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

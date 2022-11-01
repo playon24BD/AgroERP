@@ -1,0 +1,379 @@
+﻿@{
+    ViewBag.Title = "SalesReturnList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="card card-navy">
+            <div class="card-header" style="text-align: center;">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+
+                        <h5 class="text-center text-bold">
+                            Create Sales Return
+                        </h5>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-body shadow" @*style="background-color:#e7f1f6"*@ id="cardWithOutRequisition">
+                <div class="row">
+
+
+                    <div class="col-md-12">
+                        <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
+                            <h5 style="border-bottom:2px solid #f87878">Sales Return</h5>
+                            <div class="row justify-content-center">
+
+                                <div class="col-md-12">
+
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-2">
+                                            <label class="control-label" for="ddlInvoiceNo">Invoice No</label>
+                                            @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            <span class="error hide req-ddlInvoiceNo">Invoice Is Required</span>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label class="control-label" for="ddlProduct">Product</label>
+                                            <select id="ddlProduct" class="form-control form-control-sm select2">
+                                                @*<option value="0">Select Product</option>*@
+                                            </select>
+                                            <span class="error hide req-ddlProduct">Product Is Required</span>
+                                        </div>
+
+
+                                        <div class="col-md-1">
+                                            <label class="control-label" for="ddlMeasurment">Measurment</label>
+                                            <select id="ddlMeasurment" class="form-control form-control-sm select2">
+                                                @*<option value="0">Select Measurment</option>*@
+                                            </select>
+                                            <span class="error hide req-ddlMeasurment">Measurment Is Required</span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="ddlmeasurmentsize">Measurment Size</label>
+                                            <input type="text" id="ddlmeasurmentsize" name="ddlmeasurmentsize" class="form-control form-control-sm" readonly />
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <label for="ddltotalpurchaseprice">Total Price</label>
+                                            <input type="text" id="ddltotalpurchaseprice" name="ddltotalpurchaseprice" class="form-control form-control-sm" readonly />
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <label for="ddlreturnqty">Quantity</label>
+                                            <input type="number" id="ddlreturnqty" name="qty" class="form-control form-control-sm" />
+                                            <span class="error hide req-qty">Qty Is Required</span>
+                                            <span>Purchase Qty : <span id="productpurchaseqty">0</span> </span>
+                                            <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <label for="ddlunitprice">Unit Price</label>
+                                            <input type="number" id="ddlunitprice" name="ddlunitprice" class="form-control form-control-sm" />
+                                            <span class="error hide req-ddlunitprice">Qty Is Required</span>
+                                            <span>Purchase price: <span id="productpurchaseqty">0</span> </span>
+
+                                        </div>
+
+
+
+                                        <div class="col-md-1">
+                                            <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                                            <div class="clearfix">
+                                                <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card-body" id="tblWithOutRequistion">
+
+                        <div class="card-body table-responsive p-0 " style="height: 200px;">
+                            <table class="table table-head-fixed text-nowrap tadd" id="tblPstockrawmaterial">
+                                <thead>
+
+                                    <tr class="text-center" style="color:black">
+
+                                        <th>#SL</th>
+                                        <th>Raw Material</th>
+                                        <th>Unit</th>
+                                        <th>QTY</th>
+                                        <th>Return Type</th>
+                                        <th>Action</th>
+                                        <th class="hide RMId"></th>
+                                        <th class="hide unitId"></th>
+
+                                    </tr>
+
+                                </thead>
+                                <tbody class="bg-gradient-gray"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    @*addbodey*@
+
+
+</div>
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+  
+        var ddlInvoiceNo = $("#ddlInvoiceNo");
+        var ddlProduct = $("#ddlProduct");
+        var ddlMeasurment = $("#ddlMeasurment");
+        var ddlMeasurmentID = $("#ddlMeasurmentID");
+
+        //var regionNameList = [];
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+
+        })
+
+
+
+       //change Invoice
+        $('#ddlInvoiceNo').change(function () {
+
+            let INVid = $("#ddlInvoiceNo option:selected").val();
+            debugger;
+            var data = { id: TryParseInt(INVid,0) };
+            console.log(data);
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/getproduct', data)).then(function (res,status) {
+
+                var res1 = JSON.parse(res);
+                console.log(res1.flag);
+                if (res1.flag === "1") {
+                    $('#ddlProduct').empty();
+                    $('#ddlMeasurment').empty();
+                    //alert("here me 2");
+                    $.each(res1.data, function (i, obj) {
+                        debugger;
+                        console.log(i);
+                        console.log(obj.Value);
+                        console.log(obj.Text);
+                        let s = '<option value="' + obj.Value + '">' + obj.Text + '</option>';
+                        $('#ddlProduct').append(s);
+                    });
+                }
+
+            }).fail(function (error) {
+                console.log(error);
+            })
+
+
+        });
+
+
+        //change Product
+        $('#ddlProduct').change(function () {
+
+            let INVid = $("#ddlInvoiceNo option:selected").val();
+            let PROid = $("#ddlProduct option:selected").val();
+            debugger;
+            var data = { Invoiceid: TryParseInt(INVid, 0), Productid: TryParseInt(PROid, 0) };
+            console.log(data);
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetMeasurment', data)).then(function (res, status) {
+
+                var res1 = JSON.parse(res);
+                console.log(res1.flag);
+                if (res1.flag === "1") {
+                    $('#ddlMeasurment').empty();
+                    //alert("here me 2");
+                    $.each(res1.data, function (i, obj) {
+                        debugger;
+                        console.log(i);
+                        console.log(obj.Value);
+                        console.log(obj.Text);
+                        let s = '<option value="' + obj.Value + '">' + obj.Text + '</option>';
+                        $('#ddlMeasurment').append(s);
+                    });
+                }
+
+            }).fail(function (error) {
+                console.log(error);
+            })
+
+
+        });
+
+
+
+
+
+
+        //add
+        //$("#addButton").click(function (e) {
+        //    //alert();
+        //    debugger;
+        //    e.preventDefault();
+
+
+        //    if (ValidationForm() == true) {
+        //    if (regionNameList.includes(ddlRegionName.val())) {
+        //        toastrErrorAlert("Region Name Already Exist");
+        //    }
+        //    else {
+        //        var sl = $("#tblSingleItems tbody tr").length;
+        //        var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+        //        var td2 = "<td class='text-center'>" + dropDownSelectedText("ddldivname") + "</td>";
+        //        var td3 = "<td class='text-center'>" + ddlRegionName.val() + "</td>";
+
+
+        //        var td4 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
+        //        var td5 = "<td class='text-center hide'>" + ddldivname.val() + "</td>";
+
+        //        var tr = "<tr>" + td1 + td2 + td3 + td4 + td5  +"</tr>";
+
+        //        $("#tblSingleItems tbody").append(tr);
+        //        regionNameList.push(ddlRegionName.val());
+        //        }
+        //    }
+
+        //    clearCtrlRegion();
+        //})
+
+
+
+        //remove
+        //$(document).on("click", "a.data-onfly-del", function (e) {
+        //    debugger;
+        //    e.preventDefault();
+        //    var index = $(this).parent().parents('tbody tr').index();
+        //    var tds = $(this).parent().parents('tbody tr').children('td');
+
+        //    var rznId = tds.eq(7).html();
+        //    console.log("rznId :" + rznId);
+        //    const mid = regionNameList.indexOf(rznId);
+        //    regionNameList.splice(mid, 1);
+
+
+
+
+        //    removeTableRow("#tblSingleItems tbody", index);
+        //    fnFixTheTbodyRowSerial("#tblSingleItems tbody", index);
+        //})
+
+
+
+
+        //save
+        @*$("#saveButton").click(function (e) {
+            //alert();
+            debugger;
+            e.preventDefault();
+
+            var details = [];
+            details.length = 0;
+            $.each($("#tblSingleItems tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+
+                    RegionId: 0,
+                    RegionName: tds.eq(2).html(),
+                    //RegionAsignName: tds.eq(4).html(),
+                    //MobileNumber: tds.eq(5).html(),
+                    //Remarks: tds.eq(6).html(),
+                    //ZoneId: tds.eq(8).html(),
+                    DivisionId: tds.eq(4).html(),
+
+
+                });
+            })
+            console.log(details);
+            var data = JSON.stringify({ details: details });
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRegionInfo', data, getToken())).then(function (res, status) {
+                if (res === true) {
+                    debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("Regionlist")');
+                    }, 1000);
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+            }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#saveButton");
+            })
+
+            function redirectPage(page) {
+                window.location.replace(page);
+            }
+
+        });*@
+
+
+        //validation
+        //function ValidationForm() {
+        //    debugger;
+        //    Isvalid = true;
+        //    $('.error').addClass("hide");
+        //    //if ($.trim(ddlorgname.val()) == 0) {
+        //    //    $('.required-OrganizationName').removeClass("hide");
+        //    //    Isvalid = false;
+        //    //}
+        //    if ($.trim(ddldivname.val()) == 0) {
+        //        $('.required-DivisionName').removeClass("hide");
+        //        Isvalid = false;
+        //    }
+        //    if ($.trim(ddlRegionName.val()) == 0) {
+        //        $('.required-RegionName').removeClass("hide");
+        //        Isvalid = false;
+        //    }
+
+        //    return Isvalid
+
+        //}
+
+        //clear
+        //function clearCtrlRegion() {
+        //    debugger;
+        //    ddldivname.val('0');
+
+        //    ddlRegionName.val("");
+
+        //}
+
+    </script>
+}

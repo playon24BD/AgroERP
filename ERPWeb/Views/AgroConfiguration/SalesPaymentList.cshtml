@@ -130,6 +130,8 @@
                                         <input type="text" id="ddlDueAmount" class="form-control form-control-sm" readonly />
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
 
@@ -153,13 +155,26 @@
                         <div class="col-md-12">
                             <h5 style="border-bottom:2px solid #ff0000">Payment</h5>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-2">
+                                    <label for="ddlPaymentMode" class="control-label">Payment Mode</label>
+                                    <select id="ddlPaymentMode" class="form-control form-control-sm" select2>
+                                        <option value="">Select Mode</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Check">Check</option>
+                                    </select>
+                                    <span class="error hide req-ddlPaymentMode">ddlPaymentMode Is Required</span>
+                                </div>
+                                <div class="col-md-4" id="divAccountNumber">
+                                    <label for="ddlAccountNumber" class="col-form-label">Account Number</label>
+                                    <input type="number" id="ddlAccountNumber" class="form-control form-control-sm" />
+                                    <span class="error hide req-ddlAccountNumber font-weight-bold">Account is required!</span>
+                                </div>
+                                <div class="col-md-3">
                                     <label for="ddlAmount" class="col-form-label">Amount</label>
                                     <input type="number" id="ddlAmount" class="form-control form-control-sm" />
                                     <span class="error hide req-ddlAmount font-weight-bold">Amount is required!</span>
-
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-3">
                                     <label for="ddlRemarks" class="col-form-label">Remarks.</label>
                                     <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
                                     <span class="error hide req-ddlRemarks font-weight-bold">Invoice No is required!</span>
@@ -218,6 +233,9 @@
         var rptType = $("#rptType");
         var searchByAny = $("#searchByAny");
 
+        var ddlPaymentMode = $("#ddlPaymentMode");
+        var ddlAccountNumber = $("#ddlAccountNumber");
+
 
 
         var ddlInvoiceNo = $("#ddlInvoiceNo");
@@ -240,7 +258,20 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
+            $("#divAccountNumber").hide();
             LoadSalesProduct()
+        })
+
+        ddlPaymentMode.change(function () {
+            if (ddlPaymentMode.val() == "Check") {
+                $("#divAccountNumber").show();
+
+            }
+            if (ddlPaymentMode.val() == "Cash") {
+                $("#divAccountNumber").hide();
+
+            }
+
         })
 
         searchByAny.keyup(function () {
@@ -332,36 +363,39 @@
 
         //save
         $("#saveButton").click(function (e) {
-           // alert();
+            // alert();
             debugger;
             e.preventDefault();
             $(".error").addClass("hide");
 
-            var info = { ProductSalesInfoId: TryParseInt(hdProductSalesInfoId.val(), 0), PaymentAmount: ddlAmount.val(), Remarks: ddlRemarks.val() };
+            if (validateAddToList()) {
+
+            var info = { ProductSalesInfoId: TryParseInt(hdProductSalesInfoId.val(), 0), PaymentAmount: ddlAmount.val(), Remarks: ddlRemarks.val(), PaymentMode: ddlPaymentMode.val(), AccounrNumber: ddlAccountNumber.val() };
 
             var data = JSON.stringify({ info: info });
 
 
 
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveSalesPayment', data, getToken())).then(function (res, status) {
-                            if (res === true) {
-                                //debugger;
-                                $('.toastrDefaultSuccess').trigger('click');
-                                setTimeout(function () {
-                                    redirectPage('@Url.Action("SalesPaymentList")');
-                                }, 1000);
+                if (res === true) {
+                    //debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("SalesPaymentList")');
+                    }, 1000);
 
-                            }
-                            else {
-                                $('.toastrDefaultError').trigger('click');
-                            }
-                            enable("#btnSubmit");
-                        }).fail(function (error) {
-                            alert(execuStatus.fail);
-                            enable("#btnSubmit");
-                })
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#btnSubmit");
+            }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#btnSubmit");
+            })
 
 
+        }
 
         });
 
@@ -370,6 +404,30 @@
 
         function redirectPage(page) {
             window.location.replace(page);
+        }
+
+
+        //validation
+        function validateAddToList() {
+             debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlPaymentMode.val()) == 0) {
+                $(".req-ddlPaymentMode").removeClass('hide');
+                isValid = false;
+            }
+            //if (ddlReturnType.val() === "") {
+            //    $(".req-ddlReturnType").removeClass('hide');
+            //    isValid = false;
+            //}
+            if (TryParseInt(ddlAmount.val(), 0) <= 0) {
+                $(".req-ddlAmount").removeClass('hide');
+                isValid = false;
+            }
+
+
+            return isValid;
         }
     </script>
 
