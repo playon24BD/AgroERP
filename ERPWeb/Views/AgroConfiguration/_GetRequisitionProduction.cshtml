@@ -21,13 +21,13 @@
     <tbody>
         @foreach (var info in Model)
         {
-            badge = info.Status == "Pending" ? "badge bg-warning" : (info.Status == "Current" ? "badge bg-primary" : info.Status == "Approved" ? "badge bg-success" : (info.Status == "Decline" ? "badge bg-secondary" : "badge bg-danger"));
+            badge = info.Status == "Pending" ? "badge bg-warning" : (info.Status == "Send" ? "badge bg-primary" : info.Status == "Received" ? "badge bg-success" : (info.Status == "Reject" ? "badge bg-secondary" : "badge bg-danger"));
 
             sl = sl + 1;
             <tr>
                 <td class="text-center text-bold">@sl</td>
                 <td class="hide">@info.RawMaterialRequisitionInfoId</td>
-                <td>@info.RawMaterialRequisitionCode</td>
+                <td class="text-center">@info.RawMaterialRequisitionCode</td>
 
 
                 <td class="text-center" data-val="@info.Status">
@@ -35,12 +35,16 @@
                 </td>
                 <td class="action">@info.Remarks</td>
 
-                <td>@info.EntryUserId</td>
-                <td>@info.EntryDate.Value.ToString("dd-MMM-yyyy hh:mm tt")</td>
+                <td class="text-center">@info.FullName</td>
+                <td class="text-center">@info.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
                 <td class="text-center action">
+                    @if (info.Status == "Send")
+                    {
+                        <a href="@Url.Action("ReceivedOrCanelIssuedRawMaterial", "AgroConfiguration", new { @infoId = info.RawMaterialRequisitionInfoId })" @*target="_blank"*@ class="btn text-bold btn-sm btn-outline-info" title=""><i class="fas fa-pencil-alt"></i></a>
 
-                        <a href="@Url.Action("ReceivedOrCanelIssuedRawMaterial", "AgroConfiguration", new { @infoId = info.RawMaterialRequisitionInfoId })" target="_blank" class="btn text-bold btn-sm btn-outline-info" title=""><i class="fas fa-pencil-alt"></i></a>
-                    
+                    }
+
+
                     <a href="#" class="btn btn-sm btn-outline-secondary data-item-Details " title="View Details" data-item-Details="@info.RawMaterialRequisitionInfoId"><i class="fas fa-eye"></i></a>
                 </td>
             </tr>

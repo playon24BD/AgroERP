@@ -192,7 +192,7 @@
                     $("#spanRawMaterialStockQty").hide();
                     rawMaterialList.push(ddlRawMaterial.val());
                     $("#btnSubmit").show();
-                  
+
                     clearCtrl();
 
                 }
@@ -212,7 +212,7 @@
             RawMaterialStockQty.val("");
         }
         function validateAddToList() {
-            debugger;
+     
             var isValid = true;
             $(".error").addClass('hide');
 
@@ -233,7 +233,7 @@
         }
 
         function QuantityCheck() {
-            debugger;
+
             var isValid = false;
             var originalQty = RawMaterialStockQty.text();
             var qty = originalQty.replace(/\(|\)/g, '');
@@ -246,14 +246,14 @@
 
 
         $(document).on("click", "a.data-onfly-del", function (e) {
-            debugger;
+
             e.preventDefault();
             var index = $(this).parent().parents('tbody tr').index();
             var tds = $(this).parent().parents('tbody tr').children('td');
 
 
             var rId = tds.eq(5).html();
-            console.log("rId :" + rId);
+      
             const mid = rawMaterialList.indexOf(rId);
 
             rawMaterialList.splice(mid, 1);
@@ -289,13 +289,13 @@
             var data = JSON.stringify({ info });
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
             ).then(function (res, status) {
-                            if (res === true) {
-                         
+
+                if (res === true) {
+
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
-                                    redirectPage('@Url.Action("GetRequisition")');
-                                }, 1000);
-              
+                                    redirectPage('@Url.Action("GetRequisitionProduction")');
+                                }, 500);
                             }
                             else {
                                 $('.toastrDefaultError').trigger('click');
@@ -310,6 +310,10 @@
 
 
         })
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
 
     </script>
 

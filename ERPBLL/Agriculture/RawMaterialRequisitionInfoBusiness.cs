@@ -104,18 +104,10 @@ namespace ERPBLL.Agriculture
                     long requistionInfoId = rawMaterialRequisitionInfo.RawMaterialRequisitionInfoId;
                     if (rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO.Count()>0 && requistionInfoId>0)
                     {
-                        //List<RawMaterialRequisitionDetailsDTO> detailsDTOs = new List<RawMaterialRequisitionDetailsDTO>();
 
-                        //foreach (var id in rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO)
-                        //{
-                        //    id.RawMaterialRequisitionInfoId = requistionInfoId;
-                        //}
-                        //detailsDTOs.Add();
                     isSuccess=    _rawMaterialRequisitionDetailsBusiness.SaveRawMaterialRequisitionDetails(rawMaterialRequisitionInfoDTO.rawMaterialRequisitionDetailsDTO,requistionInfoId,userId,orgId);
 
                     }
-
-
 
                 }
 
@@ -139,7 +131,7 @@ namespace ERPBLL.Agriculture
                 else
                 {
                     Info.Remarks = "SFW";
-                    Info.Status = "Send";
+                    Info.Status = rawMaterialRequisitionInfoDTO.Status;
                     Info.UpdateDate = DateTime.Now;
                     Info.Type = "Requistion";
                     Info.UpdateUserId = userId;

@@ -95,9 +95,8 @@ namespace ERPBLL.Agriculture
                     rawMaterialDetails.IssueQuantity = issue.IssueQuantity;
                     rawMaterialDetails.UpdateDate = DateTime.Now;
                     rawMaterialDetails.UpdateUserId = userId;
-                    rawMaterialDetails.Status = "Send";
-                    //_rawMaterialRequisitionDetailsBusinessRepository.Update(rawMaterialDetails);
-                    //IsSuccess = _rawMaterialRequisitionDetailsBusinessRepository.Save();
+                    rawMaterialDetails.Status = issue.Status;
+
 
                    issueDetailList.Add(rawMaterialDetails);
                 }

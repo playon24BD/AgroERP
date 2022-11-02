@@ -67,7 +67,7 @@
                                     <td class="alert-primary" style="width:10%">Requsition Date</td>
                                     <td style="width:12%; background-color:#e1dada">@Model.EntryDate</td>
                                     <td class="alert-primary" style="width:10%">Requistion by</td>
-                                    <td style="width:12%; background-color:#e1dada">@Model.EntryUserId</td>
+                                    <td style="width:12%; background-color:#e1dada">@Model.FullName</td>
                                 </tr>
 
                             </tbody>
@@ -128,7 +128,7 @@
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetRequisition")');
-                                }, 1000);
+                                }, 500);
 
                             }
                             else {
@@ -144,6 +144,11 @@
 
 
         })
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
 
 
     </script>

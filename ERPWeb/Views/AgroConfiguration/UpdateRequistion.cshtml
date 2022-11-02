@@ -37,9 +37,8 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <select class="form-control form-control-sm" id="ddlAction">
-                                <option value="Approved" selected>Approved</option>
+                                <option value="Send" selected>Approved</option>
                                 <option value="Rejected">Rejected</option>
-                                <option value="Pending">Pending</option>
                             </select>
                             <div class="input-group-append" style="cursor:pointer">
                                 <a id="btnSubmit" href="#" title="Submit Requisition" style="background-color:darkblue" class="input-group-text">
@@ -67,7 +66,7 @@
                                     <td class="alert-primary" style="width:10%">Requsition Date</td>
                                     <td style="width:12%; background-color:#e1dada">@Model.EntryDate</td>
                                     <td class="alert-primary" style="width:10%">Requistion by</td>
-                                    <td style="width:12%; background-color:#e1dada">@Model.EntryUserId</td>
+                                    <td style="width:12%; background-color:#e1dada">@Model.FullName</td>
                                 </tr>
 
                             </tbody>
@@ -101,11 +100,11 @@
         issueQty.on('change', function () {
             var availableQty = $(this).parent().parent().find("td:eq(4)").text();
             var IssueQuntity = $(this).val();
-            if (IssueQuntity <= availableQty) {
+            if (Number(IssueQuntity) <= Number(availableQty)) {
 
              //   $(".error").addClass("hide");
 
-                console.log($(this).parent().children("span"));
+
                 $(this).parent().children("span").addClass("hide");
             }
             else {
@@ -116,11 +115,12 @@
     
         });
 
-        //$("#tblRequisitonDetails tbody tr").
+
 
 
 
         $("#btnSubmit").click(function (e) {
+
             e.preventDefault();
             var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0), Status: ddlAction.val() };
             var details = [];
@@ -129,15 +129,14 @@
                 var tds = $(this).children('td');
                 details.push({
                     RawMaterialIssueStockDetailId: 0,
-                    RawMaterialId: tds.eq(6).html(),
-                    UnitID: tds.eq(7).html(),
+                    UnitID: tds.eq(8).html(),
                     RequisitionQuantity: tds.eq(3).html(),
-                    IssueQuantity: tds.eq(4).children('input[type="number"]').val(),
-                    Status: tds.eq(5).html(),
-                    Remarks: tds.eq(6).html(),
-                    RawMaterialRequisitionInfoId: tds.eq(8).html(),
-                    RawMaterialRequisitionDetailsId: tds.eq(9).html(),  
-                    RawMaterialId: tds.eq(10).html(),
+                    IssueQuantity: tds.eq(5).children('input[type="number"]').val(),
+                    Status: ddlAction.val(),
+                    Remarks: tds.eq(7).html(),
+                    RawMaterialRequisitionInfoId: tds.eq(9).html(),
+                    RawMaterialRequisitionDetailsId: tds.eq(10).html(),  
+                    RawMaterialId: tds.eq(11).html(),
                 });
             })
 
@@ -145,12 +144,14 @@
             var data = JSON.stringify({ info });
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
             ).then(function (res, status) {
-                            if (res === true) {
+
+                if (res === true) {
+              
                          
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetRequisition")');
-                                }, 1000);
+                                }, 500);
               
                             }
                             else {
@@ -166,6 +167,9 @@
 
 
         })
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
 
 
     </script>
