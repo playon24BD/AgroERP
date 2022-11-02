@@ -6,8 +6,8 @@
 }
 <div class="col-md-12">
     <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblRequisitonDetails">
-        <thead>
-            <tr class="text-sm btn-dark">
+        <thead class="btn-dark">
+            <tr class="text-sm text-center">
                 <th style="vertical-align:middle">#SL</th>
                 <th style="vertical-align:middle">Raw Material Name</th>
                 <th style="vertical-align:middle">Unit</th>
@@ -28,14 +28,14 @@
                 {
                     sl++;
                     <tr>
-                        <td>@sl</td>
-                        <td>@item.RawMaterialName</td>
-                        <td>@item.UnitName</td>
-                        <td>@item.RequisitionQuantity</td>
-                        <td>@item.IssueQuantity</td>
+                        <td class="text-center">@sl</td>
+                        <td class="text-center">@item.RawMaterialName</td>
+                        <td class="text-center">@item.UnitName</td>
+                        <td class="text-center">@item.RequisitionQuantity</td>
+                        <td class="text-center">@item.IssueQuantity</td>
 
-                        <td>@item.Status</td>
-                        <td>@item.Remarks</td>
+                        <td class="text-center">@item.Status</td>
+                        <td class="text-center">@item.Remarks</td>
                         <td class="hide">@item.UnitID</td>
                         <td class="hide">@item.RawMaterialRequisitionInfoId</td>
                         <td class="hide">@item.RawMaterialRequisitionDetailsId</td>
