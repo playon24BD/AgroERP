@@ -159,5 +159,32 @@ where 1=1 and  t.ReturnType='Damage' and t.Status='Pending' {0}",
             return _returnRawMaterialRepository.GetOneByOrg(a => a.ReturnRawMaterialId == ReturnRawMaterialId);
 
         }
+
+        public IEnumerable<ReturnRawMaterialDTO> GetallReturns(string name)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForallReturnRM(name)).ToList();
+
+        }
+
+        private string QueryForallReturnRM(string name)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+
+            if (name != null && name != "")
+            {
+                param += string.Format(@" and rm.RawMaterialName like '%{0}%'", name);
+            }
+            query = string.Format(@"	
+ select rr.ReturnRawMaterialId,rr.RawMaterialId,rm.RawMaterialName,rr.Quantity,rr.UnitId,un.UnitName,rr.ReturnType,rr.EntryDate,rr.Status from tblReturnRawMaterial rr
+ inner join tblRawMaterialInfo rm on rr.RawMaterialId = rm.RawMaterialId
+ inner join tblAgroUnitInfo un on rr.UnitId = un.UnitId
+
+Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }

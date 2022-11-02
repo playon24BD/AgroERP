@@ -12,6 +12,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAgroProductSalesInfoBusiness
     {
+        IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport( string fromDate,string toDate);
         IEnumerable<ProductSalesDataReport> GetProductSalesData(string InvoiceNo);
 
         IEnumerable<ProductSalesDataChallanReport> GetProductSalesChallanData(string ChallanNo);
@@ -30,6 +31,8 @@ namespace ERPBLL.Agriculture.Interface
         AgroProductSalesInfo GetInvoiceProductionInfoById(long ProductSalesInfoId);
 
         AgroProductSalesInfo GetChallanProductionInfoById(long ProductSalesInfoId);
+
+        IEnumerable<ProductWiseSalesStementReport> GetProductwisesalesReportDownloadRpt(string fromDate, string toDate);
 
     }
 }

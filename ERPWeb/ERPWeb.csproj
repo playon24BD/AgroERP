@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -2645,6 +2646,28 @@
     <Content Include="Reports\DataSets\dsAgroSalesReport.xss">
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsc">
+      <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsInvoiceWiseCollectionSalesReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xss">
+      <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.xsc">
+      <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsProductwisesalesReportDownloadReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.xss">
+      <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\download.js" />
@@ -3071,6 +3094,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -3224,6 +3257,10 @@
     <Content Include="Views\AgroConfiguration\UpdateRequistion.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRequisitionDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\GetProductwisesalesReport.cshtml" />
+    <Content Include="Views\AgroConfiguration\_ReturnDetails.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetInvoiceWiseSales.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetRequistionDetailsbyInfoId.cshtml" />
+    <Content Include="Views\AgroConfiguration\_ReturnDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRequistionDetailsbyInfoId.cshtml" />
     <Content Include="Views\AgroConfiguration\_ReturnDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\GetRequisitionProduction.cshtml" />
@@ -3235,6 +3272,10 @@
     <Content Include="Views\AgroConfiguration\SalesReturn.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAgroSalesReturn.cshtml" />
     <Content Include="Views\AgroConfiguration\SalesReturnList.cshtml" />
+    <Content Include="Views\_SalesReturnListview.cshtml" />
+    <Content Include="Views\AgroConfiguration\_SalesReturnListview.cshtml" />
+    <Content Include="Views\AgroConfiguration\RawMaterialReturnAllList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_ALLRawMaterialReturnListview.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3271,8 +3312,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\ProductwisesalesReportDownloadsReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

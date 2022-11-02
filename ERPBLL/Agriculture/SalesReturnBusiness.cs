@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
@@ -23,6 +24,37 @@ namespace ERPBLL.Agriculture
            
         }
 
+        public IEnumerable<SalesReturnDTO> GetSalesReturns(long? ProductId, string name)
+        {
+           // return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfoss(orgId, ProductId)).ToList();
+           return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnDTO>(QueryForSalesReturn(ProductId,name)).ToList();
+        }
+        private string QueryForSalesReturn(long? ProductId, string name)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+         
+            if (ProductId != null && ProductId > 0)
+            {
+                param += string.Format(@" and sr.FinishGoodProductInfoId", ProductId);
+            }
+            if (name != null && name != "")
+            {
+                param += string.Format(@" and sr.InvoiceNo like '%{0}%'", name);
+            }
+            query = string.Format(@"	select  sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,sr.ReturnDate FROM  
+tblSalesReturn sr 
+INNER JOIN tblProductSalesInfo si on sr.ProductSalesInfoId = si.ProductSalesInfoId
+inner join tblFinishGoodProductInfo fpi on sr.FinishGoodProductInfoId = fpi.FinishGoodProductId
+inner join tblMeasurement m on sr.MeasurementId = m.MeasurementId
+
+Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+
         public bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId)
         {
             bool IsSuccess = false;
@@ -37,7 +69,7 @@ namespace ERPBLL.Agriculture
                     {
                         ReturnCode = Returncode,
                         InvoiceNo = item.InvoiceNo,
-                        
+                        MeasurementSize = item.MeasurementSize,
                         ReturnQuanity = item.ReturnQuanity,
                         ReturnPerUnitPrice = item.ReturnPerUnitPrice,
                         Status = "NOTADJUST",

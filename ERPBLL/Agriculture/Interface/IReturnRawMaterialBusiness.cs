@@ -27,6 +27,8 @@ namespace ERPBLL.Agriculture.Interface
 
         ReturnRawMaterial GetReturnsById(long ReturnRawMaterialId);
 
+        IEnumerable<ReturnRawMaterialDTO> GetallReturns(string name);
+
 
 
 
