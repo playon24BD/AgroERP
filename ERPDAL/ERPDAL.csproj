@@ -106,6 +106,10 @@
     <Compile Include="AgricultureContextMigrations\202211011159259_Agriculture_typeinTractblandrequistionInfoIdandTypeinissueStock.Designer.cs">
       <DependentUpon>202211011159259_Agriculture_typeinTractblandrequistionInfoIdandTypeinissueStock.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202211021305586_Agriculture_ProductSalesDetails.cs" />
+    <Compile Include="AgricultureContextMigrations\202211021305586_Agriculture_ProductSalesDetails.Designer.cs">
+      <DependentUpon>202211021305586_Agriculture_ProductSalesDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -169,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202211011159259_Agriculture_typeinTractblandrequistionInfoIdandTypeinissueStock.resx">
       <DependentUpon>202211011159259_Agriculture_typeinTractblandrequistionInfoIdandTypeinissueStock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211021305586_Agriculture_ProductSalesDetails.resx">
+      <DependentUpon>202211021305586_Agriculture_ProductSalesDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
