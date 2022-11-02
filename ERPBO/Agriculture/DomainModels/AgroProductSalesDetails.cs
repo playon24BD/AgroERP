@@ -27,6 +27,7 @@ namespace ERPBO.Agriculture.DomainModels
         public long? UpdateUserId { get; set; }
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
+        public string ReceipeBatchCode { get; set; }
 
         [ForeignKey("AgroProductSalesInfo")]
         public long ProductSalesInfoId { get; set; }

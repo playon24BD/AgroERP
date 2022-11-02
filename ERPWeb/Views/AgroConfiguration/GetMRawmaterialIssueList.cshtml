@@ -97,7 +97,7 @@
                                         <div class="col-md-12">
                                             <button class="btn btn-success btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
 
-                                            <h5 style="float: left; width: 50%; margin-left:-100px" class="text-sm">
+                                            @*<h5 style="float: left; width: 50%; margin-left:-100px" class="text-sm">
                                                 Choose: <label class="radio-inline">
                                                     <input type="radio" name="optradio" value="Requistion">With Requisition
                                                 </label>
@@ -105,9 +105,9 @@
                                                     <input type="radio" name="optradio" value="WithOutRequisition">With Out Requisition
                                                 </label>
 
-                                            </h5>
+                                            </h5>*@
 
-                                            <h5 class="text-bold" style="display: inline-block;  margin-left:-200px">
+                                            <h5 class="text-bold" @*style="display: inline-block;  margin-left:-200px"*@>
                                                 Create Raw Material Issue
                                             </h5>
                                         </div>
@@ -177,12 +177,12 @@
                                     </div>
                                 </div>
 
-                                <div class="card-body shadow" @*style="background-color:#e7f1f6"*@ id="cardWithRequisition">
+                                @*<div class="card-body shadow"  id="cardWithRequisition">
                                     <div class="row">
 
 
                                         <div class="col-md-12">
-                                            <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
+                                            <div class="container-fluid" >
                                                 <h5 style="border-bottom:2px solid #f87878">RawMaterial</h5>
                                                 <div class="row justify-content-center">
 
@@ -204,10 +204,7 @@
                                                                 <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
                                                             </div>
 
-                                                            @*<div class="col-md-1">
-                                                <label for="ddlrmnqty">Remain Qty</label>
-                                                <input type="text" id="ddlrmnqty" name="ddlrmnqty" class="form-control form-control-sm" readonly />
-                                            </div>*@
+                            
                                                             <div class="col-md-1">
                                                                 <label for="ddlqty"> Qty</label>
                                                                 <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
@@ -233,7 +230,7 @@
 
 
                                     </div>
-                                </div>
+                                </div>*@
                                 @*addbodey*@
 
 
@@ -264,7 +261,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="card-body" id="tblWithRequistion">
+                        @*<div class="card-body" id="tblWithRequistion">
 
                             <div class="card-body table-responsive p-0 " style="height: 200px;">
                                 <table class="table table-head-fixed text-nowrap tadd" id="tblPstockrawmaterial">
@@ -286,7 +283,7 @@
                                     <tbody class="bg-gradient-gray"></tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
 
@@ -406,26 +403,26 @@
             LoadDataTableStock();
             LoadDataTable();
 
-            $("#cardWithOutRequisition").hide();
-            $("#cardWithRequisition").hide();
-            $("#tblWithOutRequistion").hide();
-            $("#tblWithRequistion").hide();
+            //$("#cardWithOutRequisition").hide();
+            //$("#cardWithRequisition").hide();
+            //$("#tblWithOutRequistion").hide();
+            //$("#tblWithRequistion").hide();
 
           
         })
 
-        $('input[type=radio][name=optradio]').change(function () {
-            if (this.value == 'Requistion') {
-                $("#cardWithOutRequisition").hide();
-                $("#tblWithOutRequistion").hide();
+        //$('input[type=radio][name=optradio]').change(function () {
+        //    if (this.value == 'Requistion') {
+        //        $("#cardWithOutRequisition").hide();
+        //        $("#tblWithOutRequistion").hide();
         
-            }
-            else if (this.value == 'WithOutRequisition') {
+        //    }
+        //    else if (this.value == 'WithOutRequisition') {
 
-                $("#cardWithOutRequisition").show();
-                $("#tblWithOutRequistion").show();
-            }
-        });
+        //        $("#cardWithOutRequisition").show();
+        //        $("#tblWithOutRequistion").show();
+        //    }
+        //});
 
         //material change
         ddlRawMaterial.change(function () {

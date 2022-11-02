@@ -19,7 +19,10 @@ namespace ERPBO.Agriculture.DTOModels
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
         public long OrganizationId { get; set; }
+
        //
        public List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO { get; set; }
+
+        public string FullName { get; set; }
     }
 }

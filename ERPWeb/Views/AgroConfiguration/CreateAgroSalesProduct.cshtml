@@ -452,13 +452,15 @@
             var FinishGoodProductInfoId = ddlProductName.val();
             if (FinishGoodProductInfoId != "") {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetFinishGoodstockCheck', JSON.stringify({ FinishGoodProductInfoId: TryParseInt(ddlProductName.val(), 0) }), getToken())).then(function (res, status) {
+                    debugger;
                     console.log(res);
                     console.log(status);
                     if (status == "success") {
+                        debugger;
                         disable("#FinishGoodStockQty");
 
 
-                        FinishGoodStockQty.text('(' + res.FinishGoodStockQty + ')');
+                        FinishGoodStockQty.text( res.FinishGoodStockQty  );
                         //RawMaterialStockUnit.text('(' + res.RawMaterialStockUnit + ')');
 
                     }
@@ -468,7 +470,20 @@
             }
         }
 
-
+        function LoadCurrentFinishGoodStock() {
+            debugger;
+            //var t = txtQuanity.val()
+            //var span = document.getElementById("FinishGoodStockQty").innerText;
+           
+            $("#txtQuanity").text('(0)');
+            var FinishGoodProductInfoId = ddlProductName.val();
+            if (FinishGoodProductInfoId != "") {
+                var FinishGoodStockQty = document.getElementById("FinishGoodStockQty").innerText;
+                var TextQty = txtQuanity.val();
+                var CurrentQty = FinishGoodStockQty - TextQty;
+                document.getElementById("FinishGoodStockQty").textContent = CurrentQty;
+            }
+        }
 
         $("#btnAddToList").click(function (e) {
             e.preventDefault();
@@ -476,7 +491,7 @@
 
             if (validates() == true) {
 
-
+                LoadCurrentFinishGoodStock(); 
 
 
 

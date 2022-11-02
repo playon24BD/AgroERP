@@ -1981,7 +1981,7 @@ namespace ERPWeb.Controllers
 
             //var targetQuantity=_finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User)
 
-            ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.TargetQuantity + ")", Value = f.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.ReceipeBatchCode + ")", Value = f.FinishGoodProductId.ToString() }).ToList();
 
 
             ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
@@ -2015,10 +2015,11 @@ namespace ERPWeb.Controllers
 
             if (checkFinishGoodStockValue != null)
             {
-                itemStock = (checkFinishGoodStockValue.TargetQuantity);
+                itemStock = (checkFinishGoodStockValue.FirstOrDefault().TargetQuantity);
 
             }
-            return Json(new { FinishGoodStockQty = itemStock });
+            return Json(new { FinishGoodStockQty = itemStock, JsonRequestBehavior.AllowGet });
+            //return Json(itemStock, JsonRequestBehavior.AllowGet );
 
 
         }
@@ -2588,9 +2589,6 @@ namespace ERPWeb.Controllers
 
         #region Requisition
 
-
-
-
         public ActionResult GetRequisition( string flag, string RequisitonCode, long? infoId,  string status, string fdate, string tdate)
 
         //public ActionResult GetRequisition(string flag)
@@ -2633,6 +2631,8 @@ namespace ERPWeb.Controllers
                 Remarks = r.Remarks,
                 EntryDate = r.EntryDate,
                 EntryUserId = r.EntryUserId,
+                FullName =_appUserBusiness.GetAppUserOneById(r.EntryUserId.Value,User.OrgId).FullName,
+                
                 UpdateDate = r.UpdateDate,
                 UpdateUserId = r.UpdateUserId,
  
@@ -2641,19 +2641,6 @@ namespace ERPWeb.Controllers
             List<RawMaterialRequisitionInfoViewModel> rawMaterialRequisitionInfoViewModels = new List<RawMaterialRequisitionInfoViewModel>();
             AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
             return PartialView("_GetRequisition", rawMaterialRequisitionInfoViewModels);
-        }
-
-
-        [HttpGet]
-        public ActionResult SaveRequisition(string flag)
-        {
-            if (string.IsNullOrEmpty(flag))
-            {
-                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
-                return View();
-
-            }
-            return View();
         }
         [HttpGet]
         public ActionResult GetRequistionDetailsbyInfoId(long infoId)
@@ -2666,7 +2653,7 @@ namespace ERPWeb.Controllers
                 RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
                 RequisitionQuantity = d.RequisitionQuantity,
                 IssueQuantity = d.IssueQuantity,
-                AvailableQty = _rawMaterialTrack.GetAllRawMaterialTruck().Where(x => x.RawMaterialId == d.RawMaterialId && x.IssueStatus == "StockIn").Sum(c => c.Quantity)- _rawMaterialTrack.GetAllRawMaterialTruck().Where(w => w.RawMaterialId == d.RawMaterialId && w.IssueStatus == "StockOut").Sum(o=>o.Quantity),
+                AvailableQty = (_rawMaterialTrack.GetAllRawMaterialTruck().Where(x => x.RawMaterialId == d.RawMaterialId && x.IssueStatus == "StockIn").Sum(c => c.Quantity)- _rawMaterialTrack.GetAllRawMaterialTruck().Where(w => w.RawMaterialId == d.RawMaterialId && w.IssueStatus == "StockOut").Sum(o=>o.Quantity))+ _returnRawMaterialBusiness.GetAllReturnRawMaterial().Where(g => g.RawMaterialId == d.RawMaterialId && g.ReturnType == "Good").Sum(g => g.Quantity),
                
                 Status = d.Status,
                 Remarks = d.Remarks,
@@ -2681,6 +2668,62 @@ namespace ERPWeb.Controllers
             return PartialView("_GetRequistionDetailsbyInfoId", rawMaterialRequisitionDetailsViewModel);
         }
 
+        public ActionResult UpdateRequistion(string flag,long infoId)
+        {
+
+            var rawMaterialRequisitionInfo = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfobyId(infoId, User.OrgId);
+
+            RawMaterialRequisitionInfoViewModel rawMaterialRequisitionInfoViewModels = new RawMaterialRequisitionInfoViewModel()
+            {
+
+                RawMaterialRequisitionInfoId = rawMaterialRequisitionInfo.RawMaterialRequisitionInfoId,
+                RawMaterialRequisitionCode = rawMaterialRequisitionInfo.RawMaterialRequisitionCode,
+                Status = rawMaterialRequisitionInfo.Status,
+                Type = rawMaterialRequisitionInfo.Type,
+                Remarks = rawMaterialRequisitionInfo.Remarks,
+                EntryDate = rawMaterialRequisitionInfo.EntryDate,
+                EntryUserId = rawMaterialRequisitionInfo.EntryUserId,
+                FullName = _appUserBusiness.GetAppUserOneById(rawMaterialRequisitionInfo.EntryUserId.Value,User.OrgId).FullName,
+                UpdateDate = rawMaterialRequisitionInfo.UpdateDate,
+                UpdateUserId = rawMaterialRequisitionInfo.UpdateUserId,
+
+            };
+     
+            return View(rawMaterialRequisitionInfoViewModels);
+        }
+
+
+
+        //Production & WareHouse
+        [HttpPost]
+        public ActionResult SaveRequisition(RawMaterialRequisitionInfoViewModel info)
+        {
+
+
+            bool IsSuccess = false;
+            if (ModelState.IsValid)
+            {
+                RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO = new RawMaterialRequisitionInfoDTO();
+                AutoMapper.Mapper.Map(info, rawMaterialRequisitionInfoDTO);
+              IsSuccess=  _rawMaterialRequisitionInfoBusiness.SaveRawMaterialRequisition(rawMaterialRequisitionInfoDTO,User.UserId,User.OrgId);
+
+            }
+
+            return Json(IsSuccess);
+        }
+
+        //Production
+        [HttpGet]
+        public ActionResult SaveRequisition(string flag)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+                return View();
+
+            }
+            return View();
+        }
         [HttpGet]
         public ActionResult GetRequistionDetailsbyInfoIdForProduction(long infoId)
         {
@@ -2705,28 +2748,6 @@ namespace ERPWeb.Controllers
             return PartialView("_GetRequistionDetailsbyInfoIdForProduction", rawMaterialRequisitionDetailsViewModel);
         }
 
-        public ActionResult UpdateRequistion(string flag,long infoId)
-        {
-
-            var rawMaterialRequisitionInfo = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfobyId(infoId, User.OrgId);
-
-            RawMaterialRequisitionInfoViewModel rawMaterialRequisitionInfoViewModels = new RawMaterialRequisitionInfoViewModel()
-            {
-
-                RawMaterialRequisitionInfoId = rawMaterialRequisitionInfo.RawMaterialRequisitionInfoId,
-                RawMaterialRequisitionCode = rawMaterialRequisitionInfo.RawMaterialRequisitionCode,
-                Status = rawMaterialRequisitionInfo.Status,
-                Type = rawMaterialRequisitionInfo.Type,
-                Remarks = rawMaterialRequisitionInfo.Remarks,
-                EntryDate = rawMaterialRequisitionInfo.EntryDate,
-                EntryUserId = rawMaterialRequisitionInfo.EntryUserId,
-                UpdateDate = rawMaterialRequisitionInfo.UpdateDate,
-                UpdateUserId = rawMaterialRequisitionInfo.UpdateUserId,
-
-            };
-     
-            return View(rawMaterialRequisitionInfoViewModels);
-        }
         public ActionResult ReceivedOrCanelIssuedRawMaterial(string flag, long infoId)
         {
 
@@ -2742,6 +2763,7 @@ namespace ERPWeb.Controllers
                 Remarks = rawMaterialRequisitionInfo.Remarks,
                 EntryDate = rawMaterialRequisitionInfo.EntryDate,
                 EntryUserId = rawMaterialRequisitionInfo.EntryUserId,
+                FullName = _appUserBusiness.GetAppUserOneById(rawMaterialRequisitionInfo.EntryUserId.Value, User.OrgId).FullName,
                 UpdateDate = rawMaterialRequisitionInfo.UpdateDate,
                 UpdateUserId = rawMaterialRequisitionInfo.UpdateUserId,
 
@@ -2750,27 +2772,29 @@ namespace ERPWeb.Controllers
             return View(rawMaterialRequisitionInfoViewModels);
         }
 
-        [HttpPost]
-        public ActionResult SaveRequisition(RawMaterialRequisitionInfoViewModel info)
-        {
+
+        //[HttpPost]
+        //public ActionResult SaveRequisition(RawMaterialRequisitionInfoViewModel info)
+        //{
 
 
-            bool IsSuccess = false;
-            if (ModelState.IsValid)
-            {
-                RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO = new RawMaterialRequisitionInfoDTO();
+        //    bool IsSuccess = false;
+        //    if (ModelState.IsValid)
+        //    {
+        //        RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO = new RawMaterialRequisitionInfoDTO();
 
-                AutoMapper.Mapper.Map(info, rawMaterialRequisitionInfoDTO);
-              IsSuccess=  _rawMaterialRequisitionInfoBusiness.SaveRawMaterialRequisition(rawMaterialRequisitionInfoDTO,User.UserId,User.OrgId);
+        //        AutoMapper.Mapper.Map(info, rawMaterialRequisitionInfoDTO);
+        //      IsSuccess=  _rawMaterialRequisitionInfoBusiness.SaveRawMaterialRequisition(rawMaterialRequisitionInfoDTO,User.UserId,User.OrgId);
 
-                AutoMapper.Mapper.Map(info, rawMaterialRequisitionInfoDTO);
-                IsSuccess = _rawMaterialRequisitionInfoBusiness.SaveRawMaterialRequisition(rawMaterialRequisitionInfoDTO, User.UserId, User.OrgId);
+        //        AutoMapper.Mapper.Map(info, rawMaterialRequisitionInfoDTO);
+        //        IsSuccess = _rawMaterialRequisitionInfoBusiness.SaveRawMaterialRequisition(rawMaterialRequisitionInfoDTO, User.UserId, User.OrgId);
 
 
-            }
+        //    }
 
-            return Json(IsSuccess);
-        }
+        //    return Json(IsSuccess);
+        //}
+
 
         public ActionResult GetRequisitionProduction(string flag, string RequisitonCode, long? infoId, string status, string fdate, string tdate)
         {
@@ -2811,6 +2835,7 @@ namespace ERPWeb.Controllers
                 Remarks = r.Remarks,
                 EntryDate = r.EntryDate,
                 EntryUserId = r.EntryUserId,
+                FullName =_appUserBusiness.GetAppUserOneById( r.EntryUserId.Value,User.OrgId).FullName,
                 UpdateDate = r.UpdateDate,
                 UpdateUserId = r.UpdateUserId,
 

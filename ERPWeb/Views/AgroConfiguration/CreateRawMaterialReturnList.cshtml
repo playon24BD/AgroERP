@@ -193,19 +193,24 @@
         })
 
 
-
+        function InternalRawmertrialQty() {
+          
+            var RawMaterialStockQty = document.getElementById("RawMaterialStockQty").innerText;
+            var TextQty = ddlreturnqty.val();
+            var CurrentQty = RawMaterialStockQty - TextQty;
+            document.getElementById("RawMaterialStockQty").textContent = CurrentQty;
+           
+        }
         //add
         $("#addTolist").click(function (e) {
             //alert();
-            //debugger;
+            debugger;
             e.preventDefault();
 
 
             if (validateAddToList()) {
 
-                //if (ddlRawMaterialList.includes(ddlRawMaterial.val())) {
-                //    toastrErrorAlert("Material Already Exist");
-                //}
+                //InternalRawmertrialQty();
             
                     var sl = $("#tblPstockrawmaterial tbody tr").length;
                     var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
