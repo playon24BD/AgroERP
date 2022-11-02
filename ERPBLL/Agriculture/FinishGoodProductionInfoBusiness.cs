@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ERPBLL.Agriculture
 {
-    public class FinishGoodProductionInfoBusiness :IFinishGoodProductionInfoBusiness
+    public class FinishGoodProductionInfoBusiness : IFinishGoodProductionInfoBusiness
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly FinishGoodProductionInfoRepository _finishGoodProductionInfoRepository;
@@ -19,7 +19,7 @@ namespace ERPBLL.Agriculture
         private readonly IMRawMaterialIssueStockInfo _rawMaterialIssueStockInfoBusiness;
         private readonly IMRawMaterialIssueStockDetails _rawMaterialIssueStockDetailsBusiness;
         private readonly IRawMaterialStockInfo _rawMaterialStockInfo;
-        public FinishGoodProductionInfoBusiness (IAgricultureUnitOfWork agricultureUnitOfWork,IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IMRawMaterialIssueStockInfo rawMaterialIssueStockInfoBusiness, IMRawMaterialIssueStockDetails rawMaterialIssueStockDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo)
+        public FinishGoodProductionInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IMRawMaterialIssueStockInfo rawMaterialIssueStockInfoBusiness, IMRawMaterialIssueStockDetails rawMaterialIssueStockDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._finishGoodProductionInfoRepository = new FinishGoodProductionInfoRepository(this._agricultureUnitOfWork);
@@ -29,9 +29,32 @@ namespace ERPBLL.Agriculture
             this._rawMaterialStockInfo = rawMaterialStockInfo;
         }
 
-        public FinishGoodProductionInfo GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId)
+        public IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId)
         {
-            return _finishGoodProductionInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.FinishGoodProductId == FinishGoodProductInfoId);
+            //return _finishGoodProductionInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.FinishGoodProductId == FinishGoodProductInfoId);
+
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductCheckQty(FinishGoodProductInfoId, orgId)).ToList();
+        }
+
+        private string QueryForFinishGoodProductCheckQty(long finishGoodProductInfoId, long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and FI.OrganizationId={0}", orgId);
+            if (finishGoodProductInfoId>0)
+            {
+                param += string.Format(@" and FI.FinishGoodProductId={0}", finishGoodProductInfoId);
+            }
+
+            query = string.Format(@"SELECT DISTINCT FI.FinishGoodProductId,FP.FinishGoodProductName,FI.ReceipeBatchCode,SUM(FI.TargetQuantity) AS TargetQuantity
+
+FROM FinishGoodProductionInfoes FI
+INNER JOIN tblFinishGoodProductInfo FP on FI.FinishGoodProductId=FP.FinishGoodProductId
+INNER JOIN tblFinishGoodRecipeInfo RI on FI.ReceipeBatchCode=RI.ReceipeBatchCode	
+Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode {0} Group by FP.FinishGoodProductName,FI.ReceipeBatchCode,FI.FinishGoodProductId", Utility.ParamChecker(param));
+
+            return query;
         }
 
         public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfos(long orgId)
@@ -44,12 +67,15 @@ namespace ERPBLL.Agriculture
             string query = string.Empty;
             string param = string.Empty;
 
-            param += string.Format(@" and infos.OrganizationId={0}", orgId);
+            param += string.Format(@" and FI.OrganizationId={0}", orgId);
 
-            query = string.Format(@"select infos.FinishGoodProductId, info.FinishGoodProductName,infos.TargetQuantity
-from FinishGoodProductionInfoes infos 
-inner join tblFinishGoodProductInfo info on infos.FinishGoodProductId=info.FinishGoodProductId	
-Where 1=1 {0}", Utility.ParamChecker(param));
+
+            query = string.Format(@"SELECT DISTINCT FI.FinishGoodProductId,FP.FinishGoodProductName,FI.ReceipeBatchCode,SUM(FI.TargetQuantity) AS TargetQuantity
+
+FROM FinishGoodProductionInfoes FI
+INNER JOIN tblFinishGoodProductInfo FP on FI.FinishGoodProductId=FP.FinishGoodProductId
+INNER JOIN tblFinishGoodRecipeInfo RI on FI.ReceipeBatchCode=RI.ReceipeBatchCode	
+Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 Group by FP.FinishGoodProductName,FI.ReceipeBatchCode,FI.FinishGoodProductId", Utility.ParamChecker(param));
 
             return query;
         }
@@ -62,7 +88,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
         public IEnumerable<FinishGoodProductionInfo> GetFinishGoodProductionInfo(long orgId)
         {
-            return _finishGoodProductionInfoRepository.GetAll(a=>a.OrganizationId==orgId);
+            return _finishGoodProductionInfoRepository.GetAll(a => a.OrganizationId == orgId);
         }
 
         public FinishGoodProductionInfo GetProductionInfoById(long id, long orgId)
@@ -76,30 +102,30 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
             var finishGoodProductionBatch = "Pro-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
-            if (finishGoodProductionInfoDTO.FinishGoodProductionInfoId==0)
+            if (finishGoodProductionInfoDTO.FinishGoodProductionInfoId == 0)
             {
                 FinishGoodProductionInfo finishGoodProductionInfo = new FinishGoodProductionInfo
                 {
                     FinishGoodProductId = finishGoodProductionInfoDTO.FinishGoodProductId,
-                    ReceipeBatchCode=finishGoodProductionInfoDTO.ReceipeBatchCode,
-                    FinishGoodProductionBatch= finishGoodProductionBatch,
+                    ReceipeBatchCode = finishGoodProductionInfoDTO.ReceipeBatchCode,
+                    FinishGoodProductionBatch = finishGoodProductionBatch,
                     Quanity = finishGoodProductionInfoDTO.Quanity,
                     TargetQuantity = finishGoodProductionInfoDTO.TargetQuantity,
                     Remarks = finishGoodProductionInfoDTO.Remarks,
                     Status = finishGoodProductionInfoDTO.Status,
                     EntryDate = DateTime.Now,
-                    EntryUserId=userId,
-                    OrganizationId=orgId
+                    EntryUserId = userId,
+                    OrganizationId = orgId
 
                 };
                 _finishGoodProductionInfoRepository.Insert(finishGoodProductionInfo);
 
             }
-         isSuccess= _finishGoodProductionInfoRepository.Save();
+            isSuccess = _finishGoodProductionInfoRepository.Save();
             if (isSuccess)
             {
 
-                isSuccess = finishGoodProductionDetailsBusiness.SaveFinishGoodDetails(details, finishGoodProductionBatch, userId,orgId);
+                isSuccess = finishGoodProductionDetailsBusiness.SaveFinishGoodDetails(details, finishGoodProductionBatch, userId, orgId);
 
             }
             if (isSuccess)
@@ -115,7 +141,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                     {
                         //Test!
 
-                        var rawMaterialStockInfoId =_rawMaterialIssueStockDetailsBusiness.GetRawMaterialIssueStockByMeterialId(item.RawMaterialId, orgId);
+                        var rawMaterialStockInfoId = _rawMaterialIssueStockDetailsBusiness.GetRawMaterialIssueStockByMeterialId(item.RawMaterialId, orgId);
 
                         var checkRawMaterialStockValue = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(item.RawMaterialId, orgId);
                         //var rawMaterialStockInfoId = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockByMeterialId(item.RawMaterialId, orgId);
@@ -125,8 +151,8 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                         } };
                         rawMaterialIssueStockDetailsDTOList.AddRange(issuedetails);
 
-                        List<MRawMaterialIssueStockInfoDTO> rawMaterialIssueStockInfos = new List<MRawMaterialIssueStockInfoDTO>() { new MRawMaterialIssueStockInfoDTO { RawMaterialIssueStockId= rawMaterialStockInfoId.RawMaterialIssueStockId,RawMaterialId=item.RawMaterialId,Quantity=item.RequiredQuantity,OrganizationId=orgId } };
-                        rawMaterialIssueStockInfoList.AddRange(rawMaterialIssueStockInfos); 
+                        List<MRawMaterialIssueStockInfoDTO> rawMaterialIssueStockInfos = new List<MRawMaterialIssueStockInfoDTO>() { new MRawMaterialIssueStockInfoDTO { RawMaterialIssueStockId = rawMaterialStockInfoId.RawMaterialIssueStockId, RawMaterialId = item.RawMaterialId, Quantity = item.RequiredQuantity, OrganizationId = orgId } };
+                        rawMaterialIssueStockInfoList.AddRange(rawMaterialIssueStockInfos);
 
                     }
 

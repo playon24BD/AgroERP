@@ -412,23 +412,38 @@ on TE.TerritoryId=ST.TerritoryId
             string param = string.Empty;
             string query = string.Empty;
 
-
-
-            if (!string.IsNullOrEmpty(fromDate))
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
             {
-                param += string.Format(@" and CONVERT(date, SI.EntryDate) = '{0}'", fromDate);
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(SI.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
             }
-            if (!string.IsNullOrEmpty(toDate))
-            {
-                param += string.Format(@" and CONVERT(date, SI.EntryDate) = '{0}'", toDate);
-            }
+            //else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            //{
+            //    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+            //    param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", fDate);
+            //}
+            //else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            //{
+            //    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+            //    param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", tDate);
+            //}
 
-            if (!string.IsNullOrEmpty(fromDate) && !string.IsNullOrEmpty(toDate))
-            {
-                param += string.Format(@" and CONVERT(date, SI.EntryDate) Between '{0}' and '{0}'", fromDate, toDate);
-                //CONVERT(date, SI.EntryDate) Between CONVERT(date,'2022-10-27') And CONVERT(date,'2022-10-27')
-            }
-            
+            //if (!string.IsNullOrEmpty(fromDate))
+            //{
+            //    param += string.Format(@" and CONVERT(date, SI.EntryDate) = '{0}'", fromDate);
+            //}
+            //if (!string.IsNullOrEmpty(toDate))
+            //{
+            //    param += string.Format(@" and CONVERT(date, SI.EntryDate) = '{0}'", toDate);
+            //}
+
+            //if (!string.IsNullOrEmpty(fromDate) && !string.IsNullOrEmpty(toDate))
+            //{
+            //    param += string.Format(@" and CONVERT(date, SI.EntryDate) Between '{0}' and '{0}'", fromDate, toDate);
+            //    //CONVERT(date, SI.EntryDate) Between CONVERT(date,'2022-10-27') And CONVERT(date,'2022-10-27')
+            //}
+
 
             query = string.Format(@"
                 SELECT  SI.ProductSalesInfoId, A.AreaName,

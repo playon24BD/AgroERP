@@ -60,9 +60,11 @@
             <i class="fas fa-download"></i>
         </a>*@
 
-                    <a href="@Url.Action("AgroProductSalesReport", "AgroConfiguration", new { @ProductSalesInfoId = item.ProductSalesInfoId })" target="_blank" class="btn btn-sm btn-outline-danger" title="Download Report"><i class="fas fa-file-pdf"></i></a>
+                    <a href="@Url.Action("AgroProductSalesReport", "AgroConfiguration", new { @ProductSalesInfoId = item.ProductSalesInfoId })" target="_blank" class="btn btn-sm btn-outline-danger" title="Download Invoice"><i class="fas fa-file-invoice"></i></a>
 
-                    <a href="@Url.Action("AgroProductSalesChallanReport", "AgroConfiguration", new { @ProductSalesInfoId = item.ProductSalesInfoId })" target="_blank" class="btn btn-sm btn-outline-danger" title="Download Report"><i class="fas fa-file-invoice"></i></a>
+                    <a href="@Url.Action("AgroProductSalesChallanReport", "AgroConfiguration", new { @ProductSalesInfoId = item.ProductSalesInfoId })" target="_blank" class="btn btn-sm btn-outline-danger" title="Download Challan">
+                        <i class="fa-solid fa-receipt"></i>
+                    </a>
 
 
 
