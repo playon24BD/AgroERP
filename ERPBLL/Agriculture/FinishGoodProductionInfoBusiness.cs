@@ -107,7 +107,7 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
             bool isSuccess = false;
 
             var finishGoodProductionBatch = "Pro-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
-            var receiID= _finishGoodRecipeInfoBusiness.GetReceipId(finishGoodProductionInfoDTO.ReceipeBatchCode).FGRId;
+            var receiID= _finishGoodRecipeInfoBusiness.GetReceipbachcodeid(finishGoodProductionInfoDTO.ReceipeBatchCode).FGRId;
 
             if (finishGoodProductionInfoDTO.FinishGoodProductionInfoId == 0)
             {

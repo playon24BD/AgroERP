@@ -28,7 +28,11 @@ namespace ERPBLL.Agriculture
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.FGRId == id && i.OrganizationId == orgId);
         }
-        public FinishGoodRecipeInfo GetReceipId(string ReceipeBatchCode)
+        public FinishGoodRecipeInfo GetReceipId(long ProductId,int ProductUnitQty,long UnitId)
+        {
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(r => r.FinishGoodProductId == ProductId && r.FGRQty==  ProductUnitQty && r.UnitId==UnitId);
+        }
+        public FinishGoodRecipeInfo GetReceipbachcodeid(string ReceipeBatchCode)
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(r => r.ReceipeBatchCode == ReceipeBatchCode);
         }
@@ -64,10 +68,6 @@ namespace ERPBLL.Agriculture
         {
             return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeUnitQty(orgId)).ToList();
         }
-<<<<<<< Updated upstream
-       
-=======
->>>>>>> Stashed changes
 
         private string QueryForFinishGoodRecipeUnitQty(long orgId)
         {
