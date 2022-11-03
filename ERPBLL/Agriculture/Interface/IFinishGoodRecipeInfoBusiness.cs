@@ -22,7 +22,10 @@ namespace ERPBLL.Agriculture.Interface
         FinishGoodRecipeInfo GetReceipId(string ReceipeBatchCode);
         IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodUnitQty(long orgId);
         IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodReceipUnitQty(long finishGoodProductId, long orgId);
+<<<<<<< Updated upstream
         IEnumerable<FinishGoodRecipeInfo> GetCheckDupliketReceipeProduct(long FinishGoodProductId,int FGRQty, long UnitId);
+=======
+>>>>>>> Stashed changes
 
     }
 }

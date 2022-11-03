@@ -64,7 +64,10 @@ namespace ERPBLL.Agriculture
         {
             return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeUnitQty(orgId)).ToList();
         }
+<<<<<<< Updated upstream
        
+=======
+>>>>>>> Stashed changes
 
         private string QueryForFinishGoodRecipeUnitQty(long orgId)
         {
