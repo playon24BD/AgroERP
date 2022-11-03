@@ -122,7 +122,7 @@
                     <div class="col-md-5" style="border-left:2px solid #f87878">
                         <h5 style="border-bottom:2px solid #f87878">Product Salse</h5>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label for="ddlProductName" class="col-form-label">
                                     Product Name
                                 </label>
@@ -133,7 +133,7 @@
                                 <label for="ddlQtyUnit" class="col-form-label">
                                     Receipe Unit Qty
                                 </label>
-                                @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--Select Unit Qty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--Select UnitQty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-QtyUnit font-weight-bold">Unit Qty is required!</span>
                             </div>
                             <div class="col-md-4">
@@ -143,7 +143,7 @@
                                 @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "--Select MeasurementName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
                             </div>
-                            <div class="col-md-4">
+                            <div class="hide">
                                 <label for="ddlRawMaterial" class="col-form-label">Measurement Size</label>
                                 @*@Html.DropDownList("ddlMeasurementSize", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementSize, "--Select Measurement Size--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
                                 <input type="text" id="ddlMeasurementSize" class="form-control form-control-sm" readonly />
@@ -168,14 +168,7 @@
                                 <label for="ddlPrice" class="col-form-label">Discount %</label>
                                 <input type="text" id="txtDiscount" class="form-control form-control-sm" />
                             </div>
-                            @*<div class="hide">
-            <label>SubTotal</label>
-            <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
-        </div>
-        <div class="hide">
-            <label>Total Discount</label>
-            <input type="number" id="ddlttdis" name="ddlttdis" class="form-control form-control-sm" readonly />
-        </div>*@
+
                             <div class="hide">
                                 <label>SubTotal</label>
                                 <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
@@ -191,9 +184,8 @@
                             </div>
 
                             <div class="col-md-2">
-                                @*<label for="" class="control-label" style="visibility:hidden"> Add To List</label>*@
-                                <div class="clearfix">
-                                    <button type="submit" class="btn btn-sm btn-warning text-bold float-left" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
+                                <label for="" class="col-form-label" style="visibility:hidden"> Add To List</label>             <div>
+                                    <button type="submit" class="btn btn-sm btn-warning text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
 
 
                                 </div>
@@ -463,7 +455,7 @@
 
         ddlProductName.change(function () {
 
-           
+
             LoadQtyUnit();
 
         })
@@ -473,7 +465,7 @@
 
                 LoadDropDown('/AgroConfiguration/GetReceipyUnitQtyByProductionId', 'POST', ddlQtyUnit, JSON.stringify({ finishGoodProductId: ddlProductName.val() }));
             }
-          
+
 
         }
         ddlQtyUnit.change(function () {
@@ -513,7 +505,7 @@
             debugger;
             //var t = txtQuanity.val()
             //var span = document.getElementById("FinishGoodStockQty").innerText;
-           
+
             $("#txtQuanity").text('(0)');
             var FinishGoodProductInfoId = ddlProductName.val();
             if (FinishGoodProductInfoId != "") {
@@ -530,7 +522,7 @@
 
             if (validates() == true) {
 
-                LoadCurrentFinishGoodStock(); 
+                LoadCurrentFinishGoodStock();
 
 
 
@@ -538,7 +530,7 @@
 
                     var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
                     var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
-                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "  " + ddlMeasurementSize.val() +"</td>";
+                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") +"</td>";
                     var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
                     var td5 = "<td class='text-center' >" + txtPrice.val() + "</td>";
                     var td6 = "<td class='text-center'>" + txtDiscount.val() + "</td>";
@@ -598,8 +590,8 @@
                 debugger;
                 //ddlpt.val("");
                 calculateTotal();
-                
-               
+
+
             }
 
 
@@ -608,7 +600,7 @@
         txtPrice.keyup(function () {
             if (txtPrice.val() >= 0) {
                 calculateTotal();
-              
+
             }
 
         });
@@ -617,7 +609,7 @@
 
             var sub = txtPrice.val() * txtQuanity.val();
             ddlttprice.val(sub);
-           
+
 
         }
 
@@ -628,7 +620,7 @@
             ddlpt.val(pay);
         }
         //payable
-        
+
 
         //calculatedis
         txtDiscount.keyup(function () {
