@@ -13,11 +13,13 @@
         <tr class="text-center">
             <th>#SL</th>
             <th>Product Name</th>
+            <th>Unit Name</th>
             <th>Measurment Name</th>
             <th>Measurment Size</th>
             <th>Return Qty</th>
             <th>Return Unit Price</th>
             <th>Return Total Price</th>
+            <th>Return Date</th>
             <th>Accept</th>
         </tr>
     </thead>
@@ -28,11 +30,13 @@
         <tr>
             <td class="text-center">@sl</td>
             <td class="text-center">@item.FinishGoodProductName</td>
+            <td class="text-center">@item.QtyKG</td>
             <td class="text-center">@item.MeasurementName</td>
             <td class="text-center">@item.MeasurementSize</td>
             <td class="text-center">@item.ReturnQuanity</td>
             <td class="text-center">@item.ReturnPerUnitPrice</td>
             <td class="text-center">@item.ReturnTotalPrice</td>
+            <td class="text-center">@item.ReturnDate</td>
             <td class="text-center "><input type="checkbox" ></td>
             
 

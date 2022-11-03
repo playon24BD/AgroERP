@@ -168,6 +168,14 @@
                                 <label for="ddlPrice" class="col-form-label">Discount %</label>
                                 <input type="text" id="txtDiscount" class="form-control form-control-sm" />
                             </div>
+                            @*<div class="hide">
+            <label>SubTotal</label>
+            <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
+        </div>
+        <div class="hide">
+            <label>Total Discount</label>
+            <input type="number" id="ddlttdis" name="ddlttdis" class="form-control form-control-sm" readonly />
+        </div>*@
                             <div class="hide">
                                 <label>SubTotal</label>
                                 <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
@@ -175,6 +183,11 @@
                             <div class="hide">
                                 <label>Total Discount</label>
                                 <input type="number" id="ddlttdis" name="ddlttdis" class="form-control form-control-sm" readonly />
+                            </div>
+
+                            <div class="hide">
+                                <label>Payable Total</label>
+                                <input type="number" id="ddlpt" name="ddlpt" class="form-control form-control-sm" readonly />
                             </div>
 
                             <div class="col-md-2">
@@ -366,6 +379,8 @@
         var FinishGoodStockQty = $("#FinishGoodStockQty");
         var ddlQtyUnit = $("#ddlQtyUnit");
 
+        var ddlpt = $("#ddlpt");
+
 
 
 
@@ -534,10 +549,10 @@
                      //var td7 = "<td class='text-center DiscountIDCell'>" + ddlttprice.val() * txtDiscount.val() / 100 + "</td>";
                      var td7 = "<td class='text-center DiscountIDCell'>" + ddlttdis.val() + "</td>";
                     //var td8 = "<td class='text-center TotalIDCell'>" + txtQuanity.val() * txtPrice.val() + "</td>";
-                    var td8 = "<td class='text-center TotalIDCell'>" + ddlttprice.val()  + "</td>";
+                   var td8 = "<td class='text-center TotalIDCell'>" + ddlpt.val()  + "</td>";
 
                    // var td9 = "<td class='text-center'> <a href='#' class='btn btn-sm btn-danger btn-flat data-onfly-del'><i class='far fa-trash-alt'></i></a></td>";
-                    var td9 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlttprice.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td9 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
 
                     var td10 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
@@ -549,7 +564,7 @@
 
 
                     //totalprice
-                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
                     $('.totalsub').text(to);
                     console.log(to);
                     //totalprice
@@ -582,7 +597,11 @@
         //calculatetotal
         txtQuanity.keyup(function () {
             if (txtQuanity.val() >= 0) {
+                debugger;
+                //ddlpt.val("");
                 calculateTotal();
+                
+               
             }
 
 
@@ -591,7 +610,7 @@
         txtPrice.keyup(function () {
             if (txtPrice.val() >= 0) {
                 calculateTotal();
-
+              
             }
 
         });
@@ -600,14 +619,24 @@
 
             var sub = txtPrice.val() * txtQuanity.val();
             ddlttprice.val(sub);
+           
 
         }
-        //calculateend
+
+
+        function payabl() {
+            debugger;
+            var pay = ddlttprice.val() - ddlttdis.val();
+            ddlpt.val(pay);
+        }
+        //payable
+        
 
         //calculatedis
         txtDiscount.keyup(function () {
             if (txtQuanity.val() >= 0) {
                 calculateTotalDis();
+                payabl();
             }
 
 
@@ -616,13 +645,14 @@
         txtPrice.keyup(function () {
             if (txtPrice.val() >= 0) {
                 calculateTotalDis();
-
+                payabl();
             }
 
         });
         txtQuanity.keyup(function () {
             if (txtQuanity.val() >= 0) {
                 calculateTotalDis();
+                payabl();
             }
 
 

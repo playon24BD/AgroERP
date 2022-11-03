@@ -262,4 +262,13 @@ namespace ERPDAL.AgricultureDAL
     {
         public RawMaterialRequisitionDetailsBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
     }
+    public class CommissionOnProductHistoryBusinessRepository : AgricultureBaseRepository<CommisionOnProductHistory>
+    {
+        public CommissionOnProductHistoryBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    public class CommissionOnProductBusinessRepository : AgricultureBaseRepository<CommisionOnProduct>
+    {
+        public CommissionOnProductBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
 }

@@ -43,7 +43,7 @@ namespace ERPBLL.Agriculture
             {
                 param += string.Format(@" and sr.InvoiceNo like '%{0}%'", name);
             }
-            query = string.Format(@"	select  sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,sr.ReturnDate FROM  
+            query = string.Format(@"	select  sr.QtyKG,sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,sr.ReturnDate FROM  
 tblSalesReturn sr 
 INNER JOIN tblProductSalesInfo si on sr.ProductSalesInfoId = si.ProductSalesInfoId
 inner join tblFinishGoodProductInfo fpi on sr.FinishGoodProductInfoId = fpi.FinishGoodProductId
@@ -78,7 +78,9 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                         ProductSalesInfoId = item.ProductSalesInfoId,
                         ReturnDate = DateTime.Now,
                         EntryUserId = userId,
-                        ReturnTotalPrice = (item.ReturnQuanity * item.ReturnPerUnitPrice)
+                        ReturnTotalPrice = (item.ReturnQuanity * item.ReturnPerUnitPrice),
+                        FGRId = item.FGRId,
+                        QtyKG = item.QtyKG
 
 
                     };
