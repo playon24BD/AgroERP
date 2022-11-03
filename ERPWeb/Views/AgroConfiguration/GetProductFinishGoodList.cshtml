@@ -218,7 +218,7 @@
         ddlReceipBatchCode.change(function () {
 
 
-           // LoadQuantityData();
+           LoadQuantityData();
             LoadTergetQuantityData();
         })
 
@@ -326,7 +326,7 @@
         $("#btnSubmit").click(function (e) {
             e.preventDefault();
             var data = {};
-            var finishGoodProduction = {finishGoodProductId: ddlProduct.val(), quanity: 1, targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
+            var finishGoodProduction = { finishGoodProductId: ddlProduct.val(), quanity: TryParseInt(qty.val(),0), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
 
             var details = [];
             details.length = 0;

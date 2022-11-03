@@ -13,7 +13,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfos(long orgId);
         IEnumerable<FinishGoodProductionInfo> GetFinishGoodProductionInfo(long orgId);
         //FinishGoodProductionInfo GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId);
-        IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId);
+        IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,string ProductUnitQty, long orgId);
 
         FinishGoodProductionInfo GetProductionInfoById(long id, long orgId);
         FinishGoodProductionInfo GetFinishGoodProductionByAny(string any, long orgId);

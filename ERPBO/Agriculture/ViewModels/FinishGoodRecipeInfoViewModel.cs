@@ -21,5 +21,8 @@ namespace ERPBO.Agriculture.ViewModels
         public long? UpUserId { get; set; }
         public Nullable<DateTime> UpdateDate { get; set; }
         public string Status { get; set; }
+        public string UnitQty { get; set; }
+
+
     }
 }
