@@ -3196,6 +3196,13 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
         }
         #endregion
+        #region Commision
+        public ActionResult ProductCommision()
+        {
+            return View();
+        }
+        #endregion
+
 
     }
 }
