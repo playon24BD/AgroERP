@@ -30,5 +30,8 @@ namespace ERPBO.Agriculture.ViewModels
 
         public string FinishGoodProductName { get; set; }
         public string MeasurementSize { get; set; }
+        public string MeasurementName { get; set; }
+
+        public bool ISActive { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ERPBO.Agriculture.DTOModels;
+﻿using ERPBO.Agriculture.DomainModels;
+using ERPBO.Agriculture.DTOModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,17 @@ namespace ERPBLL.Agriculture.Interface
 
 
         IEnumerable<SalesReturnDTO> GetSalesReturns(long? ProductId, string name);
+
+
+        IEnumerable<SalesReturn> GetSalesSalesReturnByInfoIdNotAdjust(long? ProductSalesInfoId);
+
+        bool updateadjustsales(List<SalesReturnDTO> salesReturnDTOs);
+
+        // ReturnRawMaterial GetReturnsById(long ReturnRawMaterialId);
+
+        SalesReturn GetSalesReturnsById(long SalesReturnId);
+
+
 
     }
 }

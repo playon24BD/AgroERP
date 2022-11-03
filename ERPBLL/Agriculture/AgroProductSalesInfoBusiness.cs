@@ -543,5 +543,11 @@ on TE.TerritoryId=ST.TerritoryId
               Where 1=1{0}", Utility.ParamChecker(param));
                           return query;
         }
+
+        public IEnumerable<AgroProductSalesInfo> GetAgroSalesinfoByStokiestId(long StockiestId)
+        {
+            return _agroProductSalesInfoRepository.GetAll(d => d.StockiestId == StockiestId);
+
+        }
     }
 }

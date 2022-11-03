@@ -3114,5 +3114,95 @@ namespace ERPWeb.Controllers
 
         #endregion
 
+        #region  SalesReturnAdjust
+        public ActionResult SalesReturnAdjustCreate(long? id)
+        {
+
+            ViewBag.ddlstokiestname = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stk => new SelectListItem { Text = stk.StockiestName, Value = stk.StockiestId.ToString() });
+            return View();
+        }
+
+        public ActionResult getinvoice(long id)
+
+        {
+
+            var invoicelist = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Select(a => new SelectListItem { Text = a.InvoiceNo, Value = a.ProductSalesInfoId.ToString() }).ToList();
+
+            if (invoicelist.Count > 0 && invoicelist != null)
+            {
+                return Json(new { flag = "1", msg = "Invoice found", data = invoicelist }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { flag = "0", msg = "Invoice not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
+        public ActionResult GetStokistTotalbill(long id)
+        {
+            var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(x => x.StockiestId == id).ToList();
+            var totalbill = stokiestid.Sum(y=> y.TotalAmount);
+            return Json(totalbill, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult GetStokistTotalPaid(long id)
+        {
+            var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(p => p.StockiestId == id).ToList();
+            var totalpaid = stokiestid.Sum(pa => pa.PaidAmount);
+            return Json(totalpaid, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult GetStokistTotalDue(long id)
+        {
+            var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
+            var totaldue = stokiestid.Sum(du => du.DueAmount);
+            return Json(totaldue, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult SalesReturnAdjustCreateTbl(long? ProductSalesInfoId)
+        {
+           
+
+            List<SalesReturnViewModel> details = new List<SalesReturnViewModel>();
+            details = _salesReturn.GetSalesSalesReturnByInfoIdNotAdjust(ProductSalesInfoId).Select(i => new SalesReturnViewModel
+
+            {
+                SalesReturnId = i.SalesReturnId,
+               ReturnQuanity = i.ReturnQuanity,
+               ReturnPerUnitPrice = i.ReturnPerUnitPrice,
+               ReturnTotalPrice = i.ReturnTotalPrice,
+               FinishGoodProductInfoId = i.FinishGoodProductInfoId,
+               FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName,
+                MeasurementId = i.MeasurementId,
+                MeasurementName = _measuremenBusiness.GetMeasurementById(i.MeasurementId, User.OrgId).MeasurementName,
+                MeasurementSize = i.MeasurementSize,
+                ReturnDate = i.ReturnDate
+
+            }).ToList();
+
+
+            return PartialView("_GetAgroSalesReturnAdjust", details);
+        }
+
+        [HttpPost]
+        public ActionResult ADJUSTSalesReturn(List<SalesReturnViewModel> details)
+        {
+            bool IsSuccess = false;
+
+            if (ModelState.IsValid)
+            {
+
+                List<SalesReturnDTO> detailDTOs = new List<SalesReturnDTO>();
+                AutoMapper.Mapper.Map(details, detailDTOs);
+                IsSuccess = _salesReturn.updateadjustsales(detailDTOs);
+               
+            }
+            return Json(IsSuccess);
+        }
+        #endregion
+
     }
 }

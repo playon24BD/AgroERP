@@ -77,7 +77,8 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                         MeasurementId = item.MeasurementId,
                         ProductSalesInfoId = item.ProductSalesInfoId,
                         ReturnDate = DateTime.Now,
-                        EntryUserId = userId
+                        EntryUserId = userId,
+                        ReturnTotalPrice = (item.ReturnQuanity * item.ReturnPerUnitPrice)
 
 
                     };
@@ -86,6 +87,42 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             }
             IsSuccess = _salesReturnRepository.Save();
             return IsSuccess;
+        }
+
+
+
+
+
+        public IEnumerable<SalesReturn> GetSalesSalesReturnByInfoIdNotAdjust(long? ProductSalesInfoId)
+        {
+            return _salesReturnRepository.GetAll(i => i.ProductSalesInfoId == ProductSalesInfoId && i.Status == "NOTADJUST").ToList();
+        }
+
+        public bool updateadjustsales(List<SalesReturnDTO> salesReturnDTOs)
+        {
+            bool IsSuccess = false;
+
+            List<SalesReturn> salesReturns = new List<SalesReturn>();
+            SalesReturn salesReturn = new SalesReturn();
+            foreach(var item in salesReturnDTOs)
+            {
+                if (item.ISActive == true)
+                {
+                    salesReturn = GetSalesReturnsById(item.SalesReturnId);
+                    salesReturn.Status = "ADJUST";
+                    salesReturn.AdjustmentDate = DateTime.Now;
+
+                }
+            }
+            _salesReturnRepository.UpdateAll(salesReturns);
+            IsSuccess = _salesReturnRepository.Save();
+
+            return IsSuccess;
+        }
+
+        public SalesReturn GetSalesReturnsById(long SalesReturnId)
+        {
+            return _salesReturnRepository.GetOneByOrg(a => a.SalesReturnId == SalesReturnId);
         }
     }
 }
