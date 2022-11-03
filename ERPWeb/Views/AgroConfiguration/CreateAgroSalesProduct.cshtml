@@ -130,6 +130,13 @@
                                 <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
                             </div>
                             <div class="col-md-4">
+                                <label for="ddlQtyUnit" class="col-form-label">
+                                    Receipe Unit Qty
+                                </label>
+                                @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--Select Unit Qty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-QtyUnit font-weight-bold">Unit Qty is required!</span>
+                            </div>
+                            <div class="col-md-4">
                                 <label for="ddlMeasurementName" class="col-form-label">
                                     Measurement Name
                                 </label>
@@ -357,6 +364,8 @@
         var txtDiscount = $("#txtDiscount");
         var FinishGoodProductInfoId = '';
         var FinishGoodStockQty = $("#FinishGoodStockQty");
+        var ddlQtyUnit = $("#ddlQtyUnit");
+
 
 
 
@@ -441,6 +450,22 @@
 
         ddlProductName.change(function () {
 
+           
+            LoadQtyUnit();
+
+        })
+        function LoadQtyUnit() {
+            clearDropdown("ddlQtyUnit");
+            if (ddlProductName.val() != "") {
+
+                LoadDropDown('/AgroConfiguration/GetReceipyUnitQtyByProductionId', 'POST', ddlQtyUnit, JSON.stringify({ finishGoodProductId: ddlProductName.val() }));
+            }
+          
+
+        }
+        ddlQtyUnit.change(function () {
+
+            debugger;
             LoadFinishGoodStock();
 
         })
@@ -450,8 +475,9 @@
 
             $("#txtQuanity").text('(0)');
             var FinishGoodProductInfoId = ddlProductName.val();
+            var QtyKG = ddlQtyUnit.val();
             if (FinishGoodProductInfoId != "") {
-                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetFinishGoodstockCheck', JSON.stringify({ FinishGoodProductInfoId: TryParseInt(ddlProductName.val(), 0) }), getToken())).then(function (res, status) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetFinishGoodstockCheck', JSON.stringify({ FinishGoodProductInfoId: TryParseInt(ddlProductName.val()), QtyKG: QtyKG }), getToken())).then(function (res, status) {
                     debugger;
                     console.log(res);
                     console.log(status);

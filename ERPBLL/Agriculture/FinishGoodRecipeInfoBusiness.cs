@@ -28,17 +28,61 @@ namespace ERPBLL.Agriculture
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.FGRId == id && i.OrganizationId == orgId);
         }
+        public FinishGoodRecipeInfo GetReceipId(string ReceipeBatchCode)
+        {
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(r => r.ReceipeBatchCode == ReceipeBatchCode);
+        }
         public bool DeletefinishGoodRecipe(long id, long userId, long orgId)
         {
             _finishGoodRecipeInfoRepository.DeleteAll(i => i.FGRId == id && i.OrganizationId == orgId);
             return _finishGoodRecipeInfoRepository.Save();
+        }
+         public IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodReceipUnitQty(long finishGoodProductId, long orgId)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeUnitQtyProductwise(finishGoodProductId,orgId)).ToList();
+        }
+
+        private string QueryForFinishGoodRecipeUnitQtyProductwise(long finishGoodProductId, long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+            param += string.Format(@" and RI.OrganizationId={0}", orgId);
+            if (finishGoodProductId > 0)
+            {
+                param += string.Format(@" and RI.FinishGoodProductId={0}", finishGoodProductId);
+            }
+
+            query = string.Format(@"SELECT DISTINCT concat(RI.FGRQty,'(',U.UnitName,')') as UnitQty
+            FROM tblFinishGoodRecipeInfo RI
+            INNER JOIN tblAgroUnitInfo U on RI.UnitId=U.UnitId	
+            Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+        public IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodUnitQty(long orgId)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeUnitQty(orgId)).ToList();
+        }
+
+        private string QueryForFinishGoodRecipeUnitQty(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+            param += string.Format(@" and RI.OrganizationId={0}", orgId);
+            query = string.Format(@"SELECT DISTINCT concat(RI.FGRQty,'(',U.UnitName,')') as UnitQty
+            FROM tblFinishGoodRecipeInfo RI
+            INNER JOIN tblAgroUnitInfo U on RI.UnitId=U.UnitId	
+            Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
         }
 
         public IEnumerable<FinishGoodRecipeInfoDTO> GetFinishGoodRecipeInfos(long orgId, long? ProductId)
         {
             return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeInfoss(orgId, ProductId)).ToList();
         }
-
+        
         private string QueryForFinishGoodRecipeInfoss(long orgId, long? productId)
         {
             string query = string.Empty;

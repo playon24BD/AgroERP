@@ -1083,7 +1083,9 @@ namespace ERPWeb.Controllers
                     Status = f.Status,
                     ReceipeBatchCode = f.ReceipeBatchCode,
                     FinishGoodProductId = f.FinishGoodProductId,
-                    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName
+                    FGRId=f.FGRId,
+                    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
+                    
 
                 }).ToList();
 
@@ -1974,7 +1976,11 @@ namespace ERPWeb.Controllers
 
             //var targetQuantity=_finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User)
 
-            ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.ReceipeBatchCode + ")"+"-"+f.TargetQuantity, Value = f.FinishGoodProductId.ToString() }).ToList();
+            //ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.ReceipeBatchCode + ")" + "-" + f.TargetQuantity, Value = f.FinishGoodProductId.ToString() }).ToList();
+
+            ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+            ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.UnitQty.ToString() }).ToList();
 
 
             ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
@@ -1984,6 +1990,27 @@ namespace ERPWeb.Controllers
 
 
             return View();
+        }
+
+        public ActionResult GetReceipyUnitQtyByProductionId(long finishGoodProductId)
+        {
+            try
+            {
+                //var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(finishGoodProductId, User.OrgId).ReceipeBatchCode;
+                //var ddlRecipeCode = receipeBatchCode.Select(d => new Dropdown { text=receipeBatchCode,value=d });
+                var UnitQtys = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipUnitQty(finishGoodProductId, User.OrgId);
+
+                var dropDown = UnitQtys.Where(a => a.UnitQty != null).Select(s => new Dropdown { text = s.UnitQty, value = s.UnitQty }).ToList();
+
+
+                return Json(dropDown, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Not Found", JsonRequestBehavior.AllowGet);
+            }
+
+
         }
 
         public ActionResult GetMeasurementIdWiseSize(long MeasurementId)
@@ -2000,9 +2027,11 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId)
+        public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId,string QtyKG)
         {
-            var checkFinishGoodStockValue = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(FinishGoodProductInfoId, User.OrgId);
+            var UnitQtys = QtyKG.Split('(', ')');
+            string ProductUnitQty = UnitQtys[0];
+            var checkFinishGoodStockValue = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(FinishGoodProductInfoId, ProductUnitQty, User.OrgId);
 
             double itemStock = 0;
 
