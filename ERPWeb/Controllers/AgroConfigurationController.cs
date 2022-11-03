@@ -3037,6 +3037,8 @@ namespace ERPWeb.Controllers
 
                 details = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(id.Value, User.OrgId).Select(i => new AgroProductSalesDetailsViewModel
                 {
+                    FGRId = i.FGRId,
+                    QtyKG = i.QtyKG,
                     ProductSalesDetailsId= i.ProductSalesDetailsId,
                     ProductSalesInfoId = i.ProductSalesInfoId,
                     Price = i.Price,
@@ -3201,7 +3203,9 @@ namespace ERPWeb.Controllers
                 MeasurementId = i.MeasurementId,
                 MeasurementName = _measuremenBusiness.GetMeasurementById(i.MeasurementId, User.OrgId).MeasurementName,
                 MeasurementSize = i.MeasurementSize,
-                ReturnDate = i.ReturnDate
+                ReturnDate = i.ReturnDate,
+                FGRId= i.FGRId,
+                QtyKG= i.QtyKG
 
             }).ToList();
 
