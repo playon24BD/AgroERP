@@ -64,6 +64,7 @@ namespace ERPBLL.Agriculture
         {
             return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeUnitQty(orgId)).ToList();
         }
+       
 
         private string QueryForFinishGoodRecipeUnitQty(long orgId)
         {
@@ -107,7 +108,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         {
             bool IsSuccess = false;
             var ReceipeBatchCodes = "RecBC-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
-
+            //var CheckDupliketReceipeProduct = GetAllFini();
             if (info.FGRId == 0)
             {
                 FinishGoodRecipeInfo model = new FinishGoodRecipeInfo
@@ -152,9 +153,16 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return IsSuccess;
         }
 
+        
+
         public IEnumerable<FinishGoodRecipeInfo> GetAllFinishGoodReceif(long orgId)
         {
             return _finishGoodRecipeInfoRepository.GetAll(f => f.OrganizationId == orgId);
+        }
+
+        public IEnumerable<FinishGoodRecipeInfo> GetCheckDupliketReceipeProduct(long FinishGoodProductId, int FGRQty, long UnitId)
+        {
+            return _finishGoodRecipeInfoRepository.GetAll(f => f.FinishGoodProductId == FinishGoodProductId && f.FGRQty==FGRQty && f.UnitId==UnitId);
         }
         //public IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodReceif(long orgId)
         //{

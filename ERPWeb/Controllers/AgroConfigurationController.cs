@@ -884,7 +884,13 @@ namespace ERPWeb.Controllers
                 List<FinishGoodRecipeDetailsDTO> detailDTOs = new List<FinishGoodRecipeDetailsDTO>();
                 AutoMapper.Mapper.Map(info, infoDTO);
                 AutoMapper.Mapper.Map(details, detailDTOs);
-                IsSuccess = _finishGoodRecipeInfoBusiness.SaveFinishGoodRecipe(infoDTO, detailDTOs, User.UserId, User.OrgId);
+                var CheckDupliketReceipeProduct = _finishGoodRecipeInfoBusiness.GetCheckDupliketReceipeProduct(infoDTO.FinishGoodProductId,infoDTO.FGRQty,infoDTO.UnitId).Count();
+
+                if (CheckDupliketReceipeProduct==0)
+                {
+                    IsSuccess = _finishGoodRecipeInfoBusiness.SaveFinishGoodRecipe(infoDTO, detailDTOs, User.UserId, User.OrgId);
+
+                } 
             }
             return Json(IsSuccess);
         }
