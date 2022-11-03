@@ -79,6 +79,8 @@
     <Compile Include="Agriculture\DomainModels\AgroUnitInfo.cs" />
     <Compile Include="Agriculture\DomainModels\AreaInfoSetup.cs" />
     <Compile Include="Agriculture\DomainModels\AreaUser.cs" />
+    <Compile Include="Agriculture\DomainModels\CommisionOnProduct.cs" />
+    <Compile Include="Agriculture\DomainModels\CommisionOnProductHistory.cs" />
     <Compile Include="Agriculture\DomainModels\DistributionUser.cs" />
     <Compile Include="Agriculture\DomainModels\DivisionInfo.cs" />
     <Compile Include="Agriculture\DomainModels\DivisionUser.cs" />
@@ -115,6 +117,8 @@
     <Compile Include="Agriculture\DTOModels\AgroUnitInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\AreaSetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\AreaUserDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\CommisionOnProductDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\CommisionOnProductHistoryDTO.cs" />
     <Compile Include="Agriculture\DTOModels\DistributionUserDTO.cs" />
     <Compile Include="Agriculture\DTOModels\DistributionUserViewModel.cs" />
     <Compile Include="Agriculture\DTOModels\DivisionInfoDTO.cs" />
@@ -156,6 +160,8 @@
     <Compile Include="Agriculture\ViewModels\AgroUnitInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AreaSetupViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AreaUserViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\CommisionOnProductHistoryViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\CommisionOnProductViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\DivisionInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\DivisionUserViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionDetailViewModel.cs" />

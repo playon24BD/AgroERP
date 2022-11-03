@@ -3278,6 +3278,7 @@
     <Content Include="Views\AgroConfiguration\_ALLRawMaterialReturnListview.cshtml" />
     <Content Include="Views\AgroConfiguration\SalesReturnAdjustCreate.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAgroSalesReturnAdjust.cshtml" />
+    <Content Include="Views\AgroConfiguration\ProductCommision.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
