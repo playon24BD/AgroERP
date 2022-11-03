@@ -28,6 +28,8 @@ namespace ERPBO.Agriculture.DomainModels
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
         public string ReceipeBatchCode { get; set; }
+        public long FGRId { get; set; }
+        public string QtyKG { get; set; }
 
         [ForeignKey("AgroProductSalesInfo")]
         public long ProductSalesInfoId { get; set; }

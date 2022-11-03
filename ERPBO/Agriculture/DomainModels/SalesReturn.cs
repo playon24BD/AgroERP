@@ -34,5 +34,7 @@ namespace ERPBO.Agriculture.DomainModels
 
 
         public string MeasurementSize { get; set; }
+         public long FGRId { get; set; }
+        public string QtyKG { get; set; }
     }
 }
