@@ -44,7 +44,7 @@ namespace ERPBLL.Agriculture
             Utility.ParamChecker(param));
             return query;
         }
-
+        
 
         public IEnumerable<AgroUnitInfo> GetAllAgroUnitInfo(long OrgId)
         {
@@ -88,5 +88,12 @@ namespace ERPBLL.Agriculture
         {
             return _agroUnitInfoRepository.GetOneByOrg(r => r.UnitId == unitId && r.OrganizationId == orgId);
         }
+
+        public AgroUnitInfo GetUnitId(string ProductUnit)
+        {
+            return _agroUnitInfoRepository.GetOneByOrg(r => r.UnitName == ProductUnit);
+        }
+
+        
     }
 }

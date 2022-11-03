@@ -28,7 +28,7 @@
                     <div class="col-md-12">
                         <form id="frmItem">
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="Id" id="hdfUserId" value="@ViewBag.Id"/>
+                            <input type="hidden" name="Id" id="hdfUserId" value="@ViewBag.Id" />
                             <div class="form-row">
                                 <div class="form-group col-md-3">
                                     <label for="txtEmployeeId" class="control-label font-weight-bold">Employee Id</label>
@@ -61,14 +61,16 @@
                                     <input type="text" id="txtDesignation" class="form-control form-control-sm" />
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label for="txtUserName" class="control-label font-weight-bold">User Name
-                                        <div class="checkbox d-inline icheck-emerland">
-                                            <input type="checkbox" name="chkStatestatus" id="chkStatestatus" />
-                                            <label for="chkStatestatus" class="text-success">
-                                                Active
-                                            </label>
-                                        </div>
+                                    <label for="txtUserName" class="control-label font-weight-bold">
+                                        User Name
                                     </label>
+                                    <div class="checkbox d-inline icheck-emerland ">
+                                        <input type="checkbox" name="chkStatestatus" id="chkStatestatus" />
+                                        <label for="chkStatestatus" class="text-success">
+                                            Active
+                                        </label>
+                                    </div>
+
                                     <input type="text" id="txtUserName" class="form-control form-control-sm" />
                                     <span class="error hide required-userName font-weight-bold">Input User Name!</span>
                                     <span class="error hide dup-userName">UserName is already exist!</span>
@@ -108,14 +110,14 @@
 
                                 <div class="col-md-2" id="zoneDiv">
                                     <label for="ddlZoneName" class="control-label">Zone Name</label>
-      
+
                                     <select id="ddlZoneName" class="form-control form-control-sm select2 select2-danger" , multiple="multiple" name="ZoneName[]"></select>
                                     <span class="error hide required-ddlZoneName font-weight-bold">Zone Name is Required</span>
                                 </div>
                                 <div class="col-md-2" style="margin-left:-5px" id="divisionDiv">
                                     <label for="ddlDivisionName" class="control-label">Division Name</label>
-                                    
-                            
+
+
                                     <select id="ddlDivisionName" class="form-control form-control-sm select2 select2-danger" , multiple="multiple" name="DivisionName[]"></select>
 
                                     <span class="error hide required-ddldivisionName font-weight-bold">Division Name is Required</span>
@@ -123,7 +125,7 @@
 
                                 <div class="col-md-2" id="regionDiv">
                                     <label for="ddlRegionName" class="control-label">Region Name</label>
-                 
+
 
 
                                     <select id="ddlRegionName" class="form-control form-control-sm select2 select2-danger" , multiple="multiple" name="RegionName[]"></select>
@@ -132,7 +134,7 @@
                                 </div>
                                 <div class="col-md-2" id="areaDiv">
                                     <label for="ddlAreaName" class="control-label"> Area Name</label>
- 
+
 
 
                                     <select id="ddlAreaName" class="form-control form-control-sm select2 select2-danger" , multiple="multiple" name="AreaName[]"></select>
@@ -140,14 +142,14 @@
                                 </div>
                                 <div class="col-md-2" id="territoryDiv">
                                     <label for="ddlTerritoryName" class="control-label">Territory Name</label>
-                       
+
 
                                     <select id="ddlTerritoryName" class="form-control form-control-sm select2 select2-danger" , multiple="multiple" name="TerritoryName[]"></select>
                                 </div>
 
                                 <div class="col-md-2" id="stockiestDiv">
                                     <label for="ddlStockiestName" class="control-label">Stockiest Name</label>
-                     
+
 
                                     <select id="ddlStockiestName" class="form-control form-control-sm select2 select2-danger" , multiple="multiple" name="StockiestName[]"></select>
 
@@ -156,10 +158,10 @@
                             </div>
                             <div class="form-row">
                                 @*<div class="form-group col-md-3">
-                                    <div class="form-control form-control-sm">
-                                        <input type="checkbox" id="chkStatestatus" /> <b>Is User Active?</b>
-                                    </div>
-                                </div>*@
+                                        <div class="form-control form-control-sm">
+                                            <input type="checkbox" id="chkStatestatus" /> <b>Is User Active?</b>
+                                        </div>
+                                    </div>*@
                                 <div class="form-group col-md-3 hide">
                                     <div class="form-control form-control-sm">
                                         <input type="checkbox" id="chkStatestatusRole" /> <b>Is Role Active?</b>
@@ -179,46 +181,46 @@
                 <div class="col-md-12" style="max-height:500px;overflow-y:scroll">
                     <table class="table table-sm table-avatar table-responsive-lg" id="tblMenuData">
                         @*<tr class="btn-info">
-                    <td colspan="9" title="Module" class="text-center text-bold text-lg">
-                        Control Panel
-                    </td>
-                </tr>
-            <tr class="text-bold" data-item-name="menurow">
-                    <td title="Mainmenu" class="text-center" style="vertical-align:middle" data-mainmenu-item="" data-module-item="">
-                        User Management
-                    </td>
-                    <td class="btn btn-secondary" title="Submenu"><input type="checkbox" id="submenuId" data-item-sub="" data-item-menu="" data-item-module="" /> Organization List</td>
-                    <td>
-                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="allSubmenuId" value="" /> All
-                    </td>
-                    <td >
-                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="addSubmenuId" value="" />Add
-                    </td>
-                    <td>
-                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="editSubmenuId" value="" /> Edit
-                    </td>
-                    <td>
-                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="detailSubmenuId" value="" />Detail
-                    </td>
-                    <td>
-                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="deleteSubmenuId" value="" />
-                        Delete
-                    </td>
-                    <td>
-                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="approvalSubmenuId" value="" />
-                        Approval
-                    </td>
-                    <td>
-                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="reportSubmenuId" value="" />
-                        Report
-                    </td>
-                </tr>*@
+                                    <td colspan="9" title="Module" class="text-center text-bold text-lg">
+                                        Control Panel
+                                    </td>
+                                </tr>
+                            <tr class="text-bold" data-item-name="menurow">
+                                    <td title="Mainmenu" class="text-center" style="vertical-align:middle" data-mainmenu-item="" data-module-item="">
+                                        User Management
+                                    </td>
+                                    <td class="btn btn-secondary" title="Submenu"><input type="checkbox" id="submenuId" data-item-sub="" data-item-menu="" data-item-module="" /> Organization List</td>
+                                    <td>
+                                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="allSubmenuId" value="" /> All
+                                    </td>
+                                    <td >
+                                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="addSubmenuId" value="" />Add
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="editSubmenuId" value="" /> Edit
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="detailSubmenuId" value="" />Detail
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="deleteSubmenuId" value="" />
+                                        Delete
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="approvalSubmenuId" value="" />
+                                        Approval
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="reportSubmenuId" value="" />
+                                        Report
+                                    </td>
+                                </tr>*@
                     </table>
                 </div>
             </div>
         </div>
     </div>
- 
+
 </div>
 
 @section scripts{
@@ -238,23 +240,23 @@
 
         $(document).ready(function () {
             LoadDropDown('/ControlPanel/GetZone', type.post, ddlZoneName, null);
-        
+
 
             LoadDropDown('/ControlPanel/GetDivision', type.post, ddlDivisionName, null);
 
 
 
             LoadDropDown('/ControlPanel/GetRegion', type.post, ddlRegionName, null);
-   
+
 
             LoadDropDown('/ControlPanel/GetArea', type.post, ddlAreaName, null);
 
 
             LoadDropDown('/ControlPanel/GetTerritory', type.post, ddlTerritoryName, null);
-      
+
 
             LoadDropDown('/ControlPanel/GetStockiest', type.post, ddlStockiestName, null);
-        
+
 
             disable(ddlZoneName)
             disable(ddlDivisionName)
@@ -332,8 +334,8 @@
         function loadAppUserInfo(id) {
             var data = JSON.stringify({ flag: "load", id: id });
             $.when(postReqWithData(dataType.applicationJson, dataType.json, type.post, '/ControlPanel/CreateAppUser', data)).then(function (res, status) {
-                debugger;
-                console.log(res);
+                //debugger;
+                //console.log(res);
                 if (status === "success") {
                     debugger;
                     txtEmployeeId.val(res.EmployeeId);
@@ -375,14 +377,14 @@
 
                     ddlOrganizationName.trigger("change");
                     ddlBranchName.val(res.BranchId);
-        
+
                     ddlRoleName.val(res.RoleId);
-          
-          
-                    
+
+
+
                     chkStatestatus.prop("checked", res.IsActive);
                     chkStatestatusRole.prop("checked", res.IsRoleActive);
-                    
+
                 }
             }).fail(function (error) {
                 console.log(error);
@@ -399,15 +401,15 @@
                 LoadDropDown4('/Common/GetRolesByOrgId', type.post, ddlRoleName, JSON.stringify({ orgId: ddlOrganizationName.val() }), role);
                 //ddlRoleName.val(role);
                 dropdownValue(role);
-             
+
                 loadMenu();
             }
         })
 
 
         function dropdownValue(role) {
-            alert( "In Drop Down" + role);
-  
+            //alert( "In Drop Down" + role);
+
 
             if (role == 0) {
                 disable(ddlZoneName)
@@ -436,8 +438,8 @@
             if (role == 29) {
                 //LoadDropDown('/ControlPanel/GetZone', type.post, ddlZoneName, null);
                 //$("#ddlZoneName").attr("data-placeholder", "Select Zone");
-     
-    
+
+
 
                 $("#divisionDiv").hide();
                 $("#zoneDiv").show();
@@ -445,7 +447,7 @@
                 $("#areaDiv").hide();
                 $("#territoryDiv").hide();
                 $("#stockiestDiv").hide();
-         
+
                 $("#ddlZoneName").trigger("change")
                 alert(" after trigger In 29")
                 enable(ddlZoneName)
@@ -514,8 +516,8 @@
 
                 }
             if (role == 32) {
-                alert("In 32")
- 
+                //alert("In 32")
+
                     $("#zoneDiv").hide();
                     $("#divisionDiv").hide();
                     $("#regionDiv").hide();
@@ -540,7 +542,7 @@
                 }
             if (role == 33) {
 
-                alert("IN 33");
+                //alert("IN 33");
 
                     $("#zoneDiv").hide();
                     $("#divisionDiv").hide();
@@ -566,7 +568,7 @@
 
                 }
             if (role == 34) {
-                alert("IN 34");
+                //alert("IN 34");
 
                     $("#zoneDiv").hide();
                     $("#divisionDiv").hide();
@@ -596,13 +598,13 @@
 
 
 
-            
+
         }
 
 
         //for Create
         ddlRoleName.change(function () {
-     
+
 
 
             if (TryParseInt(ddlRoleName.val(), 0) > 0) {
@@ -765,7 +767,7 @@
 
                 if (ddlRoleName.val() == 34) {
                     clearDropdown2("ddlStockiestName");
- 
+
 
                     $("#zoneDiv").hide();
                     $("#divisionDiv").hide();
@@ -812,7 +814,7 @@
 
         function SetUserMenuUI(obj) {
             if (!$.isEmptyObject(obj)) {
-                
+
                 tblMenuData.empty();
 
                 var menus = obj.menuDetail;
@@ -1034,7 +1036,7 @@
                     }
                 }
                 if (ddlRoleName.val() == 30) {
-                   
+
                     if (ddlDivisionName.val().length > 0) {
                         $.each(ddlDivisionName.val(), function (index, item) {
                             divisions.push(item);
@@ -1074,7 +1076,7 @@
                     if (ddlStockiestName.val().length > 0) {
                         $.each(ddlStockiestName.val(), function (index, item) {
                             stockiests.push(item);
-                        })  
+                        })
                     }
                 }
 
@@ -1105,7 +1107,7 @@
                     AreaId: areas,
                     TerritoryId: territories,
                     StockiestId: stockiests,
-                
+
 
                 };
                 var menuData = fnMenuData();
@@ -1123,7 +1125,7 @@
                         $('.toastrDefaultError').trigger("click");
                         $('.toastrDefaultError').fadeOut(500);
                     }
-                    enable("#btnSubmit");  
+                    enable("#btnSubmit");
                 }).fail(function (error) {
                     console.log(error);
                     enable("#btnSubmit");

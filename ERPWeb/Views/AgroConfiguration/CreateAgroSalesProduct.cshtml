@@ -122,7 +122,7 @@
                     <div class="col-md-5" style="border-left:2px solid #f87878">
                         <h5 style="border-bottom:2px solid #f87878">Product Salse</h5>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="ddlProductName" class="col-form-label">
                                     Product Name
                                 </label>
@@ -378,12 +378,7 @@
         var FinishGoodProductInfoId = '';
         var FinishGoodStockQty = $("#FinishGoodStockQty");
         var ddlQtyUnit = $("#ddlQtyUnit");
-
-<<<<<<< Updated upstream
         var ddlpt = $("#ddlpt");
-
-=======
->>>>>>> Stashed changes
 
 
 
@@ -560,7 +555,7 @@
 
                     var td10 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
                 var td11 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
-                var td12 = "<td class='hide '>" + dropDownSelectedText("ddlProductName") + "</td>";
+                var td12 = "<td class='hide '>" + dropDownSelectedText("ddlQtyUnit") + "</td>";
 
                 var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12+ "</tr>";
 
@@ -790,13 +785,6 @@
 
 
 
-
-
-
-
-
-
-
         $("#saveButton").click(function (e) {
             debugger
             e.preventDefault();
@@ -825,7 +813,7 @@
                                FinishGoodProductInfoId: tds.eq(9).html(),
                                MeasurementSize: tds.eq(2).html(),
                                 DiscountTk: tds.eq(6).html(),
-                                ReceipeBatchCode: tds.eq(11).html()
+                                QtyKG: tds.eq(11).html()
 
 
 
@@ -842,9 +830,9 @@
                         {
                             if (res === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
-                                @*setTimeout(function () {
-                                    redirectPage('@Url.Action("")');
-                                }, 1000);*@
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetAgroSalesProductList")');
+                                }, 500);
                                 //resetUI();
                             }
                             else {

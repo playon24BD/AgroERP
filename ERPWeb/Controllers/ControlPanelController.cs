@@ -30,7 +30,7 @@ namespace ERPWeb.Controllers
         private readonly IUserAuthorizationBusiness _userAuthorizationBusiness;
         private readonly IRoleAuthorizationBusiness _roleAuthorizationBusiness;
 
-        private readonly IUserInfo _userInfo;
+
         private readonly IStockiestInfo _stockiestInfo;
         public readonly IDivisionInfo _divisionInfo;
         public readonly IZone _zone;

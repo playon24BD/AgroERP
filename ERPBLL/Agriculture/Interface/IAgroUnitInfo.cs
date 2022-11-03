@@ -16,5 +16,6 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<AgroUnitInfo> GetAllAgroUnitInfo(long OrgId);
         bool SaveAgroUnitList(AgroUnitInfoDTO infoDTO, long userId, long orgId);
+        AgroUnitInfo GetUnitId(string ProductUnit);
     }
 }

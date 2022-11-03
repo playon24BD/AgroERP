@@ -32,7 +32,9 @@ namespace ERPBLL.Agriculture
         private readonly IUserAssignBussiness _userAssignBussiness;
         private readonly IUserInfo _userInfo;
         private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness)
+        private readonly IAgroUnitInfo _agroUnitInfo;
+
+        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
@@ -47,6 +49,7 @@ namespace ERPBLL.Agriculture
             this._userInfo = userInfo;
             this._salesPaymentRegisterRepository = new SalesPaymentRegisterRepository(this._agricultureUnitOfWork);
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
+            this._agroUnitInfo = agroUnitInfo;
         }
 
 
@@ -204,9 +207,14 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
                 foreach (var item in details)
                 {
-
-                    var receipeBatch = item.ReceipeBatchCode.Split('(',')');
-                    var receiID = _finishGoodRecipeInfoBusiness.GetReceipId(item.ReceipeBatchCode).FGRId;
+                    var UnitQtys = item.QtyKG.Split('(', ')');
+                    int ProductUnitQty =Convert.ToInt32( UnitQtys[0]);
+                    string ProductUnit = UnitQtys[1];
+                    var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
+                    //var receipeBatch=_finishGoodRecipeInfoBusiness
+                    //var receipeBatch = item.ReceipeBatchCode.Split('(',')');
+                    var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
+                    var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
 
                     AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
                     {
@@ -222,10 +230,11 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                                 Quanity=item.Quanity,
                                  FinishGoodProductInfoId=item.FinishGoodProductInfoId,
                                   ProductSalesDetailsId=item.ProductSalesDetailsId,
-                                  ReceipeBatchCode=receipeBatch[1],
-                                  FGRId=receiID
-                                  
-                                  
+                                  ReceipeBatchCode= receipeBatch,
+                                  FGRId= FGRId,
+                                  QtyKG=item.QtyKG
+
+
 
 
                     };
