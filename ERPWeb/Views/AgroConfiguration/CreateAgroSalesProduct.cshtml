@@ -515,9 +515,10 @@
 
 
                     var td10 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
-                    var td11 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
+                var td11 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
+                var td12 = "<td class='hide '>" + dropDownSelectedText("ddlProductName") + "</td>";
 
-                    var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + "</tr>";
+                var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12+ "</tr>";
 
 
 
@@ -764,7 +765,8 @@
                                Discount: tds.eq(5).html(),
                                FinishGoodProductInfoId: tds.eq(9).html(),
                                MeasurementSize: tds.eq(2).html(),
-                               DiscountTk:tds.eq(6).html()
+                                DiscountTk: tds.eq(6).html(),
+                                ReceipeBatchCode: tds.eq(11).html()
 
 
 

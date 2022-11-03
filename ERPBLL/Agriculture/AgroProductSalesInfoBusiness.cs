@@ -106,7 +106,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
             var InvoiceNo = "INV-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
-            
+            string myList = "";
 
             if (agroSalesInfoDTO.ProductSalesInfoId == 0)
             {
@@ -178,6 +178,10 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
                 foreach (var item in details)
                 {
+
+                    var receipeBatch = item.ReceipeBatchCode.Split('(',')');
+
+
                     AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
                     {
                        Discount=item.Discount,
@@ -191,7 +195,9 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                                ProductSalesInfoId=item.ProductSalesInfoId,
                                 Quanity=item.Quanity,
                                  FinishGoodProductInfoId=item.FinishGoodProductInfoId,
-                                  ProductSalesDetailsId=item.ProductSalesDetailsId
+                                  ProductSalesDetailsId=item.ProductSalesDetailsId,
+                                  ReceipeBatchCode=receipeBatch[1]
+                                  
                                   
 
 
