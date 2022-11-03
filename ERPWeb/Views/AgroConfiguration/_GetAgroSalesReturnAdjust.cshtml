@@ -1,0 +1,48 @@
+﻿
+@model IEnumerable<ERPBO.Agriculture.ViewModels.SalesReturnViewModel>
+
+@{
+    ViewBag.Title = "_GetAgroSalesSalesReturnAdjust";
+    int sl = 0;
+
+}
+
+
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" id="tblReturnItems">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th>#SL</th>
+            <th>Product Name</th>
+            <th>Measurment Name</th>
+            <th>Measurment Size</th>
+            <th>Return Qty</th>
+            <th>Return Unit Price</th>
+            <th>Return Total Price</th>
+            <th>Accept</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+        <tr>
+            <td class="text-center">@sl</td>
+            <td class="text-center">@item.FinishGoodProductName</td>
+            <td class="text-center">@item.MeasurementName</td>
+            <td class="text-center">@item.MeasurementSize</td>
+            <td class="text-center">@item.ReturnQuanity</td>
+            <td class="text-center">@item.ReturnPerUnitPrice</td>
+            <td class="text-center">@item.ReturnTotalPrice</td>
+            <td class="text-center "><input type="checkbox" ></td>
+            
+
+            <td class="hide">@item.FinishGoodProductInfoId</td>
+            <td class="hide">@item.MeasurementId</td>
+            <td class="hide">@item.SalesReturnId</td>
+
+
+
+        </tr>
+        }
+    </tbody>
+</table>

@@ -34,5 +34,8 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<ProductWiseSalesStementReport> GetProductwisesalesReportDownloadRpt(string fromDate, string toDate);
 
+        IEnumerable<AgroProductSalesInfo> GetAgroSalesinfoByStokiestId(long StockiestId);
+
+
     }
 }

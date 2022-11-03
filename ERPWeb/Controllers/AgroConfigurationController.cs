@@ -69,13 +69,6 @@ namespace ERPWeb.Controllers
 
         public AgroConfigurationController(ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness)
 
-      //  public AgroConfigurationController(ISalesReturn salesReturn,IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister,IRawMaterialTrack rawMaterialTrack,IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo,IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails,IPRawMaterialStockInfo pRawMaterialStockInfo,IPRawMaterialStockIDetails pRawMaterialStockIDetails,IAgroUnitInfo agroUnitInfo,IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness)
-
-        //public AgroConfigurationController(IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness)
-
-
-
-
         {
             this._salesReturn = salesReturn;//e
             this._returnRawMaterialBusiness = returnRawMaterialBusiness;//e
@@ -1981,7 +1974,7 @@ namespace ERPWeb.Controllers
 
             //var targetQuantity=_finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User)
 
-            ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.ReceipeBatchCode + ")", Value = f.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.ReceipeBatchCode + ")"+"-"+f.TargetQuantity, Value = f.FinishGoodProductId.ToString() }).ToList();
 
 
             ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
@@ -3112,6 +3105,96 @@ namespace ERPWeb.Controllers
 
 
 
+        #endregion
+
+        #region  SalesReturnAdjust
+        public ActionResult SalesReturnAdjustCreate(long? id)
+        {
+
+            ViewBag.ddlstokiestname = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stk => new SelectListItem { Text = stk.StockiestName, Value = stk.StockiestId.ToString() });
+            return View();
+        }
+
+        public ActionResult getinvoice(long id)
+
+        {
+
+            var invoicelist = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Select(a => new SelectListItem { Text = a.InvoiceNo, Value = a.ProductSalesInfoId.ToString() }).ToList();
+
+            if (invoicelist.Count > 0 && invoicelist != null)
+            {
+                return Json(new { flag = "1", msg = "Invoice found", data = invoicelist }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { flag = "0", msg = "Invoice not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
+        public ActionResult GetStokistTotalbill(long id)
+        {
+            var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(x => x.StockiestId == id).ToList();
+            var totalbill = stokiestid.Sum(y=> y.TotalAmount);
+            return Json(totalbill, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult GetStokistTotalPaid(long id)
+        {
+            var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(p => p.StockiestId == id).ToList();
+            var totalpaid = stokiestid.Sum(pa => pa.PaidAmount);
+            return Json(totalpaid, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult GetStokistTotalDue(long id)
+        {
+            var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
+            var totaldue = stokiestid.Sum(du => du.DueAmount);
+            return Json(totaldue, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult SalesReturnAdjustCreateTbl(long? ProductSalesInfoId)
+        {
+           
+
+            List<SalesReturnViewModel> details = new List<SalesReturnViewModel>();
+            details = _salesReturn.GetSalesSalesReturnByInfoIdNotAdjust(ProductSalesInfoId).Select(i => new SalesReturnViewModel
+
+            {
+                SalesReturnId = i.SalesReturnId,
+               ReturnQuanity = i.ReturnQuanity,
+               ReturnPerUnitPrice = i.ReturnPerUnitPrice,
+               ReturnTotalPrice = i.ReturnTotalPrice,
+               FinishGoodProductInfoId = i.FinishGoodProductInfoId,
+               FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName,
+                MeasurementId = i.MeasurementId,
+                MeasurementName = _measuremenBusiness.GetMeasurementById(i.MeasurementId, User.OrgId).MeasurementName,
+                MeasurementSize = i.MeasurementSize,
+                ReturnDate = i.ReturnDate
+
+            }).ToList();
+
+
+            return PartialView("_GetAgroSalesReturnAdjust", details);
+        }
+
+        [HttpPost]
+        public ActionResult ADJUSTSalesReturn(List<SalesReturnViewModel> details)
+        {
+            bool IsSuccess = false;
+
+            if (ModelState.IsValid)
+            {
+
+                List<SalesReturnDTO> detailDTOs = new List<SalesReturnDTO>();
+                AutoMapper.Mapper.Map(details, detailDTOs);
+                IsSuccess = _salesReturn.updateadjustsales(detailDTOs);
+               
+            }
+            return Json(IsSuccess);
+        }
         #endregion
 
     }
