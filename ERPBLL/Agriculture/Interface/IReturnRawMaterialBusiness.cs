@@ -11,6 +11,12 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IReturnRawMaterialBusiness
     {
+        IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialInfosId(long rawMaterialId);
+
+        IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialSearch();
+        IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialSearch1();
+        IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialSearch2();
+
         List<AgroDropdown> GetIssueRawMaterials(long orgId);
 
         bool SaveRawMaterialReturnInfo(List<ReturnRawMaterialDTO> detailsDTO, long userId, long orgId);
@@ -27,7 +33,7 @@ namespace ERPBLL.Agriculture.Interface
 
         ReturnRawMaterial GetReturnsById(long ReturnRawMaterialId);
 
-        IEnumerable<ReturnRawMaterialDTO> GetallReturns(string name);
+        IEnumerable<ReturnRawMaterialDTO> GetallReturns( long? rawMaterialId, string returnType,string status);
 
 
 

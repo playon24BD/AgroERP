@@ -34,9 +34,9 @@
                         <td class="text-center">@item.RawMaterialSupplierName</td>
                         <td class="text-center">@item.BatchCode</td>
                         <td class="text-center">@item.InvoiceNo</td>
-                        <td class="text-center">@item.InvoiceDate</td>
+                        <td class="text-center">@item.InvoiceDate.ToString("dd.MM.yyyy")</td>
                         <td class="text-center">@item.ChalanNo</td>
-                        <td class="text-center">@item.ChalanDate</td>
+                        <td class="text-center">@item.ChalanDate.ToString("dd.MM.yyyy")</td>
                         <td class="text-center">@item.TotalAmount</td>
                         <td class="text-center">
                             @*<a href="#" class="btn btn-warning btn-sm data-item-detail" style="line-height:1" data-item-detail="@item.PRawMaterialStockId"><i class="fa fa-pen"></i> Details</a>*@

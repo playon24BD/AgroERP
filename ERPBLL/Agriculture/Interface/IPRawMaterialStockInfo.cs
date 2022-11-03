@@ -11,7 +11,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IPRawMaterialStockInfo
     {
-        IEnumerable<PRawMaterialStockInfoDTO> GetAllPRawMaterialStockInfo(long OrgId, string name, long? rsupid);
+        IEnumerable<PRawMaterialStockInfoDTO> GetAllPRawMaterialStockInfo(long OrgId, string name, string ChallanNo, string PONumber, long? supplierId, long? rsupid);
 
         bool SaveRawMaterialPurchaseStock(PRawMaterialStockInfoDTO info, List<PRawMaterialStockIDetailsDTO> details, long userId, long orgId);
 

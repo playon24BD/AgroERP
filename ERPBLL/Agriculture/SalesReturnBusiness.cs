@@ -24,12 +24,12 @@ namespace ERPBLL.Agriculture
            
         }
 
-        public IEnumerable<SalesReturnDTO> GetSalesReturns(long? ProductId, string name)
+        public IEnumerable<SalesReturnDTO> GetSalesReturns(long? ProductId, string name,string status)
         {
            // return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfoss(orgId, ProductId)).ToList();
-           return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnDTO>(QueryForSalesReturn(ProductId,name)).ToList();
+           return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnDTO>(QueryForSalesReturn(ProductId,name,status)).ToList();
         }
-        private string QueryForSalesReturn(long? ProductId, string name)
+        private string QueryForSalesReturn(long? ProductId, string name,string status)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -37,13 +37,17 @@ namespace ERPBLL.Agriculture
          
             if (ProductId != null && ProductId > 0)
             {
-                param += string.Format(@" and sr.FinishGoodProductInfoId", ProductId);
+                param += string.Format(@" and sr.FinishGoodProductInfoId like '%{0}%'", ProductId);
             }
             if (name != null && name != "")
             {
                 param += string.Format(@" and sr.InvoiceNo like '%{0}%'", name);
             }
-            query = string.Format(@"	select  sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,sr.ReturnDate FROM  
+            if (status != null && status != "")
+            {
+                param += string.Format(@" and sr.Status= '{0}'", status);
+            }
+            query = string.Format(@"	select  sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,CONVERT(date,sr.ReturnDate) AS ReturnDate FROM  
 tblSalesReturn sr 
 INNER JOIN tblProductSalesInfo si on sr.ProductSalesInfoId = si.ProductSalesInfoId
 inner join tblFinishGoodProductInfo fpi on sr.FinishGoodProductInfoId = fpi.FinishGoodProductId

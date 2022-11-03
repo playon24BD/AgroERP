@@ -1893,13 +1893,13 @@ namespace ERPWeb.Controllers
         #region Sales Invoice
 
 
-        public ActionResult GetAgroSalesProductList(string flag, long? ProductId, long? id)
+        public ActionResult GetAgroSalesProductList(string flag, long? id,long? stockiestId, string invoiceNo,string fromDate,string toDate)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetAgroSalesProductList");
             if (string.IsNullOrEmpty(flag))
             {
 
-                //ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
 
 
@@ -1908,7 +1908,7 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                var dto = _agroProductSalesInfoBusiness.GetAgroSalesInfos(User.OrgId, ProductId ?? 0);
+                var dto = _agroProductSalesInfoBusiness.GetAgroSalesInfos( stockiestId ?? 0, invoiceNo ?? null, fromDate, toDate);
 
 
                 List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
@@ -2130,7 +2130,7 @@ namespace ERPWeb.Controllers
 
         #region Payment
 
-        public ActionResult SalesPaymentList(string flag, string name, long? id)
+        public ActionResult SalesPaymentList(string flag, string name, long? id,string fromDate,string toDate)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -2144,16 +2144,20 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
 
-                IEnumerable<AgroProductSalesInfoDTO> dto = _agroProductSalesInfoBusiness.GetAllDueSalesInvoice().Where(s => (name == "" || name == null) || (s.InvoiceNo.Contains(name))).Select(o => new AgroProductSalesInfoDTO
-                {
-                    ProductSalesInfoId = o.ProductSalesInfoId,
-                    InvoiceNo = o.InvoiceNo,
-                    InvoiceDate = o.InvoiceDate,
-                    TotalAmount = o.TotalAmount,
-                    PaidAmount = o.PaidAmount,
-                    DueAmount = o.DueAmount,
+                var dto = _agroProductSalesInfoBusiness.GetPaymentListInfos( name ?? null,fromDate,toDate);
 
-                }).ToList();
+
+                //IEnumerable<AgroProductSalesInfoDTO> dto = _agroProductSalesInfoBusiness.GetAllDueSalesInvoice().Where(s => (name == "" || name == null) || (s.InvoiceNo.Contains(name))).Select(o => new AgroProductSalesInfoDTO
+                //{
+                //    ProductSalesInfoId = o.ProductSalesInfoId,
+                //    InvoiceNo = o.InvoiceNo,
+                //    InvoiceDate = o.InvoiceDate,
+                //    TotalAmount = o.TotalAmount,
+                //    PaidAmount = o.PaidAmount,
+                //    DueAmount = o.DueAmount,
+
+
+                //}).ToList();
 
                 List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
@@ -2221,7 +2225,7 @@ namespace ERPWeb.Controllers
 
         #region Purchase & RawmaterialStock
 
-        public ActionResult GetPRawmaterialStockList(string flag, string name, long? rsupid, long? id)
+        public ActionResult GetPRawmaterialStockList(string flag, string name, long? rsupid, long? id,string ChallanNo,string PONumber,long? supplierId)
         {
 
             if (string.IsNullOrEmpty(flag))
@@ -2236,8 +2240,8 @@ namespace ERPWeb.Controllers
             }
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
-            {
-                var dto = _pRawMaterialStockInfo.GetAllPRawMaterialStockInfo(User.OrgId, name ?? null, rsupid ?? 0);
+           {
+                var dto = _pRawMaterialStockInfo.GetAllPRawMaterialStockInfo(User.OrgId, name ?? null, ChallanNo?? null, PONumber ?? null, supplierId?? 0, rsupid ?? 0);
 
                 List<PRawMaterialStockInfoViewModel> viewModels = new List<PRawMaterialStockInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
@@ -2501,20 +2505,21 @@ namespace ERPWeb.Controllers
         }
 
 
-        public ActionResult RawMaterialReturnAllList(string flag, long? id, string name)
+        public ActionResult RawMaterialReturnAllList(string flag, long? id, long? rawMaterialId,string returnType,string status)
         {
             if (string.IsNullOrEmpty(flag))
             {
-                ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+                
 
                 return View();
 
             }
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
-            {
+         {
 
-                var dto = _returnRawMaterialBusiness.GetallReturns(name ?? null);
+                var dto = _returnRawMaterialBusiness.GetallReturns(rawMaterialId ?? 0, returnType??null, status??null);
 
                 List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
@@ -2950,11 +2955,13 @@ namespace ERPWeb.Controllers
 
         #region  SalesReturn
 
-        public ActionResult SalesReturnList(string flag, long? id, string name, long? ProductId)
+        public ActionResult SalesReturnList(string flag, long? id, string name, long? ProductId,string status)
         {
             if (string.IsNullOrEmpty(flag))
             {
                 ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+
+                ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(des => new SelectListItem { Text = des.FinishGoodProductName, Value = des.FinishGoodProductId.ToString() }).ToList();
 
                 return View();
 
@@ -2962,7 +2969,7 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
 
-                var dto = _salesReturn.GetSalesReturns( ProductId ?? 0, name ?? null);
+                var dto = _salesReturn.GetSalesReturns( ProductId ?? 0, name ?? null,status??null);
 
                 List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);

@@ -49,11 +49,34 @@
                                     <div class="card-body text-sm">
                                         <div class="row" style="margin-top:-15px">
 
-                                            <div class="col-md-3 float-right">
-                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+                                            @*<div class="col-md-3 float-right">
+            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
+        </div>*@
+                                            <div class="col-md-2">
+                                                <label>Raw Material Name</label>
+                                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             </div>
 
+                                            <div class="col-md-2">
+                                                <label>Return Type</label>
+                                                @*@Html.DropDownList("ddlReturnType", (IEnumerable<SelectListItem>)ViewBag.ddlReturnType, "--Select ReturnType--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
+
+                                                <select class="form-control form-control-sm select2" id="ddlReturnType">
+                                                    <option value="" selected>--Select ReturnType--</option>
+                                                    <option value="Good">Good</option>
+                                                    <option value="Damage">Damage</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>Status</label>
+                                                @*@Html.DropDownList("ddlStatus", (IEnumerable<SelectListItem>)ViewBag.ddlStatus, "--Select Status--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
+                                                <select class="form-control form-control-sm select2" id="ddlStatus">
+                                                    <option value="" selected>--Select Status--</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Approved">Approved</option>
+                                                </select>
+                                            </div>
 
                                         </div>
 
@@ -91,6 +114,10 @@
 
 
         var searchByAny = $("#searchByAny");
+        var ddlStatus = $("#ddlStatus");
+        var ddlReturnType = $("#ddlReturnType");
+        var ddlRawmaterialName = $("#ddlRawmaterialName");
+        var ddlRawMaterial = $("#ddlRawMaterial");
 
 
         $(document).ready(function () {
@@ -109,14 +136,34 @@
             LoadDataTable();
         }
 
-        searchByAny.keyup(function () {
-            LoadDataTable()
+        //searchByAny.keyup(function () {
+        //    LoadDataTable()
+        //})
+
+        ddlRawmaterialName.change(function () {
+
+            LoadDataTable();
         })
+        ddlRawMaterial.change(function () {
+            LoadDataTable();
+
+        });
+
+        ddlReturnType.change(function () {
+
+            LoadDataTable();
+        })
+
+        ddlStatus.change(function () {
+
+            LoadDataTable();
+        })
+
 
         function LoadDataTable() {
             debugger;
 
-            var data = { flag: "View", name: $.trim(searchByAny.val()) };
+            var data = { flag: "View", rawMaterialId: TryParseInt(ddlRawMaterial.val(), 0), returnType: ddlReturnType.val(), status: ddlStatus.val() };
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/RawMaterialReturnAllList', data)).then(function (res, status) {
                 console.log(status);

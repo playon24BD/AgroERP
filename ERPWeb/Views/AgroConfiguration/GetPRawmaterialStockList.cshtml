@@ -48,20 +48,60 @@
                         <div class="col-md-12">
                             <div class="card card-navy shadow">
                                 <div class="card-header">
-                                    <div class="row text-sm">
+                                    <h6 class="card-title">Search By</h6>
+
+
+                                    @*<div class="row text-sm">*@
+
+
+
+                                    @*<div class="col-md-2">
+                <h4>Search by:</h4>
+
+            </div>
+            <div class="col-md-3 float-right">
+                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+            </div>
+            <div class="col-7">
+
+            </div>*@
+
+                                    @*</div>*@
+                                </div>
+                                <div class="card-body text-sm">
+                                    <div class="row" style="margin-top:-15px">
                                         <div class="col-md-2">
-                                            <h4>Search by:</h4>
+                                            <label class="col-form-label">Invoice No </label>
+                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
                                         </div>
-                                        <div class="col-md-3 float-right">
-                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
+                                        <div class="col-md-2">
+                                            <label class="col-form-label">PO Number </label>
+                                            <input type="text" class="form-control form-control-sm" id="searchByPO" placeholder="search PO" />
                                         </div>
-                                        <div class="col-7">
 
+                                        <div class="col-md-2">
+                                            <label class="col-form-label">Challan No </label>
+                                            <input type="text" class="form-control form-control-sm" id="searchByChallan" placeholder="search Challan" />
                                         </div>
+
+                                        <div class="col-md-2">
+                                            <label for="ddlSupplierName1" class="col-form-label">Supplier Name</label>
+                                            @Html.DropDownList("ddlSupplierName1", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            
+                                        </div>
+
 
                                     </div>
+
+                                    @*<div class="col-md-2">
+                <input type="text" class="form-control form-control-sm" id="SearchInvoiceNo" placeholder="search Invoice" />
+            </div>*@
+
                                 </div>
+
+
                             </div>
 
                         </div>
@@ -284,7 +324,7 @@
                                         </div>
                                         <div class="col-md-3 float-right">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnyy" placeholder="Search by any" />
-
+                                            
                                         </div>
                                         <div class="col-7">
 
@@ -365,9 +405,9 @@
         var searchByAnyy = $("#searchByAnyy");
 
 
-
-
-
+        var ddlSupplierName1 = $("#ddlSupplierName1");
+        var searchByChallan = $("#searchByChallan");
+        var searchByPO = $("#searchByPO");
 
 
 
@@ -401,13 +441,23 @@
         })
 
 
+        ddlSupplierName1.change(function () {
+            LoadDataTable()
+        })
+
+        searchByChallan.keyup(function () {
+            LoadDataTable()
+        })
+        searchByPO.keyup(function () {
+            LoadDataTable()
+        })
 
 
         //load
         function LoadDataTable() {
             debugger;
 
-            var data = { flag: "View", name: $.trim(searchByAny.val()), RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0)};
+            var data = { flag: "View", name: $.trim(searchByAny.val()), supplierId: TryParseInt(ddlSupplierName1.val(), 0), PONumber: $.trim(searchByPO.val()), ChallanNo: $.trim(searchByChallan.val())};
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPRawmaterialStockList', data)).then(function (res, status) {
                 console.log(status);

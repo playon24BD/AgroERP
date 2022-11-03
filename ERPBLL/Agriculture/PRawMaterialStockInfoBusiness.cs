@@ -29,12 +29,12 @@ namespace ERPBLL.Agriculture
 
 
 
-        public IEnumerable<PRawMaterialStockInfoDTO> GetAllPRawMaterialStockInfo(long OrgId, string name, long? rsupid)
+        public IEnumerable<PRawMaterialStockInfoDTO> GetAllPRawMaterialStockInfo(long OrgId, string name, string ChallanNo, string PONumber, long? supplierId, long? rsupid)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<PRawMaterialStockInfoDTO>(QueryForRMPurchaseMinfo(OrgId, name, rsupid)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<PRawMaterialStockInfoDTO>(QueryForRMPurchaseMinfo(OrgId, name,ChallanNo,PONumber,supplierId, rsupid)).ToList();
         }
 
-        private string QueryForRMPurchaseMinfo(long OrgId, string name, long? rsupid)
+        private string QueryForRMPurchaseMinfo(long OrgId, string name, string ChallanNo, string PONumber, long? supplierId, long? rsupid)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -47,6 +47,19 @@ namespace ERPBLL.Agriculture
             {
                 param += string.Format(@" and i.InvoiceNo like '%{0}%'", name);
             }
+            if (ChallanNo != null && ChallanNo != "")
+            {
+                param += string.Format(@" and i.ChalanNo like '%{0}%'", ChallanNo);
+            }
+            if (PONumber != null && PONumber != "")
+            {
+                param += string.Format(@" and i.BatchCode like '%{0}%'", PONumber);
+            }
+            if (supplierId != null && supplierId >0)
+            {
+                param += string.Format(@" and i.RawMaterialSupplierId= {0}", supplierId);
+            }
+
             query = string.Format(@"
            select i.PRawMaterialStockId, s.RawMaterialSupplierName,i.RawMaterialSupplierId,i.BatchCode,i.ChalanNo,i.ChalanDate,i.InvoiceNo,i.InvoiceDate,i.TotalAmount from tblPRawMaterialStockInfo i
 inner join tblRawMaterialSupplierInfo s

@@ -37,21 +37,45 @@
                                         <h6 class="card-title">Search By</h6>
                                     </div>
                                     <div class="card-body text-sm">
-                                        <!--<div class="row" style="margin-top:-15px">
-                                            <div class="col-md-3">
-                                                <label for="ddlProductName" class="col-form-label">Invoice No </label>-->
-                                                @*@Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
-                                            <!--</div>
+                                        <div class="row" style="margin-top:-15px">
 
-                                        </div>-->
+                                            <div class="col-md-2">
+                                                <label class="col-form-label">InvoiceNo </label>
+                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
+                                            </div>
 
-                                        <div class="col-md-2">
-                                            <label  class="col-form-label">InvoiceNo </label>
-                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
+
+                                            <div class="col-md-2">
+                                                <label class="control-label font-weight-bold">From Date</label>
+                                                <div class="input-group input-group-sm ">
+                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" />
+                                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                                        <span class="input-group-text">&#10008;</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="control-label font-weight-bold">To Date</label>
+                                                <div class="input-group input-group-sm ">
+                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" />
+                                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                                        <span class="input-group-text">&#10008;</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="col-md-1" style="margin-top:28px">
+                                                <button class="control-label btn btn-info btn-sm" id="searchButton"><i class="fas fa-search "></i></button>
+                                            </div>*@
+
                                         </div>
 
+                                           
+
+
+
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                             <div class="col-md-12" style="margin-top:-10px">
                                 <div class="card">
@@ -248,7 +272,9 @@
 
         var hdProductSalesInfoId = $("#hdProductSalesInfoId");
 
-
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+        var searchButton = $("#searchButton");
 
 
         $(document).ready(function () {
@@ -258,9 +284,55 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
+
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true
+            }).on('change', function () {
+                $('.datepicker').hide();
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true
+            }).on('change', function () {
+                $('.datepicker').hide();
+            });
+
+
             $("#divAccountNumber").hide();
             LoadSalesProduct()
         })
+
+
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                }
+            }
+        })
+
+
+        $("#searchButton").click(function (e) {
+
+            LoadSalesProduct()
+        
+        })
+
+
+
+
 
         ddlPaymentMode.change(function () {
             if (ddlPaymentMode.val() == "Check") {
@@ -278,10 +350,19 @@
             LoadSalesProduct()
         })
 
+        dptFromDate.change(function () {
+            LoadSalesProduct();
+        })
+
+        dptToDate.change(function () {
+            LoadSalesProduct();
+        })
+
+
         function LoadSalesProduct() {
             debugger;
 
-            var data = { flag: "View", name: $.trim(searchByAny.val()) };
+            var data = { flag: "View", name: $.trim(searchByAny.val()), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesPaymentList', data)).then(function (res, status) {
                 console.log(status);
