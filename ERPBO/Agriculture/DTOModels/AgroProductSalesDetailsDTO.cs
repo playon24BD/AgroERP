@@ -25,6 +25,8 @@ namespace ERPBO.Agriculture.DTOModels
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
         public string ReceipeBatchCode { get; set; }
+        public long FGRId { get; set; }
+        public string QtyKG { get; set; }
 
 
 

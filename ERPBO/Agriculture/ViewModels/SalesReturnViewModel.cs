@@ -33,5 +33,7 @@ namespace ERPBO.Agriculture.ViewModels
         public string MeasurementName { get; set; }
 
         public bool ISActive { get; set; }
+        public long FGRId { get; set; }
+        public string QtyKG { get; set; }
     }
 }

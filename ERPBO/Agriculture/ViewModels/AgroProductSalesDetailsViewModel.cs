@@ -25,6 +25,8 @@ namespace ERPBO.Agriculture.ViewModels
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
         public string ReceipeBatchCode { get; set; }
+        public long FGRId { get; set; }
+        public string QtyKG { get; set; }
 
         //public string MeasurementName { get; set; }
         //public string FinishGoodProductName { get; set; }
