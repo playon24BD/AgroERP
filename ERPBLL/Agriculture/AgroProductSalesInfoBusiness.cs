@@ -31,7 +31,8 @@ namespace ERPBLL.Agriculture
         private readonly IZoneSetup _zoneSetup;
         private readonly IUserAssignBussiness _userAssignBussiness;
         private readonly IUserInfo _userInfo;
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo)
+        private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
+        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
@@ -45,6 +46,7 @@ namespace ERPBLL.Agriculture
             this._userAssignBussiness = userAssignBussiness;
             this._userInfo = userInfo;
             this._salesPaymentRegisterRepository = new SalesPaymentRegisterRepository(this._agricultureUnitOfWork);
+            this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
         }
 
 
@@ -204,7 +206,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                 {
 
                     var receipeBatch = item.ReceipeBatchCode.Split('(',')');
-
+                    var receiID = _finishGoodRecipeInfoBusiness.GetReceipId(item.ReceipeBatchCode).FGRId;
 
                     AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
                     {
@@ -220,7 +222,8 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                                 Quanity=item.Quanity,
                                  FinishGoodProductInfoId=item.FinishGoodProductInfoId,
                                   ProductSalesDetailsId=item.ProductSalesDetailsId,
-                                  ReceipeBatchCode=receipeBatch[1]
+                                  ReceipeBatchCode=receipeBatch[1],
+                                  FGRId=receiID
                                   
                                   
 

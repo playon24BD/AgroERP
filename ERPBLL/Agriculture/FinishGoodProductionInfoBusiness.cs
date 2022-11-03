@@ -19,7 +19,8 @@ namespace ERPBLL.Agriculture
         private readonly IMRawMaterialIssueStockInfo _rawMaterialIssueStockInfoBusiness;
         private readonly IMRawMaterialIssueStockDetails _rawMaterialIssueStockDetailsBusiness;
         private readonly IRawMaterialStockInfo _rawMaterialStockInfo;
-        public FinishGoodProductionInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IMRawMaterialIssueStockInfo rawMaterialIssueStockInfoBusiness, IMRawMaterialIssueStockDetails rawMaterialIssueStockDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo)
+        private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
+        public FinishGoodProductionInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IMRawMaterialIssueStockInfo rawMaterialIssueStockInfoBusiness, IMRawMaterialIssueStockDetails rawMaterialIssueStockDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._finishGoodProductionInfoRepository = new FinishGoodProductionInfoRepository(this._agricultureUnitOfWork);
@@ -27,16 +28,17 @@ namespace ERPBLL.Agriculture
             this._rawMaterialIssueStockInfoBusiness = rawMaterialIssueStockInfoBusiness;
             this._rawMaterialIssueStockDetailsBusiness = rawMaterialIssueStockDetailsBusiness;
             this._rawMaterialStockInfo = rawMaterialStockInfo;
+            this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
         }
 
-        public IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId)
+        public IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,string ProductUnitQty, long orgId)
         {
             //return _finishGoodProductionInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.FinishGoodProductId == FinishGoodProductInfoId);
 
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductCheckQty(FinishGoodProductInfoId, orgId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductCheckQty(FinishGoodProductInfoId, ProductUnitQty, orgId)).ToList();
         }
 
-        private string QueryForFinishGoodProductCheckQty(long finishGoodProductInfoId, long orgId)
+        private string QueryForFinishGoodProductCheckQty(long finishGoodProductInfoId,string ProductUnitQty, long orgId)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -45,6 +47,10 @@ namespace ERPBLL.Agriculture
             if (finishGoodProductInfoId>0)
             {
                 param += string.Format(@" and FI.FinishGoodProductId={0}", finishGoodProductInfoId);
+            }
+            if (ProductUnitQty !=null)
+            {
+                param += string.Format(@" and FI.Quanity={0}", ProductUnitQty);
             }
 
             query = string.Format(@"SELECT DISTINCT FI.FinishGoodProductId,FP.FinishGoodProductName,FI.ReceipeBatchCode,SUM(FI.TargetQuantity) AS TargetQuantity
@@ -101,6 +107,7 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
             bool isSuccess = false;
 
             var finishGoodProductionBatch = "Pro-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            var receiID= _finishGoodRecipeInfoBusiness.GetReceipId(finishGoodProductionInfoDTO.ReceipeBatchCode).FGRId;
 
             if (finishGoodProductionInfoDTO.FinishGoodProductionInfoId == 0)
             {
@@ -115,7 +122,8 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
                     Status = finishGoodProductionInfoDTO.Status,
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
-                    OrganizationId = orgId
+                    OrganizationId = orgId,
+                    FGRId= receiID
 
                 };
                 _finishGoodProductionInfoRepository.Insert(finishGoodProductionInfo);
