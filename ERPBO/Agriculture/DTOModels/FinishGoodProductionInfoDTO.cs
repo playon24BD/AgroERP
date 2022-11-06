@@ -25,12 +25,22 @@ namespace ERPBO.Agriculture.DTOModels
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
         public long FGRId { get; set; }
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 349167a6dd23545ee1c2ce1b001ffda44faf8af3
         public double ProductionTotal { get; set; }
         public double SalesTotal { get; set; }
         public double ReturnTotal { get; set; }
         public double CurrentStock { get; set; }
         public int FGRQty { get; set; }
         public long UnitId { get; set; }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 349167a6dd23545ee1c2ce1b001ffda44faf8af3
         public string UnitName { get; set; }
     }
 }
