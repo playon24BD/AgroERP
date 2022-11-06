@@ -10,6 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
    public interface IFinishGoodProductionInfoBusiness
     {
+        //IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfosList(long? productId,string finishGoodProductionBatch);
         IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfos(long orgId);
         IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionInfo(long orgId);
         //FinishGoodProductionInfo GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId);

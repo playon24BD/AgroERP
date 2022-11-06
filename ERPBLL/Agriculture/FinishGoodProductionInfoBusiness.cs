@@ -248,5 +248,45 @@ inner join tblProductSalesDetails sd on p.FinishGoodProductId = sd.FinishGoodPro
             Utility.ParamChecker(param));
             return query;
         }
+
+//        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfosList(long? productId, string finishGoodProductionBatch)
+//        {
+//            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QuerySearchForFinishGoodProductInfoss(productId,finishGoodProductionBatch)).ToList();
+//        }
+
+//        private string QuerySearchForFinishGoodProductInfoss(long? productId, string finishGoodProductionBatch)
+//        {
+//            string query = string.Empty;
+//            string param = string.Empty;
+
+//            //param += string.Format(@" and FI.OrganizationId={0}", orgId);
+
+//            if (productId != null && productId > 0)
+//            {
+//                param += string.Format(@" and s.FinishGoodProductId={0}", productId);
+//            }
+//            if (!string.IsNullOrEmpty(finishGoodProductionBatch))
+//            {
+//                param += string.Format(@"and s.FinishGoodProductionBatch like '%{0}%'", finishGoodProductionBatch);
+//            }
+
+//            query = string.Format(@"
+//--select distinct s.FinishGoodProductId, o.FinishGoodProductName,
+//--s.FinishGoodProductionBatch,s.Quanity,s.TargetQuantity
+//--from FinishGoodProductionInfoes s
+//--inner join tblFinishGoodProductInfo o on s.FinishGoodProductId=o.FinishGoodProductId
+//select s.FinishGoodProductId, o.FinishGoodProductName, s.FinishGoodProductionBatch,r.ReceipeBatchCode,a.UnitName,s.Quanity,s.TargetQuantity,s.Status
+//from FinishGoodProductionInfoes s
+//inner join tblFinishGoodProductInfo o on s.FinishGoodProductId=o.FinishGoodProductId
+//inner join tblFinishGoodRecipeInfo r on r.FGRId=s.FGRId
+//inner join tblAgroUnitInfo a on r.UnitId=a.UnitId
+
+//where 1=1 {0}", Utility.ParamChecker(param));
+
+//            return query;
+//        }
+
+
     }
 }
+

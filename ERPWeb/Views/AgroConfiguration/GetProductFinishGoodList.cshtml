@@ -35,7 +35,27 @@
                         <div class="col-md-12">
                             <div class="card card-navy shadow">
                                 <div class="card-header">
-                                    <div class="row text-sm">
+                                    <h6 class="card-title">Search By</h6>
+                                </div>
+                                <div class="card-body text-sm">
+                                    <div class="row" style="margin-top:-15px">
+
+                                        <div class="col-md-2" style="margin-top:-5px">
+                                            <label class="col-form-label">Batch Code </label>
+                                            <input type="text" class="form-control form-control-sm" id="searchBatchCode" placeholder="Search BatchCode" />
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label class="control-label" for="ddlProduct1">Product</label>
+                                            @Html.DropDownList("ddlProduct1", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                            <span class="error hide req-ddlProduct">Product Name is Required</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                @*<div class="row text-sm">
                                         <div class="col-md-2">
                                             <h4>Search by:</h4>
                                         </div>
@@ -47,8 +67,8 @@
 
                                         </div>
 
-                                    </div>
-                                </div>
+                                    </div>*@
+
                             </div>
 
 
@@ -201,6 +221,8 @@
         var targetQty = $("#targetQty");
         var ddlReceipBatchCode = $("#ddlReceipBatchCode");
         var hdTargetValue = $("#hdTargetValue");
+        var searchBatchCode = $("#searchBatchCode");
+        var ddlProduct1 = $("#ddlProduct1");
 
 
         $(document).ready(function () {
@@ -221,6 +243,34 @@
            LoadQuantityData();
             LoadTergetQuantityData();
         })
+
+        searchBatchCode.keyup(function () {
+            LoadFinishGoodList()
+        })
+
+        ddlProduct1.change(function () {
+            LoadFinishGoodList()
+        })
+
+        function LoadFinishGoodList() {
+            debugger;
+
+            var data = { flag: "View", productId:TryParseInt(ddlProduct1.val(),0), finishGoodProductionBatch: $.trim(searchBatchCode.val())};
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
 
 
 

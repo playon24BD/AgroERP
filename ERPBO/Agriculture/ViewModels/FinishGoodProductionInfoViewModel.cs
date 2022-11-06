@@ -34,7 +34,7 @@ namespace ERPBO.Agriculture.ViewModels
         public double CurrentStock { get; set; }
         public int FGRQty { get; set; }
         public long UnitId { get; set; }
-        public string UnitName { get; set; }
+        //public string UnitName { get; set; }
 
     }
 }

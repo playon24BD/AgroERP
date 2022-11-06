@@ -1077,16 +1077,30 @@ namespace ERPWeb.Controllers
 
                 return PartialView("_GetProductFinishGoodDetails", finishGoodProductionDetailViewModels);
             }
+
+            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            //{
+
+            //    var dto = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosList(productId?? 0,finishGoodProductionBatch);
+
+
+                
+
+            //    List<FinishGoodProductionInfoViewModel> viewModels = new List<FinishGoodProductionInfoViewModel>();
+            //    AutoMapper.Mapper.Map(dto, viewModels);
+            //    return PartialView("_GetProductFinishGoodList", viewModels);
+            //}
+
             else
             {
-                var finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId);
+                //var finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId);
 
                 //IEnumerable<FinishGoodProductionInfoDTO> finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f => new FinishGoodProductionInfoDTO
                 //{
                 //    FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
                 //    FinishGoodProductionBatch = f.FinishGoodProductionBatch,
                 //    TargetQuantity = f.TargetQuantity,
-<<<<<<< Updated upstream
+
                 //    Quanity =  f.Quanity,
                 //    //flag= _agroUnitInfo.UnitIdwiseUnitNameList(f.Quanity).UnitName,
                 //    Status = f.Status,
@@ -1095,19 +1109,17 @@ namespace ERPWeb.Controllers
                 //    //flag = _agroUnitInfo.UnitIdwiseUnitNameList(UnitQty).UnitName,
                 //    FinishGoodProductId = f.FinishGoodProductId,
                 //    FGRId=f.FGRId,
-=======
+
                 //    Quanity = f.Quanity,
                 //    Status = f.Status,
                 //    ReceipeBatchCode = f.ReceipeBatchCode,
                 //    FinishGoodProductId = f.FinishGoodProductId,
                 //    FGRId = f.FGRId,
->>>>>>> Stashed changes
+
                 //    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
 
 
                 //}).ToList();
-<<<<<<< Updated upstream
-=======
 
                 //List<FinishGoodProductionInfoViewModel> viewModel = new List<FinishGoodProductionInfoViewModel>();
                 //AutoMapper.Mapper.Map(finishGoodProduction, viewModel);
@@ -1125,7 +1137,7 @@ namespace ERPWeb.Controllers
                 return PartialView("_GetStockProductFinishGoodList", finishGoodProductionInfos);
 
 
->>>>>>> Stashed changes
+
 
 
             }
