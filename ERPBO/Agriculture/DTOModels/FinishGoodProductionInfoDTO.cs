@@ -25,5 +25,6 @@ namespace ERPBO.Agriculture.DTOModels
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
         public long FGRId { get; set; }
+        public string UnitName { get; set; }
     }
 }

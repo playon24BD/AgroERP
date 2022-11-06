@@ -111,14 +111,14 @@
                                             <span class="error hide req-ddlProduct">Product Name is Required</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="control-label" for="ddlReceipBatchCode">BatchCode</label>
+                                            <label class="control-label" for="ddlReceipBatchCode">Receip Code</label>
                                             @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, "--Select Batch--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
 
                                         </div>
-                                        <div class="col-md-2 hide">
+                                        <div class="col-md-2">
                                             <label for="qty"> Qty</label>
-                                            <input type="number" id="qty" name="qty" class="form-control form-control-sm" readonly />
+                                            <input type="text" id="qty" name="qty" class="form-control form-control-sm" readonly />
                                             <span class="error hide req-qty">Qty Is Required</span>
 
                                         </div>
@@ -264,7 +264,10 @@
 
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
                 debugger;
-                qty.val(res);
+                consoleLog(res.replace(/['"]+/g, ''));
+                var UnitQty = res.replace(/['"]+/g, '');
+                qty.val(UnitQty);
+               // qty.val(res);
                 //targetQty.val();
             });
         }

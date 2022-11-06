@@ -203,5 +203,9 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.ReceipeBatchCode == receipeBatchCode && i.OrganizationId == orgId);
         }
+        public FinishGoodRecipeInfo GetUnitId(string ReceipeBatchCode, double UnitId)
+        {
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.ReceipeBatchCode == ReceipeBatchCode && i.UnitId == UnitId);
+        }
     }
 }

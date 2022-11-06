@@ -92,9 +92,31 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
             throw new NotImplementedException();
         }
 
-        public IEnumerable<FinishGoodProductionInfo> GetFinishGoodProductionInfo(long orgId)
+        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionInfo(long orgId)
         {
-            return _finishGoodProductionInfoRepository.GetAll(a => a.OrganizationId == orgId);
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductInfossGetAll(orgId)).ToList();
+            // return _finishGoodProductionInfoRepository.GetAll(a => a.OrganizationId == orgId);
+        }
+
+        private string QueryForFinishGoodProductInfossGetAll(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            param += string.Format(@" and a.OrganizationId={0}", orgId);
+
+
+            query = string.Format(@"SELECT a.FinishGoodProductInfoId,a.FinishGoodProductionBatch,a.ReceipeBatchCode,a.Quanity,
+a.TargetQuantity,a.Status,a.Remarks,a.flag,a.OrganizationId,a.FGRId,
+U.UnitName,p.FinishGoodProductName 
+
+FROM FinishGoodProductionInfoes a
+Inner Join tblFinishGoodProductInfo p on a.FinishGoodProductId=p.FinishGoodProductId
+
+Inner Join tblFinishGoodRecipeInfo r on a.FGRId=r.FGRId
+Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId", Utility.ParamChecker(param));
+
+            return query;
         }
 
         public FinishGoodProductionInfo GetProductionInfoById(long id, long orgId)

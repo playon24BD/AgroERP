@@ -94,6 +94,15 @@ namespace ERPBLL.Agriculture
             return _agroUnitInfoRepository.GetOneByOrg(r => r.UnitName == ProductUnit);
         }
 
-        
+        public AgroUnitInfo UnitIdwiseUnitName(long UnitIds)
+        {
+            return _agroUnitInfoRepository.GetOneByOrg(i => i.UnitId == UnitIds);
+        }
+        public AgroUnitInfo UnitIdwiseUnitNameList(double UnitList)
+        {
+            return _agroUnitInfoRepository.GetOneByOrg(i => i.UnitId == UnitList);
+        }
+
+
     }
 }

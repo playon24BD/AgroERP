@@ -1079,21 +1079,26 @@ namespace ERPWeb.Controllers
             }
             else
             {
+                var finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId);
 
-                IEnumerable<FinishGoodProductionInfoDTO> finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f => new FinishGoodProductionInfoDTO
-                {
-                    FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
-                    FinishGoodProductionBatch = f.FinishGoodProductionBatch,
-                    TargetQuantity = f.TargetQuantity,
-                    Quanity = f.Quanity,
-                    Status = f.Status,
-                    ReceipeBatchCode = f.ReceipeBatchCode,
-                    FinishGoodProductId = f.FinishGoodProductId,
-                    FGRId=f.FGRId,
-                    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
-                    
+                //IEnumerable<FinishGoodProductionInfoDTO> finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f => new FinishGoodProductionInfoDTO
+                //{
+                //    FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
+                //    FinishGoodProductionBatch = f.FinishGoodProductionBatch,
+                //    TargetQuantity = f.TargetQuantity,
+                //    Quanity =  f.Quanity,
+                //    //flag= _agroUnitInfo.UnitIdwiseUnitNameList(f.Quanity).UnitName,
+                //    Status = f.Status,
+                //    ReceipeBatchCode = f.ReceipeBatchCode,
+                //    UnitQty=_finishGoodRecipeInfoBusiness.GetUnitId(f.ReceipeBatchCode, f.Quanity).UnitId,
+                //    //flag = _agroUnitInfo.UnitIdwiseUnitNameList(UnitQty).UnitName,
+                //    FinishGoodProductId = f.FinishGoodProductId,
+                //    FGRId=f.FGRId,
+                //    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
 
-                }).ToList();
+
+                //}).ToList();
+
 
                 List<FinishGoodProductionInfoViewModel> viewModel = new List<FinishGoodProductionInfoViewModel>();
                 AutoMapper.Mapper.Map(finishGoodProduction, viewModel);
@@ -1109,7 +1114,11 @@ namespace ERPWeb.Controllers
             {
 
                 int quantity = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByBatchCode(receipeBatchCode, User.OrgId).FGRQty;
-                return Json(quantity, JsonRequestBehavior.AllowGet);
+                var UnitIds = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByBatchCode(receipeBatchCode, User.OrgId).UnitId;
+                var UnitName = _agroUnitInfo.UnitIdwiseUnitName(UnitIds).UnitName;
+                var ShowUnitQty = quantity + "(" + UnitName + ")";
+
+                return Json(ShowUnitQty, JsonRequestBehavior.AllowGet);
 
             }
             catch

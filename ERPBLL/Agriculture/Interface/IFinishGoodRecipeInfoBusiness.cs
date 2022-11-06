@@ -29,6 +29,7 @@ namespace ERPBLL.Agriculture.Interface
 
 
         FinishGoodRecipeInfo GetReceipbachcodeid( string ReceipeBatchCode);
+        FinishGoodRecipeInfo GetUnitId(string ReceipeBatchCode,double UnitId);
 
     }
 }
