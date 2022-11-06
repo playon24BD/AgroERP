@@ -206,6 +206,7 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId", Utility.ParamChecker(param))
 
 
 
+
         public IEnumerable<FinishGoodProductionInfoDTO> FinishgoodproductInOutreturnStockInfos()
         {
             return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductStock()).ToList();
@@ -249,6 +250,7 @@ inner join tblProductSalesDetails sd on p.FinishGoodProductId = sd.FinishGoodPro
             return query;
         }
 
+
 //        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfosList(long? productId, string finishGoodProductionBatch)
 //        {
 //            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QuerySearchForFinishGoodProductInfoss(productId,finishGoodProductionBatch)).ToList();
@@ -285,7 +287,6 @@ inner join tblProductSalesDetails sd on p.FinishGoodProductId = sd.FinishGoodPro
 
 //            return query;
 //        }
-
 
     }
 }
