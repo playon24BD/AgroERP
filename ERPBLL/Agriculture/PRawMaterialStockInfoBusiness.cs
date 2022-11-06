@@ -113,7 +113,7 @@ Utility.ParamChecker(param));
                         Status = "StockIn",
                         EntryDate = DateTime.Now,
                         EntryUserId = userId,
-                        ExpireDate = DateTime.Now
+                        ExpireDate = item.ExpireDate
                         
 
                     };

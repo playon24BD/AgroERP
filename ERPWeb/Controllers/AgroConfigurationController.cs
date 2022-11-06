@@ -1086,7 +1086,7 @@ namespace ERPWeb.Controllers
                 //    FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
                 //    FinishGoodProductionBatch = f.FinishGoodProductionBatch,
                 //    TargetQuantity = f.TargetQuantity,
-<<<<<<< Updated upstream
+
                 //    Quanity =  f.Quanity,
                 //    //flag= _agroUnitInfo.UnitIdwiseUnitNameList(f.Quanity).UnitName,
                 //    Status = f.Status,
@@ -1095,19 +1095,17 @@ namespace ERPWeb.Controllers
                 //    //flag = _agroUnitInfo.UnitIdwiseUnitNameList(UnitQty).UnitName,
                 //    FinishGoodProductId = f.FinishGoodProductId,
                 //    FGRId=f.FGRId,
-=======
+
                 //    Quanity = f.Quanity,
                 //    Status = f.Status,
                 //    ReceipeBatchCode = f.ReceipeBatchCode,
                 //    FinishGoodProductId = f.FinishGoodProductId,
                 //    FGRId = f.FGRId,
->>>>>>> Stashed changes
+
                 //    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
 
 
                 //}).ToList();
-<<<<<<< Updated upstream
-=======
 
                 //List<FinishGoodProductionInfoViewModel> viewModel = new List<FinishGoodProductionInfoViewModel>();
                 //AutoMapper.Mapper.Map(finishGoodProduction, viewModel);
@@ -1119,13 +1117,13 @@ namespace ERPWeb.Controllers
                 //AutoMapper.Mapper.Map(dto, viewModels);
                 //return PartialView("_GetRawMaterialIssueView", viewModels);
 
-                var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos();
-                List<FinishGoodProductionInfoDTO> finishGoodProductionInfos = new List<FinishGoodProductionInfoDTO>();
+                var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos().ToList();
+                List<FinishGoodProductionInfoViewModel> finishGoodProductionInfos = new List<FinishGoodProductionInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, finishGoodProductionInfos);
                 return PartialView("_GetStockProductFinishGoodList", finishGoodProductionInfos);
 
 
->>>>>>> Stashed changes
+
 
 
             }
@@ -2616,7 +2614,15 @@ namespace ERPWeb.Controllers
             var IssueStockoutRMID = _mRawMaterialIssueStockDetails.GetAllRawMaterialIssueStock().Where(x => x.RawMaterialId == RawMaterialId && x.IssueStatus == "StockOut").ToList();
             var IssueStockoutqty = IssueStockoutRMID.Sum(d => d.Quantity);
 
-            var IssueStockrmnqty = IssueStockinqty - IssueStockoutqty;
+            var returnid = _returnRawMaterialBusiness.GetAllReturnRawMaterial().Where(r => r.RawMaterialId == RawMaterialId && r.ReturnType == "Good").ToList();
+            var returngood = returnid.Sum(c=> c.Quantity);
+
+            var returnvadid = _returnRawMaterialBusiness.GetAllReturnRawMaterial().Where(d => d.RawMaterialId == RawMaterialId && d.ReturnType == "Damage" && d.Status == "Approved").ToList();
+            var returndmg = returnvadid.Sum(n => n.Quantity);
+
+
+
+            var IssueStockrmnqty = IssueStockinqty - IssueStockoutqty - returngood - returndmg;
 
 
             return Json(IssueStockrmnqty, JsonRequestBehavior.AllowGet);

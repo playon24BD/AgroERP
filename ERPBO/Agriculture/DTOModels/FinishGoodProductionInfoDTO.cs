@@ -25,8 +25,7 @@ namespace ERPBO.Agriculture.DTOModels
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
         public long FGRId { get; set; }
-<<<<<<< Updated upstream
-=======
+
 
 
         public double ProductionTotal { get; set; }
@@ -35,7 +34,7 @@ namespace ERPBO.Agriculture.DTOModels
         public double CurrentStock { get; set; }
         public int FGRQty { get; set; }
         public long UnitId { get; set; }
->>>>>>> Stashed changes
+
         public string UnitName { get; set; }
     }
 }

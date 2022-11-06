@@ -62,7 +62,6 @@ FROM
 tblRawMaterialTrackInfo t 
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
-inner join tblReturnRawMaterial rr on RM.RawMaterialId=rr.RawMaterialId
       where 1=1  {0}",
             Utility.ParamChecker(param));
             return query;
