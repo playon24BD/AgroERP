@@ -18,5 +18,10 @@ namespace ERPBLL.Agriculture.Interface
         FinishGoodProductionInfo GetProductionInfoById(long id, long orgId);
         FinishGoodProductionInfo GetFinishGoodProductionByAny(string any, long orgId);
         bool SaveFinishGoodInfo(FinishGoodProductionInfoDTO finishGoodProductionInfoDTO, List<FinishGoodProductionDetailsDTO> details, long userId, long orgId);
+
+
+        IEnumerable<FinishGoodProductionInfoDTO> FinishgoodproductInOutreturnStockInfos();
+
+
     }
 }

@@ -47,18 +47,30 @@ namespace ERPBLL.Agriculture
             }
             query = string.Format(@"
      SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,
-StockIN=(SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
-where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),
-StockOut=(SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
-where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),
-CurrentStock=(SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
-where t.IssueStatus ='StockIn'and t.RawMaterialId=RM.RawMaterialId)-(SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
-where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId)
+StockIN=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),0),
+StockOut=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0),
+
+GoodReturn=isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where  t.RawMaterialId=rr.RawMaterialId and rr.ReturnType='Good'),0),
+
+BadReturn=isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where  t.RawMaterialId=rr.RawMaterialId and rr.ReturnType='Damage'),0),
+
+ReturnQty=isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where  t.RawMaterialId=rr.RawMaterialId),0),
+
+CurrentStock=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),0)-isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0)-isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where  t.RawMaterialId=rr.RawMaterialId),0)
 
 FROM  
 tblMRawMaterialIssueStockDetails t 
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
+inner join tblReturnRawMaterial rr on t.RawMaterialId = rr.RawMaterialId
       where 1=1  {0}",
             Utility.ParamChecker(param));
             return query;

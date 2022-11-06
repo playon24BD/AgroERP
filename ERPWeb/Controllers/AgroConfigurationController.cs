@@ -1086,6 +1086,7 @@ namespace ERPWeb.Controllers
                 //    FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
                 //    FinishGoodProductionBatch = f.FinishGoodProductionBatch,
                 //    TargetQuantity = f.TargetQuantity,
+<<<<<<< Updated upstream
                 //    Quanity =  f.Quanity,
                 //    //flag= _agroUnitInfo.UnitIdwiseUnitNameList(f.Quanity).UnitName,
                 //    Status = f.Status,
@@ -1094,15 +1095,39 @@ namespace ERPWeb.Controllers
                 //    //flag = _agroUnitInfo.UnitIdwiseUnitNameList(UnitQty).UnitName,
                 //    FinishGoodProductId = f.FinishGoodProductId,
                 //    FGRId=f.FGRId,
+=======
+                //    Quanity = f.Quanity,
+                //    Status = f.Status,
+                //    ReceipeBatchCode = f.ReceipeBatchCode,
+                //    FinishGoodProductId = f.FinishGoodProductId,
+                //    FGRId = f.FGRId,
+>>>>>>> Stashed changes
                 //    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
 
 
                 //}).ToList();
+<<<<<<< Updated upstream
+=======
+
+                //List<FinishGoodProductionInfoViewModel> viewModel = new List<FinishGoodProductionInfoViewModel>();
+                //AutoMapper.Mapper.Map(finishGoodProduction, viewModel);
+                //return PartialView("_GetProductFinishGoodList", viewModel);
+
+                //var dto = _mRawMaterialIssueStockDetails.GetIssueInOutInfos(name ?? null);
+
+                //List<MRawMaterialIssueStockDetailsViewModel> viewModels = new List<MRawMaterialIssueStockDetailsViewModel>();
+                //AutoMapper.Mapper.Map(dto, viewModels);
+                //return PartialView("_GetRawMaterialIssueView", viewModels);
+
+                var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos();
+                List<FinishGoodProductionInfoDTO> finishGoodProductionInfos = new List<FinishGoodProductionInfoDTO>();
+                AutoMapper.Mapper.Map(dto, finishGoodProductionInfos);
+                return PartialView("_GetStockProductFinishGoodList", finishGoodProductionInfos);
 
 
-                List<FinishGoodProductionInfoViewModel> viewModel = new List<FinishGoodProductionInfoViewModel>();
-                AutoMapper.Mapper.Map(finishGoodProduction, viewModel);
-                return PartialView("_GetProductFinishGoodList", viewModel);
+>>>>>>> Stashed changes
+
+
             }
 
 

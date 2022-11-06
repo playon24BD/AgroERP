@@ -201,5 +201,52 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId", Utility.ParamChecker(param))
 
             return isSuccess;
         }
+
+
+
+
+
+        public IEnumerable<FinishGoodProductionInfoDTO> FinishgoodproductInOutreturnStockInfos()
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductStock()).ToList();
+        }
+
+
+        private string QueryForFinishGoodProductStock()
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            //if (name != null && name != "")
+            //{
+            //    param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
+            //}
+            query = string.Format(@"
+     select Distinct fgp.FinishGoodProductId , fgp.FGRId , p.FinishGoodProductName,fr.ReceipeBatchCode,fr.FGRQty,un.UnitName,
+
+ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0) ,
+
+SalesTotal =isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
+where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0) ,
+
+ReturnTotal = isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr
+where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) ,
+
+CurrentStock=isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
+where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr
+where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) 
+
+from FinishGoodProductionInfoes fgp
+inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId
+inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId
+inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
+inner join tblProductSalesDetails sd on p.FinishGoodProductId = sd.FinishGoodProductInfoId
+      where 1=1  {0}",
+            Utility.ParamChecker(param));
+            return query;
+        }
     }
 }

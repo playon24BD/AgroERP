@@ -26,5 +26,7 @@ namespace ERPBO.Agriculture.ViewModels
         public double CurrentStock { get; set; }
         public double StockOut { get; set; }
         public double StockIN { get; set; }
+        public double StockINReturn { get; set; }
+
     }
 }
