@@ -878,6 +878,7 @@ namespace ERPWeb.Controllers
         [HttpPost]
         public ActionResult SaveFinishGoodRecipe(FinishGoodRecipeInfoViewModel info, List<FinishGoodRecipeDetailsViewModel> details)
         {
+            string msg = "not";
             bool IsSuccess = false;
             //var pre = UserPrivilege("Inventory", "GetItemPreparation");
             //var permission = ((pre.Edit) || (pre.Add));
@@ -893,7 +894,11 @@ namespace ERPWeb.Controllers
                 {
                     IsSuccess = _finishGoodRecipeInfoBusiness.SaveFinishGoodRecipe(infoDTO, detailDTOs, User.UserId, User.OrgId);
 
-                } 
+                }
+                else
+                {
+                    return Json("noooooooooooo");
+                }
             }
             return Json(IsSuccess);
         }
@@ -1324,12 +1329,20 @@ namespace ERPWeb.Controllers
         {
             try
             {
-                //var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(finishGoodProductId, User.OrgId).ReceipeBatchCode;
-                //var ddlRecipeCode = receipeBatchCode.Select(d => new Dropdown { text=receipeBatchCode,value=d });
-                var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipCode(finishGoodProductId, User.OrgId);
 
-                var dropDown = receipeBatchCode.Where(a => a.ReceipeBatchCode != null).Select(s => new Dropdown { text = s.ReceipeBatchCode, value = s.ReceipeBatchCode }).ToList();
+                var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipCode(finishGoodProductId, User.OrgId).Select(a => new FinishGoodRecipeInfoViewModel
+                {
+                   
+                    UnitName = _agroUnitInfo.GetAgroInfoById(a.UnitId,User.OrgId).UnitName, 
+                    FGRQty = a.FGRQty,
+                    ReceipeBatchCode = a.ReceipeBatchCode
+                }).ToList();
 
+                // var ddlProductList = product.GroupBy(t => t.FinishGoodProductInfoId).Select(g => g.First()).Select(p => new SelectListItem { Text = p.FinishGoodProductName, Value = p.FinishGoodProductInfoId.ToString() }).ToList();
+                // var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipCode(finishGoodProductId, User.OrgId);
+
+                // var dropDown = receipeBatchCode.Where(a => a.ReceipeBatchCode != null).Select(s => new Dropdown { text = s.ReceipeBatchCode +s.Status + s.FGRQty, value = s.ReceipeBatchCode }).ToList();
+                var dropDown = receipeBatchCode.Where(b => b.ReceipeBatchCode != null).Select(s => new Dropdown { text = s.ReceipeBatchCode + "(" + s.FGRQty + s.UnitName + ")", value = s.ReceipeBatchCode }).ToList();
 
                 return Json(dropDown, JsonRequestBehavior.AllowGet);
             }

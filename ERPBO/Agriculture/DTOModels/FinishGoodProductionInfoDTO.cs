@@ -26,6 +26,15 @@ namespace ERPBO.Agriculture.DTOModels
         public long? EntryUserId { get; set; }
         public long FGRId { get; set; }
 
+<<<<<<< Updated upstream
+=======
+
+
+
+
+
+
+>>>>>>> Stashed changes
         public double ProductionTotal { get; set; }
         public double SalesTotal { get; set; }
         public double ReturnTotal { get; set; }
