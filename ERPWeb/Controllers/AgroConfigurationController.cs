@@ -3210,6 +3210,26 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region  SalesReturnAdjust
+
+        public ActionResult GetSalesReturnAdjustList(string flag)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                return View();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                //var dto = _salesReturn.GetSalesReturns(ProductId ?? 0, name ?? null, status ?? null);
+
+                //List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
+                //AutoMapper.Mapper.Map(dto, viewModels);
+                //return PartialView("_SalesReturnListview", viewModels);
+
+            }
+            return View();
+        }
+
         public ActionResult SalesReturnAdjustCreate(long? id)
         {
 
