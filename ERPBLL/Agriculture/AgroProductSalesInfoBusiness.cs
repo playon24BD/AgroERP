@@ -33,8 +33,9 @@ namespace ERPBLL.Agriculture
         private readonly IUserInfo _userInfo;
         private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
         private readonly IAgroUnitInfo _agroUnitInfo;
+        private readonly IMeasuremenBusiness _measuremenBusiness;
 
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo)
+        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
@@ -50,6 +51,7 @@ namespace ERPBLL.Agriculture
             this._salesPaymentRegisterRepository = new SalesPaymentRegisterRepository(this._agricultureUnitOfWork);
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
             this._agroUnitInfo = agroUnitInfo;
+            this._measuremenBusiness = measuremenBusiness;
         }
 
 
@@ -207,9 +209,25 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
                 foreach (var item in details)
                 {
+                    //double ProductMesurement = 0;
+                    //double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
+                    //double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
+                    //double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
                     var UnitQtys = item.QtyKG.Split('(', ')');
-                    int ProductUnitQty =Convert.ToInt32( UnitQtys[0]);
+                    int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
                     string ProductUnit = UnitQtys[1];
+                    //if (MasterCartonMasurement != 0)
+                    //{
+                    //     ProductMesurement = MasterCartonMasurement * InnerBoxMasurement ;
+                    //}
+                    //else
+                    //{
+                    //     ProductMesurement = InnerBoxMasurement;
+                    //}
+                    //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+
+
+
                     var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
                     //var receipeBatch=_finishGoodRecipeInfoBusiness
                     //var receipeBatch = item.ReceipeBatchCode.Split('(',')');
@@ -225,9 +243,9 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                            MeasurementId=item.MeasurementId,
                             MeasurementSize=item.MeasurementSize,
                              OrganizationId=orgId,
-                              Price=item.Price,
+                              Price= item.Price,
                                ProductSalesInfoId=item.ProductSalesInfoId,
-                                Quanity=item.Quanity,
+                                Quanity= item.Quanity,
                                  FinishGoodProductInfoId=item.FinishGoodProductInfoId,
                                   ProductSalesDetailsId=item.ProductSalesDetailsId,
                                   ReceipeBatchCode= receipeBatch,

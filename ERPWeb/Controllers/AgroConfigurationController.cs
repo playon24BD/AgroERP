@@ -742,8 +742,6 @@ namespace ERPWeb.Controllers
 
         }
 
-
-
         public ActionResult GetFinishGoodRecipeList(string flag, long? ProductId, long? id)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetFinishGoodRecipeList");
@@ -878,7 +876,8 @@ namespace ERPWeb.Controllers
         [HttpPost]
         public ActionResult SaveFinishGoodRecipe(FinishGoodRecipeInfoViewModel info, List<FinishGoodRecipeDetailsViewModel> details)
         {
-           
+
+            var msg = "alert('Are you sure want to Continue?');";
             bool IsSuccess = false;
             //var pre = UserPrivilege("Inventory", "GetItemPreparation");
             //var permission = ((pre.Edit) || (pre.Add));
@@ -897,7 +896,8 @@ namespace ERPWeb.Controllers
                 }
                 else
                 {
-                    return Json("noooooooooooo");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
+                    //return Json("noooooooooooo");
                 }
             }
             return Json(IsSuccess);
@@ -2104,11 +2104,35 @@ namespace ERPWeb.Controllers
             var Unit = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).UnitId;
             var UnitName = _agroUnitInfo.GetAgroInfoById(Unit, User.OrgId).UnitName;
 
+            
             var MeasurementSize = MasterCarton + "*" + InnerBox + "*" + PackSize + "(" + UnitName + ")";
 
             return Json(MeasurementSize, JsonRequestBehavior.AllowGet);
 
         }
+        public ActionResult GetMeasurementTotalProductQty(long MeasurementId)
+        {
+            double TotalQtyProduct = 0;
+            double MasterCarton = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).MasterCarton;
+            double InnerBox = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).InnerBox;
+            double PackSize = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).PackSize;
+            //var Unit = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).UnitId;
+            //var UnitName = _agroUnitInfo.GetAgroInfoById(Unit, User.OrgId).UnitName;
+
+            if (MasterCarton != 0)
+            {
+                TotalQtyProduct = MasterCarton * InnerBox;
+            }
+            else
+            {
+                TotalQtyProduct = InnerBox ;
+            }
+          
+
+            return Json(TotalQtyProduct, JsonRequestBehavior.AllowGet);
+
+        }
+        
 
         public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string QtyKG)
         {
