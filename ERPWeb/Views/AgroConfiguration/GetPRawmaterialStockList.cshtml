@@ -48,20 +48,60 @@
                         <div class="col-md-12">
                             <div class="card card-navy shadow">
                                 <div class="card-header">
-                                    <div class="row text-sm">
+                                    <h6 class="card-title">Search By</h6>
+
+
+                                    @*<div class="row text-sm">*@
+
+
+
+                                    @*<div class="col-md-2">
+                <h4>Search by:</h4>
+
+            </div>
+            <div class="col-md-3 float-right">
+                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+            </div>
+            <div class="col-7">
+
+            </div>*@
+
+                                    @*</div>*@
+                                </div>
+                                <div class="card-body text-sm">
+                                    <div class="row" style="margin-top:-15px">
                                         <div class="col-md-2">
-                                            <h4>Search by:</h4>
+                                            <label class="col-form-label">Invoice No </label>
+                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
                                         </div>
-                                        <div class="col-md-3 float-right">
-                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
+                                        <div class="col-md-2">
+                                            <label class="col-form-label">PO Number </label>
+                                            <input type="text" class="form-control form-control-sm" id="searchByPO" placeholder="search PO" />
                                         </div>
-                                        <div class="col-7">
 
+                                        <div class="col-md-2">
+                                            <label class="col-form-label">Challan No </label>
+                                            <input type="text" class="form-control form-control-sm" id="searchByChallan" placeholder="search Challan" />
                                         </div>
+
+                                        <div class="col-md-2">
+                                            <label for="ddlSupplierName1" class="col-form-label">Supplier Name</label>
+                                            @Html.DropDownList("ddlSupplierName1", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            
+                                        </div>
+
 
                                     </div>
+
+                                    @*<div class="col-md-2">
+                <input type="text" class="form-control form-control-sm" id="SearchInvoiceNo" placeholder="search Invoice" />
+            </div>*@
+
                                 </div>
+
+
                             </div>
 
                         </div>
@@ -84,7 +124,7 @@
 
 
                 <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterial" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterial-tab">
-                    <div class="row" style="background-color:#e7f1f6">
+                    <div class="row mb-5" style="background-color:#e7f1f6">
                         <div class="col-md-12">
                             <div class="card card-navy">
                                 <div class="card-header" style="text-align: center;">
@@ -121,10 +161,12 @@
 
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <label for="ddlSupplierName" class="col-form-label">Supplier Name</label>
+                                                                <label for="ddlSupplierName" class="control-label">Supplier Name</label>
                                                                 @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                                                 <span class="error hide req-SupplierName font-weight-bold">Supplier Name is required!</span>
                                                             </div>
+
+
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="ddlInvoiceDate">Invoice Date</label>
@@ -170,7 +212,7 @@
                                                                 <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
                                                             </div>
 
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-1">
                                                                 <label for="ddlUnitName">Unit</label>
                                                                 <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
                                                             </div>
@@ -193,6 +235,18 @@
                                                                 <label>SubTotal</label>
                                                                 <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
                                                             </div>
+                                
+
+                                                            <div class="col-md-2">
+                                                                <div class="form-group">
+                                                                    <label for="ddlexpdate">Exp Date</label>
+                                                                    <input type="date" class="form-control" id="ddlexpdate" placeholder="Expire Date">
+                                                                    <span class="error hide req-ddlexpdate font-weight-bold">date requered!</span>
+                                                                </div>
+                                                            </div>
+
+
+
                                                             <div class="col-md-1">
                                                                 <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
                                                                 <div class="clearfix">
@@ -201,7 +255,7 @@
                                                             </div>
                                                         </div>
 
-                                                    </div>
+                                                        </div>
 
 
                                                 </div>
@@ -236,6 +290,7 @@
                                             <th class="hide DepotlId"></th>
                                             <th class="hide RMId"></th>
                                             <th class="hide unitId"></th>
+                                            <th class="hide ddlexpdate"></th>
 
                                         </tr>
                                     </thead>
@@ -284,7 +339,7 @@
                                         </div>
                                         <div class="col-md-3 float-right">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnyy" placeholder="Search by any" />
-
+                                            
                                         </div>
                                         <div class="col-7">
 
@@ -351,6 +406,8 @@
         var ddlChallanNo = $("#ddlChallanNo");
         var ddlInvoiceDate = $("#ddlInvoiceDate");
 
+        var ddlexpdate = $("#ddlexpdate");
+
 
         var ddlDepotName = $("#ddlDepotName");
         var ddlRawMaterial = $("#ddlRawMaterial");
@@ -365,9 +422,9 @@
         var searchByAnyy = $("#searchByAnyy");
 
 
-
-
-
+        var ddlSupplierName1 = $("#ddlSupplierName1");
+        var searchByChallan = $("#searchByChallan");
+        var searchByPO = $("#searchByPO");
 
 
 
@@ -401,13 +458,23 @@
         })
 
 
+        ddlSupplierName1.change(function () {
+            LoadDataTable()
+        })
+
+        searchByChallan.keyup(function () {
+            LoadDataTable()
+        })
+        searchByPO.keyup(function () {
+            LoadDataTable()
+        })
 
 
         //load
         function LoadDataTable() {
             debugger;
 
-            var data = { flag: "View", name: $.trim(searchByAny.val()), RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0)};
+            var data = { flag: "View", name: $.trim(searchByAny.val()), supplierId: TryParseInt(ddlSupplierName1.val(), 0), PONumber: $.trim(searchByPO.val()), ChallanNo: $.trim(searchByChallan.val())};
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPRawmaterialStockList', data)).then(function (res, status) {
                 console.log(status);
@@ -529,7 +596,9 @@
                 var td8 = "<td class='text-center hide'>" + ddlRawMaterial.val() + "</td>";
                 var td9 = "<td class='text-center hide'>" + ddlUnitID.val() + "</td>";
 
-                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + "</tr>";
+                var td10 = "<td class='text-center hide'>" + ddlexpdate.val() + "</td>";
+
+                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
 
 
                 //totalprice
@@ -584,6 +653,8 @@
                                 UnitPrice: tds.eq(3).html(),
                                 Quantity: tds.eq(4).html(),
                                 SubTotal: tds.eq(5).html(),
+
+                                ExpireDate: tds.eq(9).html(),
 
                             });
                         })

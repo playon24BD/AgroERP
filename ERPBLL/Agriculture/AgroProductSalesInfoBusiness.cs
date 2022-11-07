@@ -32,7 +32,9 @@ namespace ERPBLL.Agriculture
         private readonly IUserAssignBussiness _userAssignBussiness;
         private readonly IUserInfo _userInfo;
         private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness)
+        private readonly IAgroUnitInfo _agroUnitInfo;
+
+        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
@@ -47,6 +49,7 @@ namespace ERPBLL.Agriculture
             this._userInfo = userInfo;
             this._salesPaymentRegisterRepository = new SalesPaymentRegisterRepository(this._agricultureUnitOfWork);
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
+            this._agroUnitInfo = agroUnitInfo;
         }
 
 
@@ -66,27 +69,51 @@ namespace ERPBLL.Agriculture
             return _agroProductSalesInfoRepository.GetAll(a => a.OrganizationId == orgId);
         }
 
-        public IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long orgId, long? ProductId)
+        public IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long? stockiestId, string invoiceNo, string fromDate, string toDate)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfoss(orgId, ProductId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfoss(stockiestId,invoiceNo,fromDate,toDate)).ToList();
         }
 
-        private string QueryForAgroSalesInfoss(long orgId, long? ProductId)
+        private string QueryForAgroSalesInfoss(long? stockiestId, string invoiceNo, string fromDate, string toDate)
         {
             string query = string.Empty;
             string param = string.Empty;
 
-            param += string.Format(@" and sales.OrganizationId={0}", orgId);
-            if (ProductId != null && ProductId > 0)
+            //param += string.Format(@" and sales.OrganizationId={0}", orgId);
+            if (stockiestId != null && stockiestId > 0)
             {
-                param += string.Format(@" and sales.ProductSalesInfoId={0}", ProductId);
+                param += string.Format(@" and sales.StockiestId={0}", stockiestId);
             }
-            query = string.Format(@"	select sales.TotalAmount,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,sales.InvoiceDate,stock.StockiestName
+
+            if (!string.IsNullOrEmpty(invoiceNo))
+            {
+                param += string.Format(@"and sales.InvoiceNo like '%{0}%'", invoiceNo);
+            }
+
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", tDate);
+            }
+
+
+            query = string.Format(@"	select sales.TotalAmount,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName
 from tblProductSalesInfo sales
 inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
-select sales.InvoiceNo,sales.InvoiceDate,stock.StockiestName
-from tblProductSalesInfo sales
-inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
+--select sales.InvoiceNo,sales.InvoiceDate,stock.StockiestName
+--from tblProductSalesInfo sales
+--inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
 
 Where 1=1 {0}", Utility.ParamChecker(param));
 
@@ -180,9 +207,14 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
                 foreach (var item in details)
                 {
-
-                    var receipeBatch = item.ReceipeBatchCode.Split('(',')');
-                    var receiID = _finishGoodRecipeInfoBusiness.GetReceipId(item.ReceipeBatchCode).FGRId;
+                    var UnitQtys = item.QtyKG.Split('(', ')');
+                    int ProductUnitQty =Convert.ToInt32( UnitQtys[0]);
+                    string ProductUnit = UnitQtys[1];
+                    var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
+                    //var receipeBatch=_finishGoodRecipeInfoBusiness
+                    //var receipeBatch = item.ReceipeBatchCode.Split('(',')');
+                    var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
+                    var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
 
                     AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
                     {
@@ -198,10 +230,11 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                                 Quanity=item.Quanity,
                                  FinishGoodProductInfoId=item.FinishGoodProductInfoId,
                                   ProductSalesDetailsId=item.ProductSalesDetailsId,
-                                  ReceipeBatchCode=receipeBatch[1],
-                                  FGRId=receiID
-                                  
-                                  
+                                  ReceipeBatchCode= receipeBatch,
+                                  FGRId= FGRId,
+                                  QtyKG=item.QtyKG
+
+
 
 
                     };
@@ -557,6 +590,109 @@ on TE.TerritoryId=ST.TerritoryId
         {
             return _agroProductSalesInfoRepository.GetAll(d => d.StockiestId == StockiestId);
 
+        }
+
+        public IEnumerable<AgroProductSalesInfoDTO> GetPaymentListInfos(string name, string fromDate, string toDate)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryPaymentListReport(name,fromDate, toDate));
+        }
+
+        private string QueryPaymentListReport(string name, string fromDate, string toDate)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                param += string.Format(@"and InvoiceNo like '%{0}%'", name);
+            }
+
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", tDate);
+            }
+
+
+            query = string.Format(@"
+--select InvoiceNo,InvoiceDate,TotalAmount,PaidAmount,DueAmount
+
+ --from tblProductSalesInfo
+ --where DueAmount >0
+
+select DISTINCT 
+AU.FullName,
+ST.StockiestName,
+TE.TerritoryName,
+AU.Address,
+AU.MobileNo,
+sales.InvoiceNo,
+CONVERT(date,sales.InvoiceDate) as InvoiceDate,
+sales.ChallanNo,
+CONVERT(date,sales.ChallanDate) as ChallanDate,
+sales.Depot,
+sales.VehicleType,
+sales.VehicleNumber,
+sales.DriverName,
+sales.DeliveryPlace,
+sales.Do_ADO_DA,
+sales.DoADO_Name,
+sales.PaymentMode,
+
+ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
+
+DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
+
+RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
+
+AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
+
+salesD.ProductSalesInfoId,
+salesD.FinishGoodProductInfoId,
+FGPN.FinishGoodProductName,
+
+salesD.Quanity,
+salesD.Price,
+salesD.MeasurementSize,
+salesD.Discount,
+salesD.DiscountTk,
+sales.PaidAmount,
+sales.DueAmount,
+(salesD.Price*salesD.Quanity) AS Total,
+sales.TotalAmount
+--dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
+
+
+
+
+from [Agriculture].[dbo].[tblProductSalesInfo] sales
+INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
+on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
+
+INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
+
+LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
+on AU.UserId=sales.UserId
+LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
+on ST.StockiestId=AU.StockiestId
+LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
+on TE.TerritoryId=ST.TerritoryId
+
+            Where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
         }
     }
 }

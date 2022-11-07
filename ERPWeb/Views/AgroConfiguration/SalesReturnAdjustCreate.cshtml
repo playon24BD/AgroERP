@@ -13,9 +13,9 @@
                 <div class="row">
                     <div class="col-md-3">
 
-                        <a href="/AgroConfiguration/SalesReturnList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
-                            <i class="fas fa-arrow-alt-circle-left"></i>
-                        </a>
+                        @*<a href="/AgroConfiguration/SalesReturnList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">*@
+                            @*<i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>*@
                     </div>
                     <div class="col-md-6">
                         <h5 class="text-center text-bold">
@@ -233,8 +233,8 @@
                  // tds.eq(7).children("input").is(":checked");
            
                 details.push({
-                    SalesReturnId: tds.eq(10).html(),
-                    ISActive: tds.eq(7).children("input").is(":checked"),
+                    SalesReturnId: tds.eq(12).html(),
+                    ISActive: tds.eq(9).children("input").is(":checked"),
 
                  
 
@@ -249,7 +249,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                        redirectPage('@Url.Action("SalesReturnList")');
+                        redirectPage('@Url.Action("SalesReturnAdjustCreate")');
                     }, 1000);
                 }
                 else {

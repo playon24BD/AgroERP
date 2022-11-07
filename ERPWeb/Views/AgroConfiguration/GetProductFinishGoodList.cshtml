@@ -35,7 +35,27 @@
                         <div class="col-md-12">
                             <div class="card card-navy shadow">
                                 <div class="card-header">
-                                    <div class="row text-sm">
+                                    <h6 class="card-title">Search By</h6>
+                                </div>
+                                <div class="card-body text-sm">
+                                    <div class="row" style="margin-top:-15px">
+
+                                        <div class="col-md-2" style="margin-top:-5px">
+                                            <label class="col-form-label">Receip Code </label>
+                                            <input type="text" class="form-control form-control-sm" id="ddlReceipBatchCode1" placeholder="Search ReceipCode" />
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label class="control-label" for="ddlProduct1">Product</label>
+                                            @Html.DropDownList("ddlProduct1", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                            <span class="error hide req-ddlProduct">Product Name is Required</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                @*<div class="row text-sm">
                                         <div class="col-md-2">
                                             <h4>Search by:</h4>
                                         </div>
@@ -47,8 +67,8 @@
 
                                         </div>
 
-                                    </div>
-                                </div>
+                                    </div>*@
+
                             </div>
 
 
@@ -96,6 +116,7 @@
                                     <div class="row">
                                         <input type="hidden" id="hdMeasurementId" />
                                         <input type="hidden" id="hdTargetValue" />
+                                        <input type="hidden" id="hdQuantity" />
                                         @*<div class="col-md-3">
                                                 <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
                                                 <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
@@ -111,14 +132,14 @@
                                             <span class="error hide req-ddlProduct">Product Name is Required</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="control-label" for="ddlReceipBatchCode">BatchCode</label>
+                                            <label class="control-label" for="ddlReceipBatchCode">Receip Code</label>
                                             @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, "--Select Batch--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
 
                                         </div>
-                                        <div class="col-md-2 hide">
+                                        <div class="col-md-2">
                                             <label for="qty"> Qty</label>
-                                            <input type="number" id="qty" name="qty" class="form-control form-control-sm" readonly />
+                                            <input type="text" id="qty" name="qty" class="form-control form-control-sm" readonly />
                                             <span class="error hide req-qty">Qty Is Required</span>
 
                                         </div>
@@ -180,12 +201,12 @@
 <div class="modal fade" id="ModalProductionFinishGoodDetails" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header alert-secondary">
+            @*<div class="modal-header alert-secondary">
                 <h4 id="modalHeading" class="modal-title">Raw Material Consume Details</h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
+            </div>*@
             <div class="modal-body" id="dataContainer2">
 
             </div>
@@ -201,6 +222,10 @@
         var targetQty = $("#targetQty");
         var ddlReceipBatchCode = $("#ddlReceipBatchCode");
         var hdTargetValue = $("#hdTargetValue");
+        var searchBatchCode = $("#searchBatchCode");
+        var ddlProduct1 = $("#ddlProduct1");
+        var ddlReceipBatchCode1 = $("#ddlReceipBatchCode1");
+        var hdQuantity = $("#hdQuantity");
 
 
         $(document).ready(function () {
@@ -222,14 +247,51 @@
             LoadTergetQuantityData();
         })
 
+        ddlReceipBatchCode1.keyup(function () {
+            LoadFinishGoodList()
+        })
+
+        ddlProduct1.change(function () {
+            LoadFinishGoodList()
+        })
+
+        function LoadFinishGoodList() {
+            debugger;
+
+            var data = { flag: "View", productId: TryParseInt(ddlProduct1.val(), 0), ReceipeBatchCode: ddlReceipBatchCode1.val()};
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
+
 
 
         $(document).on('click', 'a.data-item-detail', function (e) {
             e.preventDefault();
             $("#dataContainer2").empty();
-            var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(2).html();
+            debugger;
+          
+            var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(1).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(2).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(3).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(4).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(5).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(6).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(7).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(8).html();
 
-                var data = { flag: "Detail", finishGoodProductionBatch: finishGoodProductionBatch };
+            var data = { flag: "Detail", finishGoodProductionBatch: finishGoodProductionBatch };
                 $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
                     console.log(status);
                     if (status === "success") {
@@ -264,10 +326,21 @@
 
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
                 debugger;
-                qty.val(res);
-                //targetQty.val();
+                consoleLog(res.replace(/['"]+/g, ''));
+                //console.log(res);
+                console.log(res.quantity)
+                var UnitQty = res.replace(/['"]+/g, '');
+                qty.val(UnitQty);
+
+                var qa = UnitQty.split('(')
+                var qar = qa[0]
+                var fq = qar.replace(/['"]+/g, '');
+                hdQuantity.val(fq);
+      
             });
         }
+
+
         function LoadTergetQuantityData() {
             var data = { receipeBatchCode: ddlReceipBatchCode.val() };
 
@@ -326,7 +399,7 @@
         $("#btnSubmit").click(function (e) {
             e.preventDefault();
             var data = {};
-            var finishGoodProduction = { finishGoodProductId: ddlProduct.val(), quanity: TryParseInt(qty.val(),0), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
+            var finishGoodProduction = { finishGoodProductId: ddlProduct.val(), quanity: TryParseInt(hdQuantity.val(), 0), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
 
             var details = [];
             details.length = 0;

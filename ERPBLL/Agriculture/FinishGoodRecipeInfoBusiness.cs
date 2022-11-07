@@ -28,7 +28,11 @@ namespace ERPBLL.Agriculture
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.FGRId == id && i.OrganizationId == orgId);
         }
-        public FinishGoodRecipeInfo GetReceipId(string ReceipeBatchCode)
+        public FinishGoodRecipeInfo GetReceipId(long ProductId,int ProductUnitQty,long UnitId)
+        {
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(r => r.FinishGoodProductId == ProductId && r.FGRQty==  ProductUnitQty && r.UnitId==UnitId);
+        }
+        public FinishGoodRecipeInfo GetReceipbachcodeid(string ReceipeBatchCode)
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(r => r.ReceipeBatchCode == ReceipeBatchCode);
         }
@@ -107,7 +111,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         {
             bool IsSuccess = false;
             var ReceipeBatchCodes = "RecBC-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
-
+            //var CheckDupliketReceipeProduct = GetAllFini();
             if (info.FGRId == 0)
             {
                 FinishGoodRecipeInfo model = new FinishGoodRecipeInfo
@@ -152,9 +156,16 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return IsSuccess;
         }
 
+        
+
         public IEnumerable<FinishGoodRecipeInfo> GetAllFinishGoodReceif(long orgId)
         {
             return _finishGoodRecipeInfoRepository.GetAll(f => f.OrganizationId == orgId);
+        }
+
+        public IEnumerable<FinishGoodRecipeInfo> GetCheckDupliketReceipeProduct(long FinishGoodProductId, int FGRQty, long UnitId)
+        {
+            return _finishGoodRecipeInfoRepository.GetAll(f => f.FinishGoodProductId == FinishGoodProductId && f.FGRQty==FGRQty && f.UnitId==UnitId);
         }
         //public IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodReceif(long orgId)
         //{
@@ -191,6 +202,10 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         public FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByBatchCode(string receipeBatchCode, long orgId)
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.ReceipeBatchCode == receipeBatchCode && i.OrganizationId == orgId);
+        }
+        public FinishGoodRecipeInfo GetUnitId(string ReceipeBatchCode, double UnitId)
+        {
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.ReceipeBatchCode == ReceipeBatchCode && i.UnitId == UnitId);
         }
     }
 }

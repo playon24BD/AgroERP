@@ -160,25 +160,36 @@ where 1=1 and  t.ReturnType='Damage' and t.Status='Pending' {0}",
 
         }
 
-        public IEnumerable<ReturnRawMaterialDTO> GetallReturns(string name)
+        public IEnumerable<ReturnRawMaterialDTO> GetallReturns(long?
+            rawMaterialId, string returnType,string status)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForallReturnRM(name)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForallReturnRM(rawMaterialId, returnType,status)).ToList();
 
         }
 
-        private string QueryForallReturnRM(string name)
+        private string QueryForallReturnRM(long? rawMaterialId, string returnType,string status)
         {
             string query = string.Empty;
             string param = string.Empty;
 
 
 
-            if (name != null && name != "")
+            if (rawMaterialId != 0)
             {
-                param += string.Format(@" and rm.RawMaterialName like '%{0}%'", name);
+                //param += string.Format(@" and rm.RawMaterialName like '%{0}%'", name);
+                param += string.Format(@" and rr.RawMaterialId ={0}", rawMaterialId);
             }
+            if (returnType != null && returnType != "")
+            {
+                param += string.Format(@" and rr.ReturnType = '{0}'", returnType);
+            }
+            if (status != null && status != "")
+            {
+                param += string.Format(@" and rr.Status like '%{0}%'", status);
+            }
+
             query = string.Format(@"	
- select rr.ReturnRawMaterialId,rr.RawMaterialId,rm.RawMaterialName,rr.Quantity,rr.UnitId,un.UnitName,rr.ReturnType,rr.EntryDate,rr.Status from tblReturnRawMaterial rr
+ select rr.ReturnRawMaterialId,rr.RawMaterialId,rm.RawMaterialName,rr.Quantity,rr.UnitId,un.UnitName,rr.ReturnType, CONVERT(date,rr.EntryDate) AS EntryDate,rr.Status from tblReturnRawMaterial rr
  inner join tblRawMaterialInfo rm on rr.RawMaterialId = rm.RawMaterialId
  inner join tblAgroUnitInfo un on rr.UnitId = un.UnitId
 
@@ -186,5 +197,100 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
             return query;
         }
+
+        public IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialSearch()
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForallReturnRM()).ToList();
+        }
+
+        private string QueryForallReturnRM()
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            query = string.Format(@"	
+  select distinct rr.ReturnType from tblReturnRawMaterial rr
+ inner join tblRawMaterialInfo rm on rr.RawMaterialId = rm.RawMaterialId
+ inner join tblAgroUnitInfo un on rr.UnitId = un.UnitId
+
+Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+        public IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialSearch1()
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForallReturnRM1()).ToList();
+        }
+        
+        private string QueryForallReturnRM1()
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            query = string.Format(@"	
+  select distinct rm.RawMaterialName from tblReturnRawMaterial rr
+ inner join tblRawMaterialInfo rm on rr.RawMaterialId = rm.RawMaterialId
+ inner join tblAgroUnitInfo un on rr.UnitId = un.UnitId
+
+Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+        public IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialSearch2()
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForallReturnRM2()).ToList();
+        }
+
+        private string QueryForallReturnRM2()
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            query = string.Format(@"	
+  select distinct rr.Status from tblReturnRawMaterial rr
+ inner join tblRawMaterialInfo rm on rr.RawMaterialId = rm.RawMaterialId
+ inner join tblAgroUnitInfo un on rr.UnitId = un.UnitId
+
+Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+
+        public IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialInfosId(long rawMaterialId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForReturnRawMaterialee(rawMaterialId)).ToList();
+        }
+
+
+        private string QueryForReturnRawMaterialee(long rawMaterialId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            if (rawMaterialId != 0)
+            {
+                param += string.Format(@" and t.RawMaterialId '{0}'", rawMaterialId);
+            }
+            query = string.Format(@"
+           SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,t.Status,
+TQuantity=(SELECT sum(t.Quantity) FROM  tblReturnRawMaterial t
+where t.ReturnType='Damage' and t.Status='Pending' and t.RawMaterialId=RM.RawMaterialId)
+
+FROM  
+tblReturnRawMaterial t 
+INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
+inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
+where 1=1 and  t.ReturnType='Damage' and t.Status='Pending' {0}",
+            Utility.ParamChecker(param));
+            return query;
+        }
+
     }
 }

@@ -12,11 +12,13 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAgroProductSalesInfoBusiness
     {
+        IEnumerable<AgroProductSalesInfoDTO> GetPaymentListInfos(string name,string fromDate, string toDate);
+        
         IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport( string fromDate,string toDate);
         IEnumerable<ProductSalesDataReport> GetProductSalesData(string InvoiceNo);
 
         IEnumerable<ProductSalesDataChallanReport> GetProductSalesChallanData(string ChallanNo);
-        IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long orgId, long? ProductId);
+        IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long? stockiestId, string invoiceNo, string fromDate, string toDate);
         IEnumerable<AgroProductSalesInfo> GetUserName(long orgId);
         AgroProductSalesInfo GetAgroProductionInfoById(long id, long orgId);
         IEnumerable<AgroProductSalesInfo> GetAgroProductionSalesInfo(long orgId);

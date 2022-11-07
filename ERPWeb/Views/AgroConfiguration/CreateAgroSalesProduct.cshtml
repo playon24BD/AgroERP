@@ -133,17 +133,17 @@
                                 <label for="ddlQtyUnit" class="col-form-label">
                                     Receipe Unit Qty
                                 </label>
-                                @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--Select Unit Qty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--Select UnitQty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-QtyUnit font-weight-bold">Unit Qty is required!</span>
                             </div>
                             <div class="col-md-4">
                                 <label for="ddlMeasurementName" class="col-form-label">
-                                    Measurement Name
+                                    Measurement Desc
                                 </label>
                                 @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "--Select MeasurementName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
                             </div>
-                            <div class="col-md-4">
+                            <div class="hide">
                                 <label for="ddlRawMaterial" class="col-form-label">Measurement Size</label>
                                 @*@Html.DropDownList("ddlMeasurementSize", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementSize, "--Select Measurement Size--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
                                 <input type="text" id="ddlMeasurementSize" class="form-control form-control-sm" readonly />
@@ -168,6 +168,7 @@
                                 <label for="ddlPrice" class="col-form-label">Discount %</label>
                                 <input type="text" id="txtDiscount" class="form-control form-control-sm" />
                             </div>
+
                             <div class="hide">
                                 <label>SubTotal</label>
                                 <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
@@ -177,10 +178,14 @@
                                 <input type="number" id="ddlttdis" name="ddlttdis" class="form-control form-control-sm" readonly />
                             </div>
 
+                            <div class="hide">
+                                <label>Payable Total</label>
+                                <input type="number" id="ddlpt" name="ddlpt" class="form-control form-control-sm" readonly />
+                            </div>
+
                             <div class="col-md-2">
-                                @*<label for="" class="control-label" style="visibility:hidden"> Add To List</label>*@
-                                <div class="clearfix">
-                                    <button type="submit" class="btn btn-sm btn-warning text-bold float-left" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
+                                <label for="" class="col-form-label" style="visibility:hidden"> Add To List</label>             <div>
+                                    <button type="submit" class="btn btn-sm btn-warning text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
 
 
                                 </div>
@@ -365,7 +370,7 @@
         var FinishGoodProductInfoId = '';
         var FinishGoodStockQty = $("#FinishGoodStockQty");
         var ddlQtyUnit = $("#ddlQtyUnit");
-
+        var ddlpt = $("#ddlpt");
 
 
 
@@ -450,7 +455,7 @@
 
         ddlProductName.change(function () {
 
-           
+
             LoadQtyUnit();
 
         })
@@ -460,7 +465,7 @@
 
                 LoadDropDown('/AgroConfiguration/GetReceipyUnitQtyByProductionId', 'POST', ddlQtyUnit, JSON.stringify({ finishGoodProductId: ddlProductName.val() }));
             }
-          
+
 
         }
         ddlQtyUnit.change(function () {
@@ -500,7 +505,7 @@
             debugger;
             //var t = txtQuanity.val()
             //var span = document.getElementById("FinishGoodStockQty").innerText;
-           
+
             $("#txtQuanity").text('(0)');
             var FinishGoodProductInfoId = ddlProductName.val();
             if (FinishGoodProductInfoId != "") {
@@ -517,7 +522,7 @@
 
             if (validates() == true) {
 
-                LoadCurrentFinishGoodStock(); 
+                LoadCurrentFinishGoodStock();
 
 
 
@@ -525,7 +530,7 @@
 
                     var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
                     var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
-                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "  " + ddlMeasurementSize.val() +"</td>";
+                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") +"</td>";
                     var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
                     var td5 = "<td class='text-center' >" + txtPrice.val() + "</td>";
                     var td6 = "<td class='text-center'>" + txtDiscount.val() + "</td>";
@@ -534,22 +539,22 @@
                      //var td7 = "<td class='text-center DiscountIDCell'>" + ddlttprice.val() * txtDiscount.val() / 100 + "</td>";
                      var td7 = "<td class='text-center DiscountIDCell'>" + ddlttdis.val() + "</td>";
                     //var td8 = "<td class='text-center TotalIDCell'>" + txtQuanity.val() * txtPrice.val() + "</td>";
-                    var td8 = "<td class='text-center TotalIDCell'>" + ddlttprice.val()  + "</td>";
+                   var td8 = "<td class='text-center TotalIDCell'>" + ddlpt.val()  + "</td>";
 
                    // var td9 = "<td class='text-center'> <a href='#' class='btn btn-sm btn-danger btn-flat data-onfly-del'><i class='far fa-trash-alt'></i></a></td>";
-                    var td9 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlttprice.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td9 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
 
                     var td10 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
                 var td11 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
-                var td12 = "<td class='hide '>" + dropDownSelectedText("ddlProductName") + "</td>";
+                var td12 = "<td class='hide '>" + dropDownSelectedText("ddlQtyUnit") + "</td>";
 
                 var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12+ "</tr>";
 
 
 
                     //totalprice
-                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
                     $('.totalsub').text(to);
                     console.log(to);
                     //totalprice
@@ -582,7 +587,11 @@
         //calculatetotal
         txtQuanity.keyup(function () {
             if (txtQuanity.val() >= 0) {
+                debugger;
+                //ddlpt.val("");
                 calculateTotal();
+
+
             }
 
 
@@ -601,13 +610,23 @@
             var sub = txtPrice.val() * txtQuanity.val();
             ddlttprice.val(sub);
 
+
         }
-        //calculateend
+
+
+        function payabl() {
+            debugger;
+            var pay = ddlttprice.val() - ddlttdis.val();
+            ddlpt.val(pay);
+        }
+        //payable
+
 
         //calculatedis
         txtDiscount.keyup(function () {
             if (txtQuanity.val() >= 0) {
                 calculateTotalDis();
+                payabl();
             }
 
 
@@ -616,13 +635,14 @@
         txtPrice.keyup(function () {
             if (txtPrice.val() >= 0) {
                 calculateTotalDis();
-
+                payabl();
             }
 
         });
         txtQuanity.keyup(function () {
             if (txtQuanity.val() >= 0) {
                 calculateTotalDis();
+                payabl();
             }
 
 
@@ -757,13 +777,6 @@
 
 
 
-
-
-
-
-
-
-
         $("#saveButton").click(function (e) {
             debugger
             e.preventDefault();
@@ -792,7 +805,7 @@
                                FinishGoodProductInfoId: tds.eq(9).html(),
                                MeasurementSize: tds.eq(2).html(),
                                 DiscountTk: tds.eq(6).html(),
-                                ReceipeBatchCode: tds.eq(11).html()
+                                QtyKG: tds.eq(11).html()
 
 
 
@@ -809,9 +822,9 @@
                         {
                             if (res === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
-                                @*setTimeout(function () {
-                                    redirectPage('@Url.Action("")');
-                                }, 1000);*@
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetAgroSalesProductList")');
+                                }, 500);
                                 //resetUI();
                             }
                             else {

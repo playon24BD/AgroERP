@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
@@ -27,13 +28,27 @@ namespace ERPBLL.Agriculture
             return _measurmentRepository.GetOneByOrg(a => a.MeasurementId == measureMentId && a.OrganizationId == orgId);
         }
 
-        public IEnumerable<MeasurementSetup> GetMeasurementSetups(long orgId)
+        public IEnumerable<MeasurementSetupDTO> GetMeasurementSetups(long orgId)
         {
-            return _measurmentRepository.GetAll(a => a.OrganizationId == orgId);
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForAgroMasurment(orgId)).ToList();
+            //return _measurmentRepository.GetAll(a => a.OrganizationId == orgId);
             //return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForCheckUnit(orgId)).ToList();
         }
 
-        
+        private string QueryForAgroMasurment(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+           // param += string.Format(@" and OrganizationId={0}", orgId);
+
+
+            query = string.Format(@"SELECT * FROM PackageDetails	
+Where 1=1 ", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+
 
         //public bool SaveMeasureMent(List<MeasurementSetupDTO> measurementDTO, long orgId)
         //{

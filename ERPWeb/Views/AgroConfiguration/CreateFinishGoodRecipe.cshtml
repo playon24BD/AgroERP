@@ -10,10 +10,10 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-3">
-                            <a href="/AgroConfiguration/GetFinishGoodRecipeList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
-                                <i class="fas fa-arrow-alt-circle-left"></i>
-                            </a>
-                        </div>
+                        <a href="/AgroConfiguration/GetFinishGoodRecipeList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
                     <div class="col-md-6">
                         <h5 class="text-center text-bold">Create Finish Good Recipe</h5>
                     </div>
@@ -28,48 +28,48 @@
                             Target Product
                         </h5>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="ddlProductName" class="col-form-label">
                                     Product Name
                                 </label>
                                 @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label for="txtQty" class="col-form-label">ProductQty <span id="unitName" class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
                                 <input type="number" placeholder="Qty" name="quantity" id="txtProductQty" class="form-control form-control-sm" />
                                 <span class="error hide req-src-Productqty text-bold">ProductQty is required!</span>
                             </div>
-                            <div class="col-md-4">
-                                <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
+                            <div class="col-md-3">
+                                <label for="ddlUnit" class="col-form-label">Unit Name</label>
                                 @Html.DropDownList("ddlUnit1", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                                 <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
                             </div>
-                            <div class="form-row col-6">
-                                <label for="ddlStatus" class="control-label">Status</label>
+                            <div class="col-md-2">
+                                <label for="ddlStatus" class="col-form-label">Status</label>
                                 <select class="form-control form-control-sm" id="ddlStatus">
                                     <option value="Active">Active</option>
                                     <option value="InActive">InActive</option>
                                 </select>
                             </div>
                             @*<div class="col-md-4">
-            <label class="col-form-label" for="model">Product Unit</label>
-            <input type="text" id="txtProductunit" name="unit" class="form-control form-control-sm">
-        </div>*@
+                                    <label class="col-form-label" for="model">Product Unit</label>
+                                    <input type="text" id="txtProductunit" name="unit" class="form-control form-control-sm">
+                                </div>*@
                         </div>
 
                     </div>
                     <div class="col-md-7">
                         <h5 style="border-bottom:2px solid #f87878">Source Raw Material</h5>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="ddlRawMaterialName" class="col-form-label">Raw Material Name</label>
                                 @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select RawMaterial Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-src-RawMaterialName font-weight-bold">RawMaterial Name is required !</span>
 
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label for="txtRawMaterialQty" class="col-form-label">RawMaterial Qty <span id="unitName" class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
                                 <input type="text" placeholder="Qty" name="quantity" id="txtRawMaterialQty" class="form-control form-control-sm" />
                                 <span class="error hide req-src-RawMaterialqty text-bold">RawMaterial Qty is required!</span>
@@ -79,64 +79,55 @@
                                 <label for="ddlUnitName" class="col-form-label">UnitName</label>
                                 <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
                             </div>
+                            <div class="col-md-2">
+                                <label for="" class="col-form-label" style="visibility:hidden"> Add To List</label>
+                                <div >
+                                    <button type="submit" class="btn btn-sm btn-warning text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                             <div class="hide">
                                 <label for="ddlUnitID">UnitID</label>
                                 <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
                             </div>
-
-                            @*<div class="col-md-3">
-            <label for="ddlUnit" class="col-form-label"> Unit Name</label>
-            <input type="text" id="ddlUnit" name="ddlUnit" class="form-control form-control-sm" readonly />*@
-
-            <span class="error hide req-preparation text-bold">Unit is required</span>
-        </div>
-                            @*<div class="col-md-3">
-            <label class="col-form-label" for="model">RawMaterial Unit</label>
-            <input type="text" id="txtRawMaterialunit" name="unit" class="form-control form-control-sm">
-        </div>*@
-                            <div class="col-md-2">
-                                <label for="" class="col-form-label" style="visibility:hidden"> Add To List</label>
-                                <div class="clearfix">
-                                    <button type="submit" class="btn btn-sm btn-warning text-bold float-right" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </div>
-
                         </div>
+                        
 
                     </div>
+
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-12">
-                        @Html.AntiForgeryToken()
-                        <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg" id="tblList">
-                            <thead>
-                                <tr>
-                                    <th colspan="11" class="text-center">
-                                        <span class="error hide no-items">Please load the table first.</span>
-                                        <button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-left">
-                                            <i class="fas fa-paper-plane"></i> Save
-                                        </button>
-                                    </th>
-                                </tr>
-                                <tr class="text-center btn-dark">
-                                    <th style="width:8%">#SL</th>
-                                    <th style="width:40%">RawMaterial Name</th>
-                                    <th style="width:10%">RawMaterial Qty.</th>
-                                    <th style="width:10%">RawMaterial Unit</th>
-                                    <th style="width:12%">Action</th>
-                                    <th class="hide RawMaterialId"></th>
-                                    <th class="hide UnitId"></th>
-                                     
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    @Html.AntiForgeryToken()
+                    <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg" id="tblList">
+                        <thead>
+                            <tr>
+                                <th colspan="11" class="text-center">
+                                    <span class="error hide no-items">Please load the table first.</span>
+                                    <button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-right">
+                                        <i class="fas fa-paper-plane"></i> Save
+                                    </button>
+                                </th>
+                            </tr>
+                            <tr class="text-center btn-dark">
+                                <th style="width:8%">#SL</th>
+                                <th style="width:40%">RawMaterial Name</th>
+                                <th style="width:10%">RawMaterial Qty.</th>
+                                <th style="width:10%">RawMaterial Unit</th>
+                                <th style="width:12%">Action</th>
+                                <th class="hide RawMaterialId"></th>
+                                <th class="hide UnitId"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="modal fade" id="FinishGoodRecipeModal" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -235,7 +226,7 @@
         //})
 
 
-        
+
         var rawMetarialList = [];
 
         $("#btnAddToList").click(function (e) {

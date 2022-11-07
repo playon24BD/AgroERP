@@ -19,9 +19,17 @@ namespace ERPBLL.Agriculture.Interface
         FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByFGID(long id, long orgId);
         FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByBatchCode(string receipeBatchCode, long orgId);
         bool DeletefinishGoodRecipe(long id, long userId, long orgId);
-        FinishGoodRecipeInfo GetReceipId(string ReceipeBatchCode);
+        FinishGoodRecipeInfo GetReceipId(long ProductId, int ProductUnitQty, long UnitId);
         IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodUnitQty(long orgId);
         IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodReceipUnitQty(long finishGoodProductId, long orgId);
+
+
+        IEnumerable<FinishGoodRecipeInfo> GetCheckDupliketReceipeProduct(long FinishGoodProductId,int FGRQty, long UnitId);
+
+
+
+        FinishGoodRecipeInfo GetReceipbachcodeid( string ReceipeBatchCode);
+        FinishGoodRecipeInfo GetUnitId(string ReceipeBatchCode,double UnitId);
 
     }
 }

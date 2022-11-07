@@ -33,5 +33,9 @@ namespace ERPBO.Agriculture.DTOModels
         public double CurrentStock { get; set; }
         public double StockOut { get; set; }
         public double StockIN { get; set; }
+
+        public double BadReturn { get; set; }
+        public double ReturnQty { get; set; }
+        public double GoodReturn { get; set; }
     }
 }
