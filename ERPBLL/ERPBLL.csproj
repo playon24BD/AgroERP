@@ -122,7 +122,7 @@
     <Compile Include="Agriculture\Interface\IAreaSetupBusiness.cs" />
     <Compile Include="Agriculture\Interface\IAreaUserBusiness.cs" />
     <Compile Include="Agriculture\Interface\ICommissionOnProductBusiness.cs" />
-    <Compile Include="Agriculture\Interface\ICommissionOnProductHistory.cs" />
+    <Compile Include="Agriculture\Interface\ICommissionOnProductHistoryBusiness.cs" />
     <Compile Include="Agriculture\Interface\IDistributionUserBusiness.cs" />
     <Compile Include="Agriculture\Interface\IDivisionInfo.cs" />
     <Compile Include="Agriculture\Interface\IDivisionUserBusiness.cs" />
