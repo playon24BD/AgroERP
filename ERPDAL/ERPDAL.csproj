@@ -118,6 +118,10 @@
     <Compile Include="AgricultureContextMigrations\202211030832542_Agriculture_CommissionOnProductandHistoryTableAdded.Designer.cs">
       <DependentUpon>202211030832542_Agriculture_CommissionOnProductandHistoryTableAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202211070800217_Agri_startDateAndEndDate.cs" />
+    <Compile Include="AgricultureContextMigrations\202211070800217_Agri_startDateAndEndDate.Designer.cs">
+      <DependentUpon>202211070800217_Agri_startDateAndEndDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -190,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202211030832542_Agriculture_CommissionOnProductandHistoryTableAdded.resx">
       <DependentUpon>202211030832542_Agriculture_CommissionOnProductandHistoryTableAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211070800217_Agri_startDateAndEndDate.resx">
+      <DependentUpon>202211070800217_Agri_startDateAndEndDate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
