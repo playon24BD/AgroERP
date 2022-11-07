@@ -417,14 +417,16 @@
 
             var data = JSON.stringify({ info: finishGoodProduction, details: details })
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, type.post, "/AgroConfiguration/SaveFinishGoodProduction", data, getToken())).then(function (res, status) {
+                debugger;
                 if (status == "success") {
                     $('.toastrDefaultSuccess').trigger('click');
-                     setTimeout(function () {
+                    setTimeout(function () {
                         redirectPage('@Url.Action("GetProductFinishGoodList")');
                     }, 1000);
 
 
                 }
+               
 
 
             }).fail(function (error) {

@@ -75,6 +75,10 @@ var stockReturnFlag = {
     packagingRepairFaulty: "Packaging-Repair-Faulty",
 };
 
+//e
+var eee = {
+    qtyunit = "Quantity Unit not possible same"
+};
 
 function toggleAlert(msg) {
     var al = bootbox.alert(msg);

@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.SalesReturnViewModel>
 
 @{
+    string badge = string.Empty;
     ViewBag.Title = "List of SalesReturn";
     var SL = 0;
 }
@@ -25,23 +26,29 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    SL = SL + 1;
-                    <tr>
 
-                        <td class="text-center text-bold">@SL</td>
-                        <td class="hide">@item.FinishGoodProductInfoId</td>
-                        <td class="hide">@item.ProductSalesInfoId</td>
-                        <td class="text-center">@item.InvoiceNo</td>
-                        <td class="text-center">@item.FinishGoodProductName</td>
-                        <td class="text-center">@item.QtyKG</td>
-                        <td class="text-center">@item.ReturnQuanity</td>
-                        <td class="text-center">@item.ReturnPerUnitPrice</td>
-                        <td class="text-center">@item.ReturnDate</td>
-                        <td class="text-center">@item.Status</td>
-                
-                
-                
-                    </tr>
+                    badge = item.Status == "NOTADJUST" ? "badge bg-danger" : item.Status == "ADJUST" ? "badge bg-success" : "";
+
+                    SL = SL + 1;
+                <tr>
+
+                    <td class="text-center text-bold">@SL</td>
+                    <td class="hide">@item.FinishGoodProductInfoId</td>
+                    <td class="hide">@item.ProductSalesInfoId</td>
+                    <td class="text-center">@item.InvoiceNo</td>
+                    <td class="text-center">@item.FinishGoodProductName</td>
+                    <td class="text-center">@item.QtyKG</td>
+                    <td class="text-center">@item.ReturnQuanity</td>
+                    <td class="text-center">@item.ReturnPerUnitPrice</td>
+                    <td class="text-center">@item.ReturnDate</td>
+                    @*<td class="text-center">@item.Status</td>*@
+                    <td class="text-center" data-val="@item.Status">
+                        <span class="@badge">@item.Status</span>
+                    </td>
+
+
+
+                </tr>
                 }
 
                 @if (Model.Count() == 0)
