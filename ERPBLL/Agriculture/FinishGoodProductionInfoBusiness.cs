@@ -31,14 +31,14 @@ namespace ERPBLL.Agriculture
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
         }
 
-        public IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,string ProductUnitQty, long orgId)
+        public IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,string ProductUnitQty,long? CheckQty, long orgId)
         {
             //return _finishGoodProductionInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.FinishGoodProductId == FinishGoodProductInfoId);
 
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductCheckQty(FinishGoodProductInfoId, ProductUnitQty, orgId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductCheckQty(FinishGoodProductInfoId, ProductUnitQty, CheckQty, orgId)).ToList();
         }
 
-        private string QueryForFinishGoodProductCheckQty(long finishGoodProductInfoId,string ProductUnitQty, long orgId)
+        private string QueryForFinishGoodProductCheckQty(long finishGoodProductInfoId,string ProductUnitQty, long? CheckQty, long orgId)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -52,13 +52,22 @@ namespace ERPBLL.Agriculture
             {
                 param += string.Format(@" and FI.Quanity={0}", ProductUnitQty);
             }
+            if (CheckQty >0)
+            {
+                param += string.Format(@" and FI.FGRId={0}", CheckQty);
+            }
 
-            query = string.Format(@"SELECT DISTINCT FI.FinishGoodProductId,FP.FinishGoodProductName,FI.ReceipeBatchCode,SUM(FI.TargetQuantity) AS TargetQuantity
+            query = string.Format(@"
+SELECT  DISTINCT FI.FinishGoodProductId,FGPI.FinishGoodProductName,FI.ReceipeBatchCode,FGPI.FinishGoodProductName,SUM(FI.TargetQuantity) AS TargetQuantity,
+ReturnQty=(SELECT SUM(sr.ReturnQuanity)  as ReturnQuanity FROM  tblSalesReturn sr 
+where  sr.Status='ADJUST' and sr.FGRId =FI.FGRId)
 
 FROM FinishGoodProductionInfoes FI
-INNER JOIN tblFinishGoodProductInfo FP on FI.FinishGoodProductId=FP.FinishGoodProductId
-INNER JOIN tblFinishGoodRecipeInfo RI on FI.ReceipeBatchCode=RI.ReceipeBatchCode	
-Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode {0} Group by FP.FinishGoodProductName,FI.ReceipeBatchCode,FI.FinishGoodProductId", Utility.ParamChecker(param));
+inner join tblFinishGoodRecipeInfo FGR on FGR.FGRId=FI.FGRId
+inner join [dbo].[tblFinishGoodProductInfo] FGPI on FGPI.FinishGoodProductId=FGR.FinishGoodProductId 
+Where 1=1 {0}
+Group by 
+FI.FGRId,FGPI.FinishGoodProductName,FI.FinishGoodProductId,FGPI.FinishGoodProductName,FI.ReceipeBatchCode", Utility.ParamChecker(param));
 
             return query;
         }
@@ -90,6 +99,15 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
         public FinishGoodProductionInfo GetFinishGoodProductionByAny(string any, long orgId)
         {
             throw new NotImplementedException();
+        }
+
+        public FinishGoodProductionInfo Getcheckqty(long FinishGoodProductInfoId, string ProductUnitQty)
+        {
+            var puq = ProductUnitQty.Split('"');
+            var qty = puq[0];
+            double proqty =Convert.ToDouble( qty);
+
+            return _finishGoodProductionInfoRepository.GetOneByOrg(f => f.FinishGoodProductId == FinishGoodProductInfoId && f.Quanity== proqty);
         }
 
         public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionInfo(long orgId)
@@ -207,22 +225,26 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId", Utility.ParamChecker(param))
 
 
 
-        public IEnumerable<FinishGoodProductionInfoDTO> FinishgoodproductInOutreturnStockInfos()
+        public IEnumerable<FinishGoodProductionInfoDTO> FinishgoodproductInOutreturnStockInfos(string ReceipeBatchCode, long? productId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductStock()).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductStock(ReceipeBatchCode, productId)).ToList();
         }
 
 
-        private string QueryForFinishGoodProductStock()
+        private string QueryForFinishGoodProductStock(string ReceipeBatchCode, long? productId)
         {
             string query = string.Empty;
             string param = string.Empty;
 
 
-            //if (name != null && name != "")
-            //{
-            //    param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
-            //}
+            if (ReceipeBatchCode != null && ReceipeBatchCode != "")
+            {
+                param += string.Format(@" and fgp.ReceipeBatchCode like '%{0}%'", ReceipeBatchCode);
+            }
+            if (productId>0 && productId != 0)
+            {
+                param += string.Format(@" and fgp.FinishGoodProductId ={0}", productId);
+            }
             query = string.Format(@"
      select Distinct fgp.FinishGoodProductId , fgp.FGRId , p.FinishGoodProductName,fr.ReceipeBatchCode,fr.FGRQty,un.UnitName,
 
@@ -244,7 +266,6 @@ from FinishGoodProductionInfoes fgp
 inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId
 inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId
 inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
-inner join tblProductSalesDetails sd on p.FinishGoodProductId = sd.FinishGoodProductInfoId
       where 1=1  {0}",
             Utility.ParamChecker(param));
             return query;

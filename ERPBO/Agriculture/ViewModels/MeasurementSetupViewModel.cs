@@ -24,5 +24,7 @@ namespace ERPBO.Agriculture.ViewModels
         public long EntryUserId { get; set; }
         public string Status { get; set; }
         public double UnitKG { get; set; }
+        public string PackageName { get; set; }
+
     }
 }

@@ -448,24 +448,25 @@ namespace ERPWeb.Controllers
             {
                 //var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
 
-                IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Where(s => (name == "" || name == null) || (s.MeasurementName.Contains(name))).Select(o => new MeasurementSetupDTO
-                {
-                    MeasurementId = o.MeasurementId,
-                    OrganizationId = o.OrganizationId,
-                    MeasurementName = o.MeasurementName,
-                    Status = o.Status,
-                    RoleId = o.RoleId,
-                    UnitId = o.UnitId,
-                    InnerBox = o.InnerBox,
-                    MasterCarton = o.MasterCarton,
-                    PackSize = o.PackSize,
-                    //EntryUserId=o.EntryUserId.ToString(),
-                    //UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
-                    EntryDate = o.EntryDate,
-                    UpdateUserId = o.UpdateUserId,
-                    UpdateDate = o.UpdateDate,
-                    UnitName = _agroUnitInfo.GetAgroInfoById(o.UnitId, User.OrgId).UnitName,
-                }).ToList();
+                IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
+                //    .Where(s => (name == "" || name == null) || (s.MeasurementName.Contains(name))).Select(o => new MeasurementSetupDTO
+                //{
+                //    MeasurementId = o.MeasurementId,
+                //    OrganizationId = o.OrganizationId,
+                //    MeasurementName = o.MeasurementName,
+                //    Status = o.Status,
+                //    RoleId = o.RoleId,
+                //    UnitId = o.UnitId,
+                //    InnerBox = o.InnerBox,
+                //    MasterCarton = o.MasterCarton,
+                //    PackSize = o.PackSize,
+                //    //EntryUserId=o.EntryUserId.ToString(),
+                //    //UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
+                //    EntryDate = o.EntryDate,
+                //    UpdateUserId = o.UpdateUserId,
+                //    UpdateDate = o.UpdateDate,
+                //    UnitName = _agroUnitInfo.GetAgroInfoById(o.UnitId, User.OrgId).UnitName,
+                //}).ToList();
 
 
                 List<MeasurementSetupViewModel> viewModels = new List<MeasurementSetupViewModel>();
@@ -1043,7 +1044,7 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetProductFinishGoodList(string flag, string finishGoodProductionBatch, long? productId)
+        public ActionResult GetProductFinishGoodList(string flag, string ReceipeBatchCode, long? productId,string finishGoodProductionBatch)
         {
 
 
@@ -1060,7 +1061,7 @@ namespace ERPWeb.Controllers
                 return View();
 
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == "Detail" && finishGoodProductionBatch != null)
+            else if (!string.IsNullOrEmpty(flag) && flag == "Detail")
             {
                 IEnumerable<FinishGoodProductionDetailsDTO> dto = _finishGoodProductionDetailsBusiness.GetFinishGoodProductionDetails(finishGoodProductionBatch, User.OrgId).Select(a => new FinishGoodProductionDetailsDTO
                 {
@@ -1131,7 +1132,7 @@ namespace ERPWeb.Controllers
                 //AutoMapper.Mapper.Map(dto, viewModels);
                 //return PartialView("_GetRawMaterialIssueView", viewModels);
 
-                var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos().ToList();
+                var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos(ReceipeBatchCode, productId).ToList();
                 List<FinishGoodProductionInfoViewModel> finishGoodProductionInfos = new List<FinishGoodProductionInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, finishGoodProductionInfos);
                 return PartialView("_GetStockProductFinishGoodList", finishGoodProductionInfos);
@@ -1155,6 +1156,7 @@ namespace ERPWeb.Controllers
                 var UnitName = _agroUnitInfo.UnitIdwiseUnitName(UnitIds).UnitName;
                 var ShowUnitQty = quantity + "(" + UnitName + ")";
 
+               // return Json(ShowUnitQty, JsonRequestBehavior.AllowGet);
                 return Json(ShowUnitQty, JsonRequestBehavior.AllowGet);
 
             }
@@ -2035,7 +2037,7 @@ namespace ERPWeb.Controllers
             ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.UnitQty.ToString() }).ToList();
 
 
-            ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MeasurementName, Value = d.MeasurementId.ToString() }).ToList();
+            ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.PackageName , Value = d.MeasurementId.ToString() }).ToList();
 
             ViewBag.ddlMeasurementSize = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MasterCarton.ToString() + "*" + d.InnerBox.ToString() + "*" + d.PackSize.ToString() + "(" + d.UnitId + ")", Value = d.MeasurementId.ToString() }).ToList();
 
@@ -2083,7 +2085,9 @@ namespace ERPWeb.Controllers
         {
             var UnitQtys = QtyKG.Split('(', ')');
             string ProductUnitQty = UnitQtys[0];
-            var checkFinishGoodStockValue = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(FinishGoodProductInfoId, ProductUnitQty, User.OrgId);
+            var CheckQty = _finishGoodProductionInfoBusiness.Getcheckqty(FinishGoodProductInfoId, ProductUnitQty).FGRId;
+            
+            var checkFinishGoodStockValue = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(FinishGoodProductInfoId, ProductUnitQty,CheckQty, User.OrgId);
 
             double itemStock = 0;
 

@@ -41,8 +41,8 @@
                                     <div class="row" style="margin-top:-15px">
 
                                         <div class="col-md-2" style="margin-top:-5px">
-                                            <label class="col-form-label">Batch Code </label>
-                                            <input type="text" class="form-control form-control-sm" id="searchBatchCode" placeholder="Search BatchCode" />
+                                            <label class="col-form-label">Receip Code </label>
+                                            <input type="text" class="form-control form-control-sm" id="ddlReceipBatchCode1" placeholder="Search ReceipCode" />
                                         </div>
 
                                         <div class="col-md-2">
@@ -116,6 +116,7 @@
                                     <div class="row">
                                         <input type="hidden" id="hdMeasurementId" />
                                         <input type="hidden" id="hdTargetValue" />
+                                        <input type="hidden" id="hdQuantity" />
                                         @*<div class="col-md-3">
                                                 <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
                                                 <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
@@ -223,6 +224,8 @@
         var hdTargetValue = $("#hdTargetValue");
         var searchBatchCode = $("#searchBatchCode");
         var ddlProduct1 = $("#ddlProduct1");
+        var ddlReceipBatchCode1 = $("#ddlReceipBatchCode1");
+        var hdQuantity = $("#hdQuantity");
 
 
         $(document).ready(function () {
@@ -244,7 +247,7 @@
             LoadTergetQuantityData();
         })
 
-        searchBatchCode.keyup(function () {
+        ddlReceipBatchCode1.keyup(function () {
             LoadFinishGoodList()
         })
 
@@ -255,7 +258,7 @@
         function LoadFinishGoodList() {
             debugger;
 
-            var data = { flag: "View", productId:TryParseInt(ddlProduct1.val(),0), finishGoodProductionBatch: $.trim(searchBatchCode.val())};
+            var data = { flag: "View", productId: TryParseInt(ddlProduct1.val(), 0), ReceipeBatchCode: ddlReceipBatchCode1.val()};
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
                 console.log(status);
@@ -277,9 +280,18 @@
         $(document).on('click', 'a.data-item-detail', function (e) {
             e.preventDefault();
             $("#dataContainer2").empty();
-            var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(2).html();
+            debugger;
+          
+            var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(1).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(2).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(3).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(4).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(5).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(6).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(7).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(8).html();
 
-                var data = { flag: "Detail", finishGoodProductionBatch: finishGoodProductionBatch };
+            var data = { flag: "Detail", finishGoodProductionBatch: finishGoodProductionBatch };
                 $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
                     console.log(status);
                     if (status === "success") {
@@ -315,12 +327,20 @@
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
                 debugger;
                 consoleLog(res.replace(/['"]+/g, ''));
+                //console.log(res);
+                console.log(res.quantity)
                 var UnitQty = res.replace(/['"]+/g, '');
                 qty.val(UnitQty);
-               // qty.val(res);
-                //targetQty.val();
+
+                var qa = UnitQty.split('(')
+                var qar = qa[0]
+                var fq = qar.replace(/['"]+/g, '');
+                hdQuantity.val(fq);
+      
             });
         }
+
+
         function LoadTergetQuantityData() {
             var data = { receipeBatchCode: ddlReceipBatchCode.val() };
 
@@ -379,7 +399,7 @@
         $("#btnSubmit").click(function (e) {
             e.preventDefault();
             var data = {};
-            var finishGoodProduction = { finishGoodProductId: ddlProduct.val(), quanity: TryParseInt(qty.val(),0), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
+            var finishGoodProduction = { finishGoodProductId: ddlProduct.val(), quanity: TryParseInt(hdQuantity.val(), 0), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
 
             var details = [];
             details.length = 0;
