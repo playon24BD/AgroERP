@@ -46,7 +46,8 @@ namespace ERPBLL.Agriculture
                 param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
             }
             query = string.Format(@"
-     SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,
+     
+ SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,
 StockIN=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
 where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),0),
 StockOut=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
