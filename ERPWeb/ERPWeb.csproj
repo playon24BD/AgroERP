@@ -3279,11 +3279,10 @@
     <Content Include="Views\AgroConfiguration\SalesReturnAdjustCreate.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAgroSalesReturnAdjust.cshtml" />
     <Content Include="Views\AgroConfiguration\ProductCommision.cshtml" />
-
     <Content Include="Views\AgroConfiguration\_ProductCommision.cshtml" />
-
     <Content Include="Views\AgroConfiguration\_GetStockProductFinishGoodList.cshtml" />
-
+    <Content Include="Views\AgroConfiguration\SalesCommission.cshtml" />
+    <Content Include="Views\AgroConfiguration\_SalesCommission.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -12,6 +12,6 @@ namespace ERPBLL.Agriculture.Interface
     {
        IEnumerable<CommisionOnProductSalesDetails> GetCommisionOnProductSalesDetails(long orgId);
        CommisionOnProductSalesDetails GetCommisionOnProductSalesDetailsbyId(long commisionOnProductSalesDetailsId,long orgId);
-       bool SaveCommisionOnProductSalesDetails(List<CommisionOnProductSalesDetailsDTO> onProductSalesDetailsDTO,long id,string flag,long userId,long orgId);
+       bool SaveCommisionOnProductSalesDetails(List<AgroProductSalesDetails> onProductSalesDetailsDTO,long id,string flag,long userId,long orgId);
     }
 }

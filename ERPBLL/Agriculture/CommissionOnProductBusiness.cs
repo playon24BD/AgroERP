@@ -193,5 +193,10 @@ namespace ERPBLL.Agriculture
 
             return IsSuccess;
         }
+
+        public CommisionOnProduct GetCommisionOByProductId(long finishGoodProductId, long orgId)
+        {
+           return _commissionOnProductBusinessRepository.GetOneByOrg(f=>f.FinishGoodProductId==finishGoodProductId && f.OrganizationId==orgId);
+        }
     }
 }

@@ -14,10 +14,13 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly CommissionOnProductOnSalesDetailsBusinessRepository _commissionSalesDetailsRepository;
+        private readonly ICommissionOnProductBusiness _commissionOnProductBusiness;
 
-        public CommisionOnProductSalesDetailsBusiness(IAgricultureUnitOfWork agricultureUnitOfWork)
+
+        public CommisionOnProductSalesDetailsBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, ICommissionOnProductBusiness commissionOnProductBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
+            this._commissionOnProductBusiness = commissionOnProductBusiness;
             this._commissionSalesDetailsRepository = new CommissionOnProductOnSalesDetailsBusinessRepository(this._agricultureUnitOfWork);
 
         }
@@ -41,18 +44,24 @@ namespace ERPBLL.Agriculture
                 {
                     CommisionOnProductSalesDetails commisionOnProductSalesDetails = new CommisionOnProductSalesDetails()
                     {
-                       FinishGoodProductId = item.FinishGoodProductInfoId,
-                        //CommissionOnProductOnSalesId = item.CommissionOnProductOnSalesId,
-                        //PaymentMode = item.PaymentMode,
-                        //Credit = item.Credit,
-                        //Cash = item.Cash,
+                        FinishGoodProductId = item.FinishGoodProductInfoId,
+
+                        CommissionOnProductOnSalesId = id,
+                        PaymentMode = flag,
+
+                        Credit = (flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : 0,
+
+                        Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash : 0,
                         //TotalCommission = item.TotalCommission,
                         //Status = item.Status,
-                        TotalCommission=(item.Price *item.Quanity)-item.DiscountTk,
+
+                        TotalCommission = ((item.Price * item.Quanity) - item.DiscountTk) * ((flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash)/100,
                         Remarks = "Insert",
                         EntryUserId = userId,
                         EntryDate = DateTime.Now,
                     };
+
+                    productSalesDetails.Add(commisionOnProductSalesDetails);
                 }
                 _commissionSalesDetailsRepository.InsertAll(productSalesDetails);
                 isSuccess = _commissionSalesDetailsRepository.Save();

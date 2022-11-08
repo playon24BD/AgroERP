@@ -3435,6 +3435,12 @@ namespace ERPWeb.Controllers
             Isexist = _commissionOnProductBusiness.IsExistsSameYearProduct(year,product,User.OrgId);
             return Json(Isexist);
         }
+
+
+        public ActionResult SalesCommission()
+        {
+            return View();
+        }
         #endregion
 
 

@@ -13,6 +13,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<CommisionOnProduct> GetCommisionOnProducts(long orgId);
         IEnumerable<CommisionOnProductDTO> GetAllCommisionOnProducts(long? product, int? year, long orgId);
         CommisionOnProduct GetCommisionOnProductbyId(long commissionOnProductId,long orgId);
+        CommisionOnProduct GetCommisionOByProductId(long finishGoodProductId, long orgId);
         bool SaveCommisionOnProductby(List<CommisionOnProductDTO> commisionOnProductDTOs,long userId,long orgId);
        bool IsExistsSameYearProduct(int year, long product, long orgId);
     }

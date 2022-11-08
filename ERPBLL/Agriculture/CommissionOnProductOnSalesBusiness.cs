@@ -37,20 +37,21 @@ namespace ERPBLL.Agriculture
         {
             bool isSuccess = false;
             CommissionOnProductOnSalesDTO commissionOnProductOnSalesDTO = new CommissionOnProductOnSalesDTO();
+            CommissionOnProductOnSales commissionOnProductOnSales = new CommissionOnProductOnSales();
             if (commissionOnProductOnSalesDTO.CommissionOnProductOnSalesId == 0)
             {
-                CommissionOnProductOnSales commissionOnProductOnSales = new CommissionOnProductOnSales()
-                {
-                    ProductSalesInfoId = agroProductSalesInfo.ProductSalesInfoId,
-                    InvoiceNo = agroProductSalesInfo.InvoiceNo,
-                    PaymentMode = agroProductSalesInfo.PaymentMode,
-                    Status = "Insert",
 
-                    EntryDate = DateTime.Now,
-                    OrganizationId = orgId,
-                    EntryUserId = userId,
 
-                };
+                commissionOnProductOnSales.ProductSalesInfoId = agroProductSalesInfo.ProductSalesInfoId;
+                commissionOnProductOnSales.InvoiceNo = agroProductSalesInfo.InvoiceNo;
+                commissionOnProductOnSales.PaymentMode = agroProductSalesInfo.PaymentMode;
+                commissionOnProductOnSales.Status = "Insert";
+
+                commissionOnProductOnSales.EntryDate = DateTime.Now;
+                commissionOnProductOnSales.OrganizationId = orgId;
+                commissionOnProductOnSales.EntryUserId = userId;
+
+
                 _commissionOnProductOnSalesRepository.Insert(commissionOnProductOnSales);
             }
             else
@@ -67,7 +68,7 @@ namespace ERPBLL.Agriculture
             isSuccess = _commissionOnProductOnSalesRepository.Save();
             if (isSuccess)
             {
-                //_commisionOnProductSalesDetailsBusiness.SaveCommisionOnProductSalesDetails();
+                _commisionOnProductSalesDetailsBusiness.SaveCommisionOnProductSalesDetails(agroProductSalesInfo.AgroProductSalesDetails.ToList(), commissionOnProductOnSales.CommissionOnProductOnSalesId, agroProductSalesInfo.PaymentMode, userId, orgId);
 
             }
             return isSuccess;
