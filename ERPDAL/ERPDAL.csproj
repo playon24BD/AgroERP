@@ -130,6 +130,10 @@
     <Compile Include="AgricultureContextMigrations\202211080526175_Agriculture_BoxQtyInSalesReturnandSalesDetails.Designer.cs">
       <DependentUpon>202211080526175_Agriculture_BoxQtyInSalesReturnandSalesDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202211080813337_stokistidaddretursale.cs" />
+    <Compile Include="AgricultureContextMigrations\202211080813337_stokistidaddretursale.Designer.cs">
+      <DependentUpon>202211080813337_stokistidaddretursale.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -211,6 +215,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202211080526175_Agriculture_BoxQtyInSalesReturnandSalesDetails.resx">
       <DependentUpon>202211080526175_Agriculture_BoxQtyInSalesReturnandSalesDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211080813337_stokistidaddretursale.resx">
+      <DependentUpon>202211080813337_stokistidaddretursale.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

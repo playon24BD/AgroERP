@@ -29,7 +29,7 @@ namespace ERPBO.Agriculture.DTOModels
         public long FGRId { get; set; }
         public string QtyKG { get; set; }
 
-
+        public int box { get; set; }
 
         //public string MeasurementName { get; set; }
         //public string FinishGoodProductName { get; set; }

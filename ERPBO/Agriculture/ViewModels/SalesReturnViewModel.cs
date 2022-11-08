@@ -36,5 +36,8 @@ namespace ERPBO.Agriculture.ViewModels
         public bool ISActive { get; set; }
         public long FGRId { get; set; }
         public string QtyKG { get; set; }
+
+        public int box { get; set; }
+        public long StockiestId { get; set; }
     }
 }

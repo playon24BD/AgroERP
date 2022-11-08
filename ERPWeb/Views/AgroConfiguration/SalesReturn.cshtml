@@ -97,6 +97,25 @@
 
         })
 
+        //chk
+        //returnqty.on('change', function () {
+        //    var availableQty = $(this).parent().parent().find("td:eq(4)").text();
+        //    var IssueQuntity = $(this).val();
+        //    if (Number(IssueQuntity) <= Number(availableQty)) {
+
+        //        //   $(".error").addClass("hide");
+
+
+        //        $(this).parent().children("span").addClass("hide");
+        //    }
+        //    else {
+        //        //   $('.error').removeClass("hide");
+        //        $(this).parent().children("span").removeClass("hide");
+        //    }
+
+
+        //});
+
 
 
        //change Invoice
@@ -142,12 +161,13 @@
 
                     QtyKG: tds.eq(2).html(),
 
-                    ReturnQuanity: tds.eq(7).html(),
-                    ReturnPerUnitPrice: tds.eq(8).html(),
-                    FinishGoodProductInfoId: tds.eq(9).html(),
-                    MeasurementId: tds.eq(10).html(),
+                    ReturnQuanity: tds.eq(8).children('input[type="number"]').val(),
+                 
+                    ReturnPerUnitPrice: tds.eq(9).children('input[type="number"]').val(),
+                    FinishGoodProductInfoId: tds.eq(10).html(),
+                    MeasurementId: tds.eq(11).html(),
                     MeasurementSize: tds.eq(4).html(),
-                    FGRId: tds.eq(11).html(),
+                    FGRId: tds.eq(12).html(),
                     
 
                 });

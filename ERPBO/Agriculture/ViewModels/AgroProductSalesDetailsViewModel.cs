@@ -32,7 +32,7 @@ namespace ERPBO.Agriculture.ViewModels
         //public string MeasurementName { get; set; }
         //public string FinishGoodProductName { get; set; }
 
-
+        public int box { get; set; }
 
 
 
