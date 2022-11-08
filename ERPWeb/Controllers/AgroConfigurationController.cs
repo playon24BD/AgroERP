@@ -3037,8 +3037,8 @@ namespace ERPWeb.Controllers
             string deviceInfo =
                     "<DeviceInfo>" +
                     "<OutputFormat>PDF</OutputFormat>" +
-                    "<PageWidth>8.27in</PageWidth>" +
-                    "<PageHeight>11.69in</PageHeight>" +
+                    "<PageWidth>29.7cm</PageWidth>" +
+                    "<PageHeight>21cm</PageHeight>" +
                     "<MarginTop>0.25in</MarginTop>" +
                     "<MarginLeft>0.25in</MarginLeft>" +
                     "<MarginRight>0.25in</MarginRight>" +
@@ -3443,6 +3443,7 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
         }
         #endregion
+
         #region Commision
         public ActionResult ProductCommision(string flag, long? product, int? year)
         {

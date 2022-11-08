@@ -189,11 +189,13 @@ where 1=1  and t.Status='Pending'  {0}",
             }
 
             query = string.Format(@"	
- select rr.ReturnRawMaterialId,rr.RawMaterialId,rm.RawMaterialName,rr.Quantity,rr.UnitId,un.UnitName,rr.ReturnType, CONVERT(date,rr.EntryDate) AS EntryDate,rr.Status from tblReturnRawMaterial rr
+  select distinct rr.RawMaterialId,rm.RawMaterialName,Sum(rr.Quantity) as Quantity,
+ rr.UnitId,un.UnitName,rr.ReturnType, rr.Status from tblReturnRawMaterial rr
  inner join tblRawMaterialInfo rm on rr.RawMaterialId = rm.RawMaterialId
  inner join tblAgroUnitInfo un on rr.UnitId = un.UnitId
 
-Where 1=1 {0}", Utility.ParamChecker(param));
+Where 1=1  {0}
+group by rr.RawMaterialId,rm.RawMaterialName, rr.UnitId,un.UnitName,rr.ReturnType, rr.Status ", Utility.ParamChecker(param));
 
             return query;
         }
