@@ -38,5 +38,8 @@ namespace ERPBO.Agriculture.DTOModels
         public bool ISActive { get; set; }
         public long FGRId { get; set; }
         public string QtyKG { get; set; }
+
+        public long StockiestId { get; set; }
+        public int box { get; set; }
     }
 }

@@ -3158,7 +3158,8 @@ namespace ERPWeb.Controllers
                     InvoiceDate = info.InvoiceDate,
                     PaidAmount = info.PaidAmount,
                     TotalAmount = info.TotalAmount,
-                    DueAmount = info.DueAmount
+                    DueAmount = info.DueAmount,
+                    StockiestId = info.StockiestId
 
                 };
 
@@ -3170,15 +3171,18 @@ namespace ERPWeb.Controllers
                     FGRId = i.FGRId,
                     QtyKG = i.QtyKG,
                     ProductSalesDetailsId= i.ProductSalesDetailsId,
-
+                    BoxQuanity=i.BoxQuanity,
+                    
                     ProductSalesInfoId = i.ProductSalesInfoId,
                     Price = i.Price,
                     Discount = i.Discount,
                     Quanity = i.Quanity,
+                    box =Convert.ToInt32( i.Quanity/i.BoxQuanity),
                     FinishGoodProductInfoId = i.FinishGoodProductInfoId,
                     FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName,
                     MeasurementId = i.MeasurementId,
                     MeasurementName = _measuremenBusiness.GetMeasurementById(i.MeasurementId, User.OrgId).MeasurementName,
+                   
                     MeasurementSize = i.MeasurementSize,
 
                 }).ToList();
@@ -3201,7 +3205,7 @@ namespace ERPWeb.Controllers
             {
                 List<SalesReturnDTO> detailsDTO = new List<SalesReturnDTO>();
                 AutoMapper.Mapper.Map(details, detailsDTO);
-                IsSuccess = _salesReturn.SaveSalesReturn(detailsDTO, User.UserId);
+                IsSuccess = _salesReturn.SaveSalesReturn(detailsDTO, User.UserId,User.OrgId);
 
             }
 
@@ -3299,6 +3303,7 @@ namespace ERPWeb.Controllers
         {
             var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(x => x.StockiestId == id).ToList();
             var totalbill = stokiestid.Sum(y => y.TotalAmount);
+            
             return Json(totalbill, JsonRequestBehavior.AllowGet);
 
         }
@@ -3314,6 +3319,14 @@ namespace ERPWeb.Controllers
             var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
             var totaldue = stokiestid.Sum(du => du.DueAmount);
             return Json(totaldue, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult GetStokistTotalReturn(long id)
+        {
+
+            var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
+            var totalreturn = stokiestid.Sum(du => du.DueAmount);
+            return Json(totalreturn, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -3336,7 +3349,9 @@ namespace ERPWeb.Controllers
                 MeasurementSize = i.MeasurementSize,
                 ReturnDate = i.ReturnDate,
                 FGRId= i.FGRId,
-                QtyKG= i.QtyKG
+                QtyKG= i.QtyKG,
+                BoxQuanity= i.BoxQuanity,
+                StockiestId = i.StockiestId
 
             }).ToList();
 
