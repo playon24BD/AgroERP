@@ -10,7 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface ISalesReturn
     {
-
+        
         bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId);
 
 
@@ -24,6 +24,9 @@ namespace ERPBLL.Agriculture.Interface
         // ReturnRawMaterial GetReturnsById(long ReturnRawMaterialId);
 
         SalesReturn GetSalesReturnsById(long SalesReturnId);
+
+
+        SalesReturn GetSalesReturnsAdjustById(long id, long orgId);
 
 
 

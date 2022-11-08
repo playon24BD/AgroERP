@@ -15,6 +15,9 @@ namespace ERPBO.Agriculture.DTOModels
         public int CalenderYear { get; set; }
         public double Credit { get; set; }
         public double Cash { get; set; }
+
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         //Not need bellow two
         public double? Quantity { get; set; }
         public long? UnitId { get; set; }
@@ -29,5 +32,7 @@ namespace ERPBO.Agriculture.DTOModels
         public DateTime? UpdateDate { get; set; }
         public long UpdateUserId { get; set; }
         public long OrganizationId { get; set; }
+
+        public string FinishGoodProductName { get; set; }
     }
 }

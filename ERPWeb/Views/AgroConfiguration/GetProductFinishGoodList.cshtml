@@ -135,7 +135,6 @@
                                             <label class="control-label" for="ddlReceipBatchCode">Receip Code</label>
                                             @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, "--Select Batch--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
-
                                         </div>
                                         <div class="col-md-2">
                                             <label for="qty"> Qty</label>
@@ -201,12 +200,12 @@
 <div class="modal fade" id="ModalProductionFinishGoodDetails" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header alert-secondary">
+            @*<div class="modal-header alert-secondary">
                 <h4 id="modalHeading" class="modal-title">Raw Material Consume Details</h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
+            </div>*@
             <div class="modal-body" id="dataContainer2">
 
             </div>

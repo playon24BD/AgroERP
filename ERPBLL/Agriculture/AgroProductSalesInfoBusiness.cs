@@ -694,5 +694,38 @@ on TE.TerritoryId=ST.TerritoryId
             Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
+
+
+        public IEnumerable<AgroProductSalesInfoDTO> GetSalesAdjustInfos()
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForSalesReturnAdjust()).ToList();
+        }
+
+        private string QueryForSalesReturnAdjust()
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            query = string.Format(@"
+
+select distinct i.ProductSalesInfoId, i.InvoiceNo,i.InvoiceDate, 
+StockiestName=(select StockiestName from tblStockiestInfo where StockiestId=i.StockiestId),
+i.TotalAmount,i.DueAmount,i.PaidAmount,
+ 
+ AdjustTotalReturn = isnull( (select sum(sr.ReturnTotalPrice) from tblSalesReturn sr 
+ where sr.ProductSalesInfoId= i.ProductSalesInfoId and sr.Status='ADJUST'),0),
+
+ NotAdjustTotalReturn = isnull( (select sum(sr.ReturnTotalPrice) from tblSalesReturn sr 
+ where sr.ProductSalesInfoId= i.ProductSalesInfoId and sr.Status='NOTADJUST'),0)
+
+
+ from tblProductSalesInfo i
+ inner join tblProductSalesDetails d on i.ProductSalesInfoId=d.ProductSalesInfoId
+
+
+Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }

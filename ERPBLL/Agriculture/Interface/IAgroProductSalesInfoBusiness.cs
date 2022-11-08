@@ -12,6 +12,8 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAgroProductSalesInfoBusiness
     {
+        IEnumerable<AgroProductSalesInfoDTO> GetSalesAdjustInfos();
+
         IEnumerable<AgroProductSalesInfoDTO> GetPaymentListInfos(string name,string fromDate, string toDate);
         
         IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport( string fromDate,string toDate);

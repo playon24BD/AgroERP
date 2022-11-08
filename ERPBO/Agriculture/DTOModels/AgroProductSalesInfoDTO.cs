@@ -41,5 +41,10 @@ namespace ERPBO.Agriculture.DTOModels
         public double PaidAmount { get; set; }
         public double DueAmount { get; set; }
         public string MeasurementName { get; set; }
+
+        public double AdjustTotalReturn { get; set; }
+        public double NotAdjustTotalReturn { get; set; }
+        
+
     }
 }
