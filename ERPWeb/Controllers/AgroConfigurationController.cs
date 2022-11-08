@@ -3284,7 +3284,7 @@ namespace ERPWeb.Controllers
 
         #region  SalesReturnAdjust
 
-        public ActionResult GetSalesReturnAdjustList(string flag,long?id)
+        public ActionResult GetSalesReturnAdjustList(string flag,long?id, string invoiceNo, string fromDate, string toDate)
         {
 
             if (string.IsNullOrEmpty(flag))
@@ -3296,7 +3296,7 @@ namespace ERPWeb.Controllers
             {
 
                 //var dto = _salesReturn.GetSalesAdjustInfos();
-                var dto = _agroProductSalesInfoBusiness.GetSalesAdjustInfos();
+                var dto = _agroProductSalesInfoBusiness.GetSalesAdjustInfos(invoiceNo ?? null, fromDate, toDate);
 
                 List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
@@ -3308,12 +3308,13 @@ namespace ERPWeb.Controllers
 
 
                 //var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
-                IEnumerable<SalesReturn>  dto = _salesReturn.GetSalesReturnsAdjustById(id.Value, User.OrgId).Select(i => new SalesReturn
+                IEnumerable<SalesReturnDTO>  dto = _salesReturn.GetSalesReturnsAdjustById(id.Value, User.OrgId).Select(i => new SalesReturnDTO
                 {
                     AdjustmentDate = i.AdjustmentDate,
                     ReturnPerUnitPrice = i.ReturnPerUnitPrice,
                     ReturnQuanity = i.ReturnQuanity,
-                    ReturnTotalPrice = i.ReturnTotalPrice
+                    ReturnTotalPrice = i.ReturnTotalPrice,
+                    ReturnDate=i.ReturnDate
 
                 }).ToList();
 
