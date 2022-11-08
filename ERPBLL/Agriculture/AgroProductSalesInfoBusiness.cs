@@ -242,7 +242,8 @@ namespace ERPBLL.Agriculture
                         ProductSalesDetailsId = item.ProductSalesDetailsId,
                         ReceipeBatchCode = receipeBatch,
                         FGRId = FGRId,
-                        QtyKG = item.QtyKG
+                        QtyKG = item.QtyKG,
+                        BoxQuanity=item.BoxQuanity
 
 
 
