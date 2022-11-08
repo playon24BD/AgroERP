@@ -14,7 +14,7 @@ namespace ERPBO.Agriculture.DomainModels
         [Key]
         public long ProductSalesDetailsId { get; set; }
         //public long ProductSalesInfoId { get; set; }
-        public long FinishGoodProductInfoId { get; set; }
+        public long FinishGoodProductInfoId { get; set; }//FinishGoodProductId
         public double Quanity { get; set; }
         public double BoxQuanity { get; set; }
         public double Price { get; set; }

@@ -31,7 +31,7 @@ namespace ERPBLL.Agriculture
             return _commissionSalesDetailsRepository.GetOneByOrg(d => d.CommissionOnProductSalesDetailsId == commisionOnProductSalesDetailsId && d.OrganizationId == orgId);
         }
 
-        public bool SaveCommisionOnProductSalesDetails(List<CommisionOnProductSalesDetailsDTO> onProductSalesDetailsDTO, long id, string flag, long userId, long orgId)
+        public bool SaveCommisionOnProductSalesDetails(List<AgroProductSalesDetails> onProductSalesDetailsDTO, long id, string flag, long userId, long orgId)
         {
             bool isSuccess = false;
             List<CommisionOnProductSalesDetails> productSalesDetails = new List<CommisionOnProductSalesDetails>();
@@ -41,13 +41,14 @@ namespace ERPBLL.Agriculture
                 {
                     CommisionOnProductSalesDetails commisionOnProductSalesDetails = new CommisionOnProductSalesDetails()
                     {
-                        FinishGoodProductId = item.FinishGoodProductId,
-                        CommissionOnProductOnSalesId = item.CommissionOnProductOnSalesId,
-                        PaymentMode = item.PaymentMode,
-                        Credit = item.Credit,
-                        Cash = item.Cash,
-                        TotalCommission = item.TotalCommission,
-                        Status = item.Status,
+                       FinishGoodProductId = item.FinishGoodProductInfoId,
+                        //CommissionOnProductOnSalesId = item.CommissionOnProductOnSalesId,
+                        //PaymentMode = item.PaymentMode,
+                        //Credit = item.Credit,
+                        //Cash = item.Cash,
+                        //TotalCommission = item.TotalCommission,
+                        //Status = item.Status,
+                        TotalCommission=(item.Price *item.Quanity)-item.DiscountTk,
                         Remarks = "Insert",
                         EntryUserId = userId,
                         EntryDate = DateTime.Now,

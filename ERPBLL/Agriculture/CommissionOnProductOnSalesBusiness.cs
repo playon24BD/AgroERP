@@ -14,11 +14,13 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly CommissionOnProductOnSalesBusinessRepository _commissionOnProductOnSalesRepository;
+        private readonly ICommisionOnProductSalesDetailsBusiness _commisionOnProductSalesDetailsBusiness;
 
-        public CommissionOnProductOnSalesBusiness(IAgricultureUnitOfWork agricultureUnitOfWork)
+        public CommissionOnProductOnSalesBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._commissionOnProductOnSalesRepository = new CommissionOnProductOnSalesBusinessRepository(this._agricultureUnitOfWork);
+            this._commisionOnProductSalesDetailsBusiness = commisionOnProductSalesDetailsBusiness;
         }
 
         public CommissionOnProductOnSales GetCommissionOnProductById(long commissionOnProductSalesId, long orgId)
@@ -39,10 +41,10 @@ namespace ERPBLL.Agriculture
             {
                 CommissionOnProductOnSales commissionOnProductOnSales = new CommissionOnProductOnSales()
                 {
-                    ProductSalesInfoId = commissionOnProductOnSalesDTO.ProductSalesInfoId,
-                    InvoiceNo = commissionOnProductOnSalesDTO.InvoiceNo,
-                    PaymentMode = commissionOnProductOnSalesDTO.PaymentMode,
-                    Status = commissionOnProductOnSalesDTO.Status,
+                    ProductSalesInfoId = agroProductSalesInfo.ProductSalesInfoId,
+                    InvoiceNo = agroProductSalesInfo.InvoiceNo,
+                    PaymentMode = agroProductSalesInfo.PaymentMode,
+                    Status = "Insert",
 
                     EntryDate = DateTime.Now,
                     OrganizationId = orgId,
@@ -63,7 +65,13 @@ namespace ERPBLL.Agriculture
             }
 
             isSuccess = _commissionOnProductOnSalesRepository.Save();
+            if (isSuccess)
+            {
+                //_commisionOnProductSalesDetailsBusiness.SaveCommisionOnProductSalesDetails();
+
+            }
             return isSuccess;
+
         }
     }
 }
