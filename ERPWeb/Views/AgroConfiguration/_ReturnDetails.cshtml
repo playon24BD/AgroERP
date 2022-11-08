@@ -30,6 +30,7 @@
             <th>Date</th>
             <th>Quantity</th>
             <th class="hide">ReturnID</th>
+            <th>Return Type</th>
             @*<th>Remarks</th>*@
         </tr>
     </thead>
@@ -37,13 +38,14 @@
         @foreach (var item in Model)
         {
             sl = sl + 1;
-            <tr>
-                <td class="text-center">@sl</td>
-                <td class="text-center">@item.EntryDate</td>
-                <td class="text-center text-bold">@item.Quantity</td>
-                <td class="hide">@item.ReturnRawMaterialId</td>
-         
-            </tr>
+        <tr>
+            <td class="text-center">@sl</td>
+            <td class="text-center">@item.EntryDate</td>
+            <td class="text-center text-bold">@item.Quantity</td>
+            <td class="hide">@item.ReturnRawMaterialId</td>
+            <td class="text-center text-bold">@item.ReturnType</td>
+
+        </tr>
         }
     </tbody>
 </table>

@@ -43,6 +43,10 @@
                                             <label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>
                                             @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                         </div>
+                                        <div class="hide">
+                                            <label for="ddlStokiestID">StokiestID</label>
+                                            <input type="text" id="ddlStokiestID" name="ddlStokiestID" class="form-control form-control-sm" readonly />
+                                        </div>
 
                                     </div>
 
@@ -83,8 +87,10 @@
 
 
         var ddlInvoiceNo = $("#ddlInvoiceNo");
+       // var ddlStokiestID = $("#ddlStokiestID");
+        var ddlStokiestID = $("#ddlStokiestID");
 
-
+        var returnqty = $(".returnqty");
 
 
         $(document).ready(function () {
@@ -97,24 +103,7 @@
 
         })
 
-        //chk
-        //returnqty.on('change', function () {
-        //    var availableQty = $(this).parent().parent().find("td:eq(4)").text();
-        //    var IssueQuntity = $(this).val();
-        //    if (Number(IssueQuntity) <= Number(availableQty)) {
 
-        //        //   $(".error").addClass("hide");
-
-
-        //        $(this).parent().children("span").addClass("hide");
-        //    }
-        //    else {
-        //        //   $('.error').removeClass("hide");
-        //        $(this).parent().children("span").removeClass("hide");
-        //    }
-
-
-        //});
 
 
 
@@ -136,9 +125,44 @@
                 console.log(error);
             })
 
+                // ddlStokiestID
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetStokistID", data)).then(function (res, status) {
+
+                debugger;
+                consoleLog(res.replace(/['"]+/g, ''));
+                var ddlStokiest = res.replace(/['"]+/g, '');
+                ddlStokiestID.val(res.ddlStokiest);
+                ddlStokiestID.val(ddlStokiest);
+
+          
+
+            });
+
 
 
         });
+
+
+        ////chk
+        //returnqty.on('change', function () {
+        //    debugger;
+        //    alert("to");
+        //    /*var availableQty = $(this).parent().parent().find("td:eq(6)").text();*/
+        //    /*var returnqty = $(this).val();*/
+        //    //if (Number(IssueQuntity) <= Number(availableQty)) {
+
+        //    //    //   $(".error").addClass("hide");
+
+
+        //    //    $(this).parent().children("span").addClass("hide");
+        //    //}
+        //    //else {
+        //    //    //   $('.error').removeClass("hide");
+        //    //    $(this).parent().children("span").removeClass("hide");
+        //    //}
+
+
+        //});
 
 
 
@@ -154,7 +178,8 @@
             details.length = 0;
              $.each($("#tblReturnItems tbody tr"), function (index, item) {
                 var tds = $(this).children('td');
-                details.push({
+                 details.push({
+                     StockiestId: TryParseInt(ddlStokiestID.val(), 0),
                     ProductSalesInfoId: TryParseInt(ddlInvoiceNo.val(), 0),
                     InvoiceNo:  dropDownSelectedText("ddlInvoiceNo"),
                     InvoiceDate: ddlInvoiceNo.val(),
@@ -200,179 +225,11 @@
 
 
 
-        ////change Product
-        //$('#ddlProduct').change(function () {
-
-        //    let INVid = $("#ddlInvoiceNo option:selected").val();
-        //    let PROid = $("#ddlProduct option:selected").val();
-        //    debugger;
-        //    var data = { Invoiceid: TryParseInt(INVid, 0), Productid: TryParseInt(PROid, 0) };
-        //    console.log(data);
-        //    $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetMeasurment', data)).then(function (res, status) {
-
-        //        var res1 = JSON.parse(res);
-        //        console.log(res1.flag);
-        //        if (res1.flag === "1") {
-        //            $('#ddlMeasurment').empty();
-        //            //alert("here me 2");
-        //            $.each(res1.data, function (i, obj) {
-        //                debugger;
-        //                console.log(i);
-        //                console.log(obj.Value);
-        //                console.log(obj.Text);
-        //                let s = '<option value="' + obj.Value + '">' + obj.Text + '</option>';
-        //                $('#ddlMeasurment').append(s);
-        //            });
-        //        }
-
-        //    }).fail(function (error) {
-        //        console.log(error);
-        //    })
-
-
-        //});
 
 
 
+   
 
-
-
-        //add
-        //$("#addButton").click(function (e) {
-        //    //alert();
-        //    debugger;
-        //    e.preventDefault();
-
-
-        //    if (ValidationForm() == true) {
-        //    if (regionNameList.includes(ddlRegionName.val())) {
-        //        toastrErrorAlert("Region Name Already Exist");
-        //    }
-        //    else {
-        //        var sl = $("#tblSingleItems tbody tr").length;
-        //        var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-        //        var td2 = "<td class='text-center'>" + dropDownSelectedText("ddldivname") + "</td>";
-        //        var td3 = "<td class='text-center'>" + ddlRegionName.val() + "</td>";
-
-
-        //        var td4 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
-
-        //        var td5 = "<td class='text-center hide'>" + ddldivname.val() + "</td>";
-
-        //        var tr = "<tr>" + td1 + td2 + td3 + td4 + td5  +"</tr>";
-
-        //        $("#tblSingleItems tbody").append(tr);
-        //        regionNameList.push(ddlRegionName.val());
-        //        }
-        //    }
-
-        //    clearCtrlRegion();
-        //})
-
-
-
-        //remove
-        //$(document).on("click", "a.data-onfly-del", function (e) {
-        //    debugger;
-        //    e.preventDefault();
-        //    var index = $(this).parent().parents('tbody tr').index();
-        //    var tds = $(this).parent().parents('tbody tr').children('td');
-
-        //    var rznId = tds.eq(7).html();
-        //    console.log("rznId :" + rznId);
-        //    const mid = regionNameList.indexOf(rznId);
-        //    regionNameList.splice(mid, 1);
-
-
-
-
-        //    removeTableRow("#tblSingleItems tbody", index);
-        //    fnFixTheTbodyRowSerial("#tblSingleItems tbody", index);
-        //})
-
-
-
-
-        //save
-        @*$("#saveButton").click(function (e) {
-            //alert();
-            debugger;
-            e.preventDefault();
-
-            var details = [];
-            details.length = 0;
-            $.each($("#tblSingleItems tbody tr"), function (index, item) {
-                var tds = $(this).children('td');
-                details.push({
-
-                    RegionId: 0,
-                    RegionName: tds.eq(2).html(),
-                    //RegionAsignName: tds.eq(4).html(),
-                    //MobileNumber: tds.eq(5).html(),
-                    //Remarks: tds.eq(6).html(),
-                    //ZoneId: tds.eq(8).html(),
-                    DivisionId: tds.eq(4).html(),
-
-
-                });
-            })
-            console.log(details);
-            var data = JSON.stringify({ details: details });
-
-            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRegionInfo', data, getToken())).then(function (res, status) {
-                if (res === true) {
-                    debugger;
-                    $('.toastrDefaultSuccess').trigger('click');
-                    setTimeout(function () {
-                        redirectPage('@Url.Action("Regionlist")');
-                    }, 1000);
-                }
-                else {
-                    $('.toastrDefaultError').trigger('click');
-                }
-                enable("#saveButton");
-            }).fail(function (error) {
-                alert(execuStatus.fail);
-                enable("#saveButton");
-            })
-
-            function redirectPage(page) {
-                window.location.replace(page);
-            }
-
-        });*@
-
-
-        //validation
-        //function ValidationForm() {
-        //    debugger;
-        //    Isvalid = true;
-        //    $('.error').addClass("hide");
-        //    //if ($.trim(ddlorgname.val()) == 0) {
-        //    //    $('.required-OrganizationName').removeClass("hide");
-        //    //    Isvalid = false;
-        //    //}
-        //    if ($.trim(ddldivname.val()) == 0) {
-        //        $('.required-DivisionName').removeClass("hide");
-        //        Isvalid = false;
-        //    }
-        //    if ($.trim(ddlRegionName.val()) == 0) {
-        //        $('.required-RegionName').removeClass("hide");
-        //        Isvalid = false;
-        //    }
-
-        //    return Isvalid
-
-        //}
-
-        //clear
-        //function clearCtrlRegion() {
-        //    debugger;
-        //    ddldivname.val('0');
-
-        //    ddlRegionName.val("");
-
-        //}
 
     </script>
 }

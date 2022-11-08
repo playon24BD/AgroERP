@@ -14,10 +14,13 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly CommissionOnProductOnSalesDetailsBusinessRepository _commissionSalesDetailsRepository;
+        private readonly ICommissionOnProductBusiness _commissionOnProductBusiness;
 
-        public CommisionOnProductSalesDetailsBusiness(IAgricultureUnitOfWork agricultureUnitOfWork)
+
+        public CommisionOnProductSalesDetailsBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, ICommissionOnProductBusiness commissionOnProductBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
+            this._commissionOnProductBusiness = commissionOnProductBusiness;
             this._commissionSalesDetailsRepository = new CommissionOnProductOnSalesDetailsBusinessRepository(this._agricultureUnitOfWork);
 
         }
@@ -31,7 +34,7 @@ namespace ERPBLL.Agriculture
             return _commissionSalesDetailsRepository.GetOneByOrg(d => d.CommissionOnProductSalesDetailsId == commisionOnProductSalesDetailsId && d.OrganizationId == orgId);
         }
 
-        public bool SaveCommisionOnProductSalesDetails(List<CommisionOnProductSalesDetailsDTO> onProductSalesDetailsDTO, long id, string flag, long userId, long orgId)
+        public bool SaveCommisionOnProductSalesDetails(List<AgroProductSalesDetails> onProductSalesDetailsDTO, long id, string flag, long userId, long orgId)
         {
             bool isSuccess = false;
             List<CommisionOnProductSalesDetails> productSalesDetails = new List<CommisionOnProductSalesDetails>();
@@ -41,17 +44,24 @@ namespace ERPBLL.Agriculture
                 {
                     CommisionOnProductSalesDetails commisionOnProductSalesDetails = new CommisionOnProductSalesDetails()
                     {
-                        FinishGoodProductId = item.FinishGoodProductId,
-                        CommissionOnProductOnSalesId = item.CommissionOnProductOnSalesId,
-                        PaymentMode = item.PaymentMode,
-                        Credit = item.Credit,
-                        Cash = item.Cash,
-                        TotalCommission = item.TotalCommission,
-                        Status = item.Status,
+                        FinishGoodProductId = item.FinishGoodProductInfoId,
+
+                        CommissionOnProductOnSalesId = id,
+                        PaymentMode = flag,
+
+                        Credit = (flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : 0,
+
+                        Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash : 0,
+                        //TotalCommission = item.TotalCommission,
+                        //Status = item.Status,
+
+                        TotalCommission = ((item.Price * item.Quanity) - item.DiscountTk) * ((flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash)/100,
                         Remarks = "Insert",
                         EntryUserId = userId,
                         EntryDate = DateTime.Now,
                     };
+
+                    productSalesDetails.Add(commisionOnProductSalesDetails);
                 }
                 _commissionSalesDetailsRepository.InsertAll(productSalesDetails);
                 isSuccess = _commissionSalesDetailsRepository.Save();

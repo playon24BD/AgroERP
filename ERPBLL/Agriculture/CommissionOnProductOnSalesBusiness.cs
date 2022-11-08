@@ -14,11 +14,13 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly CommissionOnProductOnSalesBusinessRepository _commissionOnProductOnSalesRepository;
+        private readonly ICommisionOnProductSalesDetailsBusiness _commisionOnProductSalesDetailsBusiness;
 
-        public CommissionOnProductOnSalesBusiness(IAgricultureUnitOfWork agricultureUnitOfWork)
+        public CommissionOnProductOnSalesBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._commissionOnProductOnSalesRepository = new CommissionOnProductOnSalesBusinessRepository(this._agricultureUnitOfWork);
+            this._commisionOnProductSalesDetailsBusiness = commisionOnProductSalesDetailsBusiness;
         }
 
         public CommissionOnProductOnSales GetCommissionOnProductById(long commissionOnProductSalesId, long orgId)
@@ -31,23 +33,25 @@ namespace ERPBLL.Agriculture
             return _commissionOnProductOnSalesRepository.GetAll(a => a.OrganizationId == orgId).ToList(); ;
         }
 
-        public bool SaveCommissionOnProductOnSales(CommissionOnProductOnSalesDTO commissionOnProductOnSalesDTO, long userId, long orgId)
+        public bool SaveCommissionOnProductOnSales(AgroProductSalesInfo agroProductSalesInfo, long userId, long orgId)
         {
             bool isSuccess = false;
+            CommissionOnProductOnSalesDTO commissionOnProductOnSalesDTO = new CommissionOnProductOnSalesDTO();
+            CommissionOnProductOnSales commissionOnProductOnSales = new CommissionOnProductOnSales();
             if (commissionOnProductOnSalesDTO.CommissionOnProductOnSalesId == 0)
             {
-                CommissionOnProductOnSales commissionOnProductOnSales = new CommissionOnProductOnSales()
-                {
-                    ProductSalesInfoId = commissionOnProductOnSalesDTO.ProductSalesInfoId,
-                    InvoiceNo = commissionOnProductOnSalesDTO.InvoiceNo,
-                    PaymentMode = commissionOnProductOnSalesDTO.PaymentMode,
-                    Status = commissionOnProductOnSalesDTO.Status,
 
-                    EntryDate = DateTime.Now,
-                    OrganizationId = orgId,
-                    EntryUserId = userId,
 
-                };
+                commissionOnProductOnSales.ProductSalesInfoId = agroProductSalesInfo.ProductSalesInfoId;
+                commissionOnProductOnSales.InvoiceNo = agroProductSalesInfo.InvoiceNo;
+                commissionOnProductOnSales.PaymentMode = agroProductSalesInfo.PaymentMode;
+                commissionOnProductOnSales.Status = "Insert";
+
+                commissionOnProductOnSales.EntryDate = DateTime.Now;
+                commissionOnProductOnSales.OrganizationId = orgId;
+                commissionOnProductOnSales.EntryUserId = userId;
+
+
                 _commissionOnProductOnSalesRepository.Insert(commissionOnProductOnSales);
             }
             else
@@ -62,7 +66,13 @@ namespace ERPBLL.Agriculture
             }
 
             isSuccess = _commissionOnProductOnSalesRepository.Save();
+            if (isSuccess)
+            {
+                _commisionOnProductSalesDetailsBusiness.SaveCommisionOnProductSalesDetails(agroProductSalesInfo.AgroProductSalesDetails.ToList(), commissionOnProductOnSales.CommissionOnProductOnSalesId, agroProductSalesInfo.PaymentMode, userId, orgId);
+
+            }
             return isSuccess;
+
         }
     }
 }
