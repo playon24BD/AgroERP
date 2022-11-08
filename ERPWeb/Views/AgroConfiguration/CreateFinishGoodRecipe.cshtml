@@ -378,7 +378,10 @@
                                 //resetUI();
                             }
                             else {
-                                $('.toastrDefaultError').trigger('click');
+                                debugger;
+                                toastrErrorAlert("Quantity Unit not possible same");
+                               // $('.toastrDefaultError').trigger('click');
+                                //$('.toastrErrorAlert').trigger('click');
                             }
                             enable("#btnSubmit");
                         }).fail(function (error) {

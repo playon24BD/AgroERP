@@ -58,9 +58,17 @@ namespace ERPBLL.Agriculture
             }
 
             query = string.Format(@"
-SELECT  DISTINCT FI.FinishGoodProductId,FGPI.FinishGoodProductName,FI.ReceipeBatchCode,FGPI.FinishGoodProductName,SUM(FI.TargetQuantity) AS TargetQuantity,
-ReturnQty=(SELECT SUM(sr.ReturnQuanity)  as ReturnQuanity FROM  tblSalesReturn sr 
-where  sr.Status='ADJUST' and sr.FGRId =FI.FGRId)
+
+SELECT  DISTINCT FI.FinishGoodProductId,FGPI.FinishGoodProductName,FI.ReceipeBatchCode,SUM(FI.TargetQuantity) AS TargetQuantitys,
+ReturnQty=ISNull((SELECT SUM(sr.ReturnQuanity)  as ReturnQuanity FROM  tblSalesReturn sr 
+where  sr.Status='ADJUST' and sr.FGRId =FI.FGRId),0),
+
+SelesQty=ISNull((SELECT SUM (sa.Quanity) AS Quantity from tblProductSalesDetails sa
+Where sa.FGRId=FI.FGRId
+),0),
+TargetQuantity=(SUM(FI.TargetQuantity)-ISNull((SELECT SUM (sa.Quanity) AS Quantity from tblProductSalesDetails sa
+Where sa.FGRId=FI.FGRId),0)+ISNull((SELECT SUM(sr.ReturnQuanity)  as ReturnQuanity FROM  tblSalesReturn sr 
+where  sr.Status='ADJUST' and sr.FGRId =FI.FGRId),0))
 
 FROM FinishGoodProductionInfoes FI
 inner join tblFinishGoodRecipeInfo FGR on FGR.FGRId=FI.FGRId

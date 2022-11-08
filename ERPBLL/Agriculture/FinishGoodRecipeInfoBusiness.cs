@@ -194,6 +194,8 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return _finishGoodRecipeInfoRepository.GetAll(a => a.FinishGoodProductId == productId && a.OrganizationId == orgId).ToList();
         }
 
+
+
         public FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByFGID(long id, long orgId)
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(a => a.FinishGoodProductId == id && a.OrganizationId == orgId);
