@@ -108,7 +108,8 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                         EntryUserId = userId,
                         ReturnTotalPrice = (TotalreturnproductQty * item.ReturnPerUnitPrice),
                         FGRId = item.FGRId,
-                        QtyKG = item.QtyKG
+                        QtyKG = item.QtyKG,
+                        StockiestId = item.StockiestId,
 
 
                     };
@@ -153,6 +154,11 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         public SalesReturn GetSalesReturnsById(long SalesReturnId)
         {
             return _salesReturnRepository.GetOneByOrg(a => a.SalesReturnId == SalesReturnId);
+        }
+
+        public IEnumerable<SalesReturn> GetAgroSalesreturnByStokiestId(long StockiestId, string status)
+        {
+            return _salesReturnRepository.GetAll(a => a.StockiestId == StockiestId && a.Status== status);
         }
     }
 }

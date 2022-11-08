@@ -69,15 +69,15 @@ namespace ERPBLL.Agriculture
                 param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
             }
             query = string.Format(@"
-           SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,t.Status,
+            SELECT distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,t.Status,
 TQuantity=(SELECT sum(t.Quantity) FROM  tblReturnRawMaterial t
-where t.ReturnType='Damage' and t.Status='Pending' and t.RawMaterialId=RM.RawMaterialId)
+where  t.Status='Pending' and t.RawMaterialId=RM.RawMaterialId)
 
 FROM  
 tblReturnRawMaterial t 
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
-where 1=1 and  t.ReturnType='Damage' and t.Status='Pending' {0}",
+where 1=1  and t.Status='Pending'  {0}",
             Utility.ParamChecker(param));
             return query;
         }
@@ -115,9 +115,9 @@ where 1=1 and  t.ReturnType='Damage' and t.Status='Pending' {0}",
 
 
 
-        public IEnumerable<ReturnRawMaterial> GetReturnRawMaterialBYRMId(long Id, string ReturnType, string Status)
+        public IEnumerable<ReturnRawMaterial> GetReturnRawMaterialBYRMId(long Id, /*string ReturnType,*/ string Status)
         {
-            return _returnRawMaterialRepository.GetAll(j => j.RawMaterialId == Id && j.ReturnType == ReturnType && j.Status == Status).ToList();
+            return _returnRawMaterialRepository.GetAll(j => j.RawMaterialId == Id /*&& j.ReturnType == ReturnType*/ && j.Status == Status).ToList();
         }
 
         public bool updateReturnStatus(List<ReturnRawMaterialDTO> returnRawMaterialDTOs, long userId, long orgId)

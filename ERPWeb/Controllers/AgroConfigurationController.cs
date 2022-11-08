@@ -2571,7 +2571,7 @@ namespace ERPWeb.Controllers
             var StockoutRMID = _rawMaterialTrack.GetAllRawMaterialTruck().Where(w => w.RawMaterialId == RawMaterialId && w.IssueStatus == "StockOut").ToList();
             var Stockoutqty = StockoutRMID.Sum(d => d.Quantity);
 
-            var ReturnRMID = _returnRawMaterialBusiness.GetAllReturnRawMaterial().Where(g => g.RawMaterialId == RawMaterialId && g.ReturnType == "Good").ToList();
+            var ReturnRMID = _returnRawMaterialBusiness.GetAllReturnRawMaterial().Where(g => g.RawMaterialId == RawMaterialId && g.ReturnType == "Good" && g.Status == "Approved").ToList();
             var ReturnRMGoodQty = ReturnRMID.Sum(g => g.Quantity);//good return qty
 
             var stkrmnqty = Stockinqty - Stockoutqty;//stock
@@ -2623,15 +2623,16 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
             {
                 string Status = "Pending";
-                string ReturnType = "Damage";
+               // string ReturnType = "Damage";
 
                 List<ReturnRawMaterialViewModel> details = new List<ReturnRawMaterialViewModel>();
 
-                details = _returnRawMaterialBusiness.GetReturnRawMaterialBYRMId(id.Value, ReturnType, Status).Select(i => new ReturnRawMaterialViewModel
+                details = _returnRawMaterialBusiness.GetReturnRawMaterialBYRMId(id.Value, Status).Select(i => new ReturnRawMaterialViewModel
                 {
                     EntryDate = i.EntryDate,
                     Quantity = i.Quantity,
-                    ReturnRawMaterialId = i.ReturnRawMaterialId
+                    ReturnRawMaterialId = i.ReturnRawMaterialId,
+                    ReturnType=i.ReturnType
 
                 }).ToList();
 
@@ -2686,7 +2687,7 @@ namespace ERPWeb.Controllers
             var IssueStockoutRMID = _mRawMaterialIssueStockDetails.GetAllRawMaterialIssueStock().Where(x => x.RawMaterialId == RawMaterialId && x.IssueStatus == "StockOut").ToList();
             var IssueStockoutqty = IssueStockoutRMID.Sum(d => d.Quantity);
 
-            var returnid = _returnRawMaterialBusiness.GetAllReturnRawMaterial().Where(r => r.RawMaterialId == RawMaterialId && r.ReturnType == "Good").ToList();
+            var returnid = _returnRawMaterialBusiness.GetAllReturnRawMaterial().Where(r => r.RawMaterialId == RawMaterialId && r.ReturnType == "Good" && r.Status == "Approved").ToList();
             var returngood = returnid.Sum(c=> c.Quantity);
 
             var returnvadid = _returnRawMaterialBusiness.GetAllReturnRawMaterial().Where(d => d.RawMaterialId == RawMaterialId && d.ReturnType == "Damage" && d.Status == "Approved").ToList();
@@ -3195,7 +3196,15 @@ namespace ERPWeb.Controllers
             return PartialView("_GetAgroSalesReturn", details);
         }
 
+        public ActionResult GetStokistID(long id)
+        {
 
+            //var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
+            //var totalreturn = stokiestid.Sum(du => du.DueAmount);
+            var ddlStokiest = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id, User.OrgId).StockiestId;
+            return Json(ddlStokiest, JsonRequestBehavior.AllowGet);
+
+        }
         public ActionResult SaveSalesReturn(List<SalesReturnViewModel> details)
         {
             bool IsSuccess = false;
@@ -3316,16 +3325,27 @@ namespace ERPWeb.Controllers
         }
         public ActionResult GetStokistTotalDue(long id)
         {
+            var status = "ADJUST";
+            var stokiest = _salesReturn.GetAgroSalesreturnByStokiestId(id, status).Where(d => d.StockiestId == id).ToList();
+
+            var totalreturn = stokiest.Sum(rr => rr.ReturnTotalPrice);
+
+
             var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
-            var totaldue = stokiestid.Sum(du => du.DueAmount);
+            var totaldues = stokiestid.Sum(du => du.DueAmount);
+
+            var totaldue = totaldues - totalreturn;
+
             return Json(totaldue, JsonRequestBehavior.AllowGet);
 
         }
         public ActionResult GetStokistTotalReturn(long id)
         {
 
-            var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
-            var totalreturn = stokiestid.Sum(du => du.DueAmount);
+            var status = "ADJUST";
+            var stokiestid = _salesReturn.GetAgroSalesreturnByStokiestId(id,status).Where(d => d.StockiestId == id).ToList();
+
+            var totalreturn = stokiestid.Sum(rr => rr.ReturnTotalPrice);
             return Json(totalreturn, JsonRequestBehavior.AllowGet);
 
         }

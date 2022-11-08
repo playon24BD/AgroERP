@@ -51,18 +51,20 @@ StockOut=isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
 where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0),
 
 StockINReturn=isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
-where rr.ReturnType ='Good' and rr.RawMaterialId=RM.RawMaterialId),0),
+where rr.ReturnType ='Good' and rr.Status='Approved' and rr.RawMaterialId=RM.RawMaterialId),0),
+StockDamagReturn=isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where rr.ReturnType ='Damage' and rr.Status='Approved' and rr.RawMaterialId=RM.RawMaterialId),0),
 
 CurrentStock= isnull( isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
 where t.IssueStatus ='StockIn'and t.RawMaterialId=RM.RawMaterialId),0)- isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
 where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0)+ isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
-where rr.ReturnType ='Good' and rr.RawMaterialId=RM.RawMaterialId),0),0)
+where rr.ReturnType ='Good' and rr.Status='Approved' and rr.RawMaterialId=RM.RawMaterialId),0),0)
 
 FROM  
 tblRawMaterialTrackInfo t 
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
-      where 1=1  {0}",
+      where 1=1    {0}",
             Utility.ParamChecker(param));
             return query;
         }
