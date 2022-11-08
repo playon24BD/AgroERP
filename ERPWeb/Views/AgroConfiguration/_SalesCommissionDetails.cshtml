@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.CommissionOnProductOnSalesViewModel>
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.CommisionOnProductSalesDetailsViewModel>
 
 @{
     string badge = string.Empty;
@@ -15,7 +15,7 @@
                 <td style="vertical-align:middle">Payment Method</td>
                 <td style="vertical-align:middle">Total Commission</td>
                 <td style="vertical-align:middle">Entry Date</td>
-                <td style="vertical-align:middle">Action</td>
+               
 
             </tr>
         </thead>
@@ -24,7 +24,7 @@
             {
                 foreach (var item in Model)
                 {
-                    badge = item.PaymentMode == "Credit" ? "badge bg-warning" : (item.PaymentMode == "Cash" ? "badge bg-success" : "" );
+                    badge = item.PaymentMode == "Credit" ? "badge bg-warning" : (item.PaymentMode == "Cash" ? "badge bg-success" : "");
 
                     sl++;
                     <tr>
@@ -39,11 +39,6 @@
                         <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
                         @*<td class="text-center hide">@item.CommissionOnProductOnSalesId</td>*@
 
-                        <td class="text-center">
-                            <a href="#" class="btn btn-outline-warning data-item-detail" title="view" data-item-detail="@item.CommissionOnProductOnSalesId" style="line-height:1">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                        </td>
                     </tr>
                 }
 
@@ -64,3 +59,4 @@
     </table>
 
 </div>
+

@@ -64,11 +64,13 @@ namespace ERPWeb.Controllers
         private readonly IRawMaterialRequisitionInfoBusiness _rawMaterialRequisitionInfoBusiness;
         private readonly IRawMaterialRequisitionDetailsBusiness _rawMaterialRequisitionDetailsBusiness;
         private readonly ICommissionOnProductBusiness _commissionOnProductBusiness;
+        private readonly ICommissionOnProductOnSalesBusiness _commissionOnProductOnSalesBusiness;
+        private readonly ICommisionOnProductSalesDetailsBusiness _commisionOnProductSalesDetailsBusiness;
 
 
 
 
-        public AgroConfigurationController(ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness)
+        public AgroConfigurationController(ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness,ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness,ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness)
 
         {
             this._salesReturn = salesReturn;//e
@@ -115,6 +117,8 @@ namespace ERPWeb.Controllers
             this._rawMaterialRequisitionInfoBusiness = rawMaterialRequisitionInfoBusiness;
             this._rawMaterialRequisitionDetailsBusiness = rawMaterialRequisitionDetailsBusiness;
             this._commissionOnProductBusiness = commissionOnProductBusiness;
+            this._commissionOnProductOnSalesBusiness = commissionOnProductOnSalesBusiness;
+            this._commisionOnProductSalesDetailsBusiness = commisionOnProductSalesDetailsBusiness;
         }
         // GET: AgroConfiguration
 
@@ -3457,9 +3461,59 @@ namespace ERPWeb.Controllers
         }
 
 
-        public ActionResult SalesCommission()
+        public ActionResult SalesCommission(string flag,long? id,string invoiceNo, string fdate, string tdate)
         {
-            return View();
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlInvoiceNo = _agroProductSalesInfoBusiness.GetAgroProductionSalesInfo(User.OrgId).Select(inv => new SelectListItem { Text = inv.InvoiceNo, Value = inv.InvoiceNo.ToString() });
+
+                return View();
+
+            }
+            else if(flag=="view")
+            {
+                var commision = _commisionOnProductSalesDetailsBusiness.GetCommisionOnProductSalesDetails(0).Where(a=>a.CommissionOnProductOnSalesId==id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
+                {
+
+                    CommissionOnProductOnSalesId=c.CommissionOnProductOnSalesId,
+                    FinishGoodProductId=c.FinishGoodProductId,
+                    FinishGoodProductName=_finishGoodProductBusiness.GetFinishGoodProductById(c.FinishGoodProductId,User.OrgId).FinishGoodProductName,
+                    PaymentMode=c.PaymentMode,
+                    TotalCommission=c.TotalCommission,
+                    InvoiceNo=_commissionOnProductOnSalesBusiness.GetCommissionOnProductById(c.CommissionOnProductOnSalesId,User.OrgId).InvoiceNo,
+                    EntryDate=c.EntryDate
+
+
+                }).ToList();
+                List<CommisionOnProductSalesDetailsViewModel> productOnSalesViewModels = new List<CommisionOnProductSalesDetailsViewModel>();
+                AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
+
+
+                return PartialView("_SalesCommissionDetails", productOnSalesViewModels);
+            }
+            else
+            {
+                var commision = _commissionOnProductOnSalesBusiness.GetAllCommissionOnProductOnSales(invoiceNo, fdate, tdate, User.OrgId).Select(c => new CommissionOnProductOnSalesDTO
+                {
+
+                    CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
+                    FinishGoodProductId = c.FinishGoodProductId,
+                    FinishGoodProductName = c.FinishGoodProductName,
+                    PaymentMode = c.PaymentMode,
+                    TotalCommission = c.TotalCommission,
+                    InvoiceNo = c.InvoiceNo,
+                    EntryDate = c.EntryDate
+
+
+                }).ToList();
+                List<CommissionOnProductOnSalesViewModel> productOnSalesViewModels = new List<CommissionOnProductOnSalesViewModel>();
+                AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
+
+
+                return PartialView("_SalesCommission", productOnSalesViewModels);
+
+            }
+
         }
         #endregion
 

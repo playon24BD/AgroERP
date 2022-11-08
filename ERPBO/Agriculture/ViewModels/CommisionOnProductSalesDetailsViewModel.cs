@@ -26,5 +26,7 @@ namespace ERPBO.Agriculture.ViewModels
         public DateTime? UpdateDate { get; set; }
         public long UpdateUserId { get; set; }
         public long OrganizationId { get; set; }
+        //
+        public string FinishGoodProductName { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using ERPDAL.AgricultureDAL;
 using System.Threading.Tasks;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
+using ERPBLL.Common;
 
 namespace ERPBLL.Agriculture
 {
@@ -31,6 +32,53 @@ namespace ERPBLL.Agriculture
         public IEnumerable<CommissionOnProductOnSales> GetCommissionOnProductOnSales(long orgId)
         {
             return _commissionOnProductOnSalesRepository.GetAll(a => a.OrganizationId == orgId).ToList(); ;
+        }
+
+        public IEnumerable<CommissionOnProductOnSalesDTO> GetAllCommissionOnProductOnSales(string invoice,string fdate,string tdate,long orgId)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<CommissionOnProductOnSalesDTO>(string.Format(QueryForSalesCommission(invoice, fdate,tdate,orgId)));
+        }
+        public string QueryForSalesCommission(string invoice, string fdate, string tdate, long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            //if (orgId > 0)
+            //{
+            //    param += string.Format(@"and OrganizationId={0}", orgId);
+            //}
+            if (invoice != null && invoice != "")
+            {
+                param += string.Format(@" and cps.InvoiceNo ='{0}'", invoice);
+            }
+
+            if (!string.IsNullOrEmpty(fdate) && fdate.Trim() != "" && !string.IsNullOrEmpty(tdate) && tdate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fdate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(tdate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(cps.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+            else if (!string.IsNullOrEmpty(fdate) && fdate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fdate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(cps.EntryDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(tdate) && tdate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(tdate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(cps.EntryDate as date)='{0}'", tDate);
+            }
+
+
+            query = string.Format(@"Select cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,p.FinishGoodProductName,SUM(cpsd.TotalCommission) As TotalCommission,cpsd.PaymentMode,Cast (cps.EntryDate as date) As EntryDate from tblCommissionOnProductSales cps
+                Inner join tblCommisionOnProductSalesDetails cpsd
+                on cps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId
+                Inner join tblFinishGoodProductInfo p
+                on cpsd.FinishGoodProductId=p.FinishGoodProductId  where 1=1  {0}
+                Group by p.FinishGoodProductName,cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,cpsd.PaymentMode,Cast (cps.EntryDate as date)",
+           Utility.ParamChecker(param));
+
+            return query;
         }
 
         public bool SaveCommissionOnProductOnSales(AgroProductSalesInfo agroProductSalesInfo, long userId, long orgId)
