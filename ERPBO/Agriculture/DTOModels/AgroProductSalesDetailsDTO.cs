@@ -13,6 +13,7 @@ namespace ERPBO.Agriculture.DTOModels
         public long FinishGoodProductInfoId { get; set; }
         public string FinishGoodProductName { get; set; }
         public double Quanity { get; set; }
+        public double BoxQuanity { get; set; }
         public double Price { get; set; }
         public long MeasurementId { get; set; }
         public string MeasurementName { get; set; }
