@@ -34,8 +34,9 @@ namespace ERPBLL.Agriculture
         private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
         private readonly IAgroUnitInfo _agroUnitInfo;
         private readonly IMeasuremenBusiness _measuremenBusiness;
+        private readonly ICommissionOnProductOnSalesBusiness _commissionOnProductOnSalesBusiness;
 
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness)
+        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness,ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
@@ -52,6 +53,7 @@ namespace ERPBLL.Agriculture
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
             this._agroUnitInfo = agroUnitInfo;
             this._measuremenBusiness = measuremenBusiness;
+            this._commissionOnProductOnSalesBusiness = commissionOnProductOnSalesBusiness;
         }
 
 
@@ -111,13 +113,13 @@ namespace ERPBLL.Agriculture
 
 
             query = string.Format(@"	select sales.TotalAmount,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName
-from tblProductSalesInfo sales
-inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
---select sales.InvoiceNo,sales.InvoiceDate,stock.StockiestName
---from tblProductSalesInfo sales
---inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
+                from tblProductSalesInfo sales
+                inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
+                --select sales.InvoiceNo,sales.InvoiceDate,stock.StockiestName
+                --from tblProductSalesInfo sales
+                --inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
 
-Where 1=1 {0}", Utility.ParamChecker(param));
+                Where 1=1 {0}", Utility.ParamChecker(param));
 
             return query;
         }
@@ -257,6 +259,13 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
 
 
+                if (isSuccess)
+                {
+                    //Commission on Sales 
+
+                   isSuccess= _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo,userId,orgId);
+
+                }
                 //paymenttable
                 SalesPaymentRegister salesPayment = new SalesPaymentRegister
                 {
@@ -269,6 +278,9 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                 //paymenttable
                 _salesPaymentRegisterRepository.Insert(salesPayment);
                 isSuccess = _salesPaymentRegisterRepository.Save();
+
+
+
 
             }
 
@@ -296,65 +308,65 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             //}
 
             query = string.Format(@"select DISTINCT 
-AU.FullName,
-ST.StockiestName,
-TE.TerritoryName,
-AU.Address,
-AU.MobileNo,
-sales.InvoiceNo,
-CONVERT(date,sales.InvoiceDate) as InvoiceDate,
-sales.ChallanNo,
-CONVERT(date,sales.ChallanDate) as ChallanDate,
-sales.Depot,
-sales.VehicleType,
-sales.VehicleNumber,
-sales.DriverName,
-sales.DeliveryPlace,
-sales.Do_ADO_DA,
-sales.DoADO_Name,
-sales.PaymentMode,
+            AU.FullName,
+            ST.StockiestName,
+            TE.TerritoryName,
+            AU.Address,
+            AU.MobileNo,
+            sales.InvoiceNo,
+            CONVERT(date,sales.InvoiceDate) as InvoiceDate,
+            sales.ChallanNo,
+            CONVERT(date,sales.ChallanDate) as ChallanDate,
+            sales.Depot,
+            sales.VehicleType,
+            sales.VehicleNumber,
+            sales.DriverName,
+            sales.DeliveryPlace,
+            sales.Do_ADO_DA,
+            sales.DoADO_Name,
+            sales.PaymentMode,
 
-ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
+            ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
 
-DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
+            DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
 
-RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
+            RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
 
-AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
+            AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
 
-salesD.ProductSalesInfoId,
-salesD.FinishGoodProductInfoId,
-FGPN.FinishGoodProductName,
+            salesD.ProductSalesInfoId,
+            salesD.FinishGoodProductInfoId,
+            FGPN.FinishGoodProductName,
 
-salesD.Quanity,
-salesD.Price,
-salesD.MeasurementSize,
-salesD.Discount,
-salesD.DiscountTk,
-sales.PaidAmount,
-sales.DueAmount,
-(salesD.Price*salesD.Quanity) AS Total,
-sales.TotalAmount,
-dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
-
-
+            salesD.Quanity,
+            salesD.Price,
+            salesD.MeasurementSize,
+            salesD.Discount,
+            salesD.DiscountTk,
+            sales.PaidAmount,
+            sales.DueAmount,
+            (salesD.Price*salesD.Quanity) AS Total,
+            sales.TotalAmount,
+            dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
 
 
-from [Agriculture].[dbo].[tblProductSalesInfo] sales
-INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
-on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
 
-INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
-on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
 
-LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
-on AU.UserId=sales.UserId
-LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
-on ST.StockiestId=AU.StockiestId
-LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
-on TE.TerritoryId=ST.TerritoryId
+            from [Agriculture].[dbo].[tblProductSalesInfo] sales
+            INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
+            on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
 
-            Where 1=1 {0}", Utility.ParamChecker(param));
+            INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+            on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
+
+            LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
+            on AU.UserId=sales.UserId
+            LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
+            on ST.StockiestId=AU.StockiestId
+            LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
+            on TE.TerritoryId=ST.TerritoryId
+
+                        Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
 
@@ -395,63 +407,63 @@ on TE.TerritoryId=ST.TerritoryId
             //}
 
             query = string.Format(@"select DISTINCT 
-AU.FullName,
-ST.StockiestName,
-TE.TerritoryName,
-AU.Address,
-AU.MobileNo,
-sales.InvoiceNo,
-CONVERT(date,sales.InvoiceDate) as InvoiceDate,
-sales.ChallanNo,
-CONVERT(date,sales.ChallanDate) as ChallanDate,
-sales.Depot,
-sales.VehicleType,
-sales.VehicleNumber,
-sales.DriverName,
-sales.DeliveryPlace,
-sales.Do_ADO_DA,
-sales.DoADO_Name,
-sales.PaymentMode,
+            AU.FullName,
+            ST.StockiestName,
+            TE.TerritoryName,
+            AU.Address,
+            AU.MobileNo,
+            sales.InvoiceNo,
+            CONVERT(date,sales.InvoiceDate) as InvoiceDate,
+            sales.ChallanNo,
+            CONVERT(date,sales.ChallanDate) as ChallanDate,
+            sales.Depot,
+            sales.VehicleType,
+            sales.VehicleNumber,
+            sales.DriverName,
+            sales.DeliveryPlace,
+            sales.Do_ADO_DA,
+            sales.DoADO_Name,
+            sales.PaymentMode,
 
-ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
+            ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
 
-DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
+            DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
 
-RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
+            RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
 
-AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
+            AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
 
-salesD.ProductSalesInfoId,
-salesD.FinishGoodProductInfoId,
-FGPN.FinishGoodProductName,
+            salesD.ProductSalesInfoId,
+            salesD.FinishGoodProductInfoId,
+            FGPN.FinishGoodProductName,
 
-salesD.Quanity,
-salesD.Price,
-salesD.MeasurementSize,
-salesD.Discount,
-salesD.DiscountTk,
-sales.PaidAmount,
-sales.DueAmount,
-(salesD.Price*salesD.Quanity) AS Total,
-sales.TotalAmount,
-dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
-
-
+            salesD.Quanity,
+            salesD.Price,
+            salesD.MeasurementSize,
+            salesD.Discount,
+            salesD.DiscountTk,
+            sales.PaidAmount,
+            sales.DueAmount,
+            (salesD.Price*salesD.Quanity) AS Total,
+            sales.TotalAmount,
+            dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
 
 
-from [Agriculture].[dbo].[tblProductSalesInfo] sales
-INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
-on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
 
-INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
-on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
 
-LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
-on AU.UserId=sales.UserId
-LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
-on ST.StockiestId=AU.StockiestId
-LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
-on TE.TerritoryId=ST.TerritoryId
+            from [Agriculture].[dbo].[tblProductSalesInfo] sales
+            INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
+            on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
+
+            INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+            on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
+
+            LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
+            on AU.UserId=sales.UserId
+            LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
+            on ST.StockiestId=AU.StockiestId
+            LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
+            on TE.TerritoryId=ST.TerritoryId
 
             Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
@@ -500,49 +512,49 @@ on TE.TerritoryId=ST.TerritoryId
 
 
             query = string.Format(@"
-                SELECT  SI.ProductSalesInfoId, A.AreaName,
-        ZoneUserName=( SELECT distinct AU.UserName FROM 
-        [Agriculture].[dbo].tblProductSalesInfo SI
-        INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId
-        INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId),
+                    SELECT  SI.ProductSalesInfoId, A.AreaName,
+            ZoneUserName=( SELECT distinct AU.UserName FROM 
+            [Agriculture].[dbo].tblProductSalesInfo SI
+            INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId
+            INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId),
         
-        ZoneUserMobile=( SELECT distinct AU.MobileNo FROM 
-        [Agriculture].[dbo].tblProductSalesInfo SI
-        INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId
-        INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId),
+            ZoneUserMobile=( SELECT distinct AU.MobileNo FROM 
+            [Agriculture].[dbo].tblProductSalesInfo SI
+            INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId
+            INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId),
         
-        TI.TerritoryName,
-        TerritoryUserName=(SELECT distinct AUT.UserName FROM 
-        [Agriculture].[dbo].tblProductSalesInfo SI
-        INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId
-        INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId=AUT.UserId ),
+            TI.TerritoryName,
+            TerritoryUserName=(SELECT distinct AUT.UserName FROM 
+            [Agriculture].[dbo].tblProductSalesInfo SI
+            INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId
+            INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId=AUT.UserId ),
         
-        TerritoryUserMobile=(SELECT distinct AUT.MobileNo FROM 
-        [Agriculture].[dbo].tblProductSalesInfo SI
-        INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId
-        INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId=AUT.UserId ),
-        STI.StockiestName,
-        SI.InvoiceNo,
-        CONVERT(date,SI.InvoiceDate) AS InvoiceDate,
-        SI.TotalAmount AS InvoiceTk,
-        Collaction=(SELECT Sum(PSPH.PaymentAmount) FROM tblProductSalesPaymentHistory PSPH Where        SI.ProductSalesInfoId=PSPH.ProductSalesInfoId),
-        SI.DueAmount,
-        DiscountTk=(SELECT Sum(PSD.DiscountTk) FROM tblProductSalesDetails PSD Where        SI.ProductSalesInfoId=PSD.ProductSalesInfoId),
+            TerritoryUserMobile=(SELECT distinct AUT.MobileNo FROM 
+            [Agriculture].[dbo].tblProductSalesInfo SI
+            INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId
+            INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId=AUT.UserId ),
+            STI.StockiestName,
+            SI.InvoiceNo,
+            CONVERT(date,SI.InvoiceDate) AS InvoiceDate,
+            SI.TotalAmount AS InvoiceTk,
+            Collaction=(SELECT Sum(PSPH.PaymentAmount) FROM tblProductSalesPaymentHistory PSPH Where        SI.ProductSalesInfoId=PSPH.ProductSalesInfoId),
+            SI.DueAmount,
+            DiscountTk=(SELECT Sum(PSD.DiscountTk) FROM tblProductSalesDetails PSD Where        SI.ProductSalesInfoId=PSD.ProductSalesInfoId),
         
-        CONVERT(date,PsPH.PaymentDate) AS PaymentDate,
-        PsPH.Remarks, 
-        PsPH.PaymentAmount
-        --PaymentAmount=(SELECT Sum(PsPHs.PaymentAmount) From [Agriculture].        [dbo].tblProductSalesPaymentHistory PsPHs where         SI.ProductSalesInfoId=PsPHs.ProductSalesInfoId)
-        
-        
+            CONVERT(date,PsPH.PaymentDate) AS PaymentDate,
+            PsPH.Remarks, 
+            PsPH.PaymentAmount
+            --PaymentAmount=(SELECT Sum(PsPHs.PaymentAmount) From [Agriculture].        [dbo].tblProductSalesPaymentHistory PsPHs where         SI.ProductSalesInfoId=PsPHs.ProductSalesInfoId)
         
         
-        FROM [Agriculture].[dbo].tblProductSalesInfo SI
-        INNER JOIN [Agriculture].[dbo].tblAreaSetup A on SI.AreaId=A.AreaId
-        INNER JOIN [Agriculture].[dbo].tblTerritoryInfos TI on SI.TerritoryId=TI.TerritoryId
-        INNER JOIN [Agriculture].[dbo].tblStockiestInfo STI on SI.StockiestId=STI.StockiestId
-        INNER JOIN [Agriculture].[dbo].tblProductSalesPaymentHistory PsPH on        SI.ProductSalesInfoId=PsPH.ProductSalesInfoId
-                 where 1=1 {0}", Utility.ParamChecker(param));
+        
+        
+            FROM [Agriculture].[dbo].tblProductSalesInfo SI
+            INNER JOIN [Agriculture].[dbo].tblAreaSetup A on SI.AreaId=A.AreaId
+            INNER JOIN [Agriculture].[dbo].tblTerritoryInfos TI on SI.TerritoryId=TI.TerritoryId
+            INNER JOIN [Agriculture].[dbo].tblStockiestInfo STI on SI.StockiestId=STI.StockiestId
+            INNER JOIN [Agriculture].[dbo].tblProductSalesPaymentHistory PsPH on        SI.ProductSalesInfoId=PsPH.ProductSalesInfoId
+                     where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
 
@@ -639,69 +651,69 @@ on TE.TerritoryId=ST.TerritoryId
 
 
             query = string.Format(@"
---select InvoiceNo,InvoiceDate,TotalAmount,PaidAmount,DueAmount
+            --select InvoiceNo,InvoiceDate,TotalAmount,PaidAmount,DueAmount
 
- --from tblProductSalesInfo
- --where DueAmount >0
+             --from tblProductSalesInfo
+             --where DueAmount >0
 
-select DISTINCT 
-AU.FullName,
-ST.StockiestName,
-TE.TerritoryName,
-AU.Address,
-AU.MobileNo,
-sales.InvoiceNo,
-CONVERT(date,sales.InvoiceDate) as InvoiceDate,
-sales.ChallanNo,
-CONVERT(date,sales.ChallanDate) as ChallanDate,
-sales.Depot,
-sales.VehicleType,
-sales.VehicleNumber,
-sales.DriverName,
-sales.DeliveryPlace,
-sales.Do_ADO_DA,
-sales.DoADO_Name,
-sales.PaymentMode,
+            select DISTINCT 
+            AU.FullName,
+            ST.StockiestName,
+            TE.TerritoryName,
+            AU.Address,
+            AU.MobileNo,
+            sales.InvoiceNo,
+            CONVERT(date,sales.InvoiceDate) as InvoiceDate,
+            sales.ChallanNo,
+            CONVERT(date,sales.ChallanDate) as ChallanDate,
+            sales.Depot,
+            sales.VehicleType,
+            sales.VehicleNumber,
+            sales.DriverName,
+            sales.DeliveryPlace,
+            sales.Do_ADO_DA,
+            sales.DoADO_Name,
+            sales.PaymentMode,
 
-ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
+            ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
 
-DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
+            DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
 
-RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
+            RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
 
-AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
+            AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
 
-salesD.ProductSalesInfoId,
-salesD.FinishGoodProductInfoId,
-FGPN.FinishGoodProductName,
+            salesD.ProductSalesInfoId,
+            salesD.FinishGoodProductInfoId,
+            FGPN.FinishGoodProductName,
 
-salesD.Quanity,
-salesD.Price,
-salesD.MeasurementSize,
-salesD.Discount,
-salesD.DiscountTk,
-sales.PaidAmount,
-sales.DueAmount,
-(salesD.Price*salesD.Quanity) AS Total,
-sales.TotalAmount
---dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
-
-
+            salesD.Quanity,
+            salesD.Price,
+            salesD.MeasurementSize,
+            salesD.Discount,
+            salesD.DiscountTk,
+            sales.PaidAmount,
+            sales.DueAmount,
+            (salesD.Price*salesD.Quanity) AS Total,
+            sales.TotalAmount
+            --dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
 
 
-from [Agriculture].[dbo].[tblProductSalesInfo] sales
-INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
-on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
 
-INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
-on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
 
-LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
-on AU.UserId=sales.UserId
-LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
-on ST.StockiestId=AU.StockiestId
-LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
-on TE.TerritoryId=ST.TerritoryId
+            from [Agriculture].[dbo].[tblProductSalesInfo] sales
+            INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
+            on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
+
+            INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+            on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
+
+            LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
+            on AU.UserId=sales.UserId
+            LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
+            on ST.StockiestId=AU.StockiestId
+            LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
+            on TE.TerritoryId=ST.TerritoryId
 
             Where 1=1 {0}", Utility.ParamChecker(param));
             return query;

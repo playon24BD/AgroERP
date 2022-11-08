@@ -31,9 +31,10 @@ namespace ERPBLL.Agriculture
             return _commissionOnProductOnSalesRepository.GetAll(a => a.OrganizationId == orgId).ToList(); ;
         }
 
-        public bool SaveCommissionOnProductOnSales(CommissionOnProductOnSalesDTO commissionOnProductOnSalesDTO, long userId, long orgId)
+        public bool SaveCommissionOnProductOnSales(AgroProductSalesInfo agroProductSalesInfo, long userId, long orgId)
         {
             bool isSuccess = false;
+            CommissionOnProductOnSalesDTO commissionOnProductOnSalesDTO = new CommissionOnProductOnSalesDTO();
             if (commissionOnProductOnSalesDTO.CommissionOnProductOnSalesId == 0)
             {
                 CommissionOnProductOnSales commissionOnProductOnSales = new CommissionOnProductOnSales()
