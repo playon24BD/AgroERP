@@ -1,0 +1,242 @@
+﻿
+@{
+    ViewBag.Title = "GetSalesReturnAdjustList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
+
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-SalesReturnAdjustList-tab" data-toggle="pill" role="tab" aria-selected="true" href="#custom-tabs-SalesReturnAdjustList" aria-controls="custom-tabs-SalesReturnAdjustList">Sales Return Adjust List</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-SalesReturnAdjustList" aria-labelledby="custom-tabs-SalesReturnAdjustList-tab" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h4 class="text-center text-bold">Sales Return Adjust List</h4>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="/AgroConfiguration/SalesReturnAdjustCreate" class="btn btn-outline-primary btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New SalesReturnAdjust</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-5px">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Search By</h4>
+                                    </div>
+
+                                    <div class="card-body text-sm">
+                                        <div class="row" style="margin-top:-15px">
+
+                                            <div class="col-md-2" style="margin-top:-5px">
+                                                <label class="col-form-label">InvoiceNo </label>
+                                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By invoice" />
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label class="control-label font-weight-bold">From Date</label>
+                                                <div class="input-group input-group-sm ">
+                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" />
+                                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                                        <span class="input-group-text">&#10008;</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="control-label font-weight-bold">To Date</label>
+                                                <div class="input-group input-group-sm ">
+                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" />
+                                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                                        <span class="input-group-text">&#10008;</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="ReturnSalesAdjustDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title">Return Sales Adjust Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var SearchAny = $("#SearchAny");
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true
+            }).on('change', function () {
+                $('.datepicker').hide();
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true
+            }).on('change', function () {
+                $('.datepicker').hide();
+            });
+
+
+            LoadSalesReturnAdjust()
+            
+        })
+
+
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                }
+            }
+        })
+
+        SearchAny.keyup(function () {
+            LoadSalesReturnAdjust()
+        })
+
+        dptToDate.change(function () {
+            LoadSalesReturnAdjust();
+        })
+
+        dptFromDate.change(function () {
+            LoadSalesReturnAdjust();
+        })
+
+        function LoadSalesReturnAdjust() {
+            debugger;
+
+            var data = { flag: "View", invoiceNo: $.trim(SearchAny.val()),fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetSalesReturnAdjustList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
+
+
+        $(document).on('click', 'a.data-item-detail', function (e) {
+            e.preventDefault();
+            debugger;
+            $("#dataContainer2").empty();
+            var id0 = $(this).parent().parents('tr').children('td').eq(0).html();
+            var id1 = $(this).parent().parents('tr').children('td').eq(1).html();
+            var id = $(this).parent().parents('tr').children('td').eq(2).html();
+            var id3 = $(this).parent().parents('tr').children('td').eq(3).html();
+            var id4 = $(this).parent().parents('tr').children('td').eq(4).html();
+            var id5 = $(this).parent().parents('tr').children('td').eq(5).html();
+            var id6 = $(this).parent().parents('tr').children('td').eq(6).html();
+            var id7 = $(this).parent().parents('tr').children('td').eq(7).html();
+            var id8 = $(this).parent().parents('tr').children('td').eq(8).html();
+            var id9 = $(this).parent().parents('tr').children('td').eq(9).html();
+            var id10 = $(this).parent().parents('tr').children('td').eq(10).html();
+
+            if (true) {
+                var data = { flag: "Detail", id: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetSalesReturnAdjustList', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res);
+                        $("#ReturnSalesAdjustDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+
+
+
+        </script>
+}

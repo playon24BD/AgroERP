@@ -719,5 +719,60 @@ namespace ERPBLL.Agriculture
             Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
+
+
+        public IEnumerable<AgroProductSalesInfoDTO> GetSalesAdjustInfos(string invoiceNo, string fromDate, string toDate)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForSalesReturnAdjust(invoiceNo,fromDate,toDate)).ToList();
+        }
+
+        private string QueryForSalesReturnAdjust(string invoiceNo, string fromDate, string toDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (!string.IsNullOrEmpty(invoiceNo))
+            {
+                param += string.Format(@"and i.InvoiceNo like '%{0}%'", invoiceNo);
+            }
+
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(i.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(i.InvoiceDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(i.InvoiceDate as date)='{0}'", tDate);
+            }
+
+
+            query = string.Format(@"select distinct isnull((r.SalesReturnId),0) as SalesReturnId, i.ProductSalesInfoId, i.InvoiceNo,convert(date,i.InvoiceDate) as InvoiceDate, 
+StockiestName=(select StockiestName from tblStockiestInfo where StockiestId=i.StockiestId),
+i.TotalAmount,i.DueAmount,i.PaidAmount,
+ 
+ AdjustTotalReturn = isnull( (select sum(sr.ReturnTotalPrice) from tblSalesReturn sr 
+ where sr.ProductSalesInfoId= i.ProductSalesInfoId and sr.Status='ADJUST'),0),
+
+ NotAdjustTotalReturn = isnull( (select sum(sr.ReturnTotalPrice) from tblSalesReturn sr 
+ where sr.ProductSalesInfoId= i.ProductSalesInfoId and sr.Status='NOTADJUST'),0)
+
+
+ from tblProductSalesInfo i
+ inner join tblProductSalesDetails d on i.ProductSalesInfoId=d.ProductSalesInfoId
+ left join tblSalesReturn r on i.ProductSalesInfoId=r.ProductSalesInfoId
+
+
+Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }

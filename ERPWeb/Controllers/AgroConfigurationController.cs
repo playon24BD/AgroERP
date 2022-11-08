@@ -3287,6 +3287,50 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region  SalesReturnAdjust
+
+        public ActionResult GetSalesReturnAdjustList(string flag,long?id, string invoiceNo, string fromDate, string toDate)
+        {
+
+            if (string.IsNullOrEmpty(flag))
+            {
+                return View();
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                //var dto = _salesReturn.GetSalesAdjustInfos();
+                var dto = _agroProductSalesInfoBusiness.GetSalesAdjustInfos(invoiceNo ?? null, fromDate, toDate);
+
+                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetSalesReturnAdjustListview", viewModels);
+
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+
+
+                //var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+                IEnumerable<SalesReturnDTO>  dto = _salesReturn.GetSalesReturnsAdjustById(id.Value, User.OrgId).Select(i => new SalesReturnDTO
+                {
+                    AdjustmentDate = i.AdjustmentDate,
+                    ReturnPerUnitPrice = i.ReturnPerUnitPrice,
+                    ReturnQuanity = i.ReturnQuanity,
+                    ReturnTotalPrice = i.ReturnTotalPrice,
+                    ReturnDate=i.ReturnDate
+
+                }).ToList();
+
+                List<SalesReturnViewModel> details = new List<SalesReturnViewModel>();
+                AutoMapper.Mapper.Map(dto, details);
+
+                return PartialView("_GetSalesReturnAdjustDetails", details);
+            }
+
+            return View();
+        }
+
         public ActionResult SalesReturnAdjustCreate(long? id)
         {
 

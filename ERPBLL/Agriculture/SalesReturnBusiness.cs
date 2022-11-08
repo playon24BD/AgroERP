@@ -156,9 +156,22 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return _salesReturnRepository.GetOneByOrg(a => a.SalesReturnId == SalesReturnId);
         }
 
+
+        public IEnumerable<SalesReturn> GetSalesReturnsAdjustById(long id, long orgId)
+        {
+            //return _salesReturnRepository.GetOneByOrg(f => f.SalesReturnId == id);
+            return _salesReturnRepository.GetAll(i => i.SalesReturnId == id).ToList();
+        }
+
+        public bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<SalesReturn> GetAgroSalesreturnByStokiestId(long StockiestId, string status)
         {
             return _salesReturnRepository.GetAll(a => a.StockiestId == StockiestId && a.Status== status);
+
         }
     }
 }

@@ -11,7 +11,12 @@ namespace ERPBLL.Agriculture.Interface
     public interface ISalesReturn
     {
 
+        
+        bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId);
+
+
         bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId, long orgid);
+
 
 
         IEnumerable<SalesReturnDTO> GetSalesReturns(long? ProductId, string name,string status);
@@ -26,6 +31,9 @@ namespace ERPBLL.Agriculture.Interface
         SalesReturn GetSalesReturnsById(long SalesReturnId);
 
         IEnumerable<SalesReturn> GetAgroSalesreturnByStokiestId(long StockiestId , string status);
+
+
+        IEnumerable<SalesReturn> GetSalesReturnsAdjustById(long id, long orgId);
 
 
 

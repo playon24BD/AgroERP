@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.SalesReturnViewModel>
+
+@{
+    
+    int sl = 0;
+}
+<div class="col-md-12">
+    <table class="table table-bordered table-striped table-hover table-sm text-sm">
+        <thead>
+            <tr class="text-sm btn-dark">
+                <th style="vertical-align:middle">#SL</th>
+                <th style="vertical-align:middle">ReturnDate</th>
+                <th style="vertical-align:middle">AdjustmentDate</th>
+                <th style="vertical-align:middle">ReturnQuanity</th>
+                <th style="vertical-align:middle">ReturnPerUnitPrice</th>
+                <th style="vertical-align:middle">ReturnTotalPrice</th>
+                @*<th style="vertical-align:middle">Remarks</th>*@
+            
+
+
+            </tr>
+
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    sl++;
+                    <tr>
+                        <td>@sl</td>
+                        <td class="text-center">@item.ReturnDate</td>
+                        <td class="text-center">@item.AdjustmentDate</td>
+                        <td class="text-center">@item.ReturnQuanity</td>
+                        <td class="text-center">@item.ReturnPerUnitPrice</td>
+                        <td class="text-center">@item.ReturnTotalPrice</td>
+                        @*<td class="text-center">@item.Remarks</td>*@
+                        
+
+
+                    </tr>
+
+                }
+
+
+            }
+            else
+            {
+                <tr>
+                    <td colspan="12"></td>
+                    No Data Found
+                </tr>
+
+            }
+
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+
+
+
