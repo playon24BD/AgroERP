@@ -240,7 +240,8 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                         ProductSalesDetailsId = item.ProductSalesDetailsId,
                         ReceipeBatchCode = receipeBatch,
                         FGRId = FGRId,
-                        QtyKG = item.QtyKG
+                        QtyKG = item.QtyKG,
+                        BoxQuanity=item.BoxQuanity
 
 
 

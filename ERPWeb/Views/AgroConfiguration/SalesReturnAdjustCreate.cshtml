@@ -50,6 +50,10 @@
                                         <input type="text" id="ddltotalpaid" name="ddltotalpaid" class="form-control form-control-sm" readonly />
                                     </div>
                                     <div class="col-md-1">
+                                        <label for="ddltotalpaid">Total Return</label>
+                                        <input type="text" id="ddltotalreturn" name="ddltotalreturn" class="form-control form-control-sm" readonly />
+                                    </div>
+                                    <div class="col-md-1">
                                         <label for="ddltotaldue">Total Due</label>
                                         <input type="text" id="ddltotaldue" name="ddltotalpurchaseprice" class="form-control form-control-sm" readonly />
                                     </div>
@@ -104,6 +108,7 @@
         var ddltotalbill = $("#ddltotalbill");
         var ddltotalpaid = $("#ddltotalpaid");
         var ddltotaldue = $("#ddltotaldue");
+        var ddltotalreturn = $("#ddltotalreturn");
 
 
         var ddlinvoiceno = $("#ddlinvoiceno");
@@ -188,6 +193,16 @@
                 var totaldue = res.replace(/['"]+/g, '');
                 ddltotaldue.val(res.totaldue);
                 ddltotaldue.val(totaldue);
+
+            });
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetStokistTotalReturn", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var totalreturn = res.replace(/['"]+/g, '');
+                ddltotalreturn.val(res.totalreturn);
+                ddltotalreturn.val(totalreturn);
 
             });
 

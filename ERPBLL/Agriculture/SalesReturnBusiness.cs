@@ -15,12 +15,15 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly SalesReturnRepository _salesReturnRepository;
+        private readonly IMeasuremenBusiness _measuremenBusiness;
 
 
-        public SalesReturnBusiness(IAgricultureUnitOfWork agricultureUnitOfWork)
+
+        public SalesReturnBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IMeasuremenBusiness measuremenBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._salesReturnRepository = new SalesReturnRepository(this._agricultureUnitOfWork);
+            this._measuremenBusiness = measuremenBusiness;
            
         }
 
@@ -50,21 +53,41 @@ namespace ERPBLL.Agriculture
             }
             //query = string.Format(@"	select  sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,CONVERT(date,sr.ReturnDate) AS ReturnDate FROM  
 
-            query = string.Format(@"select sr.QtyKG,sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,sr.ReturnDate FROM tblSalesReturn sr INNER JOIN tblProductSalesInfo si on sr.ProductSalesInfoId = si.ProductSalesInfoId inner join tblFinishGoodProductInfo fpi on sr.FinishGoodProductInfoId = fpi.FinishGoodProductId inner join tblMeasurement m on sr.MeasurementId = m.MeasurementId
+            query = string.Format(@"select sr.BoxQuanity, sr.QtyKG,sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,sr.ReturnDate FROM tblSalesReturn sr INNER JOIN tblProductSalesInfo si on sr.ProductSalesInfoId = si.ProductSalesInfoId inner join tblFinishGoodProductInfo fpi on sr.FinishGoodProductInfoId = fpi.FinishGoodProductId inner join tblMeasurement m on sr.MeasurementId = m.MeasurementId
 Where 1=1 {0}", Utility.ParamChecker(param));
 
             return query;
         }
 
 
-        public bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId)
+        public bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId , long orgid)
         {
             bool IsSuccess = false;
             List<SalesReturn> salesReturns = new List<SalesReturn>();
             foreach (var item in detailsDTO)
             {
+                double TotalreturnproductQty = 0;
+               
+                double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId,orgid).MasterCarton;
+                double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgid).InnerBox;
+                double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgid).PackSize;
+
+
+                if (MasterCartonMasurement != 0)
+                {
+                    TotalreturnproductQty = MasterCartonMasurement * InnerBoxMasurement * item.ReturnQuanity ;
+
+                }
+                else
+                {
+                    TotalreturnproductQty = InnerBoxMasurement * item.ReturnQuanity;
+                }
+                //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+
                 if (item.ReturnPerUnitPrice > 0 && item.ReturnQuanity > 0)
                 {
+
+
                     var Returncode = "RC-" + DateTime.Now.ToString("ss") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("yy");
 
                     SalesReturn salesReturn = new SalesReturn()
@@ -72,15 +95,18 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                         ReturnCode = Returncode,
                         InvoiceNo = item.InvoiceNo,
                         MeasurementSize = item.MeasurementSize,
-                        ReturnQuanity = item.ReturnQuanity,
+                        MeasurementId = item.MeasurementId,
+
+                        ReturnQuanity = TotalreturnproductQty,
+                        BoxQuanity = item.ReturnQuanity,
                         ReturnPerUnitPrice = item.ReturnPerUnitPrice,
                         Status = "NOTADJUST",
                         FinishGoodProductInfoId = item.FinishGoodProductInfoId,
-                        MeasurementId = item.MeasurementId,
+                       
                         ProductSalesInfoId = item.ProductSalesInfoId,
                         ReturnDate = DateTime.Now,
                         EntryUserId = userId,
-                        ReturnTotalPrice = (item.ReturnQuanity * item.ReturnPerUnitPrice),
+                        ReturnTotalPrice = (TotalreturnproductQty * item.ReturnPerUnitPrice),
                         FGRId = item.FGRId,
                         QtyKG = item.QtyKG
 
@@ -133,6 +159,11 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         {
             //return _salesReturnRepository.GetOneByOrg(f => f.SalesReturnId == id);
             return _salesReturnRepository.GetAll(i => i.SalesReturnId == id).ToList();
+        }
+
+        public bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
