@@ -26,7 +26,7 @@ namespace ERPBLL.Agriculture.Interface
         SalesReturn GetSalesReturnsById(long SalesReturnId);
 
 
-        SalesReturn GetSalesReturnsAdjustById(long id, long orgId);
+        IEnumerable<SalesReturn> GetSalesReturnsAdjustById(long id, long orgId);
 
 
 

@@ -742,8 +742,6 @@ namespace ERPWeb.Controllers
 
         }
 
-
-
         public ActionResult GetFinishGoodRecipeList(string flag, long? ProductId, long? id)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetFinishGoodRecipeList");
@@ -878,7 +876,8 @@ namespace ERPWeb.Controllers
         [HttpPost]
         public ActionResult SaveFinishGoodRecipe(FinishGoodRecipeInfoViewModel info, List<FinishGoodRecipeDetailsViewModel> details)
         {
-            string msg = "not";
+
+            var msg = "alert('Are you sure want to Continue?');";
             bool IsSuccess = false;
             //var pre = UserPrivilege("Inventory", "GetItemPreparation");
             //var permission = ((pre.Edit) || (pre.Add));
@@ -897,7 +896,8 @@ namespace ERPWeb.Controllers
                 }
                 else
                 {
-                    return Json("noooooooooooo");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
+                    //return Json("noooooooooooo");
                 }
             }
             return Json(IsSuccess);
@@ -2061,7 +2061,7 @@ namespace ERPWeb.Controllers
 
             //ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.ReceipeBatchCode + ")" + "-" + f.TargetQuantity, Value = f.FinishGoodProductId.ToString() }).ToList();
 
-            ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text =_finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId,User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
             ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.UnitQty.ToString() }).ToList();
 
@@ -2104,11 +2104,35 @@ namespace ERPWeb.Controllers
             var Unit = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).UnitId;
             var UnitName = _agroUnitInfo.GetAgroInfoById(Unit, User.OrgId).UnitName;
 
+            
             var MeasurementSize = MasterCarton + "*" + InnerBox + "*" + PackSize + "(" + UnitName + ")";
 
             return Json(MeasurementSize, JsonRequestBehavior.AllowGet);
 
         }
+        public ActionResult GetMeasurementTotalProductQty(long MeasurementId)
+        {
+            double TotalQtyProduct = 0;
+            double MasterCarton = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).MasterCarton;
+            double InnerBox = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).InnerBox;
+            double PackSize = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).PackSize;
+            //var Unit = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).UnitId;
+            //var UnitName = _agroUnitInfo.GetAgroInfoById(Unit, User.OrgId).UnitName;
+
+            if (MasterCarton != 0)
+            {
+                TotalQtyProduct = MasterCarton * InnerBox;
+            }
+            else
+            {
+                TotalQtyProduct = InnerBox ;
+            }
+          
+
+            return Json(TotalQtyProduct, JsonRequestBehavior.AllowGet);
+
+        }
+        
 
         public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string QtyKG)
         {
@@ -3270,54 +3294,20 @@ namespace ERPWeb.Controllers
             {
 
 
-                //var info = _salesReturn.GetSalesReturnsAdjustById(id.Value, User.OrgId);
-                //List<SalesReturnViewModel> details = new List<SalesReturnViewModel>();
-                //if (info != null)
-                //{
+                //var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+                IEnumerable<SalesReturn>  dto = _salesReturn.GetSalesReturnsAdjustById(id.Value, User.OrgId).Select(i => new SalesReturn
+                {
+                    AdjustmentDate = i.AdjustmentDate,
+                    ReturnPerUnitPrice = i.ReturnPerUnitPrice,
+                    ReturnQuanity = i.ReturnQuanity,
+                    ReturnTotalPrice = i.ReturnTotalPrice
 
+                }).ToList();
 
-                //    ViewBag.Info = new SalesReturnViewModel
-                //    {
-                //        //StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == info.StockiestId).StockiestName,
-                //        InvoiceNo = info.InvoiceNo,
-                //        //InvoiceDate=info.InvoiceDate,
-                //        AdjustmentDate = info.AdjustmentDate,
+                List<SalesReturnViewModel> details = new List<SalesReturnViewModel>();
+                AutoMapper.Mapper.Map(dto, details);
 
-                //        ReturnDate = info.ReturnDate
-
-
-                //    };
-
-                //    //details = _salesReturn.GetSalesReturnsAdjustById(id.Value, User.OrgId).Select(i => new SalesReturnViewModel
-                //    //{
-                //    //    AdjustmentDate = i.AdjustmentDate,
-                //    //    ReturnPerUnitPrice = i.ReturnPerUnitPrice,
-                //    //    ReturnQuanity = i.ReturnQuanity,
-                //    //    ReturnTotalPrice = i.ReturnTotalPrice
-
-
-
-
-                //    //}).ToList();
-
-                //}
-                //else
-                //{
-                //    ViewBag.Info = new SalesReturnViewModel();
-                //}
-                //var dto = _salesReturn.GetSalesReturnsAdjustById(id.Value, User.OrgId).Select(i => new SalesReturnViewModel
-                //{
-                //    AdjustmentDate = i.AdjustmentDate,
-                //    ReturnPerUnitPrice = i.ReturnPerUnitPrice,
-                //    ReturnQuanity = i.ReturnQuanity,
-                //    ReturnTotalPrice = i.ReturnTotalPrice
-
-                //}).ToList();
-                
-                //List<SalesReturnViewModel> details = new List<SalesReturnViewModel>();
-                //AutoMapper.Mapper.Map(dto, details);
-
-                //return PartialView("_GetSalesReturnAdjustDetails");
+                return PartialView("_GetSalesReturnAdjustDetails",details);
             }
 
             return View();
@@ -3438,6 +3428,9 @@ namespace ERPWeb.Controllers
                     Status = a.Status,
                     Remarks = a.Remarks,
                     EntryDate = a.EntryDate,
+                    StartDate=a.StartDate,
+                    EndDate=a.EndDate,
+                    Quantity=(a.EndDate.Value.Date-a.StartDate.Value.Date).Days,
                     EntryUserId = a.EntryUserId
 
 

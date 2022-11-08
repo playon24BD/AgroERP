@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "List of SalesReturnAdjustList";
     var SL = 0;
+    //var info = (ERPBO.Agriculture.DomainModels.SalesReturn)
 }
 <div class="row">
     <div class="col-md-12" style="overflow-y:scroll">
@@ -42,7 +43,7 @@
                         <td class="text-center">@item.NotAdjustTotalReturn</td>
                         <td class="text-center">
 
-                            <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail" title="View Detail" data-item-detail="@item.ProductSalesInfoId" style="line-height:1">
+                            <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail" title="View Detail" data-item-detail="@item.SalesReturnId" style="line-height:1">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </td>

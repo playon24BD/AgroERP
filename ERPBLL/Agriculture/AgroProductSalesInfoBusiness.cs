@@ -33,8 +33,9 @@ namespace ERPBLL.Agriculture
         private readonly IUserInfo _userInfo;
         private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
         private readonly IAgroUnitInfo _agroUnitInfo;
+        private readonly IMeasuremenBusiness _measuremenBusiness;
 
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness,IStockiestInfo stockiestInfo,ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo)
+        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
@@ -50,13 +51,14 @@ namespace ERPBLL.Agriculture
             this._salesPaymentRegisterRepository = new SalesPaymentRegisterRepository(this._agricultureUnitOfWork);
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
             this._agroUnitInfo = agroUnitInfo;
+            this._measuremenBusiness = measuremenBusiness;
         }
 
 
 
         public AgroProductSalesInfo CheckBYProductSalesInfoId(long? ProductSalesInfoId)
         {
-            return _agroProductSalesInfoRepository.GetOneByOrg(i => i.ProductSalesInfoId == ProductSalesInfoId );
+            return _agroProductSalesInfoRepository.GetOneByOrg(i => i.ProductSalesInfoId == ProductSalesInfoId);
         }
 
         public AgroProductSalesInfo GetAgroProductionInfoById(long id, long orgId)
@@ -71,7 +73,7 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long? stockiestId, string invoiceNo, string fromDate, string toDate)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfoss(stockiestId,invoiceNo,fromDate,toDate)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfoss(stockiestId, invoiceNo, fromDate, toDate)).ToList();
         }
 
         private string QueryForAgroSalesInfoss(long? stockiestId, string invoiceNo, string fromDate, string toDate)
@@ -125,6 +127,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         {
             throw new NotImplementedException();
         }
+        // Working here
 
         public bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId)
         {
@@ -135,17 +138,17 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
             var InvoiceNo = "INV-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
-            string myList = "";
+
 
             if (agroSalesInfoDTO.ProductSalesInfoId == 0)
             {
 
-                    var stockeiestId = _appUserBusiness.GetId(agroSalesInfoDTO.UserId, orgId).StockiestId;
-                long stockId =Convert.ToInt32( stockeiestId);
+                var stockeiestId = _appUserBusiness.GetId(agroSalesInfoDTO.UserId, orgId).StockiestId;
+                long stockId = Convert.ToInt32(stockeiestId);
 
-                    var territoryId = _stockiestInfo.GetStockiestInfoById(stockId, orgId).TerritoryId;
+                var territoryId = _stockiestInfo.GetStockiestInfoById(stockId, orgId).TerritoryId;
 
-                var areaId =_territorySetup.GetTerritoryNamebyId(stockId, orgId).AreaId;
+                var areaId = _territorySetup.GetTerritoryNamebyId(stockId, orgId).AreaId;
 
                 var regionId = _areaSetupBusiness.GetAreaInfoById(stockId, orgId).RegionId;
 
@@ -153,22 +156,13 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
                 var zoneId = _divisionInfo.GetDivisionInfoById(stockId, orgId).ZoneId;
 
-                
-
-                //var userAssignId = _userAssignBussiness.GetUserAssignById(stockId, orgId).UserAssignId;
-
-                //var userInfo = _userInfo.GetUserInfoById(stockeiestId.Value, orgId).UserId;
-
-
-
-
 
 
                 AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo
                 {
-
+                    //Info
                     ChallanNo = ChallanNo,
-                    InvoiceNo=InvoiceNo,
+                    InvoiceNo = InvoiceNo,
                     VehicleNumber = agroSalesInfoDTO.VehicleNumber,
                     ProductSalesInfoId = agroSalesInfoDTO.ProductSalesInfoId,
                     DeliveryPlace = agroSalesInfoDTO.DeliveryPlace,
@@ -184,19 +178,16 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                     AreaId = areaId,
                     DivisionId = divisionId,
                     RegionId = regionId,
-                    //UserAssignId=userAssignId,
-                    //UserId = userInfo,
-                    ZoneId=zoneId,
+                    ZoneId = zoneId,
                     ChallanDate = DateTime.Now,
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
                     OrganizationId = orgId,
-                     //InvoiceNo=agroSalesInfoDTO.InvoiceNo,
-                     Depot=agroSalesInfoDTO.Depot,
-                     Do_ADO_DA=agroSalesInfoDTO.Do_ADO_DA,
-                     TotalAmount = agroSalesInfoDTO.TotalAmount,
-                     PaidAmount = agroSalesInfoDTO.PaidAmount,
-                     DueAmount = agroSalesInfoDTO.TotalAmount - agroSalesInfoDTO.PaidAmount
+                    Depot = agroSalesInfoDTO.Depot,
+                    Do_ADO_DA = agroSalesInfoDTO.Do_ADO_DA,
+                    TotalAmount = agroSalesInfoDTO.TotalAmount,
+                    PaidAmount = agroSalesInfoDTO.PaidAmount,
+                    DueAmount = agroSalesInfoDTO.TotalAmount - agroSalesInfoDTO.PaidAmount
 
                 };
 
@@ -207,9 +198,25 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
                 foreach (var item in details)
                 {
+                    //double ProductMesurement = 0;
+                    //double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
+                    //double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
+                    //double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
                     var UnitQtys = item.QtyKG.Split('(', ')');
-                    int ProductUnitQty =Convert.ToInt32( UnitQtys[0]);
+                    int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
                     string ProductUnit = UnitQtys[1];
+                    //if (MasterCartonMasurement != 0)
+                    //{
+                    //     ProductMesurement = MasterCartonMasurement * InnerBoxMasurement ;
+                    //}
+                    //else
+                    //{
+                    //     ProductMesurement = InnerBoxMasurement;
+                    //}
+                    //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+
+
+
                     var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
                     //var receipeBatch=_finishGoodRecipeInfoBusiness
                     //var receipeBatch = item.ReceipeBatchCode.Split('(',')');
@@ -218,21 +225,22 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
                     AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
                     {
-                       Discount=item.Discount,
-                        DiscountTk=item.DiscountTk,
-                         EntryDate=DateTime.Now,
-                          EntryUserId=userId,
-                           MeasurementId=item.MeasurementId,
-                            MeasurementSize=item.MeasurementSize,
-                             OrganizationId=orgId,
-                              Price=item.Price,
-                               ProductSalesInfoId=item.ProductSalesInfoId,
-                                Quanity=item.Quanity,
-                                 FinishGoodProductInfoId=item.FinishGoodProductInfoId,
-                                  ProductSalesDetailsId=item.ProductSalesDetailsId,
-                                  ReceipeBatchCode= receipeBatch,
-                                  FGRId= FGRId,
-                                  QtyKG=item.QtyKG
+                        //Details
+                        Discount = item.Discount,
+                        DiscountTk = item.DiscountTk,
+                        EntryDate = DateTime.Now,
+                        EntryUserId = userId,
+                        MeasurementId = item.MeasurementId,
+                        MeasurementSize = item.MeasurementSize,
+                        OrganizationId = orgId,
+                        Price = item.Price,
+                        ProductSalesInfoId = item.ProductSalesInfoId,
+                        Quanity = item.Quanity,
+                        FinishGoodProductInfoId = item.FinishGoodProductInfoId,
+                        ProductSalesDetailsId = item.ProductSalesDetailsId,
+                        ReceipeBatchCode = receipeBatch,
+                        FGRId = FGRId,
+                        QtyKG = item.QtyKG
 
 
 
@@ -242,7 +250,11 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                 }
                 agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
                 _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
+
+
+
                 isSuccess = _agroProductSalesInfoRepository.Save();
+
 
 
                 //paymenttable
@@ -449,7 +461,7 @@ on TE.TerritoryId=ST.TerritoryId
         {
             return _agricultureUnitOfWork.Db.Database.SqlQuery<InvoiceWiseCollectionSalesReport>(QueryForInvoiceWiseSalesReport(fromDate, toDate));
         }
-        public string QueryForInvoiceWiseSalesReport(string fromDate,string toDate)
+        public string QueryForInvoiceWiseSalesReport(string fromDate, string toDate)
         {
             string param = string.Empty;
             string query = string.Empty;
@@ -583,7 +595,7 @@ on TE.TerritoryId=ST.TerritoryId
               INNER JOIN [Agriculture].[dbo].[tblMeasurement] M
               on salesD.MeasurementId=M.MeasurementId
               Where 1=1{0}", Utility.ParamChecker(param));
-                          return query;
+            return query;
         }
 
         public IEnumerable<AgroProductSalesInfo> GetAgroSalesinfoByStokiestId(long StockiestId)
@@ -594,7 +606,7 @@ on TE.TerritoryId=ST.TerritoryId
 
         public IEnumerable<AgroProductSalesInfoDTO> GetPaymentListInfos(string name, string fromDate, string toDate)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryPaymentListReport(name,fromDate, toDate));
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryPaymentListReport(name, fromDate, toDate));
         }
 
         private string QueryPaymentListReport(string name, string fromDate, string toDate)
@@ -706,9 +718,7 @@ on TE.TerritoryId=ST.TerritoryId
             string query = string.Empty;
             string param = string.Empty;
 
-            query = string.Format(@"
-
-select distinct i.ProductSalesInfoId, i.InvoiceNo,i.InvoiceDate, 
+            query = string.Format(@"select distinct isnull((r.SalesReturnId),0) as SalesReturnId, i.ProductSalesInfoId, i.InvoiceNo,i.InvoiceDate, 
 StockiestName=(select StockiestName from tblStockiestInfo where StockiestId=i.StockiestId),
 i.TotalAmount,i.DueAmount,i.PaidAmount,
  
@@ -721,6 +731,7 @@ i.TotalAmount,i.DueAmount,i.PaidAmount,
 
  from tblProductSalesInfo i
  inner join tblProductSalesDetails d on i.ProductSalesInfoId=d.ProductSalesInfoId
+ left join tblSalesReturn r on i.ProductSalesInfoId=r.ProductSalesInfoId
 
 
 Where 1=1 {0}", Utility.ParamChecker(param));

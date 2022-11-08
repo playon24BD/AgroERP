@@ -15,8 +15,13 @@
                 <td style="vertical-align:middle">Credit(%)</td>
                 <td style="vertical-align:middle">Cash(%)</td>
                 <td style="vertical-align:middle">Status</td>
+                <td style="vertical-align:middle">
+                    From Date
+                </td>
+                <td style="vertical-align:middle">To Date</td>
                 <td style="vertical-align:middle">Remarks</td>
                 <td style="vertical-align:middle">Entry Date</td>
+                <td style="vertical-align:middle">Validate</td>
                 <td style="vertical-align:middle">Action</td>
 
             </tr>
@@ -36,9 +41,12 @@
                 <td class="text-center">@item.Credit</td>
                 <td class="text-center">@item.Cash</td>
                 <td class="text-center">@item.Status</td>
+                <td class="text-center">@item.StartDate.Value.ToString("dd-MMM-yyyy")</td>
+                <td class="text-center">@item.EndDate.Value.ToString("dd-MMM-yyyy")</td>
                 <td class="text-center">@item.Remarks</td>
-                <td class="text-center">@item.EntryDate</td>
+                <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
                 <td class="text-center hide">@item.CommissionOnProductId</td>
+                <td class="text-center" style="color:red">@item.Quantity Days</td>
                 <td>
                     <a href="#" class="btn btn-outline-warning data-item-edit" title="Edit" data-item-edit="@item.CommissionOnProductId" style="line-height:1">
                         <i class="fas fa-pen"></i>

@@ -73,6 +73,8 @@ namespace ERPDAL.AgricultureDAL
         public DbSet<RawMaterialRequisitionDetails> tblRawMaterialRequisitionDetails { get; set; }
         public DbSet<CommisionOnProduct> tblCommisionOnProduct  { get; set; }
         public DbSet<CommisionOnProductHistory> tblCommissionProductHistory { get; set; }
+        public DbSet<CommissionOnProductOnSales> tblCommissionOnProductOnSales { get; set; }
+        public DbSet<CommisionOnProductSalesDetails> tblCommisionOnProductSalesDetails { get; set; }
 
 
 

@@ -152,7 +152,18 @@
             e.preventDefault();
             debugger;
             $("#dataContainer2").empty();
-            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+            var id0 = $(this).parent().parents('tr').children('td').eq(0).html();
+            var id1 = $(this).parent().parents('tr').children('td').eq(1).html();
+            var id2 = $(this).parent().parents('tr').children('td').eq(2).html();
+            var id3 = $(this).parent().parents('tr').children('td').eq(3).html();
+            var id4 = $(this).parent().parents('tr').children('td').eq(4).html();
+            var id5 = $(this).parent().parents('tr').children('td').eq(5).html();
+            var id6 = $(this).parent().parents('tr').children('td').eq(6).html();
+            var id7 = $(this).parent().parents('tr').children('td').eq(7).html();
+            var id8 = $(this).parent().parents('tr').children('td').eq(8).html();
+            var id9 = $(this).parent().parents('tr').children('td').eq(9).html();
+            var id10 = $(this).parent().parents('tr').children('td').eq(10).html();
+
             if (true) {
                 var data = { flag: "Detail", id: id };
                 $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetSalesReturnAdjustList', data)).then(function (res, status) {

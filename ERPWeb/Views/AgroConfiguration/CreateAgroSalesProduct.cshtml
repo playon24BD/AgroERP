@@ -182,6 +182,18 @@
                                 <label>Payable Total</label>
                                 <input type="number" id="ddlpt" name="ddlpt" class="form-control form-control-sm" readonly />
                             </div>
+                            <div class="hide">
+                                <label>TotalProductQty</label>
+                                <input type="number" id="txtTotalProductQty" name="TotalProductQty" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="hide">
+                                <label>TotalQty</label>
+                                <input type="number" id="txtTotalQty" name="TotalQty" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="hide">
+                                <label>TotalAmount</label>
+                                <input type="number" id="txtTotalAmount" name="TotalAmount" class="form-control form-control-sm" readonly />
+                            </div>
 
                             <div class="col-md-2">
                                 <label for="" class="col-form-label" style="visibility:hidden"> Add To List</label>             <div>
@@ -371,6 +383,9 @@
         var FinishGoodStockQty = $("#FinishGoodStockQty");
         var ddlQtyUnit = $("#ddlQtyUnit");
         var ddlpt = $("#ddlpt");
+        var txtTotalProductQty = $("#txtTotalProductQty");
+        var txtTotalQty = $("#txtTotalQty");
+        var txtTotalAmount = $("#txtTotalAmount");
 
 
 
@@ -446,6 +461,17 @@
                 var measurement = res.replace(/['"]+/g, '');
                 ddlMeasurementSize.val(measurement);
                 console.log(ddlMeasurementSize.val());
+
+            });
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetMeasurementTotalProductQty", data)).then(function (res, status) {
+                 debugger;
+                console.log(res);
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var TotalQtyProduct = res.replace(/['"]+/g, '');
+                txtTotalProductQty.val(TotalQtyProduct);
+                console.log(txtTotalProductQty.val());
 
             });
 
@@ -530,8 +556,9 @@
 
                     var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
                     var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
-                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") +"</td>";
-                    var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
+                var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "</td>";
+
+                    var td4 = "<td class='text-center QuanityIDCell'>" + txtTotalQty.val() + "</td>";
                     var td5 = "<td class='text-center' >" + txtPrice.val() + "</td>";
                     var td6 = "<td class='text-center'>" + txtDiscount.val() + "</td>";
 
@@ -539,10 +566,10 @@
                      //var td7 = "<td class='text-center DiscountIDCell'>" + ddlttprice.val() * txtDiscount.val() / 100 + "</td>";
                      var td7 = "<td class='text-center DiscountIDCell'>" + ddlttdis.val() + "</td>";
                     //var td8 = "<td class='text-center TotalIDCell'>" + txtQuanity.val() * txtPrice.val() + "</td>";
-                   var td8 = "<td class='text-center TotalIDCell'>" + ddlpt.val()  + "</td>";
+                var td8 = "<td class='text-center TotalIDCell'>" + ddlpt.val()  + "</td>";
 
                    // var td9 = "<td class='text-center'> <a href='#' class='btn btn-sm btn-danger btn-flat data-onfly-del'><i class='far fa-trash-alt'></i></a></td>";
-                var td9 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td9 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtTotalQty.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
 
                     var td10 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
@@ -559,7 +586,7 @@
                     console.log(to);
                     //totalprice
                     //tqty
-                to1 = parseFloat($('.totalqty').text()) + parseFloat(txtQuanity.val());
+                to1 = parseFloat($('.totalqty').text()) + parseFloat(txtTotalQty.val());
                     $('.totalqty').text(to1);
                     console.log(to1);
                     //tqty
@@ -579,17 +606,22 @@
 
             }
 
-            //ClearData();
+            ClearData();
         })
 
 
 
         //calculatetotal
+
+        
+
         txtQuanity.keyup(function () {
             if (txtQuanity.val() >= 0) {
                 debugger;
                 //ddlpt.val("");
                 calculateTotal();
+                TatalProductQty();
+                payabl();
 
 
             }
@@ -600,6 +632,9 @@
         txtPrice.keyup(function () {
             if (txtPrice.val() >= 0) {
                 calculateTotal();
+                totalAmounts();
+                payabl();
+               
 
             }
 
@@ -612,11 +647,29 @@
 
 
         }
+        function TatalProductQty() {
+
+            var sub = txtQuanity.val() * txtTotalProductQty.val();
+            txtTotalQty.val(sub);
+
+
+        }
+        function totalAmounts() {
+
+            var sub = txtTotalQty.val() * txtPrice.val();
+            txtTotalAmount.val(sub);
+
+
+        }
 
 
         function payabl() {
             debugger;
-            var pay = ddlttprice.val() - ddlttdis.val();
+            consoleLog(txtTotalAmount.val());
+            consoleLog(ddlttdis.val());
+            var pay = txtTotalAmount.val() - ddlttdis.val();
+            
+
             ddlpt.val(pay);
         }
         //payable
@@ -626,11 +679,20 @@
         txtDiscount.keyup(function () {
             if (txtQuanity.val() >= 0) {
                 calculateTotalDis();
+               
+                TotalDiscount();
                 payabl();
             }
 
 
         });
+        function TotalDiscount() {
+
+            var sub = txtTotalAmount.val() * txtDiscount.val()/100;
+            ddlttdis.val(sub);
+
+
+        }
 
         txtPrice.keyup(function () {
             if (txtPrice.val() >= 0) {
@@ -843,12 +905,12 @@
 
 
 
-        //function ClearData() {
-        //    ddlRawMaterialName.val("");
-        //    ddlQuantity.val("");
-        //    ddlUnit.val("");
+        function ClearData() {
+            txtQuanity.val("");
+            txtPrice.val("");
+            txtDiscount.val("");
 
-        //}
+        }
 
 
 

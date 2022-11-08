@@ -11,6 +11,17 @@
         background-color: darkcyan !important;
         color: white !important;
     }
+
+    body {
+        margin-top: 40px;
+    }
+
+    .container {
+        margin-bottom: 60px;
+        border: 1px solid rgba( 0,0,0, .4 );
+        padding: 40px;
+        border-radius: 6px;
+    }
 </style>
 <div class="row" style="background-color:#e7f1f6">
     <div class="col-md-12">
@@ -167,13 +178,27 @@
                                                             </div>
 
 
-                                                            <div class="col-md-6">
+                                                            @*<div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="ddlInvoiceDate">Invoice Date</label>
                                                                     <input type="date" class="form-control" id="ddlInvoiceDate" placeholder="Asign Date">
                                                                     <span class="error hide req-ddlInvoiceDate font-weight-bold">date requered!</span>
                                                                 </div>
+                                                            </div>*@
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="ddlInvoiceDate">Invoice Date</label>
+                                                                <div class="input-group date" id="datePicker">
+
+                                                                    <input type="text" class="form-control" id="ddlInvoiceDate" name="date" value="">
+                                                                    <span class="input-group-addon">
+                                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                                    </span>
+                                                                </div>
                                                             </div>
+                                                        </div>
+
+                                                            
                                                         </div>
 
                                                         <div class="row">
@@ -239,10 +264,20 @@
 
                                                             <div class="col-md-2">
                                                                 <div class="form-group">
-                                                                    <label for="ddlexpdate">Exp Date</label>
-                                                                    <input type="date" class="form-control" id="ddlexpdate" placeholder="Expire Date">
-                                                                    <span class="error hide req-ddlexpdate font-weight-bold">date requered!</span>
+                                                                    <label for="ddlexpdate">Expire Date</label>
+                                                                    <div class="input-group date" id="datePicker">
+
+                                                                        <input type="text" class="form-control" id="ddlexpdate" name="date" value="">
+                                                                        <span class="input-group-addon">
+                                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
+                                                                @*<div class="form-group">
+            <label for="ddlexpdate">Exp Date</label>
+            <input type="date" class="form-control" id="ddlexpdate" placeholder="Expire Date">
+            <span class="error hide req-ddlexpdate font-weight-bold">date requered!</span>
+        </div>*@
                                                             </div>
 
 
@@ -426,7 +461,52 @@
         var searchByChallan = $("#searchByChallan");
         var searchByPO = $("#searchByPO");
 
+        //date
+        var date = new Date();
+        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
+        var optSimple = {
+            format: 'mm-dd-yyyy',
+            todayHighlight: true,
+            orientation: 'bottom right',
+            autoclose: true,
+            container: '#sandbox'
+        };
+
+        var optComponent = {
+            format: 'mm-dd-yyyy',
+            container: '#datePicker',
+            orientation: 'auto top',
+            todayHighlight: true,
+            autoclose: true
+        };
+
+        // SIMPLE
+        $('#simple').datepicker(optSimple);
+
+        // COMPONENT
+        $('#datePicker').datepicker(optComponent);
+
+        // ===================================
+
+        $('#datepicker1').datepicker({
+            format: "mm : dd : yyyy",
+            todayHighlight: true,
+            autoclose: true,
+            container: '#box1',
+            orientation: 'top right'
+        });
+
+        $('#datepicker2').datepicker({
+            format: 'mm \\ dd \\ yyyy',
+            todayHighlight: true,
+            autoclose: true,
+            container: '#box2',
+            orientation: 'top right'
+        });
+
+        $('#datepicker1, #datepicker2, #simple, #datePicker').datepicker('setDate', today);
+        //dateend
 
 
         $(document).ready(function () {

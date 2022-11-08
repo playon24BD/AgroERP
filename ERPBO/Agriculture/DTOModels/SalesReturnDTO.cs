@@ -12,6 +12,7 @@ namespace ERPBO.Agriculture.DTOModels
         public string ReturnCode { get; set; }
         public string InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
+        public double BoxQuanity { get; set; }
         public double ReturnQuanity { get; set; }
         public double ReturnPerUnitPrice { get; set; }
         public double ReturnTotalPrice { get; set; }

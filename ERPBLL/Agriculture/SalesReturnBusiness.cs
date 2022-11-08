@@ -129,9 +129,10 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return _salesReturnRepository.GetOneByOrg(a => a.SalesReturnId == SalesReturnId);
         }
 
-        public SalesReturn GetSalesReturnsAdjustById(long id, long orgId)
+        public IEnumerable<SalesReturn> GetSalesReturnsAdjustById(long id, long orgId)
         {
-            return _salesReturnRepository.GetOneByOrg(f => f.SalesReturnId == id);
+            //return _salesReturnRepository.GetOneByOrg(f => f.SalesReturnId == id);
+            return _salesReturnRepository.GetAll(i => i.SalesReturnId == id).ToList();
         }
     }
 }

@@ -44,5 +44,8 @@ namespace ERPBO.Agriculture.ViewModels
 
         public double AdjustTotalReturn { get; set; }
         public double NotAdjustTotalReturn { get; set; }
+
+        public long SalesReturnId { get; set; }
+
     }
 }
