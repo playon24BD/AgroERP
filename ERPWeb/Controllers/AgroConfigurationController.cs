@@ -2048,7 +2048,7 @@ namespace ERPWeb.Controllers
 
             //ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.ReceipeBatchCode + ")" + "-" + f.TargetQuantity, Value = f.FinishGoodProductId.ToString() }).ToList();
 
-            ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text =_finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId,User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
             ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.UnitQty.ToString() }).ToList();
 
@@ -3348,6 +3348,9 @@ namespace ERPWeb.Controllers
                     Status = a.Status,
                     Remarks = a.Remarks,
                     EntryDate = a.EntryDate,
+                    StartDate=a.StartDate,
+                    EndDate=a.EndDate,
+                    Quantity=(a.EndDate.Value.Date-a.StartDate.Value.Date).Days,
                     EntryUserId = a.EntryUserId
 
 

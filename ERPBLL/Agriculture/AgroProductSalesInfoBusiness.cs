@@ -242,6 +242,9 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                 }
                 agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
                 _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
+
+
+
                 isSuccess = _agroProductSalesInfoRepository.Save();
 
 

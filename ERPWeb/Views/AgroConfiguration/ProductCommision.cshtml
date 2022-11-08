@@ -123,7 +123,7 @@
                                             <span class="error hide duplicate-product">Product Is Already configured In This Year</span>
                                         </div>
 
-      
+
 
                                         <div class="col-md-2">
                                             <label for="credit">Credit(%)</label>
@@ -135,6 +135,21 @@
                                             <label for="cash">Cash(%)</label>
                                             <input type="number" id="numCash" name="cash" class="form-control form-control-sm" />
                                             <span class="error hide req-numCash">Credit is Required</span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label font-weight-bold">From Date</label>
+                                            <div class="input-group input-group-sm ">
+                                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
+                                                <span class="error hide req-dptFromDate">From is Required</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label font-weight-bold">To Date</label>
+                                            <div class="input-group input-group-sm ">
+                                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" />
+                                                <span class="error hide req-dptToDate">ToDate is Required</span>
+
+                                            </div>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="txtRemarks">Remarks</label>
@@ -160,7 +175,7 @@
                                                 <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblCommissionOnProduct">
                                                     <thead>
                                                         <tr>
-                                                            <th colspan="7">
+                                                            <th colspan="9">
                                                                 <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
                                                             </th>
                                                         </tr>
@@ -171,6 +186,12 @@
 
                                                             <th>Credit</th>
                                                             <th>Cash Qty</th>
+                                                            <th>
+                                                                From Date
+                                                            </th>
+                                                            <th>
+                                                                To Date
+                                                            </th>
                                                             <th>Remarks</th>
                                                             <th>Action</th>
 
@@ -234,6 +255,22 @@
                             <input type="number" id="numCashEdit" name="cash" class="form-control form-control-sm" />
                             <span class="error hide req-numCash">Credit is Required</span>
                         </div>
+
+                        <div class="col-md-2">
+                            <label class="control-label font-weight-bold">From Date</label>
+                            <div class="input-group input-group-sm ">
+                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDateEdit" />
+                                <span class="error hide req-dptFromDateEdit">From is Required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label font-weight-bold">To Date</label>
+                            <div class="input-group input-group-sm ">
+                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDateEdit" />
+                                <span class="error hide req-dptToDateEdit">ToDate is Required</span>
+
+                            </div>
+                        </div>
                         <div class="col-md-2">
                             <label for="txtRemarks">Remarks</label>
                             <input type="text" id="txtRemarksEdit" name="txtRemarks" class="form-control form-control-sm" />
@@ -269,6 +306,7 @@
 @section scripts{
     <script type="text/javascript">
 
+
         var dateCalenderYear = $("#dateCalenderYear");
         var dateCalenderYearEdit = $("#dateCalenderYearEdit");
         var dateCalenderYearSearch = $("#dateCalenderYearSearch");
@@ -285,17 +323,60 @@
         var hdCommissionOnProductId = $("#hdCommissionOnProductId");
         var ddlstatus = $("#ddlstatus");
 
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+
+        var dptFromDateEdit = $("#dptFromDateEdit");
+        var dptToDateEdit = $("#dptToDateEdit");
+
 
 
         $(document).ready(function () {
-            //Initialize Select2 Elements
+  
+
             $('.select2').select2();
-            //Initialize Select2 Elements
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
-            //dateCalenderYear.prop('readonly', true);
-            //dateCalenderYear.css("background-color", "#fff");
+
+
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+         
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+
+
+            dptFromDateEdit.prop('readonly', true);
+            dptToDateEdit.prop('readonly', true);
+            dptFromDateEdit.css("background-color", "#fff");
+            dptToDateEdit.css("background-color", "#fff");
+
+            $('#dptFromDateEdit').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('#dptToDateEdit').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+
 
             $('#dateCalenderYear').datepicker({
                 format: "yyyy",
@@ -371,9 +452,11 @@
                     var td4 = "<td class='text-center'>" + dateCalenderYear.val() + "</td>";
                     var td5 = "<td class='text-center'>" + numCredit.val() + "</td>";
                     var td6 = "<td class='text-center'>" + numCash.val() + "</td>";
-                    var td7 = "<td class='text-center' >" + txtRemarks.val() + "</td>";
-                    var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
-                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + "</tr>";
+                    var td7 = "<td class='text-center'>" + dptFromDate.val() + "</td>";
+                    var td8 = "<td class='text-center'>" + dptToDate.val() + "</td>";
+                    var td9 = "<td class='text-center' >" + txtRemarks.val() + "</td>";
+                    var td10 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 +td9+td10+ "</tr>";
 
                     $("#tblCommissionOnProduct tbody").append(tr);
     
@@ -440,6 +523,15 @@
                 isValid = false;
             }
 
+            if ($.trim(dptFromDate.val()) == "") {
+                $(".req-dptFromDate").removeClass('hide');
+                isValid = false;
+            }
+            if ($.trim(dptToDate.val()) == "") {
+                $(".req-dptToDate").removeClass('hide');
+                isValid = false;
+            }
+
             return isValid;
         }
 
@@ -457,7 +549,9 @@
                     CalenderYear: tds.eq(3).html(),
                     Credit: tds.eq(4).html(),
                     Cash: tds.eq(5).html(),
-                    Remarks: tds.eq(6).html(),
+                    StartDate: tds.eq(6).html(),
+                    EndDate: tds.eq(7).html(),
+                    Remarks: tds.eq(8).html(),
                 });
             })
 
@@ -499,21 +593,26 @@
             var td3 = row.find('td:eq(3)').html();
             var td4 = row.find('td:eq(4)').html();
             var td5 = row.find('td:eq(5)').html();
-            var td6 = row.find('td:eq(6)').html();
-            var td7 = row.find('td:eq(7)').html();
-            var td9 = row.find('td:eq(9)').html();
+            var td6 = row.find('td:eq(6)').html();//Status
+            var td7 = row.find('td:eq(7)').html();//fdate
+            var td9 = row.find('td:eq(8)').html();//todate
+            var td10 = row.find('td:eq(9)').html();
+            var td11 = row.find('td:eq(11)').html();
 
 
-            hdCommissionOnProductId.val(td9);//id
+            hdCommissionOnProductId.val(td11);//id
             dateCalenderYearEdit.val(td1);//year
        
             ddlProductNameEdit.val(td3);//product
             ddlProductNameEdit.trigger("change");
             numCreditEdit.val(td4);
             numCashEdit.val(td5);
-            txtRemarksEdit.val(td7);
+            dptFromDateEdit.val(td7);
+            dptToDateEdit.val(td9);
+            txtRemarksEdit.val(td10);
             ddlstatus.val(td6);
             ddlstatus.trigger("change");
+            console.log(dptToDateEdit.val());
 
 
 
@@ -536,6 +635,8 @@
                     CalenderYear: dateCalenderYearEdit.val(),
                     Credit: numCreditEdit.val(),
                     Cash: numCashEdit.val(),
+                    StartDate: dptFromDateEdit.val(),
+                    EndDate: dptToDateEdit.val(),
                     Remarks: txtRemarksEdit.val(),
                     Status: ddlstatus.val()
                 });

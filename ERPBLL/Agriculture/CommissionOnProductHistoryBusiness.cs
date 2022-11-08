@@ -35,10 +35,13 @@ namespace ERPBLL.Agriculture
                     {
 
                         FGRId = item.FGRId,
+                        CommissionOnProductId=item.CommissionOnProductId,
                         FinishGoodProductId = item.FinishGoodProductId,
                         CalenderYear = item.CalenderYear,
                         Cash = item.Cash,
                         Credit = item.Credit,
+                        StartDate=item.StartDate,
+                        EndDate=item.EndDate,
                         EntryDate = DateTime.Now,
                         EntryUserId = userId,
                         OrganizationId = orgId,
@@ -66,10 +69,13 @@ namespace ERPBLL.Agriculture
                     {
 
                         FGRId = item.FGRId,
+                        CommissionOnProductId=item.CommissionOnProductId,
                         FinishGoodProductId = item.FinishGoodProductId,
                         CalenderYear = item.CalenderYear,
                         Cash = item.Cash,
                         Credit = item.Credit,
+                        StartDate=item.StartDate,
+                        EndDate=item.EndDate,
                         EntryDate = DateTime.Now,
                         EntryUserId = userId,
                         OrganizationId = orgId,
@@ -77,7 +83,6 @@ namespace ERPBLL.Agriculture
                     };
                     commisionOnProductHistories.Add(commisionOnProductHistory);
                 }
-
             }
             _commissionOnProductHistoryBusinessRepository.InsertAll(commisionOnProductHistories);
             IsSuccess = _commissionOnProductHistoryBusinessRepository.Save();

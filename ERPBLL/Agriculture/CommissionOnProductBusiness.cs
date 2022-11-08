@@ -72,7 +72,7 @@ namespace ERPBLL.Agriculture
                 param += string.Format(@"and cp.CalenderYear={0}", year);
             }
 
-            query = string.Format(@"SELECT cp.CommissionOnProductId,cp.FinishGoodProductId,cp.CalenderYear,cp.Credit,cp.Cash,cp.Status,cp.EntryDate,cp.EntryUserId,cp.Remarks,cp.UpdateUserId,cp.OrganizationId, fp.FinishGoodProductName
+            query = string.Format(@"SELECT cp.CommissionOnProductId,cp.FinishGoodProductId,cp.CalenderYear,cp.Credit,cp.Cash,cp.Status,cp.EntryDate,cp.EntryUserId,cp.Remarks,cp.UpdateUserId,cp.OrganizationId,cp.StartDate,cp.EndDate, fp.FinishGoodProductName
               FROM [dbo].[tblCommissionOnProduct] cp
               Inner Join tblFinishGoodProductInfo fp
               on cp.FinishGoodProductId=fp.FinishGoodProductId  where 1=1  {0}",
@@ -103,6 +103,8 @@ namespace ERPBLL.Agriculture
                             CalenderYear = item.CalenderYear,
                             Cash = item.Cash,
                             Credit = item.Credit,
+                            StartDate=item.StartDate,
+                            EndDate=item.EndDate,
                             Status = "Active",
                             Remarks=item.Remarks,
                             EntryDate = DateTime.Now,
@@ -110,6 +112,9 @@ namespace ERPBLL.Agriculture
                             OrganizationId = orgId,
 
                         };
+
+
+
                         commisionOnProducts.Add(commisionOnProduct);
                         action = "Insert";
                     }
@@ -122,6 +127,8 @@ namespace ERPBLL.Agriculture
                         commission.CalenderYear = item.CalenderYear;
                         commission.Cash = item.Cash;
                         commission.Credit = item.Credit;
+                        commission.StartDate = item.StartDate;
+                        commission.EndDate = item.EndDate;
                         commission.Status = item.Status;
                         commission.Remarks= item.Remarks;
 
@@ -129,11 +136,36 @@ namespace ERPBLL.Agriculture
                         commission.UpdateUserId = userId;
                         action = "Update";
 
+
+                        if (commisionOnProductDTOs.Count() > 0)
+                        {
+
+                                CommisionOnProductHistoryDTO commisionOnProductHistory = new CommisionOnProductHistoryDTO
+                                {
+
+                                    FGRId = item.FGRId,
+                                    FinishGoodProductId = item.FinishGoodProductId,
+                                    CommissionOnProductId=item.CommissionOnProductId,
+                                    CalenderYear = item.CalenderYear,
+                                    Cash = item.Cash,
+                                    Credit = item.Credit,
+                                    StartDate=item.StartDate,
+                                    EndDate=item.EndDate,
+                                    Remarks = item.Remarks,
+                                    EntryDate = DateTime.Now,
+                                    EntryUserId = userId,
+                                    OrganizationId = orgId,
+
+                                };
+                                commisionOnProductHistories.Add(commisionOnProductHistory);
+  
+                        }
+
+
                     }
 
 
                 }
-
 
             }
             if (action == "Insert")
@@ -149,35 +181,14 @@ namespace ERPBLL.Agriculture
 
             if (IsSuccess)
             {
-
-
-
-                if (commisionOnProductDTOs.Count() > 0)
+                if (action=="Insert")
                 {
-                    foreach (var item in commisionOnProductDTOs)
-                    {
-                        CommisionOnProductHistoryDTO commisionOnProductHistory = new CommisionOnProductHistoryDTO
-                        {
-
-                            FGRId = item.FGRId,
-                            FinishGoodProductId = item.FinishGoodProductId,
-                            CalenderYear = item.CalenderYear,
-                            Cash = item.Cash,
-                            Credit = item.Credit,
-                            Remarks=item.Remarks,
-                            EntryDate = DateTime.Now,
-                            EntryUserId = userId,
-                            OrganizationId = orgId,
-
-                        };
-                        commisionOnProductHistories.Add(commisionOnProductHistory);
-                    }
-
+                    IsSuccess = _commissionOnProductHistoryBusiness.SaveCommissionOnProductHistoryWhenInsert(commisionOnProducts, userId, orgId);
                 }
-                //IsSuccess = _commissionOnProductHistoryBusiness.SaveCommissionOnProductHistory(commisionOnProductHistories, userId, orgId);
-
-                IsSuccess = _commissionOnProductHistoryBusiness.SaveCommissionOnProductHistoryWhenInsert(commisionOnProducts, userId, orgId);
-
+                else
+                {
+                    IsSuccess = _commissionOnProductHistoryBusiness.SaveCommissionOnProductHistory(commisionOnProductHistories, userId, orgId);
+                }
             }
 
             return IsSuccess;
