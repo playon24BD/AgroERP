@@ -18,5 +18,6 @@ namespace ERPBO.Agriculture.ReportModels
         public DateTime EntryDate { get; set; }
         public string todate { get; set; }
         public string fromDate { get; set; }
+        public long ProductId { get; set; }
     }
 }

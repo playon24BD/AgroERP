@@ -30,6 +30,13 @@ namespace ERPBLL.Agriculture
             throw new NotImplementedException();
         }
 
+        public StockiestUser GetStockiestInfoById(long stockiestId, long orgId)
+        {
+            return _stockiestUserBusinessRepository.GetOneByOrg(a => a.StockiestId == stockiestId && a.OrganizationId == orgId);
+
+          //  return _stockiestInfoRepository.GetOneByOrg(r => r.StockiestId == stockiestId && r.OrganizationId == orgId);
+        }
+
         public bool SaveStockiestUser(List<string> stockiest, long userId, long suserId, long orgId,string action)
         {
             if (action == "Update")

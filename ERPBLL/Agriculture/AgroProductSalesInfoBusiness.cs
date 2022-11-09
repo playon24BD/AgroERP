@@ -35,8 +35,9 @@ namespace ERPBLL.Agriculture
         private readonly IAgroUnitInfo _agroUnitInfo;
         private readonly IMeasuremenBusiness _measuremenBusiness;
         private readonly ICommissionOnProductOnSalesBusiness _commissionOnProductOnSalesBusiness;
+        private readonly IStockiestUserBusiness _stockiestUserBusiness;
 
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness,ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness)
+        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness,ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, IStockiestUserBusiness stockiestUserBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
@@ -54,6 +55,7 @@ namespace ERPBLL.Agriculture
             this._agroUnitInfo = agroUnitInfo;
             this._measuremenBusiness = measuremenBusiness;
             this._commissionOnProductOnSalesBusiness = commissionOnProductOnSalesBusiness;
+            this._stockiestUserBusiness = stockiestUserBusiness;
         }
 
 
@@ -144,19 +146,19 @@ namespace ERPBLL.Agriculture
 
             if (agroSalesInfoDTO.ProductSalesInfoId == 0)
             {
-
-                var stockeiestId = _appUserBusiness.GetId(agroSalesInfoDTO.UserId, orgId).StockiestId;
-                long stockId = Convert.ToInt32(stockeiestId);
+                var UserId= _stockiestUserBusiness.GetStockiestInfoById(agroSalesInfoDTO.UserId, orgId).UserId;
+                var stockeiestId = _appUserBusiness.GetId(UserId, orgId).StockiestId;
+                long stockId = agroSalesInfoDTO.UserId;
 
                 var territoryId = _stockiestInfo.GetStockiestInfoById(stockId, orgId).TerritoryId;
 
-                var areaId = _territorySetup.GetTerritoryNamebyId(stockId, orgId).AreaId;
+                var areaId = _territorySetup.GetTerritoryNamebyId(territoryId, orgId).AreaId;
 
-                var regionId = _areaSetupBusiness.GetAreaInfoById(stockId, orgId).RegionId;
+                var regionId = _areaSetupBusiness.GetAreaInfoById(areaId, orgId).RegionId;
 
-                var divisionId = _regionSetup.GetRegionNamebyId(stockId, orgId).DivisionId;
+                var divisionId = _regionSetup.GetRegionNamebyId(regionId, orgId).DivisionId;
 
-                var zoneId = _divisionInfo.GetDivisionInfoById(stockId, orgId).ZoneId;
+                var zoneId = _divisionInfo.GetDivisionInfoById(divisionId, orgId).ZoneId;
 
 
                 //paymenttable
@@ -177,7 +179,7 @@ namespace ERPBLL.Agriculture
                         PaymentMode = agroSalesInfoDTO.PaymentMode,
                         VehicleType = agroSalesInfoDTO.VehicleType,
                         UserAssignId = agroSalesInfoDTO.UserAssignId,
-                        UserId = agroSalesInfoDTO.UserId,
+                        UserId = UserId,
                         StockiestId = stockId,
                         TerritoryId = territoryId,
                         AreaId = areaId,
@@ -630,25 +632,32 @@ namespace ERPBLL.Agriculture
             return query;
         }
 
-        public IEnumerable<ProductWiseSalesStementReport> GetProductwisesalesReportDownloadRpt(string fromDate, string toDate)
+        public IEnumerable<ProductWiseSalesStementReport> GetProductwisesalesReportDownloadRpt(long? productId, string fromDate, string toDate)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductWiseSalesStementReport>(QueryProductWiseSalesStementReport(fromDate, toDate));
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductWiseSalesStementReport>(QueryProductWiseSalesStementReport(productId,fromDate, toDate));
         }
 
-        private string QueryProductWiseSalesStementReport(string fromDate, string toDate)
+        private string QueryProductWiseSalesStementReport(long? productId, string fromDate, string toDate)
         {
             string query = string.Empty;
             string param = string.Empty;
             string FromDate = string.Empty;
             string ToDate = string.Empty;
 
+            if (productId != 0 && productId > 0)
+            {
+                param += string.Format(@" and FGPN.FinishGoodProductId={0}", productId);
+            }
 
-            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
             {
                 string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
                 string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
                 param += string.Format(@" and Cast(sales.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
             }
+
+
+
             else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
             {
                 string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");

@@ -2055,7 +2055,9 @@ namespace ERPWeb.Controllers
         [HttpGet]
         public ActionResult CreateAgroSalesProduct(long? id, long? finishGoodProductId)
         {
-            ViewBag.ddlClientName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(g => new SelectListItem { Text = g.StockiestName, Value = g.StockiestId.ToString() }).ToList();
+            
+
+            ViewBag.ddlClientName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName, Value = stock.StockiestId.ToString() }).ToList();
 
             //  ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Where(o => o.RoleId == 34).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
 
@@ -2990,7 +2992,7 @@ namespace ERPWeb.Controllers
         #region AgroReport
         public ActionResult GetProductwisesalesReport()
         {
-            
+            ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
             return View();
         }
@@ -3048,9 +3050,9 @@ namespace ERPWeb.Controllers
 
 
 
-        public ActionResult GetProductwisesalesReportDownload(string fromDate, string toDate, string rptType)
+        public ActionResult GetProductwisesalesReportDownload(long? productId, string fromDate, string toDate, string rptType)
         {
-            var data = _agroProductSalesInfoBusiness.GetProductwisesalesReportDownloadRpt(fromDate, toDate);
+            var data = _agroProductSalesInfoBusiness.GetProductwisesalesReportDownloadRpt(productId, fromDate, toDate);
             LocalReport localReport = new LocalReport();
             string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/ProductwisesalesReportDownloadsReport.rdlc");
             if (System.IO.File.Exists(reportPath))

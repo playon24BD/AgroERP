@@ -14,5 +14,6 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<StockiestUser> GetAllStockiestByUserIdAndStockiestId(long userId, long orgId);
         bool UpdateStockiestUser(List<string> stockiest, long userId, long suserId, long orgId);
         List<StockiestInfoViewModel> GetAllStockiest(long userId, long orgId);
+        StockiestUser GetStockiestInfoById(long stockiestId, long orgId);
     }
 }

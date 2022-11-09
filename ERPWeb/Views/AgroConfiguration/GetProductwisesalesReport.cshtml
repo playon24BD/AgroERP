@@ -34,6 +34,13 @@
                                         </div>
                                         <div class="row mt-1">
                                             <div class="col-md-2">
+                                                <label for="ddlProductName" class="control-label font-weight-bold">
+                                                    Product Name
+                                                </label>
+                                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
+                                            </div>
+                                            <div class="col-md-2">
                                                 <label class="control-label font-weight-bold" for="dptFromDate">From Date</label>
                                                 <div class="input-group input-group-sm">
                                                     <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
@@ -81,6 +88,7 @@
         var dptFromDate = $("#dptFromDate");
         var dptToDate = $("#dptToDate");
         var rptType = $("#rptType");
+        var ddlProductName = $("#ddlProductName");
        
 
         $(document).ready(function () {
@@ -127,11 +135,11 @@
         })
 
         $("#btnDownload").click(function () {
-            if (dptFromDate.val() == "" && dptToDate.val() == "" ) {
+            if (dptFromDate.val() == "" && dptToDate.val() == "" && ddlProductName.val()=="") {
                 bootbox.alert("Please Select Anyone");
             }
             else {
-                window.open("/AgroConfiguration/GetProductwisesalesReportDownload?fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val());
+                window.open("/AgroConfiguration/GetProductwisesalesReportDownload?fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val()+"&productId="+ ddlProductName.val());
             }
         })
 

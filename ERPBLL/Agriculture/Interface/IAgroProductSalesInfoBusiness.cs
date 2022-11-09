@@ -36,7 +36,7 @@ namespace ERPBLL.Agriculture.Interface
 
         AgroProductSalesInfo GetChallanProductionInfoById(long ProductSalesInfoId);
 
-        IEnumerable<ProductWiseSalesStementReport> GetProductwisesalesReportDownloadRpt(string fromDate, string toDate);
+        IEnumerable<ProductWiseSalesStementReport> GetProductwisesalesReportDownloadRpt(long? productId, string fromDate, string toDate);
 
         IEnumerable<AgroProductSalesInfo> GetAgroSalesinfoByStokiestId(long StockiestId);
 
