@@ -110,5 +110,40 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         {
             return _agroProductSalesDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.ProductSalesInfoId == infoId).ToList();
         }
+
+        public IEnumerable<AgroProductSalesDetailsDTO> GetAgroSalesDetailsByInfoIdGet(long infoId, long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForGetAgroSalesDetailsByInfoIdGet(infoId, orgId)).ToList();
+        }
+
+        private string QueryForGetAgroSalesDetailsByInfoIdGet(long infoId, long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (infoId != 0 && infoId > 0)
+            {
+                param += string.Format(@" and SD.ProductSalesInfoId={0}", infoId);
+            }
+          
+
+            query = string.Format(@"	
+SELECT Distinct SD.FGRId,SD.QtyKG,SD.ProductSalesDetailsId,SD.BoxQuanity,m.MeasurementId,
+SD.ProductSalesInfoId,SD.Price,SD.Discount,SD.FinishGoodProductInfoId,FGP.FinishGoodProductName,SD.MeasurementSize,
+SD.Quanity,
+ReturnQTY=ISNULL((SELECT SUM(SR.BoxQuanity) from tblSalesReturn SR where SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0),
+ReturnTotalQTY=ISNULL((SELECT SUM(SR.ReturnQuanity) from tblSalesReturn SR where SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0),
+
+CurrentQTY=ISNULL(SD.BoxQuanity-ISNULL((SELECT SUM(SR.BoxQuanity) from tblSalesReturn SR where SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0),0),
+TotalCurrentQTY=ISNULL(SD.Quanity-ISNULL((SELECT SUM(SR.ReturnQuanity) from tblSalesReturn SR where SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0),0)
+
+from tblProductSalesDetails SD
+INNER JOIN tblFinishGoodProductInfo FGP on SD.FinishGoodProductInfoId=FGP.FinishGoodProductId
+INNER JOIN tblMeasurement M on SD.MeasurementId=M.MeasurementId
+
+                Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }

@@ -370,6 +370,7 @@
                         //return;
                         $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveFinishGoodRecipe', data , getToken())).then(function (res, status)
                         {
+                            debugger;
                             if (res === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {

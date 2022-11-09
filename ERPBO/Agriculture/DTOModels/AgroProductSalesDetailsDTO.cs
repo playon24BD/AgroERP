@@ -30,6 +30,8 @@ namespace ERPBO.Agriculture.DTOModels
         public string QtyKG { get; set; }
 
         public int box { get; set; }
+        public double CurrentQTY { get; set; }
+        public double TotalCurrentQTY { get; set; }
 
         //public string MeasurementName { get; set; }
         //public string FinishGoodProductName { get; set; }

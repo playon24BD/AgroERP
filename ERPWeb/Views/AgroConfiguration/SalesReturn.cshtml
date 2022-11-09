@@ -35,9 +35,32 @@
                         <div class="col-md-12" style="margin-top:-10px">
                             <div class="card card-navy">
                                 <div class="card-header">
-                                    <h6 class="card-title">Search By</h6>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <h5 class="text-start">
+                                                Invoice
+                                            </h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            @*<label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>*@
+                                            @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        </div>
+                                        <div class="hide">
+                                            <label for="ddlStokiestID">StokiestID</label>
+                                            <input type="text" id="ddlStokiestID" name="ddlStokiestID" class="form-control form-control-sm" readonly />
+                                        </div>
+                                        <div class="col-md-6">
+
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-success btn-sm float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                            @*btn btn-outline-primary btn-sm float-lg-right*@
+                                        </div>
+                                    </div>
+                                    @*<h6 class="card-title">Search By</h6>*@
+                                   
                                 </div>
-                                <div class="card-body text-sm">
+                                @*<div class="card-body text-sm">
                                     <div class="row" style="margin-top:-15px">
                                         <div class="col-md-3">
                                             <label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>
@@ -50,7 +73,7 @@
 
                                     </div>
 
-                                </div>
+                                </div>*@
                             </div>
                         </div>
 
@@ -62,7 +85,7 @@
 
                                     </div>
                                  
-                                        <button class="btn btn-success btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                        @*<button class="btn btn-success btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>*@
                                     
                                 </div>
                                 
