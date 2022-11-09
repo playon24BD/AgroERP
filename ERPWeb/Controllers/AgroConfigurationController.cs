@@ -3003,19 +3003,21 @@ namespace ERPWeb.Controllers
         #region AgroReport
         public ActionResult GetProductwisesalesReport()
         {
-
+            
 
             return View();
         }
 
         public ActionResult GetInvoiceWiseSales()
         {
+            ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+
             return View();
         }
 
-        public ActionResult GetInvoiceWiseSalesReport(string fromDate, string toDate, string rptType)
+        public ActionResult GetInvoiceWiseSalesReport(long?stockiestId, string invoiceNo, string fromDate, string toDate, string rptType)
         {
-            var data = _agroProductSalesInfoBusiness.GetInvoiceWiseSalesReport(fromDate, toDate);
+            var data = _agroProductSalesInfoBusiness.GetInvoiceWiseSalesReport(stockiestId, invoiceNo,fromDate, toDate);
 
             LocalReport localReport = new LocalReport();
 

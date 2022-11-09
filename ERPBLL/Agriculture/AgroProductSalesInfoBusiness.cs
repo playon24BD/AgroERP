@@ -586,22 +586,43 @@ namespace ERPBLL.Agriculture
             return query;
         }
 
-        public IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport(string fromDate, string toDate)
+        public IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport(long? stockiestId, string invoiceNo, string fromDate, string toDate)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<InvoiceWiseCollectionSalesReport>(QueryForInvoiceWiseSalesReport(fromDate, toDate));
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<InvoiceWiseCollectionSalesReport>(QueryForInvoiceWiseSalesReport(stockiestId, invoiceNo,fromDate, toDate));
         }
-        public string QueryForInvoiceWiseSalesReport(string fromDate, string toDate)
+        public string QueryForInvoiceWiseSalesReport(long? stockiestId, string invoiceNo, string fromDate, string toDate)
         {
             string param = string.Empty;
             string query = string.Empty;
+
+            if (stockiestId != null && stockiestId > 0)
+            {
+                param += string.Format(@" and STI.StockiestId={0}", stockiestId);
+            }
+
+            if (!string.IsNullOrEmpty(invoiceNo))
+            {
+                param += string.Format(@"and SI.InvoiceNo like '%{0}%'", invoiceNo);
+            }
+
 
             if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
             {
                 string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
                 string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(SI.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+                param += string.Format(@" and Cast(SI.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
             }
-           
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", tDate);
+            }
+
 
 
             query = string.Format(@"

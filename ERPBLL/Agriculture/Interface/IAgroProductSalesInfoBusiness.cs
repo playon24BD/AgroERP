@@ -16,7 +16,7 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<AgroProductSalesInfoDTO> GetPaymentListInfos(string name,string fromDate, string toDate);
         
-        IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport( string fromDate,string toDate);
+        IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport(long? stockiestId, string invoiceNo, string fromDate,string toDate);
         IEnumerable<ProductSalesDataReport> GetProductSalesData(string InvoiceNo);
 
         IEnumerable<ProductSalesDataChallanReport> GetProductSalesChallanData(string ChallanNo);
