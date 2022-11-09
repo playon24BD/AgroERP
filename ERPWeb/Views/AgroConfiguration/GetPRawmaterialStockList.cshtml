@@ -7,6 +7,7 @@
         background-color: black !important;
         color: white !important;
     }
+
     table.tadd tr th {
         background-color: darkcyan !important;
         color: white !important;
@@ -60,8 +61,26 @@
                             <div class="card card-navy shadow">
                                 <div class="card-header">
                                     <h6 class="card-title">Search By</h6>
-                                </div>
 
+
+                                    @*<div class="row text-sm">*@
+
+
+
+                                    @*<div class="col-md-2">
+                                            <h4>Search by:</h4>
+
+                                        </div>
+                                        <div class="col-md-3 float-right">
+                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+                                        </div>
+                                        <div class="col-7">
+
+                                        </div>*@
+
+                                    @*</div>*@
+                                </div>
                                 <div class="card-body text-sm">
                                     <div class="row" style="margin-top:-15px">
                                         <div class="col-md-2">
@@ -82,15 +101,15 @@
                                         <div class="col-md-2">
                                             <label for="ddlSupplierName1" class="col-form-label">Supplier Name</label>
                                             @Html.DropDownList("ddlSupplierName1", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                            
+
                                         </div>
 
 
                                     </div>
 
                                     @*<div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" id="SearchInvoiceNo" placeholder="search Invoice" />
-            </div>*@
+                                            <input type="text" class="form-control form-control-sm" id="SearchInvoiceNo" placeholder="search Invoice" />
+                                        </div>*@
 
                                 </div>
 
@@ -119,7 +138,6 @@
                 <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterial" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterial-tab">
                     <div class="row mb-5" style="background-color:#e7f1f6">
                         <div class="col-md-12">
-
                             <div class="card card-navy">
                                 <div class="card-header" style="text-align: center;">
 
@@ -141,80 +159,74 @@
 
                                 @*addbodey*@
                                 <div class="card-body shadow" @*style="background-color:#e7f1f6"*@>
-
                                     <div class="row">
-                                        @*<div class="col-md-1">
 
-                                        </div>*@
-                                        <div class="col-md-12">
+
+
+                                        <div class="col-md-4">
                                             <div class="container-fluid" @*style="background-color:#e7f1f6"*@>
                                                 @*border-right:4px solid #808080*@
-                                                @*<h5 style="border-bottom:2px solid #08054e">Information</h5>*@
+                                                <h5 style="border-bottom:2px solid #08054e">Information</h5>
                                                 <div class="row justify-content-center">
 
+                                                    <div class="col-md-12">
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label for="ddlSupplierName" class="control-label">Supplier Name</label>
+                                                                @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                                <span class="error hide req-SupplierName font-weight-bold">Supplier Name is required!</span>
+                                                            </div>
 
 
-<<<<<<< Updated upstream
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="ddlInvoiceDate">Invoice Date</label>
-                                                                <div class="input-group-sm date" id="datePicker">
-=======
->>>>>>> Stashed changes
+                                                            @*<div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="ddlInvoiceDate">Invoice Date</label>
+                                                                        <input type="date" class="form-control" id="ddlInvoiceDate" placeholder="Asign Date">
+                                                                        <span class="error hide req-ddlInvoiceDate font-weight-bold">date requered!</span>
+                                                                    </div>
+                                                                </div>*@
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="ddlInvoiceDate">Invoice Date</label>
+                                                                    <div class="input-group date" id="datePicker">
 
-                                                    <div class="col-md-3">
-                                                        <label for="ddlSupplierName" class="control-label">Supplier Name</label>
-                                                        @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                                        <span class="error hide req-SupplierName font-weight-bold">Supplier Name is required!</span>
-                                                    </div>
+                                                                        <input type="text" class="form-control" id="ddlInvoiceDate" name="date" value="">
+                                                                        <span class="input-group-addon">
+                                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
 
+                                                        </div>
 
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label for="ddlInvoiceDate">Invoice Date</label>
-                                                            <div class="input-group date" id="datePicker">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label for="ddlChallanNo" class="col-form-label">Challan No.</label>
+                                                                <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
+                                                                <span class="error hide req-ddlChallanNo font-weight-bold">Chalan No is required!</span>
 
-                                                                <input type="text" class="form-control" id="ddlInvoiceDate" name="date" value="">
-                                                                <span class="input-group-addon">
-                                                                    <i class="glyphicon glyphicon-calendar"></i>
-                                                                </span>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
+                                                                <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
+                                                                <span class="error hide req-ddlInvoiceNo font-weight-bold">Invoice No is required!</span>
                                                             </div>
                                                         </div>
-                                                    </div>
-
-
-
-
-
-                                                    <div class="col-md-3">
-                                                        <label for="ddlChallanNo" class="col-form-label">Challan No.</label>
-                                                        <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
-                                                        <span class="error hide req-ddlChallanNo font-weight-bold">Chalan No is required!</span>
 
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
-                                                        <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
-                                                        <span class="error hide req-ddlInvoiceNo font-weight-bold">Invoice No is required!</span>
-                                                    </div>
-
-
-
                                                 </div>
                                             </div>
                                         </div>
-                                        @*<div class="col-md-1">
 
-                                        </div>*@
-                                    </div>
-                                    <div class="row">
-                                        @*<div class="col-md-1">
 
-                                        </div>*@
-                                        <div class="col-md-12">
+
+
+                                        <div class="col-md-8">
                                             <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
-                                                @*<h5 style="border-bottom:2px solid #f87878">RawMaterial</h5>*@
+                                                <h5 style="border-bottom:2px solid #f87878">RawMaterial</h5>
                                                 <div class="row justify-content-center">
 
                                                     <div class="col-md-12">
@@ -240,7 +252,7 @@
                                                                 <input type="number" id="ddluprice" name="uprice" class="form-control form-control-sm" />
                                                                 <span class="error hide req-uprice">Unit Price Is Required</span>
                                                             </div>
-                                                            <div class="col-md-1">
+                                                            <div class="col-md-2">
                                                                 <label for="ddlqty"> Qty</label>
                                                                 <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
                                                                 <span class="error hide req-qty">Qty Is Required</span>
@@ -254,7 +266,7 @@
                                                             <div class="col-md-2">
                                                                 <div class="form-group">
                                                                     <label for="ddlexpdate">Expire Date</label>
-                                                                    <div class="input-group-sm date" id="datePicker">
+                                                                    <div class="input-group date" id="datePicker">
 
                                                                         <input type="text" class="form-control" id="ddlexpdate" name="date" value="">
                                                                         <span class="input-group-addon">
@@ -262,38 +274,33 @@
                                                                         </span>
                                                                     </div>
                                                                 </div>
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
+                                                                @*<div class="form-group">
+                                                                        <label for="ddlexpdate">Exp Date</label>
+                                                                        <input type="date" class="form-control" id="ddlexpdate" placeholder="Expire Date">
+                                                                        <span class="error hide req-ddlexpdate font-weight-bold">date requered!</span>
+                                                                    </div>*@
                                                             </div>
 
 
 
+                                                            <div class="col-md-1">
+                                                                <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                                                                <div class="clearfix">
+                                                                    <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
                                                     </div>
 
-                                                    </div>
 
-
-                                                </div>
-
-                                                <div class="col-md-12">
-                                                    <label for="" class="control-label  font-weight-bold" style="visibility:hidden">Add</label>
-                                                    <div class="clearfix">
-                                                        <button type="submit" class="btn btn-sm float-right btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        @*<div class="col-md-1">
 
-                                        </div>*@
 
                                     </div>
-
-
                                 </div>
                                 @*addbodey*@
 
@@ -368,7 +375,7 @@
                                         </div>
                                         <div class="col-md-3 float-right">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnyy" placeholder="Search by any" />
-                                            
+
                                         </div>
                                         <div class="col-7">
 
@@ -426,7 +433,7 @@
     <script type="text/javascript">
         var to = 0;//total
         var to1 = 0;//qty
-       
+
 
 
         var ddlSupplierName = $("#ddlSupplierName");
@@ -514,7 +521,7 @@
 
             LoadDataTable();
             LoadDataTableStock();
-          
+
         })
 
         function LoadDataInitializer() {
@@ -818,8 +825,8 @@
                 if (result === true) {
                     removeTableRow("#tblPstockrawmaterial tbody", index);
                     fnFixTheTbodyRowSerial("#tblPstockrawmaterial tbody", index);
-                    
-                    
+
+
                     var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal);
                     $('.totalsub').text(totals);
 
