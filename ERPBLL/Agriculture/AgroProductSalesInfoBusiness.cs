@@ -705,13 +705,8 @@ namespace ERPBLL.Agriculture
 
 
             query = string.Format(@"
-            --select InvoiceNo,InvoiceDate,TotalAmount,PaidAmount,DueAmount
-
-             --from tblProductSalesInfo
-             --where DueAmount >0
-
-            select DISTINCT 
-            AU.FullName,
+                   select DISTINCT 
+		    AU.FullName,
             ST.StockiestName,
             TE.TerritoryName,
             AU.Address,
@@ -728,46 +723,18 @@ namespace ERPBLL.Agriculture
             sales.Do_ADO_DA,
             sales.DoADO_Name,
             sales.PaymentMode,
-
-            ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
-
-            DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
-
-            RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
-
-            AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
-
-            salesD.ProductSalesInfoId,
-            salesD.FinishGoodProductInfoId,
-            FGPN.FinishGoodProductName,
-
-            salesD.Quanity,
-            salesD.Price,
-            salesD.MeasurementSize,
-            salesD.Discount,
-            salesD.DiscountTk,
             sales.PaidAmount,
             sales.DueAmount,
-            (salesD.Price*salesD.Quanity) AS Total,
-            sales.TotalAmount
-            --dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
-
-
-
-
+            sales.TotalAmount,
+			sales.ProductSalesInfoId
             from [Agriculture].[dbo].[tblProductSalesInfo] sales
-            INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
-            on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
-
-            INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
-            on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
-
-            LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
+			 LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
             on AU.UserId=sales.UserId
             LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
             on ST.StockiestId=AU.StockiestId
             LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
             on TE.TerritoryId=ST.TerritoryId
+
 
             Where 1=1 {0}", Utility.ParamChecker(param));
             return query;

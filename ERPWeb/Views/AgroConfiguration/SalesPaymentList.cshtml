@@ -115,24 +115,24 @@
 <div class="modal" id="Paymentmodal" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header alert-secondary">
+            <div class="modal-header bg-navy">
                 <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
 
 
-            <div class="col-md-12">
+            <div class="col-md-12" style="background-color:#e7f1f6">
                 <div class="container-fluid" @*style="background-color:#e7f1f6"*@>
                     @*border-right:4px solid #808080*@
 
                     <div class="row justify-content-center">
 
 
-                        <div class="card">
-                            <div class="col-md-12">
+                        @*<div class="card" style="background-color:#e7f1f6">*@
+                            <div class="col-md-12 mb-2">
                                 <h5 style="border-bottom:2px solid #08054e">Information</h5>
 
-                                <div class="row">
+                                <div class="row" >
                                     <input type="hidden" id="hdProductSalesInfoId" />
                                     <div class="col-md-3">
                                         <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
@@ -157,7 +157,7 @@
 
 
                             </div>
-                        </div>
+                        @*</div>*@
 
 
 
@@ -168,17 +168,17 @@
             </div>
 
 
-            <div class="col-md-12">
+            <div class="col-md-12" style="background-color:#e7f1f6">
                 <div class="container" @*style="background-color:#e7f1f6"*@>
                     @*border-right:4px solid #808080*@
 
                     @*<div class="row justify-content-center">*@
 
 
-                    <div class="card">
-                        <div class="col-md-12">
+                    <div class="card" style="background-color: #20B2AA">
+                        <div class="col-md-12 mb-2">
                             <h5 style="border-bottom:2px solid #ff0000">Payment</h5>
-                            <div class="row">
+                            <div class="row justify-content-center">
                                 <div class="col-md-2">
                                     <label for="ddlPaymentMode" class="control-label">Payment Mode</label>
                                     <select id="ddlPaymentMode" class="form-control form-control-sm" select2>
@@ -189,17 +189,17 @@
                                     <span class="error hide req-ddlPaymentMode">ddlPaymentMode Is Required</span>
                                 </div>
                                 <div class="col-md-4" id="divAccountNumber">
-                                    <label for="ddlAccountNumber" class="col-form-label">Account Number</label>
+                                    <label for="ddlAccountNumber" class="control-label">Account Number</label>
                                     <input type="number" id="ddlAccountNumber" class="form-control form-control-sm" />
                                     <span class="error hide req-ddlAccountNumber font-weight-bold">Account is required!</span>
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="ddlAmount" class="col-form-label">Amount</label>
+                                    <label for="ddlAmount" class="control-label">Amount</label>
                                     <input type="number" id="ddlAmount" class="form-control form-control-sm" />
                                     <span class="error hide req-ddlAmount font-weight-bold">Amount is required!</span>
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="ddlRemarks" class="col-form-label">Remarks.</label>
+                                    <label for="ddlRemarks" class="control-label">Remarks.</label>
                                     <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
                                     <span class="error hide req-ddlRemarks font-weight-bold">Invoice No is required!</span>
                                 </div>
@@ -222,7 +222,7 @@
 
 
 
-            <div class="modal-footer btn-default">
+            <div class="modal-footer  bg-navy" >
                 <div class="col-md-6">
                     <div id="msg1" class="alert alert-success hide float-left">
                         Data has been saved Successful!

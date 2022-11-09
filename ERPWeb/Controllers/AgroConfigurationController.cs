@@ -2055,9 +2055,9 @@ namespace ERPWeb.Controllers
         [HttpGet]
         public ActionResult CreateAgroSalesProduct(long? id, long? finishGoodProductId)
         {
+            ViewBag.ddlClientName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(g => new SelectListItem { Text = g.StockiestName, Value = g.StockiestId.ToString() }).ToList();
 
-
-            ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Where(o => o.RoleId == 34).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
+            //  ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Where(o => o.RoleId == 34).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
 
             //ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
@@ -2287,19 +2287,6 @@ namespace ERPWeb.Controllers
             {
 
                 var dto = _agroProductSalesInfoBusiness.GetPaymentListInfos( name ?? null,fromDate,toDate);
-
-
-                //IEnumerable<AgroProductSalesInfoDTO> dto = _agroProductSalesInfoBusiness.GetAllDueSalesInvoice().Where(s => (name == "" || name == null) || (s.InvoiceNo.Contains(name))).Select(o => new AgroProductSalesInfoDTO
-                //{
-                //    ProductSalesInfoId = o.ProductSalesInfoId,
-                //    InvoiceNo = o.InvoiceNo,
-                //    InvoiceDate = o.InvoiceDate,
-                //    TotalAmount = o.TotalAmount,
-                //    PaidAmount = o.PaidAmount,
-                //    DueAmount = o.DueAmount,
-
-
-                //}).ToList();
 
                 List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
