@@ -13,6 +13,18 @@
         background-color: darkcyan !important;
         color: white !important;
     }
+
+
+    body {
+        margin-top: 40px;
+    }
+
+    .container {
+        margin-bottom: 60px;
+        border: 1px solid rgba( 0,0,0, .4 );
+        padding: 40px;
+        border-radius: 6px;
+    }
 </style>
 <div class="row text-sm" style="margin-top:-15px">
     <div class="col-md-12">
@@ -59,36 +71,54 @@
                                 <label for="ddlDepotName" class="col-form-label">Depot</label>
                                 <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
                             </div>
-                            @*<div class="col-md-6">
-                                    <label for="ddlChallanNo" class="col-form-label">Challan No.</label>
-                                    <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
-                                </div>*@
 
-                            <div class="col-md-2">
-                                <label class="col-form-label font-weight-bold">Challan Date</label>
-                                <div class="input-group input-group-sm ">
-                                    <input type="text" class="form-control form-control-sm date-datePicker-ChallanDate ctrl-changed" id="ChallanDate" />
-                                    <div class="input-group-prepend cursor-pointer remove-date ChallanDate" style="cursor:pointer">
-                                        <span class="input-group-text">&#10008;</span>
-                                    </div>
+
+                        <div class="col-md-2">
+                            @*<label class="col-form-label font-weight-bold">Challan Date</label>
+        <div class="input-group input-group-sm ">
+            <input type="text" class="form-control form-control-sm date-datePicker-ChallanDate ctrl-changed" id="ChallanDate" />
+            <div class="input-group-prepend cursor-pointer remove-date ChallanDate" style="cursor:pointer">
+                <span class="input-group-text">&#10008;</span>
+            </div>
+        </div>*@
+
+                            <div class="form-group">
+                                <label class="col-form-label"  for="ddlInvoiceDate">Challan Date</label>
+                                <div class="input-group-sm date" id="datePicker">
+
+                                    <input type="text" class="form-control" id="ChallanDate" name="date" value="">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
                                 </div>
-
                             </div>
+
+                        </div>
 
                             @*<div class="col-md-4">
                                     <label for="ddlInvoiceNo" class="col-form-label">Invoice No.</label>
                                     <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
                                 </div>*@
 
-                            <div class="col-md-2">
-                                <label class="col-form-label font-weight-bold">Invoice Date</label>
-                                <div class="input-group input-group-sm ">
-                                    <input type="text" class="form-control form-control-sm date-datePicker-InvoiceDate ctrl-changed" id="InvoiceDate" />
-                                    <div class="input-group-prepend cursor-pointer remove-date InvoiceDate" style="cursor:pointer">
-                                        <span class="input-group-text">&#10008;</span>
-                                    </div>
+                        <div class="col-md-2">
+                            @*<label class="col-form-label font-weight-bold">Invoice Date</label>
+        <div class="input-group input-group-sm ">
+            <input type="text" class="form-control form-control-sm date-datePicker-InvoiceDate ctrl-changed" id="InvoiceDate" />
+            <div class="input-group-prepend cursor-pointer remove-date InvoiceDate" style="cursor:pointer">
+                <span class="input-group-text">&#10008;</span>
+            </div>
+        </div>*@
+                            <div class="form-group">
+                                <label class="col-form-label" for="InvoiceDate">Invoice Date</label>
+                                <div class="input-group-sm date" id="datePicker">
+
+                                    <input type="text" class="form-control" id="InvoiceDate" name="date" value="">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
                                 </div>
                             </div>
+                        </div>
 
                             <div class="col-md-2">
                                 <label for="ddlPaymentMode" class="col-form-label">Payment</label>
@@ -413,6 +443,53 @@
 
 
 
+
+        //date
+        var date = new Date();
+        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+        var optSimple = {
+            format: 'mm-dd-yyyy',
+            todayHighlight: true,
+            orientation: 'bottom right',
+            autoclose: true,
+            container: '#sandbox'
+        };
+
+        var optComponent = {
+            format: 'mm-dd-yyyy',
+            container: '#datePicker',
+            orientation: 'auto top',
+            todayHighlight: true,
+            autoclose: true
+        };
+
+        // SIMPLE
+        $('#simple').datepicker(optSimple);
+
+        // COMPONENT
+        $('#datePicker').datepicker(optComponent);
+
+        // ===================================
+
+        $('#datepicker1').datepicker({
+            format: "mm : dd : yyyy",
+            todayHighlight: true,
+            autoclose: true,
+            container: '#box1',
+            orientation: 'top right'
+        });
+
+        $('#datepicker2').datepicker({
+            format: 'mm \\ dd \\ yyyy',
+            todayHighlight: true,
+            autoclose: true,
+            container: '#box2',
+            orientation: 'top right'
+        });
+
+        $('#datepicker1, #datepicker2, #simple, #datePicker').datepicker('setDate', today);
+        //dateend
 
 
 
