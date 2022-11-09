@@ -295,6 +295,10 @@ namespace ERPWeb.Reports.DataSets {
             
             private global::System.Data.DataColumn columnEntryDate;
             
+            private global::System.Data.DataColumn columntodate;
+            
+            private global::System.Data.DataColumn columnfromDate;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public ProductwisesalesReportDownloadReportsDataTable() {
@@ -394,6 +398,22 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn todateColumn {
+                get {
+                    return this.columntodate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn fromDateColumn {
+                get {
+                    return this.columnfromDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -429,7 +449,7 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public ProductwisesalesReportDownloadReportsRow AddProductwisesalesReportDownloadReportsRow(string FinishGoodProductName, string PackSize, string QtyCTN, string UnitKG, string QtyKG, string Total, string TotalAmount, string EntryDate) {
+            public ProductwisesalesReportDownloadReportsRow AddProductwisesalesReportDownloadReportsRow(string FinishGoodProductName, string PackSize, string QtyCTN, string UnitKG, string QtyKG, string Total, string TotalAmount, string EntryDate, string todate, string fromDate) {
                 ProductwisesalesReportDownloadReportsRow rowProductwisesalesReportDownloadReportsRow = ((ProductwisesalesReportDownloadReportsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FinishGoodProductName,
@@ -439,7 +459,9 @@ namespace ERPWeb.Reports.DataSets {
                         QtyKG,
                         Total,
                         TotalAmount,
-                        EntryDate};
+                        EntryDate,
+                        todate,
+                        fromDate};
                 rowProductwisesalesReportDownloadReportsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowProductwisesalesReportDownloadReportsRow);
                 return rowProductwisesalesReportDownloadReportsRow;
@@ -470,6 +492,8 @@ namespace ERPWeb.Reports.DataSets {
                 this.columnTotal = base.Columns["Total"];
                 this.columnTotalAmount = base.Columns["TotalAmount"];
                 this.columnEntryDate = base.Columns["EntryDate"];
+                this.columntodate = base.Columns["todate"];
+                this.columnfromDate = base.Columns["fromDate"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -491,6 +515,10 @@ namespace ERPWeb.Reports.DataSets {
                 base.Columns.Add(this.columnTotalAmount);
                 this.columnEntryDate = new global::System.Data.DataColumn("EntryDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEntryDate);
+                this.columntodate = new global::System.Data.DataColumn("todate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntodate);
+                this.columnfromDate = new global::System.Data.DataColumn("fromDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfromDate);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -769,6 +797,40 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string todate {
+                get {
+                    try {
+                        return ((string)(this[this.tableProductwisesalesReportDownloadReports.todateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'todate\' in table \'ProductwisesalesReportDownloadReports\' is" +
+                                " DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableProductwisesalesReportDownloadReports.todateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string fromDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableProductwisesalesReportDownloadReports.fromDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'fromDate\' in table \'ProductwisesalesReportDownloadReports\' " +
+                                "is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableProductwisesalesReportDownloadReports.fromDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFinishGoodProductNameNull() {
                 return this.IsNull(this.tableProductwisesalesReportDownloadReports.FinishGoodProductNameColumn);
             }
@@ -861,6 +923,30 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetEntryDateNull() {
                 this[this.tableProductwisesalesReportDownloadReports.EntryDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IstodateNull() {
+                return this.IsNull(this.tableProductwisesalesReportDownloadReports.todateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SettodateNull() {
+                this[this.tableProductwisesalesReportDownloadReports.todateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsfromDateNull() {
+                return this.IsNull(this.tableProductwisesalesReportDownloadReports.fromDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetfromDateNull() {
+                this[this.tableProductwisesalesReportDownloadReports.fromDateColumn] = global::System.Convert.DBNull;
             }
         }
         

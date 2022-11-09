@@ -11,9 +11,9 @@
     {
     <tr>
         <td style="width:5%">Invoice</td>
-        <td style="width:10%"><b>@info.InvoiceNo</b></td>
+        <td style="width:15%"><b>@info.InvoiceNo</b></td>
         <td style="width:5%">Date</td>
-        <td style="width:13%"><b>@info.InvoiceDate</b></td>
+        <td style="width:12%"><b>@info.InvoiceDate.Value.ToString("dd-MMM-yyyy")</b></td>
         <td style="width:5%">StockiestName</td>
         <td style="width:15%"><b>@info.StockiestName</b></td>
         <td style="width:20%" class="hide"><b>@info.StockiestId</b></td>
@@ -54,14 +54,14 @@
             <td class="text-center">@item.QtyKG</td>
             <td class="text-center hide">@item.MeasurementName</td>
             <td class="text-center">@item.MeasurementSize</td>
-            <td class="text-center hide">@item.Quanity</td>
-            <td class="text-center">@item.BoxQuanity</td>
+            <td class="text-center hide">@item.TotalCurrentQTY</td>
+            <td class="text-center">@item.CurrentQTY</td>
             <td class="text-center">@item.Price</td>
             <td class="text-center" style="width:10%">
                 <input type="number" class="returnqty form-control form-control-sm " value="0" />
                 <span class="error hide">Quantity must be <=available Quantity</span>
             </td>
-            <td class="text-center" style="width:10%">
+            <td class="text-center" style="width:15%">
                 <input type="number" class="returnprice form-control form-control-sm " value="0" />
                 @*<span class="error hide">Quantity must be <=available Quantity</span>*@
             </td>

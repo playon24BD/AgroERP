@@ -881,7 +881,7 @@ namespace ERPWeb.Controllers
         public ActionResult SaveFinishGoodRecipe(FinishGoodRecipeInfoViewModel info, List<FinishGoodRecipeDetailsViewModel> details)
         {
 
-            var msg = "alert('Are you sure want to Continue?');";
+            //var msg = "alert('Are you sure want to Continue?');";
             bool IsSuccess = false;
             //var pre = UserPrivilege("Inventory", "GetItemPreparation");
             //var permission = ((pre.Edit) || (pre.Add));
@@ -900,8 +900,8 @@ namespace ERPWeb.Controllers
                 }
                 else
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
-                    //return Json("noooooooooooo");
+                   // return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
+                    return Json("noooooooooooo");
                 }
             }
             return Json(IsSuccess);
@@ -3003,19 +3003,21 @@ namespace ERPWeb.Controllers
         #region AgroReport
         public ActionResult GetProductwisesalesReport()
         {
-
+            
 
             return View();
         }
 
         public ActionResult GetInvoiceWiseSales()
         {
+            ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+
             return View();
         }
 
-        public ActionResult GetInvoiceWiseSalesReport(string fromDate, string toDate, string rptType)
+        public ActionResult GetInvoiceWiseSalesReport(long?stockiestId, string invoiceNo, string fromDate, string toDate, string rptType)
         {
-            var data = _agroProductSalesInfoBusiness.GetInvoiceWiseSalesReport(fromDate, toDate);
+            var data = _agroProductSalesInfoBusiness.GetInvoiceWiseSalesReport(stockiestId, invoiceNo,fromDate, toDate);
 
             LocalReport localReport = new LocalReport();
 
@@ -3147,12 +3149,10 @@ namespace ERPWeb.Controllers
 
         public ActionResult SalesReturncreate(long? id)
         {
+            //ar details = 0;
             var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
 
             var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
-            List<AgroProductSalesDetailsViewModel> details = new List<AgroProductSalesDetailsViewModel>();
-            if (info != null)
-            {
 
 
                 ViewBag.Info = new AgroProductSalesInfoViewModel
@@ -3168,36 +3168,16 @@ namespace ERPWeb.Controllers
 
                 };
 
-                details = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(id.Value, User.OrgId).Select(i => new AgroProductSalesDetailsViewModel
-                {
 
-              
 
-                    FGRId = i.FGRId,
-                    QtyKG = i.QtyKG,
-                    ProductSalesDetailsId= i.ProductSalesDetailsId,
-                    BoxQuanity=i.BoxQuanity,
-                    
-                    ProductSalesInfoId = i.ProductSalesInfoId,
-                    Price = i.Price,
-                    Discount = i.Discount,
-                    Quanity = i.Quanity,
-                    box =Convert.ToInt32( i.Quanity/i.BoxQuanity),
-                    FinishGoodProductInfoId = i.FinishGoodProductInfoId,
-                    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName,
-                    MeasurementId = i.MeasurementId,
-                    MeasurementName = _measuremenBusiness.GetMeasurementById(i.MeasurementId, User.OrgId).MeasurementName,
-                   
-                    MeasurementSize = i.MeasurementSize,
+                var details = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoIdGet(id.Value, User.OrgId);
 
-                }).ToList();
+                List<AgroProductSalesDetailsViewModel> detailsViewModel = new List<AgroProductSalesDetailsViewModel>();
+                AutoMapper.Mapper.Map(details, detailsViewModel);
+                return PartialView("_GetAgroSalesReturn", detailsViewModel);
 
-            }
-            else
-            {
-                ViewBag.Info = new AgroProductSalesInfoViewModel();
-            }
-            return PartialView("_GetAgroSalesReturn", details);
+
+                
         }
 
         public ActionResult GetStokistID(long id)

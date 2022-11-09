@@ -32,6 +32,17 @@
                                             </div>
                                         </div>
                                         <div class="row mt-1">
+
+                                            <div class="col-md-2" style="margin-top:-5px">
+                                                <label class="col-form-label">InvoiceNo </label>
+                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label for="ddlStokiestName">Stockiest Name </label>
+                                                @Html.DropDownList("ddlStokiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStokiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            </div>
+
                                             <div class="col-md-2">
                                                 <label class="control-label font-weight-bold" for="dptFromDate">From Date</label>
                                                 <div class="input-group input-group-sm">
@@ -50,8 +61,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            
+
+
                                             <div class="col-md-2">
                                                 <label class="control-label" for="rptType">Type</label>
                                                 <div class="input-group input-group-sm">
@@ -81,6 +92,8 @@
         var dptFromDate = $("#dptFromDate");
         var dptToDate = $("#dptToDate");
         var rptType = $("#rptType");
+        var ddlStokiestName = $("#ddlStokiestName");
+        var searchByAny = $("#searchByAny");
 
         $(document).ready(function () {
            
@@ -128,14 +141,14 @@
         })
 
         $("#btnDownload").click(function () {
-            if (dptFromDate.val() == "" && dptToDate.val() == "") {
+            if (dptFromDate.val() == "" && dptToDate.val() == "" && ddlStokiestName.val() == "" && searchByAny.val() == "") {
                 bootbox.alert("Please Select Anyone");
             }
             else {
-                window.open("/AgroConfiguration/GetInvoiceWiseSalesReport?fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val());
+                window.open("/AgroConfiguration/GetInvoiceWiseSalesReport?stockiestId=" + TryParseInt(ddlStokiestName.val(), 0) + " &fromDate=" + dptFromDate.val() + " &toDate=" + dptToDate.val() + " &rptType=" + rptType.val() + "&invoiceNo=" + $.trim(searchByAny.val()));
             }
         })
-
+        
     </script>
 }
 

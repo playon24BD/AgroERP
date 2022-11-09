@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.ReturnRawMaterialViewModel>
 
 @{
-        ViewBag.Title = "Return Details";
-        int sl = 0;
-        //var info = (ERPBO.Agriculture.ViewModels.AgroProductSalesInfoViewModel)ViewBag.Info;
+    string badge = string.Empty;
+    ViewBag.Title = "Return Details";
+    int sl = 0;
+    //var info = (ERPBO.Agriculture.ViewModels.AgroProductSalesInfoViewModel)ViewBag.Info;
     }
 
 @*<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm">
@@ -37,13 +38,20 @@
     <tbody>
         @foreach (var item in Model)
         {
+
+            badge = item.ReturnType == "Damage" ? "badge bg-danger" : item.ReturnType == "Good" ? "badge bg-success" : "";
+
+     
             sl = sl + 1;
         <tr>
             <td class="text-center">@sl</td>
             <td class="text-center">@item.EntryDate</td>
             <td class="text-center text-bold">@item.Quantity</td>
             <td class="hide">@item.ReturnRawMaterialId</td>
-            <td class="text-center text-bold">@item.ReturnType</td>
+            @*<td class="text-center text-bold">@item.ReturnType</td>*@
+            <td class="text-center" data-val="@item.ReturnType">
+                <span class="@badge">@item.ReturnType</span>
+            </td>
 
         </tr>
         }

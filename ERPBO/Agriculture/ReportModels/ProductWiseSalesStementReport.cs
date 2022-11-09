@@ -16,5 +16,7 @@ namespace ERPBO.Agriculture.ReportModels
         public double Total { get; set; }
         public double TotalAmount { get; set; }
         public DateTime EntryDate { get; set; }
+        public string todate { get; set; }
+        public string fromDate { get; set; }
     }
 }

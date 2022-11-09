@@ -313,6 +313,10 @@ namespace ERPWeb.Reports.DataSets {
             
             private global::System.Data.DataColumn columnCollaction;
             
+            private global::System.Data.DataColumn columntodate;
+            
+            private global::System.Data.DataColumn columnfromDate;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public dsInvoiceWiseCollectionSalesReportDataTable() {
@@ -484,6 +488,22 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn todateColumn {
+                get {
+                    return this.columntodate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn fromDateColumn {
+                get {
+                    return this.columnfromDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -536,7 +556,9 @@ namespace ERPWeb.Reports.DataSets {
                         string TerritoryUserName, 
                         string TerritoryUserMobile, 
                         string InvoiceTK, 
-                        string Collaction) {
+                        string Collaction, 
+                        string todate, 
+                        string fromDate) {
                 dsInvoiceWiseCollectionSalesReportRow rowdsInvoiceWiseCollectionSalesReportRow = ((dsInvoiceWiseCollectionSalesReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         StockiestName,
@@ -555,7 +577,9 @@ namespace ERPWeb.Reports.DataSets {
                         TerritoryUserName,
                         TerritoryUserMobile,
                         InvoiceTK,
-                        Collaction};
+                        Collaction,
+                        todate,
+                        fromDate};
                 rowdsInvoiceWiseCollectionSalesReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdsInvoiceWiseCollectionSalesReportRow);
                 return rowdsInvoiceWiseCollectionSalesReportRow;
@@ -595,6 +619,8 @@ namespace ERPWeb.Reports.DataSets {
                 this.columnTerritoryUserMobile = base.Columns["TerritoryUserMobile"];
                 this.columnInvoiceTK = base.Columns["InvoiceTK"];
                 this.columnCollaction = base.Columns["Collaction"];
+                this.columntodate = base.Columns["todate"];
+                this.columnfromDate = base.Columns["fromDate"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -634,6 +660,10 @@ namespace ERPWeb.Reports.DataSets {
                 base.Columns.Add(this.columnInvoiceTK);
                 this.columnCollaction = new global::System.Data.DataColumn("Collaction", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCollaction);
+                this.columntodate = new global::System.Data.DataColumn("todate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntodate);
+                this.columnfromDate = new global::System.Data.DataColumn("fromDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfromDate);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1065,6 +1095,40 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string todate {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsInvoiceWiseCollectionSalesReport.todateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'todate\' in table \'dsInvoiceWiseCollectionSalesReport\' is DB" +
+                                "Null.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsInvoiceWiseCollectionSalesReport.todateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string fromDate {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsInvoiceWiseCollectionSalesReport.fromDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'fromDate\' in table \'dsInvoiceWiseCollectionSalesReport\' is " +
+                                "DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsInvoiceWiseCollectionSalesReport.fromDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsStockiestNameNull() {
                 return this.IsNull(this.tabledsInvoiceWiseCollectionSalesReport.StockiestNameColumn);
             }
@@ -1265,6 +1329,30 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetCollactionNull() {
                 this[this.tabledsInvoiceWiseCollectionSalesReport.CollactionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IstodateNull() {
+                return this.IsNull(this.tabledsInvoiceWiseCollectionSalesReport.todateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SettodateNull() {
+                this[this.tabledsInvoiceWiseCollectionSalesReport.todateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsfromDateNull() {
+                return this.IsNull(this.tabledsInvoiceWiseCollectionSalesReport.fromDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetfromDateNull() {
+                this[this.tabledsInvoiceWiseCollectionSalesReport.fromDateColumn] = global::System.Convert.DBNull;
             }
         }
         

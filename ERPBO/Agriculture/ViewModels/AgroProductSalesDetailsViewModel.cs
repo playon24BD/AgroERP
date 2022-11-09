@@ -33,6 +33,8 @@ namespace ERPBO.Agriculture.ViewModels
         //public string FinishGoodProductName { get; set; }
 
         public int box { get; set; }
+        public double CurrentQTY { get; set; }
+        public double TotalCurrentQTY { get; set; }
 
 
 

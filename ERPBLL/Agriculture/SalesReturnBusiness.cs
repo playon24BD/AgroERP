@@ -173,5 +173,10 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return _salesReturnRepository.GetAll(a => a.StockiestId == StockiestId && a.Status== status);
 
         }
+
+        public IEnumerable<SalesReturn> GetAgroSalesreturnByFGRandproductId(long FGRId, long FinishGoodProductInfoId)
+        {
+            return _salesReturnRepository.GetAll(v => v.FGRId == FGRId && v.FinishGoodProductInfoId == FinishGoodProductInfoId && v.Status == "ADJUST");
+        }
     }
 }
