@@ -17,15 +17,17 @@ namespace ERPBLL.Agriculture
         private readonly AgroProductSalesInfoRepository _agroProductSalesInfoRepository;
 
         private readonly IAgroProductSalesInfoBusiness _agroProductSalesInfoBusiness;
+        private readonly ICommissionOnProductOnSalesBusiness _commissionOnProductOnSalesBusiness;
 
 
-        public SalesPaymentRegisterBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness)
+        public SalesPaymentRegisterBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._salesPaymentRegisterRepository = new SalesPaymentRegisterRepository(this._agricultureUnitOfWork);
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
 
             this._agroProductSalesInfoBusiness = agroProductSalesInfoBusiness;
+            this._commissionOnProductOnSalesBusiness = commissionOnProductOnSalesBusiness;
         }
 
         public IEnumerable<SalesPaymentRegister> GetPaymentDetailsByInvoiceId(long infoId)
@@ -55,13 +57,26 @@ namespace ERPBLL.Agriculture
                 };
                 _salesPaymentRegisterRepository.Insert(model);
                 IsSuccess = _salesPaymentRegisterRepository.Save();
+                //
+                if (IsSuccess)
+                {
+                    var salesPayment = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(info.ProductSalesInfoId);
+                    salesPayment.PaidAmount += model.PaymentAmount;
+                    salesPayment.DueAmount -= model.PaymentAmount;
+
+                    _agroProductSalesInfoRepository.Update(salesPayment);
+                    IsSuccess = _agroProductSalesInfoRepository.Save();
+                    var dateDif = (DateTime.Now.Date - salesPayment.InvoiceDate.Value.Date).Days;
+                    if (dateDif < 4 && salesPayment.DueAmount==0)
+                    {
+
+                        _commissionOnProductOnSalesBusiness.UpdateCommissionOnProductOnSales(salesPayment, userId, salesPayment.OrganizationId);
+
+                    }
+                }
 
 
-                var salesPayment = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(info.ProductSalesInfoId);
-                salesPayment.PaidAmount += model.PaymentAmount;
-                salesPayment.DueAmount -= model.PaymentAmount;
-                _agroProductSalesInfoRepository.Update(salesPayment);
-                IsSuccess = _agroProductSalesInfoRepository.Save();
+
 
             }
          

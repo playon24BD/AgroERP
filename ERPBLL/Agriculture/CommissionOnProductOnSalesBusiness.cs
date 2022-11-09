@@ -16,17 +16,23 @@ namespace ERPBLL.Agriculture
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly CommissionOnProductOnSalesBusinessRepository _commissionOnProductOnSalesRepository;
         private readonly ICommisionOnProductSalesDetailsBusiness _commisionOnProductSalesDetailsBusiness;
+        private readonly IAgroProductSalesDetailsBusiness _agroProductSalesDetailsBusiness;
 
-        public CommissionOnProductOnSalesBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness)
+        public CommissionOnProductOnSalesBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness,IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._commissionOnProductOnSalesRepository = new CommissionOnProductOnSalesBusinessRepository(this._agricultureUnitOfWork);
             this._commisionOnProductSalesDetailsBusiness = commisionOnProductSalesDetailsBusiness;
+            this._agroProductSalesDetailsBusiness = agroProductSalesDetailsBusiness;
         }
 
         public CommissionOnProductOnSales GetCommissionOnProductById(long commissionOnProductSalesId, long orgId)
         {
             return _commissionOnProductOnSalesRepository.GetOneByOrg(c => c.CommissionOnProductOnSalesId == commissionOnProductSalesId && c.OrganizationId == orgId);
+        }
+        private CommissionOnProductOnSales GetCommissionOnSalesBySalesInfoId(long commissionOnProductSalesId, long orgId)
+        {
+            return _commissionOnProductOnSalesRepository.GetOneByOrg(c => c.ProductSalesInfoId == commissionOnProductSalesId && c.OrganizationId == orgId);
         }
 
         public IEnumerable<CommissionOnProductOnSales> GetCommissionOnProductOnSales(long orgId)
@@ -34,9 +40,9 @@ namespace ERPBLL.Agriculture
             return _commissionOnProductOnSalesRepository.GetAll(a => a.OrganizationId == orgId).ToList(); ;
         }
 
-        public IEnumerable<CommissionOnProductOnSalesDTO> GetAllCommissionOnProductOnSales(string invoice,string fdate,string tdate,long orgId)
+        public IEnumerable<CommissionOnProductOnSalesDTO> GetAllCommissionOnProductOnSales(string invoice, string fdate, string tdate, long orgId)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<CommissionOnProductOnSalesDTO>(string.Format(QueryForSalesCommission(invoice, fdate,tdate,orgId)));
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<CommissionOnProductOnSalesDTO>(string.Format(QueryForSalesCommission(invoice, fdate, tdate, orgId)));
         }
         public string QueryForSalesCommission(string invoice, string fdate, string tdate, long orgId)
         {
@@ -104,7 +110,7 @@ namespace ERPBLL.Agriculture
             }
             else
             {
-                var commissionOnProductSales = this.GetCommissionOnProductById(commissionOnProductOnSalesDTO.CommissionOnProductOnSalesId, orgId);
+                var commissionOnProductSales = this.GetCommissionOnSalesBySalesInfoId(commissionOnProductOnSalesDTO.CommissionOnProductOnSalesId, orgId);
                 commissionOnProductSales.Status = commissionOnProductOnSalesDTO.Status;
                 commissionOnProductSales.PaymentMode = commissionOnProductOnSalesDTO.PaymentMode;
                 commissionOnProductSales.UpdateDate = DateTime.Now;
@@ -117,6 +123,33 @@ namespace ERPBLL.Agriculture
             if (isSuccess)
             {
                 _commisionOnProductSalesDetailsBusiness.SaveCommisionOnProductSalesDetails(agroProductSalesInfo.AgroProductSalesDetails.ToList(), commissionOnProductOnSales.CommissionOnProductOnSalesId, agroProductSalesInfo.PaymentMode, userId, orgId);
+
+            }
+            return isSuccess;
+
+        }
+
+
+        public bool UpdateCommissionOnProductOnSales(AgroProductSalesInfo agroProductSalesInfo, long userId, long orgId)
+        {
+            bool isSuccess = false;
+
+
+            var commissionOnProductSales = this.GetCommissionOnSalesBySalesInfoId(agroProductSalesInfo.ProductSalesInfoId, orgId);
+            commissionOnProductSales.Status = "Update";
+            commissionOnProductSales.PaymentMode = "Cash";
+            commissionOnProductSales.UpdateDate = DateTime.Now;
+            commissionOnProductSales.UpdateUserId = userId;
+            _commissionOnProductOnSalesRepository.Update(commissionOnProductSales);
+
+            isSuccess = _commissionOnProductOnSalesRepository.Save();
+            if (isSuccess)
+            {
+              var productSalesDetails=  _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(agroProductSalesInfo.ProductSalesInfoId,orgId).ToList();
+
+
+
+                _commisionOnProductSalesDetailsBusiness.UpdateCommisionOnProductSalesDetails(productSalesDetails, commissionOnProductSales.CommissionOnProductOnSalesId, agroProductSalesInfo.PaymentMode, userId, orgId);
 
             }
             return isSuccess;

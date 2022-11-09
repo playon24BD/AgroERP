@@ -34,6 +34,16 @@ namespace ERPBLL.Agriculture
             return _commissionSalesDetailsRepository.GetOneByOrg(d => d.CommissionOnProductSalesDetailsId == commisionOnProductSalesDetailsId && d.OrganizationId == orgId);
         }
 
+        private CommisionOnProductSalesDetails GetCommisionOnProductSalesbyInfoId(long info)
+        {
+            return _commissionSalesDetailsRepository.GetOneByOrg(d => d.CommissionOnProductOnSalesId == info);
+        }
+
+        private IEnumerable<CommisionOnProductSalesDetails> GetCommisionOnInfoId(long InfoId, long orgId)
+        {
+            return _commissionSalesDetailsRepository.GetAll(d => d.CommissionOnProductOnSalesId == InfoId && d.OrganizationId == orgId);
+        }
+
         public bool SaveCommisionOnProductSalesDetails(List<AgroProductSalesDetails> onProductSalesDetailsDTO, long id, string flag, long userId, long orgId)
         {
             bool isSuccess = false;
@@ -55,15 +65,44 @@ namespace ERPBLL.Agriculture
                         //TotalCommission = item.TotalCommission,
                         //Status = item.Status,
 
-                        TotalCommission = ((item.Price * item.Quanity) - item.DiscountTk) * ((flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash)/100,
+                        TotalCommission = ((item.Price * item.Quanity) - item.DiscountTk) * ((flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash) / 100,
                         Remarks = "Insert",
                         EntryUserId = userId,
                         EntryDate = DateTime.Now,
+                        //OrganizationId=orgId,this time 0 Processing work
                     };
 
                     productSalesDetails.Add(commisionOnProductSalesDetails);
                 }
                 _commissionSalesDetailsRepository.InsertAll(productSalesDetails);
+                isSuccess = _commissionSalesDetailsRepository.Save();
+            }
+            return isSuccess;
+        }
+
+
+        public bool UpdateCommisionOnProductSalesDetails(List<AgroProductSalesDetails> onProductSalesDetailsDTO, long id, string flag, long userId, long orgId)
+        {
+            bool isSuccess = false;
+            flag = "Cash";
+            List<CommisionOnProductSalesDetails> productSalesDetails = new List<CommisionOnProductSalesDetails>();
+
+            var salesDetails = this.GetCommisionOnInfoId(id, 0).ToList();
+            if (salesDetails.Count() > 0)
+            {
+                foreach (var item in onProductSalesDetailsDTO)
+                {
+                    var detailsCommission = GetCommisionOnProductSalesbyInfoId(id);
+                    detailsCommission.Credit = 0;
+                    detailsCommission.Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash : 0;
+                    detailsCommission.TotalCommission = ((item.Price * item.Quanity) - item.DiscountTk) * ((flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash) / 100;
+                    detailsCommission.PaymentMode = flag;
+                    detailsCommission.Remarks = "Update";
+                    detailsCommission.UpdateDate = DateTime.Now;
+                    detailsCommission.UpdateUserId = userId;
+                    productSalesDetails.Add(detailsCommission);
+                }
+                _commissionSalesDetailsRepository.UpdateAll(productSalesDetails);
                 isSuccess = _commissionSalesDetailsRepository.Save();
             }
             return isSuccess;
