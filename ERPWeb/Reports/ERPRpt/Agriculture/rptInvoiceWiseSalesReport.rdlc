@@ -11,8 +11,9 @@
               <TextRun>
                 <Value>Invoice Wise Sales Collection Dues</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
+                  <FontSize>11pt</FontSize>
                   <FontWeight>Bold</FontWeight>
+                  <Color>Green</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -20,10 +21,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.51958in</Top>
+        <Top>1.01958in</Top>
         <Left>0.16542in</Left>
         <Height>0.25in</Height>
-        <Width>2.26042in</Width>
+        <Width>2.70833in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -35,7 +36,7 @@
         </Style>
       </Textbox>
       <Line Name="Line1">
-        <Top>0.71403in</Top>
+        <Top>1.21403in</Top>
         <Left>0.16542in</Left>
         <Height>0in</Height>
         <Width>10.51737in</Width>
@@ -55,7 +56,6 @@
               <TextRun>
                 <Value>Area :</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -64,7 +64,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>0.83903in</Top>
+        <Top>1.33903in</Top>
         <Left>0.16542in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -88,7 +88,6 @@
               <TextRun>
                 <Value>=Fields!AreaName.Value</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -97,7 +96,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>0.83903in</Top>
+        <Top>1.33903in</Top>
         <Left>0.5925in</Left>
         <Height>0.25in</Height>
         <Width>1.83334in</Width>
@@ -121,7 +120,6 @@
               <TextRun>
                 <Value>Territory :</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -130,9 +128,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>1.31819in</Top>
+        <Top>1.81819in</Top>
         <Left>0.16542in</Left>
-        <Height>0.25in</Height>
+        <Height>0.30556in</Height>
         <Width>1in</Width>
         <ZIndex>4</ZIndex>
         <Style>
@@ -154,7 +152,6 @@
               <TextRun>
                 <Value>=Fields!TerritoryName.Value</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -163,9 +160,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>1.31819in</Top>
+        <Top>1.81819in</Top>
         <Left>0.8425in</Left>
-        <Height>0.25in</Height>
+        <Height>0.30556in</Height>
         <Width>1.58334in</Width>
         <ZIndex>5</ZIndex>
         <Style>
@@ -187,7 +184,7 @@
               <TextRun>
                 <Value>=Fields!ZoneUserName.Value</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -195,10 +192,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>0.99875in</Top>
+        <Top>1.5543in</Top>
         <Left>0.16542in</Left>
         <Height>0.25in</Height>
-        <Width>2.26042in</Width>
+        <Width>3.21875in</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border>
@@ -219,7 +216,7 @@
               <TextRun>
                 <Value>=Fields!TerritoryUserName.Value</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -227,10 +224,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>1.56819in</Top>
+        <Top>2.06819in</Top>
         <Left>0.16542in</Left>
         <Height>0.25in</Height>
-        <Width>2.26042in</Width>
+        <Width>3.20486in</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -252,6 +249,8 @@
                 <Value>=Fields!ZoneUserMobile.Value</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>Green</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -259,10 +258,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>0.99875in</Top>
-        <Left>4.47792in</Left>
+        <Top>1.5543in</Top>
+        <Left>4.70538in</Left>
         <Height>0.25in</Height>
-        <Width>1.125in</Width>
+        <Width>1.34722in</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -284,6 +283,8 @@
                 <Value>=Fields!TerritoryUserMobile.Value</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>Green</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -291,8 +292,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>1.56819in</Top>
-        <Left>4.49181in</Left>
+        <Top>2.06819in</Top>
+        <Left>4.74181in</Left>
         <Height>0.25in</Height>
         <Width>1.33333in</Width>
         <ZIndex>9</ZIndex>
@@ -315,7 +316,6 @@
               <TextRun>
                 <Value>Contact Number :</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -324,10 +324,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox28</rd:DefaultName>
-        <Top>0.99875in</Top>
-        <Left>3.36333in</Left>
+        <Top>1.5543in</Top>
+        <Left>3.43973in</Left>
         <Height>0.25in</Height>
-        <Width>1.11458in</Width>
+        <Width>1.25176in</Width>
         <ZIndex>10</ZIndex>
         <Style>
           <Border>
@@ -348,7 +348,6 @@
               <TextRun>
                 <Value>Contact Number :</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -357,10 +356,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox28</rd:DefaultName>
-        <Top>1.56819in</Top>
-        <Left>3.36334in</Left>
+        <Top>2.06819in</Top>
+        <Left>3.43973in</Left>
         <Height>0.25in</Height>
-        <Width>1.11458in</Width>
+        <Width>1.25347in</Width>
         <ZIndex>11</ZIndex>
         <Style>
           <Border>
@@ -1205,10 +1204,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsInvoiceWiseCollectionSalesReport</DataSetName>
-        <Top>1.97792in</Top>
+        <Top>2.47792in</Top>
         <Left>0.16542in</Left>
         <Height>0.86458in</Height>
-        <Width>10.51737in</Width>
+        <Width>10.51736in</Width>
         <ZIndex>12</ZIndex>
         <Style>
           <Border>
@@ -1216,8 +1215,181 @@
           </Border>
         </Style>
       </Tablix>
+      <Textbox Name="todate">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!todate.Value, "dsInvoiceWiseCollectionSalesReport")</Value>
+                <Style>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>Green</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>todate</rd:DefaultName>
+        <Top>1.01958in</Top>
+        <Left>2.87375in</Left>
+        <Height>0.25in</Height>
+        <Width>1.54166in</Width>
+        <ZIndex>13</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="fromDate">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!fromDate.Value, "dsInvoiceWiseCollectionSalesReport")</Value>
+                <Style>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>Green</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>fromDate</rd:DefaultName>
+        <Top>1.01958in</Top>
+        <Left>4.64104in</Left>
+        <Height>0.25in</Height>
+        <Width>1.54166in</Width>
+        <ZIndex>14</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox99">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>To</Value>
+                <Style>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>Green</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox99</rd:DefaultName>
+        <Top>1.015in</Top>
+        <Left>4.3334in</Left>
+        <Height>0.30208in</Height>
+        <Width>0.27986in</Width>
+        <ZIndex>15</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox79">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Antezar Agro Chemicals</Value>
+                <Style>
+                  <FontSize>14pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox79</rd:DefaultName>
+        <Top>0.04688in</Top>
+        <Left>0.16542in</Left>
+        <Height>0.29042in</Height>
+        <Width>10.51736in</Width>
+        <ZIndex>16</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox80">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>90-91, New Eskatun Road,B-703,Ramna Dhaka-1217, Bangladash</Value>
+                <Style>
+                  <FontSize>11pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox80</rd:DefaultName>
+        <Top>0.30667in</Top>
+        <Left>0.16542in</Left>
+        <Height>0.25in</Height>
+        <Width>10.51736in</Width>
+        <ZIndex>17</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>2.88417in</Height>
+    <Height>3.36334in</Height>
     <Style />
   </Body>
   <Width>10.71056in</Width>
@@ -1315,10 +1487,18 @@
           <DataField>Collaction</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="todate">
+          <DataField>todate</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="fromDate">
+          <DataField>fromDate</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>dsInvoiceWiseSalesReport</rd:DataSetName>
-        <rd:SchemaPath>F:\AgroGitHub\AgroERP\ERPWeb\Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsd</rd:SchemaPath>
+        <rd:SchemaPath>E:\PROJECT\GITHUB\AgroERPNew\AgroERP\ERPWeb\Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsd</rd:SchemaPath>
         <rd:TableName>dsInvoiceWiseCollectionSalesReport</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />

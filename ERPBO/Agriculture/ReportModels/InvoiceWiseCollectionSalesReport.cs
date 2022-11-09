@@ -25,20 +25,21 @@ namespace ERPBO.Agriculture.ReportModels
         public DateTime PaymentDate { get; set; }
         public double PaymentAmount { get; set; }
         public string Remarks { get; set; }
-
+        public string todate { get; set; }
+        public string fromDate { get; set; }
 
         //public long FinishGoodProductInfoId { get; set; }
         //public long FinishGoodProductId { get; set; }
         //public string FinishGoodProductName { get; set; }
-        
+
         //public string ChallanNo { get; set; }
         //public DateTime? ChallanDate { get; set; }
-        
+
         //public string ZoneName { get; set; }
         //public string DivisionName { get; set; }
         //public string RegionName { get; set; }
-        
-        
+
+
         ////public string ProductName { get; set; }
         //public string Depot { get; set; }
         //public string VehicleType { get; set; }
@@ -52,16 +53,16 @@ namespace ERPBO.Agriculture.ReportModels
         //public string MeasurementSize { get; set; }
         //public double Discount { get; set; }
         //public double DiscountPercent { get; set; }
-        
+
         //public double DiscountAmount { get; set; }
         //public double Price { get; set; }
         //public double PaidAmount { get; set; }
-        
+
         //public string FullName { get; set; }
         //public string Address { get; set; }
         //public string MobileNo { get; set; }
         //public double Total { get; set; }
         //public string TotalAmountText { get; set; }
-        
+
     }
 }
