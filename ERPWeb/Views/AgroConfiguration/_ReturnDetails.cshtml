@@ -38,6 +38,7 @@
     <tbody>
         @foreach (var item in Model)
         {
+<<<<<<< Updated upstream
 
             badge = item.ReturnType == "Damage" ? "badge bg-danger" : item.ReturnType == "Good" ? "badge bg-success" : "";
 
@@ -52,8 +53,20 @@
             <td class="text-center" data-val="@item.ReturnType">
                 <span class="@badge">@item.ReturnType</span>
             </td>
+=======
+            //sl = sl + 1;
+            @*<tr style='background-color: @(item.ReturnType == "Damage" ? "salmon" : "mediumaquamarine") ;'>*@
+            <tr style='background-color: @(item.EntryDate > DateTime.Now ? "green" : "mediumaquamarine") ;'>
+                <td class="text-center">@sl</td>
+                <td class="text-center">@item.EntryDate</td>
+                <td class="text-center text-bold">@item.Quantity</td>
+                <td class="hide">@item.ReturnRawMaterialId</td>
+                <td class="text-center text-bold">@item.ReturnType</td>
+>>>>>>> Stashed changes
 
-        </tr>
+            </tr>
         }
+
+
     </tbody>
 </table>
