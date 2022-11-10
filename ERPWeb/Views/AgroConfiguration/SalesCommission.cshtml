@@ -29,7 +29,31 @@
                                 @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Invoice --", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                             </div>
-                            <div class="col-8">
+
+                            <div class="col-md-2">
+                                @*<label class="control-label" for="ddlProductName">Product Name</label>*@
+                                @Html.DropDownList("ddlStockiest", (IEnumerable<SelectListItem>)ViewBag.ddlStockiest, "--Stockiest --", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                            </div>
+                            <div class="col-md-2">
+
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="From Date" />
+                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="To Date" />
+                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
 
                             </div>
 
@@ -76,6 +100,10 @@
 @section scripts{
     <script type="text/javascript">
         var ddlInvoiceNo = $("#ddlInvoiceNo");
+        var ddlStockiest = $("#ddlStockiest");
+
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
 
         $(document).ready(function () {
             $('.select2').select2();
@@ -85,7 +113,45 @@
                 theme: 'bootstrap4'
             });
 
+
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+
+
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+
+
             loadCommissionOnProduct();
+        })
+
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                    loadRequistion();
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                    loadRequistion();
+                }
+            }
+            loadCommissionOnProduct();
+
         })
 
         ddlInvoiceNo.change(function () {
@@ -94,9 +160,19 @@
 
         })
 
+        dptFromDate.change(function () {
+
+            loadCommissionOnProduct();
+
+        })
+        dptToDate.change(function () {
+
+            loadCommissionOnProduct();
+
+        })
         function loadCommissionOnProduct() {
 
-            var data = { flag: "list", invoiceNo: ddlInvoiceNo.val(), fdate: "", tdate: "" };
+            var data = { flag: "list", invoiceNo: ddlInvoiceNo.val(), fdate: dptFromDate.val(), tdate: dptToDate.val() };
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesCommission', data)).then(function (res, status) {
                 console.log(status);

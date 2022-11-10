@@ -3480,6 +3480,7 @@ namespace ERPWeb.Controllers
             if (string.IsNullOrEmpty(flag))
             {
                 ViewBag.ddlInvoiceNo = _agroProductSalesInfoBusiness.GetAgroProductionSalesInfo(User.OrgId).Select(inv => new SelectListItem { Text = inv.InvoiceNo, Value = inv.InvoiceNo.ToString() });
+                ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
                 return View();
 
@@ -3511,6 +3512,7 @@ namespace ERPWeb.Controllers
                 {
 
                     CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
+                   
                     //FinishGoodProductId = c.FinishGoodProductId,
                     //FinishGoodProductName = c.FinishGoodProductName,
                     PaymentMode = c.PaymentMode,
