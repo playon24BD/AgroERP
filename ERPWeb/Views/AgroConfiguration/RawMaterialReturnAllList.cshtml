@@ -6,97 +6,86 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-two-RawMaterialReturnList-tab" data-toggle="pill" href="#custom-tabs-two-RawMaterialReturnList" role="tab" aria-controls="custom-tabs-two-RawMaterialReturnList" aria-selected="true">Raw Material Return List</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="tab-content" id="custom-tabs-two-tabContent">
-                    @Html.AntiForgeryToken()
-                    <div class="tab-pane fade show active" id="custom-tabs-two-RawMaterialReturnList" role="tabpanel" aria-labelledby="custom-tabs-two-RawMaterialReturnList-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card card-gray-dark">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="text-center text-bold">
-                                                    List Of Raw Material Return
-                                                </h5>
-                                            </div>
-                                            <div class="col-md-3">
 
-                                                <a href="/AgroConfiguration/CreateRawMaterialReturnList" class="btn btn-outline-primary btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Raw Material Return</a>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+        @Html.AntiForgeryToken()
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header">
                         <div class="row">
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <h6 class="card-title">Search By</h6>
-                                    </div>
-                                    <div class="card-body text-sm">
-                                        <div class="row" style="margin-top:-15px">
-
-                                            @*<div class="col-md-3 float-right">
-            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
-
-        </div>*@
-                                            <div class="col-md-2">
-                                                <label>Raw Material Name</label>
-                                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <label>Return Type</label>
-                                                @*@Html.DropDownList("ddlReturnType", (IEnumerable<SelectListItem>)ViewBag.ddlReturnType, "--Select ReturnType--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
-
-                                                <select class="form-control form-control-sm select2" id="ddlReturnType">
-                                                    <option value="" selected>--Select ReturnType--</option>
-                                                    <option value="Good">Good</option>
-                                                    <option value="Damage">Damage</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>Status</label>
-                                                @*@Html.DropDownList("ddlStatus", (IEnumerable<SelectListItem>)ViewBag.ddlStatus, "--Select Status--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
-                                                <select class="form-control form-control-sm select2" id="ddlStatus">
-                                                    <option value="" selected>--Select Status--</option>
-                                                    <option value="Pending">Pending</option>
-                                                    <option value="Approved">Approved</option>
-                                                </select>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <div class="col-md-3">
                             </div>
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer">
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    List Of Raw Material Return
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
 
-                                        </div>
-                                    </div>
-                                </div>
+                                <a href="/AgroConfiguration/CreateRawMaterialReturnList" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Raw Material Return</a>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <h5 class="text-center">Search By</h5>
+                            </div>
+                            <div class="col-md-2">
+                                @*<label>Raw Material Name</label>*@
+                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+
+                            <div class="col-md-2">
+                                @*<label>Return Type</label>*@
+                                <select class="form-control form-control-sm select2" id="ddlReturnType">
+                                    <option value="" selected>--ReturnType--</option>
+                                    <option value="Good">Good</option>
+                                    <option value="Damage">Damage</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                @*<label>Status</label>*@
+                                <select class="form-control form-control-sm select2" id="ddlStatus">
+                                    <option value="" selected>--Status--</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Approved">Approved</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card ">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 </div>
 

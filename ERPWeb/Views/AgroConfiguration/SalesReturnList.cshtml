@@ -8,157 +8,129 @@
     <div class="col-md-12">
 
 
-
-        <div class="card card-navy">
-
-
-            <div class="card-header" style="text-align: center;">
-                <div class="row">
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-6">
-                        <h5 class="text-center text-bold">
-                            Sales Return List
-                        </h5>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="/AgroConfiguration/SalesReturn" class="btn btn-outline-primary btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create SalesReturn</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-body  mb-5" @*style="background-color:#e7f1f6"*@ id="cardWithOutRequisition">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card card-navy">
-                            <div class="card-header">
-                                <h6 class="card-title">Search By</h6>
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header" style="text-align: center;">
+                        <div class="row">
+                            <div class="col-md-3">
                             </div>
-                            <div class="card-body text-sm">
-                                <div class="row" style="margin-top:-15px">
-                                    @*<label style="margin-top:25px">Invoice No</label>
-        <div class="col-md-2"style="margin-top:25px">
-            <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By invoice" />
-        </div>*@
-
-                                    <div class="col-md-2" style="margin-top:-5px">
-                                        <label class="col-form-label">InvoiceNo </label>
-                                        <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By invoice" />
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>Product Name</label>
-                                        @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                    </div>
-
-
-                                    <div class="col-md-2">
-                                        <label>Status</label>
-
-                                        <select class="form-control form-control-sm select2" id="ddlStatus">
-                                            <option value="" selected>--Select Status--</option>
-                                            <option value="ADJUST">ADJUST</option>
-                                            <option value="NOTADJUST">NOTADJUST</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-
-
-
-                                    @*<div class="row">
-                    <div class="card-body text-sm">
-
-
-                        <h4 class="col-md-2">Search By</h4>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By Any" />
-                        </div>
-
-
-    
-                    </div>
-                </div>*@
-
-
-                                </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Sales Return List
+                                </h5>
                             </div>
-                        </div>
-                    </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="col-md-12" id="dataContainer">
-
-                                </div>
+                            <div class="col-md-3">
+                                <a href="/AgroConfiguration/SalesReturn" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create SalesReturn</a>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
         </div>
 
 
+
+        <div class="row" style="margin-top:-10px">
+            <div class="col-md-12">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <h5 class="text-center">Search By</h5>
+                            </div>
+                            <div class="col-md-2">
+
+                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By invoice" />
+                            </div>
+                            <div class="col-md-2">
+
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+                            <div class="col-md-2">
+
+
+                                <select class="form-control form-control-sm select2" id="ddlStatus">
+                                    <option value="" selected>--Status--</option>
+                                    <option value="ADJUST">ADJUST</option>
+                                    <option value="NOTADJUST">NOTADJUST</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card ">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
-</div>
+            </div>
 
 
-@section scripts{
+            @section scripts{
 
-    <script type="text/javascript">
-
-
-
-        var SearchAny = $("#SearchAny");
-
-        var ddlProductName = $("#ddlProductName");
-        var ddlStatus = $("#ddlStatus");
-
-        $(document).ready(function () {
-
-            $('.select2').select2();
-
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            });
-
-            LoadZoneDataTable()
-        })
-
-        function LoadDataInitializer() {
-            LoadZoneDataTable();
-        }
-
-        SearchAny.keyup(function () {
-            debugger;
-            LoadZoneDataTable()
-        })
-
-        ddlProductName.change(function () {
-
-            LoadZoneDataTable();
-        })
-
-        ddlStatus.change(function () {
-
-            LoadZoneDataTable();
-        })
-
-        function LoadZoneDataTable() {
-            var data = { flag: "View", name: $.trim(SearchAny.val()), ProductId: TryParseInt(ddlProductName.val(), 0), status: ddlStatus.val() }
-            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/SalesReturnList', data)).then(function (res, status) {
-                console.log(res);
-                if (status == "success") {
-                    $("#dataContainer").empty();
-                    $("#dataContainer").append(res);
-                }
-            }).fail(function (err) { console.log(err) })
-        }
+                <script type="text/javascript">
 
 
-    </script>
-}
+
+                    var SearchAny = $("#SearchAny");
+
+                    var ddlProductName = $("#ddlProductName");
+                    var ddlStatus = $("#ddlStatus");
+
+                    $(document).ready(function () {
+
+                        $('.select2').select2();
+
+                        $('.select2bs4').select2({
+                            theme: 'bootstrap4'
+                        });
+
+                        LoadZoneDataTable()
+                    })
+
+                    function LoadDataInitializer() {
+                        LoadZoneDataTable();
+                    }
+
+                    SearchAny.keyup(function () {
+                        debugger;
+                        LoadZoneDataTable()
+                    })
+
+                    ddlProductName.change(function () {
+
+                        LoadZoneDataTable();
+                    })
+
+                    ddlStatus.change(function () {
+
+                        LoadZoneDataTable();
+                    })
+
+                    function LoadZoneDataTable() {
+                        var data = { flag: "View", name: $.trim(SearchAny.val()), ProductId: TryParseInt(ddlProductName.val(), 0), status: ddlStatus.val() }
+                        $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/SalesReturnList', data)).then(function (res, status) {
+                            console.log(res);
+                            if (status == "success") {
+                                $("#dataContainer").empty();
+                                $("#dataContainer").append(res);
+                            }
+                        }).fail(function (err) { console.log(err) })
+                    }
+
+
+                </script>
+            }
