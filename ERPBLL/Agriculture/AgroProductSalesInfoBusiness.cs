@@ -745,7 +745,7 @@ namespace ERPBLL.Agriculture
             on TE.TerritoryId=ST.TerritoryId
 
 
-            Where 1=1 {0}", Utility.ParamChecker(param));
+            Where 1=1 and sales.PaymentMode='Credit' {0}", Utility.ParamChecker(param));
             return query;
         }
 
