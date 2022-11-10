@@ -82,8 +82,8 @@ salesD.DiscountTk,
 sales.PaidAmount,
 sales.DueAmount,
 (salesD.Price*salesD.Quanity) AS Total,
-sales.TotalAmount,
-dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
+sales.TotalAmount
+--dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
 
 
 
@@ -97,8 +97,8 @@ on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
 
 LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
 on AU.UserId=sales.UserId
-LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
-on ST.StockiestId=AU.StockiestId
+ Left JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
+ on ST.StockiestId=sales.StockiestId
 LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
 on TE.TerritoryId=ST.TerritoryId
 Where 1=1 {0}", Utility.ParamChecker(param));
