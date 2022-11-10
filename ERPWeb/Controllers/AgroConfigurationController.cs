@@ -3475,7 +3475,7 @@ namespace ERPWeb.Controllers
         }
 
 
-        public ActionResult SalesCommission(string flag,long? id,string invoiceNo, string fdate, string tdate)
+        public ActionResult SalesCommission(string flag,long? id,string invoiceNo,long? stockiestId, string fdate, string tdate)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -3508,18 +3508,21 @@ namespace ERPWeb.Controllers
             }
             else
             {
-                var commision = _commissionOnProductOnSalesBusiness.GetAllCommissionOnProductOnSales(invoiceNo, fdate, tdate, User.OrgId).Select(c => new CommissionOnProductOnSalesDTO
+                var commision = _commissionOnProductOnSalesBusiness.GetAllCommissionOnProductOnSales(invoiceNo,stockiestId, fdate, tdate, User.OrgId).Select(c => new CommissionOnProductOnSalesDTO
                 {
 
                     CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
                    
                     //FinishGoodProductId = c.FinishGoodProductId,
                     //FinishGoodProductName = c.FinishGoodProductName,
+                    //Flag=_stockiestInfo.GetStockiestInfoById(_agroProductSalesInfoBusiness.GetAgroProductionInfoById(c.ProductSalesInfoId,User.OrgId).StockiestId,User.OrgId).StockiestName,
                     PaymentMode = c.PaymentMode,
                     TotalCommission = c.TotalCommission,
                     InvoiceNo = c.InvoiceNo,
-                    EntryDate = c.EntryDate
-
+                    EntryDate = c.EntryDate,
+                    StockiestName=c.StockiestName,
+                    
+                    
 
                 }).ToList();
                 List<CommissionOnProductOnSalesViewModel> productOnSalesViewModels = new List<CommissionOnProductOnSalesViewModel>();

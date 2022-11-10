@@ -40,19 +40,19 @@ namespace ERPBLL.Agriculture
             return _commissionOnProductOnSalesRepository.GetAll(a => a.OrganizationId == orgId).ToList(); ;
         }
 
-        public IEnumerable<CommissionOnProductOnSalesDTO> GetAllCommissionOnProductOnSales(string invoice, string fdate, string tdate, long orgId)
+        public IEnumerable<CommissionOnProductOnSalesDTO> GetAllCommissionOnProductOnSales(string invoice,long? stockiestId,string fdate, string tdate, long orgId)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<CommissionOnProductOnSalesDTO>(string.Format(QueryForSalesCommission(invoice, fdate, tdate, orgId)));
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<CommissionOnProductOnSalesDTO>(string.Format(QueryForSalesCommission(invoice,stockiestId, fdate, tdate, orgId)));
         }
-        public string QueryForSalesCommission(string invoice, string fdate, string tdate, long orgId)
+        public string QueryForSalesCommission(string invoice, long? stockiestId, string fdate, string tdate, long orgId)
         {
             string query = string.Empty;
             string param = string.Empty;
 
-            //if (orgId > 0)
-            //{
-            //    param += string.Format(@"and OrganizationId={0}", orgId);
-            //}
+            if (stockiestId > 0)
+            {
+                param += string.Format(@"and si.stockiestId={0}", stockiestId);
+            }
             if (invoice != null && invoice != "")
             {
                 param += string.Format(@" and cps.InvoiceNo ='{0}'", invoice);
@@ -76,11 +76,18 @@ namespace ERPBLL.Agriculture
             }
 
 
-            query = string.Format(@"Select cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,SUM(cpsd.TotalCommission) As TotalCommission,cpsd.PaymentMode,Cast (cps.EntryDate as date) As EntryDate 
+   query = string.Format(@"Select cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,SUM(cpsd.TotalCommission) As TotalCommission,cpsd.PaymentMode,Cast (cps.EntryDate as date) As EntryDate,StockiestName
             from tblCommissionOnProductSales cps
             Inner join tblCommisionOnProductSalesDetails cpsd
-            on cps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId where 1=1 {0}
-            Group by cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,cpsd.PaymentMode,Cast (cps.EntryDate as date)",
+            on cps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId
+            Inner join tblFinishGoodProductInfo p
+            on cpsd.FinishGoodProductId=p.FinishGoodProductId
+            Inner join tblProductSalesInfo si
+            on si.ProductSalesInfoId=cps.ProductSalesInfoId
+            Inner join tblStockiestInfo f
+            on si.StockiestId=f.StockiestId
+            where 1=1 {0}
+     Group by cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,cpsd.PaymentMode,Cast (cps.EntryDate as date),StockiestName",
            Utility.ParamChecker(param));
 
             return query;

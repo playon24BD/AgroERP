@@ -159,6 +159,10 @@
             loadCommissionOnProduct();
 
         })
+        ddlStockiest.change(function () {
+            loadCommissionOnProduct();
+
+        });
 
         dptFromDate.change(function () {
 
@@ -172,7 +176,7 @@
         })
         function loadCommissionOnProduct() {
 
-            var data = { flag: "list", invoiceNo: ddlInvoiceNo.val(), fdate: dptFromDate.val(), tdate: dptToDate.val() };
+            var data = { flag: "list", invoiceNo: ddlInvoiceNo.val(), stockiestId: ddlStockiest.val(), fdate: dptFromDate.val(), tdate: dptToDate.val() };
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesCommission', data)).then(function (res, status) {
                 console.log(status);
