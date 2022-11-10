@@ -299,7 +299,7 @@ namespace ERPBLL.Agriculture
                         PaymentMode = agroSalesInfoDTO.PaymentMode,
                         VehicleType = agroSalesInfoDTO.VehicleType,
                         UserAssignId = agroSalesInfoDTO.UserAssignId,
-                        UserId = agroSalesInfoDTO.UserId,
+                        UserId = UserId,
                         StockiestId = stockId,
                         TerritoryId = territoryId,
                         AreaId = areaId,
