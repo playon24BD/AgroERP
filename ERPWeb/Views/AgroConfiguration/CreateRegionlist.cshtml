@@ -259,7 +259,7 @@
             //    $('.required-OrganizationName').removeClass("hide");
             //    Isvalid = false;
             //}
-            if ($.trim(ddldivname.val()) == 0) {
+            if ($.trim(ddldivname.val()) == "") {
                 $('.required-DivisionName').removeClass("hide");
                 Isvalid = false;
             }
@@ -275,7 +275,7 @@
         //clear
         function clearCtrlRegion() {
             debugger;
-            ddldivname.val('0');
+            //ddldivname.val("");
             
             ddlRegionName.val("");
        

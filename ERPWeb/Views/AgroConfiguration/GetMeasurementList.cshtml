@@ -54,12 +54,12 @@
             </select>
             <span class="error hide req-ddlOrganiation">Organization is required</span>
         </div>*@
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <label class="control-label font-weight-bold " for="measurementName">Measurement Name</label>
                                                 <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" />
                                                 <span class="error hide req-txtmeasurementName">Measurement Name is required</span>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <label class="control-label font-weight-bold " for="masterBox">Master Box</label>
                                                 <input type="number" name="masterBox" id="txtmasterBox" class="form-control form-control-sm" />
                                                 <span class="error hide req-txtmasterBox">Master Box is required</span>
@@ -87,7 +87,7 @@
             <span class="error hide req-txtunit">Unit is required</span>
         </div>*@
 
-                                            <div class="col-md-12">
+                                            <div class="col-md-2">
                                                 <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
                                                 @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
@@ -326,6 +326,16 @@
         var ddlUnits = $("#ddlUnits");
 
 
+        $(document).ready(function () {
+            $('.select2').select2();
+
+        
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+           
+        })
+
         $("#addTolist").click(function (e) {
             e.preventDefault();
             if (validate() == true) {
@@ -337,7 +347,7 @@
                 var masterBox = "<td class='hide'>" + txtmasterBox.val(); + "</td>";
                 var innerBox = "<td class='hide'>" + txtinnerBox.val(); + "</td>";
                 var packSize = "<td class='hide'>" + txtpackSize.val(); + "</td>";
-                var unitName = "<td>" + ddlUnit.val(); + "</td>";
+                var unitName = "<td>" + dropDownSelectedText("ddlUnit") +  "</td>";
                 //var unitName = "<td>"+ dropDownSelectedText("ddlUnit") + "</td>";
                 var unitId = "<td class='hide UnitId'>" + ddlUnit.val() + "</td>";
                 if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
