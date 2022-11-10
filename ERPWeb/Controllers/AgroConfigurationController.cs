@@ -3487,8 +3487,8 @@ namespace ERPWeb.Controllers
             else if(flag=="view")
             {
                 var commision = _commisionOnProductSalesDetailsBusiness.GetCommisionOnProductSalesDetails(0).Where(a=>a.CommissionOnProductOnSalesId==id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
-                {
-
+                {//
+                    Flag=_agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyInfoId(_commissionOnProductOnSalesBusiness.GetCommissionOnProductById(c.CommissionOnProductOnSalesId, User.OrgId).ProductSalesInfoId).QtyKG, 
                     CommissionOnProductOnSalesId=c.CommissionOnProductOnSalesId,
                     FinishGoodProductId=c.FinishGoodProductId,
                     FinishGoodProductName=_finishGoodProductBusiness.GetFinishGoodProductById(c.FinishGoodProductId,User.OrgId).FinishGoodProductName,
@@ -3511,8 +3511,8 @@ namespace ERPWeb.Controllers
                 {
 
                     CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
-                    FinishGoodProductId = c.FinishGoodProductId,
-                    FinishGoodProductName = c.FinishGoodProductName,
+                    //FinishGoodProductId = c.FinishGoodProductId,
+                    //FinishGoodProductName = c.FinishGoodProductName,
                     PaymentMode = c.PaymentMode,
                     TotalCommission = c.TotalCommission,
                     InvoiceNo = c.InvoiceNo,

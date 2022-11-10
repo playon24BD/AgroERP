@@ -76,12 +76,11 @@ namespace ERPBLL.Agriculture
             }
 
 
-            query = string.Format(@"Select cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,p.FinishGoodProductName,SUM(cpsd.TotalCommission) As TotalCommission,cpsd.PaymentMode,Cast (cps.EntryDate as date) As EntryDate from tblCommissionOnProductSales cps
-                Inner join tblCommisionOnProductSalesDetails cpsd
-                on cps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId
-                Inner join tblFinishGoodProductInfo p
-                on cpsd.FinishGoodProductId=p.FinishGoodProductId  where 1=1  {0}
-                Group by p.FinishGoodProductName,cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,cpsd.PaymentMode,Cast (cps.EntryDate as date)",
+            query = string.Format(@"Select cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,SUM(cpsd.TotalCommission) As TotalCommission,cpsd.PaymentMode,Cast (cps.EntryDate as date) As EntryDate 
+            from tblCommissionOnProductSales cps
+            Inner join tblCommisionOnProductSalesDetails cpsd
+            on cps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId where 1=1 {0}
+            Group by cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,cpsd.PaymentMode,Cast (cps.EntryDate as date)",
            Utility.ParamChecker(param));
 
             return query;

@@ -37,7 +37,7 @@ namespace ERPBLL.Agriculture
         {
             bool IsExist = false;
 
-          var listofSameYearProduct=  _commissionOnProductBusinessRepository.GetAll(c =>c.CalenderYear==year && c.FinishGoodProductId==product && c.OrganizationId == orgId).ToList();
+          var listofSameYearProduct=  _commissionOnProductBusinessRepository.GetAll(c =>c.FinishGoodProductId==product && c.OrganizationId == orgId).ToList();
 
             if (listofSameYearProduct.Count()>0)
             {

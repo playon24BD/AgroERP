@@ -10,12 +10,12 @@
         <thead class="btn-dark">
             <tr class="text-center">
                 <td style="vertical-align:middle">#Sl</td>
-                <td style="vertical-align:middle">Invoice No</td>
                 <td style="vertical-align:middle">Product Name</td>
+                <td style="vertical-align:middle">Unit</td>
                 <td style="vertical-align:middle">Payment Method</td>
                 <td style="vertical-align:middle">Total Commission</td>
                 <td style="vertical-align:middle">Entry Date</td>
-               
+
 
             </tr>
         </thead>
@@ -27,19 +27,20 @@
                     badge = item.PaymentMode == "Credit" ? "badge bg-warning" : (item.PaymentMode == "Cash" ? "badge bg-success" : "");
 
                     sl++;
-                    <tr>
-                        <td class="text-center">@sl</td>
+            <tr>
+                <td class="text-center">@sl</td>
 
-                        <td class="text-center">@item.InvoiceNo</td>
-                        <td class="text-center">@item.FinishGoodProductName</td>
-                        <td class="text-center ">
-                            <span class="@badge">@item.PaymentMode</span>
-                        </td>
-                        <td class="text-center">@item.TotalCommission</td>
-                        <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
-                        @*<td class="text-center hide">@item.CommissionOnProductOnSalesId</td>*@
 
-                    </tr>
+                <td class="text-center">@item.FinishGoodProductName</td>
+                <td class="text-center">@item.Flag</td>
+                <td class="text-center ">
+                    <span class="@badge">@item.PaymentMode</span>
+                </td>
+                <td class="text-center">@item.TotalCommission</td>
+                <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
+                @*<td class="text-center hide">@item.CommissionOnProductOnSalesId</td>*@
+
+            </tr>
                 }
 
             }

@@ -44,7 +44,7 @@
                                             @Html.DropDownList("ddlProductNameSearch", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product Name --", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             <span class="error hide req-ddlProductName">Product Is Required</span>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 hide">
                                             @*<label class="control-label font-weight-bold">Year</label>*@
                                             <div class="input-group input-group-sm ">
                                                 <input type="number" class="form-control form-control-sm" id="dateCalenderYearSearch" placeholder="Search by Year" />
@@ -108,7 +108,7 @@
                                     <div class="row">
                                         <input type="text" id="hdrawMaterialRequisitionInfoId" class="hide" />
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 hide">
                                             <label class="control-label font-weight-bold">Year</label>
                                             <div class="input-group input-group-sm ">
                                                 <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dateCalenderYear" />
@@ -125,13 +125,13 @@
 
 
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-1">
                                             <label for="credit">Credit(%)</label>
                                             <input type="number" id="numCredit" name="credit" class="form-control form-control-sm" />
                                             <span class="error hide req-numCredit">Credit is Required</span>
                                         </div>
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-1">
                                             <label for="cash">Cash(%)</label>
                                             <input type="number" id="numCash" name="cash" class="form-control form-control-sm" />
                                             <span class="error hide req-numCash">Credit is Required</span>
@@ -182,7 +182,7 @@
                                                         <tr class="btn-dark">
                                                             <th>#SL</th>
                                                             <th>Product Name</th>
-                                                            <th>Year</th>
+                                                            <th class="hide">Year</th>
 
                                                             <th>Credit</th>
                                                             <th>Cash Qty</th>
@@ -229,14 +229,14 @@
                 <form id="formregion">
                     <input type="hidden" id="hdCommissionOnProductId" />
                     <div class="form-row">
-                        <div class="col-md-2">
-                            <label class="control-label font-weight-bold">Year</label>
-                            <div class="input-group input-group-sm ">
+                        <div class="col-md-2 hide">
+                            <label class="control-label font-weight-bold hide">Year</label>
+                            <div class="input-group input-group-sm hide">
                                 <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dateCalenderYearEdit" />
 
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="control-label" for="ddlProductNameEdit">Product Name</label>
                             @Html.DropDownList("ddlProductNameEdit", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product --", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             <span class="error hide req-ddlProductName">Product Is Required</span>
@@ -449,7 +449,7 @@
                     var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
                     var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
                     var td3 = "<td class='text-center hide'>" + ddlProductName.val() + "</td>";
-                    var td4 = "<td class='text-center'>" + dateCalenderYear.val() + "</td>";
+                    var td4 = "<td class='text-center hide'>" + dateCalenderYear.val() + "</td>";
                     var td5 = "<td class='text-center'>" + numCredit.val() + "</td>";
                     var td6 = "<td class='text-center'>" + numCash.val() + "</td>";
                     var td7 = "<td class='text-center'>" + dptFromDate.val() + "</td>";
@@ -514,11 +514,11 @@
                 $(".req-ddlProductName").removeClass('hide');
                 isValid = false;
             }
-            if (TryParseInt(dateCalenderYear.val(), 0) <= 0) {
-                $(".req-dateCalenderYear").removeClass('hide');
-                isValid = false;
-            }
-            if (ajaxBooleanChecker(JSON.stringify({ year: dateCalenderYear.val().trim(), product: ddlProductName.val() }), '/AgroConfiguration/IsexistSameYearProduct', getToken()) == true) {
+            //if (TryParseInt(dateCalenderYear.val(), 0) <= 0 || dateCalenderYear.val() == null || dateCalenderYear.val() == "") {
+            //    $(".req-dateCalenderYear").removeClass('hide');
+            //    isValid = false;
+            //}
+            if (ajaxBooleanChecker(JSON.stringify({ year: 0, product: ddlProductName.val() }), '/AgroConfiguration/IsexistSameYearProduct', getToken()) == true) {
                 $(".duplicate-product").removeClass("hide");
                 isValid = false;
             }
@@ -546,7 +546,8 @@
                 model.push({
                     CommissionOnProductId: 0,
                     FinishGoodProductId: tds.eq(2).html(),
-                    CalenderYear: tds.eq(3).html(),
+                    CalenderYear: 0,
+                    //CalenderYear: tds.eq(3).html(),
                     Credit: tds.eq(4).html(),
                     Cash: tds.eq(5).html(),
                     StartDate: tds.eq(6).html(),
