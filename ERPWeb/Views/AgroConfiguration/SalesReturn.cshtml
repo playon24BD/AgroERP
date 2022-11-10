@@ -3,110 +3,101 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row" @*style="margin-top:-15px*@">
 
     <div class="col-md-12">
 
-        <div class="card card-navy">
-            <div class="card-header" style="text-align: center;">
+        @*<div class="card card-navy">*@
 
-                <div class="row">
-                    <div class="col-md-3">
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header" style="text-align: center;">
 
-                        <a href="/AgroConfiguration/SalesReturnList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
-                            <i class="fas fa-arrow-alt-circle-left"></i>
-                        </a>
-                    </div>
-                    <div class="col-md-6">
-                        <h5 class="text-center text-bold">
-                            Create Sales Return
-                        </h5>
-                    </div>
-                    <div class="col-md-3">
-                    </div>
-                </div>
+                        <div class="row">
+                            <div class="col-md-3">
 
-            </div>
-
-            <div class="card-body  mb-5" @*style="background-color:#e7f1f6"*@ id="cardWithOutRequisition">
-                <div class="row">
-
-                  
-                        <div class="col-md-12" style="margin-top:-10px">
-                            <div class="card card-navy">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <h5 class="text-start">
-                                                Invoice
-                                            </h5>
-                                        </div>
-                                        <div class="col-md-3">
-                                            @*<label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>*@
-                                            @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                        </div>
-                                        <div class="hide">
-                                            <label for="ddlStokiestID">StokiestID</label>
-                                            <input type="text" id="ddlStokiestID" name="ddlStokiestID" class="form-control form-control-sm" readonly />
-                                        </div>
-                                        <div class="col-md-6">
-
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button class="btn btn-success btn-sm float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
-                                            @*btn btn-outline-primary btn-sm float-lg-right*@
-                                        </div>
-                                    </div>
-                                    @*<h6 class="card-title">Search By</h6>*@
-                                   
-                                </div>
-                                @*<div class="card-body text-sm">
-                                    <div class="row" style="margin-top:-15px">
-                                        <div class="col-md-3">
-                                            <label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>
-                                            @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                        </div>
-                                        <div class="hide">
-                                            <label for="ddlStokiestID">StokiestID</label>
-                                            <input type="text" id="ddlStokiestID" name="ddlStokiestID" class="form-control form-control-sm" readonly />
-                                        </div>
-
-                                    </div>
-
-                                </div>*@
+                                <a href="/AgroConfiguration/SalesReturnList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                                    <i class="fas fa-arrow-alt-circle-left"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Create Sales Return
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success btn-sm float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                @*btn btn-outline-primary btn-sm float-lg-right*@
                             </div>
                         </div>
 
-
-                        <div class="col-md-12" style="margin-top:-10px">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-md-12" id="dataContainer">
-
-                                    </div>
-                                 
-                                        @*<button class="btn btn-success btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>*@
-                                    
-                                </div>
-                                
-                            </div>
-                        </div>
-
+                    </div>
                 </div>
             </div>
-
         </div>
+
+
+        <!--<div class="card-body  mb-5"--> @*style="background-color:#e7f1f6"*@ <!--id="cardWithOutRequisition">-->
+            <div class="row">
+                <div class="col-md-12" style="margin-top:-10px">
+                    <div class="card card-gray-dark">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <h5 class="text-start">
+                                        Invoice
+                                    </h5>
+                                </div>
+                                <div class="col-md-3">
+                                    @*<label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>*@
+                                    @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                </div>
+                                <div class="hide">
+                                    <label for="ddlStokiestID">StokiestID</label>
+                                    <input type="text" id="ddlStokiestID" name="ddlStokiestID" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-md-6">
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-12" style="margin-top:-10px">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-md-12" id="dataContainer">
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        @*</div>*@
+
+        @*</div>*@
 
     </div>
 
 
-</div>
+            </div>
 
 
 
-@section scripts{
+            @section scripts{
 
-    <script type="text/javascript">
+                <script type="text/javascript">
 
 
         var ddlInvoiceNo = $("#ddlInvoiceNo");
@@ -157,7 +148,7 @@
                 ddlStokiestID.val(res.ddlStokiest);
                 ddlStokiestID.val(ddlStokiest);
 
-          
+
 
             });
 
@@ -210,13 +201,13 @@
                     QtyKG: tds.eq(2).html(),
 
                     ReturnQuanity: tds.eq(8).children('input[type="number"]').val(),
-                 
+
                     ReturnPerUnitPrice: tds.eq(9).children('input[type="number"]').val(),
                     FinishGoodProductInfoId: tds.eq(10).html(),
                     MeasurementId: tds.eq(11).html(),
                     MeasurementSize: tds.eq(4).html(),
                     FGRId: tds.eq(12).html(),
-                    
+
 
                 });
             })
@@ -251,8 +242,8 @@
 
 
 
-   
 
 
-    </script>
-}
+
+                </script>
+            }

@@ -6,32 +6,19 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
 
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-SalesReturnAdjustList-tab" data-toggle="pill" role="tab" aria-selected="true" href="#custom-tabs-SalesReturnAdjustList" aria-controls="custom-tabs-SalesReturnAdjustList">Sales Return Adjust List</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="card-body">
-                <div class="tab-content" id="custom-tabs-two-tabContent">
-                    @Html.AntiForgeryToken()
-                    <div class="tab-pane fade show active" id="custom-tabs-SalesReturnAdjustList" aria-labelledby="custom-tabs-SalesReturnAdjustList-tab" role="tabpanel">
-                        <div class="row">
+                        <div class="row" style="margin-top:-15px">
                             <div class="col-md-12">
-                                <div class="card card-gray-dark">
+                                <div class="card card-navy">
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col-md-3">
                                             </div>
                                             <div class="col-md-6">
-                                                <h4 class="text-center text-bold">Sales Return Adjust List</h4>
+                                                <h5 class="text-center text-bold">Sales Return Adjust List</h5>
                                             </div>
                                             <div class="col-md-3">
-                                                <a href="/AgroConfiguration/SalesReturnAdjustCreate" class="btn btn-outline-primary btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New SalesReturnAdjust</a>
+                                                <a href="/AgroConfiguration/SalesReturnAdjustCreate" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New SalesReturnAdjust</a>
                                             </div>
                                         </div>
                                     </div>
@@ -40,46 +27,42 @@
                             </div>
 
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top:-5px">
-                                <div class="card card-navy">
+         
+                        <div class="row"  style="margin-top:-10px">
+                            <div class="col-md-12">
+                                <div class="card card-gray-dark">
                                     <div class="card-header">
-                                        <h4 class="card-title">Search By</h4>
-                                    </div>
-
-                                    <div class="card-body text-sm">
-                                        <div class="row" style="margin-top:-15px">
-
-                                            <div class="col-md-2" style="margin-top:-5px">
-                                                <label class="col-form-label">InvoiceNo </label>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-2">
+                                                <h5 class="text-center">Search By</h5>
+                                            </div>
+                                            <div class="col-md-2">
+                         
                                                 <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By invoice" />
                                             </div>
 
                                             <div class="col-md-2">
-                                                <label class="control-label font-weight-bold">From Date</label>
+                                           
                                                 <div class="input-group input-group-sm ">
-                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" />
+                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" placeholder="FromDate" />
                                                     <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
                                                         <span class="input-group-text">&#10008;</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
-                                                <label class="control-label font-weight-bold">To Date</label>
+                                               
                                                 <div class="input-group input-group-sm ">
-                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" />
+                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" placeholder="ToDate" />
                                                     <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
                                                         <span class="input-group-text">&#10008;</span>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
+                                    </div>
                                     </div>
                                 </div>
-                            </div>
 
                             <div class="col-md-12" style="margin-top:-10px">
                                 <div class="card">
@@ -93,11 +76,7 @@
 
                         </div>
 
-                    </div>
-                </div>
-            </div>
 
-        </div>
     </div>
 
 </div>

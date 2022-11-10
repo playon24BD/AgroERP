@@ -3,17 +3,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row"  style="margin-top:-15px">
 
     <div class="col-md-12">
 
         <div class="card card-navy">
             <div class="card-header" style="text-align: center;">
 
-                <div class="row">
+                <div class="row" @*style="margin-bottom:-7px"*@>
 
                     <div class="col-md-12">
-                        <button class="btn btn-success btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                        <button class="btn btn-success btn float-right btn-sm" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
 
                         <h5 class="text-center text-bold">
                             Create RawMaterial Return
@@ -23,12 +23,12 @@
             </div>
 
             <div class="card-body shadow" @*style="background-color:#e7f1f6"*@ id="cardWithOutRequisition">
-                <div class="row">
+                <div class="row" @*style="margin-top:-15px"*@>
 
 
                     <div class="col-md-12">
                         <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
-                            <h5 style="border-bottom:2px solid #f87878">Return RawMaterial</h5>
+                            @*<h5 style="border-bottom:2px solid #f87878">Return RawMaterial</h5>*@
                             <div class="row justify-content-center">
 
                                 <div class="col-md-12">
@@ -49,7 +49,7 @@
                                             <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
                                         </div>
 
-                                        <div class="col-md-1">
+                                        <div class="col-md-2">
                                             <label for="ddlreturnqty"> Qty</label>
                                             <input type="number" id="ddlreturnqty" name="qty" class="form-control form-control-sm" />
                                             <span class="error hide req-qty">Qty Is Required</span>
