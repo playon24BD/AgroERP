@@ -481,7 +481,7 @@ namespace ERPBLL.Agriculture
             LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
             on AU.UserId=sales.UserId
             LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
-            on ST.StockiestId=AU.StockiestId
+            on ST.StockiestId=sales.StockiestId
             LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
             on TE.TerritoryId=ST.TerritoryId
 
@@ -580,7 +580,7 @@ namespace ERPBLL.Agriculture
             LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
             on AU.UserId=sales.UserId
             LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
-            on ST.StockiestId=AU.StockiestId
+            on ST.StockiestId=sales.StockiestId
             LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
             on TE.TerritoryId=ST.TerritoryId
 
