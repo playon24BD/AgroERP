@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ERPDAL</RootNamespace>
     <AssemblyName>ERPDAL</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -135,6 +135,14 @@
     <Compile Include="AgricultureContextMigrations\202211080813337_stokistidaddretursale.Designer.cs">
       <DependentUpon>202211080813337_stokistidaddretursale.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202211120651072_Agriculture_DepoStockiestchange.cs" />
+    <Compile Include="AgricultureContextMigrations\202211120651072_Agriculture_DepoStockiestchange.Designer.cs">
+      <DependentUpon>202211120651072_Agriculture_DepoStockiestchange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgricultureContextMigrations\202211120654346_Agriculture_DepoMesurementnew.cs" />
+    <Compile Include="AgricultureContextMigrations\202211120654346_Agriculture_DepoMesurementnew.Designer.cs">
+      <DependentUpon>202211120654346_Agriculture_DepoMesurementnew.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -219,6 +227,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202211080813337_stokistidaddretursale.resx">
       <DependentUpon>202211080813337_stokistidaddretursale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211120651072_Agriculture_DepoStockiestchange.resx">
+      <DependentUpon>202211120651072_Agriculture_DepoStockiestchange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211120654346_Agriculture_DepoMesurementnew.resx">
+      <DependentUpon>202211120654346_Agriculture_DepoMesurementnew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
