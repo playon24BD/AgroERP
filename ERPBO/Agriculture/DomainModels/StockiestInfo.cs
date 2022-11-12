@@ -32,5 +32,6 @@ namespace ERPBO.Agriculture.DomainModels
         public string StockiestContactPersonPHNumber { get; set; }
         public long AreaId { get; set; }
         public double CreditLimit { get; set; }
+
     }
 }

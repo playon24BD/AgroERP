@@ -26,5 +26,7 @@ namespace ERPBO.Agriculture.ViewModels
         public double UnitKG { get; set; }
         public string PackageName { get; set; }
 
+        public long FinishGoodProductId { get; set; }
+
     }
 }

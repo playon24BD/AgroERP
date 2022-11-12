@@ -1851,11 +1851,37 @@ namespace ERPWeb.Controllers
         public ActionResult CreateStockiestList(long? id)
         {
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+            ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
 
-            ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
 
             return View();
         }
+
+        public ActionResult getTerritroy(long id)
+
+        {
+
+            var Territory = _territorySetup.GetAllTerritoryByAreaID(id).Select(t => new TerritorySetupViewModel
+            {
+                TerritoryId= t.TerritoryId,
+                TerritoryName= _territorySetup.GetTerritoryNamebyId(t.TerritoryId,User.OrgId).TerritoryName
+            }).ToList();
+
+
+            var teritorylist = Territory.Select(v => new SelectListItem { Text = v.TerritoryName, Value = v.TerritoryId.ToString() }).ToList();
+
+            if (teritorylist.Count > 0 && teritorylist != null)
+            {
+                return Json(new { flag = "1", msg = "Teritorry found", data = teritorylist }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { flag = "0", msg = "Teritorrynot found" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
 
         public ActionResult SaveStockiestList(List<StockiestInfoViewModel> details)
         {
@@ -3268,7 +3294,6 @@ namespace ERPWeb.Controllers
 
                 //var dto = _salesReturn.GetSalesAdjustInfos();
                 var dto = _agroProductSalesInfoBusiness.GetSalesAdjustInfos(invoiceNo ?? null, fromDate, toDate);
-
                 List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_GetSalesReturnAdjustListview", viewModels);

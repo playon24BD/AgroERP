@@ -125,5 +125,10 @@ on t.AreaId = a.AreaId
 
             return IsSuccess;
         }
+
+        public IEnumerable<TerritorySetup> GetAllTerritoryByAreaID(long areaid)
+        {
+            return _territorySetupRepository.GetAll(x => x.AreaId == areaid).ToList();
+        }
     }
 }

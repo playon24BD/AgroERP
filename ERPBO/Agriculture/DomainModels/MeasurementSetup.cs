@@ -26,6 +26,8 @@ namespace ERPBO.Agriculture.DomainModels
         public long EntryUserId { get; set; }
         public string Status { get; set; }
         public double UnitKG { get; set; }
+
         public long FinishGoodProductId { get; set; }
+
     }
 }

@@ -25,5 +25,7 @@ namespace ERPBO.Agriculture.DTOModels
         public string Status { get; set; }
         public double UnitKG { get; set; }
         public string PackageName { get; set; }
+
+        public long FinishGoodProductId { get; set; }
     }
 }
