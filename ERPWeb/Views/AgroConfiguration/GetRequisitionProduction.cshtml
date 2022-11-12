@@ -5,78 +5,67 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card shadow card-primary card-outline card-tabs" style="margin-top:-20px">
-            <div class="card-body shadow">
-                @Html.AntiForgeryToken()
-                <div class="row" style="margin-top:-15px">
-                    <div class="col-md-12">
-                        <div class="card shadow card-gray-dark">
-                            <div class="card-header shadow">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h5 class="text-center text-bold">
-                                            Raw Material Requsition List
-                                        </h5>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="/AgroConfiguration/SaveRequisition" class="btn btn-outline-primary btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Requistion</a>
-                                    </div>
-                                </div>
+
+        @Html.AntiForgeryToken()
+        <div class="row" style="margin-top:-25px">
+            <div class="col-md-12">
+                <div class="card shadow card-navy">
+                    <div class="card-header shadow">
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Raw Material Requsition List
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/AgroConfiguration/SaveRequisition" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Requistion</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12" style="margin-top:-15px">
-                        <div class="card shadow card-navy">
-                            <div class="card-body text-sm">
-                                <div class="row text-sm">
-                                    <div class="col-md-3">
-                                        <label for="txtReqCode" class="control-label font-weight-bold">Requisition Code</label>
-                                        <input type="text" name="search" id="txtReqCode" class="form-control form-control-sm" placeholder="Search By Requisition Code" onkeyup="tableFilter('#tblReqInfoData tbody tr',this)" />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="txtReqCode" class="control-label font-weight-bold">Status</label>
-                                        <select class="form-control form-control-sm" id="ddlStatus">
-                                            <option value="">--Search by--</option>
-                                            <option value="Pending">Pending</option>
-                                            <option value="Send">Send</option>
-                                            <option value="Received">Received</option>
-                                            <option value="Rejected">Rejected</option>
+            </div>
+        </div>
+        <div class="row" style="margin-top:-10px">
+            <div class="col-md-12">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <h5 class="text-right">Search By</h5>
+                            </div>
+                            <div class="col-md-2">
+                              
+                                <input type="text" name="search" id="txtReqCode" class="form-control form-control-sm" placeholder="Search By Requisition Code" onkeyup="tableFilter('#tblReqInfoData tbody tr',this)" />
+                            </div>
+                            <div class="col-md-2">
+                                
+                                <select class="form-control form-control-sm" id="ddlStatus">
+                                    <option value="">--Status--</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Send">Send</option>
+                                    <option value="Received">Received</option>
+                                    <option value="Rejected">Rejected</option>
 
-                                        </select>
+                                </select>
 
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="control-label font-weight-bold">From Date</label>
-                                        <div class="input-group input-group-sm ">
-                                            <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
-                                            <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
-                                                <span class="input-group-text">&#10008;</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="control-label font-weight-bold">To Date</label>
-                                        <div class="input-group input-group-sm ">
-                                            <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" />
-                                            <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
-                                                <span class="input-group-text">&#10008;</span>
-                                            </div>
-                                        </div>
+                            </div>
+                            <div class="col-md-2">
+                            
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="From Date" />
+                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12" style="margin-top:-10px">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12 text-sm" id="dataContainer">
-                                            @*@{Html.RenderAction("GetRequisitionProduction", new { flag = "List" });}*@
-                                        </div>
+                            <div class="col-md-2">
+                              
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="To Date" />
+                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
                             </div>
@@ -85,6 +74,22 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 text-sm" id="dataContainer" style="overflow-y:scroll">
+                                @*@{Html.RenderAction("GetRequisitionProduction", new { flag = "List" });}*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 

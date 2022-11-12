@@ -3,7 +3,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row"  style="margin-top:-15px">
+<style>
+    table.tablesubtotal tr th {
+        background-color: black !important;
+        color: white !important;
+    }
+
+    table.tadd tr th {
+        background-color: darkcyan !important;
+        color: white !important;
+    }
+
+
+</style>
+
+<div class="row"  style="margin-top:-25px">
 
     <div class="col-md-12">
 
@@ -21,14 +35,15 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="card-body shadow" @*style="background-color:#e7f1f6"*@ id="cardWithOutRequisition">
+            <div class="card-body" @*style="background-color:#e7f1f6"*@ id="cardWithOutRequisition">
                 <div class="row" @*style="margin-top:-15px"*@>
 
 
                     <div class="col-md-12">
-                        <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
-                            @*<h5 style="border-bottom:2px solid #f87878">Return RawMaterial</h5>*@
+                        <div class="container-fluid">
+                          
                             <div class="row justify-content-center">
 
                                 <div class="col-md-12">
@@ -40,7 +55,7 @@
                                             <span class="error hide req-ddlRawmaterialName">RawMaterial Is Required</span>
                                         </div>
 
-                                        <div class="col-md-1">
+                                        <div class="col-md-2">
                                             <label for="ddlUnitName">Unit</label>
                                             <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
                                         </div>
@@ -83,7 +98,7 @@
 
                     <div class="card-body" id="tblWithOutRequistion">
 
-                        <div class="card-body table-responsive p-0 " style="height: 200px;">
+                        <div class="card-body table-responsive p-0 shadow" style="height: 200px;">
                             <table class="table table-head-fixed text-nowrap tadd" id="tblPstockrawmaterial">
                                 <thead>
 
@@ -110,7 +125,7 @@
                 </div>
             </div>
 
-        </div>
+        @*</div>*@
 
     </div>
 

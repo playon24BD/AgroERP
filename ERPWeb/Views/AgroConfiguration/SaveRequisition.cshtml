@@ -4,24 +4,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row" style=" margin-top: -25px">
     <div class="col-md-12">
         <div class="card card-navy">
             <div class="card-header" style="text-align: center;">
 
                 <div class="row">
-                    <div class="col-md-3">
-
-                    </div>
-                    <div class="col-md-6">
+                   
+                    <div class="col-md-12">
+                       
+                        <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
                         <h5 class="text-center text-bold">
 
                             Raw Material Requistion
                         </h5>
                     </div>
-                    <div class="col-md-3">
-
-                    </div>
+                    
 
                 </div>
             </div>
@@ -75,11 +73,11 @@
                         <div class="col-md-12" style="overflow-y:scroll">
                             <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblRawMaterialRequisiton">
                                 <thead>
-                                    <tr>
+                                    @*<tr>
                                         <th colspan="6">
                                             <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
                                         </th>
-                                    </tr>
+                                    </tr>*@
                                     <tr class="btn-dark">
                                         <th>#SL</th>
                                         <th>Raw Material</th>

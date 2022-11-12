@@ -5,84 +5,56 @@
     var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
 }
 
-<div class="row">
+<div class="row" style="margin-top:-10px">
     <div class="col-md-12">
 
-            <div class="card-body">
-                <div class="tab-content" id="custom-tabs-two-tabContent">
-                    @Html.AntiForgeryToken()
-                    <div class="tab-pane fade show active" id="custom-tabs-two-AgroSalesProductList" role="tabpanel" aria-labelledby="custom-tabs-two-AgroSalesProductList-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card card-gray-dark">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="text-center text-bold">
-                                                    Collection List
-                                                </h5>
-                                            </div>
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header" style="text-align: center;">
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Collection List
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                                        </div>
+
+        <div class="row" style="margin-top:-10px">
+            <div class="col-md-12">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <h5 class="text-center">Search By</h5>
+                            </div>
+                            <div class="col-md-2">
+
+                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" placeholder="FormDate" />
+                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <h6 class="card-title">Search By</h6>
-                                    </div>
-                                    <div class="card-body text-sm">
-                                        <div class="row" style="margin-top:-15px">
-
-                                            <div class="col-md-2"style="margin-top:-5px">
-                                                <label class="col-form-label">InvoiceNo </label>
-                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
-                                            </div>
-
-
-                                            <div class="col-md-2">
-                                                <label class="control-label font-weight-bold">From Date</label>
-                                                <div class="input-group input-group-sm ">
-                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" />
-                                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
-                                                        <span class="input-group-text">&#10008;</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label class="control-label font-weight-bold">To Date</label>
-                                                <div class="input-group input-group-sm ">
-                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" />
-                                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
-                                                        <span class="input-group-text">&#10008;</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            @*<div class="col-md-1" style="margin-top:28px">
-                                                <button class="control-label btn btn-info btn-sm" id="searchButton"><i class="fas fa-search "></i></button>
-                                            </div>*@
-
-                                        </div>
-
-                                           
-
-
-
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer">
-                                            @*@{Html.RenderAction("GetFinishGoodRecipeList", "AgroConfiguration", new { @flag = "View" });}*@
-                                        </div>
+                            <div class="col-md-2">
+                      
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" placeholder="ToDate" />
+                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
                             </div>
@@ -90,6 +62,23 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
 
     </div>
 </div>
