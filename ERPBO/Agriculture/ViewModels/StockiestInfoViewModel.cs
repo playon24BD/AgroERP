@@ -30,5 +30,6 @@ namespace ERPBO.Agriculture.ViewModels
         public long AreaId { get; set; }
         public double CreditLimit { get; set; }
         public string AreaName { get; set; }
+        public string StockiestAddress { get; set; }
     }
 }

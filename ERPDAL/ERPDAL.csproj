@@ -143,6 +143,14 @@
     <Compile Include="AgricultureContextMigrations\202211120654346_Agriculture_DepoMesurementnew.Designer.cs">
       <DependentUpon>202211120654346_Agriculture_DepoMesurementnew.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202211121251393_stokiestdomaineditadd.cs" />
+    <Compile Include="AgricultureContextMigrations\202211121251393_stokiestdomaineditadd.Designer.cs">
+      <DependentUpon>202211121251393_stokiestdomaineditadd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgricultureContextMigrations\202211121253026_stokiestdomaineditaddress.cs" />
+    <Compile Include="AgricultureContextMigrations\202211121253026_stokiestdomaineditaddress.Designer.cs">
+      <DependentUpon>202211121253026_stokiestdomaineditaddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -233,6 +241,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202211120654346_Agriculture_DepoMesurementnew.resx">
       <DependentUpon>202211120654346_Agriculture_DepoMesurementnew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211121251393_stokiestdomaineditadd.resx">
+      <DependentUpon>202211121251393_stokiestdomaineditadd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211121253026_stokiestdomaineditaddress.resx">
+      <DependentUpon>202211121253026_stokiestdomaineditaddress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

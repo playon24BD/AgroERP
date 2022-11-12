@@ -52,9 +52,10 @@ namespace ERPBLL.Agriculture
             }
 
             query = string.Format(@"
-           select s.StockiestId,t.TerritoryId,t.TerritoryName,s.StockiestName,s.Status
+           select a.AreaId,s.StockiestId,t.TerritoryId,t.TerritoryName,s.StockiestName,s.Status,a.AreaName,s.StockiestPhoneNumber,s.StockiestMail,s.StockiestTradeLicense,s.StockiestNID,s.StockiestContactPerson,s.StockiestContactPersonPHNumber,s.CreditLimit
 from tblStockiestInfo s
 inner join tblTerritoryInfos t on s.TerritoryId=t.TerritoryId
+inner join tblAreaSetup a on s.AreaId=a.AreaId
             where 1=1  {0}",
             Utility.ParamChecker(param));
             return query;
@@ -73,9 +74,18 @@ inner join tblTerritoryInfos t on s.TerritoryId=t.TerritoryId
                     OrganizationId = orgId,
                     StockiestName = item.StockiestName,
                     TerritoryId = item.TerritoryId,
-                    Status = "Active",
+                    Status = item.Status,
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
+                    AreaId=item.AreaId,
+                    StockiestPhoneNumber= item.StockiestPhoneNumber,
+                    StockiestContactPerson= item.StockiestContactPerson,
+                    StockiestContactPersonPHNumber = item.StockiestContactPersonPHNumber,
+                    StockiestMail = item.StockiestMail,
+                    StockiestNID= item.StockiestNID,
+                    StockiestTradeLicense= item.StockiestTradeLicense,
+                    CreditLimit= item.CreditLimit,
+                    
                 };
                 _stockiestInfoRepository.Insert(stockiest);
             }
