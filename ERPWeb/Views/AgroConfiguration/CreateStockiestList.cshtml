@@ -266,15 +266,18 @@
                     var td14 = "<td class='hide numclamountin'>" + numclamountin.val() + "</td>";
                     var td15 = "<td class='hide Areaid'>" + ddlareaname.val() + "</td>";
                     var td16 = "<td class='hide TerritoryId'>" + ddlTerritoryName.val() + "</td>";
+               
 
-                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + td15 + td16 + "</tr>";
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + td15 + td16  + "</tr>";
 
                     $("#tblMargeItems tbody").append(tr);
                     StockiestNameList.push(txtStockiestName.val());
                 }
-
-
+                
+                clearCtrlstkst();
+                $("#txtclamount").hide();
             }
+            
         })
 
 
@@ -316,6 +319,7 @@
                     StockiestContactPersonPHNumber: tds.eq(12).html(),
                     CreditLimit: tds.eq(13).html(),
                     Status: tds.eq(6).html(),
+                    StockiestAddress: tds.eq(4).html(),
 
                 });
             })
@@ -374,6 +378,7 @@
             }
 
 
+
             return Isvalid
 
         }
@@ -395,5 +400,28 @@
 
         })
 
+
+        function clearCtrlstkst() {
+            debugger;
+            //ddldivname.val("");
+
+            //ddlRegionName.val("");
+            ddlareaname.val("");
+            ddlareaname.trigger("change");
+            ddlTerritoryName.val("");
+            ddlTerritoryName.trigger("change");
+            txtStockiestName.val("");
+            txtStockiestAddress.val("");
+            txtphonenmbr.val("");
+            txtemail.val("");
+            txttradelicense.val("");
+            txtnid.val("");
+            txtcontactperson.val("");
+            txtcontactpersonnmbr.val("");
+            ddlcreditlimit.val("0");
+            ddlcreditlimit.trigger("change");
+            numclamountin.val("");
+
+        }
     </script>
 }

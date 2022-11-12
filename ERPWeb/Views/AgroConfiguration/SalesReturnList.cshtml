@@ -76,61 +76,61 @@
 
 
     </div>
-  </div>
+</div>
 
 
-            @section scripts{
+@section scripts{
 
-                <script type="text/javascript">
-
-
-
-                    var SearchAny = $("#SearchAny");
-
-                    var ddlProductName = $("#ddlProductName");
-                    var ddlStatus = $("#ddlStatus");
-
-                    $(document).ready(function () {
-
-                        $('.select2').select2();
-
-                        $('.select2bs4').select2({
-                            theme: 'bootstrap4'
-                        });
-
-                        LoadZoneDataTable()
-                    })
-
-                    function LoadDataInitializer() {
-                        LoadZoneDataTable();
-                    }
-
-                    SearchAny.keyup(function () {
-                        debugger;
-                        LoadZoneDataTable()
-                    })
-
-                    ddlProductName.change(function () {
-
-                        LoadZoneDataTable();
-                    })
-
-                    ddlStatus.change(function () {
-
-                        LoadZoneDataTable();
-                    })
-
-                    function LoadZoneDataTable() {
-                        var data = { flag: "View", name: $.trim(SearchAny.val()), ProductId: TryParseInt(ddlProductName.val(), 0), status: ddlStatus.val() }
-                        $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/SalesReturnList', data)).then(function (res, status) {
-                            console.log(res);
-                            if (status == "success") {
-                                $("#dataContainer").empty();
-                                $("#dataContainer").append(res);
-                            }
-                        }).fail(function (err) { console.log(err) })
-                    }
+    <script type="text/javascript">
 
 
-                </script>
-            }
+
+        var SearchAny = $("#SearchAny");
+
+        var ddlProductName = $("#ddlProductName");
+        var ddlStatus = $("#ddlStatus");
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadZoneDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadZoneDataTable();
+        }
+
+        SearchAny.keyup(function () {
+            debugger;
+            LoadZoneDataTable()
+        })
+
+        ddlProductName.change(function () {
+
+            LoadZoneDataTable();
+        })
+
+        ddlStatus.change(function () {
+
+            LoadZoneDataTable();
+        })
+
+        function LoadZoneDataTable() {
+            var data = { flag: "View", name: $.trim(SearchAny.val()), ProductId: TryParseInt(ddlProductName.val(), 0), status: ddlStatus.val() }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/SalesReturnList', data)).then(function (res, status) {
+                console.log(res);
+                if (status == "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+
+    </script>
+}
