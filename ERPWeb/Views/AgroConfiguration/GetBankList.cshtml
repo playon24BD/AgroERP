@@ -4,40 +4,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row text-sm">
-    <div class="col-md-12">
-        <div class="card card-gray">
-            <div class="card-header">
-                <h4 class="text-center">Bank Setup</h4>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="card card-navy">
-            <div class="card-header">
-                <div class="row">
-                    
-                        <h4 class="col-md-2">Search By</h4>
-                    
 
-                    <div class="col-md-3">
-                        <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By Any" />
-                    </div>
-                   
-                    <div class="col-7 ">
-                        <button class="btn btn-outline-primary btn-flat btn-sm float-right" id="clickButton"><i class="fa fa-plus"></i> Create New Bank</button>
+<div class="row" style="margin-top:-10px">
+    <div class="col-md-12">
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3 float-left">
+                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By Any" />
+
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Bank Setup
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-warning btn-flat btn-sm float-right" id="clickButton"><i class="fa fa-plus"></i>Create New Bank</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12">
+    </div>
+    <div class="col-md-12" style="margin-top:-10px">
         <div class="card">
             <div class="card-body">
                 <div class="col-md-12" id="dataContainer1">
@@ -47,13 +43,14 @@
 
         </div>
     </div>
-
 </div>
+
+
 
 <div class="modal" id="bankModal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header alert-secondary">
+            <div class="modal-header bg-gradient-gray-dark">
                 <h4 class="modal-title" id="modalHeading"><span id="spanModalHeading"></span></h4>
                 <button class="close" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
@@ -62,11 +59,7 @@
                 <form id="bankForm">
                     <input type="hidden" id="hiddenBankId" />
                     <div class="form-row">
-                        @*<div class="form-group col-md-12">
-                            <label for="ddlOrganizationName" class="control-label">Organization Name</label>
-                            @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select OrgName--", new { @class = "form-control form-control-sm" })
-                            <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
-                        </div>*@
+
                         <div class="form-group col-md-12">
                             <label for="ddlBankName" class="control-label">Bank Name</label>
                             <input type="text" id="ddlBankName" class="form-control form-control-sm" />
@@ -85,14 +78,17 @@
                             <span class="error hide required-MobileNumber font-weight-bold">Input Mobile Number!</span>
 
                         </div>
-                        <div class="form-group col-md-12">
+                       
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-8">
                             <label for="ddlEmailAddress" class="control-label">Email Address</label>
                             <input type="text" id="ddlEmailAddress" class="form-control form-control-sm" />
                             <span class="error hide required-EmailAddress font-weight-bold">Input Email Address!</span>
 
                         </div>
 
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-4">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm" id="ddlStatus">
                                 <option value="Active">Active</option>
@@ -103,7 +99,7 @@
                 </form>
             </div>
 
-            <div class="modal-footer btn-default">
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
                 <div class="col-md-6">
                     <div id="msg1" class="alert alert-success hide float-left">
                         Data has been saved Successful!

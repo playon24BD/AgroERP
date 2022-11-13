@@ -4,76 +4,56 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-12 text-center">
-        <div class="card card-gray shadow">
-            <div class="card-header">
-                <h4>Raw Material</h4>
 
-            </div>
 
-        </div>
-
-    </div>
-
-</div>
-<div class="row">
+<div class="row" style="margin-top:-10px">
     <div class="col-md-12">
-        <div class="card shadow">
-            <div class="card-header">
-                <div class="row tex-sm">
-                    <div class="col-md-3">
-                        <h4>Search by:</h4>
 
-                    </div>
-                    @*<div class="col-md-3">
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header">
+                        <div class="row text-sm">
+                            <div class="col-md-3">
+                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Search by Material--", new { @class = "form-control ctrl-changed select2 setect2-danger" })
 
-                        @Html.DropDownList("ddlDepotNameforSearch", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--Search by Depot--", new { @class = "form-control ctrl-changed select2 select2-danger ctrl-changed" })
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Raw Material Setup
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-warning btn-flat btn-sm float-right" id="btnAdd"><i class="fa fa-plus"></i>Add New Metarial</button>
 
-                    </div>*@
-                    <div class="col-md-3">
-                        @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Search by Material--", new { @class = "form-control ctrl-changed select2 setect2-danger" })
-
-                    </div>
-                    @*<div class="col-md-3">
-
-                        </div>*@
-
-                    <div class="col-md-3 text-right">
-                        <button type="button" class="btn btn-primary btn-sm" id="btnAdd"><i class="fa-fa-plus">Add New Metarial</i></button>
-
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
 
+
     </div>
-
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card shadow">
-            <div class="card-body">
-                <div class="row text-center" id="dataContainer">
-                    @{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }
-                    @*<h4 class="text-center" style="color:red">Loading</h4>*@
-
-                </div>
+    <div class="col-md-12" style="margin-top:-10px">
+        <div class="card py-2">
+            @*<div class="card-body">*@
+            <div class="col-md-12" id="dataContainer">
+                @{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }
             </div>
-
+            @*</div>*@
         </div>
-
     </div>
-
 </div>
+
+
+
 
 
 <div class="modal" id="rawmetarialModal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header alert-secondary">
+            <div class="modal-header bg-gradient-gray-dark">
                 <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
@@ -120,7 +100,7 @@
 
 
             </div>
-            <div class="modal-footer btn-light">
+            <div class="modal-footer bg-gradient-gray-dark">
                 <div class="col-md-6">
                     <div id="msg1" class="alert alert-success hide float-left">
                         Data has been Successfully Saved

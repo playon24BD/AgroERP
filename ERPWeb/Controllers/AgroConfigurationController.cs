@@ -455,25 +455,6 @@ namespace ERPWeb.Controllers
                 //var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
 
                 IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
-                //    .Where(s => (name == "" || name == null) || (s.MeasurementName.Contains(name))).Select(o => new MeasurementSetupDTO
-                //{
-                //    MeasurementId = o.MeasurementId,
-                //    OrganizationId = o.OrganizationId,
-                //    MeasurementName = o.MeasurementName,
-                //    Status = o.Status,
-                //    RoleId = o.RoleId,
-                //    UnitId = o.UnitId,
-                //    InnerBox = o.InnerBox,
-                //    MasterCarton = o.MasterCarton,
-                //    PackSize = o.PackSize,
-                //    //EntryUserId=o.EntryUserId.ToString(),
-                //    //UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
-                //    EntryDate = o.EntryDate,
-                //    UpdateUserId = o.UpdateUserId,
-                //    UpdateDate = o.UpdateDate,
-                //    UnitName = _agroUnitInfo.GetAgroInfoById(o.UnitId, User.OrgId).UnitName,
-                //}).ToList();
-
 
                 List<MeasurementSetupViewModel> viewModels = new List<MeasurementSetupViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
