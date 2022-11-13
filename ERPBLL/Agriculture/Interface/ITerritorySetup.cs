@@ -21,5 +21,8 @@ namespace ERPBLL.Agriculture.Interface
 
         TerritorySetup GetTerritoryNamebyId(long territoryId, long orgId);
 
+
+        IEnumerable<TerritorySetup> GetAllTerritoryByAreaID(long areaid);
+
     }
 }

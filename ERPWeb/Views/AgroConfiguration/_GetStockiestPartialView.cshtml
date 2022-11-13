@@ -11,10 +11,11 @@
             <thead class="btn-dark">
                 <tr class="text-center">
                     <th style="vertical-align:middle">#SL</th>
-                    <th style="vertical-align:middle" class="hide"></th>
-                    <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle">Area Name</th>
                     <th style="vertical-align:middle">Territory Name</th>
                     <th style="vertical-align:middle">Stockiest Name</th>
+                    <th style="vertical-align:middle">Number</th>
+                    <th style="vertical-align:middle">Address</th>
                     <th style="vertical-align:middle">Status</th>
                     <th style="vertical-align:middle">Action</th>
                 </tr>
@@ -28,10 +29,19 @@
                     <td class="text-center text-bold">@SL</td>
                     <td class="hide">@item.StockiestId</td>
                     <td class="hide">@item.TerritoryId</td>
+                    <td class="hide">@item.AreaId</td>
+                    <td class="text-center">@item.AreaName</td>
                     <td class="text-center">@item.TerritoryName</td>
                     <td class="text-center">@item.StockiestName</td>
+                    <td class="text-center">@item.StockiestPhoneNumber</td>
+                    <td class="text-center">@item.StockiestAddress</td>
                     <td class="text-center">@item.Status</td>
-                    <td class="text-center hide">@item.TerritoryId</td>
+                    <td class="text-center hide">@item.StockiestMail</td>
+                    <td class="text-center hide">@item.StockiestTradeLicense</td>
+                    <td class="text-center hide">@item.StockiestNID</td>
+                    <td class="text-center hide">@item.StockiestContactPerson</td>
+                    <td class="text-center hide">@item.StockiestContactPersonPHNumber</td>
+                    <td class="text-center hide">@item.CreditLimit</td>
                     <td class="text-center">
                         <a href="#" class="btn btn-warning btn-sm data-edit-item-StockiestId" style="line-height:1" data-edit-item-Territory="@item.StockiestId"><i class="fa fa-pen"></i> Edit</a>
                     </td>

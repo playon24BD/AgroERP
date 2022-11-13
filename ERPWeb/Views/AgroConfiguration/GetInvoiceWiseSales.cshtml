@@ -4,88 +4,95 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row text-sm">
+
+
+
+
+
+<div class="row text-sm" style="margin-top:-20px">
     <div class="col-md-12">
-        <div class="card card-primary card-outline card-outline-tabs" style="margin-top:-20px">
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" id="custom-tabs-one" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-one-InvoiceWiseSalesReport-tab" data-toggle="pill" href="#custom-tabs-one-InvoiceWiseSalesReport" role="tab" aria-controls="custom-tabs-one-InvoiceWiseSalesReport" aria-selected="true">
-                            Invoice Wise Sales Summery
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="tab-content" id="custom-tabs-one-tabContent">
-                    <div class="tab-pane fade show active" id="custom-tabs-one-InvoiceWiseSalesReport" role="tabpanel" aria-labelledby="custom-tabs-one-InvoiceWiseSalesReport-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card shadow">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <h5>Search By:</h5>
-                                            </div>
-                                            <div class="col-md-6">
 
-                                            </div>
-                                        </div>
-                                        <div class="row mt-1">
-
-                                            <div class="col-md-2" style="margin-top:-5px">
-                                                <label class="col-form-label">InvoiceNo </label>
-                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <label for="ddlStokiestName">Stockiest Name </label>
-                                                @Html.DropDownList("ddlStokiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStokiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <label class="control-label font-weight-bold" for="dptFromDate">From Date</label>
-                                                <div class="input-group input-group-sm">
-                                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
-                                                    <div class="input-group-prepend cursor-pointer remove-list-date dptFromDate" style="cursor:pointer">
-                                                        <span class="input-group-text">&#10008;</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label class="control-label font-weight-bold" for="dptToDate">ToDate</label>
-                                                <div class="input-group input-group-sm">
-                                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" />
-                                                    <div class="input-group-prepend cursor-pointer remove-list-date dptToDate" style="cursor:pointer">
-                                                        <span class="input-group-text">&#10008;</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-md-2">
-                                                <label class="control-label" for="rptType">Type</label>
-                                                <div class="input-group input-group-sm">
-                                                    <select class="form-control form-control-sm float-right select2" id="rptType" name="rptType">
-                                                        <option value="PDF">PDF</option>
-                                                        <option value="EXCEL">EXCEL</option>
-                                                    </select>
-                                                    <span class="input-group-append">
-                                                        <button type="button" id="btnDownload" title="Download" class="btn btn-block btn-info btn-flat"><i class="fas fa-download"></i></button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="row" style="margin-top:-5px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header" style="text-align: center;">
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Product Wise Sales Statement
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        <div class="row" style="margin-top:-10px">
+            <div class="col-md-12">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+                        <div class="row justify-content-center">
+                            <div class="col-md-1">
+                                <h6 class="text-left">Search</h6>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search Invoice" />
+                            </div>
+
+                            <div class="col-md-2">
+                                @Html.DropDownList("ddlStokiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStokiestName, "--Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate"  placeholder="FromDate"/>
+                                    <div class="input-group-prepend cursor-pointer remove-list-date dptFromDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="ToDate"/>
+                                    <div class="input-group-prepend cursor-pointer remove-list-date dptToDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm">
+                                    <select class="form-control form-control-sm float-right select2" id="rptType" name="rptType">
+                                        <option value="PDF">PDF</option>
+                                        <option value="EXCEL">EXCEL</option>
+                                    </select>
+                                    <span class="input-group-append">
+                                        <button type="button" id="btnDownload" title="Download" class="btn btn-block btn-info btn-flat"><i class="fas fa-download"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
+
 </div>
+
+
+
+
 @section scripts{
     <script type="text/javascript">
 

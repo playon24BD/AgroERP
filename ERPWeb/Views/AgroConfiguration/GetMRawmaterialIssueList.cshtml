@@ -13,47 +13,43 @@
         color: white !important;
     }
 </style>
-<div class="row" style="background-color:#e7f1f6">
+<div class="row" style=" margin-top: 5px" >
     <div class="col-md-12">
-        <div class="card  shadow card card-primary card-outline card-tabs" style="margin-top:-20px">
-            <div class="card-header p-0 pt-1 border-bottom-0">
-
-                <ul class="nav nav-tabs nav-pills" id="custom-tabs-two-tab" role="tablist">
-
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-two-pstockrawmaterialqty-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialqty" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialqty" aria-selected="false"> Raw Material Issue Stock</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-two-pstockrawmaterialList-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialList" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialList" aria-selected="false">Raw Material Issue list</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-two-pstockrawmaterial-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterial" role="tab" aria-controls="custom-tabs-two-pstockrawmaterial" aria-selected="false">Create Raw Material Issue</a>
-                    </li>
+        <div class="card  shadow card  card-outline card-tabs" style="margin-top:-30px">
 
 
-                </ul>
+            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
 
-            </div>
+                <li class="nav-item">
+                    <a class="nav-link active text-white" id="custom-tabs-two-pstockrawmaterialqty-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialqty" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialqty" aria-selected="false"> Raw Material Issue Stock</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-pstockrawmaterialList-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialList" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialList" aria-selected="false">Raw Material Issue list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-pstockrawmaterial-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterial" role="tab" aria-controls="custom-tabs-two-pstockrawmaterial" aria-selected="false">Create Raw Material Issue</a>
+                </li>
+
+
+            </ul>
+
+
         </div>
+
+
 
         <div class="card-body shadow">
             <div class="tab-content" id="custom-tabs-two-tabContent">
-                @Html.AntiForgeryToken()
+                @*@Html.AntiForgeryToken()*@
                 <div class="tab-pane fade" id="custom-tabs-two-pstockrawmaterialList" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialList-tab">
-                    <div class="row" style="margin-top:-15px">
-                        <div class="col-md-12">
-                            <div class="card shadow card-gray-dark">
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
+                    <div class="row" style="margin-top:-30px">
                         <div class="col-md-12">
-                            <div class="card card-navy shadow">
+                            <div class="card card-gray-dark shadow">
                                 <div class="card-header">
                                     <div class="row text-sm">
                                         <div class="col-md-2">
-                                            <h4>Search by:</h4>
+                                            <h5>Search by:</h5>
                                         </div>
                                         <div class="col-md-3 float-right">
                                             <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
@@ -75,7 +71,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
-                                            @*@{Html.RenderAction("GetPRawmaterialStockList", new { @flag = "Initial" });}*@
+
                                         </div>
                                     </div>
                                 </div>
@@ -87,27 +83,19 @@
 
 
                 <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterial" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterial-tab">
-                    <div class="row" style="background-color:#e7f1f6">
-                        <div class="col-md-12">
+                    <div class="row" >
+                        <div class="col-md-12" style="margin-top:-30px">
                             <div class="card card-navy">
                                 <div class="card-header" style="text-align: center;">
 
                                     <div class="row">
 
                                         <div class="col-md-12">
-                                            <button class="btn btn-success btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                            <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
 
-                                            @*<h5 style="float: left; width: 50%; margin-left:-100px" class="text-sm">
-                                                Choose: <label class="radio-inline">
-                                                    <input type="radio" name="optradio" value="Requistion">With Requisition
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="optradio" value="WithOutRequisition">With Out Requisition
-                                                </label>
 
-                                            </h5>*@
 
-                                            <h5 class="text-bold" @*style="display: inline-block;  margin-left:-200px"*@>
+                                            <h5 class="text-bold">
                                                 Create Raw Material Issue
                                             </h5>
                                         </div>
@@ -125,19 +113,19 @@
 
                                         <div class="col-md-12">
                                             <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
-                                                <h5 style="border-bottom:2px solid #f87878">RawMaterial</h5>
+                                                @*<h5 style="border-bottom:2px solid #f87878">RawMaterial</h5>*@
                                                 <div class="row justify-content-center">
 
                                                     <div class="col-md-12">
 
                                                         <div class="row justify-content-center">
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
                                                                 @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                                                 <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
                                                             </div>
 
-                                                            <div class="col-md-1">
+                                                            <div class="col-md-2">
                                                                 <label for="ddlUnitName">Unit</label>
                                                                 <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
                                                             </div>
@@ -146,11 +134,8 @@
                                                                 <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
                                                             </div>
 
-                                                            @*<div class="col-md-1">
-                                                <label for="ddlrmnqty">Remain Qty</label>
-                                                <input type="text" id="ddlrmnqty" name="ddlrmnqty" class="form-control form-control-sm" readonly />
-                                            </div>*@
-                                                            <div class="col-md-1">
+
+                                                            <div class="col-md-2">
                                                                 <label for="ddlqty"> Qty</label>
                                                                 <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
                                                                 <span class="error hide req-qty">Qty Is Required</span>
@@ -177,60 +162,7 @@
                                     </div>
                                 </div>
 
-                                @*<div class="card-body shadow"  id="cardWithRequisition">
-                                    <div class="row">
 
-
-                                        <div class="col-md-12">
-                                            <div class="container-fluid" >
-                                                <h5 style="border-bottom:2px solid #f87878">RawMaterial</h5>
-                                                <div class="row justify-content-center">
-
-                                                    <div class="col-md-12">
-
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md-2">
-                                                                <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
-                                                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                                                <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
-                                                            </div>
-
-                                                            <div class="col-md-1">
-                                                                <label for="ddlUnitName">Unit</label>
-                                                                <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
-                                                            </div>
-                                                            <div class="hide">
-                                                                <label for="ddlUnitID">UnitID</label>
-                                                                <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
-                                                            </div>
-
-                            
-                                                            <div class="col-md-1">
-                                                                <label for="ddlqty"> Qty</label>
-                                                                <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
-                                                                <span class="error hide req-qty">Qty Is Required</span>
-                                                                <span>Stock: <span id="RawMaterialStockQty">0</span> </span>
-                                                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
-                                                                <div class="clearfix">
-                                                                    <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-                                    </div>
-                                </div>*@
                                 @*addbodey*@
 
 
@@ -238,7 +170,7 @@
                         </div>
 
 
-                        <div class="card-body" id="tblWithOutRequistion">
+                        <div class="card-body" style=" margin-top: -30px"">
 
                             <div class="card-body table-responsive p-0 " style="height: 200px;">
                                 <table class="table table-head-fixed text-nowrap tadd" id="tblPstockrawmaterial">
@@ -261,49 +193,21 @@
                                 </table>
                             </div>
                         </div>
-                        @*<div class="card-body" id="tblWithRequistion">
 
-                            <div class="card-body table-responsive p-0 " style="height: 200px;">
-                                <table class="table table-head-fixed text-nowrap tadd" id="tblPstockrawmaterial">
-                                    <thead>
-
-                                        <tr class="text-center" style="color:black">
-
-                                            <th>#SL</th>
-                                            <th>Raw Material</th>
-                                            <th>Unit</th>
-                                            <th>QTY</th>
-                                            <th>Action</th>
-                                            <th class="hide RMId"></th>
-                                            <th class="hide unitId"></th>
-
-                                        </tr>
-
-                                    </thead>
-                                    <tbody class="bg-gradient-gray"></tbody>
-                                </table>
-                            </div>
-                        </div>*@
                     </div>
                 </div>
 
 
                 @*stock*@
                 <div class="tab-pane fade show active" id="custom-tabs-two-pstockrawmaterialqty" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialqty-tab">
-                    <div class="row" style="margin-top:-15px">
-                        <div class="col-md-12">
-                            <div class="card shadow card-gray-dark">
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
+                    <div class="row" style="margin-top:-30px">
                         <div class="col-md-12">
-                            <div class="card card-navy shadow">
+                            <div class="card card-gray-dark shadow">
                                 <div class="card-header">
                                     <div class="row text-sm">
                                         <div class="col-md-2">
-                                            <h4>Search by:</h4>
+                                            <h5>Search by:</h5>
                                         </div>
                                         <div class="col-md-3 float-right">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnyy" placeholder="Search by any" />
@@ -325,7 +229,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer3" style="overflow-y:scroll">
-                                            @*@{Html.RenderAction("GetPRawmaterialStockList", new { @flag = "Initial" });}*@
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -357,19 +261,7 @@
     </div>
 </div>
 
-@*<div class="modal fade" id="IssueStockDetails" role="dialog" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header alert-secondary">
-                <h4 id="modalHeading" class="modal-title">Raw Material Issue Details</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body" id="dataContainer3">
 
-            </div>
-        </div>
-    </div>
-</div>*@
 
 
 @section scripts{
