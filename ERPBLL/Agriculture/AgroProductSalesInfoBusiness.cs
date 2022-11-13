@@ -121,7 +121,7 @@ namespace ERPBLL.Agriculture
                 --from tblProductSalesInfo sales
                 --inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
 
-                Where 1=1 {0}", Utility.ParamChecker(param));
+                Where 1=1 {0} order by sales.ProductSalesInfoId desc", Utility.ParamChecker(param));
 
             return query;
         }
