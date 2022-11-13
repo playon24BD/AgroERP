@@ -119,7 +119,7 @@
                                         <div class="col-md-2">
                                             <label for="targetQty" class="control-label"> Target Qty</label>
                                             <input type="number" id="targetQty" class="form-control form-control-sm" />
-                                            <span class="error hide req-targetQty"></span>
+                                            <span class="error hide req-targetQty">Target Qty Is Required</span>
                                         </div>
 
                                         <div class="col-md-2">
@@ -323,46 +323,61 @@
 
         $("#addTolist").click(function (e) {
             e.preventDefault();
-            debugger;
-            var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
-
-            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
+            if (validationAddToList()) {
                 debugger;
-                console.log(res);
-                var sl = 0;
-                material = JSON.parse(res)
-                console.log(material);
-                var len = material.length;
-                console.log("length: " + len);
-                console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
-                console.log(targetQty.val() <= hdTargetValue.val());
-                if (Number(targetQty.val()) <= Number( hdTargetValue.val())) {
+                var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
+
+                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
+                    debugger;
+                    console.log(res);
+                    var sl = 0;
+                    material = JSON.parse(res)
+                    console.log(material);
+                    var len = material.length;
+                    console.log("length: " + len);
+                    console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
+                    console.log(targetQty.val() <= hdTargetValue.val());
+                    if (Number(targetQty.val()) <= Number(hdTargetValue.val())) {
 
 
-                    //console.log(material[0].RawMaterialName);
-                    $.each(material, function (index, value) {
 
-                        var td1 = "<td>" + value.RawMaterialName + "</td>";
-                        var td5 = "<td class='hide'>" + value.RawMaterialId + "</td>";
-                        var td2 = "<td>" + value.FGRRawMaterQty + "</td>";
-                        var td3 = "<td>" + targetQty.val() + "</td>";
-                        var td4 = "<td>" + (value.FGRRawMaterQty * targetQty.val()) + "</td>";
-                        var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + "</tr>";
-                        $("#tblFinishGoodProduction tbody").append(tr)
-                        $("#btnSubmit").show();
+                        //console.log(material[0].RawMaterialName);
+                        $.each(material, function (index, value) {
+
+                            var td1 = "<td>" + value.RawMaterialName + "</td>";
+                            var td5 = "<td class='hide'>" + value.RawMaterialId + "</td>";
+                            var td2 = "<td>" + value.FGRRawMaterQty + "</td>";
+                            var td3 = "<td>" + targetQty.val() + "</td>";
+                            var td4 = "<td>" + (value.FGRRawMaterQty * targetQty.val()) + "</td>";
+                            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + "</tr>";
+                            $("#tblFinishGoodProduction tbody").append(tr)
+                            $("#btnSubmit").show();
 
 
-                    })
+                        })
 
-                }
-                else {
-                    alert("Issue Quantity Not Sufficient Please Check Target Quantity");
-                }
+                    }
+                    else {
+                        alert("Issue Quantity Not Sufficient Please Check Target Quantity");
+                    }
 
                 });
 
-
+            }
         })
+
+        function validationAddToList() {
+            //debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (TryParseInt(targetQty.val(), 0) <= 0) {
+                $(".req-targetQty").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
 
         $("#btnSubmit").click(function (e) {
             e.preventDefault();

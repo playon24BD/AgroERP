@@ -110,6 +110,7 @@
                     <div class="col-md-12">
                         <label for="ddlStatus" class="control-label">Status</label>
                         <select class="form-control form-control-sm" id="ddlStatus">
+                            <option selected>--Select Status--</option>
                             <option value="Active">Active</option>
                             <option value="InActive">InActive</option>
                         </select>
@@ -174,14 +175,16 @@
 
 
         function OpenModal() {
+
             $("#spanModalHead").text("Add New Raw Material");
+            $("#spanSaveText").text('Save');
             $("#rawmetarialModal").modal("show");
             $(".error").addClass("hide");
 
 
         }
         $("#btnAdd").click(function (e) {
-
+            
             e.preventDefault();
 
             ClearCtrl();
@@ -305,6 +308,9 @@
         }
         function ClearCtrl() {
             rawMaterialName.val("");
+            ddlUnit.val("");
+            ddlStatus.val("");
+            ddlUnit.trigger("change");
             //remarks.val('');
             //expairDate.val('');
             //ddlOrganization.val('');

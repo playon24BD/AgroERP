@@ -73,7 +73,7 @@
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm select2" id="ddlStatus">
-                                <option value="">--Select Status--</option>
+                                <option selected>--Select Status--</option>
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
@@ -133,15 +133,17 @@
 
         $("#addButton").click(function (e) {
             e.preventDefault();
+            
             OpenModals();
+            ClearCtrl();
         })
 
         function OpenModals() {
             $("#spanModalAgroUnit").text('Add New AgroUnit');
-            //$("#spanSaveTextAgroUnit").text('Save');
+            $("#spanSaveTextAgroUnit").text('Save');
             $("#modalAgroUnit").modal("show");
             $(".error").addClass("hide");
-
+            
         }
 
 
@@ -153,10 +155,10 @@
                 $('.required-UnitName').removeClass("hide");
                 Isvalid = false;
             }
-            //if ($.trim(ddlStatus.val()) == "") {
-            //    $('.required-Status').removeClass("hide");
-            //    Isvalid = false;
-            //}
+            if ($.trim(ddlStatus.val()) == "") {
+                $('.required-Status').removeClass("hide");
+                Isvalid = false;
+            }
 
             return Isvalid
 
@@ -209,7 +211,8 @@
         function ClearCtrl() {
             txtUnitName.val("");
             ddlStatus.val("");
-            
+            hdAgroUnitId.val('0');
+            ddlStatus.trigger("change");
             
 
         }
@@ -220,7 +223,7 @@
 
             debugger;
             e.preventDefault()
-            //ClearCtrl();
+            ClearCtrl();
             var row = $(this).parent().parents('tr');
             var td1 = row.find('td:eq(1)').html();
             var td2 = row.find('td:eq(2)').html();
@@ -237,8 +240,8 @@
             OpenModals();
             $("#spanModalAgroUnit").text('Update Unit');
             $("#spanSaveTextAgroUnit").text('Update');
-
-            LoadAgroUnitList()
+            
+            //LoadAgroUnitList()
         })
 
     </script>

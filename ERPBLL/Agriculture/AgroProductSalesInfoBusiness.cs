@@ -588,11 +588,11 @@ namespace ERPBLL.Agriculture
             return query;
         }
 
-        public IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport(long? stockiestId, string invoiceNo, string fromDate, string toDate)
+        public IEnumerable<InvoiceWiseCollectionSalesReport> GetInvoiceWiseSalesReport(long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<InvoiceWiseCollectionSalesReport>(QueryForInvoiceWiseSalesReport(stockiestId, invoiceNo,fromDate, toDate));
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<InvoiceWiseCollectionSalesReport>(QueryForInvoiceWiseSalesReport(stockiestId, territoryId, invoiceNo,fromDate, toDate));
         }
-        public string QueryForInvoiceWiseSalesReport(long? stockiestId, string invoiceNo, string fromDate, string toDate)
+        public string QueryForInvoiceWiseSalesReport(long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate)
         {
             string param = string.Empty;
             string query = string.Empty;
@@ -600,6 +600,10 @@ namespace ERPBLL.Agriculture
             if (stockiestId != null && stockiestId > 0)
             {
                 param += string.Format(@" and STI.StockiestId={0}", stockiestId);
+            }
+            if (territoryId != null && territoryId > 0)
+            {
+                param += string.Format(@" and TI.TerritoryId={0}", territoryId);
             }
 
             if (!string.IsNullOrEmpty(invoiceNo))

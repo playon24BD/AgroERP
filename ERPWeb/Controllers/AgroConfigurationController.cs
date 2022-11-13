@@ -2505,6 +2505,8 @@ namespace ERPWeb.Controllers
             {
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
                 ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+
+
                 return View();
             }
 
@@ -3024,12 +3026,14 @@ namespace ERPWeb.Controllers
         {
             ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
+            ViewBag.ddlTerritoryName=_territorySetup.GetAllTerritorySetup(User.OrgId).Select(d => new SelectListItem { Text = d.TerritoryName, Value = d.TerritoryId.ToString() }).ToList();
+
             return View();
         }
 
-        public ActionResult GetInvoiceWiseSalesReport(long? stockiestId, string invoiceNo, string fromDate, string toDate, string rptType)
+        public ActionResult GetInvoiceWiseSalesReport(long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate, string rptType)
         {
-            var data = _agroProductSalesInfoBusiness.GetInvoiceWiseSalesReport(stockiestId, invoiceNo, fromDate, toDate);
+            var data = _agroProductSalesInfoBusiness.GetInvoiceWiseSalesReport(stockiestId,territoryId, invoiceNo, fromDate, toDate);
 
             LocalReport localReport = new LocalReport();
 
