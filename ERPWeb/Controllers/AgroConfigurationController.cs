@@ -1822,6 +1822,7 @@ namespace ERPWeb.Controllers
 
             if (string.IsNullOrEmpty(flag))
             {
+                ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
 
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
@@ -1835,6 +1836,9 @@ namespace ERPWeb.Controllers
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
+                ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
+
+                ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
 
                 var dto = _stockiestInfo.GetStockiestInfos(stockiestId ?? 0, territoryId ?? 0, User.OrgId);
 
