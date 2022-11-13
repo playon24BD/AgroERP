@@ -5,13 +5,13 @@
 }
 <style>
     table.tablesubtotal tr th {
-        background-color: black !important;
-        color: white !important;
+        background-color: darkcyan !important;
+        color: black !important;
     }
 
     table.tadd tr th {
         background-color: darkcyan !important;
-        color: white !important;
+        color: black !important;
     }
 
 
@@ -26,7 +26,7 @@
         border-radius: 6px;
     }
 </style>
-<div class="row text-sm" style="margin-top:-60px">
+<div class="row" style="margin-top:-60px">
     <div class="col-md-12">
         <div class="card card-navy shadow">
             <div class="card-header">
@@ -155,47 +155,47 @@
 
                         <div class="row small">
                             <div class="col-md-2">
-                                <label for="ddlProductName" class="col-form-label">
+                                <label for="ddlProductName" class="col-form-label text-white">
                                     Product Name
                                 </label>
                                 @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
                             </div>
                             <div class="col-md-2">
-                                <label for="ddlQtyUnit" class="col-form-label">
+                                <label for="ddlQtyUnit" class="col-form-label text-white">
                                     Receipe Unit Qty
                                 </label>
                                 @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--UnitQty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-QtyUnit font-weight-bold">Unit Qty is required!</span>
                             </div>
                             <div class="col-md-2">
-                                <label for="ddlMeasurementName" class="col-form-label">
+                                <label for="ddlMeasurementName" class="col-form-label text-white">
                                     Measurement Desc
                                 </label>
                                 @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "--MeasurementName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
                             </div>
                             <div class="hide">
-                                <label for="ddlRawMaterial" class="col-form-label">Measurement Size</label>
+                                <label for="ddlRawMaterial" class="col-form-label text-white">Measurement Size</label>
                                 <input type="text" id="ddlMeasurementSize" class="form-control form-control-sm" readonly />
 
                             </div>
                             <div class="col-md-2">
-                                <label for="ddlQuanity" class="col-form-label">Quanity</label>
+                                <label for="ddlQuanity" class="col-form-label text-white">Quanity</label>
                                 <input type="text" id="txtQuanity" class="form-control form-control-sm" />
-                                <label for="ddlQuantity" class="control-label font-weight-bold">
-                                    Finish Good Qty
-                                    <span id="FinishGoodStockQty"></span>
+                                <label for="ddlQuantity" class="control-label font-weight-bold text-white">
+                                    Finish Good Qty:
+                                    <span class="text-white" id="FinishGoodStockQty"></span>
                                 </label>
                                 <span class="error hide req-Quanity">Quantity is required</span>
                                 <span class="error hide req-qtyChecking">Quantity Must be less than or equal Product Qty</span>
                             </div>
                             <div class="col-md-2">
-                                <label for="ddlPrice" class="col-form-label">Rate</label>
+                                <label for="ddlPrice" class="col-form-label text-white">Rate</label>
                                 <input type="text" id="txtPrice" class="form-control form-control-sm" />
                             </div>
                             <div class="col-md-1">
-                                <label for="ddlPrice" class="col-form-label">Discount %</label>
+                                <label for="ddlPrice" class="col-form-label text-white">Discount %</label>
                                 <input type="text" id="txtDiscount" class="form-control form-control-sm" />
                             </div>
 
