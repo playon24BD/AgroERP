@@ -161,7 +161,7 @@
                 bootbox.alert("Please Select Anyone");
             }
             else {
-                window.open("/AgroConfiguration/GetInvoiceWiseSalesReport?stockiestId=" + TryParseInt(ddlStokiestName.val(), 0) + " &fromDate=" + dptFromDate.val() + " &toDate=" + dptToDate.val() + " &rptType=" + rptType.val() + "&invoiceNo=" + $.trim(searchByAny.val())+"territoryId =" + TryParseInt(ddlTerritoryName.val(), 0));
+                window.open("/AgroConfiguration/GetInvoiceWiseSalesReport?stockiestId=" + TryParseInt(ddlStokiestName.val(), 0) + "&territoryId=" + TryParseInt(ddlTerritoryName.val(), 0) + " &fromDate=" + dptFromDate.val() + " &toDate=" + dptToDate.val() + " &rptType=" + rptType.val() + "&invoiceNo=" + $.trim(searchByAny.val()));
             }
         })
         
