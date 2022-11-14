@@ -2692,6 +2692,17 @@
     <Content Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.xss">
       <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsSalesCommissionReport.xsc">
+      <DependentUpon>dsSalesCommissionReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsSalesCommissionReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsSalesCommissionReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsSalesCommissionReport.xss">
+      <DependentUpon>dsSalesCommissionReport.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\download.js" />
@@ -3140,6 +3151,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsSalesCommissionReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsSalesCommissionReport.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -3323,11 +3339,9 @@
     <Content Include="Views\AgroConfiguration\SalesCommission.cshtml" />
     <Content Include="Views\AgroConfiguration\_SalesCommission.cshtml" />
     <Content Include="Views\AgroConfiguration\_SalesCommissionDetails.cshtml" />
-
     <Content Include="Views\AgroConfiguration\DateWiseCollection.cshtml" />
-
     <Content Include="Views\AgroConfiguration\GetFinishGoodStockReport.cshtml" />
-
+    <Content Include="Views\AgroConfiguration\_GetInvoiceWiseSalesReportList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3369,6 +3383,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptDateWiseCollection.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesCommissionReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

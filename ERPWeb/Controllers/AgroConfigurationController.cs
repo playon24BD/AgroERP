@@ -3029,20 +3029,53 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region AgroReport
-        public ActionResult GetProductwisesalesReport()
+        public ActionResult GetProductwisesalesReport(string flag, long? productId, string fromDate, string toDate, string rptType)
         {
-            ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+                return View();
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _agroProductSalesInfoBusiness.GetProductWiseReportList(productId ?? 0, fromDate, toDate);
+                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetProductWiseSalesReportList", viewModels);
+
+
+            }
+
 
             return View();
         }
 
-        public ActionResult GetInvoiceWiseSales()
+        public ActionResult GetInvoiceWiseSales(string flag, long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate)
         {
-            ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
-            ViewBag.ddlTerritoryName=_territorySetup.GetAllTerritorySetup(User.OrgId).Select(d => new SelectListItem { Text = d.TerritoryName, Value = d.TerritoryId.ToString() }).ToList();
+                ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(d => new SelectListItem { Text = d.TerritoryName, Value = d.TerritoryId.ToString() }).ToList();
 
+                return View();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _agroProductSalesInfoBusiness.GetInvoiceReportList(stockiestId??0, territoryId??0, invoiceNo, fromDate, toDate);
+                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetInvoiceWiseSalesReportList", viewModels);
+
+
+            }
             return View();
+
         }
 
         public ActionResult GetFinishGoodStockReport()
@@ -3702,6 +3735,52 @@ namespace ERPWeb.Controllers
             }
 
         }
+        
+        public ActionResult SalesCommissionReport(string invoiceNo,long? stockiestId,string fromDate,string toDate, string rptType)
+        {
+            
+            var data = _commissionOnProductOnSalesBusiness.GetSalesCommissionDataReport(invoiceNo, stockiestId, fromDate, toDate);
+
+            LocalReport localReport = new LocalReport();
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptSalesCommissionReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsSalesCommissionReport", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = rptType;
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>29.7cm</PageWidth>" +
+                    "<PageHeight>21cm</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
+
         #endregion
 
 

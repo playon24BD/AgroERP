@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPBLL.Common;
+using ERPBO.Agriculture.ReportModels;
 
 namespace ERPBLL.Agriculture
 {
-    public class CommissionOnProductOnSalesBusiness : ICommissionOnProductOnSalesBusiness
+    public class CommissionOnProductOnSalesBusiness :ICommissionOnProductOnSalesBusiness
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly CommissionOnProductOnSalesBusinessRepository _commissionOnProductOnSalesRepository;
@@ -161,5 +162,52 @@ namespace ERPBLL.Agriculture
             return isSuccess;
 
         }
+
+        public IEnumerable<SalesCommissionData> GetSalesCommissionDataReport(string invoiceNo, long? stockiestId, string fromDate, string toDate)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<SalesCommissionData>(string.Format(QueryForSalesCommissionReport(invoiceNo, stockiestId, fromDate, toDate)));
+        }
+        public string QueryForSalesCommissionReport(string invoiceNo, long? stockiestId, string fromDate, string toDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (stockiestId > 0)
+            {
+                param += string.Format(@"and si.StockiestId={0}", stockiestId);
+            }
+            if (invoiceNo != null && invoiceNo != "")
+            {
+                param += string.Format(@" and cps.InvoiceNo ='{0}'", invoiceNo);
+            }
+
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(cps.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(cps.EntryDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(cps.EntryDate as date)='{0}'", tDate);
+            }
+
+
+            query = string.Format(@"Select DISTINCT toDate='" + fromDate + "', fromDate='" + toDate +"',cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,SUM(cpsd.TotalCommission) As TotalCommission,cpsd.PaymentMode,Cast (cps.EntryDate as date) As EntryDate,StockiestName from tblCommissionOnProductSales cps Inner join tblCommisionOnProductSalesDetails cpsd on cps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId Inner join tblFinishGoodProductInfo p on cpsd.FinishGoodProductId=p.FinishGoodProductId Inner join tblProductSalesInfo si on si.ProductSalesInfoId=cps.ProductSalesInfoId Inner join tblStockiestInfo f on si.StockiestId=f.StockiestId  where 1=1 {0} Group by cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,cpsd.PaymentMode,Cast (cps.EntryDate as date),StockiestName",
+                    Utility.ParamChecker(param));
+
+            return query;
+        }
+
+        //public IEnumerable<CommissionOnProductOnSalesDTO> GetSalesCommissionListInfos(string invoiceNo, long? stockiestId, string fromDate, string toDate)
+        //{
+        //    return _agricultureUnitOfWork.Db.Database.SqlQuery<CommissionOnProductOnSalesDTO>(string.Format(QueryForSalesCommissionList(invoiceNo, stockiestId, fromDate, toDate)));
+        //}
     }
 }

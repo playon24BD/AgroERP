@@ -4,11 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
-
-
-
 <div class="row text-sm" style="margin-top:-20px">
     <div class="col-md-12">
 
@@ -39,7 +34,7 @@
                     <div class="card-header">
                         <div class="row" style="margin-left:-20px">
                             <div class="col-md-1">
-                                <h6 class="text-left" style="font-size:25px" >Search</h6>
+                                <h6 class="text-left" style="font-size:25px">Search</h6>
                             </div>
                             <div class="col-md-1">
                                 <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search Invoice" />
@@ -56,7 +51,7 @@
                             <div class="col-md-2">
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="FromDate" />
-                                    <div class="input-group-prepend cursor-pointer remove-list-date dptFromDate" style="cursor:pointer">
+                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
                                         <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
@@ -64,7 +59,7 @@
                             <div class="col-md-2">
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="ToDate" />
-                                    <div class="input-group-prepend cursor-pointer remove-list-date dptToDate" style="cursor:pointer">
+                                    <div class="input-group-prepend cursor-pointer remove-date dptToDate" style="cursor:pointer">
                                         <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
@@ -83,9 +78,17 @@
                                 </div>
                             </div>
 
-                            @*<div class="col-md-1 input-group-append">
-            <button type="button" id="btnDownload" title="Download" class="btn btn-block btn-info btn-flat"><i class="fas fa-download"></i></button>
-        </div>*@
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
 
                         </div>
                     </div>
@@ -126,7 +129,7 @@
                 format: "dd MM yyyy",
                 orientation: "bottom auto",
                 todayHighlight: true,
-                autoclose: true
+                
             }).on('change', function () {
                 $('.datepicker').hide();
             });
@@ -134,11 +137,11 @@
                 format: "dd MM yyyy",
                 orientation: "bottom auto",
                 todayHighlight: true,
-                autoclose: true
+                
             }).on('change', function () {
                 $('.datepicker').hide();
             });
-
+            LoadInvoiceList();
         })
 
         $(document).on('click', 'div.remove-date', function () {
@@ -155,6 +158,46 @@
                 }
             }
         })
+
+        searchByAny.keyup(function () {
+            LoadInvoiceList()
+        })
+
+        dptFromDate.change(function () {
+            LoadInvoiceList();
+        })
+
+        dptToDate.change(function () {
+            LoadInvoiceList();
+        })
+        ddlStokiestName.change(function () {
+            LoadInvoiceList();
+        })
+        ddlTerritoryName.change(function () {
+            LoadInvoiceList();
+        })
+
+
+        function LoadInvoiceList() {
+            debugger;
+
+            var data = { flag: "View", invoiceNo: $.trim(searchByAny.val()), stockiestId: TryParseInt(ddlStokiestName.val(), 0), territoryId: TryParseInt(ddlTerritoryName.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetInvoiceWiseSales', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
+
 
         $("#btnDownload").click(function () {
             if (dptFromDate.val() == "" && dptToDate.val() == "" && ddlStokiestName.val() == "" && searchByAny.val() == "" && ddlTerritoryName.val()=="") {

@@ -6,11 +6,15 @@ using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 
 using System.Threading.Tasks;
+using ERPBO.Agriculture.ReportModels;
 
 namespace ERPBLL.Agriculture.Interface
 {
     public interface ICommissionOnProductOnSalesBusiness
     {
+        //IEnumerable<CommissionOnProductOnSalesDTO> GetSalesCommissionListInfos(string invoiceNo, long? stockiestId, string fromDate, string toDate);
+        IEnumerable<SalesCommissionData> GetSalesCommissionDataReport(string invoiceNo, long? stockiestId,string fromDate,string toDate);
+        
         IEnumerable<CommissionOnProductOnSales> GetCommissionOnProductOnSales(long orgId);
         CommissionOnProductOnSales GetCommissionOnProductById(long commissionOnProductSalesId,long orgId );
         bool SaveCommissionOnProductOnSales(AgroProductSalesInfo agroProductSalesInfo , long userId,long orgId);
