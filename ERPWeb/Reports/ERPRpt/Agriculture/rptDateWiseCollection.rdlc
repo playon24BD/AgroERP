@@ -1164,7 +1164,6 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <KeepWithGroup>Before</KeepWithGroup>
@@ -1258,7 +1257,7 @@
               <TextRun>
                 <Value>Date Wise Collection Report</Value>
                 <Style>
-                  <FontSize>11pt</FontSize>
+                  <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>Green</Color>
                 </Style>
@@ -1268,9 +1267,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>1in</Top>
+        <Top>0.50979in</Top>
+        <Left>4.35417in</Left>
         <Height>0.25in</Height>
-        <Width>2.16263in</Width>
+        <Width>2.30846in</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -1301,8 +1301,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>todate</rd:DefaultName>
-        <Top>1in</Top>
-        <Left>2.24597in</Left>
+        <Top>0.80146in</Top>
+        <Left>3.53456in</Left>
         <Height>0.25in</Height>
         <Width>1.54166in</Width>
         <ZIndex>4</ZIndex>
@@ -1335,8 +1335,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>fromDate</rd:DefaultName>
-        <Top>1in</Top>
-        <Left>4.26326in</Left>
+        <Top>0.80146in</Top>
+        <Left>5.55185in</Left>
         <Height>0.25in</Height>
         <Width>1.54166in</Width>
         <ZIndex>5</ZIndex>
@@ -1350,17 +1350,6 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Line Name="Line1">
-        <Top>1.19445in</Top>
-        <Height>0in</Height>
-        <Width>10.805in</Width>
-        <ZIndex>6</ZIndex>
-        <Style>
-          <Border>
-            <Style>Solid</Style>
-          </Border>
-        </Style>
-      </Line>
       <Textbox Name="Textbox99">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -1382,11 +1371,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox99</rd:DefaultName>
-        <Top>1in</Top>
-        <Left>3.89547in</Left>
+        <Top>0.80146in</Top>
+        <Left>5.18406in</Left>
         <Height>0.30208in</Height>
         <Width>0.27986in</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1416,7 +1405,7 @@
         <Left>9.80496in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
-        <ZIndex>8</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
