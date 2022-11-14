@@ -4,10 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row" style="margin-top:-25px;">
     <div class="col-md-12">
-        <div class="card card-gray shadow">
-            <div class="card-header">
+
+        <div class="card card-navy">
+            <div class="card-header" style="text-align: center;">
+
                 <div class="row">
                     <div class="col-md-3">
                         <a href="/AgroConfiguration/AreaList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
@@ -15,76 +17,79 @@
                         </a>
                     </div>
                     <div class="col-md-6">
-                        <h5 class="text-center text-bold">Create Area</h5>
+
+
+                        <h4 class="text-center text-bold">
+                            Create Area
+                        </h4>
                     </div>
                     <div class="col-md-3">
+                        <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+
                     </div>
                 </div>
             </div>
-
-            <div class="card-body text-sm">
-                <div class="row " style="margin-top:-8px;">
-                    @*<div class="col-md-2">
-                        <label for="ddlorgname" class="control-label">OrganizationName</label>
-                        @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                        <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
-                    </div>*@
-
-                    <div class="col-md-2">
-                        <label for="ddlRegionname" class="control-label">RegionName</label>
-                        @Html.DropDownList("ddlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "Select Region Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                        <span class="error hide required-RegionName font-weight-bold">Input RegionName!</span>
-
-
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlAreaName" class="control-label">AreaName</label>
-                        <input type="text" id="ddlAreaName" class="form-control form-control-sm" />
-                        <span class="error hide required-AreaName font-weight-bold">Input Area Name!</span>
-                        <span class="error hide duplicate-AreaName font-weight-bold">Already AreaName Exist!</span>
-                    </div>
+        </div>
 
 
 
-                    <div class="col-md-1 " style="margin-top:5px;">
-                        <label for="addButton" class="control-label"></label>
-                        <div class="clearfix">
-                            <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
-                        </div>
-                    </div>
+
+
+        <div class="card-body text-sm">
+            <div class="row " style="margin-top:-18px;">
+
+
+                <div class="col-md-2">
+                    <label for="ddlRegionname" class="control-label">RegionName</label>
+                    @Html.DropDownList("ddlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "Select Region Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    <span class="error hide required-RegionName font-weight-bold">Input RegionName!</span>
+
+
+                </div>
+                <div class="col-md-2">
+                    <label for="ddlAreaName" class="control-label">AreaName</label>
+                    <input type="text" id="ddlAreaName" class="form-control form-control-sm" />
+                    <span class="error hide required-AreaName font-weight-bold">Input Area Name!</span>
+                    <span class="error hide duplicate-AreaName font-weight-bold">Already AreaName Exist!</span>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
-                            <thead>
-                                <tr>
-                                    <th colspan="9">
-                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
-                                    </th>
-                                </tr>
 
-                                <tr class="text-center btn-dark">
-                                    <th style="width:5%">#SL</th>
-                                    <th class="hide hdOrgId"></th>
-                                    <th class="hide" style="width:20%">Org Name</th>
-                                    <th class="hide hdregionId"></th>
-                                    <th style="width:15%">Region Name</th>
-                                    <th style="width:15%">Area Name</th>
-                                    <th style="width:10%">Action</th>
 
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                <div class="col-md-1">
+                    <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-sm float-left btn-outline-success" id="addButton"><i class="fas fa-plus"></i></button>
                     </div>
-
                 </div>
             </div>
-
-
 
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
+                    <thead>
+
+
+                        <tr class="text-center btn-dark">
+                            <th style="width:5%">#SL</th>
+                            <th class="hide hdOrgId"></th>
+                            <th class="hide" style="width:20%">Org Name</th>
+                            <th class="hide hdregionId"></th>
+                            <th style="width:15%">Region Name</th>
+                            <th style="width:15%">Area Name</th>
+                            <th style="width:10%">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+
     </div>
 
 </div>

@@ -4,58 +4,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-12 text-center">
-        <div class="card card-gray shadow">
-            <div class="card-header">
-                <h4>AgroUnit List</h4>
-                
-            </div>
 
-        </div>
 
-    </div>
-
-</div>
-<div class="row">
+<div class="row" style="margin-top:-10px">
     <div class="col-md-12">
-        <div class="card card-navy shadow">
-            <div class="card-header">
-                <div class="row text-sm">
-                    <div class="col-md-2">
-                        <h4>Search by:</h4>
-                    </div>
-                    <div class="col-md-3 float-right">
-                        <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
-                    </div>
-                    <div class="col-7">
-                        <button class="btn btn-outline-primary btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Unit</button>
-                    </div>
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3 float-left">
+                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Unit Setup
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-warning btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Unit</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-
     </div>
+    <div class="col-md-12" style="margin-top:-10px">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12" id="dataContainer">
 
-</div>
-
-<div class="col-md-12" style="margin-top:-10px">
-    <div class="card">
-        <div class="card-body">
-            <div class="col-md-12" id="dataContainer">
-
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+
+
+
 <div class="modal" id="modalAgroUnit" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header alert-secondary">
+            <div class="modal-header bg-gradient-gray-dark">
                 <h4 id="modalHeading" class="modal-title"><span id="spanModalAgroUnit"></span></h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
@@ -85,15 +80,8 @@
 
             </div>
 
-            <div class="modal-footer btn-default">
-                @*<div class="col-md-6">
-                    <div id="msg1" class="alert alert-success hide float-left">
-                        Data has been saved Successful!
-                    </div>
-                    <div id="msg2" class="alert alert-danger hide float-left">
-                        Data has been failed to save!
-                    </div>
-                </div>*@
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
+
                 <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
                 <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextAgroUnit">Save</span> </button>
             </div>

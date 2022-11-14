@@ -455,25 +455,6 @@ namespace ERPWeb.Controllers
                 //var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
 
                 IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
-                //    .Where(s => (name == "" || name == null) || (s.MeasurementName.Contains(name))).Select(o => new MeasurementSetupDTO
-                //{
-                //    MeasurementId = o.MeasurementId,
-                //    OrganizationId = o.OrganizationId,
-                //    MeasurementName = o.MeasurementName,
-                //    Status = o.Status,
-                //    RoleId = o.RoleId,
-                //    UnitId = o.UnitId,
-                //    InnerBox = o.InnerBox,
-                //    MasterCarton = o.MasterCarton,
-                //    PackSize = o.PackSize,
-                //    //EntryUserId=o.EntryUserId.ToString(),
-                //    //UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
-                //    EntryDate = o.EntryDate,
-                //    UpdateUserId = o.UpdateUserId,
-                //    UpdateDate = o.UpdateDate,
-                //    UnitName = _agroUnitInfo.GetAgroInfoById(o.UnitId, User.OrgId).UnitName,
-                //}).ToList();
-
 
                 List<MeasurementSetupViewModel> viewModels = new List<MeasurementSetupViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
@@ -2099,7 +2080,7 @@ namespace ERPWeb.Controllers
 
             ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
-            ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.UnitQty.ToString() }).ToList();
+            ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.FGRId.ToString() }).ToList();
 
 
             ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.PackageName, Value = d.MeasurementId.ToString() }).ToList();
@@ -2119,7 +2100,7 @@ namespace ERPWeb.Controllers
                 //var ddlRecipeCode = receipeBatchCode.Select(d => new Dropdown { text=receipeBatchCode,value=d });
                 var UnitQtys = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipUnitQty(finishGoodProductId, User.OrgId);
 
-                var dropDown = UnitQtys.Where(a => a.UnitQty != null).Select(s => new Dropdown { text = s.UnitQty, value = s.UnitQty }).ToList();
+                var dropDown = UnitQtys.Where(a => a.UnitQty != null).Select(s => new Dropdown { text = s.UnitQty, value = s.FGRId.ToString() }).ToList();
 
 
                 return Json(dropDown, JsonRequestBehavior.AllowGet);
@@ -2170,13 +2151,13 @@ namespace ERPWeb.Controllers
         }
 
 
-        public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string QtyKG)
+        public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string FGRID)
         {
-            var UnitQtys = QtyKG.Split('(', ')');
-            string ProductUnitQty = UnitQtys[0];
-            var CheckQty = _finishGoodProductionInfoBusiness.Getcheckqty(FinishGoodProductInfoId, ProductUnitQty).FGRId;
+            //var UnitQtys = QtyKG.Split('(', ')');
+            //string ProductUnitQty = UnitQtys[0];
+            //var CheckQty = _finishGoodProductionInfoBusiness.Getcheckqty(FinishGoodProductInfoId, ProductUnitQty).FGRId;
 
-            var checkFinishGoodStockValue = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(FinishGoodProductInfoId, ProductUnitQty, CheckQty, User.OrgId);
+            var checkFinishGoodStockValue = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(FinishGoodProductInfoId,Convert.ToInt32( FGRID), User.OrgId);
 
             double itemStock = 0;
 
@@ -3035,6 +3016,13 @@ namespace ERPWeb.Controllers
             return View();
         }
 
+        public ActionResult GetFinishGoodStockReport()
+        {
+            ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+            return View();
+        }
+
         public ActionResult GetInvoiceWiseSalesReport(long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate, string rptType)
         {
             var data = _agroProductSalesInfoBusiness.GetInvoiceWiseSalesReport(stockiestId,territoryId, invoiceNo, fromDate, toDate);
@@ -3127,6 +3115,7 @@ namespace ERPWeb.Controllers
         }
 
 
+
         public ActionResult DateWiseCollection()
         {
             ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
@@ -3183,6 +3172,66 @@ namespace ERPWeb.Controllers
                 out warnings
                 );
             return File(renderedBytes, mimeType);
+        }
+
+
+    public ActionResult GetFinishGoodStockReport(long? productId, string fromDate, string toDate, string rptType)
+        {
+            var data = _finishGoodProductionInfoBusiness.GetFinishGoodStockReport(productId, fromDate, toDate);
+            LocalReport localReport = new LocalReport();
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/ProductwisesalesReportDownloadsReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+                ReportDataSource dataSource1 = new ReportDataSource("dsProductwisesalesReportDownloadReport", data);
+                localReport.DataSources.Clear();
+                localReport.DataSources.Add(dataSource1);
+                localReport.Refresh();
+                localReport.DisplayName = "Product Wise Sales Statement";
+
+                string mimeType;
+                string encoding;
+                string fileNameExtension;
+                Warning[] warnings;
+                string[] streams;
+                byte[] renderedBytes;
+                string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+
+            //var renderedBytes = localReport.Render(
+            //    reportType,
+            //    deviceInfo,
+            //    out mimeType,
+            //    out encoding,
+            //    out fileNameExtension,
+            //    out streams,
+            //    out warnings
+            //    );
+            //return File(renderedBytes, mimeType);
+
+                renderedBytes = localReport.Render(
+                    rptType,
+                     deviceInfo,
+                    out mimeType,
+
+                    out encoding,
+                    out fileNameExtension,
+                    out streams,
+                    out warnings);
+                return File(renderedBytes, mimeType);
+            }
+            return new EmptyResult();
+
         }
 
         #endregion

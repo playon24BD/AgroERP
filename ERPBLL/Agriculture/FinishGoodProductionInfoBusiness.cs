@@ -2,6 +2,7 @@
 using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
+using ERPBO.Agriculture.ReportModels;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -31,14 +32,14 @@ namespace ERPBLL.Agriculture
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
         }
 
-        public IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,string ProductUnitQty,long? CheckQty, long orgId)
+        public IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,int FGRID, long orgId)
         {
             //return _finishGoodProductionInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.FinishGoodProductId == FinishGoodProductInfoId);
 
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductCheckQty(FinishGoodProductInfoId, ProductUnitQty, CheckQty, orgId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductCheckQty(FinishGoodProductInfoId, FGRID, orgId)).ToList();
         }
 
-        private string QueryForFinishGoodProductCheckQty(long finishGoodProductInfoId,string ProductUnitQty, long? CheckQty, long orgId)
+        private string QueryForFinishGoodProductCheckQty(long finishGoodProductInfoId, int FGRID, long orgId)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -48,13 +49,10 @@ namespace ERPBLL.Agriculture
             {
                 param += string.Format(@" and FI.FinishGoodProductId={0}", finishGoodProductInfoId);
             }
-            if (ProductUnitQty !=null)
+            
+            if (FGRID > 0)
             {
-                param += string.Format(@" and FI.Quanity={0}", ProductUnitQty);
-            }
-            if (CheckQty >0)
-            {
-                param += string.Format(@" and FI.FGRId={0}", CheckQty);
+                param += string.Format(@" and FI.FGRId={0}", FGRID);
             }
 
             query = string.Format(@"
@@ -279,43 +277,84 @@ inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
             return query;
         }
 
+        public IEnumerable<FinishGoodStockReport> GetFinishGoodStockReport(long? productId, string fromDate, string toDate)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodStockReport>(QueryFinishGoodStockReport(productId, fromDate, toDate));
+        }
 
-//        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfosList(long? productId, string finishGoodProductionBatch)
-//        {
-//            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QuerySearchForFinishGoodProductInfoss(productId,finishGoodProductionBatch)).ToList();
-//        }
+        private string QueryFinishGoodStockReport(long? productId, string fromDate, string toDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+            string FromDate = string.Empty;
+            string ToDate = string.Empty;
 
-//        private string QuerySearchForFinishGoodProductInfoss(long? productId, string finishGoodProductionBatch)
-//        {
-//            string query = string.Empty;
-//            string param = string.Empty;
+            if (productId != 0 && productId > 0)
+            {
+                param += string.Format(@" and fgp.FinishGoodProductId={0}", productId);
+            }
 
-//            //param += string.Format(@" and FI.OrganizationId={0}", orgId);
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(fgp.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
 
-//            if (productId != null && productId > 0)
-//            {
-//                param += string.Format(@" and s.FinishGoodProductId={0}", productId);
-//            }
-//            if (!string.IsNullOrEmpty(finishGoodProductionBatch))
-//            {
-//                param += string.Format(@"and s.FinishGoodProductionBatch like '%{0}%'", finishGoodProductionBatch);
-//            }
 
-//            query = string.Format(@"
-//--select distinct s.FinishGoodProductId, o.FinishGoodProductName,
-//--s.FinishGoodProductionBatch,s.Quanity,s.TargetQuantity
-//--from FinishGoodProductionInfoes s
-//--inner join tblFinishGoodProductInfo o on s.FinishGoodProductId=o.FinishGoodProductId
-//select s.FinishGoodProductId, o.FinishGoodProductName, s.FinishGoodProductionBatch,r.ReceipeBatchCode,a.UnitName,s.Quanity,s.TargetQuantity,s.Status
-//from FinishGoodProductionInfoes s
-//inner join tblFinishGoodProductInfo o on s.FinishGoodProductId=o.FinishGoodProductId
-//inner join tblFinishGoodRecipeInfo r on r.FGRId=s.FGRId
-//inner join tblAgroUnitInfo a on r.UnitId=a.UnitId
 
-//where 1=1 {0}", Utility.ParamChecker(param));
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                FromDate += string.Format(@" and Cast(fgp.EntryDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                ToDate += string.Format(@" and Cast(fgp.EntryDate as date)='{0}'", tDate);
+            }
 
-//            return query;
-//        }
+            query = string.Format(@"select Distinct todate='" + fromDate + "', fromDate='" + toDate + "' fgp.FinishGoodProductId , fgp.FGRId ,p.FinishGoodProductName,fgp.FinishGoodProductionBatch,fgp.EntryDate,fr.ReceipeBatchCode,CONC( fr.FGRQty,' ( ',un.UnitName,')') AS ProductDetails,ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0) ,SalesTotal =isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0) ,ReturnTotal = isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) ,CurrentPices=isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) from FinishGoodProductionInfoes fgp inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId where 1=1", Utility.ParamChecker(param));
+            return query;
+        }
+
+
+        //        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfosList(long? productId, string finishGoodProductionBatch)
+        //        {
+        //            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QuerySearchForFinishGoodProductInfoss(productId,finishGoodProductionBatch)).ToList();
+        //        }
+
+        //        private string QuerySearchForFinishGoodProductInfoss(long? productId, string finishGoodProductionBatch)
+        //        {
+        //            string query = string.Empty;
+        //            string param = string.Empty;
+
+        //            //param += string.Format(@" and FI.OrganizationId={0}", orgId);
+
+        //            if (productId != null && productId > 0)
+        //            {
+        //                param += string.Format(@" and s.FinishGoodProductId={0}", productId);
+        //            }
+        //            if (!string.IsNullOrEmpty(finishGoodProductionBatch))
+        //            {
+        //                param += string.Format(@"and s.FinishGoodProductionBatch like '%{0}%'", finishGoodProductionBatch);
+        //            }
+
+        //            query = string.Format(@"
+        //--select distinct s.FinishGoodProductId, o.FinishGoodProductName,
+        //--s.FinishGoodProductionBatch,s.Quanity,s.TargetQuantity
+        //--from FinishGoodProductionInfoes s
+        //--inner join tblFinishGoodProductInfo o on s.FinishGoodProductId=o.FinishGoodProductId
+        //select s.FinishGoodProductId, o.FinishGoodProductName, s.FinishGoodProductionBatch,r.ReceipeBatchCode,a.UnitName,s.Quanity,s.TargetQuantity,s.Status
+        //from FinishGoodProductionInfoes s
+        //inner join tblFinishGoodProductInfo o on s.FinishGoodProductId=o.FinishGoodProductId
+        //inner join tblFinishGoodRecipeInfo r on r.FGRId=s.FGRId
+        //inner join tblAgroUnitInfo a on r.UnitId=a.UnitId
+
+        //where 1=1 {0}", Utility.ParamChecker(param));
+
+        //            return query;
+        //        }
 
     }
 }

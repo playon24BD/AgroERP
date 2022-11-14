@@ -39,7 +39,7 @@
         <Top>1.21403in</Top>
         <Left>0.16542in</Left>
         <Height>0in</Height>
-        <Width>10.51737in</Width>
+        <Width>10.98612in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -133,6 +133,9 @@
         <Height>0.30556in</Height>
         <Width>1in</Width>
         <ZIndex>4</ZIndex>
+        <Visibility>
+          <Hidden>true</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -165,6 +168,9 @@
         <Height>0.30556in</Height>
         <Width>1.58334in</Width>
         <ZIndex>5</ZIndex>
+        <Visibility>
+          <Hidden>true</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -231,6 +237,9 @@
         <Height>0.25in</Height>
         <Width>3.20486in</Width>
         <ZIndex>7</ZIndex>
+        <Visibility>
+          <Hidden>true</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -299,6 +308,9 @@
         <Height>0.25in</Height>
         <Width>1.33333in</Width>
         <ZIndex>9</ZIndex>
+        <Visibility>
+          <Hidden>true</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -363,6 +375,9 @@
         <Height>0.25in</Height>
         <Width>1.25347in</Width>
         <ZIndex>11</ZIndex>
+        <Visibility>
+          <Hidden>true</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1945,6 +1960,9 @@
         <Height>0.30208in</Height>
         <Width>0.27986in</Width>
         <ZIndex>15</ZIndex>
+        <Visibility>
+          <Hidden>=iif(Fields!fromDate.Value="",true, iif(Fields!todate.Value="",true,false))</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1978,7 +1996,7 @@
         <Top>0.04688in</Top>
         <Left>0.16542in</Left>
         <Height>0.29042in</Height>
-        <Width>10.51736in</Width>
+        <Width>10.98612in</Width>
         <ZIndex>16</ZIndex>
         <Style>
           <Border>
@@ -2012,7 +2030,7 @@
         <Top>0.30667in</Top>
         <Left>0.16542in</Left>
         <Height>0.25in</Height>
-        <Width>10.51736in</Width>
+        <Width>10.98612in</Width>
         <ZIndex>17</ZIndex>
         <Style>
           <Border>
@@ -2028,7 +2046,7 @@
     <Height>3.36334in</Height>
     <Style />
   </Body>
-  <Width>12.68279in</Width>
+  <Width>11.15154in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>

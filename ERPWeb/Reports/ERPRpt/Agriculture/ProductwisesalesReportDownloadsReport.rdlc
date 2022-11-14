@@ -786,7 +786,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>To</Value>
+                <Value EvaluationMode="Constant">To</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -805,6 +805,9 @@
         <Height>0.25in</Height>
         <Width>0.29375in</Width>
         <ZIndex>6</ZIndex>
+        <Visibility>
+          <Hidden>=iif(Fields!fromDate.Value="",true, iif(Fields!todate.Value="",true,false))</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>

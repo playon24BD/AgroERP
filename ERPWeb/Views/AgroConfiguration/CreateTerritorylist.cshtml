@@ -2,10 +2,12 @@
     ViewBag.Title = "CreateTerritory";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+<div class="row" style="margin-top:-25px;">
     <div class="col-md-12">
-        <div class="card card-gray shadow">
-            <div class="card-header">
+
+        <div class="card card-navy">
+            <div class="card-header" style="text-align: center;">
+
                 <div class="row">
                     <div class="col-md-3">
                         <a href="/AgroConfiguration/Territorylist" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
@@ -13,69 +15,70 @@
                         </a>
                     </div>
                     <div class="col-md-6">
-                        <h5 class="text-center text-bold">Create Territory</h5>
+
+
+                        <h4 class="text-center text-bold">
+                            Create Territory
+                        </h4>
                     </div>
                     <div class="col-md-3">
+                        <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="card-body text-sm">
+            <div class="row " style="margin-top:-18px;">
+
+                <div class="col-md-2">
+                    <label for="ddlareaname" class="control-label">AreaName</label>
+                    @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select Area Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    <span class="error hide required-AreaName font-weight-bold">Input AreaName!</span>
+                </div>
+
+
+                <div class="col-md-2">
+                    <label for="ddlTerritoryName" class="control-label">TerritoryName</label>
+                    <input type="text" id="ddlTerritoryName" class="form-control form-control-sm" />
+                    <span class="error hide required-TerritoryName font-weight-bold">Input Territory Name!</span>
+                    <span class="error hide required-TerritoryName font-weight-bold">Already TerritoryName Exist!</span>
+                </div>
+
+                <div class="col-md-1 " style="margin-top:5px;">
+                    <label for="addButton" class="control-label"></label>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
                     </div>
                 </div>
             </div>
 
-            <div class="card-body text-sm">
-                <div class="row " style="margin-top:-8px;">
-                    @*<div class="col-md-2">
-                        <label for="ddlorgname" class="control-label">OrganizationName</label>
-                        @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                        <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
-                    </div>*@
 
-                    <div class="col-md-2">
-                        <label for="ddlareaname" class="control-label">AreaName</label>
-                        @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select Area Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                        <span class="error hide required-AreaName font-weight-bold">Input AreaName!</span>
-                    </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
+                    <thead>
 
 
-                    <div class="col-md-2">
-                        <label for="ddlTerritoryName" class="control-label">TerritoryName</label>
-                        <input type="text" id="ddlTerritoryName" class="form-control form-control-sm" />
-                        <span class="error hide required-TerritoryName font-weight-bold">Input Territory Name!</span>
-                        <span class="error hide required-TerritoryName font-weight-bold">Already TerritoryName Exist!</span>
-                    </div>
-
-                    <div class="col-md-1 " style="margin-top:5px;">
-                        <label for="addButton" class="control-label"></label>
-                        <div class="clearfix">
-                            <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
-                            <thead>
-                                <tr>
-                                    <th colspan="9">
-                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
-                                    </th>
-                                </tr>
-
-                                <tr class="text-center btn-dark">
-                                    <th style="width:5%">#SL</th>
-                                    <th style="width:10%">AreaName</th>
-                                    <th style="width:10%">TerritoryName</th>
-                                    <th style="width:5%">Action</th>
-                                    <th class="hide ddlareaname"></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-
-                </div>
+                        <tr class="text-center btn-dark">
+                            <th style="width:5%">#SL</th>
+                            <th style="width:10%">AreaName</th>
+                            <th style="width:10%">TerritoryName</th>
+                            <th style="width:5%">Action</th>
+                            <th class="hide ddlareaname"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
 
         </div>
+
     </div>
 
 </div>

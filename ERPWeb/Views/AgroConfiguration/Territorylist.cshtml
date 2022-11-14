@@ -4,73 +4,61 @@
 }
 
 
-<div class="row">
+<div class="row" style="margin-top:-10px">
     <div class="col-md-12">
 
-        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-two-TerritoryList-tab" data-toggle="pill" href="#custom-tabs-two-RegionList" role="tab" aria-controls="custom-tabs-two-TerritoryList" aria-selected="true">Existing Territory List</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="tab-content" id="custom-tabs-two-tabContent">
-                    @Html.AntiForgeryToken()
-                    <div class="tab-pane fade show active" id="custom-tabs-two-TerritoryList" role="tabpanel" aria-labelledby="custom-tabs-two-RegionList-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card card-gray-dark">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="text-center text-bold">
-                                                    Territory List
-                                                </h5>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <a href="/AgroConfiguration/CreateTerritorylist" class="btn btn-outline-primary btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Territory</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <h4 class="col-md-2">Search By</h4>
-                                            <div class="col-md-3">
-                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search By Any" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-3">
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer">
-
-                                        </div>
-                                    </div>
-
-                                </div>
+                            <div class="col-md-6">
+                                <h4 class="text-center text-bold">Territory List</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/AgroConfiguration/CreateTerritorylist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Territory</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h5 class="text-center">Search By</h5>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search By Any" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>
