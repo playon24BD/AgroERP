@@ -2630,6 +2630,7 @@
     <Content Include="Reports\DataSets\dsAgroSalesChallanReport.xsc">
       <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
     </Content>
+<<<<<<< Updated upstream
 
     <Content Include="Reports\DataSets\Agro.xsc">
       <DependentUpon>Agro.xsd</DependentUpon>
@@ -2654,6 +2655,8 @@
       <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
 
     </Content>
+=======
+>>>>>>> Stashed changes
     <None Include="Reports\DataSets\dsAgroSalesChallanReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -2672,6 +2675,17 @@
     </Content>
     <Content Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsc">
       <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSets\dsFinishGoodStockQtyReports.xsc">
+      <DependentUpon>dsFinishGoodStockQtyReports.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsFinishGoodStockQtyReports.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsFinishGoodStockQtyReports.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsFinishGoodStockQtyReports.xss">
+      <DependentUpon>dsFinishGoodStockQtyReports.xsd</DependentUpon>
     </Content>
     <None Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsd">
       <SubType>Designer</SubType>
@@ -3108,6 +3122,7 @@
     <Compile Include="Infrastructure\PagerData.cs" />
     <Compile Include="Infrastructure\PrintReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< Updated upstream
 
     <Compile Include="Reports\DataSets\Agro.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -3120,6 +3135,8 @@
       <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
 
     </Compile>
+=======
+>>>>>>> Stashed changes
     <Compile Include="Reports\DataSets\dsAgroSalesChallanReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3129,6 +3146,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSets\dsFinishGoodStockQtyReports.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsFinishGoodStockQtyReports.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -3367,7 +3389,11 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\ProductwisesalesReportDownloadsReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
+<<<<<<< Updated upstream
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptDateWiseCollection.rdlc" />
+=======
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductStock.rdlc" />
+>>>>>>> Stashed changes
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>

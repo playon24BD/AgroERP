@@ -20,6 +20,9 @@ namespace ERPBO.Agriculture.ReportModels
         public double CurrentPices { get; set; }
         public DateTime EntryDate { get; set; }
 
+        public string todate { get; set; }
+        public string fromDate { get; set; }
+
 
     }
 }
