@@ -209,5 +209,33 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.ReceipeBatchCode == ReceipeBatchCode && i.UnitId == UnitId);
         }
+
+        public IEnumerable<MeasurementSetupDTO> GetAllMEarusmentUnitQty(long FGRID)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForGetAllMEarusmentUnitQty(FGRID)).ToList();
+        }
+
+
+        private string QueryForGetAllMEarusmentUnitQty(long? FGRID)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+       
+            if (FGRID != null && FGRID > 0)
+            {
+                param += string.Format(@" and r.FGRId={0}", FGRID);
+            }
+            query = string.Format(@" 
+select  distinct p.PackageName,m.MeasurementId from tblMeasurement m
+ inner join PackageDetails p on m.MeasurementId = p.MeasurementId
+ inner join tblAgroUnitInfo un on m.UnitId=un.UnitId
+ inner join tblFinishGoodRecipeInfo r on r.UnitId = un.UnitId
+Where 1=1 {0} and r.FGRQty=m.PackSize and r.UnitId=m.UnitId"
+
+, Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }

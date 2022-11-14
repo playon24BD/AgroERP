@@ -31,5 +31,9 @@ namespace ERPBLL.Agriculture.Interface
         FinishGoodRecipeInfo GetReceipbachcodeid( string ReceipeBatchCode);
         FinishGoodRecipeInfo GetUnitId(string ReceipeBatchCode,double UnitId);
 
+
+        IEnumerable<MeasurementSetupDTO> GetAllMEarusmentUnitQty(long fgrid);
+
+
     }
 }

@@ -2096,11 +2096,14 @@ namespace ERPWeb.Controllers
         {
             try
             {
-                //var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(finishGoodProductId, User.OrgId).ReceipeBatchCode;
-                //var ddlRecipeCode = receipeBatchCode.Select(d => new Dropdown { text=receipeBatchCode,value=d });
+           
                 var UnitQtys = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipUnitQty(finishGoodProductId, User.OrgId);
 
+
                 var dropDown = UnitQtys.Where(a => a.UnitQty != null).Select(s => new Dropdown { text = s.UnitQty, value = s.FGRId.ToString() }).ToList();
+
+                //var dropDown = UnitQtys.Where(a => a.UnitQty != null).Select(s => new Dropdown { text = s.UnitQty, value = s.UnitQty }).ToList();//e
+
 
 
                 return Json(dropDown, JsonRequestBehavior.AllowGet);
@@ -2112,6 +2115,8 @@ namespace ERPWeb.Controllers
 
 
         }
+
+
 
         public ActionResult GetMeasurementIdWiseSize(long MeasurementId)
         {
@@ -2133,8 +2138,7 @@ namespace ERPWeb.Controllers
             double MasterCarton = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).MasterCarton;
             double InnerBox = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).InnerBox;
             double PackSize = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).PackSize;
-            //var Unit = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).UnitId;
-            //var UnitName = _agroUnitInfo.GetAgroInfoById(Unit, User.OrgId).UnitName;
+
 
             if (MasterCarton != 0)
             {
@@ -2151,7 +2155,33 @@ namespace ERPWeb.Controllers
         }
 
 
+
+ 
+
+        public ActionResult GetmeasurmentUnitQtyByProductionId(long FinishGoodProductInfoId, long FGRID)
+        {
+            
+
+            try
+            {
+           
+                var measurments = _finishGoodRecipeInfoBusiness.GetAllMEarusmentUnitQty(FGRID);
+                var dropDown = measurments.Select(m=> new Dropdown { text= m.PackageName, value= m.MeasurementId.ToString() } ).ToList();
+
+
+                return Json(dropDown, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Not Found", JsonRequestBehavior.AllowGet);
+            }
+
+
+
+        }
         public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string FGRID)
+
+
         {
             //var UnitQtys = QtyKG.Split('(', ')');
             //string ProductUnitQty = UnitQtys[0];
@@ -2167,7 +2197,7 @@ namespace ERPWeb.Controllers
 
             }
             return Json(new { FinishGoodStockQty = itemStock, JsonRequestBehavior.AllowGet });
-            //return Json(itemStock, JsonRequestBehavior.AllowGet );
+            
 
 
         }
@@ -2176,14 +2206,13 @@ namespace ERPWeb.Controllers
         {
 
             bool isSucccess = false;
-            //if (ModelState.IsValid && details.Count() > 0)
-            //{
+
             AgroProductSalesInfoDTO agroSalesInfoDTO = new AgroProductSalesInfoDTO();
             List<AgroProductSalesDetailsDTO> agroSalesDetailsDTOs = new List<AgroProductSalesDetailsDTO>();
             AutoMapper.Mapper.Map(info, agroSalesInfoDTO);
             AutoMapper.Mapper.Map(details, agroSalesDetailsDTOs);
             isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
-            //}
+
             return Json(isSucccess);
         }
 

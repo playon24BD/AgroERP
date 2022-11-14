@@ -485,6 +485,7 @@
 
 
             LoadQtyUnit();
+            Loadmeasurment();
 
         })
         function LoadQtyUnit() {
@@ -500,8 +501,25 @@
 
             debugger;
             LoadFinishGoodStock();
+            Loadmeasurment();
+          
+
 
         })
+
+        function Loadmeasurment()
+        {
+            debugger;
+            clearDropdown("ddlMeasurementName");
+            if (ddlQtyUnit.val() != "" && ddlProductName.val() != "") {
+                var FinishGoodProductInfoId = ddlProductName.val();
+                var QtyKG = ddlQtyUnit.val();
+                LoadDropDown('/AgroConfiguration/GetmeasurmentUnitQtyByProductionId', 'POST', ddlMeasurementName, JSON.stringify({ FinishGoodProductInfoId: TryParseInt(ddlProductName.val()), FGRID: ddlQtyUnit.val() }));
+            }
+            else {
+                clearDropdown("ddlMeasurementName");
+            }
+        }
 
         function LoadFinishGoodStock() {
             debugger;
