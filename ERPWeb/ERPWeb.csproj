@@ -2630,6 +2630,17 @@
     <Content Include="Reports\DataSets\dsAgroSalesChallanReport.xsc">
       <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\Agro.xsc">
+      <DependentUpon>Agro.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\Agro.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Agro.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\Agro.xss">
+      <DependentUpon>Agro.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsAgroSalesChallanReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3084,6 +3095,11 @@
     <Compile Include="Infrastructure\PagerData.cs" />
     <Compile Include="Infrastructure\PrintReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\DataSets\Agro.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Agro.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsAgroSalesChallanReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3287,6 +3303,7 @@
     <Content Include="Views\AgroConfiguration\SalesCommission.cshtml" />
     <Content Include="Views\AgroConfiguration\_SalesCommission.cshtml" />
     <Content Include="Views\AgroConfiguration\_SalesCommissionDetails.cshtml" />
+    <Content Include="Views\AgroConfiguration\DateWiseCollection.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3326,6 +3343,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\ProductwisesalesReportDownloadsReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptDateWiseCollection.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>

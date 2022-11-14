@@ -3126,6 +3126,65 @@ namespace ERPWeb.Controllers
             return new EmptyResult();
         }
 
+
+        public ActionResult DateWiseCollection()
+        {
+            ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+
+            ViewBag.ddlDivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+            ViewBag.ddlRegionname = _regionSetup.GetAllRegionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
+            ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
+            ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+
+            ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(d => new SelectListItem { Text = d.TerritoryName, Value = d.TerritoryId.ToString() }).ToList();
+
+            return View();
+        }
+
+        public ActionResult GetDateWiseCollectionReport(long? zoneId,long? divisonId,long? regionId,long? areaId, long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate, string rptType)
+        {
+            var data = _salesPaymentRegister.GetDateWiseCollectionReport(zoneId,divisonId,regionId,areaId, stockiestId, territoryId, invoiceNo, fromDate, toDate);
+
+            LocalReport localReport = new LocalReport();
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptDateWiseCollection.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("DateWiseCollection", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = rptType;
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>29.7cm</PageWidth>" +
+                    "<PageHeight>21cm</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
+
         #endregion
 
         #region  SalesReturn
