@@ -510,7 +510,7 @@
             var FinishGoodProductInfoId = ddlProductName.val();
             var QtyKG = ddlQtyUnit.val();
             if (FinishGoodProductInfoId != "") {
-                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetFinishGoodstockCheck', JSON.stringify({ FinishGoodProductInfoId: TryParseInt(ddlProductName.val()), QtyKG: QtyKG }), getToken())).then(function (res, status) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetFinishGoodstockCheck', JSON.stringify({ FinishGoodProductInfoId: TryParseInt(ddlProductName.val()), FGRID: QtyKG }), getToken())).then(function (res, status) {
                     debugger;
                     console.log(res);
                     console.log(status);

@@ -2630,6 +2630,17 @@
     <Content Include="Reports\DataSets\dsAgroSalesChallanReport.xsc">
       <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsFinishGoodStockReport.xsc">
+      <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsFinishGoodStockReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsFinishGoodStockReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsFinishGoodStockReport.xss">
+      <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsAgroSalesChallanReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3084,6 +3095,11 @@
     <Compile Include="Infrastructure\PagerData.cs" />
     <Compile Include="Infrastructure\PrintReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\DataSets\dsFinishGoodStockReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsAgroSalesChallanReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3287,6 +3303,7 @@
     <Content Include="Views\AgroConfiguration\SalesCommission.cshtml" />
     <Content Include="Views\AgroConfiguration\_SalesCommission.cshtml" />
     <Content Include="Views\AgroConfiguration\_SalesCommissionDetails.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetFinishGoodStockReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

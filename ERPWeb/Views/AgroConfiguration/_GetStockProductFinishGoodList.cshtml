@@ -9,8 +9,8 @@
                 <th>Sl</th>
                 <th>Product Name </th>
                 <th>Recipe BatchCode</th>
-                <th>Unit Qty</th>
-                <th>Recipe Unit</th>
+                <th>Product Details</th>
+                @*<th>Recipe Unit</th>*@
                 <th>Production Total</th>
                 <th>Sales Total</th>
                 <th>Return Total </th>
@@ -33,8 +33,8 @@
                         <td>@sl</td>
                         <td>@item.FinishGoodProductName</td>
                         <td>@item.ReceipeBatchCode</td>
-                        <td>@item.FGRQty</td>
-                        <td>@item.UnitName</td>
+                        <td>@item.FGRQty@(" ("+@item.UnitName+" )")</td>
+                        @*<td>@item.UnitName</td>*@
                         <td>@item.ProductionTotal</td>
                         <td>@item.SalesTotal</td>
                         <td>@item.ReturnTotal</td>

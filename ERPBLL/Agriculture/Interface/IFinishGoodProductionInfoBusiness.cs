@@ -1,5 +1,6 @@
 ﻿using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
+using ERPBO.Agriculture.ReportModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfos(long orgId);
         IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionInfo(long orgId);
         //FinishGoodProductionInfo GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId);
-        IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,string ProductUnitQty,long? CheckQty, long orgId);
+        IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,int FGRID, long orgId);
 
         FinishGoodProductionInfo GetProductionInfoById(long id, long orgId);
         FinishGoodProductionInfo GetFinishGoodProductionByAny(string any, long orgId);
@@ -25,6 +26,8 @@ namespace ERPBLL.Agriculture.Interface
 
 
         FinishGoodProductionInfo Getcheckqty(long FinishGoodProductInfoId, string ProductUnitQty);
+
+        IEnumerable<FinishGoodStockReport> GetFinishGoodStockReport(long? productId, string fromDate, string toDate);
 
 
     }
