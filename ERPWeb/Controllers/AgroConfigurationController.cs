@@ -3143,9 +3143,6 @@ namespace ERPWeb.Controllers
             return new EmptyResult();
         }
 
-<<<<<<< Updated upstream
-
-
         public ActionResult DateWiseCollection()
         {
             ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
@@ -3205,10 +3202,10 @@ namespace ERPWeb.Controllers
         }
 
 
-    public ActionResult GetFinishGoodStockReport(long? productId, string fromDate, string toDate, string rptType)
-=======
+    //public ActionResult GetFinishGoodStockReport(long? productId, string fromDate, string toDate, string rptType)
+
         public ActionResult GetFinishGoodStockQtyReport(long? productId, string fromDate, string toDate, string rptType)
->>>>>>> Stashed changes
+
         {
             var data = _finishGoodProductionInfoBusiness.GetFinishGoodStockReport(productId, fromDate, toDate);
             LocalReport localReport = new LocalReport();
@@ -3707,7 +3704,6 @@ namespace ERPWeb.Controllers
 
         }
         #endregion
-
 
     }
 }
