@@ -2630,8 +2630,6 @@
     <Content Include="Reports\DataSets\dsAgroSalesChallanReport.xsc">
       <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
     </Content>
-<<<<<<< Updated upstream
-
     <Content Include="Reports\DataSets\Agro.xsc">
       <DependentUpon>Agro.xsd</DependentUpon>
     </Content>
@@ -2643,20 +2641,6 @@
     <Content Include="Reports\DataSets\Agro.xss">
       <DependentUpon>Agro.xsd</DependentUpon>
     </Content>
-    <Content Include="Reports\DataSets\dsFinishGoodStockReport.xsc">
-      <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\dsFinishGoodStockReport.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsFinishGoodStockReport.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Reports\DataSets\dsFinishGoodStockReport.xss">
-      <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
-
-    </Content>
-=======
->>>>>>> Stashed changes
     <None Include="Reports\DataSets\dsAgroSalesChallanReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3133,21 +3117,11 @@
     <Compile Include="Infrastructure\PagerData.cs" />
     <Compile Include="Infrastructure\PrintReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-<<<<<<< Updated upstream
-
     <Compile Include="Reports\DataSets\Agro.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Agro.xsd</DependentUpon>
-   </Compile>
-    <Compile Include="Reports\DataSets\dsFinishGoodStockReport.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
-
     </Compile>
-=======
->>>>>>> Stashed changes
     <Compile Include="Reports\DataSets\dsAgroSalesChallanReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3403,11 +3377,8 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\ProductwisesalesReportDownloadsReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
-<<<<<<< Updated upstream
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptDateWiseCollection.rdlc" />
-=======
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductStock.rdlc" />
->>>>>>> Stashed changes
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesCommissionReport.rdlc" />
   </ItemGroup>

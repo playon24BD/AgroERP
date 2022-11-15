@@ -3176,7 +3176,6 @@ namespace ERPWeb.Controllers
             return new EmptyResult();
         }
 
-<<<<<<< Updated upstream
 
 
         public ActionResult DateWiseCollection()
@@ -3237,11 +3236,8 @@ namespace ERPWeb.Controllers
             return File(renderedBytes, mimeType);
         }
 
-
-    public ActionResult GetFinishGoodStockReport(long? productId, string fromDate, string toDate, string rptType)
-=======
         public ActionResult GetFinishGoodStockQtyReport(long? productId, string fromDate, string toDate, string rptType)
->>>>>>> Stashed changes
+
         {
             var data = _finishGoodProductionInfoBusiness.GetFinishGoodStockReport(productId, fromDate, toDate);
             LocalReport localReport = new LocalReport();
