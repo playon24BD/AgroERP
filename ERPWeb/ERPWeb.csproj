@@ -2630,7 +2630,6 @@
     <Content Include="Reports\DataSets\dsAgroSalesChallanReport.xsc">
       <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
     </Content>
-
     <Content Include="Reports\DataSets\Agro.xsc">
       <DependentUpon>Agro.xsd</DependentUpon>
     </Content>
@@ -2641,18 +2640,6 @@
     </None>
     <Content Include="Reports\DataSets\Agro.xss">
       <DependentUpon>Agro.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\DataSets\dsFinishGoodStockReport.xsc">
-      <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\DataSets\dsFinishGoodStockReport.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsFinishGoodStockReport.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Reports\DataSets\dsFinishGoodStockReport.xss">
-      <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
-
     </Content>
     <None Include="Reports\DataSets\dsAgroSalesChallanReport.xsd">
       <SubType>Designer</SubType>
@@ -2672,6 +2659,17 @@
     </Content>
     <Content Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsc">
       <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSets\dsFinishGoodStockQtyReports.xsc">
+      <DependentUpon>dsFinishGoodStockQtyReports.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsFinishGoodStockQtyReports.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsFinishGoodStockQtyReports.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsFinishGoodStockQtyReports.xss">
+      <DependentUpon>dsFinishGoodStockQtyReports.xsd</DependentUpon>
     </Content>
     <None Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.xsd">
       <SubType>Designer</SubType>
@@ -3108,17 +3106,10 @@
     <Compile Include="Infrastructure\PagerData.cs" />
     <Compile Include="Infrastructure\PrintReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-
     <Compile Include="Reports\DataSets\Agro.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Agro.xsd</DependentUpon>
-   </Compile>
-    <Compile Include="Reports\DataSets\dsFinishGoodStockReport.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsFinishGoodStockReport.xsd</DependentUpon>
-
     </Compile>
     <Compile Include="Reports\DataSets\dsAgroSalesChallanReport.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -3129,6 +3120,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSets\dsFinishGoodStockQtyReports.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsFinishGoodStockQtyReports.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reports\DataSets\dsInvoiceWiseCollectionSalesReport.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -3323,11 +3319,8 @@
     <Content Include="Views\AgroConfiguration\SalesCommission.cshtml" />
     <Content Include="Views\AgroConfiguration\_SalesCommission.cshtml" />
     <Content Include="Views\AgroConfiguration\_SalesCommissionDetails.cshtml" />
-
     <Content Include="Views\AgroConfiguration\DateWiseCollection.cshtml" />
-
     <Content Include="Views\AgroConfiguration\GetFinishGoodStockReport.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3368,6 +3361,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptDateWiseCollection.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductStock.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>

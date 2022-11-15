@@ -3143,8 +3143,6 @@ namespace ERPWeb.Controllers
             return new EmptyResult();
         }
 
-
-
         public ActionResult DateWiseCollection()
         {
             ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
@@ -3204,19 +3202,22 @@ namespace ERPWeb.Controllers
         }
 
 
-    public ActionResult GetFinishGoodStockReport(long? productId, string fromDate, string toDate, string rptType)
+    //public ActionResult GetFinishGoodStockReport(long? productId, string fromDate, string toDate, string rptType)
+
+        public ActionResult GetFinishGoodStockQtyReport(long? productId, string fromDate, string toDate, string rptType)
+
         {
             var data = _finishGoodProductionInfoBusiness.GetFinishGoodStockReport(productId, fromDate, toDate);
             LocalReport localReport = new LocalReport();
-            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/ProductwisesalesReportDownloadsReport.rdlc");
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptFinishGoodProductStock.rdlc");
             if (System.IO.File.Exists(reportPath))
             {
                 localReport.ReportPath = reportPath;
-                ReportDataSource dataSource1 = new ReportDataSource("dsProductwisesalesReportDownloadReport", data);
+                ReportDataSource dataSource1 = new ReportDataSource("dsFinishGoodQtyStocks", data);
                 localReport.DataSources.Clear();
                 localReport.DataSources.Add(dataSource1);
                 localReport.Refresh();
-                localReport.DisplayName = "Product Wise Sales Statement";
+                localReport.DisplayName = "Finish Good Product Stock";
 
                 string mimeType;
                 string encoding;
@@ -3703,7 +3704,6 @@ namespace ERPWeb.Controllers
 
         }
         #endregion
-
 
     }
 }

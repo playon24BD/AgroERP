@@ -130,12 +130,12 @@
         })
 
         $("#btnDownload").click(function () {
-            if (dptFromDate.val() == "" && dptToDate.val() == "" && ddlProductName.val() == "") {
-                bootbox.alert("Please Select Anyone");
-            }
-            else {
-                window.open("/AgroConfiguration/GetFinishGoodStockReport?fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val() + "&productId=" + ddlProductName.val());
-            }
+            //if (dptFromDate.val() == "" && dptToDate.val() == "" && ddlProductName.val() == "") {
+            //    bootbox.alert("Please Select Anyone");
+            //}
+            //else {
+                window.open("/AgroConfiguration/GetFinishGoodStockQtyReport?fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val() + "&productId=" + ddlProductName.val());
+            //}
         })
 
     </script>
