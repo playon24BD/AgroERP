@@ -3176,8 +3176,6 @@ namespace ERPWeb.Controllers
             return new EmptyResult();
         }
 
-
-
         public ActionResult DateWiseCollection()
         {
             ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
@@ -3235,6 +3233,7 @@ namespace ERPWeb.Controllers
                 );
             return File(renderedBytes, mimeType);
         }
+
 
         public ActionResult GetFinishGoodStockQtyReport(long? productId, string fromDate, string toDate, string rptType)
 
@@ -3782,7 +3781,6 @@ namespace ERPWeb.Controllers
         }
 
         #endregion
-
 
     }
 }

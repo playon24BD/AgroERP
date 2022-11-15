@@ -3337,7 +3337,9 @@
     <Content Include="Views\AgroConfiguration\_SalesCommissionDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\DateWiseCollection.cshtml" />
     <Content Include="Views\AgroConfiguration\GetFinishGoodStockReport.cshtml" />
+
     <Content Include="Views\AgroConfiguration\_GetInvoiceWiseSalesReportList.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
