@@ -28,5 +28,9 @@ namespace ERPBO.Agriculture.ViewModels
         public long OrganizationId { get; set; }
         //
         public string FinishGoodProductName { get; set; }
+
+        public double TotalAmount { get; set; }
+        public string QtyKG { get; set; }
+        public long ProductSalesDetailsId { get; set; }
     }
 }
