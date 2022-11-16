@@ -40,10 +40,22 @@
 
                             <div class="col-md-2">
 
-                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By invoice" />
                             </div>
 
                             <div class="col-md-2">
+
+                                @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--StockiestName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+
+
+                            <div class="col-md-2">
+
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+
+
+                            <div class="col-md-1">
 
                                 <select class="form-control form-control-sm select2" id="ddlStatus">
                                     <option value="" selected>--Status--</option>
@@ -53,7 +65,7 @@
                             </div>
 
 
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="FromDate" />
                                     <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
@@ -61,7 +73,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="ToDate" />
                                     <div class="input-group-prepend cursor-pointer remove-date dptToDate" style="cursor:pointer">
@@ -117,6 +129,8 @@
         var rptType = $("#rptType");
         var ddlStatus = $("#ddlStatus");
         var ddlProductName = $("#ddlProductName");
+        var ddlStockiestName = $("#ddlStockiestName");
+        var SearchAny = $("#SearchAny");
         
         
 
@@ -165,7 +179,9 @@
             }
         })
 
-
+        SearchAny.keyup(function () {
+            LoadSalesReturnReportList();
+        })
 
         dptFromDate.change(function () {
             LoadSalesReturnReportList();
@@ -180,6 +196,10 @@
 
             LoadSalesReturnReportList();
         })
+        ddlStockiestName.change(function () {
+
+            LoadSalesReturnReportList();
+        })
 
         ddlStatus.change(function () {
 
@@ -189,7 +209,7 @@
         function LoadSalesReturnReportList() {
             debugger;
 
-            var data = { flag: "View", productId: TryParseInt(ddlProductName.val(), 0), status: ddlStatus.val(), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+            var data = { flag: "View", productId: TryParseInt(ddlProductName.val(), 0), stockiestId: TryParseInt(ddlStockiestName.val(), 0), invoiceNo: $.trim(SearchAny.val()), status: ddlStatus.val(), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetSalesReturnReportList', data)).then(function (res, status) {
                 console.log(status);
@@ -208,11 +228,11 @@
 
 
         $("#btnDownload").click(function () {
-            if (ddlProductName.val() && ddlStatus.val() && dptFromDate.val() == "" && dptToDate.val() == "") {
+            if (ddlProductName.val() && ddlStatus.val() && dptFromDate.val() == "" && dptToDate.val() == "" && ddlStockiestName.val() == "" && SearchAny.val() == "") {
                 bootbox.alert("Please Select Anyone");
             }
             else {
-                window.open("/AgroConfiguration/GetSalesReturnReport?&fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val() + "&productId=" + TryParseInt(ddlProductName.val(), 0) + "&status=" + ddlStatus.val());
+                window.open("/AgroConfiguration/GetSalesReturnReport?&fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val() + "&productId=" + TryParseInt(ddlProductName.val(), 0) + "&status=" + ddlStatus.val() + "&invoiceNo=" + $.trim(SearchAny.val()) + "&stockiestId=" + TryParseInt(ddlStockiestName.val(), 0));
             }
         })
 

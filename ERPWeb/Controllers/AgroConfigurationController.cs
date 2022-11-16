@@ -3559,7 +3559,7 @@ namespace ERPWeb.Controllers
             return File(renderedBytes, mimeType);
         }
 
-        public ActionResult GetSalesReturnReportList(string flag, long? productId, string status, string fromDate, string toDate)
+        public ActionResult GetSalesReturnReportList(string flag, long? productId,long?stockiestId,string invoiceNo, string status, string fromDate, string toDate)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -3567,13 +3567,15 @@ namespace ERPWeb.Controllers
 
                 ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(des => new SelectListItem { Text = des.FinishGoodProductName, Value = des.FinishGoodProductId.ToString() }).ToList();
 
+                ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(des => new SelectListItem { Text = des.StockiestName, Value = des.StockiestId.ToString() }).ToList();
+
                 return View();
 
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
 
-                var dto = _salesReturn.GetSalesReturnReportList(productId, status, fromDate, toDate);
+                var dto = _salesReturn.GetSalesReturnReportList(productId,stockiestId,invoiceNo, status, fromDate, toDate);
                 List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                     return PartialView("_GetSalesReturnReportList", viewModels);
@@ -3586,9 +3588,9 @@ namespace ERPWeb.Controllers
         }
 
 
-        public ActionResult GetSalesReturnReport(string rptType, long? productId, string status, string fromDate, string toDate)
+        public ActionResult GetSalesReturnReport(string rptType, long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate)
         {
-            var data = _salesReturn.GetSalesReturnReportList(productId, status, fromDate, toDate);
+            var data = _salesReturn.GetSalesReturnReportList(productId,stockiestId,invoiceNo, status, fromDate, toDate);
 
             LocalReport localReport = new LocalReport();
 

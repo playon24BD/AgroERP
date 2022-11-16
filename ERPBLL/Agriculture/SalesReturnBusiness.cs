@@ -180,12 +180,12 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return _salesReturnRepository.GetAll(v => v.FGRId == FGRId && v.FinishGoodProductInfoId == FinishGoodProductInfoId && v.Status == "ADJUST");
         }
 
-        public IEnumerable<SalesReturnDTO> GetSalesReturnReportList( long? productId, string status, string fromDate, string toDate)
+        public IEnumerable<SalesReturnDTO> GetSalesReturnReportList( long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnDTO>(QueryForSalesReturnReportList(productId, status, fromDate, toDate)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnDTO>(QueryForSalesReturnReportList(productId,stockiestId,invoiceNo, status, fromDate, toDate)).ToList();
         }
 
-        private string QueryForSalesReturnReportList(long? productId, string status, string fromDate, string toDate)
+        private string QueryForSalesReturnReportList(long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -195,10 +195,16 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             {
                 param += string.Format(@" and f.FinishGoodProductId ={0}", productId);
             }
-            //if (name != null && name != "")
-            //{
-            //    param += string.Format(@" and sr.InvoiceNo like '%{0}%'", name);
-            //}
+
+            else if (stockiestId != null && stockiestId > 0)
+            {
+                param += string.Format(@" and s.StockiestId ={0}", stockiestId);
+            }
+
+            else if (invoiceNo != null && invoiceNo != "")
+            {
+                param += string.Format(@" and sr.InvoiceNo like '%{0}%'", invoiceNo);
+            }
 
             else if (status != null && status != "")
             {
@@ -225,7 +231,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
             
 
-select convert (date,sr.ReturnDate) as ReturnDate,f.FinishGoodProductId,InvoiceNo,f.FinishGoodProductName,s.StockiestName,sr.MeasurementSize,sr.ReturnQuanity,sr.QtyKG,sr.BoxQuanity,sr.ReturnPerUnitPrice,sr.Status,sr.ReturnTotalPrice
+select convert (date,sr.ReturnDate) as ReturnDate,s.StockiestId,f.FinishGoodProductId,InvoiceNo,f.FinishGoodProductName,s.StockiestName,sr.MeasurementSize,sr.ReturnQuanity,sr.QtyKG,sr.BoxQuanity,sr.ReturnPerUnitPrice,sr.Status,sr.ReturnTotalPrice
 
 from [Agriculture].[dbo]. tblSalesReturn sr
 inner join [Agriculture].[dbo]. tblFinishGoodProductInfo f on sr.FinishGoodProductInfoId=f.FinishGoodProductId
@@ -237,12 +243,12 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
 
-        public IEnumerable<SalesReturnReportData> GetSalesReturnReportData(long? productId, string status, string fromDate, string toDate)
+        public IEnumerable<SalesReturnReportData> GetSalesReturnReportData(long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnReportData>(QueryForSalesReturnReportData(productId, status, fromDate, toDate)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnReportData>(QueryForSalesReturnReportData(productId,stockiestId,invoiceNo, status, fromDate, toDate)).ToList();
         }
 
-        private string QueryForSalesReturnReportData(long? productId, string status, string fromDate, string toDate)
+        private string QueryForSalesReturnReportData(long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -252,10 +258,15 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             {
                 param += string.Format(@" and f.FinishGoodProductId ={0}", productId);
             }
-            //if (name != null && name != "")
-            //{
-            //    param += string.Format(@" and sr.InvoiceNo like '%{0}%'", name);
-            //}
+            else if (stockiestId != null && stockiestId > 0)
+            {
+                param += string.Format(@" and s.StockiestId ={0}", stockiestId);
+            }
+
+            else if (invoiceNo != null && invoiceNo != "")
+            {
+                param += string.Format(@" and sr.InvoiceNo like '%{0}%'", invoiceNo);
+            }
 
             else if (status != null && status != "")
             {
@@ -282,7 +293,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
             
 
-select convert (date,sr.ReturnDate) as ReturnDate,f.FinishGoodProductId,InvoiceNo,f.FinishGoodProductName,s.StockiestName,sr.MeasurementSize,sr.ReturnQuanity,sr.QtyKG,sr.BoxQuanity,sr.ReturnPerUnitPrice,sr.Status,sr.ReturnTotalPrice
+select convert (date,sr.ReturnDate) as ReturnDate,s.StockiestId,f.FinishGoodProductId,InvoiceNo,f.FinishGoodProductName,s.StockiestName,sr.MeasurementSize,sr.ReturnQuanity,sr.QtyKG,sr.BoxQuanity,sr.ReturnPerUnitPrice,sr.Status,sr.ReturnTotalPrice
 
 from [Agriculture].[dbo]. tblSalesReturn sr
 inner join [Agriculture].[dbo]. tblFinishGoodProductInfo f on sr.FinishGoodProductInfoId=f.FinishGoodProductId
