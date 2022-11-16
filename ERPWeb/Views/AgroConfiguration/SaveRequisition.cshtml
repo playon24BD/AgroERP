@@ -66,8 +66,8 @@
                                         <label for="requistionQuantity">Requisition Qty</label>
                                         <input type="number" id="numRequisitonQuantity" name="requistionQuantity" class="form-control form-control-sm" />
                                         <span class="error hide req-qty">Qty Is Required</span>
-                                        <span id="spanRawMaterialStockQty">Stock: <span id="RawMaterialStockQty">0</span> </span>
-                                        <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
+                                        @*<span id="spanRawMaterialStockQty">Stock: <span id="RawMaterialStockQty">0</span> </span>*@
+                                        @*<span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>*@
                                     </div>
 
                                     <div class="col-md-2">
@@ -155,9 +155,9 @@
                                         <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
                                     </div>
                                     <div class="col-md-2">
-                                        <label for="qty"> Qty</label>
+                                        <label for="qty"> Product Details</label>
                                         <input type="text" id="qty" name="qty" class="form-control form-control-sm" readonly />
-                                        <span class="error hide req-qty">Qty Is Required</span>
+                                        <span class="error hide req-qty-bundle">Qty Is Required</span>
 
                                     </div>
                                     <div class="col-md-2">
@@ -340,13 +340,15 @@
                 $(".req-qty").removeClass('hide');
                 isValid = false;
             }
-            if (QuantityCheck() == true) {
-                $(".req-qtyChecking").removeClass('hide');
-                isValid = false;
-            }
+            //if (QuantityCheck() == true) {
+            //    $(".req-qtyChecking").removeClass('hide');
+            //    isValid = false;
+            //}
 
             return isValid;
         }
+
+
 
         function QuantityCheck() {
 
@@ -503,10 +505,31 @@
 
             });
         }
-      
+
+        function validateAddToListBundle() {
+
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (TryParseInt(ddlProduct.val(),0) == 0) {
+                $(".req-ddlProduct").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlReceipBatchCode.val() == "") {
+                
+                $(".req-ddlReceipBatchCode").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(targetQty.val(),0) == 0) {
+                $(".req-targetQty").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
         $("#addTolistBundle").click(function (e) {
             e.preventDefault();
-            if (true) {
+            if (validateAddToListBundle()==true) {
                 debugger;
                 var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
 
@@ -517,8 +540,7 @@
                     material = JSON.parse(res)
                     console.log(material);
                     var len = material.length;
-                    console.log("length: " + len);
-                    console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
+
 
                         //console.log(material[0].RawMaterialName);
                     $.each(material, function (index, value) {
