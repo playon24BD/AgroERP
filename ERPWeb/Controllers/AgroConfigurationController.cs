@@ -2252,7 +2252,6 @@ namespace ERPWeb.Controllers
 
             return View();
         }
-
         [HttpGet]
         public ActionResult CreateAgroSalesProduct(long? id, long? finishGoodProductId)
         {
@@ -2283,7 +2282,6 @@ namespace ERPWeb.Controllers
 
             return View();
         }
-
         public ActionResult GetReceipyUnitQtyByProductionId(long finishGoodProductId)
         {
             try
@@ -2307,9 +2305,6 @@ namespace ERPWeb.Controllers
 
 
         }
-
-
-
         public ActionResult GetMeasurementIdWiseSize(long MeasurementId)
         {
             var MasterCarton = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).MasterCarton;
@@ -2345,11 +2340,6 @@ namespace ERPWeb.Controllers
             return Json(TotalQtyProduct, JsonRequestBehavior.AllowGet);
 
         }
-
-
-
- 
-
         public ActionResult GetmeasurmentUnitQtyByProductionId(long FinishGoodProductInfoId, long FGRID)
         {
             
@@ -2391,7 +2381,6 @@ namespace ERPWeb.Controllers
 
 
         }
-
         public ActionResult SaveAgroProductSalesInfo(AgroProductSalesInfoViewModel info, List<AgroProductSalesDetailsViewModel> details)
         {
 
@@ -2405,7 +2394,6 @@ namespace ERPWeb.Controllers
 
             return Json(isSucccess);
         }
-
         public ActionResult AgroProductSalesReport(long ProductSalesInfoId)
         {
             var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
@@ -3540,8 +3528,8 @@ namespace ERPWeb.Controllers
             string deviceInfo =
                     "<DeviceInfo>" +
                     "<OutputFormat>PDF</OutputFormat>" +
-                    "<PageWidth>29.7cm</PageWidth>" +
-                    "<PageHeight>21cm</PageHeight>" +
+                      "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
                     "<MarginTop>0.25in</MarginTop>" +
                     "<MarginLeft>0.25in</MarginLeft>" +
                     "<MarginRight>0.25in</MarginRight>" +
@@ -3613,8 +3601,8 @@ namespace ERPWeb.Controllers
             string deviceInfo =
                     "<DeviceInfo>" +
                     "<OutputFormat>PDF</OutputFormat>" +
-                    "<PageWidth>29.7cm</PageWidth>" +
-                    "<PageHeight>21cm</PageHeight>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
                     "<MarginTop>0.25in</MarginTop>" +
                     "<MarginLeft>0.25in</MarginLeft>" +
                     "<MarginRight>0.25in</MarginRight>" +
