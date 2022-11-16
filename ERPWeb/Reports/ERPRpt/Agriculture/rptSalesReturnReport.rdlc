@@ -22,10 +22,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox79</rd:DefaultName>
-        <Top>0.11979in</Top>
-        <Left>2.11075in</Left>
+        <Top>0.17535in</Top>
+        <Left>0.18292in</Left>
         <Height>0.29042in</Height>
-        <Width>7.32167in</Width>
+        <Width>7.43749in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -55,10 +55,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox80</rd:DefaultName>
-        <Top>0.39in</Top>
-        <Left>2.11075in</Left>
+        <Top>0.44556in</Top>
+        <Left>0.18292in</Left>
         <Height>0.25in</Height>
-        <Width>7.32167in</Width>
+        <Width>7.43749in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -91,10 +91,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox81</rd:DefaultName>
-        <Top>0.765in</Top>
-        <Left>3.96542in</Left>
+        <Top>0.75111in</Top>
+        <Left>0.18292in</Left>
         <Height>0.25in</Height>
-        <Width>3.19666in</Width>
+        <Width>7.43749in</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -110,37 +110,37 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.5in</Width>
+              <Width>0.26136in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.76136in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.91761in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.76136in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.76136in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.95928in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.76136in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.43844in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.67803in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.52178in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.61553in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -158,6 +158,7 @@
                             <TextRun>
                               <Value>SL</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -193,6 +194,7 @@
                             <TextRun>
                               <Value>Return Date</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -228,6 +230,7 @@
                             <TextRun>
                               <Value>Invoice No</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -263,6 +266,7 @@
                             <TextRun>
                               <Value>Stockiest Name</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -298,6 +302,7 @@
                             <TextRun>
                               <Value> Product Name</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -333,6 +338,7 @@
                             <TextRun>
                               <Value>Measurement Size</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -368,6 +374,7 @@
                             <TextRun>
                               <Value>Status</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -401,8 +408,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Box Quanity</Value>
+                              <Value>Box Qty</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -436,8 +444,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Return Quanity</Value>
+                              <Value>Return Qty</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -473,6 +482,7 @@
                             <TextRun>
                               <Value>Return Unit Price</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -508,6 +518,7 @@
                             <TextRun>
                               <Value>Return Total Price</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -548,7 +559,7 @@
                             <TextRun>
                               <Value>=RowNumber(nothing)</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -582,7 +593,7 @@
                             <TextRun>
                               <Value>=CDate(Fields!ReturnDate.Value).ToString("dd-MMM-yyyy")</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -616,7 +627,7 @@
                             <TextRun>
                               <Value>=Fields!InvoiceNo.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -650,7 +661,7 @@
                             <TextRun>
                               <Value>=Fields!StockiestName.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -684,7 +695,7 @@
                             <TextRun>
                               <Value>=Fields!FinishGoodProductName.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -718,7 +729,7 @@
                             <TextRun>
                               <Value>=Fields!MeasurementSize.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -752,7 +763,7 @@
                             <TextRun>
                               <Value>=Fields!Status.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -786,7 +797,7 @@
                             <TextRun>
                               <Value>=Fields!BoxQuanity.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -820,7 +831,7 @@
                             <TextRun>
                               <Value>=Fields!ReturnQuanity.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -854,7 +865,7 @@
                             <TextRun>
                               <Value>=Fields!ReturnPerUnitPrice.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -888,7 +899,7 @@
                             <TextRun>
                               <Value>=Fields!ReturnTotalPrice.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1142,10 +1153,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsSalesReturnReport</DataSetName>
-        <Top>1.18625in</Top>
-        <Left>0.16208in</Left>
+        <Top>1.42236in</Top>
+        <Left>0.18292in</Left>
         <Height>0.75in</Height>
-        <Width>10.5in</Width>
+        <Width>7.43749in</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -1153,18 +1164,63 @@
           </Border>
         </Style>
       </Tablix>
+      <Textbox Name="Textbox3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Date:</Value>
+                <Style>
+                  <FontSize>9pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve"> </Value>
+                <Style>
+                  <FontSize>9pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=format(CDate(today), "dd MMM yyyy")</Value>
+                <Style>
+                  <FontSize>9pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>1.17236in</Top>
+        <Left>6.24541in</Left>
+        <Height>0.25in</Height>
+        <Width>1.375in</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>2.5in</Height>
+    <Height>2.25in</Height>
     <Style />
   </Body>
-  <Width>12.66208in</Width>
+  <Width>7.64125in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <LeftMargin>0.25in</LeftMargin>
+    <RightMargin>0.25in</RightMargin>
+    <TopMargin>0.25in</TopMargin>
+    <BottomMargin>0.25in</BottomMargin>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>

@@ -37,7 +37,7 @@
             <div class="row " style="margin-top:-18px;">
 
                 <div class="col-md-2">
-                    <label for="ddlareaname" class="control-label">Area Name</label>
+                    <label for="ddlareaname" class="control-label">Area Name<span style="color:red">*</span></label>
                     @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select Area", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                     <span class="error hide required-AreaName font-weight-bold">Select Area Name!</span>
                     <span class="error hide duplicate-AreaName font-weight-bold">Already Area Exist!</span>
@@ -45,7 +45,7 @@
 
 
                 <div class="col-md-2">
-                    <label class="control-label" for="ddlTerritoryName">TerritoryName</label>
+                    <label class="control-label" for="ddlTerritoryName">TerritoryName <span style="color:red">*</span></label>
                     <select id="ddlTerritoryName" class="form-control form-control-sm select2">
                         <option value="0">Select Territory</option>
                     </select>
@@ -54,18 +54,18 @@
                 </div>
 
                 <div class="col-md-2">
-                    <label for="txtStockiestName" class="control-label">StockiestName</label>
+                    <label for="txtStockiestName" class="control-label">StockiestName <span style="color:red">*</span></label>
                     <input type="text" id="txtStockiestName" class="form-control form-control-sm" />
                     <span class="error hide required-StockiestName font-weight-bold">Input Stockiest Name!</span>
                     <span class="error hide duplicate-StockiestName font-weight-bold">Already Stockiest Exist!</span>
                 </div>
                 <div class="col-md-2">
-                    <label for="txtStockiestAddress" class="control-label">Address</label>
+                    <label for="txtStockiestAddress" class="control-label">Address <span style="color:red">*</span></label>
                     <input type="text" id="txtStockiestAddress" class="form-control form-control-sm" />
                     <span class="error hide required-StockiestAddress font-weight-bold">Input Stockiest Address!</span>
                 </div>
                 <div class="col-md-2">
-                    <label for="txtphonenmbr" class="control-label">Phone Number</label>
+                    <label for="txtphonenmbr" class="control-label">Phone Number <span style="color:red">*</span></label>
                     <input type="text" id="txtphonenmbr" class="form-control form-control-sm" />
                     <span class="error hide required-txtphonenmbr font-weight-bold">Input Stockiest Number!</span>
 
@@ -103,7 +103,7 @@
                     <span class="error hide required-txtcontactpersonnmbr font-weight-bold">Input Coatact person Number!</span>
                 </div>
                 <div class="col-md-1">
-                    <label for="ddlcreditlimit" class="control-label">Status</label>
+                    <label for="ddlcreditlimit" class="control-label">Status <span style="color:red">*</span></label>
                     <select id="ddlcreditlimit" class="form-control form-control-sm select2" >
                         <option value="0">Select</option>
                         <option value="Active">Active</option>

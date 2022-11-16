@@ -13,5 +13,6 @@ namespace ERPBO.Agriculture.ReportModels
         public string UnitName { get; set; }
         public string ReturnType { get; set; }
         public string Status { get; set; }
+        public double Quantity { get; set; }
     }
 }
