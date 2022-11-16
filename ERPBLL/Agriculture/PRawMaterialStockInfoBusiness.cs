@@ -64,7 +64,7 @@ namespace ERPBLL.Agriculture
            select i.PRawMaterialStockId, s.RawMaterialSupplierName,i.RawMaterialSupplierId,i.BatchCode,i.ChalanNo,i.ChalanDate,i.InvoiceNo,i.InvoiceDate,i.TotalAmount from tblPRawMaterialStockInfo i
 inner join tblRawMaterialSupplierInfo s
 on i.RawMaterialSupplierId=s.RawMaterialSupplierId
-            where 1=1  {0}",
+            where 1=1  {0} order by i.PRawMaterialStockId Desc",
 Utility.ParamChecker(param));
             return query;
         }

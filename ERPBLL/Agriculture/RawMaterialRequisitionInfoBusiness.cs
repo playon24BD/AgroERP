@@ -73,7 +73,7 @@ namespace ERPBLL.Agriculture
             }
 
        
-            query = string.Format(@"select * FROM [dbo].[tblRawMaterialRequisitionInfo]  where 1=1  {0}",
+            query = string.Format(@"select * FROM [dbo].[tblRawMaterialRequisitionInfo] R  where 1=1  {0} Order By R.RawMaterialRequisitionInfoId DESC",
            Utility.ParamChecker(param));
 
             var allRequistion = _agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialRequisitionInfoDTO>(string.Format(query));
@@ -86,7 +86,7 @@ namespace ERPBLL.Agriculture
         public bool SaveRawMaterialRequisition(RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO, long userId, long orgId)
         {
             bool isSuccess = false;
-            string requistionCode = "Req-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+            string requistionCode = "REQ-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
             if (rawMaterialRequisitionInfoDTO.RawMaterialRequisitionInfoId==0)
             {
                 RawMaterialRequisitionInfo rawMaterialRequisitionInfo = new RawMaterialRequisitionInfo();
