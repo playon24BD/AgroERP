@@ -15,6 +15,7 @@ namespace ERPBO.Agriculture.DomainModels
         public long  CommissionOnProductSalesDetailsId { get; set; }
         public long CommissionOnProductOnSalesId { get; set; }
         public long ProductSalesInfoId { get; set; }//No need
+        public long ProductSalesDetailsId { get; set; }////No need
         public long CommissionOnProductId { get; set; }//No need
         public long FinishGoodProductId { get; set; }
         public string InvoiceNo { get; set; }//No need

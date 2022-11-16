@@ -4,99 +4,214 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" style=" margin-top: -25px">
+<div class="row" style=" margin-top: 25px">
     <div class="col-md-12">
+        <div class="card  shadow card card-outline card-tabs" style="margin-top:-20px">
+
+
+            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" id="custom-tabs-two-singleRequisition-tab" data-toggle="pill" href="#custom-tabs-two-singleRequisition" role="tab" aria-controls="custom-tabs-two-singleRequisition" aria-selected="false">Single Requisition</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-bundleRequisition-tab" data-toggle="pill" href="#custom-tabs-two-bundleRequisition" role="tab" aria-controls="custom-tabs-two-bundleRequisition" aria-selected="false">Bundle Requisition</a>
+                </li>
+            </ul>
+
+
+
+        </div>
+
+
         <div class="card card-navy">
-            <div class="card-header" style="text-align: center;">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
 
-                <div class="row">
-                   
+                <div class="tab-pane fade show active" id="custom-tabs-two-singleRequisition" role="tabpanel" aria-labelledby="custom-tabs-two-singleRequisition-tab">
+                    <div class="card-header" style="text-align: center;">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <button class="btn btn-success btn-sm btn float-right btnSubmit" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
+                                <h5 class="text-center text-bold">
+
+                                    Raw Material Requistion
+                                </h5>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <input type="text" id="hdrawMaterialRequisitionInfoId" class="hide" />
+                            <div class="col-md-2">
+                                <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
+                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label for="unitName">Unit</label>
+                                <input type="text" id="txtUnitName" name="unitName" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="hide">
+                                <label for="unitID">UnitID</label>
+                                <input type="text" id="hdUnitId" name="unitID" class="form-control form-control-sm" readonly />
+                            </div>
+
+                            <div class="col-md-2">
+                                <label for="requistionQuantity">Requisition Qty</label>
+                                <input type="number" id="numRequisitonQuantity" name="requistionQuantity" class="form-control form-control-sm" />
+                                <span class="error hide req-qty">Qty Is Required</span>
+                                <span id="spanRawMaterialStockQty">Stock: <span id="RawMaterialStockQty">0</span> </span>
+                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label for="txtRemarks">Remarks</label>
+                                <input type="text" id="txtRemarks" name="txtRemarks" class="form-control form-control-sm" />
+                            </div>
+
+
+                            <div class="col-md-2">
+                                <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
+                                <div class="clearfix">
+                                    <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolist"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12" style="overflow-y:scroll">
+                                                <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblRawMaterialRequisiton">
+                                                    <thead>
+                                                        @*<tr>
+                                            <th colspan="6">
+                                                <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
+                                            </th>
+                                        </tr>*@
+                                                        <tr class="btn-dark">
+                                                            <th>#SL</th>
+                                                            <th>Raw Material</th>
+                                                            <th>Unit</th>
+                                                            <th>Requisition Qty</th>
+                                                            <th>Remarks</th>
+                                                            <th>Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade show" id="custom-tabs-two-bundleRequisition" role="tabpanel" aria-labelledby="custom-tabs-two-bundleRequisition-tab">
                     <div class="col-md-12">
-                       
-                        <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
-                        <h5 class="text-center text-bold">
+                        <div class="card card-navy">
+                            <div class="card-header" style="text-align: center;">
 
-                            Raw Material Requistion
-                        </h5>
-                    </div>
-                    
+                                <div class="row">
 
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <input type="text" id="hdrawMaterialRequisitionInfoId" class="hide" />
-                    <div class="col-md-2">
-                        <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
-                        @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                        <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
-                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-success btn-sm btn float-right btnSubmit" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
+                                        <h5 class="text-center text-bold">
 
-                    <div class="col-md-2">
-                        <label for="unitName">Unit</label>
-                        <input type="text" id="txtUnitName" name="unitName" class="form-control form-control-sm" readonly />
-                    </div>
-                    <div class="hide">
-                        <label for="unitID">UnitID</label>
-                        <input type="text" id="hdUnitId" name="unitID" class="form-control form-control-sm" readonly />
-                    </div>
-
-                    <div class="col-md-2">
-                        <label for="requistionQuantity">Requisition Qty</label>
-                        <input type="number" id="numRequisitonQuantity" name="requistionQuantity" class="form-control form-control-sm" />
-                        <span class="error hide req-qty">Qty Is Required</span>
-                        <span id="spanRawMaterialStockQty">Stock: <span id="RawMaterialStockQty">0</span> </span>
-                        <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
-                    </div>
-
-                    <div class="col-md-2">
-                        <label for="txtRemarks">Remarks</label>
-                        <input type="text" id="txtRemarks" name="txtRemarks" class="form-control form-control-sm" />
-                    </div>
+                                           RM Bundle Requisition
+                                        </h5>
+                                    </div>
 
 
-                    <div class="col-md-2">
-                        <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
-                        <div class="clearfix">
-                            <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolist"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <input type="hidden" id="hdMeasurementId" />
+                                    <input type="hidden" id="hdTargetValue" />
+                                    <input type="hidden" id="hdQuantity" />
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="ddlProduct">Product</label>
+                                        @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                        <span class="error hide req-ddlProduct">Product Name is Required</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="ddlReceipBatchCode">Receip Code</label>
+                                        @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, "--Select Batch--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="qty"> Qty</label>
+                                        <input type="text" id="qty" name="qty" class="form-control form-control-sm" readonly />
+                                        <span class="error hide req-qty">Qty Is Required</span>
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="targetQty" class="control-label"> Target Qty</label>
+                                        <input type="number" id="targetQty" class="form-control form-control-sm" />
+                                        <span class="error hide req-targetQty">Target Qty Is Required</span>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
+                                        <div class="clearfix">
+                                            <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolistBundle"><i class="fas fa-plus"></i> &nbsp; ADD TO LIST </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12" style="margin-top:-10px">
-        <div class="card">
-            <div class="card-body">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-12" style="overflow-y:scroll">
-                            <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblRawMaterialRequisiton">
-                                <thead>
-                                    @*<tr>
-                                        <th colspan="6">
-                                            <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
-                                        </th>
-                                    </tr>*@
-                                    <tr class="btn-dark">
-                                        <th>#SL</th>
-                                        <th>Raw Material</th>
-                                        <th>Unit</th>
-                                        <th>Requisition Qty</th>
-                                        <th>Remarks</th>
-                                        <th>Action</th>
+                    <div class="col-md-12" style="margin-top:-10px">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12" style="overflow-y:scroll">
+                                            <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblBundleRequisiton">
+                                                <thead>
+                                                    @*<tr>
+                    <th colspan="6">
+                        <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
+                    </th>
+                </tr>*@
+                                                    <tr class="btn-dark">
+                                                        <th>#SL</th>
+                                                        <th>Raw Material</th>
+                                                        <th>Unit</th>
+                                                        <th>Requisition Qty</th>
+                                             
+ 
 
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
 
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                </div>
                 </div>
             </div>
-        </div>
     </div>
+
 
 </div>
 
@@ -210,7 +325,7 @@
             RawMaterialStockQty.val("");
         }
         function validateAddToList() {
-     
+
             var isValid = true;
             $(".error").addClass('hide');
 
@@ -251,7 +366,7 @@
 
 
             var rId = tds.eq(5).html();
-      
+
             const mid = rawMaterialList.indexOf(rId);
 
             rawMaterialList.splice(mid, 1);
@@ -267,21 +382,39 @@
         })
 
 
-        $("#btnSubmit").click(function (e) {
+        $(".btnSubmit").click(function (e) {
             e.preventDefault();
             var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0) };
             var details = [];
+            var tblbun = $("#tblBundleRequisiton tbody tr").length;
+            var tblsin = $("#tblRawMaterialRequisiton tbody tr").length;
+            if (tblsin > 0) {
+                $.each($("#tblRawMaterialRequisiton tbody tr"), function (index, item) {
+                    var tds = $(this).children('td');
+                    details.push({
+                        RawMaterialIssueStockDetailId: 0,
+                        RawMaterialId: tds.eq(6).html(),
+                        UnitID: tds.eq(7).html(),
+                        RequisitionQuantity: tds.eq(3).html(),
+                        Remarks: tds.eq(4).html(),
+                    });
+                })
 
-            $.each($("#tblRawMaterialRequisiton tbody tr"), function (index, item) {
-                var tds = $(this).children('td');
-                details.push({
-                    RawMaterialIssueStockDetailId: 0,
-                    RawMaterialId: tds.eq(6).html(),
-                    UnitID: tds.eq(7).html(),
-                    RequisitionQuantity: tds.eq(3).html(),
-                    Remarks: tds.eq(4).html(),
-                });
-            })
+            }
+            else {
+                $.each($("#tblBundleRequisiton tbody tr"), function (index, item) {
+                    var tds = $(this).children('td');
+                    details.push({
+                        RawMaterialIssueStockDetailId: 0,
+                        RawMaterialId: tds.eq(6).html(),
+                        UnitID: tds.eq(7).html(),
+                        RequisitionQuantity: tds.eq(3).html(),
+                        Remarks: "",
+                    });
+                })
+
+            }
+
 
            info.rawMaterialRequisitionDetailsDTO = details;
             var data = JSON.stringify({ info });
@@ -307,6 +440,111 @@
 
 
 
+        })
+
+        //Bundle Requisition
+        var ddlProduct = $("#ddlProduct");
+        var ddlReceipBatchCode = $("#ddlReceipBatchCode");
+        var targetQty = $("#targetQty");
+        var hdTargetValue = $("#hdTargetValue");
+        var qty = $("#qty");
+
+        ddlProduct.change(function () {
+
+            //debugger;
+            clearDropdown("ddlReceipBatchCode");
+            if (ddlProduct.val() != "") {
+
+                LoadDropDown('/AgroConfiguration/GetReceipyCodeByProductionId', 'POST', ddlReceipBatchCode, JSON.stringify({ finishGoodProductId: ddlProduct.val() }));
+            }
+            // $("#ddlRequesition option:not(:first)").remove();
+
+
+        })
+
+        ddlReceipBatchCode.change(function () {
+
+
+            LoadQuantityData();
+            LoadTergetQuantityData();
+        })
+
+        function LoadQuantityData() {
+            var data = { receipeBatchCode: ddlReceipBatchCode.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
+                debugger;
+                consoleLog(res.replace(/['"]+/g, ''));
+                //console.log(res);
+                console.log(res.quantity)
+                var UnitQty = res.replace(/['"]+/g, '');
+                qty.val(UnitQty);
+
+                var qa = UnitQty.split('(')
+                var qar = qa[0]
+                var fq = qar.replace(/['"]+/g, '');
+                hdQuantity.val(fq);
+
+            });
+        }
+
+
+        function LoadTergetQuantityData() {
+            var data = { receipeBatchCode: ddlReceipBatchCode.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyTergetQty", data)).then(function (res, status) {
+                debugger;
+                //qty.val(res);
+                targetQty.val(res);
+                hdTargetValue.val(res);
+
+            });
+        }
+
+        $("#addTolistBundle").click(function (e) {
+            e.preventDefault();
+            if (true) {
+                debugger;
+                var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
+
+                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
+                    debugger;
+                    console.log(res);
+                    var sl = 0;
+                    material = JSON.parse(res)
+                    console.log(material);
+                    var len = material.length;
+                    console.log("length: " + len);
+                    console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
+                
+                   
+
+
+
+                        //console.log(material[0].RawMaterialName);
+                    $.each(material, function (index, value) {
+                        var len = $("#tblBundleRequisiton tbody tr").length;
+                            var sl = "<td class='text-center'><b>" + (len+1) + "</b></td>"
+                        var td1 = "<td>" + value.RawMaterialName + "</td>";
+                        var unitName = "<td>" + value.UnitName + "</td>";
+                        var unitId = "<td class='hide'>" + value.UnitId + "</td>";
+                        var td5 = "<td class='hide'>" + value.RawMaterialId + "</td>";
+
+                        var td2 = "<td class='hide'>" + value.FGRRawMaterQty + "</td>";
+                            var td3 = "<td class='hide'>" + targetQty.val() + "</td>";
+                            var td4 = "<td>" + (value.FGRRawMaterQty * targetQty.val()) + "</td>";
+                        var tr = "<tr>" + sl + td1 + unitName + td4 + td3 + td2 + td5 + unitId+"</tr>";
+                            $("#tblBundleRequisiton tbody").append(tr)
+                            $("#btnSubmit").show();
+
+
+                        })
+
+               
+
+                });
+
+            }
         })
 
         function redirectPage(page) {
