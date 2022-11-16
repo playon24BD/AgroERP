@@ -48,6 +48,14 @@ namespace ERPBO.Agriculture.ViewModels
         public long SalesReturnId { get; set; }
         public string TerritoryName { get; set; }
 
+        public long FinishGoodProductId { get; set; }
+        public string FinishGoodProductName { get; set; }
+
+        public string PackSize { get; set; }
+        public double QtyCTN { get; set; }
+        public double QtyKG { get; set; }
+        public double Total { get; set; }
+
 
     }
 }

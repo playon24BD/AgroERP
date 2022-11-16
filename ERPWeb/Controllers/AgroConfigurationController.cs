@@ -3372,6 +3372,148 @@ namespace ERPWeb.Controllers
 
         }
 
+
+        public ActionResult GetReturnRawMaterialReportList(string flag, long? rawMaterialId, string returnType, string status, string fromDate, string toDate)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+
+
+                return View();
+
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _returnRawMaterialBusiness.GetReturnReportList(rawMaterialId, returnType, status, fromDate, toDate);
+                List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetReturnReportListView", viewModels);
+
+
+            }
+
+            return View();
+        }
+
+        public ActionResult GetReturnRawMaterialReport(long? rawMaterialId, string returnType, string status,string fromDate, string toDate, string rptType)
+        {
+            var data = _returnRawMaterialBusiness.GetReturnRawMaterialDataReport(rawMaterialId, returnType, status, fromDate, toDate);
+
+            LocalReport localReport = new LocalReport();
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptReturnRawMaterialReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsReturnRawMaterialReport", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = rptType;
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>29.7cm</PageWidth>" +
+                    "<PageHeight>21cm</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
+
+        public ActionResult GetSalesReturnReportList(string flag, long? productId, string status, string fromDate, string toDate)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                
+
+                ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(des => new SelectListItem { Text = des.FinishGoodProductName, Value = des.FinishGoodProductId.ToString() }).ToList();
+
+                return View();
+
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _salesReturn.GetSalesReturnReportList(productId, status, fromDate, toDate);
+                List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetSalesReturnReportList", viewModels);
+
+
+            }
+
+
+            return View();
+        }
+
+
+        public ActionResult GetSalesReturnReport(string rptType, long? productId, string status, string fromDate, string toDate)
+        {
+            var data = _salesReturn.GetSalesReturnReportList(productId, status, fromDate, toDate);
+
+            LocalReport localReport = new LocalReport();
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptSalesReturnReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsSalesReturnReport", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = rptType;
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>29.7cm</PageWidth>" +
+                    "<PageHeight>21cm</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
+
+
         #endregion
 
         #region  SalesReturn

@@ -1,5 +1,6 @@
 ﻿using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
+using ERPBO.Agriculture.ReportModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,11 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface ISalesReturn
     {
+        IEnumerable<SalesReturnReportData> GetSalesReturnReportData(long? productId, string status, string fromDate, string toDate);
 
+        IEnumerable<SalesReturnDTO> GetSalesReturnReportList( long? productId, string status, string fromDate, string toDate);
         
+
         bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId);
 
 

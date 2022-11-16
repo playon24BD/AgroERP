@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsReturnRawMaterialReport" targetNamespace="http://tempuri.org/dsReturnRawMaterialReport.xsd" xmlns:mstns="http://tempuri.org/dsReturnRawMaterialReport.xsd" xmlns="http://tempuri.org/dsReturnRawMaterialReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsReturnRawMaterialReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsReturnRawMaterialReport" msprop:Generator_UserDSName="dsReturnRawMaterialReport">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsReturnRawMaterialReport" msprop:Generator_TableClassName="dsReturnRawMaterialReportDataTable" msprop:Generator_TableVarName="tabledsReturnRawMaterialReport" msprop:Generator_TablePropName="_dsReturnRawMaterialReport" msprop:Generator_RowDeletingName="dsReturnRawMaterialReportRowDeleting" msprop:Generator_RowChangingName="dsReturnRawMaterialReportRowChanging" msprop:Generator_RowEvHandlerName="dsReturnRawMaterialReportRowChangeEventHandler" msprop:Generator_RowDeletedName="dsReturnRawMaterialReportRowDeleted" msprop:Generator_UserTableName="dsReturnRawMaterialReport" msprop:Generator_RowChangedName="dsReturnRawMaterialReportRowChanged" msprop:Generator_RowEvArgName="dsReturnRawMaterialReportRowChangeEvent" msprop:Generator_RowClassName="dsReturnRawMaterialReportRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EntryDate" msprop:Generator_ColumnVarNameInTable="columnEntryDate" msprop:Generator_ColumnPropNameInRow="EntryDate" msprop:Generator_ColumnPropNameInTable="EntryDateColumn" msprop:Generator_UserColumnName="EntryDate" type="xs:string" minOccurs="0" />
+              <xs:element name="RawMaterialName" msprop:Generator_ColumnVarNameInTable="columnRawMaterialName" msprop:Generator_ColumnPropNameInRow="RawMaterialName" msprop:Generator_ColumnPropNameInTable="RawMaterialNameColumn" msprop:Generator_UserColumnName="RawMaterialName" type="xs:string" minOccurs="0" />
+              <xs:element name="UnitName" msprop:Generator_ColumnVarNameInTable="columnUnitName" msprop:Generator_ColumnPropNameInRow="UnitName" msprop:Generator_ColumnPropNameInTable="UnitNameColumn" msprop:Generator_UserColumnName="UnitName" type="xs:string" minOccurs="0" />
+              <xs:element name="ReturnType" msprop:Generator_ColumnVarNameInTable="columnReturnType" msprop:Generator_ColumnPropNameInRow="ReturnType" msprop:Generator_ColumnPropNameInTable="ReturnTypeColumn" msprop:Generator_UserColumnName="ReturnType" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

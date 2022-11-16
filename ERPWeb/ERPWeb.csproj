@@ -2693,6 +2693,17 @@
     <Content Include="Reports\DataSets\dsSalesCommissionReport.xsc">
       <DependentUpon>dsSalesCommissionReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsReturnRawMaterialReport.xsc">
+      <DependentUpon>dsReturnRawMaterialReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsReturnRawMaterialReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsReturnRawMaterialReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsReturnRawMaterialReport.xss">
+      <DependentUpon>dsReturnRawMaterialReport.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsSalesCommissionReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3147,6 +3158,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsReturnRawMaterialReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsReturnRawMaterialReport.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsSalesCommissionReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3339,11 +3355,20 @@
     <Content Include="Views\AgroConfiguration\GetFinishGoodStockReport.cshtml" />
 
 
+
     <Content Include="Views\AgroConfiguration\_GetInvoiceWiseSalesReportList.cshtml" />
 
 
     <Content Include="Views\AgroConfiguration\FGProductAccept.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetPendingFGProduct.cshtml" />
+
+
+    <Content Include="Views\AgroConfiguration\_GetInvoiceWiseSalesReportList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetProductWiseSalesReportList.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetReturnRawMaterialReportList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetReturnReportListView.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetSalesReturnReportList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetSalesReturnReportList.cshtml" />
 
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -3387,6 +3412,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptDateWiseCollection.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductStock.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptReturnRawMaterialReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesCommissionReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>

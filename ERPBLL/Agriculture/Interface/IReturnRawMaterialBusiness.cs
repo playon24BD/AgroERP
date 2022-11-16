@@ -1,5 +1,6 @@
 ﻿using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
+using ERPBO.Agriculture.ReportModels;
 using ERPBO.Common;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,9 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IReturnRawMaterialBusiness
     {
+        IEnumerable<ReturnRawMaterialDTO> GetReturnReportList(long? rawMaterialId, string returnType, string status, string fromDate, string toDate);
+        IEnumerable<ReturnRawMaterialDataReport> GetReturnRawMaterialDataReport(long? rawMaterialId, string returnType, string status,string fromDate,string toDate);
+        
         IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialInfosId(long rawMaterialId);
 
         IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialSearch();

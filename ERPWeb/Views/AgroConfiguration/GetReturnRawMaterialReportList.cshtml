@@ -1,9 +1,8 @@
 ﻿
 @{
-    ViewBag.Title = "GetProductwisesalesReport";
+    ViewBag.Title = "GetReturnRawMaterialReportList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 <div class="row text-sm" style="margin-top:-20px">
     <div class="col-md-12">
@@ -17,7 +16,7 @@
                             </div>
                             <div class="col-md-6">
                                 <h5 class="text-center text-bold">
-                                    Product Wise Sales Statement
+                                    Return RawMaterial Report List
                                 </h5>
                             </div>
                             <div class="col-md-3">
@@ -33,14 +32,35 @@
             <div class="col-md-12">
                 <div class="card card-gray-dark">
                     <div class="card-header">
-                        <div class="row justify-content-center">
+                        <div class="row" style="margin-left:-20px">
+                            <div class="col-md-1">
+                                <h6 class="text-left" style="font-size:25px">Search</h6>
+                            </div>
+
                             <div class="col-md-2">
-                                <h5 class="text-right">Search By</h5>
+                                @*<label for="ddlRawMaterial">Select RawMaterial</label>*@
+                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+
+                            <div class="col-md-2">
+                                @*<label for="ddlReturnType">Return Type</label>*@
+                                <select class="form-control form-control-sm select2" id="ddlReturnType">
+                                    <option value="" selected>--ReturnType--</option>
+                                    <option value="Good">Good</option>
+                                    <option value="Damage">Damage</option>
+                                </select>
                             </div>
                             <div class="col-md-2">
-                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
+                                @*<label for="ddlStatus">Status</label>*@
+                                <select class="form-control form-control-sm select2" id="ddlStatus">
+                                    <option value="" selected>--Status--</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Approved">Approved</option>
+                                </select>
                             </div>
+
+
+
                             <div class="col-md-2">
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="FromDate" />
@@ -57,9 +77,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+
+
+                            <div class="col-md-1">
                                 <div class="input-group input-group-sm">
-                                    <select class="form-control form-control-sm float-right" id="rptType" name="rptType">
+                                    <select class="form-control form-control-sm float-right select2" id="rptType" name="rptType">
                                         <option value="PDF">PDF</option>
                                         <option value="EXCEL">EXCEL</option>
                                     </select>
@@ -68,6 +90,9 @@
                                     </span>
                                 </div>
                             </div>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -82,7 +107,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
 
@@ -90,22 +114,23 @@
 
 </div>
 
+
+
+
 @section scripts{
     <script type="text/javascript">
-
 
         var dptFromDate = $("#dptFromDate");
         var dptToDate = $("#dptToDate");
         var rptType = $("#rptType");
-        var ddlProductName = $("#ddlProductName");
-
+        var ddlStatus = $("#ddlStatus");
+        var ddlReturnType = $("#ddlReturnType");
+        var ddlRawMaterial = $("#ddlRawMaterial");
 
         $(document).ready(function () {
 
-            //Initialize Select2 Elements
             $('.select2').select2();
 
-            //Initialize Select2 Elements
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
@@ -117,7 +142,7 @@
                 format: "dd MM yyyy",
                 orientation: "bottom auto",
                 todayHighlight: true,
-                
+
             }).on('change', function () {
                 $('.datepicker').hide();
             });
@@ -125,47 +150,58 @@
                 format: "dd MM yyyy",
                 orientation: "bottom auto",
                 todayHighlight: true,
-                
+
             }).on('change', function () {
                 $('.datepicker').hide();
             });
-            LoadProductReportList();
-
+            LoadReturnList();
         })
 
         $(document).on('click', 'div.remove-date', function () {
             if ($(this).hasClass("dptToDate")) {
                 if (dptToDate.val() !== '') {
                     dptToDate.val('');
-                    //LoadDataTable();
+
                 }
             }
             if ($(this).hasClass("dptFromDate")) {
                 if (dptFromDate.val() !== '') {
                     dptFromDate.val('');
-                    //LoadDataTable();
+
                 }
             }
         })
 
+        
+
         dptFromDate.change(function () {
-            LoadProductReportList();
+            LoadReturnList();
         })
 
         dptToDate.change(function () {
-            LoadProductReportList();
+            LoadReturnList();
         })
-        ddlProductName.change(function () {
-            LoadProductReportList();
+        ddlRawMaterial.change(function () {
+            LoadReturnList();
+
+        });
+
+        ddlReturnType.change(function () {
+
+            LoadReturnList();
         })
 
+        ddlStatus.change(function () {
 
-        function LoadProductReportList() {
+            LoadReturnList();
+        })
+
+        function LoadReturnList() {
             debugger;
 
-            var data = { flag: "View", productId: TryParseInt(ddlProductName.val(), 0),  fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+            var data = { flag: "View", rawMaterialId: TryParseInt(ddlRawMaterial.val(), 0), returnType: ddlReturnType.val(), status: ddlStatus.val(), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
 
-            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductwisesalesReport', data)).then(function (res, status) {
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetReturnRawMaterialReportList', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {
                     $("#dataContainer").fadeOut('500', function () {
@@ -179,15 +215,20 @@
 
         }
 
+
+
         $("#btnDownload").click(function () {
-            if (dptFromDate.val() == "" && dptToDate.val() == "" && ddlProductName.val() == "") {
+            if (ddlRawMaterial.val() && ddlReturnType.val() && ddlStatus.val() && dptFromDate.val() == "" && dptToDate.val() == "") {
                 bootbox.alert("Please Select Anyone");
             }
             else {
-                window.open("/AgroConfiguration/GetProductwisesalesReportDownload?fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val() + "&productId=" + ddlProductName.val());
+                window.open("/AgroConfiguration/GetReturnRawMaterialReport? &fromDate=" + dptFromDate.val() + " &toDate=" + dptToDate.val() + " &rptType=" + rptType.val() + "&rawMaterialId=" + TryParseInt(ddlRawMaterial.val(), 0) + "&returnType=" + ddlReturnType.val() + " &status=" + ddlStatus.val());
             }
         })
 
     </script>
 }
+
+
+
 
