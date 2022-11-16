@@ -58,14 +58,15 @@ namespace ERPBLL.Agriculture
 
                         CommissionOnProductOnSalesId = id,
                         PaymentMode = flag,
-
+                        ProductSalesDetailsId=item.ProductSalesDetailsId,
+                    
 
                         Credit = (flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : 0,
 
                         Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash : 0,
                         //TotalCommission = item.TotalCommission,
                         //Status = item.Status,
-
+                       price= (item.Price * item.Quanity) - item.DiscountTk,
                         TotalCommission = ((item.Price * item.Quanity) - item.DiscountTk) * ((flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash) / 100,
                         Remarks = "Insert",
                         EntryUserId = userId,
@@ -94,18 +95,18 @@ namespace ERPBLL.Agriculture
                 foreach (var did in salesDetails)
                 {
 
-                    foreach (var item in onProductSalesDetailsDTO)
-                    {
+      
                         var detailsCommission = GetCommisionOnProductSalesbyInfoId(did.CommissionOnProductSalesDetailsId);
                         detailsCommission.Credit = 0;
-                        detailsCommission.Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash : 0;
-                        detailsCommission.TotalCommission = ((item.Price * item.Quanity) - item.DiscountTk) * ((flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash) / 100;
+                        //detailsCommission.ProductSalesDetailsId = item.ProductSalesDetailsId;
+                        detailsCommission.Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(did.FinishGoodProductId, orgId).Cash : 0;
+
                         detailsCommission.PaymentMode = flag;
                         detailsCommission.Remarks = "Update";
                         detailsCommission.UpdateDate = DateTime.Now;
                         detailsCommission.UpdateUserId = userId;
                         productSalesDetails.Add(detailsCommission);
-                    }
+                    
                 }
                 _commissionSalesDetailsRepository.UpdateAll(productSalesDetails);
                 isSuccess = _commissionSalesDetailsRepository.Save();

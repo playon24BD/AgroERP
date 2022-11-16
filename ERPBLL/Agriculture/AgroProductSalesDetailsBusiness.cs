@@ -30,6 +30,10 @@ namespace ERPBLL.Agriculture
         {
             return _agroProductSalesDetailsRepository.GetOneByOrg(a=>a.ProductSalesInfoId==productSalesinfoId);
         }
+        public AgroProductSalesDetails AgroProductSalesDetailsbyId(long id)
+        {
+            return _agroProductSalesDetailsRepository.GetOneByOrg(a => a.ProductSalesDetailsId == id);
+        }
 
         public IEnumerable<AgroProductSalesDetailsDTO> GetAllAgroSalesDetailsInfos(long orgId)
         {

@@ -261,7 +261,7 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId", Utility.ParamChecker(param))
      select Distinct fgp.FinishGoodProductId , fgp.FGRId , p.FinishGoodProductName,fr.ReceipeBatchCode,fr.FGRQty,un.UnitName,
 
 ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
-where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0) ,
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0) ,
 
 SalesTotal =isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
 where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0) ,
@@ -270,7 +270,7 @@ ReturnTotal = isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr
 where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) ,
 
 CurrentStock=isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
-where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
 where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr
 where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) 
 
@@ -340,7 +340,7 @@ inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
                 param += string.Format(@" and p.FinishGoodProductName like '%{0}%'", name);
             }
             query = string.Format(@"
-            SELECT r.FGRQty,a.FinishGoodProductInfoId,a.FinishGoodProductionBatch,a.ReceipeBatchCode,a.Quanity,
+            SELECT a.EntryDate,r.FGRQty,a.FinishGoodProductInfoId,a.FinishGoodProductionBatch,a.ReceipeBatchCode,a.Quanity,
 a.TargetQuantity,a.Status,a.Remarks,a.flag,a.OrganizationId,a.FGRId,
 U.UnitName,p.FinishGoodProductName 
 
@@ -368,6 +368,8 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId
                 FinishGoodProductionInfo info = new FinishGoodProductionInfo();
                 info = getbatchcodebyid(finishGoodProductionInfoDTO.FinishGoodProductionBatch);
                 info.Status= finishGoodProductionInfoDTO.Status;
+                info.UpdateDate = DateTime.Now;
+                info.UpdateUserId= userId;
                 _finishGoodProductionInfoRepository.Update(info);
                 
                 if (_finishGoodProductionInfoRepository.Save())
@@ -378,6 +380,8 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId
                     {
                         details1 = getdetailsbatchcodebyid(item.FinishGoodProductDetailId);
                         details1.Status = "Consumed";
+                        details1.UpdateDate = DateTime.Now;
+                        details1.UpdateUserId = userId;
                         details.Add(details1);
                     }
                     _finishGoodProductionDetailsRepository.UpdateAll(details);
@@ -402,6 +406,57 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId
                
 
                   IsSuccess = _mRawMaterialIssueStockDetailsRepository.Save();
+
+
+
+                return IsSuccess;
+
+
+
+            }
+            else if (finishGoodProductionInfoDTO.Status == "Rejected")
+            {
+                FinishGoodProductionInfo info = new FinishGoodProductionInfo();
+                info = getbatchcodebyid(finishGoodProductionInfoDTO.FinishGoodProductionBatch);
+                info.Status = finishGoodProductionInfoDTO.Status;
+                info.UpdateDate = DateTime.Now;
+                info.UpdateUserId = userId;
+                _finishGoodProductionInfoRepository.Update(info);
+
+                if (_finishGoodProductionInfoRepository.Save())
+                {
+                    List<FinishGoodProductionDetails> details = new List<FinishGoodProductionDetails>();
+                    FinishGoodProductionDetails details1 = new FinishGoodProductionDetails();
+                    foreach (var item in finishGoodProductionDetailsDTOs)
+                    {
+                        details1 = getdetailsbatchcodebyid(item.FinishGoodProductDetailId);
+                        details1.Status = "NotConsumed";
+                        details1.UpdateDate= DateTime.Now;
+                        details1.UpdateUserId= userId;
+                        details.Add(details1);
+                    }
+                    _finishGoodProductionDetailsRepository.UpdateAll(details);
+
+
+                }
+                if (_finishGoodProductionDetailsRepository.Save())
+                {
+                    List<MRawMaterialIssueStockDetails> rawMaterialIssueStockDetails = new List<MRawMaterialIssueStockDetails>();
+                    MRawMaterialIssueStockDetails rawMaterialIssueStockDetails1 = new MRawMaterialIssueStockDetails();
+                    foreach (var item in finishGoodProductionDetailsDTOs)
+                    {
+                        rawMaterialIssueStockDetails1 = getissueidbyrmidprobatch(item.FinishGoodProductionBatch, item.RawMaterialId);
+                        rawMaterialIssueStockDetails1.IssueStatus = "StockIn";
+                        rawMaterialIssueStockDetails.Add(rawMaterialIssueStockDetails1);
+
+                    }
+                    _mRawMaterialIssueStockDetailsRepository.UpdateAll(rawMaterialIssueStockDetails);
+
+                }
+
+
+
+                IsSuccess = _mRawMaterialIssueStockDetailsRepository.Save();
 
 
 

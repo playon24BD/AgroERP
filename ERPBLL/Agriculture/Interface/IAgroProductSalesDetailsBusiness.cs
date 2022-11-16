@@ -14,6 +14,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<AgroProductSalesDetails> GetAgroSalesDetailsByInfoId(long infoId, long orgId);
         IEnumerable<AgroProductSalesDetailsDTO> GetAgroSalesDetailsByInfoIdGet(long infoId, long orgId);
         AgroProductSalesDetails AgroProductSalesDetailsbyInfoId(long productSalesinfoId);
+        AgroProductSalesDetails AgroProductSalesDetailsbyId(long id);
 
 
 

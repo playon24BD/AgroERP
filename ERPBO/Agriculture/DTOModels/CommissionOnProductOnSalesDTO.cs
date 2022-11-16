@@ -26,5 +26,7 @@ namespace ERPBO.Agriculture.DTOModels
         public string FinishGoodProductName { get; set; }
         public double TotalCommission { get; set; }
         public string StockiestName { get; set; }
+        public double TotalAmount { get; set; }
+
     }
 }

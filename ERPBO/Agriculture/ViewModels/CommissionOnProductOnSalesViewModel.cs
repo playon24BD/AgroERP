@@ -25,5 +25,7 @@ namespace ERPBO.Agriculture.ViewModels
         public string FinishGoodProductName { get; set; }
         public double TotalCommission { get; set; }
         public string StockiestName { get; set; }
+        public double TotalAmount { get; set; }
+        public double price { get; set; }
     }
 }

@@ -22,6 +22,8 @@ namespace ERPBO.Agriculture.DomainModels
         public string PaymentMode { get; set; }//No need
         public double Credit { get; set; }
         public double Cash { get; set; }
+        public double TotalAmount { get; set; }
+        public double price  { get; set; }
         public double TotalCommission { get; set; }
         public string Remarks { get; set; }
         public string Status { get; set; }
