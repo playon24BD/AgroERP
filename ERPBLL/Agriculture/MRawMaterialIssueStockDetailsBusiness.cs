@@ -97,7 +97,7 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
             return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialId == rawMaterialId && i.IssueStatus == "StockOut");
         }
 
-        public bool SaveRawMaterialIssueDetails(List<MRawMaterialIssueStockDetailsDTO> rawMaterialIssueStockDetailsDTOList, long userId, long orgId)
+        public bool SaveRawMaterialIssueDetails(List<MRawMaterialIssueStockDetailsDTO> rawMaterialIssueStockDetailsDTOList, long userId, long orgId,string finishGoodProductionBatch)
         {
 
             bool IsSuccess = false;
@@ -109,6 +109,11 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
                 //List<RawMaterialIssueStockDetails> rawMaterialIssueStockDetailsList = new List<RawMaterialIssueStockDetails>();
                 foreach (var row in rawMaterialIssueStockDetailsDTOList)
                 {
+                    //var ff = row.RawMaterialIssueStockId;
+
+                    //long Rmissuestockid = 0;
+                   var  Rmissuestockid = row.RawMaterialIssueStockId -  50;
+
                     rawMaterialIssueStockDetail.RawMaterialId = row.RawMaterialId;
                     rawMaterialIssueStockDetail.Quantity = row.Quantity;
                     // rawMaterialIssueStockDetail.EntryUserId = row.EntryUserId;
@@ -116,8 +121,12 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
                     rawMaterialIssueStockDetail.UnitID = row.UnitID;
 
                     rawMaterialIssueStockDetail.EntryDate = DateTime.Now;
-                    rawMaterialIssueStockDetail.RawMaterialIssueStockId = row.RawMaterialIssueStockId;
-                    rawMaterialIssueStockDetail.IssueStatus = "StockOut";
+                   // rawMaterialIssueStockDetail.RawMaterialIssueStockId = row.RawMaterialIssueStockId;
+                    rawMaterialIssueStockDetail.FinishGoodProductionBatch= finishGoodProductionBatch;
+                    //rawMaterialIssueStockDetail.IssueStatus = "StockOut";
+                    rawMaterialIssueStockDetail.IssueStatus = "Pending";
+                    rawMaterialIssueStockDetail.RawMaterialIssueStockId = Rmissuestockid;
+           
                     //rawMaterialIssueStockDetailsList.Add(rawMaterialIssueStockDetail);
                     _mRawMaterialIssueStockDetailsRepository.Insert(rawMaterialIssueStockDetail);
                     IsSuccess = _mRawMaterialIssueStockDetailsRepository.Save();
@@ -133,6 +142,11 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
         public MRawMaterialIssueStockDetails GetRawMaterialIssueStockByMeterialId(long rawMaterialId, long orgId)
         {
             return _mRawMaterialIssueStockDetailsRepository.GetOneByOrg(i => i.RawMaterialId == rawMaterialId);
+        }
+
+        public IEnumerable<MRawMaterialIssueStockDetails> RawMaterialStockIssueInfobyRawMaterialidPending(long rawMaterialId, long orgId)
+        {
+            return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialId == rawMaterialId && i.IssueStatus == "Pending");
         }
 
     }

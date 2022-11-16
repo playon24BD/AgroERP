@@ -9,4 +9,4 @@ Add-Migration:
  Update-Database:
  Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
 
-  Add-Migration 'stokiestdomaineditaddress' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
+  Add-Migration 'issueaddfield' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration

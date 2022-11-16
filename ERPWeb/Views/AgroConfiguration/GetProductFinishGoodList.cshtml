@@ -92,13 +92,13 @@
                                         <input type="hidden" id="hdTargetValue" />
                                         <input type="hidden" id="hdQuantity" />
                                         @*<div class="col-md-3">
-                                                <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
-                                                <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
-                                                    <option value="">Select One</option>
-                                                    <option value="9">Agro Farm</option>
-                                                </select>
-                                                <span class="error hide req-ddlOrganiation">Organization is required</span>
-                                            </div>*@
+            <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
+            <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
+                <option value="">Select One</option>
+                <option value="9">Agro Farm</option>
+            </select>
+            <span class="error hide req-ddlOrganiation">Organization is required</span>
+        </div>*@
                                         <div class="col-md-3">
                                             <label class="control-label" for="ddlProduct">Product</label>
                                             @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
@@ -116,16 +116,20 @@
                                             <span class="error hide req-qty">Qty Is Required</span>
 
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 hide" >
                                             <label for="targetQty" class="control-label"> Target Qty</label>
-                                            <input type="number" id="targetQty" class="form-control form-control-sm" />
+                                            <input type="number" id="targetQty" class="form-control form-control-sm" readonly />
                                             <span class="error hide req-targetQty">Target Qty Is Required</span>
                                         </div>
-
+                                        <div class="col-md-2">
+                                            <label for="FinishQty" class="control-label">Finish Qty</label>
+                                            <input type="number" id="FinishQty" class="form-control form-control-sm" />
+                                            <span class="error hide req-FinishQty">Oty Over</span>
+                                        </div>
                                         <div class="col-md-2">
                                             <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
                                             <div class="clearfix">
-                                                <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolist"><i class="fas fa-plus"></i> &nbsp; ADD TO LIST </button>
+                                                <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -188,12 +192,16 @@
         var ddlProduct = $("#ddlProduct");
         var qty = $("#qty");
         var targetQty = $("#targetQty");
+        var FinishQty = $("#FinishQty");
         var ddlReceipBatchCode = $("#ddlReceipBatchCode");
         var hdTargetValue = $("#hdTargetValue");
         var searchBatchCode = $("#searchBatchCode");
         var ddlProduct1 = $("#ddlProduct1");
         var ddlReceipBatchCode1 = $("#ddlReceipBatchCode1");
         var hdQuantity = $("#hdQuantity");
+       
+
+
 
 
         $(document).ready(function () {
@@ -203,7 +211,10 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
-            $("#btnSubmit").hide();
+            $("#addTolist").hide();
+
+            //$("#btnSubmit").hide();
+       
         })
 
 
@@ -316,7 +327,7 @@
                 debugger;
                 //qty.val(res);
                 targetQty.val(res);
-                hdTargetValue.val(res);
+               // hdTargetValue.val(res);
 
             });
         }
@@ -325,7 +336,7 @@
             e.preventDefault();
             if (validationAddToList()) {
                 debugger;
-                var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
+                var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: FinishQty.val() };
 
                 $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
                     debugger;
@@ -335,11 +346,11 @@
                     console.log(material);
                     var len = material.length;
                     console.log("length: " + len);
-                    console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
-                    console.log(targetQty.val() <= hdTargetValue.val());
-                    if (Number(targetQty.val()) <= Number(hdTargetValue.val())) {
+                    //console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
+                    // console.log(targetQty.val() <= hdTargetValue.val());
+                    if (Number(FinishQty.val()) <= Number(targetQty.val())) {
 
-
+                        debugger;
 
                         //console.log(material[0].RawMaterialName);
                         $.each(material, function (index, value) {
@@ -347,15 +358,16 @@
                             var td1 = "<td>" + value.RawMaterialName + "</td>";
                             var td5 = "<td class='hide'>" + value.RawMaterialId + "</td>";
                             var td2 = "<td>" + value.FGRRawMaterQty + "</td>";
-                            var td3 = "<td>" + targetQty.val() + "</td>";
-                            var td4 = "<td>" + (value.FGRRawMaterQty * targetQty.val()) + "</td>";
+                            var td3 = "<td>" + FinishQty.val() + "</td>";
+                            var td4 = "<td>" + (value.FGRRawMaterQty * FinishQty.val()) + "</td>";
                             var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + "</tr>";
                             $("#tblFinishGoodProduction tbody").append(tr)
                             $("#btnSubmit").show();
+                            /*$("#addTolist").hide();*/
 
 
                         })
-
+                        $("#addTolist").hide();
                     }
                     else {
                         alert("Issue Quantity Not Sufficient Please Check Target Quantity");
@@ -367,7 +379,7 @@
         })
 
         function validationAddToList() {
-            //debugger;
+            debugger;
             var isValid = true;
             $(".error").addClass('hide');
 
@@ -376,13 +388,14 @@
                 isValid = false;
             }
 
+
             return isValid;
         }
 
         $("#btnSubmit").click(function (e) {
             e.preventDefault();
             var data = {};
-            var finishGoodProduction = { finishGoodProductId: ddlProduct.val(), quanity: TryParseInt(hdQuantity.val(), 0), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
+            var finishGoodProduction = { finishGoodProductId: ddlProduct.val(), quanity: TryParseInt(hdQuantity.val(), 0), targetQuantity: FinishQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
 
             var details = [];
             details.length = 0;
@@ -421,6 +434,18 @@
         });
 
 
+        FinishQty.keyup(function () {
+            if (Number(FinishQty.val()) > Number( targetQty.val() )){
+
+                $("#addTolist").hide();
+
+            }
+            else {
+                $("#addTolist").show();
+            }
+
+
+        })
 
         function redirectPage(page) {
             window.location.replace(page);

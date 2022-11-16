@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace ERPWeb.Controllers
 {
@@ -1216,7 +1217,10 @@ namespace ERPWeb.Controllers
                     var StockOutqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialidOut(rawMaterial.RawMaterialId, User.OrgId).ToList();
                     var SumStockOutQty = StockOutqty.Sum(d => d.Quantity);
 
-                    issueQunatitys = SumStockinQty - SumStockOutQty;
+                    var Stockpending = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialidPending(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    var SumStockpendingQty = Stockpending.Sum(d => d.Quantity);
+
+                    issueQunatitys = SumStockinQty - SumStockOutQty - SumStockpendingQty;
                     //myList += string.Format("{0},", rawMaterial.RawMaterialId);
 
 
@@ -1462,6 +1466,81 @@ namespace ERPWeb.Controllers
             return Json(isSucccess);
         }
 
+
+        public ActionResult FGProductAccept(string flag, long? rawMaterialId, long? id, string name, string finishGoodProductionBatch)
+        {
+
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
+
+                //ViewBag.ddlProduct = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+
+                return View();
+
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == "View")
+            {
+
+
+                var dto = _finishGoodProductionInfoBusiness.GetPendingFinishGoodInfos(name ?? null);
+                List<FinishGoodProductionInfoViewModel> viewModels = new List<FinishGoodProductionInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetPendingFGProduct", viewModels);
+
+
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+
+
+                var info = _finishGoodProductionInfoBusiness.GetFGProductionInfoBybatchcode(finishGoodProductionBatch);
+
+                ViewBag.Info = new FinishGoodProductionInfoViewModel
+                {
+                   FinishGoodProductionBatch=info.FinishGoodProductionBatch
+ 
+                };
+                IEnumerable<FinishGoodProductionDetailsDTO> dto = _finishGoodProductionDetailsBusiness.GetFinishGoodProductionDetails(finishGoodProductionBatch, User.OrgId).Select(a => new FinishGoodProductionDetailsDTO
+                {
+                    RawMaterialId = a.RawMaterialId,
+                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(a.RawMaterialId, User.OrgId).RawMaterialName,
+                    RequiredQuantity = a.RequiredQuantity,
+                    Status = a.Status,
+                    EntryDate = a.EntryDate, 
+                    FinishGoodProductionBatch = a.FinishGoodProductionBatch,
+                    FinishGoodProductionDetailId = a.FinishGoodProductDetailId
+
+                }).ToList();
+                List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTO = new List<FinishGoodProductionDetailsDTO>();
+                List<FinishGoodProductionDetailViewModel> finishGoodProductionDetailViewModels = new List<FinishGoodProductionDetailViewModel>();
+                AutoMapper.Mapper.Map(dto, finishGoodProductionDetailViewModels);
+
+                return PartialView("_GetProductFinishGoodDetails", finishGoodProductionDetailViewModels);
+            }
+            return View();
+
+        }
+
+        public ActionResult FGProductAcceptSave(List<FinishGoodProductionDetailViewModel> details, FinishGoodProductionInfoViewModel info)
+        {
+            bool IsSuccess = false;
+
+            if (ModelState.IsValid)
+            {
+                FinishGoodProductionInfoDTO finishGoodProductionInfoDTO = new FinishGoodProductionInfoDTO();
+                List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTOs = new List<FinishGoodProductionDetailsDTO>();
+                AutoMapper.Mapper.Map(details, finishGoodProductionDetailsDTOs);
+                AutoMapper.Mapper.Map(info, finishGoodProductionInfoDTO);
+                IsSuccess = _finishGoodProductionInfoBusiness.UpdateProductionStatus(finishGoodProductionDetailsDTOs, finishGoodProductionInfoDTO, User.UserId, User.OrgId);
+            }
+            return Json(IsSuccess);
+        }
 
 
         #endregion
@@ -2180,8 +2259,6 @@ namespace ERPWeb.Controllers
 
         }
         public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string FGRID)
-
-
         {
             //var UnitQtys = QtyKG.Split('(', ')');
             //string ProductUnitQty = UnitQtys[0];

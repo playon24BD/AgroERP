@@ -37,5 +37,7 @@ namespace ERPBO.Agriculture.ViewModels
         public double BadReturn { get; set; }
         public double ReturnQty { get; set; }
         public double GoodReturn { get; set; }
+
+        public string FinishGoodProductionBatch { get; set; }
     }
 }

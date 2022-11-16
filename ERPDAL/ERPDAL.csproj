@@ -151,6 +151,10 @@
     <Compile Include="AgricultureContextMigrations\202211121253026_stokiestdomaineditaddress.Designer.cs">
       <DependentUpon>202211121253026_stokiestdomaineditaddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202211160701095_issueaddfield.cs" />
+    <Compile Include="AgricultureContextMigrations\202211160701095_issueaddfield.Designer.cs">
+      <DependentUpon>202211160701095_issueaddfield.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -247,6 +251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202211121253026_stokiestdomaineditaddress.resx">
       <DependentUpon>202211121253026_stokiestdomaineditaddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211160701095_issueaddfield.resx">
+      <DependentUpon>202211160701095_issueaddfield.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

@@ -29,6 +29,18 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<FinishGoodStockReport> GetFinishGoodStockReport(long? productId, string fromDate, string toDate);
 
+        IEnumerable<FinishGoodProductionInfoDTO> GetPendingFinishGoodInfos(string name);
+
+        FinishGoodProductionInfo GetFGProductionInfoBybatchcode(string finishGoodProductionBatch);
+
+        bool UpdateProductionStatus(List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTOs, FinishGoodProductionInfoDTO finishGoodProductionInfoDTO, long userId, long orgId);
+
+        FinishGoodProductionInfo getbatchcodebyid(string FinishGoodProductionBatch);
+        FinishGoodProductionDetails getdetailsbatchcodebyid(long FinishGoodProductDetailId);
+        MRawMaterialIssueStockDetails getissueidbyrmidprobatch(string FinishGoodProductionBatch, long RawMaterialId);
+
+
+
 
     }
 }

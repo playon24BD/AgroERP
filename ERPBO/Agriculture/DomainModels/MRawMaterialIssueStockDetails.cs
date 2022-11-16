@@ -31,5 +31,6 @@ namespace ERPBO.Agriculture.DomainModels
         public long RawMaterialIssueStockId { get; set; }
 
         public MRawMaterialIssueStockInfo MRawMaterialIssueStockInfo { get; set; }
+        public string FinishGoodProductionBatch { get; set; }
     }
 }
