@@ -36,7 +36,7 @@ namespace ERPBLL.Agriculture
 
         private CommisionOnProductSalesDetails GetCommisionOnProductSalesbyInfoId(long info)
         {
-            return _commissionSalesDetailsRepository.GetOneByOrg(d => d.CommissionOnProductOnSalesId == info);
+            return _commissionSalesDetailsRepository.GetOneByOrg(d => d.CommissionOnProductSalesDetailsId == info);
         }
 
         private IEnumerable<CommisionOnProductSalesDetails> GetCommisionOnInfoId(long InfoId, long orgId)
@@ -58,6 +58,7 @@ namespace ERPBLL.Agriculture
 
                         CommissionOnProductOnSalesId = id,
                         PaymentMode = flag,
+
 
                         Credit = (flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : 0,
 
@@ -90,17 +91,21 @@ namespace ERPBLL.Agriculture
             var salesDetails = this.GetCommisionOnInfoId(id, 0).ToList();
             if (salesDetails.Count() > 0)
             {
-                foreach (var item in onProductSalesDetailsDTO)
+                foreach (var did in salesDetails)
                 {
-                    var detailsCommission = GetCommisionOnProductSalesbyInfoId(id);
-                    detailsCommission.Credit = 0;
-                    detailsCommission.Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash : 0;
-                    detailsCommission.TotalCommission = ((item.Price * item.Quanity) - item.DiscountTk) * ((flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash) / 100;
-                    detailsCommission.PaymentMode = flag;
-                    detailsCommission.Remarks = "Update";
-                    detailsCommission.UpdateDate = DateTime.Now;
-                    detailsCommission.UpdateUserId = userId;
-                    productSalesDetails.Add(detailsCommission);
+
+                    foreach (var item in onProductSalesDetailsDTO)
+                    {
+                        var detailsCommission = GetCommisionOnProductSalesbyInfoId(did.CommissionOnProductSalesDetailsId);
+                        detailsCommission.Credit = 0;
+                        detailsCommission.Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash : 0;
+                        detailsCommission.TotalCommission = ((item.Price * item.Quanity) - item.DiscountTk) * ((flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash) / 100;
+                        detailsCommission.PaymentMode = flag;
+                        detailsCommission.Remarks = "Update";
+                        detailsCommission.UpdateDate = DateTime.Now;
+                        detailsCommission.UpdateUserId = userId;
+                        productSalesDetails.Add(detailsCommission);
+                    }
                 }
                 _commissionSalesDetailsRepository.UpdateAll(productSalesDetails);
                 isSuccess = _commissionSalesDetailsRepository.Save();

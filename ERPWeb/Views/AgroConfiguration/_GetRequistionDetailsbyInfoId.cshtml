@@ -37,7 +37,7 @@
                 <td class="text-center" style="color:red">@item.AvailableQty</td>
                 @*<td class="text-center">@item.RequisitionQuantity</td>*@
                 <td class="text-center" style="width:10%">
-            <input type="number" class="issueQty form-control form-control-sm " value="0"  />
+            <input type="number" class="issueQty form-control form-control-sm " value="@item.RequisitionQuantity"  />
             <span class="error hide">Quantity must be <=available Quantity</span>
         </td>
                 <td class="text-center">@item.Status</td>

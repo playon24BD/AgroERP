@@ -3,6 +3,14 @@
    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "UpdateRequistion";
 }
+
+<style>
+    .center {
+   
+        text-align:center;
+    }
+
+</style>
 @*<div class="row" style="margin-top:-15px">
     <div class="col-md-12">
         <div class="card card-gray-dark">
@@ -29,19 +37,20 @@
         <div class="card card-navy">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-8">
-                        <h5 class="text-left text-bold">
+                    <div class="col-md-10 center">
+                        <h5 class="text-bold">
                             Issue Requisition
                         </h5>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="input-group">
                             <select class="form-control form-control-sm" id="ddlAction">
                                 <option value="Send" selected>Approved</option>
                                 <option value="Rejected">Rejected</option>
                             </select>
-                            <div class="input-group-append" style="cursor:pointer">
-                                <a id="btnSubmit" href="#" title="Submit Requisition" style="background-color:darkblue" class="input-group-text">
+                            <div class="input-group-append" >
+                                <a id="btnSubmit" href="#" title="Submit Requisition" class="btn btn-success">
+                                    Save
                                     <i class="fas fa-paper-plane"></i>
                                 </a>
                             </div>
@@ -127,6 +136,7 @@
 
             $.each($("#tblRequisitonDetails tbody tr"), function (index, item) {
                 var tds = $(this).children('td');
+                //alert(tds.eq(5).children('input[type="number"]').val());
                 details.push({
                     RawMaterialIssueStockDetailId: 0,
                     UnitID: tds.eq(8).html(),
@@ -137,6 +147,7 @@
                     RawMaterialRequisitionInfoId: tds.eq(9).html(),
                     RawMaterialRequisitionDetailsId: tds.eq(10).html(),  
                     RawMaterialId: tds.eq(11).html(),
+                    
                 });
             })
 

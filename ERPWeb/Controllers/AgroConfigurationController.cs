@@ -1417,6 +1417,8 @@ namespace ERPWeb.Controllers
                         FGRDetailsId = m.FGRDetailsId,
                         RawMaterialId = m.RawMaterialId,
                         RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(m.RawMaterialId, User.OrgId).RawMaterialName,
+                        UnitId = m.UnitId,
+                        UnitName = _agroUnitInfo.GetAgroInfoById(m.UnitId, User.OrgId).UnitName,
                         FGRId = m.FGRId,
                         FGRRawMaterQty = m.FGRRawMaterQty,
 
@@ -1447,6 +1449,86 @@ namespace ERPWeb.Controllers
 
         }
 
+
+        public ActionResult GetDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty)
+        {
+            double issueQunatity = 0;
+            double perRecepQuantity = 0;
+            double requirdQuantity = 0;
+            bool Checked = false;
+
+            try
+            {
+
+                var recipeDetailsRawMaterials = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByBatchCode(receipeBatchCode, User.OrgId);
+                foreach (var rawMaterial in recipeDetailsRawMaterials)
+                {
+
+                    //issueQunatity = _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
+
+                    var StocInkqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    var SumStockinQty = StocInkqty.Sum(c => c.Quantity);
+
+
+                    var StockOutqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialidOut(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    var SumStockOutQty = StockOutqty.Sum(d => d.Quantity);
+
+                    issueQunatity = SumStockinQty - SumStockOutQty;
+
+
+                    perRecepQuantity = rawMaterial.FGRRawMaterQty;
+                    requirdQuantity = (perRecepQuantity * targetQty);
+                    if (requirdQuantity > issueQunatity)
+                    {
+
+                        Checked = false;
+                    }
+                    else
+                    {
+                        Checked = true;
+
+                    }
+
+                }
+
+                if (Checked)
+                {
+                    var AllMetarial = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByBatchCode(receipeBatchCode, User.OrgId).Select(m => new FinishGoodRecipeDetailsDTO()
+                    {
+                        FGRDetailsId = m.FGRDetailsId,
+                        RawMaterialId = m.RawMaterialId,
+                        RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(m.RawMaterialId, User.OrgId).RawMaterialName,
+                        UnitId = m.UnitId,
+                        UnitName = _agroUnitInfo.GetAgroInfoById(m.UnitId,User.OrgId).UnitName,
+                        FGRId = m.FGRId,
+                        FGRRawMaterQty = m.FGRRawMaterQty,
+
+
+                    }).ToList();
+
+
+
+
+                    List<FinishGoodRecipeDetailsViewModel> viewModels = new List<FinishGoodRecipeDetailsViewModel>();
+                    AutoMapper.Mapper.Map(AllMetarial, viewModels);
+                    return Json(viewModels, JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    return Json("Issue Quantity Not Sufficient Please Check Target Quantity...", JsonRequestBehavior.AllowGet);
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return Json($"Not Found: {ex}", JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
         public ActionResult SaveFinishGoodProduction(FinishGoodProductionInfoViewModel info, List<FinishGoodProductionDetailViewModel> details)
         {
             bool isSucccess = false;
@@ -2898,6 +2980,10 @@ namespace ERPWeb.Controllers
             if (string.IsNullOrEmpty(flag))
             {
                 ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+
+                ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
+
+                ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
                 return View();
 
             }
@@ -3687,8 +3773,12 @@ namespace ERPWeb.Controllers
             }
             else if (flag == "view")
             {
+
+            
+                
                 var commision = _commisionOnProductSalesDetailsBusiness.GetCommisionOnProductSalesDetails(0).Where(a => a.CommissionOnProductOnSalesId == id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
-                {//
+                {//75
+                   
                     Flag = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyInfoId(_commissionOnProductOnSalesBusiness.GetCommissionOnProductById(c.CommissionOnProductOnSalesId, User.OrgId).ProductSalesInfoId).QtyKG,
                     CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
                     FinishGoodProductId = c.FinishGoodProductId,
