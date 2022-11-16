@@ -75,7 +75,7 @@ where  sr.Status='ADJUST' and sr.FGRId =FI.FGRId),0))
 FROM FinishGoodProductionInfoes FI
 inner join tblFinishGoodRecipeInfo FGR on FGR.FGRId=FI.FGRId
 inner join [dbo].[tblFinishGoodProductInfo] FGPI on FGPI.FinishGoodProductId=FGR.FinishGoodProductId 
-Where 1=1 {0}
+Where 1=1 and FI.Status='Approved' {0}
 Group by 
 FI.FGRId,FGPI.FinishGoodProductName,FI.FinishGoodProductId,FGPI.FinishGoodProductName,FI.ReceipeBatchCode", Utility.ParamChecker(param));
 

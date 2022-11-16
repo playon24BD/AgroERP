@@ -2918,9 +2918,10 @@ namespace ERPWeb.Controllers
             var returnvadid = _returnRawMaterialBusiness.GetAllReturnRawMaterial().Where(d => d.RawMaterialId == RawMaterialId && d.ReturnType == "Damage" && d.Status == "Approved").ToList();
             var returndmg = returnvadid.Sum(n => n.Quantity);
 
+            var PendingStockInRMID = _mRawMaterialIssueStockDetails.GetAllRawMaterialIssueStock().Where(x => x.RawMaterialId == RawMaterialId && x.IssueStatus == "Pending").ToList();
+            var PendingStockinqty = PendingStockInRMID.Sum(c => c.Quantity);
 
-
-            var IssueStockrmnqty = IssueStockinqty - IssueStockoutqty - returngood - returndmg;
+            var IssueStockrmnqty = IssueStockinqty - IssueStockoutqty - returngood - returndmg- PendingStockinqty;
 
 
             return Json(IssueStockrmnqty, JsonRequestBehavior.AllowGet);

@@ -47,11 +47,16 @@ namespace ERPBLL.Agriculture
             }
             query = string.Format(@"
      
+
+     
  SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,
 StockIN=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
 where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),0),
 StockOut=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
 where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0),
+
+PendingStock=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where  t.IssueStatus ='Pending'and t.RawMaterialId=RM.RawMaterialId),0),
 
 GoodReturn=isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
 where  t.RawMaterialId=rr.RawMaterialId and rr.ReturnType='Good' and rr.Status='Approved' ),0),
@@ -65,7 +70,8 @@ where  t.RawMaterialId=rr.RawMaterialId and rr.Status='Approved'),0),
 CurrentStock=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
 where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId ),0)-isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
 where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0)-isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
-where  t.RawMaterialId=rr.RawMaterialId and rr.Status='Approved'),0)
+where  t.RawMaterialId=rr.RawMaterialId and rr.Status='Approved'),0)-isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where  t.IssueStatus ='Pending'and t.RawMaterialId=RM.RawMaterialId),0)
 
 FROM  
 tblMRawMaterialIssueStockDetails t 
