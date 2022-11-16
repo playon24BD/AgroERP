@@ -48,13 +48,13 @@
                   <Width>1.39785in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.14194in</Width>
+                  <Width>1.20748in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.56292in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.93109in</Width>
+                  <Width>0.86555in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.75389in</Width>
@@ -68,7 +68,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.3125in</Height>
+                  <Height>0.32292in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -81,7 +81,7 @@
                                 <TextRun>
                                   <Value>SL</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -117,12 +117,14 @@
                                 <TextRun>
                                   <Value>Product Name</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox12</rd:DefaultName>
@@ -151,12 +153,14 @@
                                 <TextRun>
                                   <Value>Measurement Size</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox37</rd:DefaultName>
@@ -185,7 +189,7 @@
                                 <TextRun>
                                   <Value>Quanity</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -221,7 +225,7 @@
                                 <TextRun>
                                   <Value>Price</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -257,7 +261,7 @@
                                 <TextRun>
                                   <Value>Discount%</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -293,7 +297,7 @@
                                 <TextRun>
                                   <Value>Discount Tk</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -329,7 +333,7 @@
                                 <TextRun>
                                   <Value>Total Amount</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -772,7 +776,7 @@
             <DataSetName>dsAgroSalesReport</DataSetName>
             <Top>4.25916in</Top>
             <Left>0.2679in</Left>
-            <Height>0.875in</Height>
+            <Height>0.88542in</Height>
             <Width>7.27873in</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -868,7 +872,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox16</rd:DefaultName>
             <Top>1.08208in</Top>
-            <Left>3.28873in</Left>
+            <Left>3.03873in</Left>
             <Height>0.25in</Height>
             <Width>2.15625in</Width>
             <ZIndex>4</ZIndex>
@@ -901,7 +905,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox17</rd:DefaultName>
             <Top>1.27653in</Top>
-            <Left>3.16373in</Left>
+            <Left>3.03873in</Left>
             <Height>0.25in</Height>
             <Width>2.14881in</Width>
             <ZIndex>5</ZIndex>
@@ -1967,7 +1971,7 @@
               </Line>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>7.58208in</Top>
+            <Top>9.20708in</Top>
             <Left>0.23396in</Left>
             <Height>1.78125in</Height>
             <Width>3.73394in</Width>
@@ -2112,7 +2116,7 @@
               </Line>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>7.53063in</Top>
+            <Top>9.15563in</Top>
             <Left>3.9679in</Left>
             <Height>1.90215in</Height>
             <Width>3.55842in</Width>
@@ -2124,7 +2128,7 @@
             </Style>
           </Rectangle>
           <Line Name="Line10">
-            <Top>7.58208in</Top>
+            <Top>9.20708in</Top>
             <Left>3.9679in</Left>
             <Height>1.82354in</Height>
             <Width>0in</Width>
@@ -2136,10 +2140,10 @@
             </Style>
           </Line>
           <Line Name="Line11">
-            <Top>9.40563in</Top>
-            <Left>0.23396in</Left>
+            <Top>11.03063in</Top>
+            <Left>0.2679in</Left>
             <Height>0in</Height>
-            <Width>3.71689in</Width>
+            <Width>3.7in</Width>
             <ZIndex>38</ZIndex>
             <Style>
               <Border>
@@ -2148,7 +2152,7 @@
             </Style>
           </Line>
           <Line Name="Line12">
-            <Top>7.58208in</Top>
+            <Top>9.20708in</Top>
             <Left>0.23974in</Left>
             <Height>1.82354in</Height>
             <Width>0in</Width>
@@ -2160,7 +2164,7 @@
             </Style>
           </Line>
           <Line Name="Line22">
-            <Top>9.40011in</Top>
+            <Top>11.02511in</Top>
             <Left>4.13456in</Left>
             <Height>-1.86379in</Height>
             <Width>0in</Width>
@@ -2175,10 +2179,10 @@
             <Source>Embedded</Source>
             <Value>ID002033802af400d6080b6dab955db46f2aaf303030523836552bfae630c46917c67c4_ebcf7568f310c2fb</Value>
             <Sizing>Fit</Sizing>
-            <Top>0.25in</Top>
+            <Top>0.125in</Top>
             <Left>0.23335in</Left>
-            <Height>0.67583in</Height>
-            <Width>1.0033in</Width>
+            <Height>0.80083in</Height>
+            <Width>1.45469in</Width>
             <ZIndex>41</ZIndex>
             <Style>
               <Border>
@@ -2204,7 +2208,7 @@
             <Top>5.31472in</Top>
             <Left>1.17763in</Left>
             <Height>0.25in</Height>
-            <Width>6.25146in</Width>
+            <Width>6.369in</Width>
             <ZIndex>42</ZIndex>
             <Style>
               <Border>
@@ -2248,23 +2252,24 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Height>9.55778in</Height>
-        <Width>7.79042in</Width>
+        <Height>11.05778in</Height>
+        <Width>7.74875in</Width>
         <Style>
           <Border>
-            <Style>None</Style>
+            <Style>Solid</Style>
           </Border>
+          <BackgroundColor>White</BackgroundColor>
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>9.55778in</Height>
+    <Height>11.05778in</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <Width>7.79042in</Width>
+  <Width>7.74875in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>
