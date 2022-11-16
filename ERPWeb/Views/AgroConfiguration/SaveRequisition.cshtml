@@ -27,58 +27,61 @@
             <div class="tab-content" id="custom-tabs-two-tabContent">
 
                 <div class="tab-pane fade show active" id="custom-tabs-two-singleRequisition" role="tabpanel" aria-labelledby="custom-tabs-two-singleRequisition-tab">
-                    <div class="card-header" style="text-align: center;">
+                    <div class="col-md-12">
+                        <div class="card card-navy">
+                            <div class="card-header" style="text-align: center;">
 
-                        <div class="row">
+                                <div class="row">
 
-                            <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-success btn-sm btn float-right btnSubmit" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
+                                        <h5 class="text-center text-bold">
 
-                                <button class="btn btn-success btn-sm btn float-right btnSubmit" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
-                                <h5 class="text-center text-bold">
+                                            RM Single Requisition
+                                        </h5>
+                                    </div>
 
-                                    Raw Material Requistion
-                                </h5>
+
+                                </div>
                             </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <input type="text" id="hdrawMaterialRequisitionInfoId" class="hide" />
+                                    <div class="col-md-2">
+                                        <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
+                                        @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label for="unitName">Unit</label>
+                                        <input type="text" id="txtUnitName" name="unitName" class="form-control form-control-sm" readonly />
+                                    </div>
+                                    <div class="hide">
+                                        <label for="unitID">UnitID</label>
+                                        <input type="text" id="hdUnitId" name="unitID" class="form-control form-control-sm" readonly />
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label for="requistionQuantity">Requisition Qty</label>
+                                        <input type="number" id="numRequisitonQuantity" name="requistionQuantity" class="form-control form-control-sm" />
+                                        <span class="error hide req-qty">Qty Is Required</span>
+                                        <span id="spanRawMaterialStockQty">Stock: <span id="RawMaterialStockQty">0</span> </span>
+                                        <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label for="txtRemarks">Remarks</label>
+                                        <input type="text" id="txtRemarks" name="txtRemarks" class="form-control form-control-sm" />
+                                    </div>
 
 
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <input type="text" id="hdrawMaterialRequisitionInfoId" class="hide" />
-                            <div class="col-md-2">
-                                <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
-                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
-                            </div>
-
-                            <div class="col-md-2">
-                                <label for="unitName">Unit</label>
-                                <input type="text" id="txtUnitName" name="unitName" class="form-control form-control-sm" readonly />
-                            </div>
-                            <div class="hide">
-                                <label for="unitID">UnitID</label>
-                                <input type="text" id="hdUnitId" name="unitID" class="form-control form-control-sm" readonly />
-                            </div>
-
-                            <div class="col-md-2">
-                                <label for="requistionQuantity">Requisition Qty</label>
-                                <input type="number" id="numRequisitonQuantity" name="requistionQuantity" class="form-control form-control-sm" />
-                                <span class="error hide req-qty">Qty Is Required</span>
-                                <span id="spanRawMaterialStockQty">Stock: <span id="RawMaterialStockQty">0</span> </span>
-                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
-                            </div>
-
-                            <div class="col-md-2">
-                                <label for="txtRemarks">Remarks</label>
-                                <input type="text" id="txtRemarks" name="txtRemarks" class="form-control form-control-sm" />
-                            </div>
-
-
-                            <div class="col-md-2">
-                                <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
-                                <div class="clearfix">
-                                    <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolist"><i class="fas fa-plus"></i></button>
+                                    <div class="col-md-2">
+                                        <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
+                                        <div class="clearfix">
+                                            <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -89,13 +92,13 @@
                                         <div class="row">
                                             <div class="col-md-12" style="overflow-y:scroll">
                                                 <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblRawMaterialRequisiton">
-                                                    <thead>
+                                                    <thead class="btn-dark">
                                                         @*<tr>
-                                            <th colspan="6">
-                                                <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
-                                            </th>
-                                        </tr>*@
-                                                        <tr class="btn-dark">
+                                                                <th colspan="6">
+                                                                    <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
+                                                                </th>
+                                                            </tr>*@
+                                                        <tr class="text-center">
                                                             <th>#SL</th>
                                                             <th>Raw Material</th>
                                                             <th>Unit</th>
@@ -128,7 +131,7 @@
                                         <button class="btn btn-success btn-sm btn float-right btnSubmit" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
                                         <h5 class="text-center text-bold">
 
-                                           RM Bundle Requisition
+                                            RM Bundle Requisition
                                         </h5>
                                     </div>
 
@@ -166,7 +169,7 @@
                                     <div class="col-md-2">
                                         <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
                                         <div class="clearfix">
-                                            <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolistBundle"><i class="fas fa-plus"></i> &nbsp; ADD TO LIST </button>
+                                            <button type="submit" class="btn btn-sm btn-outline-success" id="addTolistBundle"><i class="fas fa-plus"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -180,19 +183,19 @@
                                     <div class="row">
                                         <div class="col-md-12" style="overflow-y:scroll">
                                             <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblBundleRequisiton">
-                                                <thead>
+                                                <thead class="btn-dark">
                                                     @*<tr>
-                    <th colspan="6">
-                        <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
-                    </th>
-                </tr>*@
-                                                    <tr class="btn-dark">
+                                                            <th colspan="6">
+                                                                <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
+                                                            </th>
+                                                        </tr>*@
+                                                    <tr  class="text-center">
                                                         <th>#SL</th>
                                                         <th>Raw Material</th>
                                                         <th>Unit</th>
                                                         <th>Requisition Qty</th>
-                                             
- 
+
+
 
                                                     </tr>
                                                 </thead>
@@ -208,8 +211,8 @@
                     </div>
 
                 </div>
-                </div>
             </div>
+        </div>
     </div>
 
 
@@ -237,7 +240,7 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
-            $("#btnSubmit").hide();
+            $(".btnSubmit").hide();
             $("#spanRawMaterialStockQty").hide();
 
             //LoadDataTableStock();
@@ -299,7 +302,7 @@
                     var td5 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
                     var td6 = "<td class='text-center hide'>" + ddlRawMaterial.val() + "</td>";
                     var td7 = "<td class='text-center hide'>" + hdUnitId.val() + "</td>";
-                    var tr = "<tr>" + td1 + td2 + td3 + td4 +td8+ td5 + td6 + td7 + "</tr>";
+                    var tr = "<tr class='text-center'>" + td1 + td2 + td3 + td4 +td8+ td5 + td6 + td7 + "</tr>";
 
                     $("#tblRawMaterialRequisiton tbody").append(tr);
                     $("#spanRawMaterialStockQty").hide();
@@ -495,12 +498,12 @@
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyTergetQty", data)).then(function (res, status) {
                 debugger;
                 //qty.val(res);
-                targetQty.val(res);
+                //targetQty.val(res);
                 hdTargetValue.val(res);
 
             });
         }
-
+      
         $("#addTolistBundle").click(function (e) {
             e.preventDefault();
             if (true) {
@@ -516,10 +519,6 @@
                     var len = material.length;
                     console.log("length: " + len);
                     console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
-                
-                   
-
-
 
                         //console.log(material[0].RawMaterialName);
                     $.each(material, function (index, value) {
@@ -533,14 +532,15 @@
                         var td2 = "<td class='hide'>" + value.FGRRawMaterQty + "</td>";
                             var td3 = "<td class='hide'>" + targetQty.val() + "</td>";
                             var td4 = "<td>" + (value.FGRRawMaterQty * targetQty.val()) + "</td>";
-                        var tr = "<tr>" + sl + td1 + unitName + td4 + td3 + td2 + td5 + unitId+"</tr>";
+                        var tr = "<tr class='text-center'>" + sl + td1 + unitName + td4 + td3 + td2 + td5 + unitId+"</tr>";
                             $("#tblBundleRequisiton tbody").append(tr)
-                            $("#btnSubmit").show();
+                        $(".btnSubmit").show();
+                        $("#addTolistBundle").hide();
 
 
                         })
 
-               
+
 
                 });
 

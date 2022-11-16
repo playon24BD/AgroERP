@@ -3862,7 +3862,7 @@ namespace ERPWeb.Controllers
                     FinishGoodProductId = c.FinishGoodProductId,
                     FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(c.FinishGoodProductId, User.OrgId).FinishGoodProductName,
                     PaymentMode = c.PaymentMode,
-                    TotalCommission = c.TotalCommission,
+                    TotalCommission =(c.Cash==0?c.Credit*c.price :c.Cash*c.price)/100,
                     InvoiceNo = _commissionOnProductOnSalesBusiness.GetCommissionOnProductById(c.CommissionOnProductOnSalesId, User.OrgId).InvoiceNo,
                     EntryDate = c.EntryDate
 
