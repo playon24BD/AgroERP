@@ -328,7 +328,7 @@ where 1=1 and  t.ReturnType='Damage' and t.Status='Pending' {0}",
             
 
             query = string.Format(@"
-                   select rm.RawMaterialId, convert(date,rrm.EntryDate) as EntryDate,rm.RawMaterialName,UnitName=(Convert(nvarchar,rrm.Quantity)+' '+ u.UnitName), rrm.ReturnType,rrm.Status
+                   select rm.RawMaterialId, convert(date,rrm.EntryDate) as EntryDate,RawMaterialName=(rm.RawMaterialName+' '+u.UnitName),UnitName=(Convert(nvarchar,rrm.Quantity)+' '+ u.UnitName),rrm.Quantity,rrm.ReturnType,rrm.Status
  from [Agriculture].[dbo].tblReturnRawMaterial rrm
 inner join [Agriculture].[dbo].tblRawMaterialInfo rm on  rrm.RawMaterialId=rm.RawMaterialId
 inner join [Agriculture].[dbo].tblAgroUnitInfo u on rrm.UnitId=u.UnitId
@@ -382,10 +382,12 @@ inner join [Agriculture].[dbo].tblAgroUnitInfo u on rrm.UnitId=u.UnitId
 
 
             query = string.Format(@"
-                   select rm.RawMaterialId, convert(date,rrm.EntryDate) as EntryDate,rm.RawMaterialName,UnitName=(Convert(nvarchar,rrm.Quantity)+' '+ u.UnitName),rrm.ReturnType,rrm.Status
+                   select rm.RawMaterialId, convert(date,rrm.EntryDate) as EntryDate,RawMaterialName=(rm.RawMaterialName+' '+u.UnitName),UnitName=(Convert(nvarchar,rrm.Quantity)+' '+ u.UnitName),rrm.Quantity,rrm.ReturnType,rrm.Status
  from [Agriculture].[dbo].tblReturnRawMaterial rrm
 inner join [Agriculture].[dbo].tblRawMaterialInfo rm on  rrm.RawMaterialId=rm.RawMaterialId
 inner join [Agriculture].[dbo].tblAgroUnitInfo u on rrm.UnitId=u.UnitId
+
+
 
   where 1=1 {0}", Utility.ParamChecker(param));
             return query;

@@ -289,6 +289,8 @@ namespace ERPWeb.Reports.DataSets {
             
             private global::System.Data.DataColumn columnStatus;
             
+            private global::System.Data.DataColumn columnQuantity;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public dsReturnRawMaterialReportDataTable() {
@@ -364,6 +366,14 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn QuantityColumn {
+                get {
+                    return this.columnQuantity;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -399,14 +409,15 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsReturnRawMaterialReportRow AdddsReturnRawMaterialReportRow(string EntryDate, string RawMaterialName, string UnitName, string ReturnType, string Status) {
+            public dsReturnRawMaterialReportRow AdddsReturnRawMaterialReportRow(string EntryDate, string RawMaterialName, string UnitName, string ReturnType, string Status, string Quantity) {
                 dsReturnRawMaterialReportRow rowdsReturnRawMaterialReportRow = ((dsReturnRawMaterialReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         EntryDate,
                         RawMaterialName,
                         UnitName,
                         ReturnType,
-                        Status};
+                        Status,
+                        Quantity};
                 rowdsReturnRawMaterialReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdsReturnRawMaterialReportRow);
                 return rowdsReturnRawMaterialReportRow;
@@ -434,6 +445,7 @@ namespace ERPWeb.Reports.DataSets {
                 this.columnUnitName = base.Columns["UnitName"];
                 this.columnReturnType = base.Columns["ReturnType"];
                 this.columnStatus = base.Columns["Status"];
+                this.columnQuantity = base.Columns["Quantity"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -449,6 +461,8 @@ namespace ERPWeb.Reports.DataSets {
                 base.Columns.Add(this.columnReturnType);
                 this.columnStatus = new global::System.Data.DataColumn("Status", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStatus);
+                this.columnQuantity = new global::System.Data.DataColumn("Quantity", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnQuantity);
                 this.ExtendedProperties.Add("Generator_TablePropName", "_dsReturnRawMaterialReport");
                 this.ExtendedProperties.Add("Generator_UserTableName", "dsReturnRawMaterialReport");
             }
@@ -675,6 +689,22 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Quantity {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsReturnRawMaterialReport.QuantityColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Quantity\' in table \'dsReturnRawMaterialReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsReturnRawMaterialReport.QuantityColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsEntryDateNull() {
                 return this.IsNull(this.tabledsReturnRawMaterialReport.EntryDateColumn);
             }
@@ -731,6 +761,18 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetStatusNull() {
                 this[this.tabledsReturnRawMaterialReport.StatusColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsQuantityNull() {
+                return this.IsNull(this.tabledsReturnRawMaterialReport.QuantityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetQuantityNull() {
+                this[this.tabledsReturnRawMaterialReport.QuantityColumn] = global::System.Convert.DBNull;
             }
         }
         
