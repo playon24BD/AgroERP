@@ -12,7 +12,7 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="/AgroConfiguration/Regionlist" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                        <a href="/AgroConfiguration/GetStockiestList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
                             <i class="fas fa-arrow-alt-circle-left"></i>
                         </a>
                     </div>
@@ -91,12 +91,12 @@
 
 @section scripts{
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
         //var ddlorgname = $("#ddlorgname");
         var ddldivname = $("#ddldivname");
         var ddlRegionName = $("#ddlRegionName");
-       
+
         var regionNameList = [];
 
 
@@ -107,7 +107,7 @@
                 theme: 'bootstrap4'
             });
 
-           
+
         })
        //change zone
         //$('#ddlzonename').change(function () {
@@ -164,7 +164,7 @@
                 var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
                 var td2 = "<td class='text-center'>" + dropDownSelectedText("ddldivname") + "</td>";
                 var td3 = "<td class='text-center'>" + ddlRegionName.val() + "</td>";
-              
+
 
                 var td4 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
@@ -209,7 +209,7 @@
             //alert();
             debugger;
             e.preventDefault();
-  
+
             var details = [];
             details.length = 0;
             $.each($("#tblSingleItems tbody tr"), function (index, item) {
@@ -223,7 +223,7 @@
                     //Remarks: tds.eq(6).html(),
                     //ZoneId: tds.eq(8).html(),
                     DivisionId: tds.eq(4).html(),
-                    
+
 
                 });
             })
@@ -235,7 +235,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                        redirectPage('@Url.Action("Regionlist")');
+                        redirectPage('@Url.Action("GetStockiestList", new {tab= "Region" })');
                     }, 1000);
                 }
                 else {
@@ -280,11 +280,11 @@
         function clearCtrlRegion() {
             debugger;
             //ddldivname.val("");
-            
+
             ddlRegionName.val("");
-       
+
         }
 
-    </script>
+</script>
 }
 

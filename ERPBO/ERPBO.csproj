@@ -156,16 +156,15 @@
     <Compile Include="Agriculture\DTOModels\ZoneDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneSetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneUserDTO.cs" />
-
     <Compile Include="Agriculture\ReportModels\DateWiseCollectionReport.cs" />
-
     <Compile Include="Agriculture\ReportModels\FinishGoodStockReport.cs" />
-
     <Compile Include="Agriculture\ReportModels\InvoiceWiseCollectionSalesReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductSalesDataChallanReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductSalesDataReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductWiseSalesStementReport.cs" />
+    <Compile Include="Agriculture\ReportModels\ReturnRawMaterialDataReport.cs" />
     <Compile Include="Agriculture\ReportModels\SalesCommissionData.cs" />
+    <Compile Include="Agriculture\ReportModels\SalesReturnReportData.cs" />
     <Compile Include="Agriculture\ViewModels\AgroProductSalesDetailsViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AgroProductSalesInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AgroUnitInfoViewModel.cs" />

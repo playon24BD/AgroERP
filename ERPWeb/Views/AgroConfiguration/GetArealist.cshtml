@@ -12,7 +12,7 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="/AgroConfiguration/AreaList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                        <a href="/AgroConfiguration/GetStockiestList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
                             <i class="fas fa-arrow-alt-circle-left"></i>
                         </a>
                     </div>
@@ -96,7 +96,7 @@
 
 @section scripts{
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
 
 
@@ -225,7 +225,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                          redirectPage('@Url.Action("AreaList")');
+                          redirectPage('@Url.Action("GetStockiestList", new {tab= "Area" })');
                     }, 1000);
                 }
                 else {
@@ -245,6 +245,6 @@
 
         });
 
-    </script>
+</script>
 }
 

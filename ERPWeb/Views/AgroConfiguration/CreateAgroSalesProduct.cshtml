@@ -67,9 +67,16 @@
                                 <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
                             </div>
                             <div class="col-md-2">
-                                <label for="ddlDepotName" class="col-form-label pt-0">Depot</label>
-                                <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
+                                <label for="ddlClient" class="col-form-label pt-0">
+                                    Depot
+                                </label>
+                                @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--DepotName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-DepotName font-weight-bold">Depot Name is required!</span>
                             </div>
+                            @*<div class="col-md-2">
+            <label for="ddlDepotName" class="col-form-label pt-0">Depot</label>
+            <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
+        </div>*@
 
                             <div class="col-md-2">
 

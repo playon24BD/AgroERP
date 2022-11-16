@@ -39,5 +39,7 @@ namespace ERPBO.Agriculture.ViewModels
 
         public int box { get; set; }
         public long StockiestId { get; set; }
+
+        public string StockiestName { get; set; }
     }
 }

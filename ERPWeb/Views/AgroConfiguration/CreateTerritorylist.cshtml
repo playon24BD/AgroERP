@@ -10,7 +10,7 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="/AgroConfiguration/Territorylist" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                        <a href="/AgroConfiguration/GetStockiestList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
                             <i class="fas fa-arrow-alt-circle-left"></i>
                         </a>
                     </div>
@@ -85,7 +85,7 @@
 
 @section scripts{
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
         var ddlorgname = $("#ddlorgname");
         var ddlareaname = $("#ddlareaname");
@@ -190,7 +190,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                        redirectPage('@Url.Action("Territorylist")');
+                        redirectPage('@Url.Action("GetStockiestList", new {tab= "Territory" })');
                     }, 1000);
                 }
                 else {
@@ -231,5 +231,5 @@
 
         }
 
-    </script>
+</script>
 }

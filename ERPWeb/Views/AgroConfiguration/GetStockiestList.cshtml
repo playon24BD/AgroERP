@@ -3,100 +3,677 @@
     ViewBag.Title = "GetStockiestList";
     var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string tab = ViewBag.tab;
 }
 
-<div class="row" style="margin-top:-10px">
+<div class="row" style="margin-top:5px">
     <div class="col-md-12">
+        <input id="tab" type="text" hidden value="@tab" />
+
+        <div class="card  shadow card  card-outline card-tabs" style="margin-top:-30px">
+            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
+
+                <li class="nav-item">
+                    <a class="nav-link active text-white" id="custom-tabs-two-StockiestList-tab" data-toggle="pill" href="#custom-tabs-two-StockiestList" role="tab" aria-controls="custom-tabs-two-StockiestList" aria-selected="false">Stockiest</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-Territory-tab" data-toggle="pill" href="#custom-tabs-two-Territory" role="tab" aria-controls="custom-tabs-two-Territory" aria-selected="true">Territory</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-Area-tab" data-toggle="pill" href="#custom-tabs-two-Area" role="tab" aria-controls="custom-tabs-two-Area" aria-selected="true">Area</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-Region-tab" data-toggle="pill" href="#custom-tabs-two-Region" role="tab" aria-controls="custom-tabs-two-Region" aria-selected="true">Region</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-Division-tab" data-toggle="pill" href="#custom-tabs-two-Division" role="tab" aria-controls="custom-tabs-two-Division" aria-selected="true">Division</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " id="custom-tabs-two-Zone-tab" data-toggle="pill" href="#custom-tabs-two-Zone" role="tab" aria-controls="custom-tabs-two-Zone" aria-selected="true">Zone</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body shadow">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+                @*Stockiest List *@
+                <div class="tab-pane fade show active" id="custom-tabs-two-StockiestList" role="tabpanel" aria-labelledby="custom-tabs-two-StockiestList-tab">
 
 
-        <div class="row" style="margin-top:-15px">
-            <div class="col-md-12">
-                <div class="card card-navy">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-md-3">
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Stockiest List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateStockiestList" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Stockiest</a>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="col-md-6">
-                                <h4 class="text-center text-bold">Stockiest List</h4>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+
+                                        <div class="col-md-2">
+
+                                            @Html.DropDownList("sddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        </div>
+                                        <div class="col-md-2">
+
+
+                                            @Html.DropDownList("sddlTerritoryName1", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <a href="/AgroConfiguration/CreateStockiestList" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Stockiest</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="sdataContainer">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                @*Territory List *@
+                <div class="tab-pane fade show" id="custom-tabs-two-Territory" role="tabpanel" aria-labelledby="custom-tabs-two-Territory-tab">
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Territory List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateTerritorylist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Territory</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="tsearchByAny" placeholder="Search By Any" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="tdataContainer">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                @*Area List *@
+                <div class="tab-pane fade show" id="custom-tabs-two-Area" role="tabpanel" aria-labelledby="custom-tabs-two-Area-tab">
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Area List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/GetArealist" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Area</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+
+
+
+
+                                        <div class="col-md-3 float-right">
+                                            <input type="text" class="form-control form-control-sm" id="asearchByAny" placeholder="Search by any" />
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="adataContainer">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                @*Region List *@
+                <div class="tab-pane fade show" id="custom-tabs-two-Region" role="tabpanel" aria-labelledby="custom-tabs-two-Region-tab">
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Region List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateRegionlist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Region</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="rsearchByAny" placeholder="search By Any" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="rdataContainer">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                @*Division List *@
+                <div class="tab-pane fade show" id="custom-tabs-two-Division" role="tabpanel" aria-labelledby="custom-tabs-two-Division-tab">
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Devision List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateDivisionInfo" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Division</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="dsearchByAny" placeholder="search By Any" />
+                                        </div>
+                                        @*<div class="col-md-2">
+
+                                                @Html.DropDownList("dddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            </div>
+                                            <div class="col-md-2">
+
+
+                                                @Html.DropDownList("dddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Division--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="ddataContainer">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Zone List *@
+                <div class="tab-pane fade show " id="custom-tabs-two-Zone" role="tabpanel" aria-labelledby="custom-tabs-two-Zone-tab">
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Zone List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateZonelist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Zone</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row ">
+                                        <h5 class="text-center">Search By</h5>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="zSearchAny" placeholder="search By Any" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="zdataContainer">
+
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-
         </div>
-
-        <div class="row" style="margin-top:-15px">
-            <div class="col-md-12">
-                <div class="card card-gray-dark">
-                    <div class="card-header">
-                        <div class="row justify-content-center">
-                            <div class="col-md-2">
-                                <h5 class="text-center">Search By</h5>
-                            </div>
-
-                            <div class="col-md-2">
-
-                                @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                            </div>
-                            <div class="col-md-2">
-
-
-                                @Html.DropDownList("ddlTerritoryName1", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" style="margin-top:-10px">
-                <div class="card ">
-                    <div class="card-body">
-                        <div class="col-md-12" id="dataContainer">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
 
     </div>
 
 </div>
 
+@* Zone modal*@
+<div class="modal" id="zonemodal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title"><span id="zspanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formzone">
+                    <input type="hidden" id="zhdzonetId" />
+                    <div class="form-row">
+                        @*<div class="form-group col-md-12">
+                                <label for="ddlorgname" class="control-label">OrganizationName</label>
+                                @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
+                            </div>*@
+                        <div class="form-group col-md-12">
+                            <label for="ddlZoneName" class="control-label">ZoneName</label>
+                            <input type="text" id="zddlZoneName" class="form-control form-control-sm" />
+                            <span class="error hide required-ZoneName font-weight-bold">Input Zone Name!</span>
+                            <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlstatus" class="control-label">Status</label>
+                            <select class="form-control form-control-sm select2" id="zddlstatus">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                            <span class="error hide required-status font-weight-bold">Input status!</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
 
-@*modal*@
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="zsaveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextZone">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Division modal*@
+<div class="modal" id="DivisionModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title"><span id="dspanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formDivision">
+                    <input type="hidden" id="dhddivisionId" />
+                    <div class="col-md-10">
+                        <label for="dddlZoneName" class="control-label">Zone Name</label>
+                        @Html.DropDownList("dddlZoneNameInput", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                    </div>
+
+
+
+                    <div class="col-md-10">
+                        <label for="txtDivisionName" class="control-label">DivisionName</label>
+                        <input type="text" id="dtxtDivisionName" class="form-control form-control-sm" />
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="ddlStatus" class="control-label">Status</label>
+
+                        <select id="dddlStatus" class="form-control form-control-sm select2">
+                            <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been Successfully Saved
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been faild to Save
+                    </div>
+                </div>
+                <button id="btnCancel" type="button" class="btn btn-outline-danger btn-sm float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
+                <button type="submit" id="dbtnSave" class="btn btn-outline-success btn-sm float-rightt"><i class="fas fa-paper-plane"></i> <span id="dspanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Region modal*@
+<div class="modal" id="regionmodal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title"><span id="rspanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formregion">
+                    <input type="hidden" id="rhdregiontId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="ddldivname" class="control-label">DivisionName</label>
+                            @Html.DropDownList("rddldivname", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "Select divName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            <span class="error hide required-DivisionName font-weight-bold">Input DivisionName!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlRegionName" class="control-label">RegionName</label>
+                            <input type="text" id="rddlRegionName" class="form-control form-control-sm" />
+                            <span class="error hide required-RegionName font-weight-bold">Input RegionName Name!</span>
+                            <span class="error hide duplicate-RegionName font-weight-bold">Already RegionName Exist!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlstatus" class="control-label">Status</label>
+                            <select class="form-control form-control-sm select2" id="rddlstatus">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                            <span class="error hide required-status font-weight-bold">Input status!</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="rsaveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextRegion">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Area modal*@
+<div class="modal" id="AreaModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title"><span id="aspanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formDivision">
+                    <input type="hidden" id="ahdAreaId" />
+
+                    <div class="col-md-10">
+                        <label for="ddlRegionname" class="control-label">RegionName</label>
+                        @Html.DropDownList("addlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "Select Region Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        <span class="error hide required-RegionName font-weight-bold">Input RegionName!</span>
+
+                    </div>
+                    <div class="col-md-10">
+                        <label for="ddlAreaName" class="control-label">AreaName</label>
+                        <input type="text" id="addlAreaName" class="form-control form-control-sm" />
+                        <span class="error hide required-AreaName font-weight-bold">Input Area Name!</span>
+                        <span class="error hide duplicate-AreaName font-weight-bold">Already AreaName Exist!</span>
+                    </div>
+                    <div class="col-md-10">
+                        <label for="ddlStatus" class="control-label">Status</label>
+                        <select class="form-control form-control-sm select2" id="addlStatus">
+                            <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
+                        </select>
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer btn-light bg-gradient-gray-dark">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been Successfully Saved
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been faild to Save
+                    </div>
+                </div>
+                <button id="btnCancel" type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="abtnSave"><i class="fas fa-paper-plane"></i> <span id="aspanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Territory modal*@
+<div class="modal" id="territorymodal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title"><span id="tspanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formterritory">
+                    <input type="hidden" id="thdterritoryId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="ddlareaname" class="control-label">AreaName</label>
+                            @Html.DropDownList("tddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select AreaName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            <span class="error hide required-AreaName font-weight-bold">Input AreaName!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlTerritoryName" class="control-label">TerritoryName</label>
+                            <input type="text" id="tddlTerritoryName" class="form-control form-control-sm" />
+                            <span class="error hide required-TerritoryName font-weight-bold">Input TerritoryName!</span>
+                            <span class="error hide duplicate-TerritoryName font-weight-bold">Already TerritoryName Exist!</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="ddlstatus" class="control-label">Status</label>
+                            <select class="form-control form-control-sm select2" id="tddlstatus">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                            <span class="error hide required-status font-weight-bold">Input status!</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="tsaveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextTerritory">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Stockiest modal*@
 <div class="modal " id="StockiestModal" role="dialog">
     <div class="modal-dialog modal-xl " style="margin-top:5px" role="document" id="StockiestModal">
         <div class="modal-content">
             <div class="modal-header bg-gradient-gray-dark">
-                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <h4 id="modalHeading" class="modal-title"><span id="sspanModalHead"></span></h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="card-body text-sm">
                 <div class="row " @*style="margin-top:-18px;"*@>
-                    <input type="hidden" id="hdstockiestId" />
-                    <input type="hidden" id="hdterritorytId" />
-                    <input type="hidden" id="hdareaId" />
+                    <input type="hidden" id="shdstockiestId" />
+                    <input type="hidden" id="shdterritorytId" />
+                    <input type="hidden" id="shdareaId" />
                     <div class="col-md-2">
                         <label for="ddlareaname" class="control-label">Area Name</label>
-                        @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select Area", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        @Html.DropDownList("sddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select Area", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                         <span class="error hide required-AreaName font-weight-bold">Select Area Name!</span>
                         <span class="error hide duplicate-AreaName font-weight-bold">Already Area Exist!</span>
                     </div>
                     <div class="col-md-2">
                         <label for="ddlTerritoryName" class="control-label">Area Name</label>
-                        @Html.DropDownList("ddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "Territory", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        @Html.DropDownList("sddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "Territory", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                         <span class="error hide required-AreaName font-weight-bold">Select Area Name!</span>
                         <span class="error hide duplicate-AreaName font-weight-bold">Already Area Exist!</span>
                     </div>
@@ -105,24 +682,24 @@
 
                     <div class="col-md-2">
                         <label for="txtStockiestName" class="control-label">StockiestName</label>
-                        <input type="text" id="txtStockiestName" class="form-control form-control-sm" />
+                        <input type="text" id="stxtStockiestName" class="form-control form-control-sm" />
                         <span class="error hide required-StockiestName font-weight-bold">Input Stockiest Name!</span>
                         <span class="error hide duplicate-StockiestName font-weight-bold">Already Stockiest Exist!</span>
                     </div>
                     <div class="col-md-2">
                         <label for="txtStockiestAddress" class="control-label">Address</label>
-                        <input type="text" id="txtStockiestAddress" class="form-control form-control-sm" />
+                        <input type="text" id="stxtStockiestAddress" class="form-control form-control-sm" />
                         <span class="error hide required-StockiestAddress font-weight-bold">Input Stockiest Address!</span>
                     </div>
                     <div class="col-md-2">
                         <label for="txtphonenmbr" class="control-label">Phone Number</label>
-                        <input type="text" id="txtphonenmbr" class="form-control form-control-sm" />
+                        <input type="text" id="stxtphonenmbr" class="form-control form-control-sm" />
                         <span class="error hide required-txtphonenmbr font-weight-bold">Input Stockiest Number!</span>
 
                     </div>
                     <div class="col-md-2">
                         <label for="txtemail" class="control-label">Email</label>
-                        <input type="email" id="txtemail" class="form-control form-control-sm" />
+                        <input type="email" id="stxtemail" class="form-control form-control-sm" />
                         <span class="error hide required-txtemail font-weight-bold">Input Stockiest Email!</span>
 
                     </div>
@@ -134,36 +711,36 @@
                 <div class="row">
                     <div class="col-md-2">
                         <label for="txttradelicense" class="control-label">Trade License</label>
-                        <input type="text" id="txttradelicense" class="form-control form-control-sm" />
+                        <input type="text" id="stxttradelicense" class="form-control form-control-sm" />
                         <span class="error hide required-txttradelicense font-weight-bold">Input Stockiest trade License!</span>
                     </div>
                     <div class="col-md-2">
                         <label for="txtnid" class="control-label">NID</label>
-                        <input type="text" id="txtnid" class="form-control form-control-sm" />
+                        <input type="text" id="stxtnid" class="form-control form-control-sm" />
                         <span class="error hide required-txtnid font-weight-bold">Input Stockiest Nid!</span>
                     </div>
                     <div class="col-md-2">
                         <label for="txtcontactperson" class="control-label">Contact Person</label>
-                        <input type="text" id="txtcontactperson" class="form-control form-control-sm" />
+                        <input type="text" id="stxtcontactperson" class="form-control form-control-sm" />
                         <span class="error hide required-txtcontactperson font-weight-bold">Input Coatact person!</span>
                     </div>
                     <div class="col-md-2">
                         <label for="txtcontactpersonnmbr" class="control-label">Contact Person No</label>
-                        <input type="text" id="txtcontactpersonnmbr" class="form-control form-control-sm" />
+                        <input type="text" id="stxtcontactpersonnmbr" class="form-control form-control-sm" />
                         <span class="error hide required-txtcontactpersonnmbr font-weight-bold">Input Coatact person Number!</span>
                     </div>
                     <div class="col-md-2">
                         <label for="ddlcreditlimit" class="control-label">Status</label>
-                        <select id="ddlcreditlimit" class="form-control form-control-sm select2" >
+                        <select id="sddlcreditlimit" class="form-control form-control-sm select2">
                             <option value="0">Select</option>
                             <option value="Active">Active</option>
                             <option value="InActive">InActive</option>
                         </select>
                         <span class="error hide req-ddlcreditlimit">Credit Limit Status Is Required</span>
                     </div>
-                    <div class="col-md-2" id="txtclamount">
+                    <div class="col-md-2" id="stxtclamount">
                         <label for="txtclamount" class="control-label">C.L Amount</label>
-                        <input type="number" id="numclamountin" class="form-control form-control-sm" />
+                        <input type="number" id="snumclamountin" class="form-control form-control-sm" />
                         <span class="error hide required-txtclamount font-weight-bold">Input Credit Limit Amount!</span>
                     </div>
 
@@ -181,7 +758,7 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
-                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="btnSave"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextZone">Save</span> </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="sbtnSave"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextStockiest">Save</span> </button>
             </div>
 
 
@@ -193,31 +770,40 @@
 
 
     <script type="text/javascript">
+        // #region Stockiest Script Start
+        var ddlStockiestName = $("#sddlStockiestName");
 
-        var ddlStockiestName = $("#ddlStockiestName");
-
-        var ddlTerritoryName1 = $("#ddlTerritoryName1");
-        var ddlStatus = $("#ddlStatus");
+        var ddlTerritoryName1 = $("#sddlTerritoryName1");
+        var ddlStatus = $("#sddlStatus");
 
 
-        var hdstockiestId = $("#hdstockiestId");
-        var hdterritorytId = $("#hdterritorytId");
-        var hdareaId = $("#hdareaId");
-        var txtStockiestName = $("#txtStockiestName");
-        var ddlareaname = $("#ddlareaname");
-        var ddlTerritoryName = $("#ddlTerritoryName");
-        var txtStockiestAddress = $("#txtStockiestAddress");
-        var txtphonenmbr = $("#txtphonenmbr");
-        var txtemail = $("#txtemail");
-        var txttradelicense = $("#txttradelicense");
-        var txtnid = $("#txtnid");
-        var txtcontactperson = $("#txtcontactperson");
-        var txtcontactpersonnmbr = $("#txtcontactpersonnmbr");
-        var ddlcreditlimit = $("#ddlcreditlimit");
-        var txtclamount = $("#txtclamount");
-        var numclamountin = $("#numclamountin");
+        var hdstockiestId = $("#shdstockiestId");
+        var hdterritorytId = $("#shdterritorytId");
+        var hdareaId = $("#shdareaId");
+        var txtStockiestName = $("#stxtStockiestName");
+        var ddlareaname = $("#sddlareaname");
+        var ddlTerritoryName = $("#sddlTerritoryName");
+        var txtStockiestAddress = $("#stxtStockiestAddress");
+        var txtphonenmbr = $("#stxtphonenmbr");
+        var txtemail = $("#stxtemail");
+        var txttradelicense = $("#stxttradelicense");
+        var txtnid = $("#stxtnid");
+        var txtcontactperson = $("#stxtcontactperson");
+        var txtcontactpersonnmbr = $("#stxtcontactpersonnmbr");
+        var ddlcreditlimit = $("#sddlcreditlimit");
+        var txtclamount = $("#stxtclamount");
+        var numclamountin = $("#snumclamountin");
 
         $(document).ready(function () {
+
+            if ($("#tab").val() == 'StockiestList') {
+                $("#custom-tabs-two-StockiestList").addClass('active');
+                $("#custom-tabs-two-StockiestList-tab").addClass('active');
+
+                $("#custom-tabs-two-StockiestList-tab").removeClass('active');
+                $("#custom-tabs-two-StockiestList").removeClass('active');
+
+            }
             $('.select2').select2();
 
             $('.select2bs4').select2({
@@ -244,9 +830,9 @@
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetStockiestList', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {
-                    $("#dataContainer").fadeOut('500', function () {
-                        $("#dataContainer").empty();
-                        $("#dataContainer").append(res).fadeIn('500');
+                    $("#sdataContainer").fadeOut('500', function () {
+                        $("#sdataContainer").empty();
+                        $("#sdataContainer").append(res).fadeIn('500');
                     });
                 }
             }).fail(function (error) {
@@ -255,27 +841,27 @@
         }
 
 
-        function OpenModal() {
+        function SOpenModal() {
 
-            $("#spanSaveText").text('Save');
+            $("#spanSaveTextStockiest").text('Save');
             $("#StockiestModal").modal("show");
 
-
+            
         }
 
 
-        $("#btnSave").click(function (e) {
+        $("#sbtnSave").click(function (e) {
 
             e.preventDefault();
             debugger;
             var data = { StockiestId: TryParseInt(hdstockiestId.val(), 0), TerritoryId: TryParseInt(ddlTerritoryName.val(), 0), AreaId: TryParseInt(ddlareaname.val(), 0), StockiestName: txtStockiestName.val(), StockiestPhoneNumber: txtphonenmbr.val(), StockiestMail: txtemail.val(), StockiestTradeLicense: txttradelicense.val(), StockiestNID: txtnid.val(), StockiestContactPerson: txtcontactperson.val(), StockiestContactPersonPHNumber: txtcontactpersonnmbr.val(), Status: ddlcreditlimit.val(), CreditLimit: numclamountin.val(), StockiestAddress: txtStockiestAddress.val(), }
 
-                 
-                            
-                                
-                     
-                    
-                                      
+
+
+
+
+
+
             if (true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/UpdateStockiestList", JSON.stringify(data), getToken())).then(function (res, status) {
 
@@ -360,11 +946,740 @@
             //ddlTerritoryName.trigger("change");
 
 
-            OpenModal();
-            $("#spanModalHead").text('Update Stockiest');
-            $("#spanSaveText").text('Update');
+            SOpenModal();
+            $("#sspanModalHead").text('Update Stockiest');
+            $("#spanSaveTextStockiest").text('Update');
+        })
+        // #endregion
+
+        //#region Territory Script Start
+
+        var hdterritoryId = $("#thdterritoryId");
+        var ddlareaname = $("#tddlareaname");
+        var ddlTerritoryName = $("#tddlTerritoryName");
+        var ddlstatus = $("#tddlstatus");
+        var searchByAny = $("#tsearchByAny");
+
+        //var SearchAny = $("#SearchAny");
+
+
+
+        $(document).ready(function () {
+
+            if ($("#tab").val() == 'Territory') {
+                $("#custom-tabs-two-Territory").addClass('active');
+                $("#custom-tabs-two-Territory-tab").addClass('active');
+
+                $("#custom-tabs-two-StockiestList-tab").removeClass('active');
+                $("#custom-tabs-two-StockiestList").removeClass('active');
+
+            }
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadTerritoryDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadTerritoryDataTable();
+        }
+
+        searchByAny.keyup(function () {
+            LoadTerritoryDataTable()
+        })
+
+        function LoadTerritoryDataTable() {
+            //debugger
+            // alert("here me 2");
+            var data = { flag: "View", name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Territorylist', data)).then(function (res, status) {
+                console.log(res);
+                if (status == "success") {
+                    $("#tdataContainer").empty();
+                    $("#tdataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+
+
+        //opemmodal
+        function TOpenModal() {
+            $("#territorymodal").modal("show");
+            //$("#spanModalHead").text("Add New Zone");
+            //$("#spanSaveTextRegion").text('Save');
+            //$("#regionmodal").modal("show");
+            //$(".error").addClass("hide");
+        }
+
+
+
+        //editbuttun
+        $(document).on("click", "a.data-edit-item-Territory", function (e) {
+            //alert();
+            // debugger;
+            e.preventDefault()
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+
+
+            //console.log(td1);
+            //console.log(td2);
+
+            hdterritoryId.val(td1);
+            ddlareaname.val(td2);
+            ddlareaname.trigger("change");
+            ddlTerritoryName.val(td3);
+            ddlstatus.val(td5);
+            ddlstatus.trigger("change");
+
+
+
+            TOpenModal();
+            $("#tspanModalHead").text('Update Territory');
+            $("#spanSaveTextTerritory").text('Update');
+            //spanSaveTextRegion
         })
 
 
+        //savemodal
+        $("#tsaveButton").click(function (e) {
+            //alert();
+            //debugger;
+            e.preventDefault();
+            $(".error").addClass("hide");
+
+            if (TValidationForm() == true) {
+                var edetails = JSON.stringify({ TerritoryId: TryParseInt(hdterritoryId.val(), 0), AreaId: TryParseInt(ddlareaname.val(), 0), TerritoryName: ddlTerritoryName.val(), Status: ddlstatus.val() });
+                console.log(edetails);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveTerritoryInfo', edetails, getToken())).then(function (res, status) {
+                    //alert("hitme");
+                    debugger;
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        //$("#zonemodal").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        //alert("Here Me");
+                        $("#territorymodal").modal("hide");
+
+                        LoadTerritoryDataTable();
+                    }
+                    else {
+                        //message("#msg2");
+                        toastrErrorAlert(execuStatus.fail);
+                        alert("This Territory Already Exist");
+                    }
+                    // enable("#saveButton");
+                })
+            }
+        });
+
+
+
+        //validationform
+
+        function TValidationForm() {
+            //debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlareaname.val()) == 0) {
+                $('.required-AreaName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlTerritoryName.val()) == 0) {
+                $('.required-TerritoryName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlstatus.val()) == 0) {
+                $('.required-status').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+        // #endregion
+
+        // #region Area Script Start
+
+        var ddlorgname = $("#addlorgname");
+        var ddlRegionname = $("#addlRegionname");
+        var ddlAreaName = $("#addlAreaName");
+        var searchByAny = $("#asearchByAny");
+        var ddlStatus = $("#addlStatus");
+        var hdAreaId = $("#ahdAreaId");
+
+        //var hdregionId = '';
+        //var AreaId = '';
+        //var hdOrgId = '';
+        //var AreaNameList = [];
+
+        $(document).ready(function () {
+            if ($("#tab").val() == 'Area') {
+                $("#custom-tabs-two-Area").addClass('active');
+                $("#custom-tabs-two-Area-tab").addClass('active');
+
+                $("#custom-tabs-two-StockiestList-tab").removeClass('active');
+                $("#custom-tabs-two-StockiestList").removeClass('active');
+
+            }
+
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            LoadAreaDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadAreaDataTable();
+        }
+        searchByAny.keyup(function () {
+            LoadAreaDataTable();
+        })
+
+        function LoadAreaDataTable() {
+            debugger;
+            var data = { flag: 'AreaSetup', name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/AreaList', data)).then(function (res, status) {
+                console.log(res);
+                if (status === "success") {
+                    $("#adataContainer").empty();
+                    $("#adataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+        function AOpenModal() {
+
+            $("#AreaModal").modal("show");
+
+
+        }
+
+        $("#abtnSave").click(function (e) {
+            debugger;
+            e.preventDefault();
+            var data = { AreaId: hdAreaId.val(), RegionId: TryParseInt(ddlRegionname.val(), 0), AreaName: ddlAreaName.val(), Status: ddlStatus.val() }
+
+            if (true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveAreaInfo", JSON.stringify(data), getToken())).then(function (res, status) {
+
+                    console.log(status);
+                    if (res == true) {
+                        message("#msg1", "#AreaModal");
+
+                    }
+                    else {
+                        message("#msg2");
+                    }
+
+                })
+
+            }
+
+        })
+        $(document).on("click", "a.data-edit-item-Area", function (e) {
+
+            e.preventDefault()
+            debugger;
+
+
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+
+
+
+            ddlRegionname.val(td2);
+            ddlRegionname.trigger("change");
+            ddlAreaName.val(td4);
+            ddlStatus.val(td5);
+            ddlStatus.trigger("change");
+            hdAreaId.val(td1);
+
+
+
+            AOpenModal();
+            $("#aspanModalHead").text('Update Area');
+            $("#aspanSaveText").text('Update');
+        })
+
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+        // #endregion
+
+        // #region Region Script Start
+
+        var hdregiontId = $("#rhdregiontId");
+        var ddldivname = $("#rddldivname");
+        var ddlRegionName = $("#rddlRegionName");
+        var ddlstatus = $("#rddlstatus");
+        var searchByAny = $("#rsearchByAny");
+
+        //var SearchAny = $("#SearchAny");
+
+
+
+        $(document).ready(function () {
+
+            if ($("#tab").val() == 'Region') {
+                $("#custom-tabs-two-Region").addClass('active');
+                $("#custom-tabs-two-Region-tab").addClass('active');
+
+                $("#custom-tabs-two-StockiestList-tab").removeClass('active');
+                $("#custom-tabs-two-StockiestList").removeClass('active');
+
+            }
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadRegionDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadRegionDataTable();
+        }
+
+        searchByAny.keyup(function () {
+            LoadRegionDataTable()
+        })
+
+        function LoadRegionDataTable() {
+            debugger
+            // alert("here me 2");
+            var data = { flag: "View", name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Regionlist', data)).then(function (res, status) {
+                console.log(res);
+                if (status == "success") {
+                    $("#rdataContainer").empty();
+                    $("#rdataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+
+
+        //opemmodal
+        function ROpenModal() {
+            $("#regionmodal").modal("show");
+            //$("#spanModalHead").text("Add New Zone");
+            //$("#spanSaveTextRegion").text('Save');
+            //$("#regionmodal").modal("show");
+            //$(".error").addClass("hide");
+        }
+
+
+
+        //editbuttun
+        $(document).on("click", "a.data-edit-item-Region", function (e) {
+            // alert();
+            debugger;
+            e.preventDefault()
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+
+
+            //console.log(td1);
+            //console.log(td2);
+
+            hdregiontId.val(td1);
+            ddldivname.val(td2);
+            ddldivname.trigger("change");
+            ddlRegionName.val(td3);
+            ddlstatus.val(td5);
+            ddlstatus.trigger("change");
+
+
+
+            ROpenModal();
+            $("#rspanModalHead").text('Update Region');
+            $("#spanSaveTextRegion").text('Update');
+            //spanSaveTextRegion
+        })
+
+
+        //savemodal
+        $("#rsaveButton").click(function (e) {
+            //alert();
+            debugger;
+            e.preventDefault();
+            $(".error").addClass("hide");
+
+            if (RValidationForm() == true) {
+                var edetails = JSON.stringify({ RegionId: TryParseInt(hdregiontId.val(), 0), DivisionId: TryParseInt(ddldivname.val(), 0), RegionName: ddlRegionName.val(), Status: ddlstatus.val() });
+                console.log(edetails);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRegionInfo', edetails, getToken())).then(function (res, status) {
+
+                    debugger;
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+
+                        toastrSuccessAlert(execuStatus.successSave);
+
+                        $("#regionmodal").modal("hide");
+
+                        LoadRegionDataTable();
+                    }
+                    else {
+
+                        toastrErrorAlert(execuStatus.fail);
+                        alert("This Zone Already Exist");
+                    }
+                    // enable("#saveButton");
+                })
+            }
+        });
+
+
+
+        //validationform
+        function RValidationForm() {
+            //debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddldivname.val()) == 0) {
+                $('.required-DivisionName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlRegionName.val()) == 0) {
+                $('.required-RegionName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlstatus.val()) == 0) {
+                $('.required-status').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+        // #endregion
+
+        // #region Division Script Start
+
+        var hddivisionId = $("#dhddivisionId");
+        var ddlZoneName = $("#dddlZoneName");
+        var ddlDivisionName = $("#dddlDivisionName");
+        var txtDivisionName = $("#dtxtDivisionName");
+        var ddlDivisionNameInput = $("#ddlDivisionNameInput");
+        var ddlZoneNameInput = $("#dddlZoneNameInput");
+        var ddlStatus = $("#dddlStatus");
+        var searchByAny = $("#dsearchByAny");
+
+
+
+        $(document).ready(function () {
+
+            if ($("#tab").val() == 'Division') {
+                $("#custom-tabs-two-Division").addClass('active');
+                $("#custom-tabs-two-Division-tab").addClass('active');
+
+                $("#custom-tabs-two-StockiestList-tab").removeClass('active');
+                $("#custom-tabs-two-StockiestList").removeClass('active');
+
+            }
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadDivisionList()
+        })
+
+        searchByAny.change(function () {
+
+            LoadDivisionList();
+        })
+        //ddlDivisionName.change(function () {
+
+        //    LoadDivisionList();
+        //})
+
+        function LoadDivisionList() {
+            debugger;
+            //var a = TryParseInt(ddlDivisionName.val(), 0);
+            //var t = TryParseInt(ddlZoneName.val(), 0);
+            //$.trim(searchByAny.val())
+            //var data = { flag: "View", divisionId: $.trim(ddlDivisionName.val()), zoneId: $.trim(ddlZoneName.val()), id: 0 };
+            var data = { flag: "View", name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetDivisionInfo', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    //$("#ddataContainer").fadeOut('500', function () {
+                    //    $("#ddataContainer").empty();
+                    //    $("#ddataContainer").append(res).fadeIn('500');
+                    //});
+                    $("#ddataContainer").empty();
+                    $("#ddataContainer").append(res);
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+        }
+
+
+        function DOpenModal() {
+
+            $("#dspanSaveText").text('Save');
+            $("#DivisionModal").modal("show");
+
+
+        }
+
+        $("#dbtnSave").click(function (e) {
+
+            e.preventDefault();
+            debugger;
+            var data = { DivisionId: TryParseInt(hddivisionId.val(), 0), ZoneId: TryParseInt(ddlZoneNameInput.val(), 0), DivisionName: txtDivisionName.val(), Status: ddlStatus.val() }
+
+            if (true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/UpdateDivision", JSON.stringify(data), getToken())).then(function (res, status) {
+
+                    console.log(status);
+                    if (res == true) {
+                        message("#msg1", "#DivisionModal");
+
+                    }
+                    else {
+                        message("#msg2");
+                    }
+
+                })
+
+            }
+
+        })
+
+        $(document).on("click", "a.data-edit-item-DivisionId", function (e) {
+
+
+            e.preventDefault()
+            debugger;
+
+
+
+            var row = $(this).parent().parents('tr');
+
+            console.log(row);
+            //var td2 = row.find('td:eq(2)').html();
+            //var td3 = row.find('td:eq(3)').html();
+            var divisionId = row.find('td:eq(4)').html();
+            var zoneId = row.find('td:eq(2)').html();
+            var hid = row.find('td:eq(1)').html();
+            var Status = row.find('td:eq(5)').html();
+
+
+
+            ddlStatus.val(Status);
+            ddlStatus.trigger("change");
+            hddivisionId.val(hid);
+            txtDivisionName.val(divisionId);
+            txtDivisionName.trigger("change");
+
+            ddlZoneNameInput.val(zoneId);
+            console.log(zoneId);
+            ddlZoneNameInput.trigger("change");
+
+
+
+            //txtDivisionName.val(td2);
+            //ddlZoneName.val(td3);
+
+
+
+
+            DOpenModal();
+            $("#dspanModalHead").text('Update Division');
+            $("#dspanSaveText").text('Update');
+        })
+        // #endregion
+
+        // #region ZONE Script Start
+        var hdzonetId = $("#zhdzonetId");
+        var ddlorgname = $("#zddlorgname");
+        var ddlZoneName = $("#zddlZoneName");
+        var ddlstatus = $("#zddlstatus");
+
+        var SearchAny = $("#zSearchAny");
+
+
+        $(document).ready(function () {
+
+            if ($("#tab").val() == 'Zone') {
+                $("#custom-tabs-two-Zone").addClass('active');
+                $("#custom-tabs-two-Zone-tab").addClass('active');
+
+                $("#custom-tabs-two-StockiestList-tab").removeClass('active');
+                $("#custom-tabs-two-StockiestList").removeClass('active');
+
+            }
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadZoneDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadZoneDataTable();
+        }
+
+        SearchAny.keyup(function () {
+            LoadZoneDataTable()
+        })
+
+        function LoadZoneDataTable() {
+            var data = { flag: "View", name: $.trim(SearchAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Zonelist', data)).then(function (res, status) {
+                console.log(res);
+                if (status == "success") {
+                    $("#zdataContainer").empty();
+                    $("#zdataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+
+        //edit
+        //openmodals
+        function OpenModal() {
+            $("#zspanModalHead").text("Add New Zone");
+            $("#spanSaveTextZone").text('Save');
+            $("#zonemodal").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        //edit
+        $(document).on("click", "a.data-edit-item-Zone", function (e) {
+            //alert();
+            debugger;
+            e.preventDefault()
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+
+
+            console.log(td4);
+
+            hdzonetId.val(td1);
+            ddlorgname.val(td2);
+            ddlorgname.trigger("change");
+            ddlZoneName.val(td4);
+            ddlstatus.val(td5);
+            ddlstatus.trigger("change");
+
+
+
+            OpenModal();
+            $("#zspanModalHead").text('Update Zone');
+            $("#spanSaveTextZone").text('Update');
+        })
+
+
+
+        $("#zsaveButton").click(function (e) {
+            //alert();
+            debugger;
+            e.preventDefault();
+            $(".error").addClass("hide");
+
+            if (ValidationForm() == true) {
+                var edetails = JSON.stringify({ ZoneId: TryParseInt(hdzonetId.val(), 0), ZoneName: ddlZoneName.val(), Status: ddlstatus.val() });
+                console.log(edetails);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveZonetInfo', edetails, getToken())).then(function (res, status) {
+                    //alert("hitme");
+                    debugger;
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        $("#zonemodal").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        LoadZoneDataTable();
+                    }
+                    else {
+                        message("#msg2");
+                        toastrErrorAlert(execuStatus.fail);
+                        alert("This Zone Already Exist");
+                    }
+                    enable("#zsaveButton");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#zsaveButton");
+                });
+            }
+        });
+
+
+
+
+        //validationform
+        function ValidationForm() {
+            //debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+            //if ($.trim(ddlorgname.val()) == 0) {
+            //    $('.required-OrganizationName').removeClass("hide");
+            //    Isvalid = false;
+            //}
+            if ($.trim(ddlZoneName.val()) == 0) {
+                $('.required-ZoneName').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
+
+                                                                // #endregion
     </script>
 }

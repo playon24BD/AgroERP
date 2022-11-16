@@ -41,5 +41,7 @@ namespace ERPBO.Agriculture.DTOModels
 
         public long StockiestId { get; set; }
         public int box { get; set; }
+
+        public string StockiestName { get; set; }
     }
 }

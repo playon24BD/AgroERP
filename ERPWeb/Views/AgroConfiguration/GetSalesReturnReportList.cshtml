@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "GetProductwisesalesReport";
+    ViewBag.Title = "GetSalesReturnReportList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-md-6">
                                 <h5 class="text-center text-bold">
-                                    Product Wise Sales Statement
+                                    Sales Return Report List
                                 </h5>
                             </div>
                             <div class="col-md-3">
@@ -33,15 +33,39 @@
             <div class="col-md-12">
                 <div class="card card-gray-dark">
                     <div class="card-header">
-                        <div class="row justify-content-center">
-                            <div class="col-md-2">
-                                <h5 class="text-right">Search By</h5>
+                        <div class="row" style="margin-left:-20px">
+                            <div class="col-md-1">
+                                <h6 class="text-left" style="font-size:25px">Search</h6>
                             </div>
+
                             <div class="col-md-2">
+
+                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By invoice" />
+                            </div>
+
+                            <div class="col-md-2">
+
+                                @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--StockiestName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+
+
+                            <div class="col-md-2">
+
                                 @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
                             </div>
-                            <div class="col-md-2">
+
+
+                            <div class="col-md-1">
+
+                                <select class="form-control form-control-sm select2" id="ddlStatus">
+                                    <option value="" selected>--Status--</option>
+                                    <option value="ADJUST">ADJUST</option>
+                                    <option value="NOTADJUST">NOTADJUST</option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-md-1">
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="FromDate" />
                                     <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
@@ -49,7 +73,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="ToDate" />
                                     <div class="input-group-prepend cursor-pointer remove-date dptToDate" style="cursor:pointer">
@@ -57,9 +81,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+
+
+                            <div class="col-md-1">
                                 <div class="input-group input-group-sm">
-                                    <select class="form-control form-control-sm float-right" id="rptType" name="rptType">
+                                    <select class="form-control form-control-sm float-right select2" id="rptType" name="rptType">
                                         <option value="PDF">PDF</option>
                                         <option value="EXCEL">EXCEL</option>
                                     </select>
@@ -68,6 +94,9 @@
                                     </span>
                                 </div>
                             </div>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -82,7 +111,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
 
@@ -90,22 +118,26 @@
 
 </div>
 
+
+
+
 @section scripts{
     <script type="text/javascript">
-
 
         var dptFromDate = $("#dptFromDate");
         var dptToDate = $("#dptToDate");
         var rptType = $("#rptType");
+        var ddlStatus = $("#ddlStatus");
         var ddlProductName = $("#ddlProductName");
-
+        var ddlStockiestName = $("#ddlStockiestName");
+        var SearchAny = $("#SearchAny");
+        
+        
 
         $(document).ready(function () {
 
-            //Initialize Select2 Elements
             $('.select2').select2();
 
-            //Initialize Select2 Elements
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
@@ -117,7 +149,7 @@
                 format: "dd MM yyyy",
                 orientation: "bottom auto",
                 todayHighlight: true,
-                
+
             }).on('change', function () {
                 $('.datepicker').hide();
             });
@@ -125,47 +157,61 @@
                 format: "dd MM yyyy",
                 orientation: "bottom auto",
                 todayHighlight: true,
-                
+
             }).on('change', function () {
                 $('.datepicker').hide();
             });
-            LoadProductReportList();
-
+            LoadSalesReturnReportList();
         })
 
         $(document).on('click', 'div.remove-date', function () {
             if ($(this).hasClass("dptToDate")) {
                 if (dptToDate.val() !== '') {
                     dptToDate.val('');
-                    //LoadDataTable();
+
                 }
             }
             if ($(this).hasClass("dptFromDate")) {
                 if (dptFromDate.val() !== '') {
                     dptFromDate.val('');
-                    //LoadDataTable();
+
                 }
             }
         })
 
+        SearchAny.keyup(function () {
+            LoadSalesReturnReportList();
+        })
+
         dptFromDate.change(function () {
-            LoadProductReportList();
+            LoadSalesReturnReportList();
         })
 
         dptToDate.change(function () {
-            LoadProductReportList();
+            LoadSalesReturnReportList();
         })
+        
+
         ddlProductName.change(function () {
-            LoadProductReportList();
+
+            LoadSalesReturnReportList();
+        })
+        ddlStockiestName.change(function () {
+
+            LoadSalesReturnReportList();
         })
 
+        ddlStatus.change(function () {
 
-        function LoadProductReportList() {
+            LoadSalesReturnReportList();
+        })
+
+        function LoadSalesReturnReportList() {
             debugger;
 
-            var data = { flag: "View", productId: TryParseInt(ddlProductName.val(), 0),  fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+            var data = { flag: "View", productId: TryParseInt(ddlProductName.val(), 0), stockiestId: TryParseInt(ddlStockiestName.val(), 0), invoiceNo: $.trim(SearchAny.val()), status: ddlStatus.val(), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
 
-            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductwisesalesReport', data)).then(function (res, status) {
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetSalesReturnReportList', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {
                     $("#dataContainer").fadeOut('500', function () {
@@ -179,15 +225,19 @@
 
         }
 
+
+
         $("#btnDownload").click(function () {
-            if (dptFromDate.val() == "" && dptToDate.val() == "" && ddlProductName.val() == "") {
+            if (ddlProductName.val() && ddlStatus.val() && dptFromDate.val() == "" && dptToDate.val() == "" && ddlStockiestName.val() == "" && SearchAny.val() == "") {
                 bootbox.alert("Please Select Anyone");
             }
             else {
-                window.open("/AgroConfiguration/GetProductwisesalesReportDownload?fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val() + "&productId=" + ddlProductName.val());
+                window.open("/AgroConfiguration/GetSalesReturnReport?&fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val() + "&productId=" + TryParseInt(ddlProductName.val(), 0) + "&status=" + ddlStatus.val() + "&invoiceNo=" + $.trim(SearchAny.val()) + "&stockiestId=" + TryParseInt(ddlStockiestName.val(), 0));
             }
         })
 
     </script>
 }
+
+
 

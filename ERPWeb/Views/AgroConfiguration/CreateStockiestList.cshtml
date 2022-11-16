@@ -161,7 +161,7 @@
 
 @section scripts{
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
         var ddlOrganizationName = $("#ddlOrganizationName");
         var ddlTerritoryName = $("#ddlTerritoryName");
@@ -174,12 +174,12 @@
 
         var txtphonenmbr = $("#txtphonenmbr");
         var txtemail = $("#txtemail");
-        var txttradelicense = $("#txttradelicense"); 
-        var txtnid = $("#txtnid"); 
-        var txtcontactperson = $("#txtcontactperson"); 
-        var txtcontactpersonnmbr = $("#txtcontactpersonnmbr"); 
+        var txttradelicense = $("#txttradelicense");
+        var txtnid = $("#txtnid");
+        var txtcontactperson = $("#txtcontactperson");
+        var txtcontactpersonnmbr = $("#txtcontactpersonnmbr");
 
-    
+
 
         var StockiestNameList = [];
 
@@ -239,7 +239,7 @@
         $("#addButton").click(function (e) {
             e.preventDefault();
 
-            
+
 
             if (FormValidations() == true) {
 
@@ -249,7 +249,7 @@
                 else {
                     //debugger;
                     console.log();
-             
+
                     var sl = $("#tblMargeItems tbody tr").length;
                     var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
                     var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlareaname") + "</td>";
@@ -267,18 +267,18 @@
                     var td14 = "<td class='hide numclamountin'>" + numclamountin.val() + "</td>";
                     var td15 = "<td class='hide Areaid'>" + ddlareaname.val() + "</td>";
                     var td16 = "<td class='hide TerritoryId'>" + ddlTerritoryName.val() + "</td>";
-               
+
 
                     var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + td15 + td16  + "</tr>";
 
                     $("#tblMargeItems tbody").append(tr);
                     StockiestNameList.push(txtStockiestName.val());
                 }
-                
+
                 clearCtrlstkst();
                 $("#txtclamount").hide();
             }
-            
+
         })
 
 
@@ -424,5 +424,5 @@
             numclamountin.val("");
 
         }
-    </script>
+</script>
 }

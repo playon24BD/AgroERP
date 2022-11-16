@@ -864,8 +864,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         {
             string query = string.Empty;
             string param = string.Empty;
-            string FromDate = string.Empty;
-            string ToDate = string.Empty;
+            
 
             if (productId != 0 && productId > 0)
             {
@@ -876,23 +875,23 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             {
                 string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
                 string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(sales.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+                param += string.Format(@" and Cast(sales.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
             }
-
-
 
             else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
             {
                 string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                FromDate += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", fDate);
+                param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", fDate);
             }
             else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
             {
                 string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                ToDate += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", tDate);
+                param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", tDate);
             }
 
-            query = string.Format(@"SELECT DISTINCT todate='" + fromDate + "', fromDate='" + toDate + "',FGPN.FinishGoodProductName,salesD.MeasurementSize AS PackSize, QtyCTN=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId),QtyKG=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId) * M.UnitKG,Total=(SELECT SUM(sd.Price) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId)FROM [Agriculture].[dbo].[tblProductSalesDetails] salesD INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId INNER JOIN [Agriculture].[dbo].[tblMeasurement] M on salesD.MeasurementId=M.MeasurementId  Inner Join [Agriculture].[dbo].[tblProductSalesInfo] sales  on sales.ProductSalesInfoId=salesD.ProductSalesInfoId Where 1=1{0} Group by FGPN.FinishGoodProductName, M.MeasurementName,salesD.MeasurementId,salesD.FinishGoodProductInfoId,  salesD.Quanity,M.UnitKG,salesD.Price,salesD.EntryDate,sales.TotalAmount,salesD.ProductSalesInfoId,M.MasterCarton,M.InnerBox,M.PackSize,salesD.MeasurementSize", Utility.ParamChecker(param));
+
+
+            query = string.Format(@"SELECT DISTINCT sales.InvoiceDate,FGPN.FinishGoodProductName,salesD.MeasurementSize AS PackSize, QtyCTN=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId),QtyKG=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId) * M.UnitKG,Total=(SELECT SUM(sd.Price) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId)FROM [Agriculture].[dbo].[tblProductSalesDetails] salesD INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId INNER JOIN [Agriculture].[dbo].[tblMeasurement] M on salesD.MeasurementId=M.MeasurementId  Inner Join [Agriculture].[dbo].[tblProductSalesInfo] sales  on sales.ProductSalesInfoId=salesD.ProductSalesInfoId Where 1=1{0} Group by sales.InvoiceDate,FGPN.FinishGoodProductName, M.MeasurementName,salesD.MeasurementId,salesD.FinishGoodProductInfoId,  salesD.Quanity,M.UnitKG,salesD.Price,salesD.EntryDate,sales.TotalAmount,salesD.ProductSalesInfoId,M.MasterCarton,M.InnerBox,M.PackSize,salesD.MeasurementSize", Utility.ParamChecker(param));
             return query;
         }
     }
