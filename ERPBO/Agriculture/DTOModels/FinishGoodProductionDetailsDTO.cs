@@ -9,6 +9,7 @@ namespace ERPBO.Agriculture.DTOModels
     public class FinishGoodProductionDetailsDTO
     {
         public long FinishGoodProductionDetailId { get; set; }
+        public long FinishGoodProductDetailId { get; set; }
         public string FinishGoodProductionBatch { get; set; }
         public string ReceipeBatchCode { get; set; }
         public long RawMaterialId { get; set; }

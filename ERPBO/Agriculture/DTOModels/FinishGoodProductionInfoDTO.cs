@@ -35,5 +35,7 @@ namespace ERPBO.Agriculture.DTOModels
         public long UnitId { get; set; }
 
         public string UnitName { get; set; }
+
+        public long FinishGoodProductInfoId { get; set; }
     }
 }

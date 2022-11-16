@@ -16,6 +16,8 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly FinishGoodProductionInfoRepository _finishGoodProductionInfoRepository;
+        private readonly FinishGoodProductionDetailsRepository _finishGoodProductionDetailsRepository;
+        private readonly MRawMaterialIssueStockDetailsRepository _mRawMaterialIssueStockDetailsRepository;
         private readonly IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness;
         private readonly IMRawMaterialIssueStockInfo _rawMaterialIssueStockInfoBusiness;
         private readonly IMRawMaterialIssueStockDetails _rawMaterialIssueStockDetailsBusiness;
@@ -25,6 +27,8 @@ namespace ERPBLL.Agriculture
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._finishGoodProductionInfoRepository = new FinishGoodProductionInfoRepository(this._agricultureUnitOfWork);
+            this._finishGoodProductionDetailsRepository = new FinishGoodProductionDetailsRepository(this._agricultureUnitOfWork);
+            this._mRawMaterialIssueStockDetailsRepository = new MRawMaterialIssueStockDetailsRepository(this._agricultureUnitOfWork);
             this.finishGoodProductionDetailsBusiness = finishGoodProductionDetailsBusiness;
             this._rawMaterialIssueStockInfoBusiness = rawMaterialIssueStockInfoBusiness;
             this._rawMaterialIssueStockDetailsBusiness = rawMaterialIssueStockDetailsBusiness;
@@ -165,11 +169,12 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId", Utility.ParamChecker(param))
                     Quanity = finishGoodProductionInfoDTO.Quanity,
                     TargetQuantity = finishGoodProductionInfoDTO.TargetQuantity,
                     Remarks = finishGoodProductionInfoDTO.Remarks,
-                    Status = finishGoodProductionInfoDTO.Status,
+                    Status = "Pending",
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
                     OrganizationId = orgId,
-                    FGRId= receiID
+                    FGRId= receiID,
+
 
                 };
                 _finishGoodProductionInfoRepository.Insert(finishGoodProductionInfo);
@@ -211,7 +216,8 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId", Utility.ParamChecker(param))
                     }
 
 
-                    isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveRawMaterialIssueDetails(rawMaterialIssueStockDetailsDTOList, userId, orgId);
+                    //isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveRawMaterialIssueDetails(rawMaterialIssueStockDetailsDTOList, userId, orgId);
+                    isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveRawMaterialIssueDetails(rawMaterialIssueStockDetailsDTOList, userId, orgId, finishGoodProductionBatch);
 
                     //if (isSuccess)
                     //{
@@ -318,6 +324,117 @@ inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
             return query;
         }
 
+        public IEnumerable<FinishGoodProductionInfoDTO> GetPendingFinishGoodInfos(string name)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForPendingFinishGood(name)).ToList();
+
+        }
+        private string QueryForPendingFinishGood(string name)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            if (name != null && name != "")
+            {
+                param += string.Format(@" and p.FinishGoodProductName like '%{0}%'", name);
+            }
+            query = string.Format(@"
+            SELECT r.FGRQty,a.FinishGoodProductInfoId,a.FinishGoodProductionBatch,a.ReceipeBatchCode,a.Quanity,
+a.TargetQuantity,a.Status,a.Remarks,a.flag,a.OrganizationId,a.FGRId,
+U.UnitName,p.FinishGoodProductName 
+
+FROM FinishGoodProductionInfoes a
+Inner Join tblFinishGoodProductInfo p on a.FinishGoodProductId=p.FinishGoodProductId
+
+Inner Join tblFinishGoodRecipeInfo r on a.FGRId=r.FGRId
+Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId
+ where 1=1 and a.Status='Pending'  {0}",
+            Utility.ParamChecker(param));
+            return query;
+        }
+
+        public FinishGoodProductionInfo GetFGProductionInfoBybatchcode(string finishGoodProductionBatch)
+        {
+            return _finishGoodProductionInfoRepository.GetOneByOrg(i => i.FinishGoodProductionBatch == finishGoodProductionBatch);
+        }
+
+        public bool UpdateProductionStatus(List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTOs, FinishGoodProductionInfoDTO finishGoodProductionInfoDTO, long userId, long orgId)
+        {
+            bool IsSuccess = false;
+
+            if(finishGoodProductionInfoDTO.Status == "Approved")
+            {
+                FinishGoodProductionInfo info = new FinishGoodProductionInfo();
+                info = getbatchcodebyid(finishGoodProductionInfoDTO.FinishGoodProductionBatch);
+                info.Status= finishGoodProductionInfoDTO.Status;
+                _finishGoodProductionInfoRepository.Update(info);
+                
+                if (_finishGoodProductionInfoRepository.Save())
+                {
+                    List<FinishGoodProductionDetails> details = new List<FinishGoodProductionDetails>();
+                    FinishGoodProductionDetails details1 = new FinishGoodProductionDetails();
+                    foreach (var item in finishGoodProductionDetailsDTOs)
+                    {
+                        details1 = getdetailsbatchcodebyid(item.FinishGoodProductDetailId);
+                        details1.Status = "Consumed";
+                        details.Add(details1);
+                    }
+                    _finishGoodProductionDetailsRepository.UpdateAll(details);
+                 
+
+                }
+                if (_finishGoodProductionDetailsRepository.Save())
+                {
+                    List<MRawMaterialIssueStockDetails> rawMaterialIssueStockDetails = new List<MRawMaterialIssueStockDetails>();
+                    MRawMaterialIssueStockDetails rawMaterialIssueStockDetails1 = new MRawMaterialIssueStockDetails();
+                    foreach (var item in finishGoodProductionDetailsDTOs)
+                    {
+                        rawMaterialIssueStockDetails1 = getissueidbyrmidprobatch(item.FinishGoodProductionBatch, item.RawMaterialId);
+                        rawMaterialIssueStockDetails1.IssueStatus = "StockOut";
+                        rawMaterialIssueStockDetails.Add(rawMaterialIssueStockDetails1);
+
+                    }
+                    _mRawMaterialIssueStockDetailsRepository.UpdateAll(rawMaterialIssueStockDetails);
+
+                }
+
+               
+
+                  IsSuccess = _mRawMaterialIssueStockDetailsRepository.Save();
+
+
+
+                return IsSuccess;
+
+
+
+            }
+            else
+            {
+                return IsSuccess;
+
+            }
+
+
+   
+        }
+
+
+        public FinishGoodProductionInfo getbatchcodebyid(string FinishGoodProductionBatch)
+        {
+            return _finishGoodProductionInfoRepository.GetOneByOrg(a => a.FinishGoodProductionBatch == FinishGoodProductionBatch);
+        }
+
+        public FinishGoodProductionDetails getdetailsbatchcodebyid(long FinishGoodProductDetailId)
+        {
+            return _finishGoodProductionDetailsRepository.GetOneByOrg(ff => ff.FinishGoodProductDetailId == FinishGoodProductDetailId);
+        }
+
+        public MRawMaterialIssueStockDetails getissueidbyrmidprobatch(string FinishGoodProductionBatch, long RawMaterialId)
+        {
+            return _mRawMaterialIssueStockDetailsRepository.GetOneByOrg(df => df.FinishGoodProductionBatch == FinishGoodProductionBatch && df.RawMaterialId == RawMaterialId);
+        }
 
         //        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfosList(long? productId, string finishGoodProductionBatch)
         //        {

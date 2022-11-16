@@ -14,14 +14,17 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId,string Status);
         IEnumerable<MRawMaterialIssueStockDetails> RawMaterialStockIssueInfobyRawMaterialid(long rawMaterialId, long orgId);
         IEnumerable<MRawMaterialIssueStockDetails> RawMaterialStockIssueInfobyRawMaterialidOut(long rawMaterialId, long orgId);
-        bool SaveRawMaterialIssueDetails(List<MRawMaterialIssueStockDetailsDTO> finishGoodProductionDetailsDTOs, long userId, long orgId);
+        IEnumerable<MRawMaterialIssueStockDetails> RawMaterialStockIssueInfobyRawMaterialidPending(long rawMaterialId, long orgId);
+
+        bool SaveRawMaterialIssueDetails(List<MRawMaterialIssueStockDetailsDTO> finishGoodProductionDetailsDTOs, long userId, long orgId,string finishGoodProductionBatch);
         MRawMaterialIssueStockDetails GetRawMaterialIssueStockByMeterialId(long rawMaterialId, long orgId);
 
         IEnumerable<MRawMaterialIssueStockDetails> GetAllRawMaterialIssueStock();
 
         IEnumerable<MRawMaterialIssueStockDetailsDTO> GetIssueInOutInfos(string name);
 
- 
+
+
 
     }
 }

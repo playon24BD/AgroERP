@@ -135,19 +135,7 @@ where 1=1  and t.Status='Pending'  {0}",
             _returnRawMaterialRepository.UpdateAll(returnRawMaterials);
             IsSuccess = _returnRawMaterialRepository.Save();
 
-            //List<FinishGoodRecipeDetails> finishGoodRecipeDetails = new List<FinishGoodRecipeDetails>();
-            //FinishGoodRecipeDetails finishGoodRecipeDetail = new FinishGoodRecipeDetails();
-            //foreach (var item in finishGoodRecipeDetailDTO)
-            //{
-            //    finishGoodRecipeDetail = GetFinishGoodRecipeDetailsById(item.FGRDetailsId, orgId);
-            //    finishGoodRecipeDetail.FGRRawMaterQty = item.FGRRawMaterQty;
-            //    finishGoodRecipeDetail.UpdateDate = DateTime.Now;
-            //    finishGoodRecipeDetail.UpUserId = userId;
-            //    finishGoodRecipeDetails.Add(finishGoodRecipeDetail);
 
-            //}
-            //_finishGoodRecipeDetailsRepository.UpdateAll(finishGoodRecipeDetails);
-            //IsSuccess = _finishGoodRecipeDetailsRepository.Save();
 
             return IsSuccess;
 
