@@ -100,7 +100,7 @@
 
 
     $(document).ready(function () {
-       
+
         $('.select2').select2();
 
         $('.select2bs4').select2({
@@ -124,7 +124,7 @@
             var td2 = "<td class='hide'>" + dropDownSelectedText("ddlOrganizationName") + "</td>";
             var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlZoneName") + "</td>";
             var td4 = "<td class='text-center'>" + txtDivisionName.val() + "</td>";
-            
+
             var td5 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
             var td6 = "<td class='hide OrganizationId'>" + ddlOrganizationName.val() + "</td>";
             var td7 = "<td class='hide ZoneId'>" + ddlZoneName.val() + "</td>";
@@ -186,7 +186,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                        redirectPage('@Url.Action("GetDivisionInfo")');
+                        redirectPage('@Url.Action("GetStockiestList", new {tab= "Division" })');
                     }, 1000);
                 }
                 else {
@@ -198,7 +198,7 @@
                 enable("#saveButton");
         })
 
-        
+
 
     });
 
@@ -210,12 +210,12 @@
         //    $('.required-ddlOrganization').removeClass("hide");
         //    Isvalid = false;
         //}
-        
+
         if ($.trim(txtDivisionName.val()) == "") {
             $('.required-DivisionName').removeClass("hide");
             Isvalid = false;
         }
-        
+
 
         return Isvalid
 
@@ -227,5 +227,5 @@
         window.location.replace(page);
     }
 
-    </script>
+</script>
 }

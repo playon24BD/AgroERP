@@ -4,120 +4,391 @@
 }
 
 
-<div class="row" style="margin-top:-10px">
+<div class="row" style="margin-top:5px">
     <div class="col-md-12">
 
+        <div class="card  shadow card  card-outline card-tabs" style="margin-top:-30px">
+            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" id="custom-tabs-two-StockiestList-tab" data-toggle="pill" href="#custom-tabs-two-StockiestList" role="tab" aria-controls="custom-tabs-two-StockiestList" aria-selected="false">Stockiest</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-Territory-tab" data-toggle="pill" href="#custom-tabs-two-Territory" role="tab" aria-controls="custom-tabs-two-Territory" aria-selected="true">Territory</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-Area-tab" data-toggle="pill" href="#custom-tabs-two-Area" role="tab" aria-controls="custom-tabs-two-Area" aria-selected="true">Area</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-Region-tab" data-toggle="pill" href="#custom-tabs-two-Region" role="tab" aria-controls="custom-tabs-two-Region" aria-selected="true">Region</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-Division-tab" data-toggle="pill" href="#custom-tabs-two-Division" role="tab" aria-controls="custom-tabs-two-Division" aria-selected="true">Division</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-Zone-tab" data-toggle="pill" href="#custom-tabs-two-Zone" role="tab" aria-controls="custom-tabs-two-Zone" aria-selected="true">Zone</a>
+                </li>
 
-        <div class="row" style="margin-top:-15px">
-            <div class="col-md-12">
-                <div class="card card-navy">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-md-3">
+            </ul>
+        </div>
+
+
+        <div class="card-body shadow">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+                @*Zone List *@
+                <div class="tab-pane fade show" id="custom-tabs-two-Zone" role="tabpanel" aria-labelledby="custom-tabs-two-Zone-tab">
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Zone List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateZonelist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Zone</a>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="col-md-6">
-                                <h4 class="text-center text-bold">Zone List</h4>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row ">
+                                        <h5 class="text-center">Search By</h5>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="zSearchAny" placeholder="search By Any" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <a href="/AgroConfiguration/CreateZonelist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Zone</a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="zdataContainer">
+
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
                 </div>
-            </div>
-        </div>
-        <div class="row" style="margin-top:-15px">
-            <div class="col-md-12">
-                <div class="card card-gray-dark">
-                    <div class="card-header">
-                        <div class="row ">
-                                <h5 class="text-center">Search By</h5>
-                            <div class="col-md-3">
-                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By Any" />
+                @*Stockiest List *@
+                <div class="tab-pane fade show active" id="custom-tabs-two-StockiestList" role="tabpanel" aria-labelledby="custom-tabs-two-StockiestList-tab">
+
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Stockiest List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateStockiestList" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Stockiest</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+
+                                        <div class="col-md-2">
+
+                                            @Html.DropDownList("sddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        </div>
+                                        <div class="col-md-2">
+
+
+                                            @Html.DropDownList("sddlTerritoryName1", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="sdataContainer">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                @*Territory List *@
+                <div class="tab-pane fade show" id="custom-tabs-two-Territory" role="tabpanel" aria-labelledby="custom-tabs-two-Territory-tab">
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Territory List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateTerritorylist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Territory</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="tsearchByAny" placeholder="Search By Any" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="tdataContainer">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                @*Area List *@
+                <div class="tab-pane fade show" id="custom-tabs-two-Area" role="tabpanel" aria-labelledby="custom-tabs-two-Area-tab">
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Area List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/GetArealist" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Area</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+
+
+
+
+                                        <div class="col-md-3 float-right">
+                                            <input type="text" class="form-control form-control-sm" id="asearchByAny" placeholder="Search by any" />
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="adataContainer">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                @*Region List *@
+                <div class="tab-pane fade show" id="custom-tabs-two-Region" role="tabpanel" aria-labelledby="custom-tabs-two-Region-tab">
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Region List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateRegionlist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Region</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="rsearchByAny" placeholder="search By Any" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="rdataContainer">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                @*Division List *@
+                <div class="tab-pane fade show" id="custom-tabs-two-Division" role="tabpanel" aria-labelledby="custom-tabs-two-Division-tab">
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-center text-bold">Devision List</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateDivisionInfo" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Division</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="dsearchByAny" placeholder="search By Any" />
+                                        </div>
+                                        @*<div class="col-md-2">
+
+                                    @Html.DropDownList("dddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                </div>
+                                <div class="col-md-2">
+
+
+                                    @Html.DropDownList("dddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Division--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12" id="ddataContainer">
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
-
-
-
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="col-md-12" id="dataContainer">
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
 
     </div>
 </div>
-
-
-
-<div class="modal" id="zonemodal" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-gradient-gray-dark">
-                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <form id="formzone">
-                    <input type="hidden" id="hdzonetId" />
-                    <div class="form-row">
-                        @*<div class="form-group col-md-12">
-                            <label for="ddlorgname" class="control-label">OrganizationName</label>
-                            @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                            <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
-                        </div>*@
-                        <div class="form-group col-md-12">
-                            <label for="ddlZoneName" class="control-label">ZoneName</label>
-                            <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
-                            <span class="error hide required-ZoneName font-weight-bold">Input Zone Name!</span>
-                            <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="ddlstatus" class="control-label">Status</label>
-                            <select class="form-control form-control-sm select2" id="ddlstatus">
-                                <option value="Active">Active</option>
-                                <option value="InActive">InActive</option>
-                            </select>
-                            <span class="error hide required-status font-weight-bold">Input status!</span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-
-            <div class="modal-footer btn-default bg-gradient-gray-dark">
-                <div class="col-md-6">
-                    <div id="msg1" class="alert alert-success hide float-left">
-                        Data has been saved Successful!
-                    </div>
-                    <div id="msg2" class="alert alert-danger hide float-left">
-                        Data has been failed to save!
-                    </div>
-                </div>
-                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
-                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextZone">Save</span> </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
 
 
 
@@ -125,12 +396,733 @@
 
     <script type="text/javascript">
 
-        var hdzonetId = $("#hdzonetId");
-        var ddlorgname = $("#ddlorgname");
-        var ddlZoneName = $("#ddlZoneName");
-        var ddlstatus = $("#ddlstatus");
 
-        var SearchAny = $("#SearchAny");
+        // #region Stockiest Script Start
+        var ddlStockiestName = $("#sddlStockiestName");
+
+        var ddlTerritoryName1 = $("#sddlTerritoryName1");
+        var ddlStatus = $("#sddlStatus");
+
+
+        var hdstockiestId = $("#shdstockiestId");
+        var hdterritorytId = $("#shdterritorytId");
+        var hdareaId = $("#shdareaId");
+        var txtStockiestName = $("#stxtStockiestName");
+        var ddlareaname = $("#sddlareaname");
+        var ddlTerritoryName = $("#sddlTerritoryName");
+        var txtStockiestAddress = $("#stxtStockiestAddress");
+        var txtphonenmbr = $("#stxtphonenmbr");
+        var txtemail = $("#stxtemail");
+        var txttradelicense = $("#stxttradelicense");
+        var txtnid = $("#stxtnid");
+        var txtcontactperson = $("#stxtcontactperson");
+        var txtcontactpersonnmbr = $("#stxtcontactpersonnmbr");
+        var ddlcreditlimit = $("#sddlcreditlimit");
+        var txtclamount = $("#stxtclamount");
+        var numclamountin = $("#snumclamountin");
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadStockiestList();
+        })
+
+        ddlStockiestName.change(function () {
+
+            LoadStockiestList();
+        })
+
+        ddlTerritoryName1.change(function () {
+
+            LoadStockiestList();
+        })
+
+        function LoadStockiestList() {
+
+            var data = { flag: "View", stockiestId: TryParseInt(ddlStockiestName.val(), 0), territoryId: TryParseInt(ddlTerritoryName1.val(), 0), id: 0 };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetStockiestList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#sdataContainer").fadeOut('500', function () {
+                        $("#sdataContainer").empty();
+                        $("#sdataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+        }
+
+
+        function OpenModal() {
+
+            $("#sspanSaveText").text('Save');
+            $("#StockiestModal").modal("show");
+
+
+        }
+
+
+        $("#sbtnSave").click(function (e) {
+
+            e.preventDefault();
+            debugger;
+            var data = { StockiestId: TryParseInt(hdstockiestId.val(), 0), TerritoryId: TryParseInt(ddlTerritoryName.val(), 0), AreaId: TryParseInt(ddlareaname.val(), 0), StockiestName: txtStockiestName.val(), StockiestPhoneNumber: txtphonenmbr.val(), StockiestMail: txtemail.val(), StockiestTradeLicense: txttradelicense.val(), StockiestNID: txtnid.val(), StockiestContactPerson: txtcontactperson.val(), StockiestContactPersonPHNumber: txtcontactpersonnmbr.val(), Status: ddlcreditlimit.val(), CreditLimit: numclamountin.val(), StockiestAddress: txtStockiestAddress.val(), }
+
+
+
+
+
+
+
+            if (true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/UpdateStockiestList", JSON.stringify(data), getToken())).then(function (res, status) {
+
+                    console.log(status);
+                    if (res == true) {
+                        message("#msg1", "#StockiestModal");
+
+                    }
+                    else {
+                        message("#msg2");
+                    }
+
+                })
+
+            }
+
+        })
+
+        $(document).on("click", "a.data-edit-item-StockiestId", function (e) {
+
+
+            e.preventDefault()
+            debugger;
+
+
+
+            var row = $(this).parent().parents('tr');
+
+            console.log(row);
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+            var td8 = row.find('td:eq(8)').html();
+            var td9 = row.find('td:eq(9)').html();
+            var td10 = row.find('td:eq(10)').html();
+            var td11 = row.find('td:eq(11)').html();
+            var td12 = row.find('td:eq(12)').html();
+            var td13 = row.find('td:eq(13)').html();
+            var td14 = row.find('td:eq(14)').html();
+            var td15 = row.find('td:eq(15)').html();
+
+
+
+
+
+
+
+            hdstockiestId.val(td1);
+            hdterritorytId.val(td2);
+            hdareaId.val(td3);
+            txtStockiestName.val(td6);
+            ddlareaname.val(td3);
+            ddlareaname.trigger("change");
+            ddlTerritoryName.val(td2);
+            ddlTerritoryName.trigger("change");
+            txtStockiestAddress.val(td8);
+            txtphonenmbr.val(td7);
+            txtemail.val(td10);
+            txttradelicense.val(td11);
+            txtnid.val(td12);
+            txtcontactperson.val(td13);
+            txtcontactpersonnmbr.val(td14);
+            ddlcreditlimit.val(td9);
+            numclamountin.val(td15);
+
+            //ddlStatus.val(Status);
+            //ddlStatus.trigger("change");
+
+            //console.log(hdstockiestId.val());
+            //console.log(hid);
+            ////txtStockiestName.val(stockiestId);
+            //txtStockiestName.trigger("change");
+
+            //ddlTerritoryName.val(territoryId);
+            //console.log(territoryId);
+            //ddlTerritoryName.trigger("change");
+
+
+            OpenModal();
+            $("#sspanModalHead").text('Update Stockiest');
+            $("#spanSaveStockiest").text('Update');
+        })
+        // #endregion
+
+        //#region Territory Script Start
+
+        var hdterritoryId = $("#thdterritoryId");
+        var ddlareaname = $("#tddlareaname");
+        var ddlTerritoryName = $("#tddlTerritoryName");
+        var ddlstatus = $("#tddlstatus");
+        var searchByAny = $("#tsearchByAny");
+
+        //var SearchAny = $("#SearchAny");
+
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadTerritoryDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadTerritoryDataTable();
+        }
+
+        searchByAny.keyup(function () {
+            LoadTerritoryDataTable()
+        })
+
+        function LoadTerritoryDataTable() {
+            //debugger
+            // alert("here me 2");
+            var data = { flag: "View", name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Territorylist', data)).then(function (res, status) {
+                console.log(res);
+                if (status == "success") {
+                    $("#tdataContainer").empty();
+                    $("#tdataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+
+
+        //opemmodal
+        function OpenModal() {
+            $("#territorymodal").modal("show");
+            //$("#spanModalHead").text("Add New Zone");
+            //$("#spanSaveTextRegion").text('Save');
+            //$("#regionmodal").modal("show");
+            //$(".error").addClass("hide");
+        }
+
+
+
+        //editbuttun
+        $(document).on("click", "a.data-edit-item-Territory", function (e) {
+            //alert();
+            // debugger;
+            e.preventDefault()
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+
+
+            //console.log(td1);
+            //console.log(td2);
+
+            hdterritoryId.val(td1);
+            ddlareaname.val(td2);
+            ddlareaname.trigger("change");
+            ddlTerritoryName.val(td3);
+            ddlstatus.val(td5);
+            ddlstatus.trigger("change");
+
+
+
+            OpenModal();
+            $("#tspanModalHead").text('Update Territory');
+            $("#spanSaveTextTerritory").text('Update');
+            //spanSaveTextRegion
+        })
+
+
+        //savemodal
+        $("#tsaveButton").click(function (e) {
+            //alert();
+            //debugger;
+            e.preventDefault();
+            $(".error").addClass("hide");
+
+            if (ValidationForm() == true) {
+                var edetails = JSON.stringify({ TerritoryId: TryParseInt(hdterritoryId.val(), 0), AreaId: TryParseInt(ddlareaname.val(), 0), TerritoryName: ddlTerritoryName.val(), Status: ddlstatus.val() });
+                console.log(edetails);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveTerritoryInfo', edetails, getToken())).then(function (res, status) {
+                    //alert("hitme");
+                    debugger;
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        //$("#zonemodal").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        //alert("Here Me");
+                        $("#territorymodal").modal("hide");
+
+                        LoadTerritoryDataTable();
+                    }
+                    else {
+                        //message("#msg2");
+                        toastrErrorAlert(execuStatus.fail);
+                        alert("This Territory Already Exist");
+                    }
+                    // enable("#saveButton");
+                })
+            }
+        });
+
+
+
+        //validationform
+
+        function ValidationForm() {
+            //debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddlareaname.val()) == 0) {
+                $('.required-AreaName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlTerritoryName.val()) == 0) {
+                $('.required-TerritoryName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlstatus.val()) == 0) {
+                $('.required-status').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+        // #endregion
+
+        // #region Area Script Start
+
+        var ddlorgname = $("#addlorgname");
+        var ddlRegionname = $("#addlRegionname");
+        var ddlAreaName = $("#addlAreaName");
+        var searchByAny = $("#asearchByAny");
+        var ddlStatus = $("#addlStatus");
+        var hdAreaId = $("#ahdAreaId");
+
+        //var hdregionId = '';
+        //var AreaId = '';
+        //var hdOrgId = '';
+        //var AreaNameList = [];
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            LoadAreaDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadAreaDataTable();
+        }
+        searchByAny.keyup(function () {
+            LoadAreaDataTable();
+        })
+
+        function LoadAreaDataTable() {
+            debugger;
+            var data = { flag: 'AreaSetup', name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/AreaList', data)).then(function (res, status) {
+                console.log(res);
+                if (status === "success") {
+                    $("#adataContainer").empty();
+                    $("#adataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+        function OpenModal() {
+
+            $("#AreaModal").modal("show");
+
+
+        }
+
+        $("#abtnSave").click(function (e) {
+            debugger;
+            e.preventDefault();
+            var data = { AreaId: hdAreaId.val(), RegionId: TryParseInt(ddlRegionname.val(), 0), AreaName: ddlAreaName.val(), Status: ddlStatus.val() }
+
+            if (true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveAreaInfo", JSON.stringify(data), getToken())).then(function (res, status) {
+
+                    console.log(status);
+                    if (res == true) {
+                        message("#msg1", "#AreaModal");
+
+                    }
+                    else {
+                        message("#msg2");
+                    }
+
+                })
+
+            }
+
+        })
+        $(document).on("click", "a.data-edit-item-Area", function (e) {
+
+            e.preventDefault()
+            debugger;
+
+
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+
+
+
+            ddlRegionname.val(td2);
+            ddlRegionname.trigger("change");
+            ddlAreaName.val(td4);
+            ddlStatus.val(td5);
+            ddlStatus.trigger("change");
+            hdAreaId.val(td1);
+
+
+
+            OpenModal();
+            $("#aspanModalHead").text('Update Area');
+            $("#aspanSaveText").text('Update');
+        })
+
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+        // #endregion
+
+        // #region Region Script Start
+
+        var hdregiontId = $("#rhdregiontId");
+        var ddldivname = $("#rddldivname");
+        var ddlRegionName = $("#rddlRegionName");
+        var ddlstatus = $("#rddlstatus");
+        var searchByAny = $("#rsearchByAny");
+
+        //var SearchAny = $("#SearchAny");
+
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadRegionDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadRegionDataTable();
+        }
+
+        searchByAny.keyup(function () {
+            LoadRegionDataTable()
+        })
+
+        function LoadRegionDataTable() {
+            debugger
+            // alert("here me 2");
+            var data = { flag: "View", name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Regionlist', data)).then(function (res, status) {
+                console.log(res);
+                if (status == "success") {
+                    $("#rdataContainer").empty();
+                    $("#rdataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+
+
+        //opemmodal
+        function OpenModal() {
+            $("#regionmodal").modal("show");
+            //$("#spanModalHead").text("Add New Zone");
+            //$("#spanSaveTextRegion").text('Save');
+            //$("#regionmodal").modal("show");
+            //$(".error").addClass("hide");
+        }
+
+
+
+        //editbuttun
+        $(document).on("click", "a.data-edit-item-Region", function (e) {
+            // alert();
+            debugger;
+            e.preventDefault()
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+
+
+            //console.log(td1);
+            //console.log(td2);
+
+            hdregiontId.val(td1);
+            ddldivname.val(td2);
+            ddldivname.trigger("change");
+            ddlRegionName.val(td3);
+            ddlstatus.val(td5);
+            ddlstatus.trigger("change");
+
+
+
+            OpenModal();
+            $("#rspanModalHead").text('Update Region');
+            $("#spanSaveTextRegion").text('Update');
+            //spanSaveTextRegion
+        })
+
+
+        //savemodal
+        $("#rsaveButton").click(function (e) {
+            //alert();
+            //debugger;
+            e.preventDefault();
+            $(".error").addClass("hide");
+
+            if (ValidationForm() == true) {
+                var edetails = JSON.stringify({ RegionId: TryParseInt(hdregiontId.val(), 0), DivisionId: TryParseInt(ddldivname.val(), 0), RegionName: ddlRegionName.val(), Status: ddlstatus.val() });
+                console.log(edetails);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRegionInfo', edetails, getToken())).then(function (res, status) {
+
+                    debugger;
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+
+                        toastrSuccessAlert(execuStatus.successSave);
+
+                        $("#regionmodal").modal("hide");
+
+                        LoadRegionDataTable();
+                    }
+                    else {
+
+                        toastrErrorAlert(execuStatus.fail);
+                        alert("This Zone Already Exist");
+                    }
+                    // enable("#saveButton");
+                })
+            }
+        });
+
+
+
+        //validationform
+        function ValidationForm() {
+            //debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(ddldivname.val()) == 0) {
+                $('.required-DivisionName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlRegionName.val()) == 0) {
+                $('.required-RegionName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlstatus.val()) == 0) {
+                $('.required-status').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+        // #endregion
+
+        // #region Division Script Start
+
+        var hddivisionId = $("#dhddivisionId");
+        var ddlZoneName = $("#dddlZoneName");
+        var ddlDivisionName = $("#dddlDivisionName");
+        var txtDivisionName = $("#dtxtDivisionName");
+        var ddlDivisionNameInput = $("#ddlDivisionNameInput");
+        var ddlZoneNameInput = $("#dddlZoneNameInput");
+        var ddlStatus = $("#dddlStatus");
+        var searchByAny = $("#dsearchByAny");
+
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadDivisionList()
+        })
+
+        searchByAny.change(function () {
+
+            LoadDivisionList();
+        })
+        //ddlDivisionName.change(function () {
+
+        //    LoadDivisionList();
+        //})
+
+        function LoadDivisionList() {
+            debugger;
+            //var a = TryParseInt(ddlDivisionName.val(), 0);
+            //var t = TryParseInt(ddlZoneName.val(), 0);
+            //$.trim(searchByAny.val())
+            //var data = { flag: "View", divisionId: $.trim(ddlDivisionName.val()), zoneId: $.trim(ddlZoneName.val()), id: 0 };
+            var data = { flag: "View", name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetDivisionInfo', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    //$("#ddataContainer").fadeOut('500', function () {
+                    //    $("#ddataContainer").empty();
+                    //    $("#ddataContainer").append(res).fadeIn('500');
+                    //});
+                    $("#ddataContainer").empty();
+                    $("#ddataContainer").append(res);
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+        }
+
+
+        function OpenModal() {
+
+            $("#dspanSaveText").text('Save');
+            $("#DivisionModal").modal("show");
+
+
+        }
+
+        $("#dbtnSave").click(function (e) {
+
+            e.preventDefault();
+            debugger;
+            var data = { DivisionId: TryParseInt(hddivisionId.val(), 0), ZoneId: TryParseInt(ddlZoneNameInput.val(), 0), DivisionName: txtDivisionName.val(), Status: ddlStatus.val() }
+
+            if (true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/UpdateDivision", JSON.stringify(data), getToken())).then(function (res, status) {
+
+                    console.log(status);
+                    if (res == true) {
+                        message("#msg1", "#DivisionModal");
+
+                    }
+                    else {
+                        message("#msg2");
+                    }
+
+                })
+
+            }
+
+        })
+
+        $(document).on("click", "a.data-edit-item-DivisionId", function (e) {
+
+
+            e.preventDefault()
+            debugger;
+
+
+
+            var row = $(this).parent().parents('tr');
+
+            console.log(row);
+            //var td2 = row.find('td:eq(2)').html();
+            //var td3 = row.find('td:eq(3)').html();
+            var divisionId = row.find('td:eq(4)').html();
+            var zoneId = row.find('td:eq(2)').html();
+            var hid = row.find('td:eq(1)').html();
+            var Status = row.find('td:eq(5)').html();
+
+
+
+            ddlStatus.val(Status);
+            ddlStatus.trigger("change");
+            hddivisionId.val(hid);
+            txtDivisionName.val(divisionId);
+            txtDivisionName.trigger("change");
+
+            ddlZoneNameInput.val(zoneId);
+            console.log(zoneId);
+            ddlZoneNameInput.trigger("change");
+
+
+
+            //txtDivisionName.val(td2);
+            //ddlZoneName.val(td3);
+
+
+
+
+            OpenModal();
+            $("#dspanModalHead").text('Update Division');
+            $("#dspanSaveText").text('Update');
+        })
+        // #endregion
+
+        // #region ZONE Script Start
+        var hdzonetId = $("#zhdzonetId");
+        var ddlorgname = $("#zddlorgname");
+        var ddlZoneName = $("#zddlZoneName");
+        var ddlstatus = $("#zddlstatus");
+
+        var SearchAny = $("#zSearchAny");
 
 
         $(document).ready(function () {
@@ -157,8 +1149,8 @@
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Zonelist', data)).then(function (res, status) {
                 console.log(res);
                 if (status == "success") {
-                    $("#dataContainer").empty();
-                    $("#dataContainer").append(res);
+                    $("#zdataContainer").empty();
+                    $("#zdataContainer").append(res);
                 }
             }).fail(function (err) { console.log(err) })
         }
@@ -167,9 +1159,9 @@
         //edit
         //openmodals
         function OpenModal() {
-            $("#spanModalHead").text("Add New Zone");
+            $("#zspanModalHead").text("Add New Zone");
             $("#spanSaveTextZone").text('Save');
-            $("#zonemodal").modal("show");
+            $("#Zzonemodal").modal("show");
             $(".error").addClass("hide");
         }
 
@@ -200,28 +1192,28 @@
 
 
             OpenModal();
-            $("#spanModalHead").text('Update Zone');
+            $("#zspanModalHead").text('Update Zone');
             $("#spanSaveTextZone").text('Update');
         })
 
 
 
-        $("#saveButton").click(function (e) {
+        $("#zsaveButton").click(function (e) {
             //alert();
-           // debugger;
+            debugger;
             e.preventDefault();
             $(".error").addClass("hide");
 
             if (ValidationForm() == true) {
-            var edetails = JSON.stringify({ ZoneId: TryParseInt(hdzonetId.val(), 0),  ZoneName: ddlZoneName.val(), Status: ddlstatus.val() });
-            console.log(edetails);
-            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveZonetInfo', edetails, getToken())).then(function (res, status) {
-                //alert("hitme");
-                //debugger;
+                var edetails = JSON.stringify({ ZoneId: TryParseInt(hdzonetId.val(), 0), ZoneName: ddlZoneName.val(), Status: ddlstatus.val() });
+                console.log(edetails);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveZonetInfo', edetails, getToken())).then(function (res, status) {
+                    //alert("hitme");
+                    debugger;
                     console.log(status);
                     console.log(res);
                     if (res == true) {
-                        $("#zonemodal").modal("toggle");
+                        $("#Zzonemodal").modal("toggle");
                         toastrSuccessAlert(execuStatus.successSave);
                         LoadZoneDataTable();
                     }
@@ -230,17 +1222,17 @@
                         toastrErrorAlert(execuStatus.fail);
                         alert("This Zone Already Exist");
                     }
-                    enable("#saveButton");
-            }).fail(function (err) {
+                    enable("#zsaveButton");
+                }).fail(function (err) {
                     console.log(err);
-                    enable("#saveButton");
+                    enable("#zsaveButton");
                 });
             }
         });
 
 
 
-    
+
         //validationform
         function ValidationForm() {
             //debugger;
@@ -258,5 +1250,7 @@
             return Isvalid
 
         }
+
+        // #endregion
     </script>
 }

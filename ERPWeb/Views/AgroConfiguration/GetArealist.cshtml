@@ -96,7 +96,7 @@
 
 @section scripts{
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
 
 
@@ -225,7 +225,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                          redirectPage('@Url.Action("AreaList")');
+                          redirectPage('@Url.Action("GetStockiestList", new {tab= "Area" })');
                     }, 1000);
                 }
                 else {
@@ -245,6 +245,6 @@
 
         });
 
-    </script>
+</script>
 }
 
