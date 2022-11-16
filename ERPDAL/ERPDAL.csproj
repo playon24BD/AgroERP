@@ -159,6 +159,10 @@
     <Compile Include="AgricultureContextMigrations\202211160916429_Agriculture_detailsIdsales.Designer.cs">
       <DependentUpon>202211160916429_Agriculture_detailsIdsales.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202211161036145_Agriculture_priceinde.cs" />
+    <Compile Include="AgricultureContextMigrations\202211161036145_Agriculture_priceinde.Designer.cs">
+      <DependentUpon>202211161036145_Agriculture_priceinde.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -261,6 +265,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202211160916429_Agriculture_detailsIdsales.resx">
       <DependentUpon>202211160916429_Agriculture_detailsIdsales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211161036145_Agriculture_priceinde.resx">
+      <DependentUpon>202211161036145_Agriculture_priceinde.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

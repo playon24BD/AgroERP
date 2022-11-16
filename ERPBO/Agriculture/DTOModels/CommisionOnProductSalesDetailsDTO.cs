@@ -30,6 +30,7 @@ namespace ERPBO.Agriculture.DTOModels
         //
         public string FinishGoodProductName { get; set; }
         public double TotalAmount { get; set; }
+        public double price { get; set; }
         public string QtyKG { get; set; }
         public long ProductSalesDetailsId { get; set; }
     }

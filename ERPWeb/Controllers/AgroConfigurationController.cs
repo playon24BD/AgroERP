@@ -3856,7 +3856,8 @@ namespace ERPWeb.Controllers
                 var commision = _commisionOnProductSalesDetailsBusiness.GetCommisionOnProductSalesDetails(0).Where(a => a.CommissionOnProductOnSalesId == id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
                 {//75
                    
-                    Flag = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyInfoId(_commissionOnProductOnSalesBusiness.GetCommissionOnProductById(c.CommissionOnProductOnSalesId, User.OrgId).ProductSalesInfoId).QtyKG,
+                    QtyKG = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyId(c.ProductSalesDetailsId).QtyKG,
+      
                     CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
                     FinishGoodProductId = c.FinishGoodProductId,
                     FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(c.FinishGoodProductId, User.OrgId).FinishGoodProductName,
@@ -3884,6 +3885,7 @@ namespace ERPWeb.Controllers
                     //FinishGoodProductName = c.FinishGoodProductName,
                     //Flag=_stockiestInfo.GetStockiestInfoById(_agroProductSalesInfoBusiness.GetAgroProductionInfoById(c.ProductSalesInfoId,User.OrgId).StockiestId,User.OrgId).StockiestName,
                     PaymentMode = c.PaymentMode,
+                    TotalAmount=c.TotalAmount,
                     TotalCommission = c.TotalCommission,
                     InvoiceNo = c.InvoiceNo,
                     EntryDate = c.EntryDate,
