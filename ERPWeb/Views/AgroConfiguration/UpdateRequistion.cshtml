@@ -49,7 +49,7 @@
                                 <option value="Rejected">Rejected</option>
                             </select>
                             <div class="input-group-append" >
-                                <a id="btnSubmit" href="#" title="Submit Requisition" class="btn btn-success">
+                                <a id="btnSubmit" href="#" title="Submit Requisition" class="btn btn-sm btn-success">
                                     Save
                                     <i class="fas fa-paper-plane"></i>
                                 </a>
@@ -106,24 +106,30 @@
         var issueQty = $(".issueQty");
 
 
+        $(document).ready(function () {
+
+            alert("hello");
+           
+
+        })
+
         issueQty.on('change', function () {
             var availableQty = $(this).parent().parent().find("td:eq(4)").text();
             var IssueQuntity = $(this).val();
             if (Number(IssueQuntity) <= Number(availableQty)) {
-               
-             //   $(".error").addClass("hide");
+
+                //   $(".error").addClass("hide");
 
 
                 $(this).parent().children("span").addClass("hide");
             }
             else {
-             //   $('.error').removeClass("hide");
+                //   $('.error').removeClass("hide");
                 $(this).parent().children("span").removeClass("hide");
             }
 
-    
-        });
 
+        });
 
 
 
@@ -131,49 +137,61 @@
         $("#btnSubmit").click(function (e) {
 
             e.preventDefault();
-            var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0), Status: ddlAction.val() };
-            var details = [];
+ 
+            var hclass = $(".error").hasClass("hide");
+     
+            if (hclass == false) {
+                var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0), Status: ddlAction.val() };
+                var details = [];
 
-            $.each($("#tblRequisitonDetails tbody tr"), function (index, item) {
-                var tds = $(this).children('td');
-                //alert(tds.eq(5).children('input[type="number"]').val());
-                details.push({
-                    RawMaterialIssueStockDetailId: 0,
-                    UnitID: tds.eq(8).html(),
-                    RequisitionQuantity: tds.eq(3).html(),
-                    IssueQuantity: tds.eq(5).children('input[type="number"]').val(),
-                    Status: ddlAction.val(),
-                    Remarks: tds.eq(7).html(),
-                    RawMaterialRequisitionInfoId: tds.eq(9).html(),
-                    RawMaterialRequisitionDetailsId: tds.eq(10).html(),  
-                    RawMaterialId: tds.eq(11).html(),
-                    
-                });
-            })
+                $.each($("#tblRequisitonDetails tbody tr"), function (index, item) {
+                    var tds = $(this).children('td');
+                    //alert(tds.eq(5).children('input[type="number"]').val());
+                    details.push({
+                        RawMaterialIssueStockDetailId: 0,
+                        UnitID: tds.eq(8).html(),
+                        RequisitionQuantity: tds.eq(3).html(),
+                        IssueQuantity: tds.eq(5).children('input[type="number"]').val(),
+                        Status: ddlAction.val(),
+                        Remarks: tds.eq(7).html(),
+                        RawMaterialRequisitionInfoId: tds.eq(9).html(),
+                        RawMaterialRequisitionDetailsId: tds.eq(10).html(),
+                        RawMaterialId: tds.eq(11).html(),
 
-           info.rawMaterialRequisitionDetailsDTO = details;
-            var data = JSON.stringify({ info });
-            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
-            ).then(function (res, status) {
+                    });
+                })
 
-                if (res === true) {
-              
-                         
-                                $('.toastrDefaultSuccess').trigger('click');
-                                setTimeout(function () {
-                                    redirectPage('@Url.Action("GetRequisition")');
-                                }, 500);
-              
-                            }
-                            else {
-                                $('.toastrDefaultError').trigger('click');
-                            }
-                            enable("#btnSubmit");
-                        }).fail(function (error) {
-                            alert(execuStatus.fail);
-                            enable("#btnSubmit");
-                        })
+                info.rawMaterialRequisitionDetailsDTO = details;
+                var data = JSON.stringify({ info });
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
+                ).then(function (res, status) {
 
+                    if (res === true) {
+
+
+                        $('.toastrDefaultSuccess').trigger('click');
+                        setTimeout(function () {
+                            redirectPage('@Url.Action("GetRequisition")');
+                        }, 500);
+
+                    }
+                    else {
+                        $('.toastrDefaultError').trigger('click');
+                    }
+                    enable("#btnSubmit");
+                }).fail(function (error) {
+                    alert(execuStatus.fail);
+                    enable("#btnSubmit");
+                })
+
+
+
+            }
+            else {
+                alert("Issue Quantity must be less then or Equal available Quantity ");
+            }
+            //return hclass;
+         
 
 
 
