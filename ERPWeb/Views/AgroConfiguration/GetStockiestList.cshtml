@@ -1185,12 +1185,22 @@
 
                     console.log(status);
                     if (res == true) {
-                        message("#msg1", "#AreaModal");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        $("#AreaModal").modal("hide");
 
+                        LoadTerritoryDataTable();
                     }
                     else {
-                        message("#msg2");
+                        toastrErrorAlert(execuStatus.fail);
+                        alert("This Area Already Exist");
                     }
+                    //if (res == true) {
+                    //    message("#msg1", "#AreaModal");
+
+                    //}
+                    //else {
+                    //    message("#msg2");
+                    //}
 
                 })
 
@@ -1477,13 +1487,25 @@
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/UpdateDivision", JSON.stringify(data), getToken())).then(function (res, status) {
 
                     console.log(status);
-                    if (res == true) {
-                        message("#msg1", "#DivisionModal");
 
+                    if (res == true) {
+                        toastrSuccessAlert(execuStatus.successSave);
+                        $("#DivisionModal").modal("hide");
+
+                        LoadTerritoryDataTable();
                     }
                     else {
-                        message("#msg2");
+                        toastrErrorAlert(execuStatus.fail);
+                        alert("This Division Already Exist");
                     }
+                    
+                    //if (res == true) {
+                    //    message("#msg1", "#DivisionModal");
+
+                    //}
+                    //else {
+                    //    message("#msg2");
+                    //}
 
                 })
 
