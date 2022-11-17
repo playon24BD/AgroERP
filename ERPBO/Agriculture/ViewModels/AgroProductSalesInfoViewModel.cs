@@ -35,7 +35,7 @@ namespace ERPBO.Agriculture.ViewModels
         public long? UpdateUserId { get; set; }
         public DateTime? EntryDate { get; set; }
         public long? EntryUserId { get; set; }
-        public string StockiestName { get; set; }
+        
         public string EntryUser { get; set; }
 
         public double PaidAmount { get; set; }
@@ -46,7 +46,7 @@ namespace ERPBO.Agriculture.ViewModels
         public double NotAdjustTotalReturn { get; set; }
 
         public long SalesReturnId { get; set; }
-        public string TerritoryName { get; set; }
+        //public string TerritoryName { get; set; }
 
         public long FinishGoodProductId { get; set; }
         public string FinishGoodProductName { get; set; }
@@ -55,6 +55,13 @@ namespace ERPBO.Agriculture.ViewModels
         public double QtyCTN { get; set; }
         public double QtyKG { get; set; }
         public double Total { get; set; }
+
+        public string StockiestName { get; set; }
+        public string ZoneName { get; set; }
+        public string TerritoryName { get; set; }
+        public string RegionName { get; set; }
+        public string AreaName { get; set; }
+        public string DivisionName { get; set; }
 
 
     }

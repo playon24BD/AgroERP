@@ -9,15 +9,67 @@
 <table class="table table-bordered table-striped table-sm table-responsive-lg text-sm">
     @if (info != null)
     {
-        <tr>
-            <td style="width:13%">Invoice No</td>
-            <td style="width:15%"><b>@info.InvoiceNo</b></td>
-            <td style="width:18%">Invoice Date</td>
-            <td style="width:20%"><b>@info.InvoiceDate</b></td>
-            <td style="width:13%">StockiestName</td>
-            <td style="width:20%"><b>@info.StockiestName</b></td>
-            <td style="width:20%" class="hide"><b>@info.StockiestId</b></td>
-        </tr>
+    <tr style="width:100%">
+        <td style="width:5%">Date</td>
+        <td style="width:10%"><b>@info.InvoiceDate.Value.ToShortDateString()</b></td>
+
+        <td style="width:5%">Invoice No</td>
+        <td style="width:10%"><b>@info.InvoiceNo</b></td>
+
+        <td style="width:5%">ChallanNo No</td>
+        <td style="width:10%"><b>@info.ChallanNo</b></td>
+
+        <td style="width:5%">Driver Name</td>
+        <td style="width:10%"><b>@info.DriverName</b></td>
+
+        <td style="width:5%">Vehicle Number</td>
+        <td style="width:10%"><b>@info.VehicleNumber</b></td>
+
+        <td style="width:5%">Delivery Place</td>
+        <td style="width:10%"><b>@info.DeliveryPlace</b></td>
+
+        @*<td style="width:13%">Zone Name</td>
+        <td style="width:15%"><b>@info.ZoneName</b></td>
+
+        <td style="width:13%">Division Name</td>
+        <td style="width:15%"><b>@info.DivisionName</b></td>
+
+        <td style="width:13%">Region Name</td>
+        <td style="width:15%"><b>@info.RegionName</b></td>
+
+        <td style="width:13%">Area Name</td>
+        <td style="width:15%"><b>@info.AreaName</b></td>
+
+        <td style="width:13%">Territory Name</td>
+        <td style="width:15%"><b>@info.TerritoryName</b></td>
+
+        <td style="width:13%">Stockiest Name</td>
+        <td style="width:20%"><b>@info.StockiestName</b></td>*@
+
+        @**@
+
+
+        <td style="width:20%" class="hide"><b>@info.StockiestId</b></td>
+    </tr>
+    <tr style="width:100%">
+        <td style="width:13%">Zone Name</td>
+        <td style="width:15%"><b>@info.ZoneName</b></td>
+
+        <td style="width:13%">Division Name</td>
+        <td style="width:15%"><b>@info.DivisionName</b></td>
+
+        <td style="width:13%">Region Name</td>
+        <td style="width:15%"><b>@info.RegionName</b></td>
+
+        <td style="width:13%">Area Name</td>
+        <td style="width:15%"><b>@info.AreaName</b></td>
+
+        <td style="width:13%">Territory Name</td>
+        <td style="width:15%"><b>@info.TerritoryName</b></td>
+
+        <td style="width:13%">Stockiest Name</td>
+        <td style="width:20%"><b>@info.StockiestName</b></td>
+    </tr>
     }
 </table>
 <table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" id="tblReturnItems">

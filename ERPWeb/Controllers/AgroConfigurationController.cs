@@ -2209,6 +2209,11 @@ namespace ERPWeb.Controllers
             {
                 var FinishGoodProductName = _agroProductSalesDetailsBusiness.GetAllAgroSalesDetailsInfos(User.OrgId).ToList();
                 var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
+                var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
+                var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
+                var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
+                var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
+                var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
 
                 var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
                 List<AgroProductSalesDetailsViewModel> details = new List<AgroProductSalesDetailsViewModel>();
@@ -2218,9 +2223,19 @@ namespace ERPWeb.Controllers
 
                     ViewBag.Info = new AgroProductSalesInfoViewModel
                     {
+                        ZoneName = ZoneName.FirstOrDefault(Z => Z.ZoneId == info.ZoneId).ZoneName,
+                        DivisionName = DivisionName.FirstOrDefault(D => D.DivisionId == info.DivisionId).DivisionName,
+                        RegionName = RegionName.FirstOrDefault(R => R.RegionId == info.RegionId).RegionName,
+                        AreaName=AreaName.FirstOrDefault(A=>A.AreaId==info.AreaId).AreaName,
+                        TerritoryName=TerritoryName.FirstOrDefault(T=>T.TerritoryId==info.TerritoryId).TerritoryName,
                         StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == info.StockiestId).StockiestName,
                         InvoiceNo = info.InvoiceNo,
-                        InvoiceDate = info.InvoiceDate
+                        ChallanNo=info.ChallanNo,
+                        DriverName=info.DriverName,
+                        VehicleNumber=info.VehicleNumber,
+                        DeliveryPlace=info.DeliveryPlace,
+                        InvoiceDate = info.InvoiceDate,
+
                         //StockiestName = _stockiestInfo.GetAllStockiestSetup(info.StockiestId, User.OrgId).StockiestName
                     };
 

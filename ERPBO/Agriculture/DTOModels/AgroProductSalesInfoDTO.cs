@@ -55,7 +55,12 @@ namespace ERPBO.Agriculture.DTOModels
         public double QtyKG { get; set; }
         public double Total { get; set; }
 
-
+        //public string StockiestName { get; set; }
+        public string ZoneName { get; set; }
+        //public string TerritoryName { get; set; }
+        public string RegionName { get; set; }
+        public string AreaName { get; set; }
+        public string DivisionName { get; set; }
 
 
 
