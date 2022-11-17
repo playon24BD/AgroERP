@@ -59,6 +59,14 @@
                     <span class="error hide required-StockiestName font-weight-bold">Input Stockiest Name!</span>
                     <span class="error hide duplicate-StockiestName font-weight-bold">Already Stockiest Exist!</span>
                 </div>
+
+                <div class="col-md-2">
+                    <label for="txtStockiestCode" class="control-label">Stockiest Code <span style="color:red">*</span></label>
+                    <input type="text" id="txtStockiestCode" class="form-control form-control-sm" />
+                    <span class="error hide required-txtStockiestCode font-weight-bold">Input Stockiest Code!</span>
+
+                </div>
+
                 <div class="col-md-2">
                     <label for="txtStockiestAddress" class="control-label">Address <span style="color:red">*</span></label>
                     <input type="text" id="txtStockiestAddress" class="form-control form-control-sm" />
@@ -139,8 +147,9 @@
                             <th class="text-center" style="width:15%">Area</th>
                             <th style="width:15%">Territory</th>
                             <th style="width:15%">Stockiest</th>
-                            <th style="width:15%">Address</th>
-                            <th style="width:15%">Number</th>
+                            <th style="width:10%">Stockiest Code</th>
+                            <th style="width:10%">Address</th>
+                            <th style="width:10%">Number</th>
                             <th style="width:10%">Status</th>
                             <th style="width:10%">Action</th>
 
@@ -166,6 +175,7 @@
         var ddlOrganizationName = $("#ddlOrganizationName");
         var ddlTerritoryName = $("#ddlTerritoryName");
         var txtStockiestName = $("#txtStockiestName");
+        var txtStockiestCode = $("#txtStockiestCode");
         var txtStockiestAddress = $("#txtStockiestAddress");
         var ddlareaname = $("#ddlareaname");
         var ddlcreditlimit = $("#ddlcreditlimit");
@@ -255,21 +265,22 @@
                     var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlareaname") + "</td>";
                     var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlTerritoryName") + "</td>";
                     var td4 = "<td class='text-center'>" + txtStockiestName.val() + "</td>";
-                    var td5 = "<td class='text-center'>" + txtStockiestAddress.val() + "</td>";
-                    var td6 = "<td class='text-center'>" + txtphonenmbr.val() + "</td>";
-                    var td7 = "<td class='text-center'>" + ddlcreditlimit.val() + "</td>";
-                    var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
-                    var td9 = "<td class='hide txtemail'>" + txtemail.val() + "</td>";
-                    var td10 = "<td class='hide txttradelicense'>" + txttradelicense.val() + "</td>";
-                    var td11 = "<td class='hide txtnid'>" + txtnid.val() + "</td>";
-                    var td12 = "<td class='hide txtcontactperson'>" + txtcontactperson.val() + "</td>";
-                    var td13 = "<td class='hide txtcontactpersonnmbr'>" + txtcontactpersonnmbr.val() + "</td>";
-                    var td14 = "<td class='hide numclamountin'>" + numclamountin.val() + "</td>";
-                    var td15 = "<td class='hide Areaid'>" + ddlareaname.val() + "</td>";
-                    var td16 = "<td class='hide TerritoryId'>" + ddlTerritoryName.val() + "</td>";
+                    var td5 = "<td class='text-center'>" + txtStockiestCode.val() + "</td>";
+                    var td6 = "<td class='text-center'>" + txtStockiestAddress.val() + "</td>";
+                    var td7 = "<td class='text-center'>" + txtphonenmbr.val() + "</td>";
+                    var td8 = "<td class='text-center'>" + ddlcreditlimit.val() + "</td>";
+                    var td9 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                    var td10 = "<td class='hide txtemail'>" + txtemail.val() + "</td>";
+                    var td11 = "<td class='hide txttradelicense'>" + txttradelicense.val() + "</td>";
+                    var td12 = "<td class='hide txtnid'>" + txtnid.val() + "</td>";
+                    var td13 = "<td class='hide txtcontactperson'>" + txtcontactperson.val() + "</td>";
+                    var td14 = "<td class='hide txtcontactpersonnmbr'>" + txtcontactpersonnmbr.val() + "</td>";
+                    var td15 = "<td class='hide numclamountin'>" + numclamountin.val() + "</td>";
+                    var td16 = "<td class='hide Areaid'>" + ddlareaname.val() + "</td>";
+                    var td17 = "<td class='hide TerritoryId'>" + ddlTerritoryName.val() + "</td>";
 
 
-                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + td15 + td16  + "</tr>";
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + td15 + td16  + td17 + "</tr>";
 
                     $("#tblMargeItems tbody").append(tr);
                     StockiestNameList.push(txtStockiestName.val());
@@ -308,18 +319,33 @@
                 var tds = $(this).children('td');
                 details.push({
 
+                    //StockiestId: 0,
+                    //TerritoryId: tds.eq(15).html(),
+                    //AreaId: tds.eq(14).html(),
+                    //StockiestName: tds.eq(3).html(),
+                    //StockiestPhoneNumber: tds.eq(5).html(),
+                    //StockiestMail: tds.eq(8).html(),
+                    //StockiestTradeLicense: tds.eq(9).html(),
+                    //StockiestNID: tds.eq(10).html(),
+                    //StockiestContactPerson: tds.eq(11).html(),
+                    //StockiestContactPersonPHNumber: tds.eq(12).html(),
+                    //CreditLimit: tds.eq(13).html(),
+                    //Status: tds.eq(6).html(),
+                    //StockiestAddress: tds.eq(4).html(),
+
+
                     StockiestId: 0,
-                    TerritoryId: tds.eq(15).html(),
-                    AreaId: tds.eq(14).html(),
+                    TerritoryId: tds.eq(16).html(),
+                    AreaId: tds.eq(15).html(),
                     StockiestName: tds.eq(3).html(),
                     StockiestPhoneNumber: tds.eq(5).html(),
-                    StockiestMail: tds.eq(8).html(),
-                    StockiestTradeLicense: tds.eq(9).html(),
-                    StockiestNID: tds.eq(10).html(),
-                    StockiestContactPerson: tds.eq(11).html(),
-                    StockiestContactPersonPHNumber: tds.eq(12).html(),
-                    CreditLimit: tds.eq(13).html(),
-                    Status: tds.eq(6).html(),
+                    StockiestMail: tds.eq(9).html(),
+                    StockiestTradeLicense: tds.eq(10).html(),
+                    StockiestNID: tds.eq(11).html(),
+                    StockiestContactPerson: tds.eq(12).html(),
+                    StockiestContactPersonPHNumber: tds.eq(13).html(),
+                    CreditLimit: tds.eq(14).html(),
+                    Status: tds.eq(7).html(),
                     StockiestAddress: tds.eq(4).html(),
 
                 });
@@ -355,6 +381,10 @@
 
             if ($.trim(txtStockiestName.val()) == "") {
                 $('.required-StockiestName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(txtStockiestCode.val()) == "") {
+                $('.required-txtStockiestCode').removeClass("hide");
                 Isvalid = false;
             }
             if ($.trim(ddlareaname.val()) == "") {

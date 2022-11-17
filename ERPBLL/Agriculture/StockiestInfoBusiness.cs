@@ -86,6 +86,7 @@ inner join tblAreaSetup a on s.AreaId=a.AreaId
                     StockiestTradeLicense= item.StockiestTradeLicense,
                     CreditLimit= item.CreditLimit,
                     StockiestAddress= item.StockiestAddress,
+                    StockiestCode=item.StockiestCode
                     
                 };
                 _stockiestInfoRepository.Insert(stockiest);
@@ -108,6 +109,7 @@ inner join tblAreaSetup a on s.AreaId=a.AreaId
             info.UpdateUserId = userId;
             info.AreaId= updateDTOs.AreaId;
             info.Status= updateDTOs.Status;
+            info.StockiestCode = updateDTOs.StockiestCode;
             info.StockiestPhoneNumber = updateDTOs.StockiestPhoneNumber;
             info.StockiestNID= updateDTOs.StockiestNID;
             info.StockiestMail= updateDTOs.StockiestMail;

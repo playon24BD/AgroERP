@@ -14,6 +14,7 @@ namespace ERPBO.Agriculture.DomainModels
         [Key]
         public long StockiestId { get; set; }
         public string StockiestName { get; set; }
+        public string StockiestCode { get; set; }
         public long OrganizationId { get; set; }
         public long TerritoryId { get; set; }
         public long RoleId { get; set; }

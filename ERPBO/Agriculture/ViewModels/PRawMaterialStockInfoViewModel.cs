@@ -26,7 +26,7 @@ namespace ERPBO.Agriculture.ViewModels
         public long? EntryUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
-
+        public string ProductCode { get; set; }
 
 
         public ICollection<PRawMaterialStockIDetails> PRawMaterialStockIDetails { get; set; }
