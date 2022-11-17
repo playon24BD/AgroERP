@@ -35,6 +35,8 @@ namespace ERPBO.Agriculture.ViewModels
         public int box { get; set; }
         public double CurrentQTY { get; set; }
         public double TotalCurrentQTY { get; set; }
+        public double ProductTotal { get; set; }
+        public int RT { get; set; }
 
 
 

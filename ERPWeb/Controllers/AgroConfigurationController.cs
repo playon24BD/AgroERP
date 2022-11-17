@@ -2207,7 +2207,7 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
             {
-                var FinishGoodProductName = _agroProductSalesDetailsBusiness.GetAllAgroSalesDetailsInfos(User.OrgId).ToList();
+                //var FinishGoodProductName = _agroProductSalesDetailsBusiness.GetAllAgroSalesDetailsInfos(User.OrgId).ToList();
                 var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
                 var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
                 var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
@@ -2216,9 +2216,9 @@ namespace ERPWeb.Controllers
                 var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
 
                 var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
-                List<AgroProductSalesDetailsViewModel> details = new List<AgroProductSalesDetailsViewModel>();
-                if (info != null)
-                {
+               // List<AgroProductSalesDetailsViewModel> details = new List<AgroProductSalesDetailsViewModel>();
+                //if (info != null)
+                //{
 
 
                     ViewBag.Info = new AgroProductSalesInfoViewModel
@@ -2239,29 +2239,14 @@ namespace ERPWeb.Controllers
                         //StockiestName = _stockiestInfo.GetAllStockiestSetup(info.StockiestId, User.OrgId).StockiestName
                     };
 
-                    details = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(id.Value, User.OrgId).Select(i => new AgroProductSalesDetailsViewModel
-                    {
-                        MeasurementSize = i.MeasurementSize,
-                        //FinishGoodProductName =_agroProductSalesDetailsBusiness.GetAllAgroSalesDetailsInfos(User.OrgId),
+                    var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
 
-                        FinishGoodProductName = FinishGoodProductName.FirstOrDefault(it => it.FinishGoodProductInfoId == i.FinishGoodProductInfoId).FinishGoodProductName,
+          
 
-
-                        Price = i.Price,
-                        Discount = i.Discount,
-                        Quanity = i.Quanity,
-
-
-
-
-                    }).ToList();
-
-                }
-                else
-                {
-                    ViewBag.Info = new AgroProductSalesInfoViewModel();
-                }
-                return PartialView("_GetAgroSalesProductDetails", details);
+                List<AgroProductSalesDetailsViewModel> detailsvm = new List<AgroProductSalesDetailsViewModel>();
+                AutoMapper.Mapper.Map(details, detailsvm);
+                return PartialView("_GetAgroSalesProductDetails", detailsvm);
+             
             }
 
 
@@ -3673,7 +3658,7 @@ namespace ERPWeb.Controllers
 
         public ActionResult SalesReturn(long? id)
         {
-
+            ViewBag.ddlstokiestname = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stk => new SelectListItem { Text = stk.StockiestName, Value = stk.StockiestId.ToString() });
             ViewBag.ddlInvoiceNo = _agroProductSalesInfoBusiness.GetAgroProductionSalesInfo(User.OrgId).Select(inv => new SelectListItem { Text = inv.InvoiceNo, Value = inv.ProductSalesInfoId.ToString() });
             return View();
         }
@@ -3714,8 +3699,7 @@ namespace ERPWeb.Controllers
         public ActionResult GetStokistID(long id)
         {
 
-            //var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
-            //var totalreturn = stokiestid.Sum(du => du.DueAmount);
+
             var ddlStokiest = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id, User.OrgId).StockiestId;
             return Json(ddlStokiest, JsonRequestBehavior.AllowGet);
 
@@ -3734,6 +3718,30 @@ namespace ERPWeb.Controllers
             }
 
             return Json(IsSuccess);
+        }
+        public ActionResult GetINVBYstokiestId(long StockiestId)
+        {
+            try
+            {
+
+                var InvoiceNo = _agroProductSalesInfoBusiness.GetAllINVBYSTOKIESTID(StockiestId);
+
+
+
+
+                var dropDown = InvoiceNo.Select(s => new Dropdown { text = s.InvoiceNo, value = s.ProductSalesInfoId.ToString() }).ToList();
+               
+
+
+
+                return Json(dropDown, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Not Found", JsonRequestBehavior.AllowGet);
+            }
+
+
         }
 
 

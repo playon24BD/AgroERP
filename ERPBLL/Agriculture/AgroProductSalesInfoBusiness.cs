@@ -894,5 +894,28 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             query = string.Format(@"SELECT DISTINCT sales.InvoiceDate,FGPN.FinishGoodProductName,salesD.MeasurementSize AS PackSize, QtyCTN=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId),QtyKG=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId) * M.UnitKG,Total=(SELECT SUM(sd.Price) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId)FROM [Agriculture].[dbo].[tblProductSalesDetails] salesD INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId INNER JOIN [Agriculture].[dbo].[tblMeasurement] M on salesD.MeasurementId=M.MeasurementId  Inner Join [Agriculture].[dbo].[tblProductSalesInfo] sales  on sales.ProductSalesInfoId=salesD.ProductSalesInfoId Where 1=1{0} Group by sales.InvoiceDate,FGPN.FinishGoodProductName, M.MeasurementName,salesD.MeasurementId,salesD.FinishGoodProductInfoId,  salesD.Quanity,M.UnitKG,salesD.Price,salesD.EntryDate,sales.TotalAmount,salesD.ProductSalesInfoId,M.MasterCarton,M.InnerBox,M.PackSize,salesD.MeasurementSize", Utility.ParamChecker(param));
             return query;
         }
+
+        public IEnumerable<AgroProductSalesInfoDTO> GetAllINVBYSTOKIESTID(long StockiestId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForGetAllINVBYSTOKIESTID(StockiestId)).ToList();
+        }
+        private string QueryForGetAllINVBYSTOKIESTID(long StockiestId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+        
+            if (StockiestId > 0)
+            {
+                param += string.Format(@" and s.StockiestId={0}", StockiestId);
+            }
+
+            query = string.Format(@"select s.ProductSalesInfoId,s.InvoiceNo,s.StockiestId from tblProductSalesInfo s
+			inner join tblStockiestInfo st on s.StockiestId=st.StockiestId	
+            Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+
     }
 }

@@ -39,51 +39,55 @@
 
 
         <!--<div class="card-body  mb-5"--> @*style="background-color:#e7f1f6"*@ <!--id="cardWithOutRequisition">-->
-            <div class="row">
-                <div class="col-md-12" style="margin-top:-15px">
-                    <div class="card card-gray-dark">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-md-1">
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-15px">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+                        <div class="row">
+                            @*<div class="col-md-1">
                                     <h5 class="text-start">
                                         Invoice
                                     </h5>
-                                </div>
-                                <div class="col-md-3">
-                                    @*<label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>*@
-                                    @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                </div>
-                                <div class="hide">
-                                    <label for="ddlStokiestID">StokiestID</label>
-                                    <input type="text" id="ddlStokiestID" name="ddlStokiestID" class="form-control form-control-sm" readonly />
-                                </div>
-                                <div class="col-md-6">
-
-                                </div>
+                                </div>*@
+                            <div class="col-md-3">
+                                @*<label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>*@
+                                @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "--Select Stokiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+                            <div class="col-md-3">
+                                @*<label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>*@
+                                @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+                            <div class="hide">
+                                <label for="ddlStokiestID">StokiestID</label>
+                                <input type="text" id="ddlStokiestID" name="ddlStokiestID" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col-md-6">
 
                             </div>
 
-
                         </div>
 
-                    </div>
-                </div>
-
-
-                <div class="col-md-12" style="margin-top:-10px">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="col-md-12" id="dataContainer">
-
-                            </div>
-
-
-                        </div>
 
                     </div>
-                </div>
 
+                </div>
             </div>
+
+
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
         @*</div>*@
 
         @*</div>*@
@@ -91,13 +95,13 @@
     </div>
 
 
-            </div>
+</div>
 
 
 
-            @section scripts{
+@section scripts{
 
- <script type="text/javascript">
+    <script type="text/javascript">
 
 
         var ddlInvoiceNo = $("#ddlInvoiceNo");
@@ -105,6 +109,7 @@
         var ddlStokiestID = $("#ddlStokiestID");
 
         var returnqty = $(".returnqty");
+        var ddlstokiestname = $("#ddlstokiestname");
 
 
 
@@ -123,8 +128,24 @@
 
 
 
+     ddlstokiestname.change(function () {
 
 
+         Loadinvoice();
+         $("#dataContainer").empty();
+        /* Loadmeasurment();*/
+
+     })
+
+     function Loadinvoice() {
+         clearDropdown("ddlInvoiceNo");
+         if (ddlstokiestname.val() != "") {
+
+             LoadDropDown('/AgroConfiguration/GetINVBYstokiestId', 'POST', ddlInvoiceNo, JSON.stringify({ StockiestId: ddlstokiestname.val() }));
+         }
+
+
+     }
 
 
 
@@ -262,5 +283,5 @@
 
 
 
-                </script>
-            }
+    </script>
+}

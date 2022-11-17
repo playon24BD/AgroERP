@@ -44,6 +44,8 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<AgroProductSalesInfo> GetAgroSalesinfoByStokiestId(long StockiestId);
 
+        IEnumerable<AgroProductSalesInfoDTO> GetAllINVBYSTOKIESTID(long StockiestId);
+
 
     }
 }
