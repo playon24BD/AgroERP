@@ -520,7 +520,7 @@
                             <span class="error hide duplicate-RegionName font-weight-bold">Already RegionName Exist!</span>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="ddlstatus" class="control-label">Status</label>
+                            <label for="rddlstatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm select2" id="rddlstatus">
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
@@ -572,7 +572,7 @@
                         <span class="error hide duplicate-AreaName font-weight-bold">Already AreaName Exist!</span>
                     </div>
                     <div class="col-md-10">
-                        <label for="ddlStatus" class="control-label">Status</label>
+                        <label for="addlStatus" class="control-label">Status</label>
                         <select class="form-control form-control-sm select2" id="addlStatus">
                             <option value="Active">Active</option>
                             <option value="InActive">InActive</option>
@@ -623,7 +623,7 @@
                             <span class="error hide duplicate-TerritoryName font-weight-bold">Already TerritoryName Exist!</span>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="ddlstatus" class="control-label">Status</label>
+                            <label for="tddlstatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm select2" id="tddlstatus">
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
@@ -666,13 +666,13 @@
                     <input type="hidden" id="shdterritorytId" />
                     <input type="hidden" id="shdareaId" />
                     <div class="col-md-2">
-                        <label for="ddlareaname" class="control-label">Area Name</label>
+                        <label for="sddlareaname" class="control-label">Area Name</label>
                         @Html.DropDownList("sddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select Area", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                         <span class="error hide required-AreaName font-weight-bold">Select Area Name!</span>
                         <span class="error hide duplicate-AreaName font-weight-bold">Already Area Exist!</span>
                     </div>
                     <div class="col-md-2">
-                        <label for="ddlTerritoryName" class="control-label">Area Name</label>
+                        <label for="sddlTerritoryName" class="control-label">Area Name</label>
                         @Html.DropDownList("sddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "Territory", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                         <span class="error hide required-AreaName font-weight-bold">Select Area Name!</span>
                         <span class="error hide duplicate-AreaName font-weight-bold">Already Area Exist!</span>
@@ -730,7 +730,7 @@
                         <span class="error hide required-txtcontactpersonnmbr font-weight-bold">Input Coatact person Number!</span>
                     </div>
                     <div class="col-md-2">
-                        <label for="ddlcreditlimit" class="control-label">Status</label>
+                        <label for="sddlcreditlimit" class="control-label">Status</label>
                         <select id="sddlcreditlimit" class="form-control form-control-sm select2">
                             <option value="0">Select</option>
                             <option value="Active">Active</option>
@@ -775,14 +775,15 @@
 
         var ddlTerritoryName1 = $("#sddlTerritoryName1");
         var ddlStatus = $("#sddlStatus");
+        //var rddlstatus = $("#rddlstatus");
 
 
         var hdstockiestId = $("#shdstockiestId");
         var hdterritorytId = $("#shdterritorytId");
         var hdareaId = $("#shdareaId");
         var txtStockiestName = $("#stxtStockiestName");
-        var ddlareaname = $("#sddlareaname");
-        var ddlTerritoryName = $("#sddlTerritoryName");
+        var sddlareaname = $("#sddlareaname");
+        var sddlTerritoryName = $("#sddlTerritoryName");
         var txtStockiestAddress = $("#stxtStockiestAddress");
         var txtphonenmbr = $("#stxtphonenmbr");
         var txtemail = $("#stxtemail");
@@ -790,7 +791,7 @@
         var txtnid = $("#stxtnid");
         var txtcontactperson = $("#stxtcontactperson");
         var txtcontactpersonnmbr = $("#stxtcontactpersonnmbr");
-        var ddlcreditlimit = $("#sddlcreditlimit");
+        var sddlcreditlimit = $("#sddlcreditlimit");
         var txtclamount = $("#stxtclamount");
         var numclamountin = $("#snumclamountin");
 
@@ -854,7 +855,7 @@
 
             e.preventDefault();
             debugger;
-            var data = { StockiestId: TryParseInt(hdstockiestId.val(), 0), TerritoryId: TryParseInt(ddlTerritoryName.val(), 0), AreaId: TryParseInt(ddlareaname.val(), 0), StockiestName: txtStockiestName.val(), StockiestPhoneNumber: txtphonenmbr.val(), StockiestMail: txtemail.val(), StockiestTradeLicense: txttradelicense.val(), StockiestNID: txtnid.val(), StockiestContactPerson: txtcontactperson.val(), StockiestContactPersonPHNumber: txtcontactpersonnmbr.val(), Status: ddlcreditlimit.val(), CreditLimit: numclamountin.val(), StockiestAddress: txtStockiestAddress.val(), }
+            var data = { StockiestId: TryParseInt(hdstockiestId.val(), 0), TerritoryId: TryParseInt(sddlTerritoryName.val(), 0), AreaId: TryParseInt(sddlareaname.val(), 0), StockiestName: txtStockiestName.val(), StockiestPhoneNumber: txtphonenmbr.val(), StockiestMail: txtemail.val(), StockiestTradeLicense: txttradelicense.val(), StockiestNID: txtnid.val(), StockiestContactPerson: txtcontactperson.val(), StockiestContactPersonPHNumber: txtcontactpersonnmbr.val(), Status: sddlcreditlimit.val(), CreditLimit: numclamountin.val(), StockiestAddress: txtStockiestAddress.val(), }
 
 
 
@@ -919,10 +920,10 @@
             hdterritorytId.val(td2);
             hdareaId.val(td3);
             txtStockiestName.val(td6);
-            ddlareaname.val(td3);
-            ddlareaname.trigger("change");
-            ddlTerritoryName.val(td2);
-            ddlTerritoryName.trigger("change");
+            sddlareaname.val(td3);
+            sddlareaname.trigger("change");
+            sddlTerritoryName.val(td2);
+            sddlTerritoryName.trigger("change");
             txtStockiestAddress.val(td8);
             txtphonenmbr.val(td7);
             txtemail.val(td10);
@@ -930,7 +931,8 @@
             txtnid.val(td12);
             txtcontactperson.val(td13);
             txtcontactpersonnmbr.val(td14);
-            ddlcreditlimit.val(td9);
+            sddlcreditlimit.val(td9);
+            sddlcreditlimit.trigger("change");
             numclamountin.val(td15);
 
             //ddlStatus.val(Status);
@@ -957,8 +959,8 @@
         var hdterritoryId = $("#thdterritoryId");
         var ddlareaname = $("#tddlareaname");
         var ddlTerritoryName = $("#tddlTerritoryName");
-        var ddlstatus = $("#tddlstatus");
-        var searchByAny = $("#tsearchByAny");
+        var tddlstatus = $("#tddlstatus");
+        var tsearchByAny = $("#tsearchByAny");
 
         //var SearchAny = $("#SearchAny");
 
@@ -987,14 +989,14 @@
             LoadTerritoryDataTable();
         }
 
-        searchByAny.keyup(function () {
+        tsearchByAny.keyup(function () {
             LoadTerritoryDataTable()
         })
 
         function LoadTerritoryDataTable() {
             //debugger
             // alert("here me 2");
-            var data = { flag: "View", name: $.trim(searchByAny.val()) }
+            var data = { flag: "View", name: $.trim(tsearchByAny.val()) }
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Territorylist', data)).then(function (res, status) {
                 console.log(res);
                 if (status == "success") {
@@ -1040,8 +1042,8 @@
             ddlareaname.val(td2);
             ddlareaname.trigger("change");
             ddlTerritoryName.val(td3);
-            ddlstatus.val(td5);
-            ddlstatus.trigger("change");
+            tddlstatus.val(td5);
+            tddlstatus.trigger("change");
 
 
 
@@ -1060,7 +1062,7 @@
             $(".error").addClass("hide");
 
             if (TValidationForm() == true) {
-                var edetails = JSON.stringify({ TerritoryId: TryParseInt(hdterritoryId.val(), 0), AreaId: TryParseInt(ddlareaname.val(), 0), TerritoryName: ddlTerritoryName.val(), Status: ddlstatus.val() });
+                var edetails = JSON.stringify({ TerritoryId: TryParseInt(hdterritoryId.val(), 0), AreaId: TryParseInt(ddlareaname.val(), 0), TerritoryName: ddlTerritoryName.val(), Status: tddlstatus.val() });
                 console.log(edetails);
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveTerritoryInfo', edetails, getToken())).then(function (res, status) {
                     //alert("hitme");
@@ -1120,8 +1122,8 @@
         var ddlorgname = $("#addlorgname");
         var ddlRegionname = $("#addlRegionname");
         var ddlAreaName = $("#addlAreaName");
-        var searchByAny = $("#asearchByAny");
-        var ddlStatus = $("#addlStatus");
+        var asearchByAny = $("#asearchByAny");
+        var addlStatus = $("#addlStatus");
         var hdAreaId = $("#ahdAreaId");
 
         //var hdregionId = '';
@@ -1151,13 +1153,13 @@
         function LoadDataInitializer() {
             LoadAreaDataTable();
         }
-        searchByAny.keyup(function () {
+        asearchByAny.keyup(function () {
             LoadAreaDataTable();
         })
 
         function LoadAreaDataTable() {
             debugger;
-            var data = { flag: 'AreaSetup', name: $.trim(searchByAny.val()) }
+            var data = { flag: 'AreaSetup', name: $.trim(asearchByAny.val()) }
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/AreaList', data)).then(function (res, status) {
                 console.log(res);
                 if (status === "success") {
@@ -1176,7 +1178,7 @@
         $("#abtnSave").click(function (e) {
             debugger;
             e.preventDefault();
-            var data = { AreaId: hdAreaId.val(), RegionId: TryParseInt(ddlRegionname.val(), 0), AreaName: ddlAreaName.val(), Status: ddlStatus.val() }
+            var data = { AreaId: hdAreaId.val(), RegionId: TryParseInt(ddlRegionname.val(), 0), AreaName: ddlAreaName.val(), Status: addlStatus.val() }
 
             if (true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveAreaInfo", JSON.stringify(data), getToken())).then(function (res, status) {
@@ -1214,8 +1216,8 @@
             ddlRegionname.val(td2);
             ddlRegionname.trigger("change");
             ddlAreaName.val(td4);
-            ddlStatus.val(td5);
-            ddlStatus.trigger("change");
+            addlStatus.val(td5);
+            addlStatus.trigger("change");
             hdAreaId.val(td1);
 
 
@@ -1237,8 +1239,8 @@
         var hdregiontId = $("#rhdregiontId");
         var ddldivname = $("#rddldivname");
         var ddlRegionName = $("#rddlRegionName");
-        var ddlstatus = $("#rddlstatus");
-        var searchByAny = $("#rsearchByAny");
+        var rddlstatus = $("#rddlstatus");
+        var rsearchByAny = $("#rsearchByAny");
 
         //var SearchAny = $("#SearchAny");
 
@@ -1268,14 +1270,14 @@
             LoadRegionDataTable();
         }
 
-        searchByAny.keyup(function () {
+        rsearchByAny.keyup(function () {
             LoadRegionDataTable()
         })
 
         function LoadRegionDataTable() {
             debugger
             // alert("here me 2");
-            var data = { flag: "View", name: $.trim(searchByAny.val()) }
+            var data = { flag: "View", name: $.trim(rsearchByAny.val()) }
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Regionlist', data)).then(function (res, status) {
                 console.log(res);
                 if (status == "success") {
@@ -1290,10 +1292,10 @@
         //opemmodal
         function ROpenModal() {
             $("#regionmodal").modal("show");
-            //$("#spanModalHead").text("Add New Zone");
-            //$("#spanSaveTextRegion").text('Save');
-            //$("#regionmodal").modal("show");
-            //$(".error").addClass("hide");
+            $("#rspanModalHead").text("Add New Region");
+            $("#spanSaveTextRegion").text('Save');
+            $(".error").addClass("hide");
+
         }
 
 
@@ -1321,8 +1323,8 @@
             ddldivname.val(td2);
             ddldivname.trigger("change");
             ddlRegionName.val(td3);
-            ddlstatus.val(td5);
-            ddlstatus.trigger("change");
+            rddlstatus.val(td5);
+            rddlstatus.trigger("change");
 
 
 
@@ -1341,7 +1343,7 @@
             $(".error").addClass("hide");
 
             if (RValidationForm() == true) {
-                var edetails = JSON.stringify({ RegionId: TryParseInt(hdregiontId.val(), 0), DivisionId: TryParseInt(ddldivname.val(), 0), RegionName: ddlRegionName.val(), Status: ddlstatus.val() });
+                var edetails = JSON.stringify({ RegionId: TryParseInt(hdregiontId.val(), 0), DivisionId: TryParseInt(ddldivname.val(), 0), RegionName: ddlRegionName.val(), Status: rddlstatus.val() });
                 console.log(edetails);
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRegionInfo', edetails, getToken())).then(function (res, status) {
 
@@ -1404,7 +1406,7 @@
         var ddlDivisionNameInput = $("#ddlDivisionNameInput");
         var ddlZoneNameInput = $("#dddlZoneNameInput");
         var ddlStatus = $("#dddlStatus");
-        var searchByAny = $("#dsearchByAny");
+        var dsearchByAny = $("#dsearchByAny");
 
 
 
@@ -1428,10 +1430,10 @@
             LoadDivisionList()
         })
 
-        searchByAny.change(function () {
-
-            LoadDivisionList();
+        dsearchByAny.keyup(function () {
+            LoadDivisionList()
         })
+
         //ddlDivisionName.change(function () {
 
         //    LoadDivisionList();
@@ -1439,11 +1441,8 @@
 
         function LoadDivisionList() {
             debugger;
-            //var a = TryParseInt(ddlDivisionName.val(), 0);
-            //var t = TryParseInt(ddlZoneName.val(), 0);
-            //$.trim(searchByAny.val())
-            //var data = { flag: "View", divisionId: $.trim(ddlDivisionName.val()), zoneId: $.trim(ddlZoneName.val()), id: 0 };
-            var data = { flag: "View", name: $.trim(searchByAny.val()) }
+            
+            var data = { flag: "View", name: $.trim(dsearchByAny.val()) }
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetDivisionInfo', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {

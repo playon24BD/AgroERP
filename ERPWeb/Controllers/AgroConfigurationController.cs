@@ -1704,7 +1704,7 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Division List
-        public ActionResult GetDivisionInfo(string flag, long? divisionId, long? zoneId, long? id)
+        public ActionResult GetDivisionInfo(string flag,string name, long? divisionId, long? zoneId, long? id)
         {
             ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetDivisionInfo");
 
@@ -1727,7 +1727,7 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
 
-                var dto = _divisionInfo.GetDivisionInfos(divisionId ?? 0, zoneId ?? 0, User.OrgId);
+                var dto = _divisionInfo.GetDivisionInfos(name?? null,divisionId ?? 0, zoneId ?? 0, User.OrgId);
 
                 //IEnumerable<DivisionInfoDTO> dto = _divisionInfo.GetAllDivisionSetup(User.OrgId).Where(s => (name == "" || name == null) || (s.DivisionName.Contains(name))).Select(o => new DivisionInfoDTO
                 //{
@@ -2021,7 +2021,7 @@ namespace ERPWeb.Controllers
 
 
             }
-
+            
             return View();
         }
 

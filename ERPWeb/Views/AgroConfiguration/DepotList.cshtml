@@ -104,7 +104,7 @@
         //DepotList
         var hddepotId = $("#hddepotId");
         var searchByAny = $("#searchByAny");
-        //var ddlOrganizationName = $("#ddlOrganizationName");
+        
         var ddlStatus = $("#ddlStatus");
         var ddlDepotName = $("#ddlDepotName");
 
@@ -152,15 +152,16 @@
             $(".error").addClass("hide");
             if (formValidations() == true) {
                 debugger;
-                var data = JSON.stringify({ DepotId: TryParseInt(hddepotId.val(), 0),  DepotName: ddlDepotName.val(), Status: ddlStatus.val() });
+                var data = JSON.stringify({ DepotId: TryParseInt(hddepotId.val(), 0), DepotName: ddlDepotName.val(), Status: ddlStatus.val() });
                 console.log(data);
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveDepotInfo', data, getToken())).then(function (res, status) {
                     console.log(status);
                     console.log(res);
                     if (res == true) {
                         //message("#msg1", "#modalWarehouse");
-                        $("#depotmodal").modal("toggle");
+                        $("#depotmodal").modal("hide");
                         toastrSuccessAlert(execuStatus.successSave);
+                        
                         LoadDepotDataTable();
                     }
                     else {
@@ -220,13 +221,10 @@
             
 
             hddepotId.val(td1);
-            //ddlOrganizationName.val(td2);
+            
             ddlDepotName.val(td4);
             ddlStatus.val(td6);
-            //ddlStatus.prop("checked", false);
-            //if (td6.toLowerCase() === 'active') {
-            //    ddlStatus.prop("checked", true);
-            //}
+            ddlStatus.trigger("change");
             
            
 
