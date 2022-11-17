@@ -794,6 +794,8 @@
         var sddlcreditlimit = $("#sddlcreditlimit");
         var txtclamount = $("#stxtclamount");
         var numclamountin = $("#snumclamountin");
+        var txtStockiestCode = $("#txtStockiestCode");
+        
 
         $(document).ready(function () {
 
@@ -855,12 +857,7 @@
 
             e.preventDefault();
             debugger;
-            var data = { StockiestId: TryParseInt(hdstockiestId.val(), 0), TerritoryId: TryParseInt(sddlTerritoryName.val(), 0), AreaId: TryParseInt(sddlareaname.val(), 0), StockiestName: txtStockiestName.val(), StockiestPhoneNumber: txtphonenmbr.val(), StockiestMail: txtemail.val(), StockiestTradeLicense: txttradelicense.val(), StockiestNID: txtnid.val(), StockiestContactPerson: txtcontactperson.val(), StockiestContactPersonPHNumber: txtcontactpersonnmbr.val(), Status: sddlcreditlimit.val(), CreditLimit: numclamountin.val(), StockiestAddress: txtStockiestAddress.val(), }
-
-
-
-
-
+            var data = { StockiestId: TryParseInt(hdstockiestId.val(), 0), TerritoryId: TryParseInt(sddlTerritoryName.val(), 0), AreaId: TryParseInt(sddlareaname.val(), 0), StockiestName: txtStockiestName.val(), StockiestPhoneNumber: txtphonenmbr.val(), StockiestMail: txtemail.val(), StockiestTradeLicense: txttradelicense.val(), StockiestNID: txtnid.val(), StockiestContactPerson: txtcontactperson.val(), StockiestContactPersonPHNumber: txtcontactpersonnmbr.val(), Status: sddlcreditlimit.val(), CreditLimit: numclamountin.val(), StockiestAddress: txtStockiestAddress.val(), StockiestCode: txtStockiestCode.val()}
 
 
             if (true) {
@@ -909,31 +906,29 @@
             var td13 = row.find('td:eq(13)').html();
             var td14 = row.find('td:eq(14)').html();
             var td15 = row.find('td:eq(15)').html();
-
-
-
-
-
+            var td16 = row.find('td:eq(16)').html();
 
 
             hdstockiestId.val(td1);
             hdterritorytId.val(td2);
             hdareaId.val(td3);
             txtStockiestName.val(td6);
+            //txtStockiestCode.val(td7);
             sddlareaname.val(td3);
             sddlareaname.trigger("change");
             sddlTerritoryName.val(td2);
             sddlTerritoryName.trigger("change");
-            txtStockiestAddress.val(td8);
-            txtphonenmbr.val(td7);
-            txtemail.val(td10);
-            txttradelicense.val(td11);
-            txtnid.val(td12);
-            txtcontactperson.val(td13);
-            txtcontactpersonnmbr.val(td14);
-            sddlcreditlimit.val(td9);
+            txtStockiestAddress.val(td9);
+            txtphonenmbr.val(td8);
+            txtemail.val(td11);
+            txttradelicense.val(td12);
+            txtnid.val(td13);
+            txtcontactperson.val(td14);
+            txtcontactpersonnmbr.val(td15);
+            sddlcreditlimit.val(td10);
             sddlcreditlimit.trigger("change");
-            numclamountin.val(td15);
+            numclamountin.val(td16);
+            
 
             //ddlStatus.val(Status);
             //ddlStatus.trigger("change");

@@ -52,7 +52,7 @@ namespace ERPBLL.Agriculture
             }
 
             query = string.Format(@"
-           select s.StockiestAddress,a.AreaId,s.StockiestId,t.TerritoryId,t.TerritoryName,s.StockiestName,s.Status,a.AreaName,s.StockiestPhoneNumber,s.StockiestMail,s.StockiestTradeLicense,s.StockiestNID,s.StockiestContactPerson,s.StockiestContactPersonPHNumber,s.CreditLimit
+           select s.StockiestAddress,a.AreaId,s.StockiestId,t.TerritoryId,t.TerritoryName,s.StockiestName,s.StockiestCode,s.Status,a.AreaName,s.StockiestPhoneNumber,s.StockiestMail,s.StockiestTradeLicense,s.StockiestNID,s.StockiestContactPerson,s.StockiestContactPersonPHNumber,s.CreditLimit
 from tblStockiestInfo s
 inner join tblTerritoryInfos t on s.TerritoryId=t.TerritoryId
 inner join tblAreaSetup a on s.AreaId=a.AreaId
@@ -109,7 +109,7 @@ inner join tblAreaSetup a on s.AreaId=a.AreaId
             info.UpdateUserId = userId;
             info.AreaId= updateDTOs.AreaId;
             info.Status= updateDTOs.Status;
-            info.StockiestCode = updateDTOs.StockiestCode;
+            //info.StockiestCode = updateDTOs.StockiestCode;
             info.StockiestPhoneNumber = updateDTOs.StockiestPhoneNumber;
             info.StockiestNID= updateDTOs.StockiestNID;
             info.StockiestMail= updateDTOs.StockiestMail;

@@ -2,6 +2,7 @@
 using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
+using ERPBO.Agriculture.ReportModels;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -180,6 +181,21 @@ namespace ERPBLL.Agriculture
 
 
             return isSuccess;
+        }
+
+        public IEnumerable<GetSendAndReceiveReportData> GetSendAndReceiveReport()
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<GetSendAndReceiveReportData>(QueryForSendAndReceiveReport());
+        }
+        
+        public string QueryForSendAndReceiveReport()
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+            
+
+            query = string.Format(@"  where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
         }
     }
 }

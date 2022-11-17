@@ -2255,9 +2255,11 @@ namespace ERPWeb.Controllers
         [HttpGet]
         public ActionResult CreateAgroSalesProduct(long? id, long? finishGoodProductId)
         {
+            //var stockiestCode = _stockiestInfo.GetStockiestInfoById(stockiestId.Value, User.OrgId).StockiestCode;
 
-
-            ViewBag.ddlClientName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName, Value = stock.StockiestId.ToString() }).ToList();
+            ViewBag.ddlClientName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName + " ("+stock.StockiestCode+ ")", Value = stock.StockiestId.ToString() }).ToList();
+            
+            
 
             //  ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Where(o => o.RoleId == 34).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
 
@@ -3208,6 +3210,50 @@ namespace ERPWeb.Controllers
             return PartialView("_GetRequisitionProduction", rawMaterialRequisitionInfoViewModels);
         }
 
+
+        public ActionResult GetSendAndReceiveRequisitionReport(string rptType)
+        {
+            var data = _rawMaterialRequisitionInfoBusiness.GetSendAndReceiveReport();
+
+            LocalReport localReport = new LocalReport();
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptSendAndReceiveRequisitionReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsSendAndReceiveRequisitionReport", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = rptType;
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
 
         #endregion
 
