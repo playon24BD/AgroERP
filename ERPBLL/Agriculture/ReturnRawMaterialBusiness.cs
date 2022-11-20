@@ -393,5 +393,29 @@ inner join [Agriculture].[dbo].tblAgroUnitInfo u on rrm.UnitId=u.UnitId
             return query;
         }
 
+        public IEnumerable<ReturnRawMaterialDataReport> GetRawMaterialReturnReport()
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDataReport>(RawMaterialReturnReport()).ToList();
+        }
+        
+        public string RawMaterialReturnReport()
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+                
+
+            query = string.Format(@"
+                   
+select convert(date,rrm.EntryDate)as EntryDate,rm.RawMaterialName,u.UnitName,rrm.Quantity,rrm.ReturnType,rrm.Status from tblReturnRawMaterial rrm
+inner join tblRawMaterialInfo rm on rm.RawMaterialId=rrm.RawMaterialId
+inner join tblAgroUnitInfo u on rrm.UnitId=u.UnitId
+
+
+
+
+  where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+        }
+
     }
 }

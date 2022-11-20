@@ -2704,6 +2704,17 @@
     <Content Include="Reports\DataSets\dsReturnRawMaterialReport.xss">
       <DependentUpon>dsReturnRawMaterialReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsReturnRawMaterialReportSave.xsc">
+      <DependentUpon>dsReturnRawMaterialReportSave.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsReturnRawMaterialReportSave.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsReturnRawMaterialReportSave.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsReturnRawMaterialReportSave.xss">
+      <DependentUpon>dsReturnRawMaterialReportSave.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsSalesCommissionReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3185,6 +3196,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsReturnRawMaterialReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsReturnRawMaterialReportSave.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsReturnRawMaterialReportSave.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsSalesCommissionReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3437,6 +3453,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductStock.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptReturnRawMaterialReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptReturnRawMaterialReportSave.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesCommissionReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesReturnReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSendAndReceiveRequisitionReport.rdlc" />

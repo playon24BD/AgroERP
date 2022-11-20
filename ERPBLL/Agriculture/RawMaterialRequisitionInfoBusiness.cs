@@ -183,16 +183,25 @@ namespace ERPBLL.Agriculture
             return isSuccess;
         }
 
-        public IEnumerable<GetSendAndReceiveReportData> GetSendAndReceiveReport()
+
+
+
+        public IEnumerable<GetSendAndReceiveReportData> GetSendAndReceiveReport(string RawMaterialRequisitionCode)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<GetSendAndReceiveReportData>(QueryForSendAndReceiveReport());
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<GetSendAndReceiveReportData>(QueryForSendAndReceiveReport(RawMaterialRequisitionCode));
         }
         
-        public string QueryForSendAndReceiveReport()
+        public string QueryForSendAndReceiveReport(string RawMaterialRequisitionCode)
         {
             string param = string.Empty;
             string query = string.Empty;
-            
+
+
+            if (!string.IsNullOrEmpty(RawMaterialRequisitionCode))
+            {
+                param += string.Format(@"and ri.RawMaterialRequisitionCode ='{0}'", RawMaterialRequisitionCode);
+            }
+
 
             query = string.Format(@" 
         select ri.RawMaterialRequisitionCode, convert(date,rd.EntryDate)as EntryDate,au.FullName,rm.RawMaterialName,rd.IssueQuantity,rd.RequisitionQuantity,rd.Status ,ui.UnitName,ri.Remarks from tblRawMaterialRequistionDetails rd

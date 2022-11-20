@@ -3020,6 +3020,52 @@ namespace ERPWeb.Controllers
             }
             return Json(IsSuccess);
         }
+
+        public ActionResult GetRawMaterialReturnReport(string rptType)
+        {
+            var data = _returnRawMaterialBusiness.GetRawMaterialReturnReport();
+
+            LocalReport localReport = new LocalReport();
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptReturnRawMaterialReportSave.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsReturnRawMaterialReportSave", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = rptType;
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                      "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
+
+
         #endregion
 
         #region Requisition
@@ -3140,6 +3186,15 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(info, rawMaterialRequisitionInfoDTO);
                 IsSuccess = _rawMaterialRequisitionInfoBusiness.SaveRawMaterialRequisition(rawMaterialRequisitionInfoDTO, User.UserId, User.OrgId);
 
+            }
+
+            if (IsSuccess == true)
+            {
+                
+                var requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfos(User.OrgId).FirstOrDefault().RawMaterialRequisitionCode;
+
+                
+                return Json(new { isSucccess = IsSuccess, File = requisitionCode });
             }
 
             return Json(IsSuccess);
@@ -3284,9 +3339,9 @@ namespace ERPWeb.Controllers
         }
 
 
-        public ActionResult GetSendAndReceiveRequisitionReport(string rptType)
+        public ActionResult GetSendAndReceiveRequisitionReport(string RawMaterialRequisitionCode)
         {
-            var data = _rawMaterialRequisitionInfoBusiness.GetSendAndReceiveReport();
+            var data = _rawMaterialRequisitionInfoBusiness.GetSendAndReceiveReport(RawMaterialRequisitionCode);
 
             LocalReport localReport = new LocalReport();
 
@@ -3299,7 +3354,7 @@ namespace ERPWeb.Controllers
             ReportDataSource dataSource1 = new ReportDataSource("dsSendAndReceiveRequisitionReport", data);
             localReport.DataSources.Add(dataSource1);
 
-            string reportType = rptType;
+            string reportType = "PDF";
             string mimeType;
             string encoding;
             string fileNameExtension;
@@ -3838,6 +3893,52 @@ namespace ERPWeb.Controllers
 
             return Json(IsSuccess);
         }
+
+        public ActionResult GetSalesReturnReportSave(string rptType)
+        {
+            var data = _salesReturn.GetSalesReturnReportSave();
+
+            LocalReport localReport = new LocalReport();
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptSalesReturnReportSave.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsSalesReturnReportSave", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = rptType;
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
+
+
         public ActionResult GetINVBYstokiestId(long StockiestId)
         {
             try

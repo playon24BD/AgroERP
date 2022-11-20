@@ -12,6 +12,8 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IReturnRawMaterialBusiness
     {
+        IEnumerable<ReturnRawMaterialDataReport> GetRawMaterialReturnReport();
+
         IEnumerable<ReturnRawMaterialDTO> GetReturnReportList(long? rawMaterialId, string returnType, string status, string fromDate, string toDate);
         IEnumerable<ReturnRawMaterialDataReport> GetReturnRawMaterialDataReport(long? rawMaterialId, string returnType, string status,string fromDate,string toDate);
         

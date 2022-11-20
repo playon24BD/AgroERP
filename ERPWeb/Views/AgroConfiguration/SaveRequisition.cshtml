@@ -1,7 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "SaveRequisition";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "SaveRequisition";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row" style=" margin-top: 25px">
@@ -189,7 +191,7 @@
                                                                 <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
                                                             </th>
                                                         </tr>*@
-                                                    <tr  class="text-center">
+                                                    <tr class="text-center">
                                                         <th>#SL</th>
                                                         <th>Raw Material</th>
                                                         <th>Unit</th>
@@ -426,13 +428,30 @@
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
             ).then(function (res, status) {
 
-                if (res === true) {
+                @*if (res === true) {
 
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetRequisitionProduction")');
                                 }, 500);
+                            }*@
+                debugger;
+                if (res.isSucccess === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                    var RawMaterialRequisitionCode = res.File;
+                    window.open('/AgroConfiguration/GetSendAndReceiveRequisitionReport?RawMaterialRequisitionCode=' + RawMaterialRequisitionCode, '_blank');
+                                
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetRequisitionProduction")');
+                                }, 500);
+                               // printJS({ printable: res.File, type: 'pdf', base64: true });
+                                
+                                //resetUI();
                             }
+
+
+
+
                             else {
                                 $('.toastrDefaultError').trigger('click');
                             }
@@ -516,7 +535,7 @@
                 isValid = false;
             }
             if (ddlReceipBatchCode.val() == "") {
-                
+
                 $(".req-ddlReceipBatchCode").removeClass('hide');
                 isValid = false;
             }

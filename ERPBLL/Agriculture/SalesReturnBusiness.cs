@@ -305,5 +305,32 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
 
+        public IEnumerable<SalesReturnReportData> GetSalesReturnReportSave()
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnReportData>(QueryForSalesReturnReportDataSave()).ToList();
+        }
+
+        private string QueryForSalesReturnReportDataSave()
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+
+            query = string.Format(@"
+
+select convert (date,sr.ReturnDate) as ReturnDate,InvoiceNo,f.FinishGoodProductName,s.StockiestName,sr.MeasurementSize,sr.ReturnQuanity,sr.QtyKG,sr.BoxQuanity,sr.ReturnPerUnitPrice,sr.Status,sr.ReturnTotalPrice
+
+from [Agriculture].[dbo]. tblSalesReturn sr
+inner join [Agriculture].[dbo]. tblFinishGoodProductInfo f on sr.FinishGoodProductInfoId=f.FinishGoodProductId
+inner join [Agriculture].[dbo]. tblStockiestInfo s on sr.StockiestId=s.StockiestId
+
+
+
+Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
     }
 }
