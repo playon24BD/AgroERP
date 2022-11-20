@@ -391,8 +391,9 @@
         
 
         $(document).on('click', 'a.data-item-download', function (e) {
+            debugger;
             e.preventDefault();
-            window.open("/AgroConfiguration/AgroProductSalesReport?ProductSalesInfoId=" + ProductSalesInfoId.val());
+            window.open("/AgroConfiguration/AgroProductSalesReports?ProductSalesInfoId=" + ProductSalesInfoId.val());
         })
 
         $(document).on('click', 'a.data-item-download', function (e) {

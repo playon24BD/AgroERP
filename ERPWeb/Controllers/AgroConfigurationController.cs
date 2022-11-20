@@ -2469,51 +2469,51 @@ namespace ERPWeb.Controllers
             return File(renderedBytes, mimeType);
         }
 
-        //public ActionResult AgroProductSalesReport(long ProductSalesInfoId)
-        //{
-        //    var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
-        //    var data = _agroProductSalesInfoBusiness.GetProductSalesData(InvoiceNo);
+        public ActionResult AgroProductSalesReports(long ProductSalesInfoId)
+        {
+            var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
+            var data = _agroProductSalesInfoBusiness.GetProductSalesData(InvoiceNo);
 
-        //    LocalReport localReport = new LocalReport();
+            LocalReport localReport = new LocalReport();
 
 
-        //    string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptAgroProductSalesReport.rdlc");
-        //    if (System.IO.File.Exists(reportPath))
-        //    {
-        //        localReport.ReportPath = reportPath;
-        //    }
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptAgroProductSalesReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
 
-        //    ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
-        //    localReport.DataSources.Add(dataSource1);
+            ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
+            localReport.DataSources.Add(dataSource1);
 
-        //    string reportType = "PDF";
-        //    string mimeType;
-        //    string encoding;
-        //    string fileNameExtension;
-        //    Warning[] warnings;
-        //    string[] streams;
-        //    string deviceInfo =
-        //            "<DeviceInfo>" +
-        //            "<OutputFormat>PDF</OutputFormat>" +
-        //            "<PageWidth>8.27in</PageWidth>" +
-        //            "<PageHeight>11.69in</PageHeight>" +
-        //            "<MarginTop>0.25in</MarginTop>" +
-        //            "<MarginLeft>0.25in</MarginLeft>" +
-        //            "<MarginRight>0.25in</MarginRight>" +
-        //            "<MarginBottom>0.25in</MarginBottom>" +
-        //            "</DeviceInfo>";
+            string reportType = "PDF";
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
 
-        //    var renderedBytes = localReport.Render(
-        //        reportType,
-        //        deviceInfo,
-        //        out mimeType,
-        //        out encoding,
-        //        out fileNameExtension,
-        //        out streams,
-        //        out warnings
-        //        );
-        //    return File(renderedBytes, mimeType);
-        //}
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
 
 
 
