@@ -2723,6 +2723,17 @@
     <Content Include="Reports\DataSets\dsSalesReturnReport.xss">
       <DependentUpon>dsSalesReturnReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsSendAndReceiveRequisitionReport.xsc">
+      <DependentUpon>dsSendAndReceiveRequisitionReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsSendAndReceiveRequisitionReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsSendAndReceiveRequisitionReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsSendAndReceiveRequisitionReport.xss">
+      <DependentUpon>dsSendAndReceiveRequisitionReport.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\download.js" />
@@ -3184,6 +3195,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsSalesReturnReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsSendAndReceiveRequisitionReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsSendAndReceiveRequisitionReport.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -3423,6 +3439,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptReturnRawMaterialReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesCommissionReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesReturnReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSendAndReceiveRequisitionReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
