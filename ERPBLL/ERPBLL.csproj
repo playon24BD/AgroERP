@@ -143,6 +143,8 @@
     <Compile Include="Agriculture\Interface\IMRawMaterialIssueStockInfo.cs" />
     <Compile Include="Agriculture\Interface\IPRawMaterialStockIDetails.cs" />
     <Compile Include="Agriculture\Interface\IPRawMaterialStockInfo.cs" />
+    <Compile Include="Agriculture\Interface\IProductPriceConfiguration.cs" />
+    <Compile Include="Agriculture\Interface\IProductPricingHistory.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialIssueStockDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialIssueStockInfoBusiness.cs" />
@@ -172,6 +174,8 @@
     <Compile Include="Agriculture\MRawMaterialIssueStockInfoBusisness.cs" />
     <Compile Include="Agriculture\PRawMaterialStockIDetailsBusiness.cs" />
     <Compile Include="Agriculture\PRawMaterialStockInfoBusiness.cs" />
+    <Compile Include="Agriculture\ProductPriceConfigurationBusiness.cs" />
+    <Compile Include="Agriculture\ProductPricingHistoryBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialIssueStockDetailsBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialIssueStockInfoBusiness.cs" />

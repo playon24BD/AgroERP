@@ -93,6 +93,8 @@
     <Compile Include="Agriculture\DomainModels\MRawMaterialIssueStockInfo.cs" />
     <Compile Include="Agriculture\DomainModels\PRawMaterialStockIDetails.cs" />
     <Compile Include="Agriculture\DomainModels\PRawMaterialStockInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\ProductPriceConfiguration.cs" />
+    <Compile Include="Agriculture\DomainModels\ProductPricingHistory.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialIssueStockDetails.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialIssueStockInfo.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialRequisitionInfo.cs" />
@@ -134,6 +136,9 @@
     <Compile Include="Agriculture\DTOModels\MRawMaterialIssueStockInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\PRawMaterialStockIDetailsDTO.cs" />
     <Compile Include="Agriculture\DTOModels\PRawMaterialStockInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ProductDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ProductPriceConfigurationDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ProductPricingHistoryDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialIssueStockDetailsDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialIssueStockInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialRequisitionDetailsDTO.cs" />
@@ -183,6 +188,8 @@
     <Compile Include="Agriculture\ViewModels\MRawMaterialIssueStockInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\PRawMaterialStockIDetailsViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\PRawMaterialStockInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\ProductPriceConfigurationViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\ProductPricingHistoryViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialIssueStockDetailsViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialIssueStockInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialRequisitionDetailsViewModel.cs" />

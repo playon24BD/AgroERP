@@ -18,6 +18,21 @@ namespace ERPDAL.AgricultureDAL
     }
 
 
+
+    //e
+    public class ProductPricingHistoryRepository : AgricultureBaseRepository<ProductPricingHistory>
+    {
+        public ProductPricingHistoryRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+
+    }
+    //e
+    public class ProductPriceConfigurationRepository : AgricultureBaseRepository<ProductPriceConfiguration>
+    {
+        public ProductPriceConfigurationRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+    }
+
     //e
     public class SalesPaymentRegisterRepository : AgricultureBaseRepository<SalesPaymentRegister>
     {
