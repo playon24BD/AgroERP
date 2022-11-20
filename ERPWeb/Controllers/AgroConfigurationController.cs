@@ -2259,6 +2259,7 @@ namespace ERPWeb.Controllers
 
             ViewBag.ddlClientName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName + " ("+stock.StockiestCode+ ")", Value = stock.StockiestId.ToString() }).ToList();
             
+
             
 
             //  ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Where(o => o.RoleId == 34).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
