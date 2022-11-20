@@ -1549,6 +1549,7 @@ namespace ERPWeb.Controllers
                 List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTOs = new List<FinishGoodProductionDetailsDTO>();
                 AutoMapper.Mapper.Map(info, finishGoodProductionInfoDTO);
                 AutoMapper.Mapper.Map(details, finishGoodProductionDetailsDTOs);
+
                 isSucccess = _finishGoodProductionInfoBusiness.SaveFinishGoodInfo(finishGoodProductionInfoDTO, finishGoodProductionDetailsDTOs, User.UserId, User.OrgId);
             }
             return Json(isSucccess);
@@ -2394,20 +2395,32 @@ namespace ERPWeb.Controllers
         }
         public ActionResult SaveAgroProductSalesInfo(AgroProductSalesInfoViewModel info, List<AgroProductSalesDetailsViewModel> details)
         {
-
+            ExecutionStateWithText executionState = new ExecutionStateWithText();
             bool isSucccess = false;
 
             AgroProductSalesInfoDTO agroSalesInfoDTO = new AgroProductSalesInfoDTO();
             List<AgroProductSalesDetailsDTO> agroSalesDetailsDTOs = new List<AgroProductSalesDetailsDTO>();
             AutoMapper.Mapper.Map(info, agroSalesInfoDTO);
             AutoMapper.Mapper.Map(details, agroSalesDetailsDTOs);
+            //isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
             isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
 
+            if (isSucccess == true)
+            {
+                // Report ..
+                var invoice = _agroProductSalesInfoBusiness.GetLastInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
+
+                //var file = AgroProductSalesReports(invoice);
+                return Json(new { isSucccess = isSucccess, File = invoice });
+            }
+
+            // return Json(isSucccess);
             return Json(isSucccess);
         }
-        public ActionResult AgroProductSalesReport(long ProductSalesInfoId)
+        public ActionResult AgroProductSalesReport(string InvoiceNo)
         {
-            var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
+            string file = string.Empty;
+            // var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
             var data = _agroProductSalesInfoBusiness.GetProductSalesData(InvoiceNo);
 
             LocalReport localReport = new LocalReport();
@@ -2419,37 +2432,88 @@ namespace ERPWeb.Controllers
                 localReport.ReportPath = reportPath;
             }
 
-            ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
-            localReport.DataSources.Add(dataSource1);
+                ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
+                localReport.DataSources.Add(dataSource1);
 
-            string reportType = "PDF";
-            string mimeType;
-            string encoding;
-            string fileNameExtension;
-            Warning[] warnings;
-            string[] streams;
-            string deviceInfo =
-                    "<DeviceInfo>" +
-                    "<OutputFormat>PDF</OutputFormat>" +
-                    "<PageWidth>8.27in</PageWidth>" +
-                    "<PageHeight>11.69in</PageHeight>" +
-                    "<MarginTop>0.25in</MarginTop>" +
-                    "<MarginLeft>0.25in</MarginLeft>" +
-                    "<MarginRight>0.25in</MarginRight>" +
-                    "<MarginBottom>0.25in</MarginBottom>" +
-                    "</DeviceInfo>";
+                string reportType = "PDF";
+                string mimeType;
+                string encoding;
+                string fileNameExtension;
+                Warning[] warnings;
+                string[] streams;
+                string deviceInfo =
+                        "<DeviceInfo>" +
+                        "<OutputFormat>PDF</OutputFormat>" +
+                        "<PageWidth>8.27in</PageWidth>" +
+                        "<PageHeight>11.69in</PageHeight>" +
+                        "<MarginTop>0.25in</MarginTop>" +
+                        "<MarginLeft>0.25in</MarginLeft>" +
+                        "<MarginRight>0.25in</MarginRight>" +
+                        "<MarginBottom>0.25in</MarginBottom>" +
+                        "</DeviceInfo>";
 
-            var renderedBytes = localReport.Render(
-                reportType,
-                deviceInfo,
-                out mimeType,
-                out encoding,
-                out fileNameExtension,
-                out streams,
-                out warnings
-                );
+                var renderedBytes = localReport.Render(
+                    reportType,
+                    deviceInfo,
+                    out mimeType,
+                    out encoding,
+                    out fileNameExtension,
+                    out streams,
+                    out warnings
+                    );
+            //    var base64 = Convert.ToBase64String(renderedBytes);
+            ////var fs = String.Format("data:application/pdf;base64,{0}", base64);
+            //var fs = String.Format("{0}", base64);
+            //file = fs;
+
             return File(renderedBytes, mimeType);
         }
+
+        //public ActionResult AgroProductSalesReport(long ProductSalesInfoId)
+        //{
+        //    var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
+        //    var data = _agroProductSalesInfoBusiness.GetProductSalesData(InvoiceNo);
+
+        //    LocalReport localReport = new LocalReport();
+
+
+        //    string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptAgroProductSalesReport.rdlc");
+        //    if (System.IO.File.Exists(reportPath))
+        //    {
+        //        localReport.ReportPath = reportPath;
+        //    }
+
+        //    ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
+        //    localReport.DataSources.Add(dataSource1);
+
+        //    string reportType = "PDF";
+        //    string mimeType;
+        //    string encoding;
+        //    string fileNameExtension;
+        //    Warning[] warnings;
+        //    string[] streams;
+        //    string deviceInfo =
+        //            "<DeviceInfo>" +
+        //            "<OutputFormat>PDF</OutputFormat>" +
+        //            "<PageWidth>8.27in</PageWidth>" +
+        //            "<PageHeight>11.69in</PageHeight>" +
+        //            "<MarginTop>0.25in</MarginTop>" +
+        //            "<MarginLeft>0.25in</MarginLeft>" +
+        //            "<MarginRight>0.25in</MarginRight>" +
+        //            "<MarginBottom>0.25in</MarginBottom>" +
+        //            "</DeviceInfo>";
+
+        //    var renderedBytes = localReport.Render(
+        //        reportType,
+        //        deviceInfo,
+        //        out mimeType,
+        //        out encoding,
+        //        out fileNameExtension,
+        //        out streams,
+        //        out warnings
+        //        );
+        //    return File(renderedBytes, mimeType);
+        //}
 
 
 

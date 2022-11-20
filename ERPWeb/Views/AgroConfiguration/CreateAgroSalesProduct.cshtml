@@ -913,16 +913,25 @@
                         //return;
                         $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAgroProductSalesInfo', data , getToken())).then(function (res, status)
                         {
-                            if (res === true) {
+                            debugger;
+                            if (res.isSucccess === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
+                                var InvoiceNo = res.File;
+                                window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + InvoiceNo, '_blank');
+                                //window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + res.File, '_blank');
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetAgroSalesProductList")');
                                 }, 500);
+                               // printJS({ printable: res.File, type: 'pdf', base64: true });
+                                
                                 //resetUI();
                             }
                             else {
                                 $('.toastrDefaultError').trigger('click');
                             }
+                            //var InvoiceNo = res.File;
+                            //window.open("/AgroConfiguration/AgroProductSalesReport?InvoiceNo=" + InvoiceNo);
+
                             enable("#btnSubmit");
                         }).fail(function (error) {
                             alert(execuStatus.fail);

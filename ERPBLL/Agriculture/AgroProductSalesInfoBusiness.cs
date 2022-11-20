@@ -4,6 +4,7 @@ using ERPBLL.ControlPanel.Interface;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ReportModels;
+using ERPBO.Common;
 using ERPDAL.AgricultureDAL;
 using ERPDAL.ControlPanelDAL;
 using System;
@@ -74,10 +75,24 @@ namespace ERPBLL.Agriculture
         {
             return _agroProductSalesInfoRepository.GetAll(a => a.OrganizationId == orgId);
         }
-
         public IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long? stockiestId, string invoiceNo, string fromDate, string toDate)
         {
             return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfoss(stockiestId, invoiceNo, fromDate, toDate)).ToList();
+        }
+
+        public IEnumerable<AgroProductSalesInfoDTO> GetLastInvoice(long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfossLastInvoice(orgId)).ToList();
+        }
+
+        private string QueryForAgroSalesInfossLastInvoice(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            query = string.Format(@"	SELECT Top 1 * FROM tblProductSalesInfo where OrganizationId=9 order by ProductSalesInfoId DESC", Utility.ParamChecker(param));
+
+            return query;
         }
 
         private string QueryForAgroSalesInfoss(long? stockiestId, string invoiceNo, string fromDate, string toDate)
@@ -160,7 +175,7 @@ namespace ERPBLL.Agriculture
 
                 var zoneId = _divisionInfo.GetDivisionInfoById(divisionId, orgId).ZoneId;
 
-
+                ExecutionStateWithText executionState = new ExecutionStateWithText();
                 //paymenttable
                 if (agroSalesInfoDTO.PaymentMode == "Cash")
                 {
@@ -264,8 +279,9 @@ namespace ERPBLL.Agriculture
                     if (isSuccess)
                     {
                         //Commission on Sales 
-
+                        executionState.text = InvoiceNo;
                         isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
+                        
 
                     }
 
@@ -381,9 +397,9 @@ namespace ERPBLL.Agriculture
                     if (isSuccess)
                     {
                         //Commission on Sales 
-
+                        executionState.text = InvoiceNo;
                         isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
-
+                        
                     }
 
 
@@ -398,6 +414,9 @@ namespace ERPBLL.Agriculture
                     //paymenttable
                     _salesPaymentRegisterRepository.Insert(salesPayment);
                     isSuccess = _salesPaymentRegisterRepository.Save();
+
+
+
                 }
 
 
@@ -916,6 +935,291 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
 
+        //ExecutionStateWithText IAgroProductSalesInfoBusiness.  (AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId)
+        //{
+        //    bool isSuccess = false;
 
+        //    var ChallanNo = "CHA-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+
+        //    var InvoiceNo = "INV-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
+
+        //    ExecutionStateWithText executionState = new ExecutionStateWithText();
+
+        //    if (agroSalesInfoDTO.ProductSalesInfoId == 0)
+        //    {
+        //        var UserId = _stockiestUserBusiness.GetStockiestInfoById(agroSalesInfoDTO.UserId, orgId).UserId;
+        //        var stockeiestId = _appUserBusiness.GetId(UserId, orgId).StockiestId;
+        //        long stockId = agroSalesInfoDTO.UserId;
+
+        //        var territoryId = _stockiestInfo.GetStockiestInfoById(stockId, orgId).TerritoryId;
+
+        //        var areaId = _territorySetup.GetTerritoryNamebyId(territoryId, orgId).AreaId;
+
+        //        var regionId = _areaSetupBusiness.GetAreaInfoById(areaId, orgId).RegionId;
+
+        //        var divisionId = _regionSetup.GetRegionNamebyId(regionId, orgId).DivisionId;
+
+        //        var zoneId = _divisionInfo.GetDivisionInfoById(divisionId, orgId).ZoneId;
+
+
+        //        //paymenttable
+        //        if (agroSalesInfoDTO.PaymentMode == "Cash")
+        //        {
+
+        //            AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo
+        //            {
+        //                //Info
+        //                ChallanNo = ChallanNo,
+        //                InvoiceNo = InvoiceNo,
+        //                VehicleNumber = agroSalesInfoDTO.VehicleNumber,
+        //                ProductSalesInfoId = agroSalesInfoDTO.ProductSalesInfoId,
+        //                DeliveryPlace = agroSalesInfoDTO.DeliveryPlace,
+        //                DoADO_Name = agroSalesInfoDTO.DoADO_Name,
+        //                DriverName = agroSalesInfoDTO.DriverName,
+        //                InvoiceDate = agroSalesInfoDTO.InvoiceDate,
+        //                PaymentMode = agroSalesInfoDTO.PaymentMode,
+        //                VehicleType = agroSalesInfoDTO.VehicleType,
+        //                UserAssignId = agroSalesInfoDTO.UserAssignId,
+        //                UserId = UserId,
+        //                StockiestId = stockId,
+        //                TerritoryId = territoryId,
+        //                AreaId = areaId,
+        //                DivisionId = divisionId,
+        //                RegionId = regionId,
+        //                ZoneId = zoneId,
+        //                ChallanDate = DateTime.Now,
+        //                EntryDate = DateTime.Now,
+        //                EntryUserId = userId,
+        //                OrganizationId = orgId,
+        //                Depot = agroSalesInfoDTO.Depot,
+        //                Do_ADO_DA = agroSalesInfoDTO.Do_ADO_DA,
+        //                TotalAmount = agroSalesInfoDTO.TotalAmount,
+        //                PaidAmount = agroSalesInfoDTO.TotalAmount,
+        //                DueAmount = 0
+
+        //            };
+
+
+        //            List<AgroProductSalesDetails> agroDetails = new List<AgroProductSalesDetails>();
+
+        //            foreach (var item in details)
+        //            {
+        //                //double ProductMesurement = 0;
+        //                //double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
+        //                //double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
+        //                //double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
+        //                var UnitQtys = item.QtyKG.Split('(', ')');
+        //                int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
+        //                string ProductUnit = UnitQtys[1];
+        //                //if (MasterCartonMasurement != 0)
+        //                //{
+        //                //     ProductMesurement = MasterCartonMasurement * InnerBoxMasurement ;
+        //                //}
+        //                //else
+        //                //{
+        //                //     ProductMesurement = InnerBoxMasurement;
+        //                //}
+        //                //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+
+
+
+        //                var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
+        //                //var receipeBatch=_finishGoodRecipeInfoBusiness
+        //                //var receipeBatch = item.ReceipeBatchCode.Split('(',')');
+        //                var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
+        //                var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
+
+        //                AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
+        //                {
+        //                    //Details
+        //                    Discount = item.Discount,
+        //                    DiscountTk = item.DiscountTk,
+        //                    EntryDate = DateTime.Now,
+        //                    EntryUserId = userId,
+        //                    MeasurementId = item.MeasurementId,
+        //                    MeasurementSize = item.MeasurementSize,
+        //                    OrganizationId = orgId,
+        //                    Price = item.Price,
+        //                    ProductSalesInfoId = item.ProductSalesInfoId,
+        //                    Quanity = item.Quanity,
+        //                    FinishGoodProductInfoId = item.FinishGoodProductInfoId,
+        //                    ProductSalesDetailsId = item.ProductSalesDetailsId,
+        //                    ReceipeBatchCode = receipeBatch,
+        //                    FGRId = FGRId,
+        //                    QtyKG = item.QtyKG,
+        //                    BoxQuanity = item.BoxQuanity
+
+
+
+
+        //                };
+        //                agroDetails.Add(agroSalesDetails);
+        //            }
+        //            agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
+        //            _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
+
+
+
+        //            //isSuccess = _agroProductSalesInfoRepository.Save();
+
+        //            //if (isSuccess)
+        //            //{
+        //            //    //Commission on Sales 
+
+        //            //    isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
+
+        //            //}
+        //            if (_agroProductSalesInfoRepository.Save() == true)
+        //            {
+        //                isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
+        //                executionState.isSuccess = isSuccess;
+        //                executionState.text = InvoiceNo;
+        //            }
+
+
+        //            SalesPaymentRegister salesPayment = new SalesPaymentRegister
+        //            {
+        //                PaymentDate = DateTime.Now,
+        //                PaymentAmount = agroSalesInfoDTO.TotalAmount,
+        //                ProductSalesInfoId = agroSalesProductionInfo.ProductSalesInfoId,
+        //                Remarks = "SalesTime",
+        //                EntryUserId = userId
+        //            };
+        //            //paymenttable
+        //            _salesPaymentRegisterRepository.Insert(salesPayment);
+        //            isSuccess = _salesPaymentRegisterRepository.Save();
+        //        }
+
+        //        else
+        //        {
+        //            AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo
+        //            {
+        //                //Info
+        //                ChallanNo = ChallanNo,
+        //                InvoiceNo = InvoiceNo,
+        //                VehicleNumber = agroSalesInfoDTO.VehicleNumber,
+        //                ProductSalesInfoId = agroSalesInfoDTO.ProductSalesInfoId,
+        //                DeliveryPlace = agroSalesInfoDTO.DeliveryPlace,
+        //                DoADO_Name = agroSalesInfoDTO.DoADO_Name,
+        //                DriverName = agroSalesInfoDTO.DriverName,
+        //                InvoiceDate = agroSalesInfoDTO.InvoiceDate,
+        //                PaymentMode = agroSalesInfoDTO.PaymentMode,
+        //                VehicleType = agroSalesInfoDTO.VehicleType,
+        //                UserAssignId = agroSalesInfoDTO.UserAssignId,
+        //                UserId = UserId,
+        //                StockiestId = stockId,
+        //                TerritoryId = territoryId,
+        //                AreaId = areaId,
+        //                DivisionId = divisionId,
+        //                RegionId = regionId,
+        //                ZoneId = zoneId,
+        //                ChallanDate = DateTime.Now,
+        //                EntryDate = DateTime.Now,
+        //                EntryUserId = userId,
+        //                OrganizationId = orgId,
+        //                Depot = agroSalesInfoDTO.Depot,
+        //                Do_ADO_DA = agroSalesInfoDTO.Do_ADO_DA,
+        //                TotalAmount = agroSalesInfoDTO.TotalAmount,
+        //                PaidAmount = 0,
+        //                DueAmount = agroSalesInfoDTO.TotalAmount
+
+        //            };
+        //            List<AgroProductSalesDetails> agroDetails = new List<AgroProductSalesDetails>();
+
+        //            foreach (var item in details)
+        //            {
+        //                //double ProductMesurement = 0;
+        //                //double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
+        //                //double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
+        //                //double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
+        //                var UnitQtys = item.QtyKG.Split('(', ')');
+        //                int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
+        //                string ProductUnit = UnitQtys[1];
+        //                //if (MasterCartonMasurement != 0)
+        //                //{
+        //                //     ProductMesurement = MasterCartonMasurement * InnerBoxMasurement ;
+        //                //}
+        //                //else
+        //                //{
+        //                //     ProductMesurement = InnerBoxMasurement;
+        //                //}
+        //                //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+
+
+
+        //                var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
+        //                //var receipeBatch=_finishGoodRecipeInfoBusiness
+        //                //var receipeBatch = item.ReceipeBatchCode.Split('(',')');
+        //                var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
+        //                var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
+
+        //                AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
+        //                {
+        //                    //Details
+        //                    Discount = item.Discount,
+        //                    DiscountTk = item.DiscountTk,
+        //                    EntryDate = DateTime.Now,
+        //                    EntryUserId = userId,
+        //                    MeasurementId = item.MeasurementId,
+        //                    MeasurementSize = item.MeasurementSize,
+        //                    OrganizationId = orgId,
+        //                    Price = item.Price,
+        //                    ProductSalesInfoId = item.ProductSalesInfoId,
+        //                    Quanity = item.Quanity,
+        //                    FinishGoodProductInfoId = item.FinishGoodProductInfoId,
+        //                    ProductSalesDetailsId = item.ProductSalesDetailsId,
+        //                    ReceipeBatchCode = receipeBatch,
+        //                    FGRId = FGRId,
+        //                    QtyKG = item.QtyKG,
+        //                    BoxQuanity = item.BoxQuanity
+
+
+
+
+        //                };
+        //                agroDetails.Add(agroSalesDetails);
+        //            }
+        //            agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
+        //            _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
+
+
+
+        //            //isSuccess = _agroProductSalesInfoRepository.Save();
+        //            //if (isSuccess)
+        //            //{
+        //            //    //Commission on Sales 
+
+        //            //    isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
+
+        //            //}
+        //            if (_agroProductSalesInfoRepository.Save() == true)
+        //            {
+        //                isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
+        //                executionState.isSuccess = isSuccess;
+        //                executionState.text = InvoiceNo;
+        //            }
+
+
+        //            SalesPaymentRegister salesPayment = new SalesPaymentRegister
+        //            {
+        //                PaymentDate = DateTime.Now,
+        //                PaymentAmount = 0,
+        //                ProductSalesInfoId = agroSalesProductionInfo.ProductSalesInfoId,
+        //                Remarks = "SalesTime",
+        //                EntryUserId = userId
+        //            };
+        //            //paymenttable
+        //            _salesPaymentRegisterRepository.Insert(salesPayment);
+        //            isSuccess = _salesPaymentRegisterRepository.Save();
+
+
+
+        //        }
+
+
+        //    }
+
+        //    return executionState;
+        //}
     }
 }
