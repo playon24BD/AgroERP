@@ -2617,7 +2617,7 @@ namespace ERPWeb.Controllers
             LocalReport localReport = new LocalReport();
 
 
-            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptAgroProductSalesReport.rdlc");
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptAgroProductSalesDropReport.rdlc");
             if (System.IO.File.Exists(reportPath))
             {
                 localReport.ReportPath = reportPath;

@@ -232,6 +232,11 @@ namespace ERPDAL.AgricultureDAL
     public class AgroProductSalesInfoRepository : AgricultureBaseRepository<AgroProductSalesInfo>
     {
         public AgroProductSalesInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+        public object GetInvoiceProductionInfoById(long productSalesInfoId)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class AgroProductSalesDetailsRepository : AgricultureBaseRepository<AgroProductSalesDetails>
     {

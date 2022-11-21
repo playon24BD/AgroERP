@@ -20,7 +20,7 @@ namespace ERPBLL.Agriculture
 
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly AgroProductSalesInfoRepository _agroProductSalesInfoRepository;
-        
+        private readonly AgroProductSalesDetailsRepository _agroProductSalesDetailsRepository;
         private readonly SalesPaymentRegisterRepository _salesPaymentRegisterRepository;
 
         //private readonly AppUserRepository appUserRepository; // repo
@@ -44,7 +44,8 @@ namespace ERPBLL.Agriculture
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
-            
+            this._agroProductSalesDetailsRepository = new AgroProductSalesDetailsRepository(this._agricultureUnitOfWork);
+
             this._appUserBusiness = appUserBusiness;
             this._stockiestInfo = stockiestInfo;
             this._territorySetup = territorySetup;
@@ -140,7 +141,7 @@ namespace ERPBLL.Agriculture
                 --from tblProductSalesInfo sales
                 --inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId 
 
-                Where 1=1 {0} order by sales.ProductSalesInfoId desc", Utility.ParamChecker(param));
+                Where 1=1  and sales.Status is null {0} order by sales.ProductSalesInfoId desc", Utility.ParamChecker(param));
 
             return query;
         }
@@ -942,25 +943,31 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         public bool UpdateInvoiceDrop(long productSalesInfoId, long userId)
         {
             bool isUpdateSucccess = false;
-            AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo();
 
-            agroSalesProductionInfo.Status = "Drop";
+            var SalesInfoDb = GetInvoiceProductionInfoById(productSalesInfoId);
 
-            agroSalesProductionInfo.UpdateDate = DateTime.Now;
-            agroSalesProductionInfo.UpdateUserId = userId;
-            _agroProductSalesInfoRepository.Update(agroSalesProductionInfo);
-            isUpdateSucccess = _agroProductSalesInfoRepository.Save();
+            if (SalesInfoDb!=null)
+            {
+                SalesInfoDb.Status = "Drop";
+                SalesInfoDb.UpdateDate = DateTime.Now;
+                SalesInfoDb.UpdateUserId = userId;
+                _agroProductSalesInfoRepository.Update(SalesInfoDb);
+                isUpdateSucccess = _agroProductSalesInfoRepository.Save();
+            }
+            var SalesDetailsDb = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(productSalesInfoId,9);
+            if (SalesDetailsDb != null)
+            {
+                foreach (var item in SalesDetailsDb)
+                {
+                    item.Status = "Drop";
+                    item.UpdateDate = DateTime.Now;
+                    item.UpdateUserId = userId;
+                    _agroProductSalesDetailsRepository.Update(item);
+                    isUpdateSucccess = _agroProductSalesDetailsRepository.Save();
 
-            var SalesDetailsDb = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyInfoId(productSalesInfoId);
-
-            //AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails();
-
-            //agroSalesDetails.Status = "Drop";
-            //agroSalesDetails.UpdateDate = DateTime.Now;
-            //agroSalesDetails.UpdateUserId = userId;
-            //_a.Update(agroSalesProductionInfo);
-            //isUpdateSucccess = _agroProductSalesInfoRepository.Save();
-
+                }
+            }
+           
 
             return isUpdateSucccess;
         }
