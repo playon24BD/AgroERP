@@ -30,6 +30,21 @@ namespace ERPBLL.Agriculture
         {
             return _stockiestInfoRepository.GetOneByOrg(r => r.StockiestId == stockiestId && r.OrganizationId == orgId);
         }
+        public IEnumerable<StockiestInfoDTO> GetStockiestCodess(long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<StockiestInfoDTO>(QueryForStockiestInfossCodes(orgId)).ToList();
+        }
+
+        private string QueryForStockiestInfossCodes(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            query = string.Format(@"
+           SELECT Top 1 * FROM tblStockiestInfo where OrganizationId=9 order by StockiestId DESC",
+            Utility.ParamChecker(param));
+            return query;
+        }
 
         public IEnumerable<StockiestInfoDTO> GetStockiestInfos(long? stockiestId, long? territoryId, long orgId)
         {
@@ -64,6 +79,17 @@ inner join tblAreaSetup a on s.AreaId=a.AreaId
         public bool SaveStockiestList(List<StockiestInfoDTO> infoDTO, long userId, long orgId)
         {
             bool isSuccess = false;
+            string StockiestCode = "";
+            var checkStockiestCodeValue = GetStockiestCodess(orgId).FirstOrDefault().StockiestCode;
+            if (checkStockiestCodeValue!="0")
+            {
+                StockiestCode = "SC-" + checkStockiestCodeValue+ 1;
+            }
+            else
+            {
+                StockiestCode = "SC-" + "100001";
+            }
+            
 
             List<StockiestInfo> StockiestInfos = new List<StockiestInfo>();
 
@@ -86,8 +112,8 @@ inner join tblAreaSetup a on s.AreaId=a.AreaId
                     StockiestTradeLicense= item.StockiestTradeLicense,
                     CreditLimit= item.CreditLimit,
                     StockiestAddress= item.StockiestAddress,
-                    StockiestCode=item.StockiestCode
-                    
+                    StockiestCode= StockiestCode
+
                 };
                 _stockiestInfoRepository.Insert(stockiest);
             }

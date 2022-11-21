@@ -61,7 +61,10 @@
                 </div>
 
                 <div class="col-md-2">
-                    <label for="txtStockiestCode" class="control-label">Stockiest Code <span style="color:red">*</span></label>
+                    <label for="txtStockiestCode" class="control-label">
+                        Stockiest Code
+                        @*<span class="text-black" id="txtStockiestCode"></span>*@
+                    </label>
                     <input type="text" id="txtStockiestCode" class="form-control form-control-sm" />
                     @*<input type="text" id="txt_usrid" class="form-control form-control-sm" />*@
                     <span class="error hide required-txtStockiestCode font-weight-bold">Input Stockiest Code!</span>
@@ -176,8 +179,8 @@
         var ddlOrganizationName = $("#ddlOrganizationName");
         var ddlTerritoryName = $("#ddlTerritoryName");
         var txtStockiestName = $("#txtStockiestName");
-    //var txtStockiestCode = $("#txtStockiestCode");
-        var txtStockiestCode = $("#txt_usrid");
+    var txtStockiestCode = $("#txtStockiestCode");
+        //var txtStockiestCode = $("#txt_usrid");
         var txtStockiestAddress = $("#txtStockiestAddress");
         var ddlareaname = $("#ddlareaname");
         var ddlcreditlimit = $("#ddlcreditlimit");
@@ -203,10 +206,37 @@
                 theme: 'bootstrap4'
             });
             $("#txtclamount").hide();
+
+            //LoadStockiestCode();
         })
 
 
+        function LoadStockiestCode() {
+            debugger;
+            var a = ddlOrganizationName.val();
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetStockiestCodeCheck', JSON.stringify({ OrganizationId: 9}), getToken())).then(function (res, status) {
+                debugger;
+                console.log(res);
+                console.log(status);
+                if (status == "success") {
+                    debugger;
+                    //disable("#txtStockiestCode");
+                    if (res.txtStockiestCode == 0) {
+                        var code = "SC-" + "100001";
+                        txtStockiestCode.text(code);
+                    }
+                    else {
+                        txtStockiestCode.text(res.txtStockiestCode);
+                    }
 
+                    
+                    //RawMaterialStockUnit.text('(' + res.RawMaterialStockUnit + ')');
+
+                }
+            }).fail(function (error) {
+                consoleLog(error);
+            })
+        }
 
         //change Invoice
         $('#ddlareaname').change(function () {
@@ -386,10 +416,10 @@
                 $('.required-StockiestName').removeClass("hide");
                 Isvalid = false;
             }
-            if ($.trim(txtStockiestCode.val()) == "") {
-                $('.required-txtStockiestCode').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(txtStockiestCode.val()) == "") {
+            //    $('.required-txtStockiestCode').removeClass("hide");
+            //    Isvalid = false;
+            //}
             if ($.trim(ddlareaname.val()) == "") {
                 $('.required-AreaName').removeClass("hide");
                 Isvalid = false;

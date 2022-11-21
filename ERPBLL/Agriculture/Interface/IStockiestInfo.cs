@@ -14,6 +14,7 @@ namespace ERPBLL.Agriculture.Interface
 
         StockiestInfo GetStockiestInfoById(long stockiestId, long orgId);
         IEnumerable<StockiestInfoDTO> GetStockiestInfos(long? stockiestId, long? territoryId, long orgId);
+        IEnumerable<StockiestInfoDTO> GetStockiestCodess(long orgId);
 
         bool SaveStockiestList(List<StockiestInfoDTO> infoDTO, long userId, long orgId);
         bool UpdateStockiestList(StockiestInfoDTO updateDTOs, long userId, long orgId);

@@ -2042,7 +2042,22 @@ namespace ERPWeb.Controllers
 
             return View();
         }
+        public ActionResult GetStockiestCodeCheck(long OrganizationId)
+        {
+            //var UnitQtys = QtyKG.Split('(', ')');
+            //string ProductUnitQty = UnitQtys[0];
+            //var CheckQty = _finishGoodProductionInfoBusiness.Getcheckqty(FinishGoodProductInfoId, ProductUnitQty).FGRId;
+            string StockiestCode = "";
+            var checkStockiestCodeValue = _stockiestInfo.GetStockiestCodess(OrganizationId).FirstOrDefault().StockiestCode;
+            if (checkStockiestCodeValue!="0")
+            {
+                StockiestCode = (checkStockiestCodeValue+1);
+            }
+          
+            return Json(new { txtStockiestCode = StockiestCode, JsonRequestBehavior.AllowGet });
 
+
+        }
         public ActionResult getTerritroy(long id)
 
         {
