@@ -400,6 +400,10 @@
             e.preventDefault();
             window.open("/AgroConfiguration/AgroProductSalesChallanReport?ProductSalesInfoId=" + ProductSalesInfoId.val());
         })
+        $(document).on('click', 'a.data-item-download', function (e) {
+            e.preventDefault();
+            window.open("/AgroConfiguration/AgroProductSalesInvoiceDropReports?ProductSalesInfoId=" + ProductSalesInfoId.val());
+        })
 
 
         //$(document).on('click', 'a.data-item-download', function (e) {

@@ -31,6 +31,7 @@ namespace ERPBO.Agriculture.DomainModels
         public string ReceipeBatchCode { get; set; }
         public long FGRId { get; set; }
         public string QtyKG { get; set; }
+        public string Status { get; set; }
 
         [ForeignKey("AgroProductSalesInfo")]
         public long ProductSalesInfoId { get; set; }

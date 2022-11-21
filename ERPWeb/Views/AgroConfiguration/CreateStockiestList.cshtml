@@ -416,10 +416,10 @@
                 $('.required-StockiestName').removeClass("hide");
                 Isvalid = false;
             }
-            //if ($.trim(txtStockiestCode.val()) == "") {
-            //    $('.required-txtStockiestCode').removeClass("hide");
-            //    Isvalid = false;
-            //}
+            if ($.trim(txtStockiestCode.val()) == "") {
+                $('.required-txtStockiestCode').removeClass("hide");
+                Isvalid = false;
+            }
             if ($.trim(ddlareaname.val()) == "") {
                 $('.required-AreaName').removeClass("hide");
                 Isvalid = false;

@@ -62,6 +62,8 @@ namespace ERPBO.Agriculture.DTOModels
         public string AreaName { get; set; }
         public string DivisionName { get; set; }
 
+        public string Status { get; set; }
+
 
 
     }

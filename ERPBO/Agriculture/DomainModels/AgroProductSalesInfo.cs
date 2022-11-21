@@ -41,7 +41,8 @@ namespace ERPBO.Agriculture.DomainModels
         public long? EntryUserId { get; set; }
         public double PaidAmount { get; set; }
         public double DueAmount { get; set; }
-       
+
+        public string Status { get; set; }
 
         public ICollection<AgroProductSalesDetails> AgroProductSalesDetails { get; set; }
 

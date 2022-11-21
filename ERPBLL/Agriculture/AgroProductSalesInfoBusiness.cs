@@ -20,9 +20,11 @@ namespace ERPBLL.Agriculture
 
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly AgroProductSalesInfoRepository _agroProductSalesInfoRepository;
+        
         private readonly SalesPaymentRegisterRepository _salesPaymentRegisterRepository;
 
         //private readonly AppUserRepository appUserRepository; // repo
+        private readonly IAgroProductSalesDetailsBusiness _agroProductSalesDetailsBusiness;
         private readonly IAppUserBusiness _appUserBusiness;
         private readonly IStockiestInfo _stockiestInfo;
         private readonly ITerritorySetup _territorySetup;
@@ -38,10 +40,11 @@ namespace ERPBLL.Agriculture
         private readonly ICommissionOnProductOnSalesBusiness _commissionOnProductOnSalesBusiness;
         private readonly IStockiestUserBusiness _stockiestUserBusiness;
 
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness,ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, IStockiestUserBusiness stockiestUserBusiness)
+        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness,ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, IStockiestUserBusiness stockiestUserBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
+            
             this._appUserBusiness = appUserBusiness;
             this._stockiestInfo = stockiestInfo;
             this._territorySetup = territorySetup;
@@ -57,6 +60,7 @@ namespace ERPBLL.Agriculture
             this._measuremenBusiness = measuremenBusiness;
             this._commissionOnProductOnSalesBusiness = commissionOnProductOnSalesBusiness;
             this._stockiestUserBusiness = stockiestUserBusiness;
+            this._agroProductSalesDetailsBusiness = agroProductSalesDetailsBusiness;
         }
 
 
@@ -934,6 +938,33 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
             return query;
         }
+
+        public bool UpdateInvoiceDrop(long productSalesInfoId, long userId)
+        {
+            bool isUpdateSucccess = false;
+            AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo();
+
+            agroSalesProductionInfo.Status = "Drop";
+
+            agroSalesProductionInfo.UpdateDate = DateTime.Now;
+            agroSalesProductionInfo.UpdateUserId = userId;
+            _agroProductSalesInfoRepository.Update(agroSalesProductionInfo);
+            isUpdateSucccess = _agroProductSalesInfoRepository.Save();
+
+            var SalesDetailsDb = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyInfoId(productSalesInfoId);
+
+            //AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails();
+
+            //agroSalesDetails.Status = "Drop";
+            //agroSalesDetails.UpdateDate = DateTime.Now;
+            //agroSalesDetails.UpdateUserId = userId;
+            //_a.Update(agroSalesProductionInfo);
+            //isUpdateSucccess = _agroProductSalesInfoRepository.Save();
+
+
+            return isUpdateSucccess;
+        }
+
 
         //ExecutionStateWithText IAgroProductSalesInfoBusiness.  (AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId)
         //{

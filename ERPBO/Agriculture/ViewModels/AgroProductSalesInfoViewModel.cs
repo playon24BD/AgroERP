@@ -62,7 +62,7 @@ namespace ERPBO.Agriculture.ViewModels
         public string RegionName { get; set; }
         public string AreaName { get; set; }
         public string DivisionName { get; set; }
-
+        public string Status { get; set; }
 
     }
 }
