@@ -203,7 +203,6 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId", Utility.ParamChecker(param))
                         var rawMaterialStockInfoId = _rawMaterialIssueStockDetailsBusiness.GetRawMaterialIssueStockByMeterialId(item.RawMaterialId, orgId);
 
                         var checkRawMaterialStockValue = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(item.RawMaterialId, orgId);
-                        //var rawMaterialStockInfoId = _rawMaterialIssueStockInfoBusiness.GetRawMaterialIssueStockByMeterialId(item.RawMaterialId, orgId);
 
                         List<MRawMaterialIssueStockDetailsDTO> issuedetails = new List<MRawMaterialIssueStockDetailsDTO> { new MRawMaterialIssueStockDetailsDTO { RawMaterialIssueStockId = rawMaterialStockInfoId.RawMaterialIssueStockId,RawMaterialId=item.RawMaterialId,Quantity=item.RequiredQuantity, UnitID =rawMaterialStockInfoId.UnitID
 
@@ -216,15 +215,9 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId", Utility.ParamChecker(param))
                     }
 
 
-                    //isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveRawMaterialIssueDetails(rawMaterialIssueStockDetailsDTOList, userId, orgId);
+
                     isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveRawMaterialIssueDetails(rawMaterialIssueStockDetailsDTOList, userId, orgId, finishGoodProductionBatch);
 
-                    //if (isSuccess)
-                    //{
-
-                    //    isSuccess = _rawMaterialIssueStockInfoBusiness.UpdateProductIssueRawMaterialStock(rawMaterialIssueStockInfoList);
-
-                    //}
 
                 }
             }
@@ -491,10 +484,22 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId
             return _mRawMaterialIssueStockDetailsRepository.GetOneByOrg(df => df.FinishGoodProductionBatch == FinishGoodProductionBatch && df.RawMaterialId == RawMaterialId);
         }
 
+
         public IEnumerable<FinishGoodProductionDataReport> GetFinishGoodProductionReport(string ReceipeBatchCode)
         {
             return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionDataReport>(QueryForFinishGoodProductionReport(ReceipeBatchCode)).ToList();
         }
+
+        public IEnumerable<FinishGoodProductionInfo> GetFinishGoodProductInfosall(long orgId)
+        {
+            return _finishGoodProductionInfoRepository.GetAll(c => c.OrganizationId == orgId).ToList();
+        }
+
+        //        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfosList(long? productId, string finishGoodProductionBatch)
+        //        {
+        //            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QuerySearchForFinishGoodProductInfoss(productId,finishGoodProductionBatch)).ToList();
+        //        }
+
 
         private string QueryForFinishGoodProductionReport(string ReceipeBatchCode)
         {

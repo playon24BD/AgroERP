@@ -22,5 +22,6 @@ namespace ERPBO.Agriculture.DTOModels
 
         public string Flag { get; set; }
         public string FinishGoodProductName { get; set; }
+        public string UserName { get; set; }
     }
 }

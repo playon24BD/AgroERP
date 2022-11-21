@@ -199,11 +199,13 @@
                             </div>
                             <div class="col-md-2">
                                 <label for="ddlPrice" class="col-form-label text-white">Rate/PC</label>
-                                <input type="text" id="txtPrice" class="form-control form-control-sm" />
+                                <input type="text" id="txtPrice" class="form-control form-control-sm" readonly />
+                                <span class="error hide req-txtPrice">Price not Configure</span>
                             </div>
                             <div class="col-md-1">
                                 <label for="ddlPrice" class="col-form-label text-white">Discount %</label>
                                 <input type="text" id="txtDiscount" class="form-control form-control-sm" />
+
                             </div>
 
                             <div class="hide">
@@ -494,6 +496,7 @@
             LoadQtyUnit();
             Loadmeasurment();
 
+
         })
         function LoadQtyUnit() {
             clearDropdown("ddlQtyUnit");
@@ -509,7 +512,22 @@
             debugger;
             LoadFinishGoodStock();
             Loadmeasurment();
-          
+
+
+
+            let proid = $("#ddlProductName option:selected").val();
+            let fgrid = $("#ddlQtyUnit option:selected").val();
+            //   debugger;
+            var data = { pid: TryParseInt(proid, 0), rid: TryParseInt(fgrid, 0) };
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/ProductPrice", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var proprice = res.replace(/['"]+/g, '');
+                txtPrice.val(res.proprice);
+                txtPrice.val(proprice);
+
+            });
 
 
         })
@@ -651,24 +669,25 @@
                 //ddlpt.val("");
                 calculateTotal();
                 TatalProductQty();
-                payabl();
-
-
-            }
-
-
-        });
-
-        txtPrice.keyup(function () {
-            if (txtPrice.val() >= 0) {
-                calculateTotal();
                 totalAmounts();
                 payabl();
-               
+
 
             }
 
+
         });
+
+        //txtPrice.keyup(function () {
+        //    if (txtPrice.val() >= 0) {
+        //        calculateTotal();
+        //        totalAmounts();
+        //        payabl();
+               
+
+        //    }
+
+        //});
 
         function calculateTotal() {
 
@@ -774,6 +793,7 @@
 
 
         function validates() {
+            debugger;
             var isValid = true;
             $(".error").addClass('hide');
 
@@ -789,6 +809,10 @@
                 $(".req-req-Quanity").removeClass('hide');
                 isValid = false;
             }
+            if (txtPrice.val() === "") {
+                $(".req-txtPrice").removeClass('hide');
+                isValid = false;
+            }
             if (QuantityCheck() == true) {
                 $(".req-qtyChecking").removeClass('hide');
                 isValid = false;
@@ -800,12 +824,15 @@
             return isValid;
         }
 
+
+
         function QuantityCheck() {
+            debugger;
             var isValid = false;
             var originalQty = FinishGoodStockQty.text();
-            var qty = originalQty.replace(/\(|\)/g, '');
+            var qty = txtTotalQty.val();
             console.log(qty);
-            if (TryParseInt(txtQuanity.val()) > qty) {
+            if (TryParseInt(txtTotalQty.val()) > originalQty) {
                 isValid = true
             }
             return isValid;
@@ -947,7 +974,7 @@
 
         function ClearData() {
             txtQuanity.val("");
-            txtPrice.val("");
+          /*  txtPrice.val("");*/
             txtDiscount.val("");
 
         }

@@ -3458,6 +3458,10 @@
     <Content Include="Views\AgroConfiguration\_GetReturnReportListView.cshtml" />
     <Content Include="Views\AgroConfiguration\GetSalesReturnReportList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetSalesReturnReportList.cshtml" />
+    <Content Include="Views\AgroConfiguration\CreateProductPrice.cshtml" />
+    <Content Include="Views\AgroConfiguration\ProductPriceList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_ProductPriceListview.cshtml" />
+    <Content Include="Views\AgroConfiguration\_ProductPaymentHistoryDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

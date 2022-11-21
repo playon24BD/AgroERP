@@ -79,16 +79,16 @@ inner join tblAreaSetup a on s.AreaId=a.AreaId
         public bool SaveStockiestList(List<StockiestInfoDTO> infoDTO, long userId, long orgId)
         {
             bool isSuccess = false;
-            string StockiestCode = "";
-            var checkStockiestCodeValue = GetStockiestCodess(orgId).FirstOrDefault().StockiestCode;
-            if (checkStockiestCodeValue!="0")
-            {
-                StockiestCode = "SC-" + checkStockiestCodeValue+ 1;
-            }
-            else
-            {
-                StockiestCode = "SC-" + "100001";
-            }
+            //string StockiestCode = "";
+            //var checkStockiestCodeValue = GetStockiestCodess(orgId).FirstOrDefault().StockiestCode;
+            //if (checkStockiestCodeValue!="0")
+            //{
+            //    StockiestCode = "SC-" + checkStockiestCodeValue+ 1;
+            //}
+            //else
+            //{
+            //    StockiestCode = "SC-" + "100001";
+            //}
             
 
             List<StockiestInfo> StockiestInfos = new List<StockiestInfo>();
@@ -112,7 +112,7 @@ inner join tblAreaSetup a on s.AreaId=a.AreaId
                     StockiestTradeLicense= item.StockiestTradeLicense,
                     CreditLimit= item.CreditLimit,
                     StockiestAddress= item.StockiestAddress,
-                    StockiestCode= StockiestCode
+                    StockiestCode= item.StockiestCode
 
                 };
                 _stockiestInfoRepository.Insert(stockiest);

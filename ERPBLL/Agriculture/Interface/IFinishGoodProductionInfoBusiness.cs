@@ -44,6 +44,8 @@ namespace ERPBLL.Agriculture.Interface
         FinishGoodProductionDetails getdetailsbatchcodebyid(long FinishGoodProductDetailId);
         MRawMaterialIssueStockDetails getissueidbyrmidprobatch(string FinishGoodProductionBatch, long RawMaterialId);
 
+        IEnumerable<FinishGoodProductionInfo> GetFinishGoodProductInfosall(long orgId);
+
 
 
 

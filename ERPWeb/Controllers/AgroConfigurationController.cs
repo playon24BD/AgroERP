@@ -6,6 +6,7 @@ using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ViewModels;
 using ERPBO.Common;
 using Microsoft.Reporting.WebForms;
+using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -843,9 +844,9 @@ namespace ERPWeb.Controllers
         [HttpGet]
         public ActionResult CreateFinishGoodRecipe(long? id)
         {
-            ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            //ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
             //ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).Select(r => new SelectListItem { Text = r.RawMaterialName, Value = r.RawMaterialId.ToString() }).ToList();
-
+            ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
             ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Where(o => o.Status == "Active").Select(org => new SelectListItem { Text = org.RawMaterialName, Value = org.RawMaterialId.ToString() }).ToList();
 
             ViewBag.ddlUnit1 = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
@@ -1054,7 +1055,8 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
 
                 //ViewBag.ddlProduct = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-                ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                // ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
 
                 return View();
@@ -2094,7 +2096,20 @@ namespace ERPWeb.Controllers
             ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
             ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
 
-
+            var stkst = _stockiestInfo.GetAllStockiestSetup(9).ToList();
+            var max = "";
+            if (stkst.Count== 0)
+            {
+                max = "1";
+            }
+            else
+            {
+                max = (stkst.Count + 1).ToString();
+            }
+            var userid = User.UserId;
+            //var code = "SC-" + DateTime.Now.Year + "/U-" + userid + "/" + max;
+            var code = "SC-100000"+ max;
+            ViewBag.code = code;
             return View();
         }
         public ActionResult GetStockiestCodeCheck(long OrganizationId)
@@ -2349,7 +2364,9 @@ namespace ERPWeb.Controllers
 
             //ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.ReceipeBatchCode + ")" + "-" + f.TargetQuantity, Value = f.FinishGoodProductId.ToString() }).ToList();
 
-            ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+           // ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosall(User.OrgId).GroupBy(t=>t.FinishGoodProductId).Select(g=>g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
 
             ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.FGRId.ToString() }).ToList();
 
@@ -2684,6 +2701,14 @@ namespace ERPWeb.Controllers
                 out warnings
                 );
             return File(renderedBytes, mimeType);
+        }
+
+        public ActionResult ProductPrice(long pid, long rid)
+        {
+            var proprice = _productPriceConfiguration.GetPriceByproandfgrId(pid, rid).ProductPrice;
+        
+            return Json(proprice, JsonRequestBehavior.AllowGet);
+
         }
 
         #endregion
@@ -4590,6 +4615,98 @@ namespace ERPWeb.Controllers
 
         #region ProductPriceConfiguration
 
+        public ActionResult ProductPriceList(string flag, long? id, string name, long? ProductId, long? pid, long? rid)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+
+                //ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(des => new SelectListItem { Text = des.FinishGoodProductName, Value = des.FinishGoodProductId.ToString() }).ToList();
+                ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+                return View();
+
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _productPriceConfiguration.GetAllproductPRicelist(name ?? null);
+
+
+
+
+                List<ProductPriceConfigurationViewModel> viewModels = new List<ProductPriceConfigurationViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_ProductPriceListview", viewModels);
+
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+                //string Status = "Pending";
+                // string ReturnType = "Damage";
+
+                List<ProductPricingHistoryViewModel> productPricingHistoryViewModels= new List<ProductPricingHistoryViewModel>();
+                productPricingHistoryViewModels=_productPricingHistory.GetPriceByproANDfgrId(pid.Value,rid.Value).Select(de => new ProductPricingHistoryViewModel
+                {
+                    EntryDate= de.EntryDate,
+                    EntryUser=de.EntryUser,
+                    ProductPrice=de.ProductPrice,
+                    UserName = UserForEachRecord(de.EntryUser.Value).UserName,
+
+                }).ToList();
+                return PartialView("_ProductPaymentHistoryDetails", productPricingHistoryViewModels);
+
+
+            }
+
+
+
+            return View();
+        }
+
+
+        public ActionResult CreateProductPrice()
+        {
+
+            ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+            //ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+            ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.FGRId.ToString() }).ToList();
+
+
+
+            return View();
+        }
+
+        public ActionResult SaveProductPrice(List<ProductPriceConfigurationViewModel> details)
+        {
+            bool IsSuccess = false;
+            if (details.Count > 0)
+            {
+                List<ProductPriceConfigurationDTO> dto = new List<ProductPriceConfigurationDTO>();
+
+                AutoMapper.Mapper.Map(details, dto);
+                IsSuccess= _productPriceConfiguration.SaveProductPrice(dto,User.UserId);
+
+            }
+            return Json(IsSuccess);
+
+        }
+
+
+        public ActionResult UpdateProductPrice(ProductPriceConfigurationViewModel details)
+        {
+            bool IsSuccess = false;
+
+            ProductPriceConfigurationDTO updatedto = new ProductPriceConfigurationDTO();
+            AutoMapper.Mapper.Map(details, updatedto);
+            IsSuccess = _productPriceConfiguration.UpdateProductPrice(updatedto,User.UserId);
+
+ 
+
+            return Json(IsSuccess);
+
+        }
         #endregion
     }
 }

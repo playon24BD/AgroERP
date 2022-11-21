@@ -1,0 +1,291 @@
+﻿@{
+    ViewBag.Title = "ProductPriceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row" style="margin-top:-10px">
+    <div class="col-md-12">
+
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header" style="text-align: center;">
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Product Price List
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/AgroConfiguration/CreateProductPrice" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i>Create ProductPrice</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h5 class="text-left">Search By</h5>
+                            </div>
+                            <div class="col-md-3">
+
+                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="Search By Product" />
+                            </div>
+                            @*<div class="col-md-2">
+
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card ">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<div class="modal" id="PriceModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formDivision">
+                    <input type="hidden" id="hdpriceid" />
+                    <input type="hidden" id="hdproductid" />
+                    <input type="hidden" id="hdfgrid" />
+                    <div class="col-md-10">
+                        <label for="ddlproductname" class="control-label">ProductName</label>
+                        <input type="text" id="ddlproductname" class="form-control form-control-sm" readonly/>
+                    </div>
+                    <div class="col-md-10">
+                        <label for="ddlproductdetails" class="control-label">ProductDetails</label>
+                        <input type="text" id="ddlproductdetails" class="form-control form-control-sm" readonly />
+                    </div>
+                    <div class="col-md-10">
+                        <label for="ddlprice" class="control-label">Price</label>
+                        <input type="number" id="ddlprice" class="form-control form-control-sm" />
+                    </div>
+
+
+                </form>
+            </div>
+
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
+
+                <button id="btnCancel" type="button" class="btn btn-outline-danger btn-sm float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
+                <button type="submit" id="btnSave" class="btn btn-outline-success btn-sm float-rightt"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="PaymentDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title">Price Setup History</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
+                <div class="col-md-6">
+
+                </div>
+                @*<button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="Accept"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextZone">Appreved</span> </button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+
+
+        var SearchAny = $("#SearchAny");
+
+        var ddlproductdetails = $("#ddlproductdetails");
+        var ddlprice = $("#ddlprice");
+        var ddlproductname = $("#ddlproductname");
+        var hdfgrid = $("#hdfgrid");
+        var hdproductid = $("#hdproductid");
+        var hdpriceid = $("#hdpriceid");
+ 
+
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadZoneDataTable()
+        })
+
+        function LoadDataInitializer() {
+            LoadZoneDataTable();
+        }
+
+        SearchAny.keyup(function () {
+            debugger;
+            LoadZoneDataTable()
+        })
+
+
+        function LoadZoneDataTable() {
+            var data = { flag: "View", name: $.trim(SearchAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/ProductPriceList', data)).then(function (res, status) {
+                console.log(res);
+                if (status == "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+        $(document).on('click', 'a.data-item-detail', function (e) {
+            e.preventDefault();
+            debugger;
+            $("#dataContainer2").empty();
+            var pid = $(this).parent().parents('tr').children('td').eq(2).html();
+            var rid = $(this).parent().parents('tr').children('td').eq(3).html();
+            if (true) {
+                var data = { flag: "Detail", pid: pid, rid: rid };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/ProductPriceList', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res);
+                        $("#PaymentDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+
+        function OpenModal() {
+
+            $("#spanSaveText").text('Save');
+            $("#PriceModal").modal("show");
+
+
+        }
+
+        $(document).on("click", ".data-edit-item-price", function (e) {
+
+            debugger;
+            e.preventDefault()
+            debugger;
+
+
+
+            var row = $(this).parent().parents('tr');
+
+            console.log(row);
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+
+
+
+
+            hdpriceid.val(td1);
+            hdproductid.val(td2);
+            hdfgrid.val(td3);
+            ddlproductname.val(td4);
+            ddlproductdetails.val(td5);
+            ddlprice.val(td6);
+
+
+
+
+
+
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update Price');
+            $("#spanSaveText").text('Update');
+        })
+
+
+
+
+        $("#btnSave").click(function (e) {
+
+            e.preventDefault();
+            debugger;
+            var data = { ProductPriceConfigurationId: TryParseInt(hdpriceid.val(), 0), FinishGoodProductId: TryParseInt(hdproductid.val(), 0), FGRId: TryParseInt(hdfgrid.val(), 0), ProductPrice: ddlprice.val(), Flag: ddlproductdetails.val() }
+
+            if (true) {
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/UpdateProductPrice", JSON.stringify(data), getToken())).then(function (res, status) {
+
+                    console.log(status);
+                    if (res == true) {
+                      $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("ProductPriceList")');
+                    }, 1000);
+
+                    }
+                    else {
+                        message("#msg2");
+                    }
+
+                })
+
+            }
+
+        })
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+
+
+    </script>
+}
+

@@ -54,67 +54,70 @@
                 </div>
 
                 <div class="col-md-2">
+                    <label for="txtStockiestCode" class="control-label">
+                        Stockiest Code
+                        @*<span class="text-black" id="txtStockiestCode"></span>*@
+                    </label>
+                    <input type="text" id="txtStockiestCode" class="form-control form-control-sm" value="@ViewBag.code" readonly/>
+                </div>
+                <div class="col-md-3">
                     <label for="txtStockiestName" class="control-label">StockiestName <span style="color:red">*</span></label>
                     <input type="text" id="txtStockiestName" class="form-control form-control-sm" />
                     <span class="error hide required-StockiestName font-weight-bold">Input Stockiest Name!</span>
                     <span class="error hide duplicate-StockiestName font-weight-bold">Already Stockiest Exist!</span>
                 </div>
 
-                <div class="col-md-2">
-                    <label for="txtStockiestCode" class="control-label">
-                        Stockiest Code
-                        @*<span class="text-black" id="txtStockiestCode"></span>*@
-                    </label>
-                    <input type="text" id="txtStockiestCode" class="form-control form-control-sm" />
-                    @*<input type="text" id="txt_usrid" class="form-control form-control-sm" />*@
-                    <span class="error hide required-txtStockiestCode font-weight-bold">Input Stockiest Code!</span>
 
-                </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="txtStockiestAddress" class="control-label">Address <span style="color:red">*</span></label>
                     <input type="text" id="txtStockiestAddress" class="form-control form-control-sm" />
                     <span class="error hide required-StockiestAddress font-weight-bold">Input Stockiest Address!</span>
                 </div>
-                <div class="col-md-2">
+
+
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
                     <label for="txtphonenmbr" class="control-label">Phone Number <span style="color:red">*</span></label>
                     <input type="text" id="txtphonenmbr" class="form-control form-control-sm" />
                     <span class="error hide required-txtphonenmbr font-weight-bold">Input Stockiest Number!</span>
 
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="txtemail" class="control-label">Email</label>
                     <input type="email" id="txtemail" class="form-control form-control-sm" />
                     <span class="error hide required-txtemail font-weight-bold">Input Stockiest Email!</span>
 
                 </div>
 
-
-
-            </div>
-
-            <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="txttradelicense" class="control-label">Trade License</label>
                     <input type="text" id="txttradelicense" class="form-control form-control-sm" />
                     <span class="error hide required-txttradelicense font-weight-bold">Input Stockiest trade License!</span>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="txtnid" class="control-label">NID</label>
                     <input type="text" id="txtnid" class="form-control form-control-sm" />
                     <span class="error hide required-txtnid font-weight-bold">Input Stockiest Nid!</span>
                 </div>
-                <div class="col-md-2">
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3">
                     <label for="txtcontactperson" class="control-label">Contact Person</label>
                     <input type="text" id="txtcontactperson" class="form-control form-control-sm" />
                     <span class="error hide required-txtcontactperson font-weight-bold">Input Coatact person!</span>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="txtcontactpersonnmbr" class="control-label">Contact Person No</label>
                     <input type="text" id="txtcontactpersonnmbr" class="form-control form-control-sm" />
                     <span class="error hide required-txtcontactpersonnmbr font-weight-bold">Input Coatact person Number!</span>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-3">
                     <label for="ddlcreditlimit" class="control-label">Status <span style="color:red">*</span></label>
                     <select id="ddlcreditlimit" class="form-control form-control-sm select2">
                         <option value="0">Select</option>
@@ -132,7 +135,7 @@
                 <div class="col-md-1">
                     <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
                     <div class="clearfix">
-                        <button type="submit" class="btn btn-sm float-right btn-outline-success" id="addButton"><i class="fas fa-plus"></i></button>
+                        <button type="submit" class="btn btn-sm float-left btn-outline-success" id="addButton"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </div>
@@ -207,36 +210,36 @@
             });
             $("#txtclamount").hide();
 
-            //LoadStockiestCode();
+
         })
 
 
-        function LoadStockiestCode() {
-            debugger;
-            var a = ddlOrganizationName.val();
-            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetStockiestCodeCheck', JSON.stringify({ OrganizationId: 9}), getToken())).then(function (res, status) {
-                debugger;
-                console.log(res);
-                console.log(status);
-                if (status == "success") {
-                    debugger;
-                    //disable("#txtStockiestCode");
-                    if (res.txtStockiestCode == 0) {
-                        var code = "SC-" + "100001";
-                        txtStockiestCode.text(code);
-                    }
-                    else {
-                        txtStockiestCode.text(res.txtStockiestCode);
-                    }
+        //function LoadStockiestCode() {
+        //    debugger;
+        //    var a = ddlOrganizationName.val();
+        //    $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetStockiestCodeCheck', JSON.stringify({ OrganizationId: 9}), getToken())).then(function (res, status) {
+        //        debugger;
+        //        console.log(res);
+        //        console.log(status);
+        //        if (status == "success") {
+        //            debugger;
+        //            //disable("#txtStockiestCode");
+        //            if (res.txtStockiestCode == 0) {
+        //                var code = "SC-" + "100001";
+        //                txtStockiestCode.text(code);
+        //            }
+        //            else {
+        //                txtStockiestCode.text(res.txtStockiestCode);
+        //            }
 
-                    
-                    //RawMaterialStockUnit.text('(' + res.RawMaterialStockUnit + ')');
 
-                }
-            }).fail(function (error) {
-                consoleLog(error);
-            })
-        }
+        //            //RawMaterialStockUnit.text('(' + res.RawMaterialStockUnit + ')');
+
+        //        }
+        //    }).fail(function (error) {
+        //        consoleLog(error);
+        //    })
+        //}
 
         //change Invoice
         $('#ddlareaname').change(function () {
@@ -316,6 +319,7 @@
 
                     $("#tblMargeItems tbody").append(tr);
                     StockiestNameList.push(txtStockiestName.val());
+                    $("#addButton").hide();
                 }
 
                 clearCtrlstkst();
@@ -337,6 +341,7 @@
 
             removeTableRow("#tblMargeItems tbody", index);
             fnFixTheTbodyRowSerial("#tblMargeItems tbody", index);
+            redirectPage('@Url.Action("CreateStockiestList")');
         })
 
 

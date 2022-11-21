@@ -22,5 +22,6 @@ namespace ERPBO.Agriculture.ViewModels
 
         public string Flag { get; set; }
         public string FinishGoodProductName { get; set; }
+        public string UserName { get; set; }
     }
 }
