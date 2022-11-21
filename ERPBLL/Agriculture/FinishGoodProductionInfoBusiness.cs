@@ -491,43 +491,66 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId
             return _mRawMaterialIssueStockDetailsRepository.GetOneByOrg(df => df.FinishGoodProductionBatch == FinishGoodProductionBatch && df.RawMaterialId == RawMaterialId);
         }
 
-        //        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductInfosList(long? productId, string finishGoodProductionBatch)
-        //        {
-        //            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QuerySearchForFinishGoodProductInfoss(productId,finishGoodProductionBatch)).ToList();
-        //        }
+        public IEnumerable<FinishGoodProductionDataReport> GetFinishGoodProductionReport(string ReceipeBatchCode)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionDataReport>(QueryForFinishGoodProductionReport(ReceipeBatchCode)).ToList();
+        }
 
-        //        private string QuerySearchForFinishGoodProductInfoss(long? productId, string finishGoodProductionBatch)
-        //        {
-        //            string query = string.Empty;
-        //            string param = string.Empty;
+        private string QueryForFinishGoodProductionReport(string ReceipeBatchCode)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
 
-        //            //param += string.Format(@" and FI.OrganizationId={0}", orgId);
+            if (!string.IsNullOrEmpty(ReceipeBatchCode))
+            {
+                param += string.Format(@"and fr.ReceipeBatchCode ='{0}'", ReceipeBatchCode);
+            }
 
-        //            if (productId != null && productId > 0)
-        //            {
-        //                param += string.Format(@" and s.FinishGoodProductId={0}", productId);
-        //            }
-        //            if (!string.IsNullOrEmpty(finishGoodProductionBatch))
-        //            {
-        //                param += string.Format(@"and s.FinishGoodProductionBatch like '%{0}%'", finishGoodProductionBatch);
-        //            }
+            query = string.Format(@"
+     select Distinct fgp.FinishGoodProductId , fgp.FGRId , p.FinishGoodProductName,fr.ReceipeBatchCode,fr.FGRQty,un.UnitName,
 
-        //            query = string.Format(@"
-        //--select distinct s.FinishGoodProductId, o.FinishGoodProductName,
-        //--s.FinishGoodProductionBatch,s.Quanity,s.TargetQuantity
-        //--from FinishGoodProductionInfoes s
-        //--inner join tblFinishGoodProductInfo o on s.FinishGoodProductId=o.FinishGoodProductId
-        //select s.FinishGoodProductId, o.FinishGoodProductName, s.FinishGoodProductionBatch,r.ReceipeBatchCode,a.UnitName,s.Quanity,s.TargetQuantity,s.Status
-        //from FinishGoodProductionInfoes s
-        //inner join tblFinishGoodProductInfo o on s.FinishGoodProductId=o.FinishGoodProductId
-        //inner join tblFinishGoodRecipeInfo r on r.FGRId=s.FGRId
-        //inner join tblAgroUnitInfo a on r.UnitId=a.UnitId
+ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0) ,
 
-        //where 1=1 {0}", Utility.ParamChecker(param));
+SalesTotal =isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
+where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0) ,
 
-        //            return query;
-        //        }
+ReturnTotal = isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr
+where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) ,
 
+CurrentStock=isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
+where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr
+where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) 
+
+from FinishGoodProductionInfoes fgp
+inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId
+inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId
+inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
+      where 1=1  {0}",
+            Utility.ParamChecker(param));
+            return query;
+        }
+
+        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProduct(long orgId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<FinishGoodProductionInfoDTO> GetReceiveBatchCode(long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForReceiveBatchCode(orgId)).ToList();
+        }
+        
+        private string QueryForReceiveBatchCode(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            query = string.Format(@"SELECT Top 1 * FROM tblFinishGoodProductInfo where OrganizationId=9 order by FinishGoodProductId DESC", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }
 

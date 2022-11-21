@@ -11,7 +11,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IRawMaterialRequisitionInfoBusiness
     {
-
+        IEnumerable<IssueRequisitionReportData> GetIssueRequisitionReportData(string RawMaterialRequisitionCode);
         IEnumerable<GetSendAndReceiveReportData> GetSendAndReceiveReport(string RawMaterialRequisitionCode);
         
         IEnumerable<RawMaterialRequisitionInfo> GetRawMaterialRequisitionInfos(long orgId);

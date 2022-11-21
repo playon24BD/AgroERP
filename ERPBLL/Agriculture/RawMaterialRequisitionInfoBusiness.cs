@@ -213,5 +213,33 @@ inner join tblRawMaterialRequisitionInfo ri on ri.RawMaterialRequisitionInfoId=r
 where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
+
+        public IEnumerable<IssueRequisitionReportData> GetIssueRequisitionReportData(string RawMaterialRequisitionCode)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<IssueRequisitionReportData>(QueryForIssueRequisitionReport(RawMaterialRequisitionCode));
+        }
+
+        public string QueryForIssueRequisitionReport(string RawMaterialRequisitionCode)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+
+            if (!string.IsNullOrEmpty(RawMaterialRequisitionCode))
+            {
+                param += string.Format(@"and ri.RawMaterialRequisitionCode ='{0}'", RawMaterialRequisitionCode);
+            }
+
+
+            query = string.Format(@" 
+        select ri.RawMaterialRequisitionCode, convert(date,rd.EntryDate)as EntryDate,au.FullName,rm.RawMaterialName,rd.IssueQuantity,rd.RequisitionQuantity,rd.Status ,ui.UnitName,ri.Remarks from tblRawMaterialRequistionDetails rd
+inner join [ControlPanelAgro].[dbo].tblApplicationUsers au on rd.EntryUserId=au.UserId
+inner join tblRawMaterialInfo rm on rd.RawMaterialId=rm.RawMaterialId
+inner join tblAgroUnitInfo ui on rd.UnitID=ui.UnitId
+inner join tblRawMaterialRequisitionInfo ri on ri.RawMaterialRequisitionInfoId=rd.RawMaterialRequisitionInfoId
+
+where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+        }
     }
 }

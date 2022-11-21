@@ -162,9 +162,12 @@
     <Compile Include="Agriculture\DTOModels\ZoneSetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneUserDTO.cs" />
     <Compile Include="Agriculture\ReportModels\DateWiseCollectionReport.cs" />
+    <Compile Include="Agriculture\ReportModels\FinishGoodProductionDataReport.cs" />
     <Compile Include="Agriculture\ReportModels\FinishGoodStockReport.cs" />
     <Compile Include="Agriculture\ReportModels\GetSendAndReceiveReportData.cs" />
     <Compile Include="Agriculture\ReportModels\InvoiceWiseCollectionSalesReport.cs" />
+    <Compile Include="Agriculture\ReportModels\IssueRequisitionReportData.cs" />
+    <Compile Include="Agriculture\ReportModels\MRawMaterialDataReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductSalesDataChallanReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductSalesDataReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductWiseSalesStementReport.cs" />

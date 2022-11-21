@@ -391,6 +391,7 @@
 
         $(".btnSubmit").click(function (e) {
             e.preventDefault();
+            debugger;
             var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0) };
             var details = [];
             var tblbun = $("#tblBundleRequisiton tbody tr").length;
@@ -436,10 +437,10 @@
                                 }, 500);
                             }*@
                 debugger;
-                if (res.isSucccess === true) {
+                if (res.IsSuccess === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
                     var RawMaterialRequisitionCode = res.File;
-                    window.open('/AgroConfiguration/GetSendAndReceiveRequisitionReport?RawMaterialRequisitionCode=' + RawMaterialRequisitionCode, '_blank');
+                    window.open('/AgroConfiguration/GetSendAndReceiveRequisitionReport?RawMaterialRequisitionCode='+RawMaterialRequisitionCode,'_blank');
                                 
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetRequisitionProduction")');
@@ -460,10 +461,6 @@
                             alert(execuStatus.fail);
                             enable("#btnSubmit");
                         })
-
-
-
-
         })
 
         //Bundle Requisition

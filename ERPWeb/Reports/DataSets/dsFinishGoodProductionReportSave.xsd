@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsFinishGoodProductionReportSave" targetNamespace="http://tempuri.org/dsFinishGoodProductionReportSave.xsd" xmlns:mstns="http://tempuri.org/dsFinishGoodProductionReportSave.xsd" xmlns="http://tempuri.org/dsFinishGoodProductionReportSave.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsFinishGoodProductionReportSave" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsFinishGoodProductionReportSave" msprop:Generator_UserDSName="dsFinishGoodProductionReportSave">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="FinishGoodProductionReportSave" msprop:Generator_TableClassName="FinishGoodProductionReportSaveDataTable" msprop:Generator_TableVarName="tableFinishGoodProductionReportSave" msprop:Generator_TablePropName="FinishGoodProductionReportSave" msprop:Generator_RowDeletingName="FinishGoodProductionReportSaveRowDeleting" msprop:Generator_RowChangingName="FinishGoodProductionReportSaveRowChanging" msprop:Generator_RowEvHandlerName="FinishGoodProductionReportSaveRowChangeEventHandler" msprop:Generator_RowDeletedName="FinishGoodProductionReportSaveRowDeleted" msprop:Generator_UserTableName="FinishGoodProductionReportSave" msprop:Generator_RowChangedName="FinishGoodProductionReportSaveRowChanged" msprop:Generator_RowEvArgName="FinishGoodProductionReportSaveRowChangeEvent" msprop:Generator_RowClassName="FinishGoodProductionReportSaveRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FinishGoodProductName" msprop:Generator_ColumnVarNameInTable="columnFinishGoodProductName" msprop:Generator_ColumnPropNameInRow="FinishGoodProductName" msprop:Generator_ColumnPropNameInTable="FinishGoodProductNameColumn" msprop:Generator_UserColumnName="FinishGoodProductName" type="xs:string" minOccurs="0" />
+              <xs:element name="FinishGoodProductionBatch" msprop:Generator_ColumnVarNameInTable="columnFinishGoodProductionBatch" msprop:Generator_ColumnPropNameInRow="FinishGoodProductionBatch" msprop:Generator_ColumnPropNameInTable="FinishGoodProductionBatchColumn" msprop:Generator_UserColumnName="FinishGoodProductionBatch" type="xs:string" minOccurs="0" />
+              <xs:element name="ReceipeBatchCode" msprop:Generator_ColumnVarNameInTable="columnReceipeBatchCode" msprop:Generator_ColumnPropNameInRow="ReceipeBatchCode" msprop:Generator_ColumnPropNameInTable="ReceipeBatchCodeColumn" msprop:Generator_UserColumnName="ReceipeBatchCode" type="xs:string" minOccurs="0" />
+              <xs:element name="ProductDetails" msprop:Generator_ColumnVarNameInTable="columnProductDetails" msprop:Generator_ColumnPropNameInRow="ProductDetails" msprop:Generator_ColumnPropNameInTable="ProductDetailsColumn" msprop:Generator_UserColumnName="ProductDetails" type="xs:string" minOccurs="0" />
+              <xs:element name="ProductionTotal" msprop:Generator_ColumnVarNameInTable="columnProductionTotal" msprop:Generator_ColumnPropNameInRow="ProductionTotal" msprop:Generator_ColumnPropNameInTable="ProductionTotalColumn" msprop:Generator_UserColumnName="ProductionTotal" type="xs:string" minOccurs="0" />
+              <xs:element name="SalesTotal" msprop:Generator_ColumnVarNameInTable="columnSalesTotal" msprop:Generator_ColumnPropNameInRow="SalesTotal" msprop:Generator_ColumnPropNameInTable="SalesTotalColumn" msprop:Generator_UserColumnName="SalesTotal" type="xs:string" minOccurs="0" />
+              <xs:element name="ReturnTotal" msprop:Generator_ColumnVarNameInTable="columnReturnTotal" msprop:Generator_ColumnPropNameInRow="ReturnTotal" msprop:Generator_ColumnPropNameInTable="ReturnTotalColumn" msprop:Generator_UserColumnName="ReturnTotal" type="xs:string" minOccurs="0" />
+              <xs:element name="CurrentPices" msprop:Generator_ColumnVarNameInTable="columnCurrentPices" msprop:Generator_ColumnPropNameInRow="CurrentPices" msprop:Generator_ColumnPropNameInTable="CurrentPicesColumn" msprop:Generator_UserColumnName="CurrentPices" type="xs:string" minOccurs="0" />
+              <xs:element name="EntryDate" msprop:Generator_ColumnVarNameInTable="columnEntryDate" msprop:Generator_ColumnPropNameInRow="EntryDate" msprop:Generator_ColumnPropNameInTable="EntryDateColumn" msprop:Generator_UserColumnName="EntryDate" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

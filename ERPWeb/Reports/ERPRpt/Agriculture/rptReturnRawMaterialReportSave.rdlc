@@ -23,7 +23,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox79</rd:DefaultName>
         <Height>0.29042in</Height>
-        <Width>6.85876in</Width>
+        <Width>7.10876in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -55,7 +55,7 @@
         <rd:DefaultName>Textbox80</rd:DefaultName>
         <Top>0.27021in</Top>
         <Height>0.25in</Height>
-        <Width>6.85876in</Width>
+        <Width>7.10876in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -91,7 +91,7 @@
         <rd:DefaultName>Textbox15</rd:DefaultName>
         <Top>0.655in</Top>
         <Height>0.25in</Height>
-        <Width>6.85876in</Width>
+        <Width>7.10876in</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -133,10 +133,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>1.03in</Top>
-        <Left>5.48376in</Left>
+        <Top>1.28in</Top>
+        <Left>5.60876in</Left>
         <Height>0.25in</Height>
-        <Width>1.375in</Width>
+        <Width>1.45833in</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -435,6 +435,7 @@
                               <Value>=Fields!EntryDate.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
+                                <Format>dd-MMM-yy</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -775,6 +776,7 @@
         </TablixRowHierarchy>
         <DataSetName>dsReturnRawMaterialReportSave</DataSetName>
         <Top>1.54042in</Top>
+        <Left>0.25in</Left>
         <Height>0.75in</Height>
         <Width>6.85876in</Width>
         <ZIndex>4</ZIndex>
@@ -788,7 +790,7 @@
     <Height>2.74875in</Height>
     <Style />
   </Body>
-  <Width>6.88417in</Width>
+  <Width>7.14459in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>

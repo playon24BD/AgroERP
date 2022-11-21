@@ -1,5 +1,6 @@
 ﻿using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
+using ERPBO.Agriculture.ReportModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IMRawMaterialIssueStockInfo
     {
+        IEnumerable<MRawMaterialDataReport> MRawMaterialReport();
+        
         IEnumerable<MRawMaterialIssueStockInfo> GetAllRawMaterialIssue(long OrgId);
 
         bool SaveRawMaterialIssueStock(MRawMaterialIssueStockInfoDTO info, List<MRawMaterialIssueStockDetailsDTO> details, long userId, long orgId);

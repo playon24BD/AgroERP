@@ -2663,6 +2663,17 @@
     <Content Include="Reports\DataSets\dsFinishGoodStockQtyReports.xsc">
       <DependentUpon>dsFinishGoodStockQtyReports.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsFinishGoodProductionReportSave.xsc">
+      <DependentUpon>dsFinishGoodProductionReportSave.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsFinishGoodProductionReportSave.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsFinishGoodProductionReportSave.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsFinishGoodProductionReportSave.xss">
+      <DependentUpon>dsFinishGoodProductionReportSave.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsFinishGoodStockQtyReports.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -2681,6 +2692,28 @@
     </Content>
     <Content Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.xsc">
       <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSets\dsMRawMaterialReportSave.xsc">
+      <DependentUpon>dsMRawMaterialReportSave.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSets\dsIssueRequisitionReport.xsc">
+      <DependentUpon>dsIssueRequisitionReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsIssueRequisitionReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsIssueRequisitionReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsIssueRequisitionReport.xss">
+      <DependentUpon>dsIssueRequisitionReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsMRawMaterialReportSave.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsMRawMaterialReportSave.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsMRawMaterialReportSave.xss">
+      <DependentUpon>dsMRawMaterialReportSave.xsd</DependentUpon>
     </Content>
     <None Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.xsd">
       <SubType>Designer</SubType>
@@ -3176,6 +3209,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsFinishGoodProductionReportSave.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsFinishGoodProductionReportSave.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsFinishGoodStockQtyReports.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3185,6 +3223,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsInvoiceWiseCollectionSalesReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSets\dsIssueRequisitionReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsIssueRequisitionReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSets\dsMRawMaterialReportSave.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsMRawMaterialReportSave.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reports\DataSets\dsProductwisesalesReportDownloadReport.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -3450,8 +3498,11 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptDateWiseCollection.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductionReportSave.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductStock.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptIssueRequisitionReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptMRawMaterialReportSave.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptReturnRawMaterialReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptReturnRawMaterialReportSave.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesCommissionReport.rdlc" />

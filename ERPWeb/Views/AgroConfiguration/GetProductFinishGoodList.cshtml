@@ -393,6 +393,7 @@
         }
 
         $("#btnSubmit").click(function (e) {
+            debugger;   
             e.preventDefault();
             var data = {};
             var finishGoodProduction = { finishGoodProductId: ddlProduct.val(), quanity: TryParseInt(hdQuantity.val(), 0), targetQuantity: FinishQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
@@ -414,22 +415,45 @@
 
             var data = JSON.stringify({ info: finishGoodProduction, details: details })
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, type.post, "/AgroConfiguration/SaveFinishGoodProduction", data, getToken())).then(function (res, status) {
-                debugger;
-                if (status == "success") {
+                
+                            debugger;
+                            if (res.isSucccess === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                var ReceipeBatchCode = res.File;
+                                window.open('/AgroConfiguration/GetFinishGoodProductionReportSave?ReceipeBatchCode='+ReceipeBatchCode,'_blank');
+                                //window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + res.File, '_blank');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetProductFinishGoodList")');
+                                }, 500);
+                              
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                           
+
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+
+
+                @*if (status == "success") {
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
                         redirectPage('@Url.Action("GetProductFinishGoodList")');
                     }, 1000);
 
 
-                }
+                }*@
                
 
 
-            }).fail(function (error) {
+            //}).fail(function (error) {
 
-                alert(execuStatus.fail);
-            })
+            //    alert(execuStatus.fail);
+            //})
 
         });
 
