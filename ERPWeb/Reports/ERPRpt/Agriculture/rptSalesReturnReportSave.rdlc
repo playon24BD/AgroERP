@@ -24,7 +24,7 @@
         <rd:DefaultName>Textbox79</rd:DefaultName>
         <Top>0.21212in</Top>
         <Height>0.29042in</Height>
-        <Width>8.60292in</Width>
+        <Width>7.69667in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -56,7 +56,7 @@
         <rd:DefaultName>Textbox80</rd:DefaultName>
         <Top>0.48233in</Top>
         <Height>0.25in</Height>
-        <Width>8.60292in</Width>
+        <Width>7.69667in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -91,7 +91,7 @@
         <rd:DefaultName>Textbox81</rd:DefaultName>
         <Top>0.78788in</Top>
         <Height>0.25in</Height>
-        <Width>8.60292in</Width>
+        <Width>7.69667in</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -133,10 +133,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>1.44319in</Top>
-        <Left>7.07167in</Left>
+        <Top>1.31819in</Top>
+        <Left>6.44667in</Left>
         <Height>0.25in</Height>
-        <Width>1.53125in</Width>
+        <Width>1.25in</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -158,7 +158,7 @@
               <Width>0.77894in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.77894in</Width>
+              <Width>0.96644in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.77894in</Width>
@@ -173,16 +173,16 @@
               <Width>0.54977in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.77894in</Width>
+              <Width>0.35186in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.77894in</Width>
+              <Width>0.57061in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.76039in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.90625in</Width>
+              <Width>0.6875in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -450,7 +450,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Box Quanity</Value>
+                              <Value>Box Qty</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -486,7 +486,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Return Quanity</Value>
+                              <Value>Return Qty</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -522,7 +522,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Return Unit Price</Value>
+                              <Value>Return Price</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1043,12 +1043,48 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>4</ColSpan>
+                    <ColSpan>3</ColSpan>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
                 <TablixCell />
-                <TablixCell />
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox4">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Sum(Fields!BoxQuanity.Value)</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox4</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>Green</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox111">
@@ -1196,10 +1232,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsSalesReturnReportSave</DataSetName>
-        <Top>1.74875in</Top>
+        <Top>1.62375in</Top>
         <Left>0.18625in</Left>
         <Height>0.75in</Height>
-        <Width>8.41667in</Width>
+        <Width>7.51042in</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -1208,10 +1244,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.74875in</Height>
+    <Height>2.37375in</Height>
     <Style />
   </Body>
-  <Width>8.63417in</Width>
+  <Width>7.69667in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>

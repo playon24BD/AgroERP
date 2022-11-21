@@ -2770,6 +2770,17 @@
     <Content Include="Reports\DataSets\dsSendAndReceiveRequisitionReport.xsc">
       <DependentUpon>dsSendAndReceiveRequisitionReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsSalesReturnReportSave.xsc">
+      <DependentUpon>dsSalesReturnReportSave.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsSalesReturnReportSave.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsSalesReturnReportSave1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Reports\DataSets\dsSalesReturnReportSave.xss">
+      <DependentUpon>dsSalesReturnReportSave.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsSendAndReceiveRequisitionReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3259,6 +3270,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsSalesReturnReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsSalesReturnReportSave1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsSalesReturnReportSave.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsSendAndReceiveRequisitionReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3512,6 +3528,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptReturnRawMaterialReportSave.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesCommissionReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesReturnReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesReturnReportSave.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSendAndReceiveRequisitionReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>

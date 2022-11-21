@@ -297,6 +297,12 @@ namespace ERPWeb.Reports.DataSets {
             
             private global::System.Data.DataColumn columnEntryDate;
             
+            private global::System.Data.DataColumn columnCurrentStock;
+            
+            private global::System.Data.DataColumn columnFGRQty;
+            
+            private global::System.Data.DataColumn columnUnitName;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public FinishGoodProductionReportSaveDataTable() {
@@ -404,6 +410,30 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CurrentStockColumn {
+                get {
+                    return this.columnCurrentStock;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn FGRQtyColumn {
+                get {
+                    return this.columnFGRQty;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn UnitNameColumn {
+                get {
+                    return this.columnUnitName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -439,7 +469,7 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public FinishGoodProductionReportSaveRow AddFinishGoodProductionReportSaveRow(string FinishGoodProductName, string FinishGoodProductionBatch, string ReceipeBatchCode, string ProductDetails, string ProductionTotal, string SalesTotal, string ReturnTotal, string CurrentPices, string EntryDate) {
+            public FinishGoodProductionReportSaveRow AddFinishGoodProductionReportSaveRow(string FinishGoodProductName, string FinishGoodProductionBatch, string ReceipeBatchCode, string ProductDetails, string ProductionTotal, string SalesTotal, string ReturnTotal, string CurrentPices, string EntryDate, string CurrentStock, string FGRQty, string UnitName) {
                 FinishGoodProductionReportSaveRow rowFinishGoodProductionReportSaveRow = ((FinishGoodProductionReportSaveRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FinishGoodProductName,
@@ -450,7 +480,10 @@ namespace ERPWeb.Reports.DataSets {
                         SalesTotal,
                         ReturnTotal,
                         CurrentPices,
-                        EntryDate};
+                        EntryDate,
+                        CurrentStock,
+                        FGRQty,
+                        UnitName};
                 rowFinishGoodProductionReportSaveRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowFinishGoodProductionReportSaveRow);
                 return rowFinishGoodProductionReportSaveRow;
@@ -482,6 +515,9 @@ namespace ERPWeb.Reports.DataSets {
                 this.columnReturnTotal = base.Columns["ReturnTotal"];
                 this.columnCurrentPices = base.Columns["CurrentPices"];
                 this.columnEntryDate = base.Columns["EntryDate"];
+                this.columnCurrentStock = base.Columns["CurrentStock"];
+                this.columnFGRQty = base.Columns["FGRQty"];
+                this.columnUnitName = base.Columns["UnitName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -505,6 +541,12 @@ namespace ERPWeb.Reports.DataSets {
                 base.Columns.Add(this.columnCurrentPices);
                 this.columnEntryDate = new global::System.Data.DataColumn("EntryDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEntryDate);
+                this.columnCurrentStock = new global::System.Data.DataColumn("CurrentStock", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCurrentStock);
+                this.columnFGRQty = new global::System.Data.DataColumn("FGRQty", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFGRQty);
+                this.columnUnitName = new global::System.Data.DataColumn("UnitName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUnitName);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -800,6 +842,57 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string CurrentStock {
+                get {
+                    try {
+                        return ((string)(this[this.tableFinishGoodProductionReportSave.CurrentStockColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CurrentStock\' in table \'FinishGoodProductionReportSave\' is " +
+                                "DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFinishGoodProductionReportSave.CurrentStockColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string FGRQty {
+                get {
+                    try {
+                        return ((string)(this[this.tableFinishGoodProductionReportSave.FGRQtyColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FGRQty\' in table \'FinishGoodProductionReportSave\' is DBNull" +
+                                ".", e);
+                    }
+                }
+                set {
+                    this[this.tableFinishGoodProductionReportSave.FGRQtyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string UnitName {
+                get {
+                    try {
+                        return ((string)(this[this.tableFinishGoodProductionReportSave.UnitNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'UnitName\' in table \'FinishGoodProductionReportSave\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tableFinishGoodProductionReportSave.UnitNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFinishGoodProductNameNull() {
                 return this.IsNull(this.tableFinishGoodProductionReportSave.FinishGoodProductNameColumn);
             }
@@ -904,6 +997,42 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetEntryDateNull() {
                 this[this.tableFinishGoodProductionReportSave.EntryDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsCurrentStockNull() {
+                return this.IsNull(this.tableFinishGoodProductionReportSave.CurrentStockColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetCurrentStockNull() {
+                this[this.tableFinishGoodProductionReportSave.CurrentStockColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsFGRQtyNull() {
+                return this.IsNull(this.tableFinishGoodProductionReportSave.FGRQtyColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetFGRQtyNull() {
+                this[this.tableFinishGoodProductionReportSave.FGRQtyColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsUnitNameNull() {
+                return this.IsNull(this.tableFinishGoodProductionReportSave.UnitNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetUnitNameNull() {
+                this[this.tableFinishGoodProductionReportSave.UnitNameColumn] = global::System.Convert.DBNull;
             }
         }
         
