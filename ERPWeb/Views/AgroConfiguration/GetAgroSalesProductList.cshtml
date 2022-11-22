@@ -390,20 +390,24 @@
 
         
 
-        $(document).on('click', 'a.data-item-download', function (e) {
+        $(document).on('click', 'a.data-item-downloade', function (e) {
             debugger;
             e.preventDefault();
             window.open("/AgroConfiguration/AgroProductSalesReports?ProductSalesInfoId=" + ProductSalesInfoId.val());
         })
 
-        $(document).on('click', 'a.data-item-download', function (e) {
+        $(document).on('click', 'a.data-item-downloadr', function (e) {
             e.preventDefault();
             window.open("/AgroConfiguration/AgroProductSalesChallanReport?ProductSalesInfoId=" + ProductSalesInfoId.val());
         })
-        $(document).on('click', 'a.data-item-download', function (e) {
+        $(document).on('click', 'a.data-item-download-ProductionSalesInfoId', function (e) {
+            debugger;
             e.preventDefault();
+            var a = TryParseInt(hdProductSalesInfoId.val(), 0);
             if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                debugger;
                 if (result === true) {
+                    debugger;
                     window.open("/AgroConfiguration/AgroProductSalesInvoiceDropReports?ProductSalesInfoId=" + ProductSalesInfoId.val());
                 };
             }));

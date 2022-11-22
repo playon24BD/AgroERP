@@ -87,6 +87,7 @@ Utility.ParamChecker(param));
                     InvoiceNo= info.InvoiceNo,
                     InvoiceDate = info.InvoiceDate,
                     RawMaterialSupplierId = info.RawMaterialSupplierId,
+                    ProductCode=info.ProductCode,
                     IssueStatus = "Active",
 
                     OrganizationId = orgId,

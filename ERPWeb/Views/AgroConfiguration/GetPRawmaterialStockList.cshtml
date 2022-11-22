@@ -145,36 +145,42 @@
                                               
                                                 <div class="row justify-content-center">
 
-                                                            <div class="col-md-3">
-                                                                <label for="ddlSupplierName" class="control-label">Supplier Name</label>
-                                                                @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                                                <span class="error hide req-SupplierName font-weight-bold">Supplier Name is required!</span>
-                                                            </div>
+                                                    <div class="col-md-3">
+                                                        <label for="ddlSupplierName" class="control-label">Supplier Name</label>
+                                                        @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                        <span class="error hide req-SupplierName font-weight-bold">Supplier Name is required!</span>
+                                                    </div>
 
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="ddlInvoiceDate">Invoice Date</label>
-                                                                    <div class="input-group-sm date" id="datePicker">
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="ddlInvoiceDate">Invoice Date</label>
+                                                            <div class="input-group-sm date" id="datePicker">
 
-                                                                        <input type="text" class="form-control" id="ddlInvoiceDate" name="date" value="">
-                                                                        <span class="input-group-addon">
-                                                                            <i class="glyphicon glyphicon-calendar"></i>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
+                                                                <input type="text" class="form-control" id="ddlInvoiceDate" name="date" value="">
+                                                                <span class="input-group-addon">
+                                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                                </span>
                                                             </div>
+                                                        </div>
+                                                    </div>
 
-                                                            <div class="col-md-3">
-                                                                <label for="ddlChallanNo" class="control-label">Challan No.</label>
-                                                                <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
-                                                                <span class="error hide req-ddlChallanNo font-weight-bold">Chalan No is required!</span>
+                                                    <div class="col-md-2">
+                                                        <label for="ddlChallanNo" class="control-label">Challan No.</label>
+                                                        <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
+                                                        <span class="error hide req-ddlChallanNo font-weight-bold">Chalan No is required!</span>
 
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <label for="ddlInvoiceNo" class="control-label">Invoice No.</label>
-                                                                <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
-                                                                <span class="error hide req-ddlInvoiceNo font-weight-bold">Invoice No is required!</span>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label for="ddlInvoiceNo" class="control-label">Invoice No.</label>
+                                                        <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
+                                                        <span class="error hide req-ddlInvoiceNo font-weight-bold">Invoice No is required!</span>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label for="ddlProductCode" class="control-label">Product Code</label>
+                                                        <input type="text" id="ddlProductCode" class="form-control form-control-sm" />
+                                                        @*<span class="error hide req-ddlInvoiceNo font-weight-bold">Invoice No is required!</span>*@
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -384,6 +390,7 @@
         var ddlInvoiceNo = $("#ddlInvoiceNo");
         var ddlChallanNo = $("#ddlChallanNo");
         var ddlInvoiceDate = $("#ddlInvoiceDate");
+        var ddlProductCode = $("#ddlProductCode");
 
         var ddlexpdate = $("#ddlexpdate");
 
@@ -664,7 +671,7 @@
                        // debugger;
                         var totalsub = $('.totalsub').text();//initilize class total
 
-                        var info = { RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0), ChalanNo: ddlChallanNo.val(), InvoiceNo: ddlInvoiceNo.val(), InvoiceDate: ddlInvoiceDate.val(), TotalAmount: totalsub };
+                        var info = { RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0), ChalanNo: ddlChallanNo.val(), InvoiceNo: ddlInvoiceNo.val(), InvoiceDate: ddlInvoiceDate.val(), ProductCode: ddlProductCode.val(), TotalAmount: totalsub };
                         var details = [];
                         details.length = 0;
 
