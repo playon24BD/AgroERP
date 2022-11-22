@@ -566,14 +566,29 @@
                         //var data = JSON.stringify({ info: info, details: details });
                         var data = JSON.stringify({ details: details });
                         $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawmaterialPIssueStock', data, getToken())).then(function (res, status) {
-                            if (res === true) {
+                            @*if (res === true) {
                                 //debugger;
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetMRawmaterialIssueList")');
                                 }, 1000);
                                 //resetUI();
+                            }*@
+
+                            if (res.IsSuccess === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                var RawMaterialName = res.File;
+                                window.open('/AgroConfiguration/GetMRawMaterialReportSave?RawMaterialName=' + RawMaterialName, '_blank');
+                                //window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + res.File, '_blank');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetMRawmaterialIssueList")');
+                                }, 500);
+                               // printJS({ printable: res.File, type: 'pdf', base64: true });
+                                
+                                //resetUI();
                             }
+
+
                             else {
                                 $('.toastrDefaultError').trigger('click');
                             }

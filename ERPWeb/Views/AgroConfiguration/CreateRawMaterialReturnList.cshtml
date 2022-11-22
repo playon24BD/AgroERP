@@ -354,13 +354,26 @@
             var data = JSON.stringify({ details: details });
 
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialReturnInfo', data, getToken())).then(function (res, status) {
-                if (res === true) {
+
+                if (res.isSucccess === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                    var RawMaterialName = res.File;
+                    window.open('/AgroConfiguration/GetRawMaterialReturnReport?RawMaterialName=' + RawMaterialName, '_blank');
+                               
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("RawMaterialReturnAllList")');
+                                }, 500);
+                              
+                            }
+
+
+                @*if (res === true) {
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
                         redirectPage('@Url.Action("RawMaterialReturnAllList")');
                     }, 1000);
-                }
+                }*@
                 else {
                     $('.toastrDefaultError').trigger('click');
                 }

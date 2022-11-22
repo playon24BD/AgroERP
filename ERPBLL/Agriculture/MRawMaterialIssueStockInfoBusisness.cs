@@ -186,23 +186,27 @@ namespace ERPBLL.Agriculture
             return _mRawMaterialIssueStockInfoRepository.GetOneByOrg(i => i.RawMaterialIssueStockId == rawMaterialId && i.OrganizationId == orgId);
         }
 
-        public IEnumerable<MRawMaterialDataReport> MRawMaterialReport()
+        public IEnumerable<MRawMaterialDataReport> MRawMaterialReport(long? rawMaterialId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<MRawMaterialDataReport>(QueryForMRawMaterialReport()).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<MRawMaterialDataReport>(QueryForMRawMaterialReport(rawMaterialId)).ToList();
         }
 
-        private string QueryForMRawMaterialReport()
+        private string QueryForMRawMaterialReport(long? rawMaterialId)
         {
             string query = string.Empty;
             string param = string.Empty;
 
-            
+
+            if (rawMaterialId != null && rawMaterialId > 0)
+            {
+                param += string.Format(@" and RM.RawMaterialId={0}", rawMaterialId);
+            }
 
             query = string.Format(@"
 
 
 
-SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,
+SELECT Distinct RM.RawMaterialName,RM.RawMaterialId,un.UnitName,
 StockIN=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
 where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),0),
 StockOut=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t

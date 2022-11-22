@@ -305,21 +305,24 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
 
-        public IEnumerable<SalesReturnReportData> GetSalesReturnReportSave()
+        public IEnumerable<SalesReturnReportData> GetSalesReturnReportSave(string InvoiceNo)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnReportData>(QueryForSalesReturnReportDataSave()).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnReportData>(QueryForSalesReturnReportDataSave(InvoiceNo)).ToList();
         }
 
-        private string QueryForSalesReturnReportDataSave()
+        private string QueryForSalesReturnReportDataSave(string InvoiceNo)
         {
             string query = string.Empty;
             string param = string.Empty;
 
-
+            if (!string.IsNullOrEmpty(InvoiceNo))
+            {
+                param += string.Format(@"and sr.InvoiceNo ='{0}'", InvoiceNo);
+            }
 
             query = string.Format(@"
 
-select convert (date,sr.ReturnDate) as ReturnDate,InvoiceNo,f.FinishGoodProductName,s.StockiestName,sr.MeasurementSize,sr.ReturnQuanity,sr.QtyKG,sr.BoxQuanity,sr.ReturnPerUnitPrice,sr.Status,sr.ReturnTotalPrice
+select convert (date,sr.ReturnDate) as ReturnDate,sr.InvoiceNo,f.FinishGoodProductName,s.StockiestName,sr.MeasurementSize,sr.ReturnQuanity,sr.QtyKG,sr.BoxQuanity,sr.ReturnPerUnitPrice,sr.Status,sr.ReturnTotalPrice
 
 from [Agriculture].[dbo]. tblSalesReturn sr
 inner join [Agriculture].[dbo]. tblFinishGoodProductInfo f on sr.FinishGoodProductInfoId=f.FinishGoodProductId

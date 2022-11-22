@@ -393,20 +393,25 @@ inner join [Agriculture].[dbo].tblAgroUnitInfo u on rrm.UnitId=u.UnitId
             return query;
         }
 
-        public IEnumerable<ReturnRawMaterialDataReport> GetRawMaterialReturnReport()
+        public IEnumerable<ReturnRawMaterialDataReport> GetRawMaterialReturnReport(long? rawMaterialId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDataReport>(RawMaterialReturnReport()).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDataReport>(RawMaterialReturnReport(rawMaterialId)).ToList();
         }
         
-        public string RawMaterialReturnReport()
+        public string RawMaterialReturnReport(long? rawMaterialId)
         {
             string param = string.Empty;
             string query = string.Empty;
-                
+
+            if (rawMaterialId != null && rawMaterialId > 0)
+            {
+                param += string.Format(@" and rm.RawMaterialId={0}", rawMaterialId);
+            }
+
 
             query = string.Format(@"
                    
-select convert(date,rrm.EntryDate)as EntryDate,rm.RawMaterialName,u.UnitName,rrm.Quantity,rrm.ReturnType,rrm.Status from tblReturnRawMaterial rrm
+select convert(date,rrm.EntryDate)as EntryDate,rm.RawMaterialId,rm.RawMaterialName,u.UnitName,rrm.Quantity,rrm.ReturnType,rrm.Status from tblReturnRawMaterial rrm
 inner join tblRawMaterialInfo rm on rm.RawMaterialId=rrm.RawMaterialId
 inner join tblAgroUnitInfo u on rrm.UnitId=u.UnitId
 

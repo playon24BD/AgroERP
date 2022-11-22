@@ -12,7 +12,7 @@ namespace ERPBLL.Agriculture.Interface
     public interface ISalesReturn
     {
 
-        IEnumerable<SalesReturnReportData> GetSalesReturnReportSave();
+        IEnumerable<SalesReturnReportData> GetSalesReturnReportSave(string InvoiceNo);
 
         IEnumerable<SalesReturnReportData> GetSalesReturnReportData(long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate);
 

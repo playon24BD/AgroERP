@@ -11,7 +11,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IMRawMaterialIssueStockInfo
     {
-        IEnumerable<MRawMaterialDataReport> MRawMaterialReport();
+        IEnumerable<MRawMaterialDataReport> MRawMaterialReport(long? rawMaterialId);
         
         IEnumerable<MRawMaterialIssueStockInfo> GetAllRawMaterialIssue(long OrgId);
 

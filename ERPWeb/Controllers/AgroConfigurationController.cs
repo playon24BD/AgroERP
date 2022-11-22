@@ -3031,18 +3031,18 @@ namespace ERPWeb.Controllers
             if (IsSuccess == true)
             {
 
-                //var rawMaterialName = _mRawMaterialIssueStockInfo(User.OrgId).FirstOrDefault();
+                var rawMaterialName = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).FirstOrDefault().RawMaterialName;
 
 
-                //return Json(new { IsSuccess = IsSuccess, File = rawMaterialName });
+                return Json(new { IsSuccess = IsSuccess, File = rawMaterialName });
             }
 
             return Json(IsSuccess);
         }
 
-        public ActionResult GetMRawMaterialReportSave()
+        public ActionResult GetMRawMaterialReportSave(long? rawMaterialId)
         {
-            var data = _mRawMaterialIssueStockInfo.MRawMaterialReport();
+            var data = _mRawMaterialIssueStockInfo.MRawMaterialReport(rawMaterialId??0);
 
             LocalReport localReport = new LocalReport();
 
@@ -3207,10 +3207,10 @@ namespace ERPWeb.Controllers
             if (IsSuccess == true)
             {
 
-                //var RawMaterialName = _returnRawMaterialBusiness.GetReturnRawMaterialInfosId(User.OrgId).FirstOrDefault();
+                var RawMaterialName = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).FirstOrDefault().RawMaterialName;
 
 
-                //return Json(new { IsSuccess = IsSuccess, File = RawMaterialName });
+                return Json(new { IsSuccess = IsSuccess, File = RawMaterialName });
             }
 
 
@@ -3232,9 +3232,9 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
         }
 
-        public ActionResult GetRawMaterialReturnReport()
+        public ActionResult GetRawMaterialReturnReport(long? rawMaterialId)
         {
-            var data = _returnRawMaterialBusiness.GetRawMaterialReturnReport();
+            var data = _returnRawMaterialBusiness.GetRawMaterialReturnReport( rawMaterialId??0);
 
             LocalReport localReport = new LocalReport();
 
@@ -4146,12 +4146,22 @@ namespace ERPWeb.Controllers
 
             }
 
+            if (IsSuccess == true)
+            {
+                // Report ..
+                var invoice = _agroProductSalesInfoBusiness.GetLastInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
+
+                //var file = AgroProductSalesReports(invoice);
+                return Json(new { isSucccess = IsSuccess, File = invoice });
+            }
+
+
             return Json(IsSuccess);
         }
 
-        public ActionResult GetSalesReturnReportSave()
+        public ActionResult GetSalesReturnReportSave(string InvoiceNo)
         {
-            var data = _salesReturn.GetSalesReturnReportSave();
+            var data = _salesReturn.GetSalesReturnReportSave(InvoiceNo);
 
             LocalReport localReport = new LocalReport();
 
