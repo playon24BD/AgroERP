@@ -170,7 +170,7 @@
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
                 ).then(function (res, status) {
 
-                    if (res === true) {
+                    @*if (res === true) {
 
 
                         $('.toastrDefaultSuccess').trigger('click');
@@ -178,7 +178,21 @@
                             redirectPage('@Url.Action("GetRequisition")');
                         }, 500);
 
-                    }
+                    }*@
+                    debugger;
+                    if (res.isSucccess === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                        var RawMaterialRequisitionCode = res.File;
+                        window.open('/AgroConfiguration/GetIssueRequisitionReport?RawMaterialRequisitionCode=' + RawMaterialRequisitionCode, '_blank');
+                               
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetRequisition")');
+                                }, 500);
+                               // printJS({ printable: res.File, type: 'pdf', base64: true });
+                                
+                                //resetUI();
+                            }
+
                     else {
                         $('.toastrDefaultError').trigger('click');
                     }

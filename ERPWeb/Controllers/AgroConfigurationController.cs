@@ -3379,6 +3379,16 @@ namespace ERPWeb.Controllers
 
             };
 
+            //if (IsSuccess == true)
+            //{
+
+            //    var requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfos(User.OrgId).FirstOrDefault().RawMaterialRequisitionCode;
+
+
+            //    return Json(new { IsSuccess = IsSuccess, File = requisitionCode });
+            //}
+
+
             return View(rawMaterialRequisitionInfoViewModels);
         }
 
