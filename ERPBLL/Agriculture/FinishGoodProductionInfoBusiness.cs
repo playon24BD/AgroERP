@@ -139,15 +139,7 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
             param += string.Format(@" and a.OrganizationId={0}", orgId);
 
 
-            query = string.Format(@"SELECT a.FinishGoodProductInfoId,a.FinishGoodProductionBatch,a.ReceipeBatchCode,a.Quanity,
-a.TargetQuantity,a.Status,a.Remarks,a.flag,a.OrganizationId,a.FGRId,
-U.UnitName,p.FinishGoodProductName 
-
-FROM FinishGoodProductionInfoes a
-Inner Join tblFinishGoodProductInfo p on a.FinishGoodProductId=p.FinishGoodProductId
-
-Inner Join tblFinishGoodRecipeInfo r on a.FGRId=r.FGRId
-Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId", Utility.ParamChecker(param));
+            query = string.Format(@"SELECT TOP 1 * FROM FinishGoodProductionInfoes where  OrganizationId=9 ORDER BY FinishGoodProductInfoId DESC", Utility.ParamChecker(param));
 
             return query;
         }
@@ -516,25 +508,14 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId
 
             if (!string.IsNullOrEmpty(ReceipeBatchCode))
             {
-                param += string.Format(@"and fr.ReceipeBatchCode ='{0}'", ReceipeBatchCode);
+                param += string.Format(@"and fgp.FinishGoodProductionBatch ='{0}'", ReceipeBatchCode);
             }
 
             query = string.Format(@"
-     select Distinct fgp.FinishGoodProductId , fgp.FGRId , p.FinishGoodProductName,fr.ReceipeBatchCode,fr.FGRQty,un.UnitName,
+     
+     select Distinct fgp.FinishGoodProductId , fgp.FGRId ,fgp.FinishGoodProductionBatch, p.FinishGoodProductName,fr.ReceipeBatchCode,fgp.TargetQuantity,fr.FGRQty,un.UnitName
 
-ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
-where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0) ,
 
-SalesTotal =isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
-where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0) ,
-
-ReturnTotal = isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr
-where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) ,
-
-CurrentStock=isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
-where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
-where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr
-where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) 
 
 from FinishGoodProductionInfoes fgp
 inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId

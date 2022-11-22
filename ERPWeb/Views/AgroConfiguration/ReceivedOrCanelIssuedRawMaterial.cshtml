@@ -123,9 +123,12 @@
             var data = JSON.stringify({ info });
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
             ).then(function (res, status) {
-                            if (res === true) {
+                debugger;
+                            if (res.IsSuccess === true) {
 
                                 $('.toastrDefaultSuccess').trigger('click');
+                                var requisitionCode = res.File;
+                                window.open("/AgroConfiguration/AgroRequisitionREceiveReport?RawMaterialRequisitionCode=" + requisitionCode, "_blank");
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetRequisition")');
                                 }, 500);

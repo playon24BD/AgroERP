@@ -22,5 +22,6 @@ namespace ERPBO.Agriculture.ReportModels
         public double CurrentPices { get; set; }
         public double CurrentStock { get; set; }
         public DateTime EntryDate { get; set; }
+        public double TargetQuantity { get; set; }
     }
 }

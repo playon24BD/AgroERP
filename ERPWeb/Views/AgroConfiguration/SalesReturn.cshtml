@@ -252,9 +252,10 @@
             console.log(details);
             var data = JSON.stringify({ details: details });
 
-            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveSalesReturn', data, getToken())).then(function (res, status) {
+             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveSalesReturn', data, getToken())).then(function (res, status) {
+                 debugger;
                 if (res === true) {
-                    debugger;
+                   
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
                         redirectPage('@Url.Action("SalesReturnList")');

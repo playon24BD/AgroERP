@@ -1558,7 +1558,7 @@ namespace ERPWeb.Controllers
             if (isSucccess == true)
             {
                 
-                var receipeBatchCode = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).FirstOrDefault().ReceipeBatchCode;
+                var receipeBatchCode = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).FirstOrDefault().FinishGoodProductionBatch;
 
                 
                 return Json(new { isSucccess = isSucccess, File = receipeBatchCode });
@@ -3454,7 +3454,49 @@ namespace ERPWeb.Controllers
             return File(renderedBytes, mimeType);
         }
 
+        public ActionResult AgroRequisitionREceiveReport(string RawMaterialRequisitionCode)
+        {
+            var data = _rawMaterialRequisitionInfoBusiness.GetIssueRequisitionReportData(RawMaterialRequisitionCode);
 
+            LocalReport localReport = new LocalReport();
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptIssueRequisitionReport.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsIssueRequisitionReport", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = "PDF";
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
 
         //Production & WareHouse
         [HttpPost]
@@ -3481,6 +3523,10 @@ namespace ERPWeb.Controllers
                 else if(info.Status== null)
                 {
                      requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfos(User.OrgId, info.Status).FirstOrDefault().RawMaterialRequisitionCode;
+                }
+                else if (info.Status == "Received")
+                {
+                    requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfoReceives(User.OrgId, info.Status, info.RawMaterialRequisitionInfoId).FirstOrDefault().RawMaterialRequisitionCode;
                 }
                
 
@@ -4182,14 +4228,14 @@ namespace ERPWeb.Controllers
 
             }
 
-            if (IsSuccess == true)
-            {
-                // Report ..
-                var invoice = _agroProductSalesInfoBusiness.GetLastInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
+            //if (IsSuccess == true)
+            //{
+            //    // Report ..
+            //    var invoice = _agroProductSalesInfoBusiness.GetLastInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
 
-                //var file = AgroProductSalesReports(invoice);
-                return Json(new { isSucccess = IsSuccess, File = invoice });
-            }
+            //    //var file = AgroProductSalesReports(invoice);
+            //    return Json(new { isSucccess = IsSuccess, File = invoice });
+            //}
 
 
             return Json(IsSuccess);

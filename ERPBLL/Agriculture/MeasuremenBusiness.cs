@@ -137,7 +137,7 @@ Where 1=1 ", Utility.ParamChecker(param));
                     {
                         UnitKG = Convert.ToInt32(MasterCarton * InnerBox * PackSize);
                     }
-                    if (item.UnitId == 5)
+                    if (item.UnitId == 4)
                     {
                         UnitKG = Convert.ToInt32(MasterCarton * InnerBox * PackSize / 1000);
                     }
@@ -217,7 +217,7 @@ Where 1=1 ", Utility.ParamChecker(param));
                 {
                     UnitKG = Convert.ToInt32(MasterCarton * InnerBox * PackSize);
                 }
-                if (measurementSetup.UnitId == 5)
+                if (measurementSetup.UnitId == 4)
                 {
                     UnitKG = Convert.ToInt32(MasterCarton * InnerBox * PackSize / 1000);
                 }

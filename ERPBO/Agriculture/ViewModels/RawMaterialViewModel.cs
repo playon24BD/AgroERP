@@ -9,6 +9,7 @@ namespace ERPBO.Agriculture.ViewModels
 {
     public class RawMaterialViewModel
     {
+        //public long ReturnRawMaterialId { get; set; }
         public long RawMaterialId { get; set; }
         public long OrganizationId { get; set; }
         public string OrganizationName { get; set; }
