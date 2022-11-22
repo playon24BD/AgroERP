@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
@@ -23,6 +24,44 @@ namespace ERPBLL.Agriculture
         public RawMaterial GetRawMaterialById(long rawMaterialId, long orgId)
         {
             return _rawMaterialRepository.GetOneByOrg(r=>r.RawMaterialId==rawMaterialId && r.OrganizationId==orgId);
+        }
+        public IEnumerable<ReturnRawMaterialDTO> CheckStatus(long orgId)
+        {
+            return this._db.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForCheckStatuss(orgId)).ToList();
+        }
+
+        private string QueryForCheckStatuss(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+            query = string.Format(@"SELECT Top 1 * FROM tblReturnRawMaterial where 1=1  and OrganizationId=9 order by ReturnRawMaterialId DESC", Utility.ParamChecker(param));
+
+            return query;
+
+        }
+        public IEnumerable<ReturnRawMaterialDTO> GetRawMaterialApproved(long orgId,string status,long RawMaterialId)
+        {
+            return this._db.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForGetRawMaterialApproved(orgId, status, RawMaterialId)).ToList();
+        }
+
+        private string QueryForGetRawMaterialApproved(long orgId, string status, long rawMaterialId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+            if (status != null && status != "")
+            {
+                param += string.Format(@"and rt.Status='{0}'", status);
+            }
+            if (rawMaterialId != 0)
+            {
+                param += string.Format(@"and rt.RawMaterialId='{0}'", rawMaterialId);
+            }
+
+            query = string.Format(@"	SELECT ri.RawMaterialName, * FROM tblReturnRawMaterial rt 
+						inner join tblRawMaterialInfo ri on ri.RawMaterialId=rt.RawMaterialId
+						where 1=1 {0} and rt.OrganizationId=9  ", Utility.ParamChecker(param));
+
+            return query;
         }
 
         public IEnumerable<RawMaterial> GetRawMaterialByOrgId(long orgId)

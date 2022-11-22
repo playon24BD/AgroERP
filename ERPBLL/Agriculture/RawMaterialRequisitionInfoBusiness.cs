@@ -32,9 +32,50 @@ namespace ERPBLL.Agriculture
             return _rawMaterialRequisitionInfoRepoBusiness.GetOneByOrg(a=>a.RawMaterialRequisitionInfoId==infoId && a.OrganizationId==orgId);
         }
 
-        public IEnumerable<RawMaterialRequisitionInfo> GetRawMaterialRequisitionInfos(long orgId)
+        //public IEnumerable<RawMaterialRequisitionInfo> GetRawMaterialRequisitionInfos(long orgId)
+        //{
+        //    return _rawMaterialRequisitionInfoRepoBusiness.GetAll(a =>a.OrganizationId == orgId).ToList();
+        //}
+        public IEnumerable<RawMaterialRequisitionInfoDTO> GetRawMaterialRequisitionInfoReceives(long orgId, string Status, long RawMaterialRequisitionInfoId)
         {
-            return _rawMaterialRequisitionInfoRepoBusiness.GetAll(a =>a.OrganizationId == orgId).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialRequisitionInfoDTO>(QueryForGetRawMaterialRequisitionInfoReceives(orgId, Status, RawMaterialRequisitionInfoId)).ToList();
+        }
+
+        private string QueryForGetRawMaterialRequisitionInfoReceives(long orgId, string status, long rawMaterialRequisitionInfoId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+            if (rawMaterialRequisitionInfoId!=0)
+            {
+                param += string.Format(@"and RawMaterialRequisitionInfoId ={0}", rawMaterialRequisitionInfoId);
+            }
+            if (status != null && status != "")
+            {
+                param += string.Format(@"and Status='{0}'", status);
+            }
+
+            query = string.Format(@"	SELECT Top 1 * FROM tblRawMaterialRequisitionInfo where 1=1  {0} and OrganizationId=9 ", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+        public IEnumerable<RawMaterialRequisitionInfoDTO> GetRawMaterialRequisitionInfos(long orgId,string Status)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialRequisitionInfoDTO>(QueryForGetRawMaterialRequisitionInfos(orgId, Status)).ToList();
+        }
+
+        private string QueryForGetRawMaterialRequisitionInfos(long orgId,string Status)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+            if (Status!=null && Status!="")
+            {
+                param += string.Format(@"and Status='{0}'", Status);
+            }
+
+            query = string.Format(@"	SELECT Top 1 * FROM tblRawMaterialRequisitionInfo where 1=1  {0} and OrganizationId=9 order by RawMaterialRequisitionInfoId DESC", Utility.ParamChecker(param));
+
+            return query;
         }
 
         public IEnumerable<RawMaterialRequisitionInfoDTO> GetAllRawMaterialRequisitionInfos(string RequisitonCode, string status, string fdate,string tdate,long orgId)

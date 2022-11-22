@@ -15,5 +15,7 @@ namespace ERPBLL.Agriculture.Interface
         RawMaterial GetRawMaterialById(long rawMaterialId,long orgId);
         IEnumerable<RawMaterial> GetRawMaterials(long orgId );
         IEnumerable<RawMaterial> GetRawMaterialByOrgId(long orgId);
+        IEnumerable<ReturnRawMaterialDTO> CheckStatus(long orgId);
+        IEnumerable<ReturnRawMaterialDTO> GetRawMaterialApproved(long orgId,string status,long rawMaterialId);
     }
 }

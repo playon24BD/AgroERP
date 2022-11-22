@@ -3194,7 +3194,7 @@ namespace ERPWeb.Controllers
         public ActionResult SaveRawMaterialReturnInfo(List<ReturnRawMaterialViewModel> details)
         {
             bool IsSuccess = false;
-
+            var RawMaterialName = "";
 
             if (details.Count > 0)
             {
@@ -3204,15 +3204,20 @@ namespace ERPWeb.Controllers
 
             }
 
+
             if (IsSuccess == true)
             {
+                var CheckInternalRawMaterial = _rawMaterialBusiness.CheckStatus(User.OrgId).FirstOrDefault().Status;
+                if (CheckInternalRawMaterial == "Pending")
+                {
+                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialApproved(User.OrgId, CheckInternalRawMaterial, details.FirstOrDefault().RawMaterialId).FirstOrDefault().RawMaterialName;
+                }
 
-                var RawMaterialName = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).FirstOrDefault().RawMaterialName;
+
 
 
                 return Json(new { IsSuccess = IsSuccess, File = RawMaterialName });
             }
-
 
             return Json(IsSuccess);
         }
@@ -3221,7 +3226,7 @@ namespace ERPWeb.Controllers
         public ActionResult AcceptRawMaterialReturnInfo(List<ReturnRawMaterialViewModel> details)
         {
             bool IsSuccess = false;
-
+            var RawMaterialName = "";
             if (ModelState.IsValid)
             {
 
@@ -3229,6 +3234,19 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(details, detailDTOs);
                 IsSuccess = _returnRawMaterialBusiness.updateReturnStatus(detailDTOs, User.UserId, User.OrgId);
             }
+            //if (IsSuccess == true)
+            //{
+            //    var CheckInternalRawMaterial = _rawMaterialBusiness.CheckStatus(User.OrgId).FirstOrDefault().Status;
+            //    if (CheckInternalRawMaterial == "Approved")
+            //    {
+            //        RawMaterialName = _rawMaterialBusiness.GetRawMaterialApproved(User.OrgId, CheckInternalRawMaterial, details.FirstOrDefault().RawMaterialId).FirstOrDefault().RawMaterialName;
+            //    }
+
+
+
+
+            //    return Json(new { IsSuccess = IsSuccess, File = RawMaterialName });
+            //}
             return Json(IsSuccess);
         }
 
@@ -3445,6 +3463,7 @@ namespace ERPWeb.Controllers
 
 
             bool IsSuccess = false;
+            var requisitionCode = "";
             if (ModelState.IsValid)
             {
                 RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO = new RawMaterialRequisitionInfoDTO();
@@ -3455,8 +3474,15 @@ namespace ERPWeb.Controllers
 
             if (IsSuccess == true)
             {
-                
-                var requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfos(User.OrgId).FirstOrDefault().RawMaterialRequisitionCode;
+                if(info.Status== "Send")
+                {
+                     requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfoReceives(User.OrgId, info.Status,info.RawMaterialRequisitionInfoId).FirstOrDefault().RawMaterialRequisitionCode;
+                }
+                else if(info.Status== null)
+                {
+                     requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfos(User.OrgId, info.Status).FirstOrDefault().RawMaterialRequisitionCode;
+                }
+               
 
                 
                 return Json(new { IsSuccess = IsSuccess, File = requisitionCode }); 

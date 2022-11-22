@@ -9,6 +9,7 @@ namespace ERPBO.Agriculture.DTOModels
 {
     public class RawMaterialDTO
     {
+        public long ReturnRawMaterialId { get; set; }
 
         public long RawMaterialId { get; set; }
         public long OrganizationId { get; set; }

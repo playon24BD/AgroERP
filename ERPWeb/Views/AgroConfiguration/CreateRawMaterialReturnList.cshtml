@@ -354,11 +354,11 @@
             var data = JSON.stringify({ details: details });
 
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialReturnInfo', data, getToken())).then(function (res, status) {
-
-                if (res.isSucccess === true) {
+                debugger;
+                if (res.IsSuccess === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
                     var RawMaterialName = res.File;
-                    window.open('/AgroConfiguration/GetRawMaterialReturnReport?RawMaterialName=' + RawMaterialName, '_blank');
+                    window.open("/AgroConfiguration/GetRawMaterialReturnReport?RawMaterialName=" + RawMaterialName, "_blank");
                                
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("RawMaterialReturnAllList")');

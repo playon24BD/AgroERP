@@ -141,10 +141,10 @@
         $("#btnSubmit").click(function (e) {
 
             e.preventDefault();
- 
+            debugger;
             var hclass = $(".error").hasClass("hide");
-     
-            if (hclass == false) {
+
+            if (hclass == true) {
                 var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0), Status: ddlAction.val() };
                 var details = [];
 
@@ -180,10 +180,10 @@
 
                     }*@
                     debugger;
-                    if (res.isSucccess === true) {
+                    if (res.IsSuccess === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
                         var RawMaterialRequisitionCode = res.File;
-                        window.open('/AgroConfiguration/GetIssueRequisitionReport?RawMaterialRequisitionCode=' + RawMaterialRequisitionCode, '_blank');
+                        window.open("/AgroConfiguration/GetIssueRequisitionReport?RawMaterialRequisitionCode=" + RawMaterialRequisitionCode, "_blank");
                                
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetRequisition")');
