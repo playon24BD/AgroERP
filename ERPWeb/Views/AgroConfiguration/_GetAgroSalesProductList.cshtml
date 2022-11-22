@@ -42,38 +42,39 @@
             @*<td class="hide">@item.UnitId</td>*@
             @*<td>@item.EntryDate.Value.ToString("dd-MMM-yyyy hh:mm tt")</td>*@
 
-            <td class="text-center">
+        <td class="text-center">
 
-                <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail-ProductionSalesInfoId" title="View Detail" data-item-detail-ProductionSalesInfoId="@item.ProductSalesInfoId" style="line-height:1">
-                    <i class="fas fa-eye"></i>
-                </a>
+            <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail-ProductionSalesInfoId" title="View Detail" data-item-detail-ProductionSalesInfoId="@item.ProductSalesInfoId" style="line-height:1">
+                <i class="fas fa-eye"></i>
+            </a>
 
-                @*<a href="#" class="btn btn-sm btn-outline-primary data-item-Payment-ProductionSalesInfoId" title="View Detail" data-item-Payment-ProductionSalesInfoId="@item.ProductSalesInfoId" style="line-height:1">
+            @*<a href="#" class="btn btn-sm btn-outline-primary data-item-Payment-ProductionSalesInfoId" title="View Detail" data-item-Payment-ProductionSalesInfoId="@item.ProductSalesInfoId" style="line-height:1">
             <i class="fas fa-money-bill"></i>
         </a>*@
 
-                @*<a href="#" class="btn btn-sm btn-outline-success data-edit-item-download" title="Download" data-edit-item-download="@item.ProductSalesInfoId" style="line-height:1"></a>*@
-                @*}
+            @*<a href="#" class="btn btn-sm btn-outline-success data-edit-item-download" title="Download" data-edit-item-download="@item.ProductSalesInfoId" style="line-height:1"></a>*@
+            @*}
         @if (privilege != null && privilege.Edit)
         {*@
-                @*<a href="#" class="btn btn-sm btn-outline-success data-item-download" title="Download" id="rptType" name="rptType" data-item-download="@item.ProductSalesInfoId" style="line-height:1">
-
+            @*<a href="#" class="btn btn-sm btn-outline-success data-item-download" title="Download" id="rptType" name="rptType" data-item-download="@item.ProductSalesInfoId" style="line-height:1">
             <i class="fas fa-download"></i>
         </a>*@
 
-                <a href="@Url.Action("AgroProductSalesReports", "AgroConfiguration", new { @ProductSalesInfoId = item.ProductSalesInfoId })" target="_blank" class="btn btn-sm btn-outline-danger" title="Download Invoice"><i class="fas fa-file-invoice"></i></a>
+            <a href="@Url.Action("AgroProductSalesReports", "AgroConfiguration", new { @ProductSalesInfoId = item.ProductSalesInfoId })" target="_blank" class="btn btn-sm btn-outline-success" title="Download Invoice"><i class="fas fa-file-invoice"></i></a>
 
-                <a href="@Url.Action("AgroProductSalesChallanReport", "AgroConfiguration", new { @ProductSalesInfoId = item.ProductSalesInfoId })" target="_blank"  class="btn btn-sm btn-outline-danger" title="Download Challan">
-                    <i class="fa-solid fa-receipt"></i>
+            <a href="@Url.Action("AgroProductSalesChallanReport", "AgroConfiguration", new { @ProductSalesInfoId = item.ProductSalesInfoId })" target="_blank" class="btn btn-sm btn-outline-warning" title="Download Challan">
+                <i class="fa-solid fa-receipt"></i>
+            </a>
+
+            @if (item.PaidAmount == 0 || item.DueAmount == 0)
+            {
+                <a href="@Url.Action("AgroProductSalesInvoiceDropReports", "AgroConfiguration", new { @ProductSalesInfoId = item.ProductSalesInfoId })" target="_blank" data-item-download-ProductionSalesInfoId="@item.ProductSalesInfoId" class="btn btn-sm btn-outline-dark " title="Download Drop Invoice">
+                    <i class="fas fa-tint"></i>
                 </a>
-                <a href="@Url.Action("AgroProductSalesInvoiceDropReports", "AgroConfiguration", new { @ProductSalesInfoId = item.ProductSalesInfoId })" target="_blank" data-item-download-ProductionSalesInfoId="@item.ProductSalesInfoId"  class="btn btn-sm btn-outline-dark " title="Download Drop Invoice">
-                    <i class="fas fa-tint"></i></a>
+            }
 
 
-
-
-
-            </td>
+        </td>
         </tr>
         }
         @if (Model.Count() == 0)

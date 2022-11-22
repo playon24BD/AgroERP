@@ -703,7 +703,7 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<AgroProductSalesInfo> GetAgroSalesinfoByStokiestId(long StockiestId)
         {
-            return _agroProductSalesInfoRepository.GetAll(d => d.StockiestId == StockiestId);
+            return _agroProductSalesInfoRepository.GetAll(d => d.StockiestId == StockiestId && d.Status == null);
 
         }
 
@@ -935,7 +935,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
             query = string.Format(@"select s.ProductSalesInfoId,s.InvoiceNo,s.StockiestId from tblProductSalesInfo s
 			inner join tblStockiestInfo st on s.StockiestId=st.StockiestId	
-            Where 1=1 {0}", Utility.ParamChecker(param));
+            Where 1=1 {0} and s.Status is null", Utility.ParamChecker(param));
 
             return query;
         }

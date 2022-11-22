@@ -8,78 +8,78 @@
 <div class="row" style="margin-top:-10px">
     <div class="col-md-12">
 
-                    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="text-center text-bold">
-                                                    List Of Invoice & Challan
-                                                </h5>
-                                            </div>
-                                            <div class="col-md-3">
-
-                                                <a href="/AgroConfiguration/CreateAgroSalesProduct" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Invoice</a>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header">
                         <div class="row">
-                            <div class="col-md-12" style="margin-top:-15px">
-                                <div class="card card-gray-dark">
-                                    <div class="card-header">
-                                        <div class="row justify-content-center">
-                                            <div class="col-md-2">
-                                                <h5 class="text-right">Search By</h5>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
-                                            </div>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    List Of Invoice & Challan
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
 
-                                            <div class="col-md-2">
-                                                @Html.DropDownList("ddlStockiest", (IEnumerable<SelectListItem>)ViewBag.ddlStockiest, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <a href="/AgroConfiguration/CreateAgroSalesProduct" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Invoice</a>
 
-                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-15px">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <h5 class="text-right">Search By</h5>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
+                            </div>
 
-                                            <div class="col-md-2">
-                                                <div class="input-group input-group-sm ">
-                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" placeholder="From Date" />
-                                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
-                                                        <span class="input-group-text">&#10008;</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="input-group input-group-sm ">
-                                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" placeholder="To Date" />
-                                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
-                                                        <span class="input-group-text">&#10008;</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="col-md-2">
+                                @Html.DropDownList("ddlStockiest", (IEnumerable<SelectListItem>)ViewBag.ddlStockiest, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" placeholder="From Date" />
+                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer" >
-                    
-                                        </div>
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" placeholder="To Date" />
+                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
@@ -121,7 +121,7 @@
                         <div class="card">
                             <div class="col-md-12">
                                 <h5 style="border-bottom:2px solid #08054e">Information</h5>
-                              
+
                                 <div class="row">
                                     <input type="hidden" id="hdProductSalesInfoId" />
                                     <div class="col-md-3">
@@ -163,25 +163,25 @@
                     @*<div class="row justify-content-center">*@
 
 
-                        <div class="card">
-                            <div class="col-md-12">
-                                <h5 style="border-bottom:2px solid #ff0000">Payment</h5>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="ddlAmount" class="col-form-label">Amount</label>
-                                        <input type="number" id="ddlAmount" class="form-control form-control-sm" />
-                                        <span class="error hide req-ddlAmount font-weight-bold">Amount is required!</span>
+                    <div class="card">
+                        <div class="col-md-12">
+                            <h5 style="border-bottom:2px solid #ff0000">Payment</h5>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="ddlAmount" class="col-form-label">Amount</label>
+                                    <input type="number" id="ddlAmount" class="form-control form-control-sm" />
+                                    <span class="error hide req-ddlAmount font-weight-bold">Amount is required!</span>
 
-                                    </div>
-                                    <div class="col-md-8">
-                                        <label for="ddlRemarks" class="col-form-label">Remarks.</label>
-                                        <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
-                                        <span class="error hide req-ddlRemarks font-weight-bold">Invoice No is required!</span>
-                                    </div>
                                 </div>
-
+                                <div class="col-md-8">
+                                    <label for="ddlRemarks" class="col-form-label">Remarks.</label>
+                                    <input type="text" id="ddlRemarks" class="form-control form-control-sm" />
+                                    <span class="error hide req-ddlRemarks font-weight-bold">Invoice No is required!</span>
+                                </div>
                             </div>
+
                         </div>
+                    </div>
 
 
 
@@ -228,36 +228,24 @@
 
 
     <script type="text/javascript">
-
         var rptType = $("#rptType");
-
-
-
         var ddlInvoiceNo = $("#ddlInvoiceNo");
         var ddlTotalAmount = $("#ddlTotalAmount");
         var ddlPaidAmount = $("#ddlPaidAmount");
         var ddlDueAmount = $("#ddlDueAmount");
-
         var ddlAmount = $("#ddlAmount");
         var ddlRemarks = $("#ddlRemarks");
-
         var hdProductSalesInfoId = $("#hdProductSalesInfoId");
-
         var dptFromDate = $("#dptFromDate");
         var dptToDate = $("#dptToDate");
         var searchByAny = $("#searchByAny");
         var ddlStockiest = $("#ddlStockiest");
-
-
-
         $(document).ready(function () {
-         
-            $('.select2').select2();
 
+            $('.select2').select2();
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
-
             dptFromDate.prop('readonly', true);
             dptToDate.prop('readonly', true);
             dptFromDate.css("background-color", "#fff");
@@ -276,12 +264,8 @@
             }).on('change', function () {
                 $('.datepicker').hide();
             });
-
             LoadSalesProducts()
         })
-
-
-
         $(document).on('click', 'div.remove-date', function () {
             if ($(this).hasClass("dptToDate")) {
                 if (dptToDate.val() !== '') {
@@ -294,28 +278,21 @@
                 }
             }
         })
-
         searchByAny.keyup(function () {
             LoadSalesProducts()
         })
-
         dptFromDate.change(function () {
             LoadSalesProducts();
         })
-
         dptToDate.change(function () {
             LoadSalesProducts();
         })
         ddlStockiest.change(function () {
             LoadSalesProducts();
         })
-
-
         function LoadSalesProducts() {
             debugger;
-
             var data = { flag: "View", id: 0, invoiceNo: $.trim(searchByAny.val()), stockiestId: TryParseInt(ddlStockiest.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
-
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAgroSalesProductList', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {
@@ -327,9 +304,8 @@
             }).fail(function (error) {
                 console.log(error);
             });
-            
-        }
 
+        }
         $(document).on('click', 'a.data-item-detail-ProductionSalesInfoId', function (e) {
             e.preventDefault();
             debugger;
@@ -349,53 +325,42 @@
                 })
             }
         })
-
         //modal open
-
         function OpenModal() {
             $("#spanModalHead").text("Add New Zone");
             $("#spanSaveTextZone").text('Save');
             $("#Paymentmodal").modal("show");
             $(".error").addClass("hide");
         }
-      
+
         //payment
         $(document).on("click", "a.data-item-Payment-ProductionSalesInfoId", function (e) {
             //alert();
             //debugger;
             e.preventDefault()
-
             var row = $(this).parent().parents('tr');
             var td1 = row.find('td:eq(3)').html();
             var td2 = row.find('td:eq(6)').html();
             var td3 = row.find('td:eq(7)').html();
             var td4 = row.find('td:eq(8)').html();
             var td5 = row.find('td:eq(1)').html();
-     
 
             hdProductSalesInfoId.val(td5);
             ddlInvoiceNo.val(td1);
             ddlTotalAmount.val(td2);
             ddlPaidAmount.val(td3);
             ddlDueAmount.val(td4);
-          
 
             OpenModal();
             $("#spanModalHead").text('Payment');
             $("#spanSaveTextZone").text('Payment Update');
         })
 
-
-
-
-        
-
         $(document).on('click', 'a.data-item-downloade', function (e) {
             debugger;
             e.preventDefault();
             window.open("/AgroConfiguration/AgroProductSalesReports?ProductSalesInfoId=" + ProductSalesInfoId.val());
         })
-
         $(document).on('click', 'a.data-item-downloadr', function (e) {
             e.preventDefault();
             window.open("/AgroConfiguration/AgroProductSalesChallanReport?ProductSalesInfoId=" + ProductSalesInfoId.val());
@@ -411,10 +376,8 @@
                     window.open("/AgroConfiguration/AgroProductSalesInvoiceDropReports?ProductSalesInfoId=" + ProductSalesInfoId.val());
                 };
             }));
-           
+
         })
-
-
         //$(document).on('click', 'a.data-item-download', function (e) {
         //    e.preventDefault();
         //    debugger;
@@ -434,25 +397,14 @@
         //        })
         //    }
         //})
-
-
-
-
-
-
         //save
         $("#saveButton").click(function (e) {
             alert();
             debugger;
             e.preventDefault();
             $(".error").addClass("hide");
-
             var info = { ProductSalesInfoId: TryParseInt(hdProductSalesInfoId.val(), 0), PaymentAmount: ddlAmount.val(), Remarks: ddlRemarks.val() };
-
             var data = JSON.stringify({ info: info });
-
-
-
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveSalesPayment', data, getToken())).then(function (res, status) {
                             if (res === true) {
                                 //debugger;
@@ -460,7 +412,7 @@
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetAgroSalesProductList")');
                                 }, 1000);
-                                
+
                             }
                             else {
                                 $('.toastrDefaultError').trigger('click');
@@ -470,14 +422,7 @@
                             alert(execuStatus.fail);
                             enable("#btnSubmit");
                 })
-
-
-
         });
-
-
-
-
         function redirectPage(page) {
             window.location.replace(page);
         }
