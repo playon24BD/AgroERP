@@ -3085,6 +3085,50 @@ namespace ERPWeb.Controllers
         }
 
 
+        public ActionResult MRawMaterialIssueAcceptList(string flag, long? id, string name)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+
+                return View();
+
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _mRawMaterialIssueStockInfo.GetAllRawMaterialIssue(User.OrgId);
+
+                //var dto = _returnRawMaterialBusiness.GetReturnRawMaterialInfos(name ?? null);
+                //List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
+                //AutoMapper.Mapper.Map(dto, viewModels);
+                //return PartialView("_GetReturnRawMaterial", viewModels);
+
+
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+                string Status = "Pending";
+                // string ReturnType = "Damage";
+
+                List<ReturnRawMaterialViewModel> details = new List<ReturnRawMaterialViewModel>();
+
+                details = _returnRawMaterialBusiness.GetReturnRawMaterialBYRMId(id.Value, Status).Select(i => new ReturnRawMaterialViewModel
+                {
+                    EntryDate = i.EntryDate,
+                    Quantity = i.Quantity,
+                    ReturnRawMaterialId = i.ReturnRawMaterialId,
+                    ReturnType = i.ReturnType
+
+                }).ToList();
+
+                return PartialView("_ReturnDetails", details);
+            }
+
+
+
+            return View();
+        }
 
         #endregion
 
@@ -4388,7 +4432,7 @@ namespace ERPWeb.Controllers
 
                 //var dto = _salesReturn.GetSalesAdjustInfos();
                 var dto = _agroProductSalesInfoBusiness.GetSalesAdjustInfos(invoiceNo ?? null, fromDate, toDate);
-                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_GetSalesReturnAdjustListview", viewModels);
 
@@ -4404,7 +4448,12 @@ namespace ERPWeb.Controllers
                     ReturnPerUnitPrice = i.ReturnPerUnitPrice,
                     ReturnQuanity = i.ReturnQuanity,
                     ReturnTotalPrice = i.ReturnTotalPrice,
-                    ReturnDate = i.ReturnDate
+                    ReturnDate = i.ReturnDate,
+                    FinishGoodProductInfoId= i.FinishGoodProductInfoId,
+                    MeasurementSize= i.MeasurementSize,
+                    Status= i.Status,
+                    QtyKG= i.QtyKG,
+                    FinishGoodProductName=_finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId,User.OrgId).FinishGoodProductName
 
                 }).ToList();
 

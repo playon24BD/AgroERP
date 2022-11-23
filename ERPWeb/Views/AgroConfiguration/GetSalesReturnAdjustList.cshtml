@@ -32,7 +32,7 @@
             <div class="col-md-12">
                 <div class="card card-gray-dark">
                     <div class="card-header">
-                        <div class="row justify-content-center">
+                        <div class="row ">
                             <div class="col-md-2">
                                 <h5 class="text-center">Search By</h5>
                             </div>
@@ -41,7 +41,7 @@
                                 <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By invoice" />
                             </div>
 
-                            <div class="col-md-2">
+                            @*<div class="col-md-2">
 
                                 <div class="input-group input-group-sm ">
                                     <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" placeholder="FromDate" />
@@ -58,7 +58,7 @@
                                         <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -82,9 +82,9 @@
 </div>
 
 <div class="modal fade" id="ReturnSalesAdjustDetails" role="dialog" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header alert-secondary">
+            <div class="modal-header bg-gradient-gray-dark">
                 <h4 id="modalHeading" class="modal-title">Return Sales Adjust Details</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
@@ -188,17 +188,9 @@
             e.preventDefault();
             debugger;
             $("#dataContainer2").empty();
-            var id0 = $(this).parent().parents('tr').children('td').eq(0).html();
-            var id1 = $(this).parent().parents('tr').children('td').eq(1).html();
-            var id = $(this).parent().parents('tr').children('td').eq(2).html();
-            var id3 = $(this).parent().parents('tr').children('td').eq(3).html();
-            var id4 = $(this).parent().parents('tr').children('td').eq(4).html();
-            var id5 = $(this).parent().parents('tr').children('td').eq(5).html();
-            var id6 = $(this).parent().parents('tr').children('td').eq(6).html();
-            var id7 = $(this).parent().parents('tr').children('td').eq(7).html();
-            var id8 = $(this).parent().parents('tr').children('td').eq(8).html();
-            var id9 = $(this).parent().parents('tr').children('td').eq(9).html();
-            var id10 = $(this).parent().parents('tr').children('td').eq(10).html();
+
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+
 
             if (true) {
                 var data = { flag: "Detail", id: id };

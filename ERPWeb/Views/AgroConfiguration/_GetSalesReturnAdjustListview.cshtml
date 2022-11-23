@@ -1,54 +1,45 @@
-﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.AgroProductSalesInfoViewModel>
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.SalesReturnViewModel>
 
 @{
-    ViewBag.Title = "List of SalesReturnAdjustList";
+    string badge = string.Empty;
+    ViewBag.Title = "List of SalesReturn";
     var SL = 0;
-    //var info = (ERPBO.Agriculture.DomainModels.SalesReturn)
 }
 <div class="row">
     <div class="col-md-12" style="overflow-y:scroll">
-        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblSalesReturnAdjust">
+        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblretunrData">
             <thead class="btn-dark">
                 <tr class="text-center">
                     <th style="vertical-align:middle">#SL</th>
                     <th style="vertical-align:middle" class="hide"></th>
-                    <th style="vertical-align:middle" class="hide"></th>
+
                     <th style="vertical-align:middle">Invoice No</th>
-                    <th style="vertical-align:middle">Invoice Date</th>
-                    <th style="vertical-align:middle" class="hide"></th>
-                    <th style="vertical-align:middle">StockiestName</th>
-                    <th style="vertical-align:middle">Total Bill</th>
-                    <th style="vertical-align:middle">Total Paid</th>
-                    <th style="vertical-align:middle">Total Due</th>
-                    <th style="vertical-align:middle">AdjustTotalReturn</th>
-                    <th style="vertical-align:middle">NotAdjustTotalReturn</th>
+                    <th style="vertical-align:middle">Stockiest Name</th>
                     <th style="vertical-align:middle">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
+
+                    badge = item.Status == "NOTADJUST" ? "badge bg-danger" : item.Status == "ADJUST" ? "badge bg-success" : "";
+
                     SL = SL + 1;
                     <tr>
 
                         <td class="text-center text-bold">@SL</td>
+                    
                         <td class="hide">@item.ProductSalesInfoId</td>
-                        <td class="hide">@item.SalesReturnId</td>
                         <td class="text-center">@item.InvoiceNo</td>
-                        <td class="text-center">@item.InvoiceDate</td>
-                        <td class="hide">@item.StockiestId</td>
                         <td class="text-center">@item.StockiestName</td>
-                        <td class="text-center">@item.TotalAmount</td>
-                        <td class="text-center">@item.PaidAmount</td>
-                        <td class="text-center">@item.DueAmount</td>
-                        <td class="text-center">@item.AdjustTotalReturn</td>
-                        <td class="text-center">@item.NotAdjustTotalReturn</td>
+                
                         <td class="text-center">
-
-                            <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail" title="View Detail" data-item-detail="@item.SalesReturnId" style="line-height:1">
+                            <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail" title="View Detail" data-item-detail="@item.ProductSalesInfoId" style="line-height:1">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </td>
+                    
+
                     </tr>
                 }
 
@@ -65,4 +56,3 @@
     </div>
 
 </div>
-

@@ -161,7 +161,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         public IEnumerable<SalesReturn> GetSalesReturnsAdjustById(long id, long orgId)
         {
             //return _salesReturnRepository.GetOneByOrg(f => f.SalesReturnId == id);
-            return _salesReturnRepository.GetAll(i => i.SalesReturnId == id).ToList();
+            return _salesReturnRepository.GetAll(i => i.ProductSalesInfoId == id).ToList();
         }
 
         public bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId)

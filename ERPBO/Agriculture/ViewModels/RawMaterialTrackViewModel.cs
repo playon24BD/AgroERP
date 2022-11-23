@@ -28,5 +28,7 @@ namespace ERPBO.Agriculture.ViewModels
         public double StockIN { get; set; }
         public double StockINReturn { get; set; }
 
+        public long RawMaterialIssueStockId { get; set; }
+
     }
 }

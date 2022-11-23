@@ -55,6 +55,7 @@ namespace ERPBLL.Agriculture
 
         public bool SaveRawMaterialIssueStock(MRawMaterialIssueStockInfoDTO info, List<MRawMaterialIssueStockDetailsDTO> details, long userId, long orgId)
         {
+            
             bool IsSuccess = false;
             var BatchCode = "BPIS-" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("yy") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
@@ -68,9 +69,14 @@ namespace ERPBLL.Agriculture
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
                     OrganizationId = orgId,
-                    Status = "Active",
+                    Status = "InActive",
 
                 };
+                _mRawMaterialIssueStockInfoRepository.Insert(model);
+                IsSuccess = _mRawMaterialIssueStockInfoRepository.Save();
+
+                var Issueid = GetRawmaterialIssueInfoByProbatch(model.ProductBatchCode).RawMaterialIssueStockId;
+                
                 List<MRawMaterialIssueStockDetails> modelDetails = new List<MRawMaterialIssueStockDetails>();
                 List<RawMaterialTrack> modeltrk = new List<RawMaterialTrack>();//RawMaterialTrackInfo table update
 
@@ -82,7 +88,7 @@ namespace ERPBLL.Agriculture
                         RawMaterialId = item.RawMaterialId,
                         Quantity = item.Quantity,
                         UnitID = item.UnitID,
-                        IssueStatus = "StockIn",                  
+                        IssueStatus = "PendingStockIn",                  
                         EntryDate = DateTime.Now,
 
                     };
@@ -96,9 +102,10 @@ namespace ERPBLL.Agriculture
                         Quantity = item.Quantity,
                         IssueDate = DateTime.Now,
                         EntryDate = DateTime.Now,
-                        IssueStatus = "StockOut",
+                        IssueStatus = "PendingStockOut",
                         type="NonRequisiton",
-                        EntryUserId = userId
+                        EntryUserId = userId,
+                        RawMaterialIssueStockId= Issueid
                     };
                     modeltrk.Add(rawMaterialTrack);
 
@@ -106,8 +113,7 @@ namespace ERPBLL.Agriculture
 
                 model.MRawMaterialIssueStockDetails = modelDetails;
 
-                _mRawMaterialIssueStockInfoRepository.Insert(model);
-                IsSuccess = _mRawMaterialIssueStockInfoRepository.Save();
+
 
                 _rawMaterialTrackInfoRepository.InsertAll(modeltrk);
                 IsSuccess = _rawMaterialTrackInfoRepository.Save();
@@ -239,6 +245,16 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
             Where 1=1 {0}", Utility.ParamChecker(param));
 
             return query;
+        }
+
+        public IEnumerable<MRawMaterialIssueStockInfo> GetAllRawMaterialIssueforaccept()
+        {
+            throw new NotImplementedException();
+        }
+
+        public MRawMaterialIssueStockInfo GetRawmaterialIssueInfoByProbatch(string ProductBatchCode)
+        {
+            return _mRawMaterialIssueStockInfoRepository.GetOneByOrg(d=>d.ProductBatchCode== ProductBatchCode);
         }
     }
 }

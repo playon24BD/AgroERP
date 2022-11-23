@@ -29,6 +29,7 @@ namespace ERPBO.Agriculture.DTOModels
         public double StockOut { get; set; }
         public double StockIN { get; set; }
         public double StockINReturn { get; set; }
+        public long RawMaterialIssueStockId { get; set; }
 
     }
 }

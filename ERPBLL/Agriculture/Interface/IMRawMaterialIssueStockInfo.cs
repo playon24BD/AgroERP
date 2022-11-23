@@ -23,5 +23,10 @@ namespace ERPBLL.Agriculture.Interface
         //bool UpdateProductIssueRawMaterialStock(List<MRawMaterialIssueStockInfoDTO> issueStockInfoDTOs);
         bool SaveRawMaterialIssueStockWithRequistion(RawMaterialRequisitionInfoDTO info, List<RawMaterialRequisitionDetailsDTO> details, long userId, long orgId);
 
+
+        IEnumerable<MRawMaterialIssueStockInfo> GetAllRawMaterialIssueforaccept();
+
+        MRawMaterialIssueStockInfo GetRawmaterialIssueInfoByProbatch(string ProductBatchCode);
+
     }
 }
