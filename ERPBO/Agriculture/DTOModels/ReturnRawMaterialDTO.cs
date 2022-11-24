@@ -27,6 +27,7 @@ namespace ERPBO.Agriculture.DTOModels
 
 
         public double TQuantity { get; set; }
-       
+        public int count { get; set; }
+
     }
 }

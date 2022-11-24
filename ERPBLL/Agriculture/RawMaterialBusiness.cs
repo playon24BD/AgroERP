@@ -110,5 +110,20 @@ namespace ERPBLL.Agriculture
             return IsSuccess;
             
         }
+
+        public IEnumerable<ReturnRawMaterialDTO> CheckStatusApproved(long orgId)
+        {
+            return this._db.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForCheckStatusApproved(orgId)).ToList();
+        }
+        private string QueryForCheckStatusApproved(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+            query = string.Format(@"SELECT * FROM tblReturnRawMaterial where 1=1  and OrganizationId=9 and
+Status='Approved' order by ReturnRawMaterialId desc", Utility.ParamChecker(param));
+
+            return query;
+
+        }
     }
 }

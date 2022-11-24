@@ -574,16 +574,16 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>0.89583in</Size>
+                <Size>0.39652in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox20">
+                  <Textbox Name="Textbox1">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Date</Value>
+                            <Value>SL</Value>
                             <Style>
                               <FontWeight>Bold</FontWeight>
                               <Color>White</Color>
@@ -595,7 +595,7 @@
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox20</rd:DefaultName>
+                    <rd:DefaultName>Textbox1</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -613,16 +613,16 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.07104in</Size>
+                    <Size>0.89583in</Size>
                     <CellContents>
-                      <Textbox Name="Textbox22">
+                      <Textbox Name="Textbox20">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Batch Code</Value>
+                                <Value>Date</Value>
                                 <Style>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>White</Color>
@@ -634,7 +634,7 @@
                             </Style>
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Textbox22</rd:DefaultName>
+                        <rd:DefaultName>Textbox20</rd:DefaultName>
                         <Style>
                           <Border>
                             <Color>LightGrey</Color>
@@ -652,16 +652,16 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.21036in</Size>
+                        <Size>1.07104in</Size>
                         <CellContents>
-                          <Textbox Name="Textbox24">
+                          <Textbox Name="Textbox22">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>Receipe Code</Value>
+                                    <Value>Batch Code</Value>
                                     <Style>
                                       <FontWeight>Bold</FontWeight>
                                       <Color>White</Color>
@@ -673,7 +673,7 @@
                                 </Style>
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Textbox24</rd:DefaultName>
+                            <rd:DefaultName>Textbox22</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Color>LightGrey</Color>
@@ -691,16 +691,16 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.15625in</Size>
+                            <Size>1.21036in</Size>
                             <CellContents>
-                              <Textbox Name="Textbox26">
+                              <Textbox Name="Textbox24">
                                 <CanGrow>true</CanGrow>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>Product Name</Value>
+                                        <Value>Receipe Code</Value>
                                         <Style>
                                           <FontWeight>Bold</FontWeight>
                                           <Color>White</Color>
@@ -712,7 +712,7 @@
                                     </Style>
                                   </Paragraph>
                                 </Paragraphs>
-                                <rd:DefaultName>Textbox26</rd:DefaultName>
+                                <rd:DefaultName>Textbox24</rd:DefaultName>
                                 <Style>
                                   <Border>
                                     <Color>LightGrey</Color>
@@ -728,7 +728,48 @@
                             </CellContents>
                           </TablixHeader>
                           <TablixMembers>
-                            <TablixMember />
+                            <TablixMember>
+                              <TablixHeader>
+                                <Size>1.15625in</Size>
+                                <CellContents>
+                                  <Textbox Name="Textbox26">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value>Product Name</Value>
+                                            <Style>
+                                              <FontWeight>Bold</FontWeight>
+                                              <Color>White</Color>
+                                            </Style>
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style>
+                                          <TextAlign>Center</TextAlign>
+                                        </Style>
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox26</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Color>LightGrey</Color>
+                                        <Style>Solid</Style>
+                                      </Border>
+                                      <BackgroundColor>Green</BackgroundColor>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingTop>2pt</PaddingTop>
+                                      <PaddingBottom>2pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixHeader>
+                              <TablixMembers>
+                                <TablixMember />
+                              </TablixMembers>
+                            </TablixMember>
                           </TablixMembers>
                         </TablixMember>
                       </TablixMembers>
@@ -750,19 +791,17 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.89583in</Size>
+                <Size>0.39652in</Size>
                 <CellContents>
-                  <Textbox Name="EntryDate1">
+                  <Textbox Name="Textbox2">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!EntryDate.Value</Value>
-                            <Style>
-                              <Format>dd-MMM-yy</Format>
-                            </Style>
+                            <Value>=Runningvalue(Fields!EntryDate.Value,countDistinct, "dsFinishGoodQtyStocks")</Value>
+                            <Style />
                           </TextRun>
                         </TextRuns>
                         <Style>
@@ -770,7 +809,7 @@
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>EntryDate1</rd:DefaultName>
+                    <rd:DefaultName>Textbox2</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -787,28 +826,20 @@
               </TablixHeader>
               <TablixMembers>
                 <TablixMember>
-                  <Group Name="FinishGoodProductionBatch">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!FinishGoodProductionBatch.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!FinishGoodProductionBatch.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
                   <TablixHeader>
-                    <Size>1.07104in</Size>
+                    <Size>0.89583in</Size>
                     <CellContents>
-                      <Textbox Name="FinishGoodProductionBatch1">
+                      <Textbox Name="EntryDate1">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!FinishGoodProductionBatch.Value</Value>
-                                <Style />
+                                <Value>=Fields!EntryDate.Value</Value>
+                                <Style>
+                                  <Format>dd-MMM-yy</Format>
+                                </Style>
                               </TextRun>
                             </TextRuns>
                             <Style>
@@ -816,12 +847,13 @@
                             </Style>
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>FinishGoodProductionBatch1</rd:DefaultName>
+                        <rd:DefaultName>EntryDate1</rd:DefaultName>
                         <Style>
                           <Border>
                             <Color>LightGrey</Color>
                             <Style>Solid</Style>
                           </Border>
+                          <VerticalAlign>Middle</VerticalAlign>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
                           <PaddingTop>2pt</PaddingTop>
@@ -832,27 +864,27 @@
                   </TablixHeader>
                   <TablixMembers>
                     <TablixMember>
-                      <Group Name="ReceipeBatchCode">
+                      <Group Name="FinishGoodProductionBatch">
                         <GroupExpressions>
-                          <GroupExpression>=Fields!ReceipeBatchCode.Value</GroupExpression>
+                          <GroupExpression>=Fields!FinishGoodProductionBatch.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
                       <SortExpressions>
                         <SortExpression>
-                          <Value>=Fields!ReceipeBatchCode.Value</Value>
+                          <Value>=Fields!FinishGoodProductionBatch.Value</Value>
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>1.21036in</Size>
+                        <Size>1.07104in</Size>
                         <CellContents>
-                          <Textbox Name="ReceipeBatchCode1">
+                          <Textbox Name="FinishGoodProductionBatch1">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Fields!ReceipeBatchCode.Value</Value>
+                                    <Value>=Fields!FinishGoodProductionBatch.Value</Value>
                                     <Style />
                                   </TextRun>
                                 </TextRuns>
@@ -861,7 +893,7 @@
                                 </Style>
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>ReceipeBatchCode1</rd:DefaultName>
+                            <rd:DefaultName>FinishGoodProductionBatch1</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Color>LightGrey</Color>
@@ -877,27 +909,27 @@
                       </TablixHeader>
                       <TablixMembers>
                         <TablixMember>
-                          <Group Name="FinishGoodProductName">
+                          <Group Name="ReceipeBatchCode">
                             <GroupExpressions>
-                              <GroupExpression>=Fields!FinishGoodProductName.Value</GroupExpression>
+                              <GroupExpression>=Fields!ReceipeBatchCode.Value</GroupExpression>
                             </GroupExpressions>
                           </Group>
                           <SortExpressions>
                             <SortExpression>
-                              <Value>=Fields!FinishGoodProductName.Value</Value>
+                              <Value>=Fields!ReceipeBatchCode.Value</Value>
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>1.15625in</Size>
+                            <Size>1.21036in</Size>
                             <CellContents>
-                              <Textbox Name="FinishGoodProductName1">
+                              <Textbox Name="ReceipeBatchCode1">
                                 <CanGrow>true</CanGrow>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>=Fields!FinishGoodProductName.Value</Value>
+                                        <Value>=Fields!ReceipeBatchCode.Value</Value>
                                         <Style />
                                       </TextRun>
                                     </TextRuns>
@@ -906,7 +938,7 @@
                                     </Style>
                                   </Paragraph>
                                 </Paragraphs>
-                                <rd:DefaultName>FinishGoodProductName1</rd:DefaultName>
+                                <rd:DefaultName>ReceipeBatchCode1</rd:DefaultName>
                                 <Style>
                                   <Border>
                                     <Color>LightGrey</Color>
@@ -922,7 +954,54 @@
                           </TablixHeader>
                           <TablixMembers>
                             <TablixMember>
-                              <Group Name="Details" />
+                              <Group Name="FinishGoodProductName">
+                                <GroupExpressions>
+                                  <GroupExpression>=Fields!FinishGoodProductName.Value</GroupExpression>
+                                </GroupExpressions>
+                              </Group>
+                              <SortExpressions>
+                                <SortExpression>
+                                  <Value>=Fields!FinishGoodProductName.Value</Value>
+                                </SortExpression>
+                              </SortExpressions>
+                              <TablixHeader>
+                                <Size>1.15625in</Size>
+                                <CellContents>
+                                  <Textbox Name="FinishGoodProductName1">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value>=Fields!FinishGoodProductName.Value</Value>
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style>
+                                          <TextAlign>Center</TextAlign>
+                                        </Style>
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>FinishGoodProductName1</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Color>LightGrey</Color>
+                                        <Style>Solid</Style>
+                                      </Border>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingTop>2pt</PaddingTop>
+                                      <PaddingBottom>2pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixHeader>
+                              <TablixMembers>
+                                <TablixMember>
+                                  <Group Name="Details" />
+                                </TablixMember>
+                              </TablixMembers>
                             </TablixMember>
                           </TablixMembers>
                         </TablixMember>
@@ -934,16 +1013,16 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>4.33348in</Size>
+                <Size>0.39652in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox71">
+                  <Textbox Name="Textbox4">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Total</Value>
+                            <Value />
                             <Style>
                               <FontSize>11pt</FontSize>
                               <FontWeight>Bold</FontWeight>
@@ -956,7 +1035,7 @@
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox71</rd:DefaultName>
+                    <rd:DefaultName>Textbox4</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -972,6 +1051,49 @@
                   </Textbox>
                 </CellContents>
               </TablixHeader>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>4.33348in</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox71">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>Total</Value>
+                                <Style>
+                                  <FontSize>11pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                  <Color>White</Color>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox71</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <BackgroundColor>Teal</BackgroundColor>
+                          <VerticalAlign>Middle</VerticalAlign>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                </TablixMember>
+              </TablixMembers>
               <KeepWithGroup>Before</KeepWithGroup>
             </TablixMember>
           </TablixMembers>
@@ -980,7 +1102,7 @@
         <Top>1.35292in</Top>
         <Left>0.08792in</Left>
         <Height>0.75in</Height>
-        <Width>7.20848in</Width>
+        <Width>7.605in</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -1099,7 +1221,7 @@
     <Height>2.10292in</Height>
     <Style />
   </Body>
-  <Width>7.2964in</Width>
+  <Width>7.69292in</Width>
   <Page>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>

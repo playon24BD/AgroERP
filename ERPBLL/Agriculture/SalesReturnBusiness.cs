@@ -335,5 +335,19 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
 
+        public IEnumerable<SalesReturnDTO> GetInvoice(long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnDTO>(QueryForSalesReturnInvoice(orgId)).ToList();
+        }
+
+        private string QueryForSalesReturnInvoice(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            query = string.Format(@"	SELECT top 1 * FROM tblSalesReturn order by SalesReturnId desc", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }

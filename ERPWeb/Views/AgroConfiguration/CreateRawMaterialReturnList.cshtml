@@ -357,8 +357,8 @@
                 debugger;
                 if (res.IsSuccess === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
-                    var RawMaterialName = res.File;
-                    window.open("/AgroConfiguration/GetRawMaterialReturnReport?RawMaterialName=" + RawMaterialName, "_blank");
+                    var ReturnRawMaterialId = res.File;
+                    window.open("/AgroConfiguration/GetRawMaterialReturnReport?ReturnRawMaterialId=" + ReturnRawMaterialId, "_blank");
                                
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("RawMaterialReturnAllList")');

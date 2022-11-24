@@ -172,6 +172,7 @@
     <Compile Include="Agriculture\ReportModels\ProductSalesDataReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductWiseSalesStementReport.cs" />
     <Compile Include="Agriculture\ReportModels\ReturnRawMaterialDataReport.cs" />
+    <Compile Include="Agriculture\ReportModels\ReturnRawMaterialDataReportApproved.cs" />
     <Compile Include="Agriculture\ReportModels\SalesCommissionData.cs" />
     <Compile Include="Agriculture\ReportModels\SalesReturnReportData.cs" />
     <Compile Include="Agriculture\ViewModels\AgroProductSalesDetailsViewModel.cs" />

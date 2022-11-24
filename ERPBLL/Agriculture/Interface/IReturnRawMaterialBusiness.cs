@@ -12,7 +12,11 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IReturnRawMaterialBusiness
     {
-        IEnumerable<ReturnRawMaterialDataReport> GetRawMaterialReturnReport(long? rawMaterialId);
+        IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterilIdApproved (int count);
+        IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterilId(int count);
+
+        IEnumerable<ReturnRawMaterialDataReportApproved> GetRawMaterialReturnReportApproved(string ReturnRawMaterialId);
+        IEnumerable<ReturnRawMaterialDataReport> GetRawMaterialReturnReport(string ReturnRawMaterialId);
 
         IEnumerable<ReturnRawMaterialDTO> GetReturnReportList(long? rawMaterialId, string returnType, string status, string fromDate, string toDate);
         IEnumerable<ReturnRawMaterialDataReport> GetReturnRawMaterialDataReport(long? rawMaterialId, string returnType, string status,string fromDate,string toDate);

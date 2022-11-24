@@ -254,6 +254,19 @@
 
              $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveSalesReturn', data, getToken())).then(function (res, status) {
                  debugger;
+
+                 @*if (res.IsSuccess === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                var InvoiceNo = res.File;
+                     window.open('/AgroConfiguration/GetSalesReturnReportSave?InvoiceNo=' + InvoiceNo, '_blank');
+                                
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("SalesReturnList")');
+                                }, 500);
+                               
+                            }*@
+
+
                 if (res === true) {
                    
                     $('.toastrDefaultSuccess').trigger('click');

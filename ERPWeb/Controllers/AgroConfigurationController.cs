@@ -3317,7 +3317,11 @@ namespace ERPWeb.Controllers
         public ActionResult SaveRawMaterialReturnInfo(List<ReturnRawMaterialViewModel> details)
         {
             bool IsSuccess = false;
+            //string[] RMReturnID;
+            var RMReturnID=string.Empty;
+            int count = 0;
             var RawMaterialName = "";
+            string ReturnRawMaterialId = "";
 
             if (details.Count > 0)
             {
@@ -3327,19 +3331,43 @@ namespace ERPWeb.Controllers
 
             }
 
-
+            
             if (IsSuccess == true)
             {
+                //List<string> RMReturnID = new List<string>();
+                //var RMReturnID = 0;
                 var CheckInternalRawMaterial = _rawMaterialBusiness.CheckStatus(User.OrgId).FirstOrDefault().Status;
                 if (CheckInternalRawMaterial == "Pending")
                 {
-                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialApproved(User.OrgId, CheckInternalRawMaterial, details.FirstOrDefault().RawMaterialId).FirstOrDefault().RawMaterialName;
+                     count = details.Count();
+
+                    IEnumerable<ReturnRawMaterialDTO> RMReturnIDs = _returnRawMaterialBusiness.GetReturnRawMaterilId(count).ToList();
+
+                    foreach(var item in RMReturnIDs)
+                    {
+                        RMReturnID += item.ReturnRawMaterialId +",";
+                    }
+                     ReturnRawMaterialId = RMReturnID.TrimEnd(',');
+
+
+                    //foreach (var item in details)
+                    //{
+                    //     //count +=
+                    //    //var RMId = item.RawMaterialId;
+                    //    //var RMQty = item.Quantity;
+                    //    //var unitId = item.UnitId;
+                    //    //
+                    //   //string a= String.Join(",", RMReturnALLID);
+                    //    //RMReturnID += a;
+
+                    //}
+                    //RawMaterialName = _rawMaterialBusiness.GetRawMaterialApproved(User.OrgId, CheckInternalRawMaterial, details.FirstOrDefault().RawMaterialId).FirstOrDefault().RawMaterialName;
                 }
 
 
 
 
-                return Json(new { IsSuccess = IsSuccess, File = RawMaterialName });
+                return Json(new { IsSuccess = IsSuccess, File = ReturnRawMaterialId });
             }
 
             return Json(IsSuccess);
@@ -3349,7 +3377,13 @@ namespace ERPWeb.Controllers
         public ActionResult AcceptRawMaterialReturnInfo(List<ReturnRawMaterialViewModel> details)
         {
             bool IsSuccess = false;
+            
+            var RMReturnID = string.Empty;
+            int count = 0;
             var RawMaterialName = "";
+            string ReturnRawMaterialId = "";
+
+
             if (ModelState.IsValid)
             {
 
@@ -3357,27 +3391,82 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(details, detailDTOs);
                 IsSuccess = _returnRawMaterialBusiness.updateReturnStatus(detailDTOs, User.UserId, User.OrgId);
             }
-            //if (IsSuccess == true)
-            //{
-            //    var CheckInternalRawMaterial = _rawMaterialBusiness.CheckStatus(User.OrgId).FirstOrDefault().Status;
-            //    if (CheckInternalRawMaterial == "Approved")
-            //    {
-            //        RawMaterialName = _rawMaterialBusiness.GetRawMaterialApproved(User.OrgId, CheckInternalRawMaterial, details.FirstOrDefault().RawMaterialId).FirstOrDefault().RawMaterialName;
-            //    }
+
+            if (IsSuccess == true)
+            {
+                
+                var CheckInternalRawMaterial = _rawMaterialBusiness.CheckStatusApproved(User.OrgId).FirstOrDefault().Status;
+                if (CheckInternalRawMaterial == "Approved")
+                {
+                    count = details.Count();
+
+                    IEnumerable<ReturnRawMaterialDTO> RMReturnIDs = _returnRawMaterialBusiness.GetReturnRawMaterilIdApproved(count).ToList();
+
+                    foreach (var item in RMReturnIDs)
+                    {
+                        RMReturnID += item.ReturnRawMaterialId + ",";
+                    }
+                    ReturnRawMaterialId = RMReturnID.TrimEnd(',');
+           
+                }
 
 
+                return Json(new { IsSuccess = IsSuccess, File = ReturnRawMaterialId });
+            }
 
-
-            //    return Json(new { IsSuccess = IsSuccess, File = RawMaterialName });
-            //}
             return Json(IsSuccess);
         }
 
-        public ActionResult GetRawMaterialReturnReport(long? rawMaterialId)
+        public ActionResult GetRawMaterialReturnReportApproved(string ReturnRawMaterialId)
         {
-            var data = _returnRawMaterialBusiness.GetRawMaterialReturnReport( rawMaterialId??0);
+            var data = _returnRawMaterialBusiness.GetRawMaterialReturnReportApproved(ReturnRawMaterialId);
 
             LocalReport localReport = new LocalReport();
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptRawMaterialReturnReportApproved.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsRawMaterialReturnReportApproved", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = "PDF";
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                      "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
+
+
+        public ActionResult GetRawMaterialReturnReport(string ReturnRawMaterialId)
+        {
+             var data = _returnRawMaterialBusiness.GetRawMaterialReturnReport(ReturnRawMaterialId);
+
+             LocalReport localReport = new LocalReport();
 
             string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptReturnRawMaterialReportSave.rdlc");
             if (System.IO.File.Exists(reportPath))
@@ -4354,10 +4443,10 @@ namespace ERPWeb.Controllers
             //if (IsSuccess == true)
             //{
             //    // Report ..
-            //    var invoice = _agroProductSalesInfoBusiness.GetLastInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
+            //    var invoice = _salesReturn.GetInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
 
             //    //var file = AgroProductSalesReports(invoice);
-            //    return Json(new { isSucccess = IsSuccess, File = invoice });
+            //    return Json(new { IsSuccess = IsSuccess, File = invoice });
             //}
 
 

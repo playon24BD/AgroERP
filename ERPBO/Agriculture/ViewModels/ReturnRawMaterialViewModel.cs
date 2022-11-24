@@ -28,5 +28,6 @@ namespace ERPBO.Agriculture.ViewModels
 
 
         public double TQuantity { get; set; }
+        public int count { get; set; }
     }
 }

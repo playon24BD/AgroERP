@@ -2729,6 +2729,17 @@
     <Content Include="Reports\DataSets\dsReturnRawMaterialReport.xsc">
       <DependentUpon>dsReturnRawMaterialReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsRawMaterialReturnReportApproved.xsc">
+      <DependentUpon>dsRawMaterialReturnReportApproved.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsRawMaterialReturnReportApproved.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsRawMaterialReturnReportApproved.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsRawMaterialReturnReportApproved.xss">
+      <DependentUpon>dsRawMaterialReturnReportApproved.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsReturnRawMaterialReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3250,6 +3261,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsProductwisesalesReportDownloadReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsRawMaterialReturnReportApproved.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsRawMaterialReturnReportApproved.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsReturnRawMaterialReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3527,6 +3543,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptIssueRequisitionReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptMRawMaterialReportSave.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptRawMaterialReturnReportApproved.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptReturnRawMaterialReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptReturnRawMaterialReportSave.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptSalesCommissionReport.rdlc" />

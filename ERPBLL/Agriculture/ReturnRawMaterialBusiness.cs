@@ -393,19 +393,19 @@ inner join [Agriculture].[dbo].tblAgroUnitInfo u on rrm.UnitId=u.UnitId
             return query;
         }
 
-        public IEnumerable<ReturnRawMaterialDataReport> GetRawMaterialReturnReport(long? rawMaterialId)
+        public IEnumerable<ReturnRawMaterialDataReport> GetRawMaterialReturnReport(string ReturnRawMaterialId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDataReport>(RawMaterialReturnReport(rawMaterialId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDataReport>(RawMaterialReturnReport(ReturnRawMaterialId)).ToList();
         }
         
-        public string RawMaterialReturnReport(long? rawMaterialId)
+        public string RawMaterialReturnReport(string ReturnRawMaterialId)
         {
             string param = string.Empty;
             string query = string.Empty;
 
-            if (rawMaterialId != null && rawMaterialId > 0)
+            if (ReturnRawMaterialId != null && ReturnRawMaterialId!="")
             {
-                param += string.Format(@" and rm.RawMaterialId={0}", rawMaterialId);
+                param += string.Format(@" and rrm.ReturnRawMaterialId in ({0})", ReturnRawMaterialId);
             }
 
 
@@ -414,13 +414,86 @@ inner join [Agriculture].[dbo].tblAgroUnitInfo u on rrm.UnitId=u.UnitId
 select convert(date,rrm.EntryDate)as EntryDate,rm.RawMaterialId,rm.RawMaterialName,u.UnitName,rrm.Quantity,rrm.ReturnType,rrm.Status from tblReturnRawMaterial rrm
 inner join tblRawMaterialInfo rm on rm.RawMaterialId=rrm.RawMaterialId
 inner join tblAgroUnitInfo u on rrm.UnitId=u.UnitId
-
-
-
-
   where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
+        
+        public IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterilId(long? ReturnRawMaterilId)
+        {
+            return null;
+            //return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForReturnRawMaterialId(ReturnRawMaterilId)).ToList();
+        }
+  //      public string QueryForReturnRawMaterialId(long? ReturnRawMaterilId)
+  //      {
+  ////          string param = string.Empty;
+  ////          string query = string.Empty;
 
+    
+  ////          query = string.Format(@"
+ 
+
+  ////where 1=1 {0}", Utility.ParamChecker(param));
+  ////          return query;
+  //      }
+
+        public IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterilId(int count)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForReturnRawMaterialId(count)).ToList();
+        }
+
+        private string QueryForReturnRawMaterialId(int count)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+            //if (count != 0 && count > 0)
+            //{
+            //    param += string.Format(@" and RawMaterialId={0}", rawMaterialId);
+            //}
+           
+
+
+            query = string.Format(@"SELECT Top " + count + " * FROM tblReturnRawMaterial order by ReturnRawMaterialId desc", Utility.ParamChecker(param));
+            return query;
+        }
+
+        public IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterilIdApproved(int count)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForReturnRawMaterialIdApproved(count)).ToList();
+        }
+        private string QueryForReturnRawMaterialIdApproved(int count)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+
+            query = string.Format(@"SELECT Top " + count + " * FROM tblReturnRawMaterial order by ReturnRawMaterialId desc", Utility.ParamChecker(param));
+            return query;
+        }
+
+        public IEnumerable<ReturnRawMaterialDataReportApproved> GetRawMaterialReturnReportApproved(string ReturnRawMaterialId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDataReportApproved>(RawMaterialReturnReportApproved(ReturnRawMaterialId)).ToList();
+        }
+
+        public string RawMaterialReturnReportApproved(string ReturnRawMaterialId)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+            if (ReturnRawMaterialId != null && ReturnRawMaterialId != "")
+            {
+                param += string.Format(@" and rrm.ReturnRawMaterialId in ({0})", ReturnRawMaterialId);
+            }
+
+
+            query = string.Format(@"
+                   
+select convert(date,rrm.EntryDate)as EntryDate,rm.RawMaterialId,rm.RawMaterialName,u.UnitName,rrm.Quantity,rrm.ReturnType,rrm.Status from tblReturnRawMaterial rrm
+inner join tblRawMaterialInfo rm on rm.RawMaterialId=rrm.RawMaterialId
+inner join tblAgroUnitInfo u on rrm.UnitId=u.UnitId
+  where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+        }
     }
 }
