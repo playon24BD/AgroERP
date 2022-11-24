@@ -3479,6 +3479,8 @@
     <Content Include="Views\AgroConfiguration\_ProductPriceListview.cshtml" />
     <Content Include="Views\AgroConfiguration\_ProductPaymentHistoryDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\MRawMaterialIssueAcceptList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetRawMaterialIssueaccPartialView.cshtml" />
+    <Content Include="Views\AgroConfiguration\_RawmatiralIssueaccpet.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

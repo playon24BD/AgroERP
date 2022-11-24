@@ -17,6 +17,8 @@ namespace ERPBLL.Agriculture
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly MRawMaterialIssueStockInfoRepository _mRawMaterialIssueStockInfoRepository;
         private readonly RawMaterialTrackInfoRepository _rawMaterialTrackInfoRepository;
+        private readonly MRawMaterialIssueStockDetailsRepository _mRawMaterialIssueStockDetailsRepository;
+
 
 
         //contractor
@@ -25,6 +27,7 @@ namespace ERPBLL.Agriculture
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._mRawMaterialIssueStockInfoRepository = new MRawMaterialIssueStockInfoRepository(this._agricultureUnitOfWork);
             this._rawMaterialTrackInfoRepository = new RawMaterialTrackInfoRepository(this._agricultureUnitOfWork);
+            this._mRawMaterialIssueStockDetailsRepository = new MRawMaterialIssueStockDetailsRepository(this._agricultureUnitOfWork);
         }
 
         public IEnumerable<MRawMaterialIssueStockInfo> GetAllRawMaterialIssue(long OrgId)
@@ -247,14 +250,156 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
             return query;
         }
 
+       //extra
         public IEnumerable<MRawMaterialIssueStockInfo> GetAllRawMaterialIssueforaccept()
         {
-            throw new NotImplementedException();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<MRawMaterialIssueStockInfo>(QueryForissue()).ToList();
         }
+        private string QueryForissue()
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+
+
+            query = string.Format(@"
+
+
+
+SELECT Distinct RM.RawMaterialName,RM.RawMaterialId,un.UnitName,
+StockIN=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),0),
+StockOut=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0),
+
+PendingStock=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where  t.IssueStatus ='Pending'and t.RawMaterialId=RM.RawMaterialId),0),
+
+GoodReturn=isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where  t.RawMaterialId=rr.RawMaterialId and rr.ReturnType='Good' and rr.Status='Approved' ),0),
+
+BadReturn=isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where  t.RawMaterialId=rr.RawMaterialId and rr.ReturnType='Damage'and rr.Status='Approved'),0),
+
+ReturnQty=isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where  t.RawMaterialId=rr.RawMaterialId and rr.Status='Approved'),0),
+
+CurrentStock=isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId ),0)-isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0)-isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where  t.RawMaterialId=rr.RawMaterialId and rr.Status='Approved'),0)-isnull((SELECT sum(t.Quantity) FROM  tblMRawMaterialIssueStockDetails t
+where  t.IssueStatus ='Pending'and t.RawMaterialId=RM.RawMaterialId),0)
+
+FROM  
+tblMRawMaterialIssueStockDetails t 
+INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
+inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
+
+
+            Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+
 
         public MRawMaterialIssueStockInfo GetRawmaterialIssueInfoByProbatch(string ProductBatchCode)
         {
             return _mRawMaterialIssueStockInfoRepository.GetOneByOrg(d=>d.ProductBatchCode== ProductBatchCode);
+        }
+
+        public bool UpdateRawMaterialIssueStock(MRawMaterialIssueStockInfoDTO info, List<MRawMaterialIssueStockDetailsDTO> details, long userId)
+        {
+            bool IsSuccess = false;
+            if(info.Status == "Approved")
+            {
+
+
+                MRawMaterialIssueStockInfo mRawMaterialIssueStockInfo = new MRawMaterialIssueStockInfo();
+                mRawMaterialIssueStockInfo = GetRawmaterialIssueInfoOneById(info.RawMaterialIssueStockId, 9);
+                mRawMaterialIssueStockInfo.Status = "Active";
+                _mRawMaterialIssueStockInfoRepository.Update(mRawMaterialIssueStockInfo);
+                if (_mRawMaterialIssueStockInfoRepository.Save())
+                {
+                    List<MRawMaterialIssueStockDetails> mRawMaterialIssueStockDetails = new List<MRawMaterialIssueStockDetails>();
+                    MRawMaterialIssueStockDetails mRawMaterialIssueStockDetails1 = new MRawMaterialIssueStockDetails();
+                    foreach (var item in details)
+                    {
+                        mRawMaterialIssueStockDetails1 = GetRawmaterialIssueDetailsByISSueadndRMid(item.RawMaterialIssueStockId, item.RawMaterialId);
+                        mRawMaterialIssueStockDetails1.IssueStatus = "StockIn";
+                        mRawMaterialIssueStockDetails.Add(mRawMaterialIssueStockDetails1);
+                    }
+                    _mRawMaterialIssueStockDetailsRepository.UpdateAll(mRawMaterialIssueStockDetails);
+                }
+                if (_mRawMaterialIssueStockDetailsRepository.Save())
+                {
+                   List<RawMaterialTrack> rawMaterialTracks= new List<RawMaterialTrack>();
+                   RawMaterialTrack rawMaterialTrack = new RawMaterialTrack();
+                    foreach(var track in details)
+                    {
+                        rawMaterialTrack = GetRawmaterialTrkDetailsByISSueadndRMid(track.RawMaterialIssueStockId,track.RawMaterialId);
+                        rawMaterialTrack.IssueStatus = "StockOut";
+                        rawMaterialTracks.Add(rawMaterialTrack);
+                    }
+                    _rawMaterialTrackInfoRepository.UpdateAll(rawMaterialTracks);
+
+                }
+                IsSuccess = _rawMaterialTrackInfoRepository.Save();
+
+                return IsSuccess;
+            }
+            else if (info.Status == "Rejected")
+            {
+                MRawMaterialIssueStockInfo mRawMaterialIssueStockInfo = new MRawMaterialIssueStockInfo();
+                mRawMaterialIssueStockInfo = GetRawmaterialIssueInfoOneById(info.RawMaterialIssueStockId, 9);
+                mRawMaterialIssueStockInfo.Status = "Reject";
+                _mRawMaterialIssueStockInfoRepository.Update(mRawMaterialIssueStockInfo);
+                if (_mRawMaterialIssueStockInfoRepository.Save())
+                {
+                    List<MRawMaterialIssueStockDetails> mRawMaterialIssueStockDetails = new List<MRawMaterialIssueStockDetails>();
+                    MRawMaterialIssueStockDetails mRawMaterialIssueStockDetails1 = new MRawMaterialIssueStockDetails();
+                    foreach (var item in details)
+                    {
+                        mRawMaterialIssueStockDetails1 = GetRawmaterialIssueDetailsByISSueadndRMid(item.RawMaterialIssueStockId, item.RawMaterialId);
+                        mRawMaterialIssueStockDetails1.IssueStatus = "Reject";
+                        mRawMaterialIssueStockDetails.Add(mRawMaterialIssueStockDetails1);
+                    }
+                    _mRawMaterialIssueStockDetailsRepository.UpdateAll(mRawMaterialIssueStockDetails);
+                }
+                if (_mRawMaterialIssueStockDetailsRepository.Save())
+                {
+                    List<RawMaterialTrack> rawMaterialTracks = new List<RawMaterialTrack>();
+                    RawMaterialTrack rawMaterialTrack = new RawMaterialTrack();
+                    foreach (var track in details)
+                    {
+                        rawMaterialTrack = GetRawmaterialTrkDetailsByISSueadndRMid(track.RawMaterialIssueStockId, track.RawMaterialId);
+                        rawMaterialTrack.IssueStatus = "Reject";
+                        rawMaterialTracks.Add(rawMaterialTrack);
+                    }
+                    _rawMaterialTrackInfoRepository.UpdateAll(rawMaterialTracks);
+
+                }
+                IsSuccess = _rawMaterialTrackInfoRepository.Save();
+
+                return IsSuccess;
+
+            }
+            else
+            {
+                return IsSuccess;
+            }
+
+        }
+
+        public MRawMaterialIssueStockDetails GetRawmaterialIssueDetailsByISSueadndRMid(long RawMaterialIssueStockId, long RawMaterialId)
+        {
+            return _mRawMaterialIssueStockDetailsRepository.GetOneByOrg(c=>c.RawMaterialIssueStockId== RawMaterialIssueStockId && c.RawMaterialId== RawMaterialId);
+        }
+
+        public RawMaterialTrack GetRawmaterialTrkDetailsByISSueadndRMid(long RawMaterialIssueStockId, long RawMaterialId)
+        {
+            return _rawMaterialTrackInfoRepository.GetOneByOrg(p=>p.RawMaterialIssueStockId== RawMaterialIssueStockId && p.RawMaterialId== RawMaterialId);
         }
     }
 }

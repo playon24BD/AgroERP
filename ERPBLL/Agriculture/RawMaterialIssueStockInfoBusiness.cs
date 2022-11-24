@@ -238,5 +238,9 @@ namespace ERPBLL.Agriculture
             return isSuccess;
         }
 
+        public bool UpdateRawMaterialIssueStock(MRawMaterialIssueStockInfoDTO mRawMaterialIssueStockInfoDTO, long userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

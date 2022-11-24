@@ -83,9 +83,9 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
         }
 
      
-        public IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId, string Status)
+        public IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId)
         {
-            return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialIssueStockId == infoId && i.IssueStatus == "StockIn").ToList();
+            return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialIssueStockId == infoId).ToList();
 
         }
 

@@ -1,0 +1,41 @@
+﻿
+@model IEnumerable<ERPBO.Agriculture.ViewModels.MRawMaterialIssueStockDetailsViewModel>
+
+@{
+    ViewBag.Title = "_GetRawMaterialIssueDetail";
+    int sl = 0;
+    var info = (ERPBO.Agriculture.ViewModels.MRawMaterialIssueStockInfoViewModel)ViewBag.Info;
+}
+
+
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" id="tblReturnItems">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th>#SL</th>
+            <th>RawMaterial Name</th>
+            <th>Qty</th>
+            <th>Unit</th>
+
+            <th>StockDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+            <tr>
+                <td class="text-center">@sl</td>
+                <td class="hide">@item.RawMaterialIssueStockId</td>
+                <td class="hide">@item.RawMaterialId</td>
+
+                <td class="text-center">@item.RawMaterialName</td>
+                <td class="text-center text-bold">@item.Quantity</td>
+                <td class="text-center">@item.UnitName</td>
+
+                <td class="text-center">@item.EntryDate</td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>

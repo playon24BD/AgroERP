@@ -2976,7 +2976,7 @@ namespace ERPWeb.Controllers
 
                     };
 
-                    details = _mRawMaterialIssueStockDetails.GetRawMatwrialissueDetailsByInfoId(id.Value, Status).Select(i => new MRawMaterialIssueStockDetailsViewModel
+                    details = _mRawMaterialIssueStockDetails.GetRawMatwrialissueDetailsByInfoId(id.Value).Select(i => new MRawMaterialIssueStockDetailsViewModel
                     {
                         RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
                         UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
@@ -3097,37 +3097,116 @@ namespace ERPWeb.Controllers
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                var dto = _mRawMaterialIssueStockInfo.GetAllRawMaterialIssue(User.OrgId);
+                IEnumerable<MRawMaterialIssueStockInfoDTO> dto = _mRawMaterialIssueStockInfo.GetAllRawMaterialIssue(User.OrgId).Where(s => (name == "" || name == null) || (s.ProductBatchCode.Contains(name))).Select(o => new MRawMaterialIssueStockInfoDTO
+                {
+                    RawMaterialIssueStockId = o.RawMaterialIssueStockId,
+                    ProductBatchCode = o.ProductBatchCode,
+                    EntryDate = o.EntryDate,
+                    Status = o.Status,
+                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
 
-                //var dto = _returnRawMaterialBusiness.GetReturnRawMaterialInfos(name ?? null);
-                //List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
-                //AutoMapper.Mapper.Map(dto, viewModels);
-                //return PartialView("_GetReturnRawMaterial", viewModels);
+                }).ToList();
+                List<MRawMaterialIssueStockInfoViewModel> viewModels = new List<MRawMaterialIssueStockInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetRawMaterialIssueaccPartialView", viewModels);
 
 
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
             {
-                string Status = "Pending";
-                // string ReturnType = "Damage";
+                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
+                string Status = "StockIn";
+                var info = _mRawMaterialIssueStockInfo.GetRawmaterialIssueInfoOneById(id.Value, User.OrgId);
 
-                List<ReturnRawMaterialViewModel> details = new List<ReturnRawMaterialViewModel>();
+                List<MRawMaterialIssueStockDetailsViewModel> details = new List<MRawMaterialIssueStockDetailsViewModel>();
 
-                details = _returnRawMaterialBusiness.GetReturnRawMaterialBYRMId(id.Value, Status).Select(i => new ReturnRawMaterialViewModel
+                if (info != null)
                 {
-                    EntryDate = i.EntryDate,
-                    Quantity = i.Quantity,
-                    ReturnRawMaterialId = i.ReturnRawMaterialId,
-                    ReturnType = i.ReturnType
+                    ViewBag.Info = new MRawMaterialIssueStockInfoViewModel
+                    {
 
-                }).ToList();
+                        ProductBatchCode = info.ProductBatchCode,
+                        EntryDate = info.EntryDate,
+                        Status = info.Status,
 
-                return PartialView("_ReturnDetails", details);
+
+                    };
+
+                    details = _mRawMaterialIssueStockDetails.GetRawMatwrialissueDetailsByInfoId(id.Value).Select(i => new MRawMaterialIssueStockDetailsViewModel
+                    {
+                        RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                        UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
+                        Quantity = i.Quantity,
+                        IssueStatus = i.IssueStatus,
+                        EntryDate = i.EntryDate
+                    }).ToList();
+                }
+                else
+                {
+                    ViewBag.Info = new MRawMaterialIssueStockInfoViewModel();
+                }
+                return PartialView("_RawmatiralIssueDetails", details);
+
             }
 
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
+            {
+                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
+           
+                var info = _mRawMaterialIssueStockInfo.GetRawmaterialIssueInfoOneById(id.Value, User.OrgId);
 
+                List<MRawMaterialIssueStockDetailsViewModel> details = new List<MRawMaterialIssueStockDetailsViewModel>();
+
+                if (info != null)
+                {
+                    ViewBag.Info = new MRawMaterialIssueStockInfoViewModel
+                    {
+
+                        ProductBatchCode = info.ProductBatchCode,
+                        EntryDate = info.EntryDate,
+                        Status = info.Status,
+
+
+                    };
+
+                    details = _mRawMaterialIssueStockDetails.GetRawMatwrialissueDetailsByInfoId(id.Value).Select(i => new MRawMaterialIssueStockDetailsViewModel
+                    {
+                        RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                        UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
+                        Quantity = i.Quantity,
+                        IssueStatus = i.IssueStatus,
+                        EntryDate = i.EntryDate,
+                        RawMaterialId= i.RawMaterialId,
+                        RawMaterialIssueStockId= i.RawMaterialIssueStockId,
+                    }).ToList();
+                }
+                else
+                {
+                    ViewBag.Info = new MRawMaterialIssueStockInfoViewModel();
+                }
+                return PartialView("_RawmatiralIssueaccpet", details);
+
+            }
 
             return View();
+        }
+
+
+        public ActionResult DirectRMISsueAcceptSave(MRawMaterialIssueStockInfoViewModel info, List<MRawMaterialIssueStockDetailsViewModel> details)
+        {
+            bool IsSuccess = false;
+
+            if (ModelState.IsValid)
+            {
+                MRawMaterialIssueStockInfoDTO mRawMaterialIssueStockInfoDTO = new MRawMaterialIssueStockInfoDTO();
+                List<MRawMaterialIssueStockDetailsDTO> detailDTOs = new List<MRawMaterialIssueStockDetailsDTO>();
+                AutoMapper.Mapper.Map(info, mRawMaterialIssueStockInfoDTO);
+                AutoMapper.Mapper.Map(details, detailDTOs);
+                IsSuccess = _mRawMaterialIssueStockInfo.UpdateRawMaterialIssueStock(mRawMaterialIssueStockInfoDTO,detailDTOs ,User.UserId);
+            }
+            return Json(IsSuccess);
         }
 
         #endregion
