@@ -61,13 +61,14 @@
         var ctx1 = document.getElementById("lineChart").getContext('2d');
         var lineChart = new Chart(ctx1, {
             type: 'bar',
-           
+            
             data: {
                 labels: labelsArray,
+                labelFontColor: "red",
                 color:'#3EB9DC',
                 datasets: [{
                     label: '% Raw Material Current Stock',
-                    backgroundColor:"red",
+                    
                     //backgroundColor: '#3EB9DC',
                     backgroundColor: [
                         "#f990a7",
@@ -83,15 +84,37 @@
                 }]
             },
             options: {
+                legend: {
+                    labels: {
+                        fontColor: "blue",
+                        fontSize: 18
+                    }
+                },
                 tooltips: { mode: 'index', intersect: false },
                 responsive: true,
                 scales: {
-                    xAxes: [{ stacked: true }],
-                    yAxes: [{ stacked: true }]
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "green",
+                            fontSize: 18,
+                            stepSize: 1,
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "purple",
+                            fontSize: 14,
+                            stepSize: 1,
+                            beginAtZero: true
+                        }
+                    }]
                 }
-            }
-        });
+            }});
     });
+
+
+   
         @*var PieChartData =  
         {  
 
