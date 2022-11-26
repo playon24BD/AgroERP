@@ -6,15 +6,20 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <div id="chartContainerRM" style="height: 200px; width: 500px; margin-bottom:5px">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div id="chartContainerFG" style="height: 200px; width: 500px; margin-bottom:5px">
-            </div>
+            @*<div style="text-align:center; height: 200px; width: 500px; margin-bottom:5px">
+                <canvas id="Piecanvas"/>*@
+            @*<div id="chartContainerRM" style="height: 200px; width: 500px; margin-bottom:5px">
+                </div>*@
+            <canvas id="lineChart" height="150" width="200"></canvas>
+
         </div>
     </div>
-    <div class="row ">
+    @*<div class="col-md-6">
+            <div id="chartContainerFG" style="height: 200px; width: 500px; margin-bottom:5px">
+            </div>
+        </div>*@
+</div>
+@*<div class="row ">
 
         <div class="col-md-6">
             <div id="chartContainer" style="height: 200px; width: 500px;">
@@ -27,243 +32,270 @@
 
 
 
-    </div>
-    
-    @*<div class="row " style="margin-top: 10px">
-
-   
     </div>*@
-</div>
 
-<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+@*<div class="row " style="margin-top: 10px">
+
+
+    </div>*@
+@*</div>*@
+
+@*<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>*@
+@*<script type="text/javascript" src ="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js">
+    </script>*@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 <script type="text/javascript">
-    
-    window.onload = function () {
-        var chartCollection = new CanvasJS.Chart("chartContainerCollection",
-            {
-                title: {
-                    text: "Monthly Collection Chart"
-                },
-                axisX: {
-                    //title: "timeline",
-                    gridThickness: 1
-                },
-                //axisY: {
-                //    title: "Downloads"
-                //},
-                data: [
+    $(function () {
+        debugger;
+        //var labels = '<%=TempData["platform_family"] %>';
+        var labels = '@TempData["platform_family"]';
+        var datas = '@TempData["CurrentStock"]';
+        var labelsArray = new Array();
+        var dataArray = new Array();
+        for (var i = 0; i < labels.split(',').length; i++) {
+            labelsArray.push(labels.split(',')[i]);
+            dataArray.push(datas.split(',')[i]);
+        }
+        var ctx1 = document.getElementById("lineChart").getContext('2d');
+        var lineChart = new Chart(ctx1, {
+            type: 'bar',
+           
+            data: {
+                labels: labelsArray,
+                color:'#3EB9DC',
+                datasets: [{
+                    label: '% Raw Material Current Stock',
+                    backgroundColor:"red",
+                    //backgroundColor: '#3EB9DC',
+                    backgroundColor: [
+                        "#f990a7",
+                        "#aad2ed",
+                        "#9966FF",
+                        "#99e5e5",
+                        "#f7bd83",
+                        "#A52A2A",
+                        "#DC143C",
+                        "#FFA500 "
+                    ],  
+                    data: dataArray
+                }]
+            },
+            options: {
+                tooltips: { mode: 'index', intersect: false },
+                responsive: true,
+                scales: {
+                    xAxes: [{ stacked: true }],
+                    yAxes: [{ stacked: true }]
+                }
+            }
+        });
+    });
+        @*var PieChartData =  
+        {  
+
+                labels: [@Html.Raw(ViewBag.RMName)],  
+                datasets: [{  
+                    label: 'ProductWise Sales Count',  
+                    backgroundColor: [  
+                        "#f990a7",  
+                        "#aad2ed",  
+                        "#9966FF",  
+                        "#99e5e5",  
+                        "#f7bd83",  
+                    ],  
+                    borderWidth: 2,  
+                    data: [@ViewBag.RMCurrentStock]  
+                }]  
+        };
+        window.onload = function () {
+            debugger;
+            var chartRM = new CanvasJS.Chart("chartContainerFG",
+                {
+                    type: 'pie',
+                    data: PieChartData,
+                    options:
                     {
-                        type: "spline",
-                        dataPoints: [//array
-                            { x: new Date(2022, 10, 1), y: 5000 },
-                            { x: new Date(2022, 10, 2), y: 3000 },
-                            { x: new Date(2022, 10, 3), y: 4000 },
-                            { x: new Date(2022, 10, 4), y: 8000 },
-                            { x: new Date(2022, 10, 5), y: 40000 },
-                            { x: new Date(2022, 10, 6), y: 42855 },
-                            { x: new Date(2022, 10, 7), y: 47000 },
-                            { x: new Date(2022, 10, 8), y: 5800 },
-                            { x: new Date(2022, 10, 9), y: 6900 },
-                            { x: new Date(2022, 10, 10), y: 6000 },
-
-                            { x: new Date(2022, 10, 11), y: 5100 },
-                            { x: new Date(2022, 10, 12), y: 3200 },
-                            { x: new Date(2022, 10, 13), y: 4300 },
-                            { x: new Date(2022, 10, 14), y: 8500 },
-                            { x: new Date(2022, 10, 15), y: 43000 },
-                            { x: new Date(2022, 10, 16), y: 42855 },
-                            { x: new Date(2022, 10, 17), y: 47000 },
-                            { x: new Date(2022, 10, 18), y: 5900 },
-                            { x: new Date(2022, 10, 19), y: 7000 },
-                            { x: new Date(2022, 10, 20), y: 9000 },
-
-                            { x: new Date(2022, 10, 21), y: 2600 },
-                            { x: new Date(2022, 10, 22), y: 5800 },
-                            { x: new Date(2022, 10, 23), y: 6300 },
-                            { x: new Date(2022, 10, 24), y: 31890 }
-                            //{ x: new Date(2022, 11, 25), y: 51 },
-                            //{ x: new Date(2022, 11, 26), y: 54 },
-                            //{ x: new Date(2022, 11, 27), y: 86 },
-                            //{ x: new Date(2022, 11, 28), y: 90 },
-                            //{ x: new Date(2022, 11, 29), y: 13 },
-                            //{ x: new Date(2022, 11, 30), y: 20 },
-
-                        ]
+                        title:
+                        {
+                            display: true,
+                            text: "ProductWise Sales Count"
+                        },
+                        responsive: true,
+                        maintainAspectRatio: true
                     }
-                ]
-            });
-        chartCollection.render();
+                });
+            chartRM.render();
+        }*@  
+        //window.onload = function () {
 
-        var chartSales = new CanvasJS.Chart("chartContainer",
-            {
-                title: {
-                    text: "Monthly Sales Chart"
-                },
-                axisX: {
-                    //title: "timeline",
-                    gridThickness: 1
-                },
-                //axisY: {
-                //    title: "Downloads"
-                //},
-                data: [
-                    {
-                        type: "spline",
-                        dataPoints: [//array
-                            { x: new Date(2022, 10, 1), y: 2600 },
-                            { x: new Date(2022, 10, 2), y: 3800 },
-                            { x: new Date(2022, 10, 3), y: 4300 },
-                            { x: new Date(2022, 10, 4), y: 1100 },
-                            { x: new Date(2022, 10, 5), y: 4100 },
-                            { x: new Date(2022, 10, 6), y: 5400 },
-                            { x: new Date(2022, 10, 7), y: 6600 },
-                            { x: new Date(2022, 10, 8), y: 6000 },
-                            { x: new Date(2022, 10, 9), y: 5300 },
-                            { x: new Date(2022, 10, 10), y: 6000 },
+        //    var chartRM = new CanvasJS.Chart("chartContainerRM",
+        //        {
+        //            title: {
+        //                text: "R.M Stock"
+        //            },
+        //            legend: {
+        //                maxWidth: 500,
+        //                itemWidth: 200
+        //            },
+        //            data: [
+        //                {
+        //                    type: "pie",
+        //                    showInLegend: true,
+        //                    legendText: "{indexLabel}",
+        //                    dataPoints: [
+        //                        { y: 1602002, indexLabel: "4.cpa gm" },
+        //                        { y: 1323000, indexLabel: "Chelated zinc 10% kg" },
+        //                        { y: 1323000, indexLabel: "Solubor Boron 20% kg" },
+        //                        { y: 7101000, indexLabel: "CMC kg" },
+        //                        { y: 7056000, indexLabel: "Apple Green Colour kg" },
+        //                        { y: 8667000, indexLabel: "Zipsum gm" },
+        //                        { y: 7731000, indexLabel: "Dolomight-500+Naphtholic Acetic Acid-98 kg" },
+        //                        { y: 7101000, indexLabel: "Dolomight" }
+        //                    ]
+        //                }
+        //            ]
+        //        });
+        //    chartRM.render();
+        //        //var chartCollection = new CanvasJS.Chart("chartContainerCollection",
+        //        //    {
+        //        //        title: {
+        //        //            text: "Monthly Collection Chart"
+        //        //        },
+        //        //        axisX: {
+        //        //            //title: "timeline",
+        //        //            gridThickness: 1
+        //        //        },
+        //        //        //axisY: {
+        //        //        //    title: "Downloads"
+        //        //        //},
+        //        //        data: [
+        //        //            {
+        //        //                type: "spline",
+        //        //                dataPoints: [//array
+        //        //                    { x: new Date(2022, 10, 1), y: 5000 },
+        //        //                    { x: new Date(2022, 10, 2), y: 3000 },
+        //        //                    { x: new Date(2022, 10, 3), y: 4000 },
+        //        //                    { x: new Date(2022, 10, 4), y: 8000 },
+        //        //                    { x: new Date(2022, 10, 5), y: 40000 },
+        //        //                    { x: new Date(2022, 10, 6), y: 42855 },
+        //        //                    { x: new Date(2022, 10, 7), y: 47000 },
+        //        //                    { x: new Date(2022, 10, 8), y: 5800 },
+        //        //                    { x: new Date(2022, 10, 9), y: 6900 },
+        //        //                    { x: new Date(2022, 10, 10), y: 6000 },
 
-                            { x: new Date(2022, 10, 11), y: 1000 },
-                            { x: new Date(2022, 10, 12), y: 2800 },
-                            { x: new Date(2022, 10, 13), y: 7300 },
-                            { x: new Date(2022, 10, 14), y: 2900 },
-                            { x: new Date(2022, 10, 15), y: 800 },
-                            { x: new Date(2022, 10, 16), y: 5400 },
-                            { x: new Date(2022, 10, 17), y: 3600 },
-                            { x: new Date(2022, 10, 18), y: 7000 },
-                            { x: new Date(2022, 10, 19), y: 800 },
-                            { x: new Date(2022, 10, 20), y: 900 },
+        //        //                    { x: new Date(2022, 10, 11), y: 5100 },
+        //        //                    { x: new Date(2022, 10, 12), y: 3200 },
+        //        //                    { x: new Date(2022, 10, 13), y: 4300 },
+        //        //                    { x: new Date(2022, 10, 14), y: 8500 },
+        //        //                    { x: new Date(2022, 10, 15), y: 43000 },
+        //        //                    { x: new Date(2022, 10, 16), y: 42855 },
+        //        //                    { x: new Date(2022, 10, 17), y: 47000 },
+        //        //                    { x: new Date(2022, 10, 18), y: 5900 },
+        //        //                    { x: new Date(2022, 10, 19), y: 7000 },
+        //        //                    { x: new Date(2022, 10, 20), y: 9000 },
 
-                            { x: new Date(2022, 10, 21), y: 2600 },
-                            { x: new Date(2022, 10, 22), y: 5800 },
-                            { x: new Date(2022, 10, 23), y: 6300 },
-                            { x: new Date(2022, 10, 24), y: 4900 }
-                            //{ x: new Date(2022, 11, 25), y: 51 },
-                            //{ x: new Date(2022, 11, 26), y: 54 },
-                            //{ x: new Date(2022, 11, 27), y: 86 },
-                            //{ x: new Date(2022, 11, 28), y: 90 },
-                            //{ x: new Date(2022, 11, 29), y: 13 },
-                            //{ x: new Date(2022, 11, 30), y: 20 },
+        //        //                    { x: new Date(2022, 10, 21), y: 2600 },
+        //        //                    { x: new Date(2022, 10, 22), y: 5800 },
+        //        //                    { x: new Date(2022, 10, 23), y: 6300 },
+        //        //                    { x: new Date(2022, 10, 24), y: 31890 }
+        //        //                    //{ x: new Date(2022, 11, 25), y: 51 },
+        //        //                    //{ x: new Date(2022, 11, 26), y: 54 },
+        //        //                    //{ x: new Date(2022, 11, 27), y: 86 },
+        //        //                    //{ x: new Date(2022, 11, 28), y: 90 },
+        //        //                    //{ x: new Date(2022, 11, 29), y: 13 },
+        //        //                    //{ x: new Date(2022, 11, 30), y: 20 },
 
-                        ]
-                    }
-                ]
-            });
-        chartSales.render();
+        //        //                ]
+        //        //            }
+        //        //        ]
+        //        //    });
+        //        //chartCollection.render();
 
-        var chartRM = new CanvasJS.Chart("chartContainerRM",
-            {
-                title: {
-                    text: "R.M Stock"
-                },
-                legend: {
-                    maxWidth: 500,
-                    itemWidth: 200
-                },
-                data: [
-                    {
-                        type: "pie",
-                        showInLegend: true,
-                        legendText: "{indexLabel}",
-                        dataPoints: [
-                            { y: 1602002, indexLabel: "4.cpa gm" },
-                            { y: 1323000, indexLabel: "Chelated zinc 10% kg" },
-                            { y: 1323000, indexLabel: "Solubor Boron 20% kg" },
-                            { y: 7101000, indexLabel: "CMC kg" },
-                            { y: 7056000, indexLabel: "Apple Green Colour kg" },
-                            { y: 8667000, indexLabel: "Zipsum gm" },
-                            { y: 7731000, indexLabel: "Dolomight-500+Naphtholic Acetic Acid-98 kg" },
-                            { y: 7101000, indexLabel: "Dolomight" }
-                        ]
-                    }
-                ]
-            });
-        chartRM.render();
-        var chartFGProduct = new CanvasJS.Chart("chartContainerFG",
-            {
-                title: {
-                    text: "F.G Product Stock"
-                },
-                legend: {
-                    maxWidth: 500,
-                    itemWidth: 200
-                },
-                data: [
-                    {
-                        type: "pie",
-                        showInLegend: true,
-                        legendText: "{indexLabel}",
-                        dataPoints: [
-                            { y: 420, indexLabel: "Nava(1kg)" },
-                            { y: 440, indexLabel: "Nava(100ml)" },
-                            { y: 470, indexLabel: "Nava(500ml)" },
-                            { y: 500, indexLabel: "Nava Root(1kg)" }
+        //        //var chartSales = new CanvasJS.Chart("chartContainer",
+        //        //    {
+        //        //        title: {
+        //        //            text: "Monthly Sales Chart"
+        //        //        },
+        //        //        axisX: {
+        //        //            //title: "timeline",
+        //        //            gridThickness: 1
+        //        //        },
+        //        //        //axisY: {
+        //        //        //    title: "Downloads"
+        //        //        //},
+        //        //        data: [
+        //        //            {
+        //        //                type: "spline",
+        //        //                dataPoints: [//array
+        //        //                    { x: new Date(2022, 10, 1), y: 2600 },
+        //        //                    { x: new Date(2022, 10, 2), y: 3800 },
+        //        //                    { x: new Date(2022, 10, 3), y: 4300 },
+        //        //                    { x: new Date(2022, 10, 4), y: 1100 },
+        //        //                    { x: new Date(2022, 10, 5), y: 4100 },
+        //        //                    { x: new Date(2022, 10, 6), y: 5400 },
+        //        //                    { x: new Date(2022, 10, 7), y: 6600 },
+        //        //                    { x: new Date(2022, 10, 8), y: 6000 },
+        //        //                    { x: new Date(2022, 10, 9), y: 5300 },
+        //        //                    { x: new Date(2022, 10, 10), y: 6000 },
 
-                        ]
-                    }
-                ]
-            });
-        chartFGProduct.render();
+        //        //                    { x: new Date(2022, 10, 11), y: 1000 },
+        //        //                    { x: new Date(2022, 10, 12), y: 2800 },
+        //        //                    { x: new Date(2022, 10, 13), y: 7300 },
+        //        //                    { x: new Date(2022, 10, 14), y: 2900 },
+        //        //                    { x: new Date(2022, 10, 15), y: 800 },
+        //        //                    { x: new Date(2022, 10, 16), y: 5400 },
+        //        //                    { x: new Date(2022, 10, 17), y: 3600 },
+        //        //                    { x: new Date(2022, 10, 18), y: 7000 },
+        //        //                    { x: new Date(2022, 10, 19), y: 800 },
+        //        //                    { x: new Date(2022, 10, 20), y: 900 },
 
-    }
-    
+        //        //                    { x: new Date(2022, 10, 21), y: 2600 },
+        //        //                    { x: new Date(2022, 10, 22), y: 5800 },
+        //        //                    { x: new Date(2022, 10, 23), y: 6300 },
+        //        //                    { x: new Date(2022, 10, 24), y: 4900 }
+        //        //                    //{ x: new Date(2022, 11, 25), y: 51 },
+        //        //                    //{ x: new Date(2022, 11, 26), y: 54 },
+        //        //                    //{ x: new Date(2022, 11, 27), y: 86 },
+        //        //                    //{ x: new Date(2022, 11, 28), y: 90 },
+        //        //                    //{ x: new Date(2022, 11, 29), y: 13 },
+        //        //                    //{ x: new Date(2022, 11, 30), y: 20 },
+
+        //        //                ]
+        //        //            }
+        //        //        ]
+        //        //    });
+        //        //chartSales.render();
+
+
+        //        //var chartFGProduct = new CanvasJS.Chart("chartContainerFG",
+        //        //    {
+        //        //        title: {
+        //        //            text: "F.G Product Stock"
+        //        //        },
+        //        //        legend: {
+        //        //            maxWidth: 500,
+        //        //            itemWidth: 200
+        //        //        },
+        //        //        data: [
+        //        //            {
+        //        //                type: "pie",
+        //        //                showInLegend: true,
+        //        //                legendText: "{indexLabel}",
+        //        //                dataPoints: [
+        //        //                    { y: 420, indexLabel: "Nava(1kg)" },
+        //        //                    { y: 440, indexLabel: "Nava(100ml)" },
+        //        //                    { y: 470, indexLabel: "Nava(500ml)" },
+        //        //                    { y: 500, indexLabel: "Nava Root(1kg)" }
+
+        //        //                ]
+        //        //            }
+        //        //        ]
+        //        //    });
+        //        //chartFGProduct.render();
+
+        //    }
+
 </script>
 
-@*<script type="text/javascript">
-    window.onload = function () {
-        var chart = new CanvasJS.Chart("chartContainerCollection",
-            {
-                title: {
-                    text: "Monthly Collection Chart"
-                },
-                axisX: {
-                    //title: "timeline",
-                    gridThickness: 1
-                },
-                //axisY: {
-                //    title: "Downloads"
-                //},
-                data: [
-                    {
-                        type: "spline",
-                        dataPoints: [//array
-                            { x: new Date(2022, 10, 1), y: 5000 },
-                            { x: new Date(2022, 10, 2), y: 3000 },
-                            { x: new Date(2022, 10, 3), y: 4000 },
-                            { x: new Date(2022, 10, 4), y: 8000 },
-                            { x: new Date(2022, 10, 5), y: 40000 },
-                            { x: new Date(2022, 10, 6), y: 42855 },
-                            { x: new Date(2022, 10, 7), y: 47000 },
-                            { x: new Date(2022, 10, 8), y: 5800 },
-                            { x: new Date(2022, 10, 9), y: 6900 },
-                            { x: new Date(2022, 10, 10), y: 6000 },
-
-                            { x: new Date(2022, 10, 11), y: 5100 },
-                            { x: new Date(2022, 10, 12), y: 3200 },
-                            { x: new Date(2022, 10, 13), y: 4300 },
-                            { x: new Date(2022, 10, 14), y: 8500 },
-                            { x: new Date(2022, 10, 15), y: 43000 },
-                            { x: new Date(2022, 10, 16), y: 42855 },
-                            { x: new Date(2022, 10, 17), y: 47000 },
-                            { x: new Date(2022, 10, 18), y: 5900 },
-                            { x: new Date(2022, 10, 19), y: 7000 },
-                            { x: new Date(2022, 10, 20), y: 9000 },
-
-                            { x: new Date(2022, 10, 21), y: 2600 },
-                            { x: new Date(2022, 10, 22), y: 5800 },
-                            { x: new Date(2022, 10, 23), y: 6300 },
-                            { x: new Date(2022, 10, 24), y: 4900 }
-                            //{ x: new Date(2022, 11, 25), y: 51 },
-                            //{ x: new Date(2022, 11, 26), y: 54 },
-                            //{ x: new Date(2022, 11, 27), y: 86 },
-                            //{ x: new Date(2022, 11, 28), y: 90 },
-                            //{ x: new Date(2022, 11, 29), y: 13 },
-                            //{ x: new Date(2022, 11, 30), y: 20 },
-
-                        ]
-                    }
-                ]
-            });
-
-        chart.render();
-    }
-</script>*@

@@ -156,6 +156,7 @@
     <Compile Include="Agriculture\Interface\IRegionSetup.cs" />
     <Compile Include="Agriculture\Interface\IRegionUserBusiness.cs" />
     <Compile Include="Agriculture\Interface\IReturnRawMaterialBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IRMStockDashboardGrap.cs" />
     <Compile Include="Agriculture\Interface\ISalesPaymentRegister.cs" />
     <Compile Include="Agriculture\Interface\ISalesReturn.cs" />
     <Compile Include="Agriculture\Interface\IStockiestInfo.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Agriculture\RegionSetupBusiness.cs" />
     <Compile Include="Agriculture\RegionUserBusiness.cs" />
     <Compile Include="Agriculture\ReturnRawMaterialBusiness.cs" />
+    <Compile Include="Agriculture\RMStockDashboardGrapBusiness.cs" />
     <Compile Include="Agriculture\SalesPaymentRegisterBusiness.cs" />
     <Compile Include="Agriculture\SalesReturnBusiness.cs" />
     <Compile Include="Agriculture\StockiestInfoBusiness.cs" />

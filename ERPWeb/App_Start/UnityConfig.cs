@@ -110,7 +110,9 @@ namespace ERPWeb
             container.RegisterType<ICommissionOnProductHistoryBusiness, CommissionOnProductHistoryBusiness>();
             container.RegisterType<ICommissionOnProductOnSalesBusiness, CommissionOnProductOnSalesBusiness>();
             container.RegisterType<ICommisionOnProductSalesDetailsBusiness, CommisionOnProductSalesDetailsBusiness>();
+            container.RegisterType<IRMStockDashboardGrap, RMStockDashboardGrapBusiness>();
             container.RegisterType<IAgricultureUnitOfWork, AgricultureUnitOfWork>();
+            
             #endregion
             // FrontDesk Database
 
