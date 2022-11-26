@@ -114,7 +114,8 @@ Utility.ParamChecker(param));
                         Status = "StockIn",
                         EntryDate = DateTime.Now,
                         EntryUserId = userId,
-                        ExpireDate = item.ExpireDate
+                        ExpireDate = item.ExpireDate,
+                        RmMRPCode= item.RmMRPCode,
                         
 
                     };

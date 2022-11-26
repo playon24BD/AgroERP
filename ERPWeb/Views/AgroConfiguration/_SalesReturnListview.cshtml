@@ -40,7 +40,7 @@
                     <td class="text-center">@item.QtyKG</td>
                     <td class="text-center">@item.BoxQuanity</td>
                     <td class="text-center">@item.ReturnPerUnitPrice</td>
-                    <td class="text-center">@item.ReturnDate</td>
+                    <td class="text-center">@item.ReturnDate.Value.ToString("dd-MMM-yyyy")</td>
                     @*<td class="text-center">@item.Status</td>*@
                     <td class="text-center" data-val="@item.Status">
                         <span class="@badge">@item.Status</span>

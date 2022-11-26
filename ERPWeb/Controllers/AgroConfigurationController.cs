@@ -3105,7 +3105,7 @@ namespace ERPWeb.Controllers
                     Status = o.Status,
                     UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
 
-                }).ToList();
+                }).OrderByDescending(o=>o.RawMaterialIssueStockId).ToList();
                 List<MRawMaterialIssueStockInfoViewModel> viewModels = new List<MRawMaterialIssueStockInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_GetRawMaterialIssueaccPartialView", viewModels);
@@ -4621,9 +4621,11 @@ namespace ERPWeb.Controllers
                     MeasurementSize= i.MeasurementSize,
                     Status= i.Status,
                     QtyKG= i.QtyKG,
-                    FinishGoodProductName=_finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId,User.OrgId).FinishGoodProductName
+                    FinishGoodProductName=_finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId,User.OrgId).FinishGoodProductName,
+                    BoxQuanity= i.BoxQuanity,
+                    SalesReturnId= i.SalesReturnId,
 
-                }).ToList();
+                }).OrderByDescending(i => i.SalesReturnId).ToList();
 
                 List<SalesReturnViewModel> details = new List<SalesReturnViewModel>();
                 AutoMapper.Mapper.Map(dto, details);
@@ -5017,5 +5019,7 @@ namespace ERPWeb.Controllers
 
         }
         #endregion
+
+
     }
 }

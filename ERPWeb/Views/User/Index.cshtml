@@ -20,7 +20,6 @@
         </div>*@
 </div>
 @*<div class="row ">
-
         <div class="col-md-6">
             <div id="chartContainer" style="height: 200px; width: 500px;">
             </div>
@@ -29,19 +28,14 @@
             <div id="chartContainerCollection" style="height: 200px; width: 500px;">
             </div>
         </div>
-
-
-
     </div>*@
 
 @*<div class="row " style="margin-top: 10px">
-
-
     </div>*@
 @*</div>*@
 
 @*<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>*@
-@*<script type="text/javascript" src ="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js">
+@*<script type="text/javascript" src ="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js">
     </script>*@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
@@ -78,7 +72,7 @@
                         "#A52A2A",
                         "#DC143C",
                         "#FFA500 "
-                    ],  
+                    ],  
                     data: dataArray
                 }]
             },
@@ -92,22 +86,21 @@
             }
         });
     });
-        @*var PieChartData =  
-        {  
-
-                labels: [@Html.Raw(ViewBag.RMName)],  
-                datasets: [{  
-                    label: 'ProductWise Sales Count',  
-                    backgroundColor: [  
-                        "#f990a7",  
-                        "#aad2ed",  
-                        "#9966FF",  
-                        "#99e5e5",  
-                        "#f7bd83",  
-                    ],  
-                    borderWidth: 2,  
-                    data: [@ViewBag.RMCurrentStock]  
-                }]  
+        @*var PieChartData =  
+        {  
+                labels: [@Html.Raw(ViewBag.RMName)],  
+                datasets: [{  
+                    label: 'ProductWise Sales Count',  
+                    backgroundColor: [  
+                        "#f990a7",  
+                        "#aad2ed",  
+                        "#9966FF",  
+                        "#99e5e5",  
+                        "#f7bd83",  
+                    ],  
+                    borderWidth: 2,  
+                    data: [@ViewBag.RMCurrentStock]  
+                }]  
         };
         window.onload = function () {
             debugger;
@@ -120,16 +113,15 @@
                         title:
                         {
                             display: true,
-                            text: "ProductWise Sales Count"
+                            text: "ProductWise Sales Count"
                         },
                         responsive: true,
                         maintainAspectRatio: true
                     }
                 });
             chartRM.render();
-        }*@  
+        }*@  
         //window.onload = function () {
-
         //    var chartRM = new CanvasJS.Chart("chartContainerRM",
         //        {
         //            title: {
@@ -184,7 +176,6 @@
         //        //                    { x: new Date(2022, 10, 8), y: 5800 },
         //        //                    { x: new Date(2022, 10, 9), y: 6900 },
         //        //                    { x: new Date(2022, 10, 10), y: 6000 },
-
         //        //                    { x: new Date(2022, 10, 11), y: 5100 },
         //        //                    { x: new Date(2022, 10, 12), y: 3200 },
         //        //                    { x: new Date(2022, 10, 13), y: 4300 },
@@ -195,7 +186,6 @@
         //        //                    { x: new Date(2022, 10, 18), y: 5900 },
         //        //                    { x: new Date(2022, 10, 19), y: 7000 },
         //        //                    { x: new Date(2022, 10, 20), y: 9000 },
-
         //        //                    { x: new Date(2022, 10, 21), y: 2600 },
         //        //                    { x: new Date(2022, 10, 22), y: 5800 },
         //        //                    { x: new Date(2022, 10, 23), y: 6300 },
@@ -206,13 +196,11 @@
         //        //                    //{ x: new Date(2022, 11, 28), y: 90 },
         //        //                    //{ x: new Date(2022, 11, 29), y: 13 },
         //        //                    //{ x: new Date(2022, 11, 30), y: 20 },
-
         //        //                ]
         //        //            }
         //        //        ]
         //        //    });
         //        //chartCollection.render();
-
         //        //var chartSales = new CanvasJS.Chart("chartContainer",
         //        //    {
         //        //        title: {
@@ -239,7 +227,6 @@
         //        //                    { x: new Date(2022, 10, 8), y: 6000 },
         //        //                    { x: new Date(2022, 10, 9), y: 5300 },
         //        //                    { x: new Date(2022, 10, 10), y: 6000 },
-
         //        //                    { x: new Date(2022, 10, 11), y: 1000 },
         //        //                    { x: new Date(2022, 10, 12), y: 2800 },
         //        //                    { x: new Date(2022, 10, 13), y: 7300 },
@@ -250,7 +237,6 @@
         //        //                    { x: new Date(2022, 10, 18), y: 7000 },
         //        //                    { x: new Date(2022, 10, 19), y: 800 },
         //        //                    { x: new Date(2022, 10, 20), y: 900 },
-
         //        //                    { x: new Date(2022, 10, 21), y: 2600 },
         //        //                    { x: new Date(2022, 10, 22), y: 5800 },
         //        //                    { x: new Date(2022, 10, 23), y: 6300 },
@@ -261,14 +247,11 @@
         //        //                    //{ x: new Date(2022, 11, 28), y: 90 },
         //        //                    //{ x: new Date(2022, 11, 29), y: 13 },
         //        //                    //{ x: new Date(2022, 11, 30), y: 20 },
-
         //        //                ]
         //        //            }
         //        //        ]
         //        //    });
         //        //chartSales.render();
-
-
         //        //var chartFGProduct = new CanvasJS.Chart("chartContainerFG",
         //        //    {
         //        //        title: {
@@ -288,14 +271,10 @@
         //        //                    { y: 440, indexLabel: "Nava(100ml)" },
         //        //                    { y: 470, indexLabel: "Nava(500ml)" },
         //        //                    { y: 500, indexLabel: "Nava Root(1kg)" }
-
         //        //                ]
         //        //            }
         //        //        ]
         //        //    });
         //        //chartFGProduct.render();
-
         //    }
-
 </script>
-
