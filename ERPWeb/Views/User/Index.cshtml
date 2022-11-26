@@ -61,7 +61,7 @@
                 labelFontColor: "red",
                 color:'#3EB9DC',
                 datasets: [{
-                    label: '% Raw Material Current Stock',
+                    label: 'Raw Material Current Stock',
                     
                     //backgroundColor: '#3EB9DC',
                     backgroundColor: [
@@ -80,13 +80,14 @@
             options: {
                 legend: {
                     labels: {
-                        fontColor: "blue",
+                        fontColor: "white",
                         fontSize: 18
                     }
                 },
-                tooltips: { mode: 'index', intersect: false },
+                //tooltips: { mode: 'index', intersect: false },
                 responsive: true,
                 scales: {
+<<<<<<< Updated upstream
                     yAxes: [{
                         ticks: {
                             fontColor: "white",
@@ -95,15 +96,31 @@
                             beginAtZero: true
                         }
                     }],
+=======
+                    //xAxes: [{ stacked: true }],
+                    //xAxes: [{ stacked: true }],
+                    
+>>>>>>> Stashed changes
                     xAxes: [{
                         ticks: {
                             fontColor: "white",
                             fontSize: 14,
                             stepSize: 1,
-                            beginAtZero: true
+                            beginAtZero: true,
+                            stacked: true
                         }
-                    }]
-                }
+                    }],
+                    yAxes: [{
+                        //ticks: {
+                        fontColor: "white",
+                        fontSize: 14,
+                        stepSize: 1,
+                        beginAtZero: true,
+                        stacked: true
+                       // }
+                    }]                    
+                    
+                },
             }});
     });
 
@@ -125,7 +142,6 @@
 =======
 
 
-   
         @*var PieChartData =  
         {  
 
