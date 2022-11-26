@@ -36,5 +36,6 @@ namespace ERPBO.Agriculture.DTOModels
         //dto
         public string RawMaterialName { get; set; }
         public string UnitName { get; set; }
+        public string RmMRPCode { get; set; }
     }
 }

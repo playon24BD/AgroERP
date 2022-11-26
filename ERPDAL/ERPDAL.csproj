@@ -179,6 +179,10 @@
     <Compile Include="AgricultureContextMigrations\202211231118500_RMTrack.Designer.cs">
       <DependentUpon>202211231118500_RMTrack.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202211260543091_Agriculture_RMPurchaseRMCode.cs" />
+    <Compile Include="AgricultureContextMigrations\202211260543091_Agriculture_RMPurchaseRMCode.Designer.cs">
+      <DependentUpon>202211260543091_Agriculture_RMPurchaseRMCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -296,6 +300,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202211231118500_RMTrack.resx">
       <DependentUpon>202211231118500_RMTrack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211260543091_Agriculture_RMPurchaseRMCode.resx">
+      <DependentUpon>202211260543091_Agriculture_RMPurchaseRMCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

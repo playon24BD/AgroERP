@@ -211,12 +211,12 @@
                                                                 <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
                                                             </div>
 
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-1">
                                                                 <label for="ddluprice">Unit Price</label>
                                                                 <input type="number" id="ddluprice" name="uprice" class="form-control form-control-sm" />
                                                                 <span class="error hide req-uprice">Unit Price Is Required</span>
                                                             </div>
-                                                            <div class="col-md-1">
+                                                            <div class="col-md-2">
                                                                 <label for="ddlqty"> Qty</label>
                                                                 <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
                                                                 <span class="error hide req-qty">Qty Is Required</span>
@@ -439,21 +439,21 @@
 
         // ===================================
 
-        $('#datepicker1').datepicker({
-            format: "mm : dd : yyyy",
-            todayHighlight: true,
-            autoclose: true,
-            container: '#box1',
-            orientation: 'top right'
-        });
+        //$('#datepicker1').datepicker({
+        //    format: "dd-mm-yyyy",
+        //    todayHighlight: true,
+        //    autoclose: true,
+        //    container: '#box1',
+        //    orientation: 'top right'
+        //});
 
-        $('#datepicker2').datepicker({
-            format: 'mm \\ dd \\ yyyy',
-            todayHighlight: true,
-            autoclose: true,
-            container: '#box2',
-            orientation: 'top right'
-        });
+        //$('#datepicker2').datepicker({
+        //    format: 'dd-mm-yyyy',
+        //    todayHighlight: true,
+        //    autoclose: true,
+        //    container: '#box2',
+        //    orientation: 'top right'
+        //});
 
         $('#datepicker1, #datepicker2, #simple, #datePicker').datepicker('setDate', today);
         //dateend

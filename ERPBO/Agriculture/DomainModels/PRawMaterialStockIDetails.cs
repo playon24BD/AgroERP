@@ -36,7 +36,7 @@ namespace ERPBO.Agriculture.DomainModels
 
         public PRawMaterialStockInfo PRawMaterialStockInfo { get; set; }
 
-
+        public string RmMRPCode { get; set; }
 
 
 
