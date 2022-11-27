@@ -57,12 +57,12 @@
     var colors = ["#27AE60", "#ffc107", "#8D6E63", "#BA68C8", "#2196F3", "#009688", "#D4E157", "#9E9E9E", "#607D8B", "#CC3333", "#DC7633", "#E91E63", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000"];
     function GetLast30DaysSalesChart() {
         debugger;
-        
+
         var days = '@TempData["days"]';
         var charts = '@TempData["charts"]';
         //Generate30DaysSalesChart(days, charts);
         Generate30DaysSalesChartTest(days, charts);
-        
+
     }
 
     function Generate30DaysSalesChart(days, data) {
@@ -199,7 +199,7 @@
             //    }
             //}
             options: {
-                
+
                 legend: {
                     labels: {
                         fontColor: "white",
@@ -246,7 +246,7 @@
         });
     }
 
-    
+
 
 
     function RMStockGrap() {
@@ -310,7 +310,7 @@
                             //drawBorder: false,
                         }
 
-                    }], 
+                    }],
 
                     yAxes: [{
                         ticks: {
@@ -324,7 +324,7 @@
                             //color: '#efefef',
                             //drawBorder: false,
                         }
-                    }]    
+                    }]
                 },
 
             }});
@@ -406,7 +406,7 @@
                         }
                     }],
 
-                   
+
                 },
             }});
     };
