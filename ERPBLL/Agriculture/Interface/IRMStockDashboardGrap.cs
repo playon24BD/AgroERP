@@ -11,5 +11,8 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<RawMaterialTrackDTO> GetMainStockRMName(long orgId);
         IEnumerable<RawMaterialTrackDTO> GetMainStockRMCurrentStock(long orgId);
+
+        IEnumerable<FinishGoodProductionInfoDTO> GetMainStockFGProductName(long orgId);
+        IEnumerable<FinishGoodProductionInfoDTO> GetMainStockFGProductCurrentStock(long orgId);
     }
 }

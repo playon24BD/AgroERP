@@ -54,17 +54,25 @@ namespace ERPWeb.Controllers
 
             TempData["platform_family"] = string.Join(",", platformfamily);
             TempData["CurrentStock"] = string.Join(",", CurrentStock);
+
+            //productStockgraph
+            var FGProductNameList = _rMStockDashboardGrap.GetMainStockFGProductName(User.OrgId);
+            List<string> product = new List<string>();
+            List<string> stock = new List<string>();
+            foreach(var item in FGProductNameList)
+            {
+                product.Add(item.FinishGoodProductName.ToString());
+            }
+            var FGCurrsentQtyList = _rMStockDashboardGrap.GetMainStockFGProductCurrentStock(User.OrgId);
+            foreach(var item in FGCurrsentQtyList)
+            {
+                stock.Add(item.CurrentStock.ToString());
+            }
+            TempData["FG_NAME"] = string.Join(",", product);
+            TempData["CurrentStockF"] = string.Join(",", stock);
             return View();
 
-            //IEnumerable<RawMaterialTrackDTO> RMNameList = _rMStockDashboardGrap.GetMainStockRMName(User.OrgId);
-            //ViewBag.RMName = RMNameList;
-            //IEnumerable<RawMaterialTrackDTO> RMCurrentStockList = _rMStockDashboardGrap.GetMainStockRMCurrentStock(User.OrgId);
-            //ViewBag.RMCurrentStock = RMCurrentStockList;
 
-            //TempData["platform_family"] = string.Join(",", RMNameList);
-            //TempData["percentage"] = string.Join(",", RMCurrentStockList);
-
-            //return View();
     
         }
 
