@@ -58,9 +58,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        debugger;
         $("#cw").addClass("ccc2");
         //initialLoad();
         setInterval('refreshPage()', 300000);
+        debugger;
         RMStockGrap();
         ProductStockGrap();
         GetLast30DaysSalesChart();
@@ -72,24 +74,11 @@
     var colors = ["#27AE60", "#ffc107", "#8D6E63", "#BA68C8", "#2196F3", "#009688", "#D4E157", "#9E9E9E", "#607D8B", "#CC3333", "#DC7633", "#E91E63", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000"];
     function GetLast30DaysSalesChart() {
         debugger;
-        //$.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAgroProductSalesInfo', data, getToken())).then(function (res, status)
-        //$.when(postReqWithToken(dataType.applicationJson, dataType.json, type.post, '/AgroConfiguration/GetLast30DaysAgroSales', null, getToken())).then(function (res, status) {
-        //    debugger;
-        //    if (status === 'success') {
-        //        //console.log(res);
+        
         var days = '@TempData["days"]';
         var charts = '@TempData["charts"]';
         Generate30DaysSalesChart(days, charts);
-        //    }
-        //    else {
-        //        $(".toastrDefaultError").trigger('click');
-        //        $(".toastrDefaultError").fadeOut(800);
-        //    }
-        //}).fail(function (error) {
-        //    console.log(error);
-        //    $(".toastrDefaultError").trigger('click');
-        //    $(".toastrDefaultError").fadeOut(800);
-        //})
+        
     }
 
     function Generate30DaysSalesChart(days, data) {
@@ -247,7 +236,6 @@
                 //tooltips: { mode: 'index', intersect: false },
                 responsive: true,
                 scales: {
-<<<<<<< Updated upstream
                     yAxes: [{
                         //ticks: {
                             fontColor: "white",
@@ -256,13 +244,6 @@
                             beginAtZero: true
                         //}
                     }],
-
-                   
-=======
-                    
-                    //xAxes: [{ stacked: true }],
-                    //xAxes: [{ stacked: true }],
->>>>>>> Stashed changes
                     
                     xAxes: [{
                         ticks: {
@@ -273,22 +254,19 @@
                             stacked: true,
                             autoSkip: false
                         }
-<<<<<<< Updated upstream
+
                     }], 
-=======
-                    }],
-                    yAxes: [{
-                        //ticks: {
-                        fontColor: "white",
-                        fontSize: 14,
-                        stepSize: 1,
-                        beginAtZero: true,
-                            stacked: true,
-                            autoSkip: false
-                        //}
-                    }]                    
-                    
->>>>>>> Stashed changes
+
+                    //yAxes: [{
+                    //    //ticks: {
+                    //    fontColor: "white",
+                    //    fontSize: 14,
+                    //    stepSize: 1,
+                    //    beginAtZero: true,
+                    //        stacked: true,
+                    //        autoSkip: false
+                    //    //}
+                    //}]                    
                 },
             }});
     };
