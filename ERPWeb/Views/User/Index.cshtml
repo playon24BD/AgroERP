@@ -3,16 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-<div class="container">
-    <div class="row ">
-        <div class="col-md-8">
-            <canvas id="line-chart" width="800" height="450"></canvas>
-        </div>
-        @*<div class="col-md-6">
-                <div id="chartContainerCollection" style="height: 200px; width: 500px;">
-                </div>
-            </div>*@
-    </div>
+<div class="container mb-5">
     <div class="row">
         <div class="col-md-6">
             <canvas id="lineChart" height="150" width="200"></canvas>
@@ -22,6 +13,18 @@
             <canvas id="FGChart" height="97" width="150"></canvas>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="line-chart" width="800" height="450"></canvas>
+
+
+        </div>
+        @*<div class="col-md-6">
+                <div id="chartContainerCollection" style="height: 200px; width: 500px;">
+                </div>
+            </div>*@
+    </div>
+
 
 </div>
 
@@ -45,6 +48,7 @@
         RMStockGrap();
         ProductStockGrap();
         GetLast30DaysSalesChart();
+       // GetLast30DaysSalesChartTest();
        // GetTotalSRChart();
     })
     function refreshPage() {
@@ -56,12 +60,119 @@
         
         var days = '@TempData["days"]';
         var charts = '@TempData["charts"]';
-       
+        //Generate30DaysSalesChart(days, charts);
         Generate30DaysSalesChartTest(days, charts);
         
     }
 
+    function Generate30DaysSalesChart(days, data) {
+        debugger;
+        var canvas = document.getElementById('last30DaysSalesChart');
+        canvas.width = 960;
+        canvas.height = 600;
 
+        var myCanvas = canvas.getContext('2d');
+        var amount = ["Salesertyui"];
+        var month = days;
+        var data = data;
+
+        var mydataSets = [];
+        mydataSets.length = 0;
+
+        for (var i = 0; i < amount.length; i++) {
+
+            mydataSets.push({
+                label: amount[i],
+                fill: false,
+                borderWidth: 2,
+                lineTension: 0,
+                spanGaps: true,
+                borderColor: colors[i],
+                pointRadius: 3,
+                pointHoverRadius: 7,
+                pointColor: colors[i],
+                pointBackgroundColor: colors[i],
+                data: data
+            })
+        }
+        console.log('My data set');
+        console.log(mydataSets);
+
+        var chartData = {
+            labels: month,
+            datasets: mydataSets
+        };
+
+        console.log(chartData);
+
+        var ChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: {
+                display: false,
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontColor: '#efefef',
+                    },
+                    gridLines: {
+                        display: false,
+                        color: '#efefef',
+                        drawBorder: false,
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        stepSize: 2000,
+                        fontColor: '#efefef',
+
+                    },
+                    gridLines: {
+                        display: true,
+                        color: '#efefef',
+                        drawBorder: false,
+                    }
+                }]
+            }
+        }
+        Chart.defaults.global.legend.labels.usePointStyle = true;
+        var chart = new Chart(myCanvas, {
+            type: 'line',
+            data: chartData,
+            markerType: "square",
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "#000",
+                            fontStyle: "bold",
+                            beginAtZero: true,
+                            maxTicksLimit: 5, //5
+                            //padding: 3 // 20
+                        },
+                        gridLines: {
+                            //drawTicks: false,
+                            //display: false,
+                        }
+
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            //zeroLineColor: "transparent"
+                        },
+                        ticks: {
+                            padding: 20, //20
+                            fontColor: "rgba(0,0,0,0.5)",
+                            fontStyle: "bold"
+                        }
+                    }]
+                }
+            }
+        });
+    }
     function Generate30DaysSalesChartTest(days, data) {
         var labelsArray = new Array();
         var dataArray = new Array();
@@ -81,11 +192,56 @@
                 }
                 ]
             },
+            //options: {
+            //    title: {
+            //        display: true,
+            //        text: 'World population per region (in millions)'
+            //    }
+            //}
             options: {
-                title: {
-                    display: true,
-                    text: 'World population per region (in millions)'
-                }
+                
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 18
+                    }
+                },
+                //tooltips: { mode: 'index', intersect: false },
+                responsive: true,
+                scales: {
+
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            beginAtZero: true,
+                            stacked: true,
+                            //autoSkip: false
+                        },
+                        gridLines: {
+                            //display: false,
+                            ////color: '#efefef',
+                            //drawBorder: false,
+                        }
+
+                    }],
+
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            stepSize: 2000,
+                            beginAtZero: true,
+                            stacked: true,
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }]
+                },
+
             }
         });
     }
@@ -133,44 +289,44 @@
                 legend: {
                     labels: {
                         fontColor: "white",
-                        fontSize: 18
+                        fontSize: 14
                     }
                 },
                 //tooltips: { mode: 'index', intersect: false },
                 responsive: true,
                 scales: {
-                    yAxes: [{
-                        //ticks: {
-                            fontColor: "white",
-                            fontSize: 18,
-                            stepSize: 1,
-                            beginAtZero: true
-                        //}
-                    }],
-                    
+
                     xAxes: [{
                         ticks: {
                             fontColor: "white",
-                            fontSize: 14,
-                            stepSize: 1,
+                            fontSize: 10,
                             beginAtZero: true,
                             stacked: true,
                             autoSkip: false
+                        },
+                         gridLines: {
+                            //display: false,
+                            //color: '#efefef',
+                            //drawBorder: false,
                         }
 
                     }], 
 
-                    //yAxes: [{
-                    //    //ticks: {
-                    //    fontColor: "white",
-                    //    fontSize: 14,
-                    //    stepSize: 1,
-                    //    beginAtZero: true,
-                    //        stacked: true,
-                    //        autoSkip: false
-                    //    //}
-                    //}]                    
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            stepSize: 2000,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }]    
                 },
+
             }});
     };
 
@@ -216,35 +372,41 @@
                 legend: {
                     labels: {
                         fontColor: "white",
-                        fontSize: 18
+                        fontSize: 14
                     }
                 },
                 //tooltips: { mode: 'index', intersect: false },
                 responsive: true,
                 scales: {
-
-                    yAxes: [{
-                        //ticks: {
-                            fontColor: "white",
-                            fontSize: 18,
-                            stepSize: 1,
-                            beginAtZero: true
-                        //}
-                    }],
-
-                    //xAxes: [{ stacked: true }],
-                    //xAxes: [{ stacked: true }],
-
-
                     xAxes: [{
                         ticks: {
                             fontColor: "white",
-                            fontSize: 14,
-                            stepSize: 1,
+                            fontSize: 10,
                             beginAtZero: true,
                             stacked: true
+                        },
+                        gridLines: {
+                            //display: false,
+                            //color: '#efefef',
+                            //drawBorder: false,
                         }
-                    }]
+                    }],
+
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            stepSize: 1,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }],
+
+                   
                 },
             }});
     };
