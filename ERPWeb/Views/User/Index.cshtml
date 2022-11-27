@@ -29,12 +29,6 @@
 </div>
 
 
-@*<div class="row " style="margin-top: 10px">
-    </div>*@
-@*</div>*@
-
-
-
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 
@@ -59,7 +53,7 @@
         debugger;
 
         var days = '@TempData["days"]';
-        var charts = '@TempData["charts"]';
+        var charts = '@TempData["Sells"]';
         //Generate30DaysSalesChart(days, charts);
         Generate30DaysSalesChartTest(days, charts);
 
@@ -72,7 +66,7 @@
         canvas.height = 600;
 
         var myCanvas = canvas.getContext('2d');
-        var amount = ["Salesertyui"];
+        var amount = ["Sales"];
         var month = days;
         var data = data;
 
