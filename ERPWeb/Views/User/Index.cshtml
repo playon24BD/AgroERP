@@ -4,39 +4,47 @@
 }
 
 <div class="container">
+    <div class="row ">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="card-title" style="font-style:italic; font-weight:bold">
+                        <i class="fas fa-th mr-1"></i>
+                        Last 30 Days Sales Graph
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body" style="padding:0">
+                    <div style="width:100%;height:200%;">
+                        <canvas class="chart" id="last30DaysSalesChart" style="min-height: 200px; height: 300px; max-height: 300px; min-width: 100%;max-width:960px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-6">
+                <div id="chartContainerCollection" style="height: 200px; width: 500px;">
+                </div>
+            </div>*@
+    </div>
     <div class="row">
         <div class="col-md-6">
-            @*<div style="text-align:center; height: 200px; width: 500px; margin-bottom:5px">
-            <canvas id="Piecanvas"/>*@
-            @*<div id="chartContainerRM" style="height: 200px; width: 500px; margin-bottom:5px">
-            </div>*@
             <canvas id="lineChart" height="150" width="200"></canvas>
 
         </div>
         <div class="col-md-6">
-            @*<div style="text-align:center; height: 200px; width: 500px; margin-bottom:5px">
-            <canvas id="Piecanvas"/>*@
-            @*<div id="chartContainerRM" style="height: 200px; width: 500px; margin-bottom:5px">
-            </div>*@
             <canvas id="FGChart" height="97" width="150"></canvas>
-
         </div>
     </div>
-    @*<div class="col-md-6">
-            <div id="chartContainerFG" style="height: 200px; width: 500px; margin-bottom:5px">
-            </div>
-        </div>*@
+
 </div>
-@*<div class="row ">
-        <div class="col-md-6">
-            <div id="chartContainer" style="height: 200px; width: 500px;">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div id="chartContainerCollection" style="height: 200px; width: 500px;">
-            </div>
-        </div>
-    </div>*@
+
 
 @*<div class="row " style="margin-top: 10px">
     </div>*@
@@ -49,7 +57,151 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 <script type="text/javascript">
-    $(function () {
+    $(document).ready(function () {
+        $("#cw").addClass("ccc2");
+        //initialLoad();
+        setInterval('refreshPage()', 300000);
+        RMStockGrap();
+        ProductStockGrap();
+        GetLast30DaysSalesChart();
+       // GetTotalSRChart();
+    })
+    function refreshPage() {
+        location.reload();
+    }
+    var colors = ["#27AE60", "#ffc107", "#8D6E63", "#BA68C8", "#2196F3", "#009688", "#D4E157", "#9E9E9E", "#607D8B", "#CC3333", "#DC7633", "#E91E63", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000"];
+    function GetLast30DaysSalesChart() {
+        debugger;
+        //$.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAgroProductSalesInfo', data, getToken())).then(function (res, status)
+        //$.when(postReqWithToken(dataType.applicationJson, dataType.json, type.post, '/AgroConfiguration/GetLast30DaysAgroSales', null, getToken())).then(function (res, status) {
+        //    debugger;
+        //    if (status === 'success') {
+        //        //console.log(res);
+        var days = '@TempData["days"]';
+        var charts = '@TempData["charts"]';
+        Generate30DaysSalesChart(days, charts);
+        //    }
+        //    else {
+        //        $(".toastrDefaultError").trigger('click');
+        //        $(".toastrDefaultError").fadeOut(800);
+        //    }
+        //}).fail(function (error) {
+        //    console.log(error);
+        //    $(".toastrDefaultError").trigger('click');
+        //    $(".toastrDefaultError").fadeOut(800);
+        //})
+    }
+
+    function Generate30DaysSalesChart(days, data) {
+        debugger;
+        var canvas = document.getElementById('last30DaysSalesChart');
+        canvas.width = 960;
+        canvas.height = 300;
+
+        var myCanvas = canvas.getContext('2d');
+        var amount = ["Sales"];
+        var month = days;
+        var data = data;
+
+        var mydataSets = [];
+        mydataSets.length = 0;
+
+        for (var i = 0; i < amount.length; i++) {
+
+            mydataSets.push({
+                label: amount[i],
+                fill: false,
+                borderWidth: 2,
+                lineTension: 0,
+                spanGaps: true,
+                borderColor: colors[i],
+                pointRadius: 3,
+                pointHoverRadius: 7,
+                pointColor: colors[i],
+                pointBackgroundColor: colors[i],
+                data: data
+            })
+        }
+        console.log('My data set');
+        console.log(mydataSets);
+
+        var chartData = {
+            labels: month,
+            datasets: mydataSets
+        };
+
+        console.log(chartData);
+
+        var ChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: {
+                display: false,
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontColor: '#efefef',
+                    },
+                    gridLines: {
+                        display: false,
+                        color: '#efefef',
+                        drawBorder: false,
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        stepSize: 2000,
+                        fontColor: '#efefef',
+
+                    },
+                    gridLines: {
+                        display: true,
+                        color: '#efefef',
+                        drawBorder: false,
+                    }
+                }]
+            }
+        }
+        Chart.defaults.global.legend.labels.usePointStyle = true;
+        var chart = new Chart(myCanvas, {
+            type: 'line',
+            data: chartData,
+            markerType: "square",
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "#000",
+                            fontStyle: "bold",
+                            beginAtZero: true,
+                            maxTicksLimit: 5, //5
+                            //padding: 3 // 20
+                        },
+                        gridLines: {
+                            //drawTicks: false,
+                            //display: false,
+                        }
+
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            //zeroLineColor: "transparent"
+                        },
+                        ticks: {
+                            padding: 20, //20
+                            fontColor: "rgba(0,0,0,0.5)",
+                            fontStyle: "bold"
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    function RMStockGrap() {
         debugger;
         //var labels = '<%=TempData["platform_family"] %>';
         var labels = '@TempData["platform_family"]';
@@ -95,46 +247,34 @@
                 //tooltips: { mode: 'index', intersect: false },
                 responsive: true,
                 scales: {
-
                     yAxes: [{
-                        ticks: {
+                        //ticks: {
                             fontColor: "white",
                             fontSize: 18,
                             stepSize: 1,
                             beginAtZero: true
-                        }
+                        //}
                     }],
 
-                    //xAxes: [{ stacked: true }],
-                    //xAxes: [{ stacked: true }],
-
-
+                   
+                    
                     xAxes: [{
                         ticks: {
                             fontColor: "white",
                             fontSize: 14,
                             stepSize: 1,
                             beginAtZero: true,
-                            stacked: true
+                            stacked: true,
+                            autoSkip: false
                         }
-                    }],
-                    yAxes: [{
-                        //ticks: {
-                        fontColor: "white",
-                        fontSize: 14,
-                        stepSize: 1,
-                        beginAtZero: true,
-                        stacked: true
-                       // }
-                    }]
-
+                    }], 
                 },
             }});
-    });
+    };
 
 
     //fgstock
-    $(function () {
+    function ProductStockGrap () {
         debugger;
         //var labels = '<%=TempData["platform_family"] %>';
         var labels = '@TempData["FG_NAME"]';
@@ -182,12 +322,12 @@
                 scales: {
 
                     yAxes: [{
-                        ticks: {
+                        //ticks: {
                             fontColor: "white",
                             fontSize: 18,
                             stepSize: 1,
                             beginAtZero: true
-                        }
+                        //}
                     }],
 
                     //xAxes: [{ stacked: true }],
@@ -202,20 +342,10 @@
                             beginAtZero: true,
                             stacked: true
                         }
-                    }],
-                    yAxes: [{
-                        //ticks: {
-                        fontColor: "white",
-                        fontSize: 14,
-                        stepSize: 1,
-                        beginAtZero: true,
-                        stacked: true
-                       // }
                     }]
-
                 },
             }});
-    });
+    };
 
 
 </script>

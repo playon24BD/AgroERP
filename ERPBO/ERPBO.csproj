@@ -228,6 +228,7 @@
     <Compile Include="Common\CustomPrincipalSerializeModel.cs" />
     <Compile Include="Common\Dropdown.cs" />
     <Compile Include="Common\ExecutionStateWithText.cs" />
+    <Compile Include="Common\Last30DaysSalesGraph.cs" />
     <Compile Include="Common\UserInformation.cs" />
     <Compile Include="Common\UserPrivilege.cs" />
     <Compile Include="Agriculture\DomainModels\BankSetup.cs" />

@@ -1,6 +1,7 @@
 ﻿using ERPBLL.Agriculture.Interface;
 using ERPBLL.Common;
 using ERPBO.Agriculture.DTOModels;
+using ERPBO.Common;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -117,6 +118,17 @@ inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
       where 1=1    {0}",
             Utility.ParamChecker(param));
             return query;
+        }
+
+        public IEnumerable<Last30DaysSalesGraph> Last30DaysSellsChart(string fromDate, string toDate, long orgId)
+        {
+            IEnumerable<Last30DaysSalesGraph> data = new List<Last30DaysSalesGraph>();
+            if (orgId > 0)
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<Last30DaysSalesGraph>(
+                string.Format(@"Exec [dbo].[spLast30DaysSellsChart] '{0}','{1}',{2}", fromDate, toDate, orgId)).ToList();
+            }
+            return data;
         }
     }
 }

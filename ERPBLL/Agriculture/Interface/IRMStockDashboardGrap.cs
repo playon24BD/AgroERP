@@ -1,4 +1,5 @@
 ﻿using ERPBO.Agriculture.DTOModels;
+using ERPBO.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<FinishGoodProductionInfoDTO> GetMainStockFGProductName(long orgId);
         IEnumerable<FinishGoodProductionInfoDTO> GetMainStockFGProductCurrentStock(long orgId);
+        IEnumerable<Last30DaysSalesGraph> Last30DaysSellsChart(string fromDate, string toDate, long orgId);
     }
 }

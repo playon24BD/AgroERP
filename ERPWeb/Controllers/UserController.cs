@@ -3,6 +3,7 @@ using ERPBLL.Agriculture.Interface;
 using ERPBO.Agriculture.DTOModels;
 using ERPWeb.Filters;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace ERPWeb.Controllers
@@ -24,14 +25,7 @@ namespace ERPWeb.Controllers
         //}
         public ActionResult Index(string flag)
         {
-           // TestEntities db = new TestEntities();
-            //var platform_family = (from b in db.EQMlists
-            //                       where b.inspection_status == "PASS"
-            //                       orderby b.platform_family ascending
-            //                       group b by b.platform_family into g
-            //                       select new { platform_family = g.Key }).ToList();
-
-            //decimal total = db.EQMlists.Count();
+          
             var RMNameList = _rMStockDashboardGrap.GetMainStockRMName(User.OrgId);
 
             List<string> platformfamily = new List<string>();
@@ -70,12 +64,20 @@ namespace ERPWeb.Controllers
             }
             TempData["FG_NAME"] = string.Join(",", product);
             TempData["CurrentStockF"] = string.Join(",", stock);
+
+            var data = _rMStockDashboardGrap.Last30DaysSellsChart(string.Empty, string.Empty, User.OrgId);
+            var days = data.Select(s => s.EntryDate.ToString("dd-MMM-yyyy")).ToArray();
+            var charts = data.Select(s => s.Sells).ToArray();
+            TempData["days"] = string.Join(",", days);
+            TempData["charts"] = string.Join(",", charts);
+
             return View();
 
 
     
         }
 
+       
         
         protected override void Dispose(bool disposing)
         {
