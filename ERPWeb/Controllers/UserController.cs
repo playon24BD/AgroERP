@@ -2,6 +2,7 @@
 using ERPBLL.Agriculture.Interface;
 using ERPBO.Agriculture.DTOModels;
 using ERPWeb.Filters;
+using LinqToExcel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -67,9 +68,9 @@ namespace ERPWeb.Controllers
 
             var data = _rMStockDashboardGrap.Last30DaysSellsChart(string.Empty, string.Empty, User.OrgId);
             var days = data.Select(s => s.EntryDate.ToString("dd-MMM-yyyy")).ToArray();
-            var charts = data.Select(s => s.Sells).ToArray();
+            var Sells = data.Select(s => s.Sells).ToArray();
             TempData["days"] = string.Join(",", days);
-            TempData["charts"] = string.Join(",", charts);
+            TempData["Sells"] = string.Join(",", Sells);
 
             return View();
 
