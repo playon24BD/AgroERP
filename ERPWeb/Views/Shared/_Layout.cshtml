@@ -81,7 +81,6 @@
     <script src="~/Scripts/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/Scripts/Chart.min.js"></script>
-    <script src="~/Scripts/canvasjs.min.js"></script>
     <script src="~/Scripts/sparkline.js"></script>
     <script src="~/Content/dist/js/adminlte.js"></script>
     <script src="~/Scripts/jquery.dataTables.js"></script>
@@ -97,16 +96,15 @@
     <script src="~/Scripts/download.js"></script>
     <script src="~/Scripts/print.js"></script>
     <script src="~/Scripts/ds.js"></script>
-    <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js">
-    </script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <link href="~/Content/dist/css/dashboardCSS.css" rel="stylesheet" />
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        //$(document).ready(function () {
 
 
-            $('#double-scroll').doubleScroll();
-        });
+        //    $('#double-scroll').doubleScroll();
+        //});
 
 
         var txtCurrentPassword = $("#txtCurrentPassword");
@@ -265,72 +263,72 @@
         })
 
         // Change Password
-        $("#changePassword").click(function (e) {
-            e.preventDefault();
-            txtCurrentPassword.val('');
-            txtPassword.val('');
-            txtConfirmPassword.val('');
-            $(".error").addClass("hide");
-            $("#changePasswordModal").modal("show");
-        })
+        //$("#changePassword").click(function (e) {
+        //    e.preventDefault();
+        //    txtCurrentPassword.val('');
+        //    txtPassword.val('');
+        //    txtConfirmPassword.val('');
+        //    $(".error").addClass("hide");
+        //    $("#changePasswordModal").modal("show");
+        //})
 
-        function validateChangePassword() {
-            var isValid = true;
-            $(".error").addClass("hide");
-            if (txtCurrentPassword.val() === "") {
-                $(".required-current-password").removeClass("hide");
-                isValid = false;
-            }
-            else {
-                // Checking in database//
-                if (ajaxBooleanChecker2(JSON.stringify({ password: txtCurrentPassword.val() }), '/Common/IsCurrentUserPasswordCorrect') === false) {
-                    $(".incorrect-password").removeClass('hide');
-                    isValid = false;
-                }
-            }
-            if (txtPassword.val() === "") {
-                $(".required-password").removeClass("hide");
-                isValid = false;
-            }
-            else {
-                if (txtPassword.val().length < 6) {
-                    $(".password-lenght").removeClass("hide");
-                    isValid = false;
-                }
-            }
-            if (txtConfirmPassword.val() === "") {
-                $(".required-confirmPassword").removeClass("hide");
-                isValid = false;
-            }
+        //function validateChangePassword() {
+        //    var isValid = true;
+        //    $(".error").addClass("hide");
+        //    if (txtCurrentPassword.val() === "") {
+        //        $(".required-current-password").removeClass("hide");
+        //        isValid = false;
+        //    }
+        //    else {
+        //        // Checking in database//
+        //        if (ajaxBooleanChecker2(JSON.stringify({ password: txtCurrentPassword.val() }), '/Common/IsCurrentUserPasswordCorrect') === false) {
+        //            $(".incorrect-password").removeClass('hide');
+        //            isValid = false;
+        //        }
+        //    }
+        //    if (txtPassword.val() === "") {
+        //        $(".required-password").removeClass("hide");
+        //        isValid = false;
+        //    }
+        //    else {
+        //        if (txtPassword.val().length < 6) {
+        //            $(".password-lenght").removeClass("hide");
+        //            isValid = false;
+        //        }
+        //    }
+        //    if (txtConfirmPassword.val() === "") {
+        //        $(".required-confirmPassword").removeClass("hide");
+        //        isValid = false;
+        //    }
 
-            if (txtPassword.val() !== txtConfirmPassword.val()) {
-                $(".compare-password").removeClass("hide");
-                isValid = false;
-            }
-            return isValid;
-        }
+        //    if (txtPassword.val() !== txtConfirmPassword.val()) {
+        //        $(".compare-password").removeClass("hide");
+        //        isValid = false;
+        //    }
+        //    return isValid;
+        //}
 
-        $("#btnChangePassword").click(function (e) {
-            e.preventDefault();
-            if (validateChangePassword()) {
-                var data = JSON.stringify({ "CurrentPassword": txtCurrentPassword.val(), "NewPassword": txtPassword.val() });
-                console.log(data);
-                $.when(postReqWithData(dataType.applicationJson, dataType.json, 'POST', '/Access/ChangePassword', data)).then(function (res, status) {
-                    console.log(status);
-                    console.log(res);
-                    if (res == true) {
-                        $('.toastrDefaultSuccess').trigger('click');
-                        $("#changePasswordModal").modal("toggle");
-                    }
-                    else {
-                        $('.toastrDefaultError').trigger('click');
-                    }
-                }).fail(function (err) {
-                    $('.toastrDefaultError').trigger('click');
-                    console.log(err);
-                });
-            }
-        })
+        //$("#btnChangePassword").click(function (e) {
+        //    e.preventDefault();
+        //    if (validateChangePassword()) {
+        //        var data = JSON.stringify({ "CurrentPassword": txtCurrentPassword.val(), "NewPassword": txtPassword.val() });
+        //        console.log(data);
+        //        $.when(postReqWithData(dataType.applicationJson, dataType.json, 'POST', '/Access/ChangePassword', data)).then(function (res, status) {
+        //            console.log(status);
+        //            console.log(res);
+        //            if (res == true) {
+        //                $('.toastrDefaultSuccess').trigger('click');
+        //                $("#changePasswordModal").modal("toggle");
+        //            }
+        //            else {
+        //                $('.toastrDefaultError').trigger('click');
+        //            }
+        //        }).fail(function (err) {
+        //            $('.toastrDefaultError').trigger('click');
+        //            console.log(err);
+        //        });
+        //    }
+        //})
 
         $(function () {
 

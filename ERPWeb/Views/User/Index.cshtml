@@ -6,27 +6,7 @@
 <div class="container">
     <div class="row ">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header border-0">
-                    <h3 class="card-title" style="font-style:italic; font-weight:bold">
-                        <i class="fas fa-th mr-1"></i>
-                        Last 30 Days Sales Graph
-                    </h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body" style="padding:0">
-                    <div style="width:100%;height:200%;">
-                        <canvas class="chart" id="last30DaysSalesChart" style="min-height: 200px; height: 300px; max-height: 300px; min-width: 100%;max-width:960px"></canvas>
-                    </div>
-                </div>
-            </div>
+            <canvas id="line-chart" width="800" height="450"></canvas>
         </div>
         @*<div class="col-md-6">
                 <div id="chartContainerCollection" style="height: 200px; width: 500px;">
@@ -50,11 +30,10 @@
     </div>*@
 @*</div>*@
 
-@*<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>*@
-@*<script type="text/javascript" src ="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js">
-    </script>*@
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -77,118 +56,42 @@
         
         var days = '@TempData["days"]';
         var charts = '@TempData["charts"]';
-        Generate30DaysSalesChart(days, charts);
+       
+        Generate30DaysSalesChartTest(days, charts);
         
     }
 
-    function Generate30DaysSalesChart(days, data) {
-        debugger;
-        var canvas = document.getElementById('last30DaysSalesChart');
-        canvas.width = 960;
-        canvas.height = 300;
 
-        var myCanvas = canvas.getContext('2d');
-        var amount = ["Sales"];
-        var month = days;
-        var data = data;
-
-        var mydataSets = [];
-        mydataSets.length = 0;
-
-        for (var i = 0; i < amount.length; i++) {
-
-            mydataSets.push({
-                label: amount[i],
-                fill: false,
-                borderWidth: 2,
-                lineTension: 0,
-                spanGaps: true,
-                borderColor: colors[i],
-                pointRadius: 3,
-                pointHoverRadius: 7,
-                pointColor: colors[i],
-                pointBackgroundColor: colors[i],
-                data: data
-            })
+    function Generate30DaysSalesChartTest(days, data) {
+        var labelsArray = new Array();
+        var dataArray = new Array();
+        for (var i = 0; i < days.split(',').length; i++) {
+            labelsArray.push(days.split(',')[i]);
+            dataArray.push(data.split(',')[i]);
         }
-        console.log('My data set');
-        console.log(mydataSets);
-
-        var chartData = {
-            labels: month,
-            datasets: mydataSets
-        };
-
-        console.log(chartData);
-
-        var ChartOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-            legend: {
-                display: false,
-            },
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        fontColor: '#efefef',
-                    },
-                    gridLines: {
-                        display: false,
-                        color: '#efefef',
-                        drawBorder: false,
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                        stepSize: 2000,
-                        fontColor: '#efefef',
-
-                    },
-                    gridLines: {
-                        display: true,
-                        color: '#efefef',
-                        drawBorder: false,
-                    }
-                }]
-            }
-        }
-        Chart.defaults.global.legend.labels.usePointStyle = true;
-        var chart = new Chart(myCanvas, {
+        new Chart(document.getElementById("line-chart"), {
             type: 'line',
-            data: chartData,
-            markerType: "square",
+            data: {
+                labels: labelsArray,
+                datasets: [{
+                    data: dataArray,
+                    label: "Sales",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+                ]
+            },
             options: {
-                maintainAspectRatio: false,
-                responsive: true,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            fontColor: "#000",
-                            fontStyle: "bold",
-                            beginAtZero: true,
-                            maxTicksLimit: 5, //5
-                            //padding: 3 // 20
-                        },
-                        gridLines: {
-                            //drawTicks: false,
-                            //display: false,
-                        }
-
-                    }],
-                    xAxes: [{
-                        gridLines: {
-                            //zeroLineColor: "transparent"
-                        },
-                        ticks: {
-                            padding: 20, //20
-                            fontColor: "rgba(0,0,0,0.5)",
-                            fontStyle: "bold"
-                        }
-                    }]
+                title: {
+                    display: true,
+                    text: 'World population per region (in millions)'
                 }
             }
         });
     }
+
+    
+
 
     function RMStockGrap() {
         debugger;

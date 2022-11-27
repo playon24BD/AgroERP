@@ -310,7 +310,10 @@
     <Content Include="Content\LogIn\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\LogIn\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\LogIn\fonts\FontAwesome.otf" />
-    <Content Include="Scripts\canvasjs.js" />
+    <Content Include="Scripts\Chart.js" />
+    <None Include="Scripts\jquery-1.11.0.intellisense.js" />
+    <Content Include="Scripts\jquery-1.11.0.js" />
+    <Content Include="Scripts\jquery-1.11.0.min.js" />
     <Content Include="wwwroot\assets\build\config\postcss.config.js" />
     <Content Include="wwwroot\assets\build\config\rollup.config.js" />
     <Content Include="wwwroot\assets\build\js\AdminLTE.js" />
@@ -2801,7 +2804,6 @@
     <Content Include="Reports\DataSets\dsSendAndReceiveRequisitionReport.xss">
       <DependentUpon>dsSendAndReceiveRequisitionReport.xsd</DependentUpon>
     </Content>
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\download.js" />
     <Content Include="Scripts\ds.js" />
@@ -2809,9 +2811,7 @@
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
     <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\jquery-1.11.0.min.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap4.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
