@@ -130,5 +130,16 @@ inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
             }
             return data;
         }
+
+        public IEnumerable<Last30DaysPaymentGraph> Last30DaysPaymentChart(string fromDate, string toDate, long orgId)
+        {
+            IEnumerable<Last30DaysPaymentGraph> data = new List<Last30DaysPaymentGraph>();
+            if (orgId > 0)
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<Last30DaysPaymentGraph>(
+                string.Format(@"Exec [dbo].[PaymentHistoryDashBoard] '{0}','{1}',{2}", fromDate, toDate, orgId)).ToList();
+            }
+            return data;
+        }
     }
 }

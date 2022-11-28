@@ -3,27 +3,43 @@
     ViewBag.Title = "Index";
 }
 
+
+
 <div class="container mb-5">
-    <div class="row">
-        <div class="col-md-6">
-            <canvas id="lineChart" height="150" width="200"></canvas>
+    
+        <div class="row">
 
-        </div>
-        <div class="col-md-6">
-            <canvas id="FGChart" height="97" width="150"></canvas>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <canvas id="line-chart" width="800" height="450"></canvas>
-
-
-        </div>
-        @*<div class="col-md-6">
-                <div id="chartContainerCollection" style="height: 200px; width: 500px;">
+            <div class="col-md-6">
+                <div class="card">
+                    <canvas id="lineChart" height="150" width="200"></canvas>
                 </div>
-            </div>*@
-    </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <canvas id="FGChart" height="150" width="200"></canvas>
+                </div>
+
+            </div>
+        </div>
+ 
+
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card">
+                    <canvas id="line-chart" width="800" height="450"></canvas>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <canvas id="line-chartpayment" width="800" height="450"></canvas>
+                </div>
+
+            </div>
+        </div>
 
 
 </div>
@@ -42,6 +58,7 @@
         RMStockGrap();
         ProductStockGrap();
         GetLast30DaysSalesChart();
+        GetLast30DaysPaymentChart();
        // GetLast30DaysSalesChartTest();
        // GetTotalSRChart();
     })
@@ -58,115 +75,86 @@
         Generate30DaysSalesChartTest(days, charts);
 
     }
-
-    function Generate30DaysSalesChart(days, data) {
+    function GetLast30DaysPaymentChart() {
         debugger;
-        var canvas = document.getElementById('last30DaysSalesChart');
-        canvas.width = 960;
-        canvas.height = 600;
 
-        var myCanvas = canvas.getContext('2d');
-        var amount = ["Sales"];
-        var month = days;
-        var data = data;
+        var days1 = '@TempData["days1"]';
+        var charts1 = '@TempData["Sells1"]';
+        //Generate30DaysSalesChart(days, charts);
+        Generate30DaysPaymentChartTest(days1, charts1);
 
-        var mydataSets = [];
-        mydataSets.length = 0;
+    }
 
-        for (var i = 0; i < amount.length; i++) {
-
-            mydataSets.push({
-                label: amount[i],
-                fill: false,
-                borderWidth: 2,
-                lineTension: 0,
-                spanGaps: true,
-                borderColor: colors[i],
-                pointRadius: 3,
-                pointHoverRadius: 7,
-                pointColor: colors[i],
-                pointBackgroundColor: colors[i],
-                data: data
-            })
+    function Generate30DaysPaymentChartTest(days1, data1) {
+        debugger;
+        var labelsArray1 = new Array();
+        var dataArray1 = new Array();
+        for (var i = 0; i < days1.split(',').length; i++) {
+            labelsArray1.push(days1.split(',')[i]);
+            dataArray1.push(data1.split(',')[i]);
         }
-        console.log('My data set');
-        console.log(mydataSets);
-
-        var chartData = {
-            labels: month,
-            datasets: mydataSets
-        };
-
-        console.log(chartData);
-
-        var ChartOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-            legend: {
-                display: false,
-            },
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        fontColor: '#efefef',
-                    },
-                    gridLines: {
-                        display: false,
-                        color: '#efefef',
-                        drawBorder: false,
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                        stepSize: 2000,
-                        fontColor: '#efefef',
-
-                    },
-                    gridLines: {
-                        display: true,
-                        color: '#efefef',
-                        drawBorder: false,
-                    }
-                }]
-            }
-        }
-        Chart.defaults.global.legend.labels.usePointStyle = true;
-        var chart = new Chart(myCanvas, {
+        new Chart(document.getElementById("line-chartpayment"), {
             type: 'line',
-            data: chartData,
-            markerType: "square",
+            data: {
+                labels: labelsArray1,
+                datasets: [{
+                    data: dataArray1,
+                    label: "Collection",
+                    borderColor: "#BDB76B",
+                    fill: false
+                }
+                ]
+            },
+
             options: {
-                maintainAspectRatio: false,
+
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 18
+                    }
+                },
+                //tooltips: { mode: 'index', intersect: false },
                 responsive: true,
                 scales: {
-                    yAxes: [{
+
+                    xAxes: [{
                         ticks: {
-                            fontColor: "#000",
-                            fontStyle: "bold",
+                            fontColor: "white",
+                            fontSize: 10,
                             beginAtZero: true,
-                            maxTicksLimit: 5, //5
-                            //padding: 3 // 20
+                            stacked: true,
+                            //autoSkip: false
                         },
                         gridLines: {
-                            //drawTicks: false,
                             //display: false,
+                            ////color: '#efefef',
+                            //drawBorder: false,
                         }
 
                     }],
-                    xAxes: [{
-                        gridLines: {
-                            //zeroLineColor: "transparent"
-                        },
+
+                    yAxes: [{
                         ticks: {
-                            padding: 20, //20
-                            fontColor: "rgba(0,0,0,0.5)",
-                            fontStyle: "bold"
+                            fontColor: "white",
+                            fontSize: 10,
+                            stepSize: 2000,
+                            beginAtZero: true,
+                            stacked: true,
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
                         }
                     }]
-                }
+                },
+
             }
         });
     }
+
+
     function Generate30DaysSalesChartTest(days, data) {
         var labelsArray = new Array();
         var dataArray = new Array();

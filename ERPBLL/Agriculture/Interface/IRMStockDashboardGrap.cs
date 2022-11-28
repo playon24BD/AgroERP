@@ -16,5 +16,8 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<FinishGoodProductionInfoDTO> GetMainStockFGProductName(long orgId);
         IEnumerable<FinishGoodProductionInfoDTO> GetMainStockFGProductCurrentStock(long orgId);
         IEnumerable<Last30DaysSalesGraph> Last30DaysSellsChart(string fromDate, string toDate, long orgId);
+        IEnumerable<Last30DaysPaymentGraph> Last30DaysPaymentChart(string fromDate, string toDate, long orgId);
+
+
     }
 }

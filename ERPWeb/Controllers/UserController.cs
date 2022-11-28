@@ -66,11 +66,20 @@ namespace ERPWeb.Controllers
             TempData["FG_NAME"] = string.Join(",", product);
             TempData["CurrentStockF"] = string.Join(",", stock);
 
+
             var data = _rMStockDashboardGrap.Last30DaysSellsChart(string.Empty, string.Empty, User.OrgId);
             var days = data.Select(s => s.EntryDate.ToString("dd-MMM-yyyy")).ToArray();
             var Sells = data.Select(s => s.Sells).ToArray();
             TempData["days"] = string.Join(",", days);
             TempData["Sells"] = string.Join(",", Sells);
+
+
+            //payment
+            var data1 = _rMStockDashboardGrap.Last30DaysPaymentChart(string.Empty, string.Empty, User.OrgId);
+            var days1 = data1.Select(p => p.PaymentDate.ToString("dd-MMM-yyyy")).ToArray();
+            var Sells1 = data1.Select(t => t.Sells).ToArray();
+            TempData["days1"] = string.Join(",", days1);
+            TempData["Sells1"] = string.Join(",", Sells1);
 
             return View();
 
