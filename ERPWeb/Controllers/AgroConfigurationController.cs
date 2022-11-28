@@ -736,6 +736,267 @@ namespace ERPWeb.Controllers
             return Json(unitname, JsonRequestBehavior.AllowGet);
 
         }
+        public ActionResult RawMaterialConverter(long FinishGoodProductId, long RawMaterialId,double FGRQty,long UnitId)
+        {
+            decimal convertml = 0;
+            decimal cpa = 0;
+            decimal Chelatedzinc = 0;
+            decimal SoluborBoron = 0;
+            decimal CMC = 0;
+            decimal AppleGreenColour = 0;
+
+            decimal Zipsum = 0;
+            decimal NaphtholicAceticAcid = 0;
+            decimal Dolomight = 0;
+
+            decimal RMQTY ;
+            #region 50ml Measurement Size
+            if (FinishGoodProductId==1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 1)
+            {
+                convertml = 50 * 1000;
+                cpa = 1250 * 50 / convertml;
+                RMQTY = cpa;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 2)
+            {
+                convertml = 50 * 1000;
+                Chelatedzinc = 5 * 50 / convertml;
+                RMQTY = Chelatedzinc;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 3)
+            {
+                convertml = 50 * 1000;
+                SoluborBoron = Convert.ToDecimal(2.5 * 50);
+                decimal SoluborBoronValue = SoluborBoron / convertml;
+                RMQTY = SoluborBoronValue;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 4)
+            {
+                convertml = 50 * 1000;
+                CMC = 5 * 50 / convertml;
+                RMQTY = CMC;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 5)
+            {
+                convertml = 50 * 1000;
+                AppleGreenColour = 250 * 50 / convertml;
+                RMQTY = AppleGreenColour;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            #region 100ml Measurement Size
+            if (FinishGoodProductId == 1 && FGRQty == 100 && UnitId == 4 && RawMaterialId == 1)
+            {
+                convertml = 100 * 1000;
+                cpa = 1250 * 100 / convertml;
+                RMQTY = cpa;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 100 && UnitId == 4 && RawMaterialId == 2)
+            {
+                convertml = 100 * 1000;
+                Chelatedzinc = 5 * 100 / convertml;
+                RMQTY = Chelatedzinc;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 100 && UnitId == 4 && RawMaterialId == 3)
+            {
+                convertml = 100 * 1000;
+                SoluborBoron = Convert.ToDecimal(2.5 * 100);
+                decimal SoluborBoronValue = SoluborBoron / convertml;
+                RMQTY = SoluborBoronValue;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 100 && UnitId == 4 && RawMaterialId == 4)
+            {
+                convertml = 100 * 1000;
+                CMC = 5 * 100 / convertml;
+                RMQTY = CMC;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 100 && UnitId == 4 && RawMaterialId == 5)
+            {
+                convertml = 100 * 1000;
+                AppleGreenColour = 250 * 100 / convertml;
+                RMQTY = AppleGreenColour;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            #region 200ml Measurement Size
+            if (FinishGoodProductId == 1 && FGRQty ==200 && UnitId==4 && RawMaterialId == 1)
+            {
+                 convertml = 200 * 1000;
+                 cpa = 1250*200 / convertml;
+                RMQTY = cpa;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 200 && UnitId == 4 && RawMaterialId == 2)
+            {
+                 convertml = 200 * 1000;
+                Chelatedzinc = 5 * 200 / convertml;
+                RMQTY = Chelatedzinc;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 200 && UnitId == 4 && RawMaterialId == 3)
+            {
+                convertml = 200 * 1000;
+                SoluborBoron =Convert.ToDecimal( 2.5 * 200);
+                decimal SoluborBoronValue = SoluborBoron / convertml;
+                RMQTY = SoluborBoronValue;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 200 && UnitId == 4 && RawMaterialId == 4)
+            {
+                convertml = 200 * 1000;
+                CMC = 5 * 200 / convertml;
+                RMQTY = CMC;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 200 && UnitId == 4 && RawMaterialId == 5)
+            {
+                convertml = 200 * 1000;
+                AppleGreenColour =250 * 200 / convertml;
+                RMQTY = AppleGreenColour;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            #region 500ml Measurement Size
+            if (FinishGoodProductId == 1 && FGRQty == 500 && UnitId == 4 && RawMaterialId == 1)
+            {
+                convertml = 500 * 1000;
+                cpa = 1250 * 500 / convertml;
+                RMQTY = cpa;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 500 && UnitId == 4 && RawMaterialId == 2)
+            {
+                convertml = 500 * 1000;
+                Chelatedzinc = 5 * 500 / convertml;
+                RMQTY = Chelatedzinc;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 500 && UnitId == 4 && RawMaterialId == 3)
+            {
+                convertml = 500 * 1000;
+                SoluborBoron = Convert.ToDecimal(2.5 * 500);
+                decimal SoluborBoronValue = SoluborBoron / convertml;
+                RMQTY = SoluborBoronValue;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 500 && UnitId == 4 && RawMaterialId == 4)
+            {
+                convertml = 500 * 1000;
+                CMC = 5 * 500 / convertml;
+                RMQTY = CMC;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 500 && UnitId == 4 && RawMaterialId == 5)
+            {
+                convertml = 500 * 1000;
+                AppleGreenColour = 250 * 500 / convertml;
+                RMQTY = AppleGreenColour;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            #region 1ltr Measurement Size
+            if (FinishGoodProductId == 1 && FGRQty == 1 && UnitId == 3 && RawMaterialId == 1)
+            {
+                convertml = 1 * 1000;
+                cpa = 1250 * 1 / convertml;
+                RMQTY = cpa;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 1 && UnitId == 3 && RawMaterialId == 2)
+            {
+                convertml = 1 * 1000;
+                Chelatedzinc = 5 * 1 / convertml;
+                RMQTY = Chelatedzinc;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 1 && UnitId == 3 && RawMaterialId == 3)
+            {
+                convertml = 1 * 1000;
+                SoluborBoron = Convert.ToDecimal(2.5 * 1);
+                decimal SoluborBoronValue = SoluborBoron / convertml;
+                RMQTY = SoluborBoronValue;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 1 && UnitId == 3 && RawMaterialId == 4)
+            {
+                convertml = 1 * 1000;
+                CMC = 5 * 1 / convertml;
+                RMQTY = CMC;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 1 && FGRQty == 1 && UnitId == 3 && RawMaterialId == 5)
+            {
+                convertml = 1 * 1000;
+                AppleGreenColour = 250 * 1 / convertml;
+                RMQTY = AppleGreenColour;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            #region 1kg Measurement Size
+            if (FinishGoodProductId == 2 && FGRQty == 1 && UnitId == 1 && RawMaterialId == 6)
+            {
+                convertml = 1 * 1000;
+                Zipsum = 500 * 1 / convertml;
+                RMQTY = Zipsum;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 2 && FGRQty == 1 && UnitId == 1 && RawMaterialId == 7)
+            {
+                convertml = 1 * 1000;
+                NaphtholicAceticAcid = 500 * 1 / convertml;
+                RMQTY = Chelatedzinc;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 2 && FGRQty == 1 && UnitId == 1 && RawMaterialId == 8)
+            {
+                convertml = 1 * 1000;
+                Dolomight = 2 * 1 / convertml;
+                RMQTY = Dolomight;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+
+            #endregion
+
+            #region 2kg Measurement Size
+            if (FinishGoodProductId == 2 && FGRQty == 2 && UnitId == 1 && RawMaterialId == 6)
+            {
+                convertml = 2 * 1000;
+                Zipsum = 500 * 2 / convertml;
+                RMQTY = Zipsum;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 2 && FGRQty == 1 && UnitId == 1 && RawMaterialId == 7)
+            {
+                convertml = 2 * 1000;
+                NaphtholicAceticAcid = 500 * 2 / convertml;
+                RMQTY = Chelatedzinc;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+            else if (FinishGoodProductId == 2 && FGRQty == 1 && UnitId == 1 && RawMaterialId == 8)
+            {
+                convertml = 2 * 1000;
+                Dolomight = 2 * 2 / convertml;
+                RMQTY = Dolomight;
+                return Json(RMQTY, JsonRequestBehavior.AllowGet);
+            }
+
+            #endregion
+            return null;
+
+        }
 
         public ActionResult GetFinishGoodRecipeList(string flag, long? ProductId, long? id)
         {

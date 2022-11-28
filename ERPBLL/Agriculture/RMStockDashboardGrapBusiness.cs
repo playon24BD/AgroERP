@@ -63,7 +63,7 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
             //    param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
             //}
             query = string.Format(@"
-SELECT Distinct RM.RawMaterialName
+SELECT Distinct concat(RM.RawMaterialName,' ( ',un.UnitName,' )') AS RawMaterialName
 
 FROM  
 tblRawMaterialTrackInfo t 
