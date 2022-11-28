@@ -18,5 +18,8 @@ namespace ERPBO.Agriculture.ReportModels
         public string MeasurementSize { get; set; }
         public string FinishGoodProductName { get; set; }
         public string StockiestName { get; set; }
+        public double TotalAmount { get; set; }
+        public double PaidAmount { get; set; }
+        public double DueAmount { get; set; }
     }
 }

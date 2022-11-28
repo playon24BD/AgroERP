@@ -223,14 +223,29 @@
                 var data = JSON.stringify({ details: details, info: info });
 
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/FGProductAcceptSave', data , getToken())).then(function (res, status)
-                        {
-                            if (res === true) {
+                {
+
+                    if (res.IsSuccess === true) {
+                     debugger;
+                                $('.toastrDefaultSuccess').trigger('click');
+                        var FinishGoodProductionBatch = res.File;
+                   
+                        window.open('/AgroConfiguration/GetFinishGoodAcceptReport?FinishGoodProductionBatch=' + FinishGoodProductionBatch, '_blank');
+
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("FGProductAccept")');
+                                }, 500);
+
+                            }
+
+
+                            @*if (res === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("FGProductAccept")');
                                 }, 1000);
 
-                            }
+                            }*@
                             else {
                                 $('.toastrDefaultError').trigger('click');
                             }

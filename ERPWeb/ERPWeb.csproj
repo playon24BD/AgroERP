@@ -2804,6 +2804,19 @@
     <Content Include="Reports\DataSets\dsSendAndReceiveRequisitionReport.xss">
       <DependentUpon>dsSendAndReceiveRequisitionReport.xsd</DependentUpon>
     </Content>
+
+    <Content Include="Reports\DataSets\dsFinishGoodProductionReportAccept.xsc">
+      <DependentUpon>dsFinishGoodProductionReportAccept.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsFinishGoodProductionReportAccept.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsFinishGoodProductionReportAccept.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsFinishGoodProductionReportAccept.xss">
+      <DependentUpon>dsFinishGoodProductionReportAccept.xsd</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\download.js" />
     <Content Include="Scripts\ds.js" />
@@ -3297,6 +3310,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsSendAndReceiveRequisitionReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsFinishGoodProductionReportAccept.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsFinishGoodProductionReportAccept.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -3498,6 +3516,10 @@
     <Content Include="Views\AgroConfiguration\MRawMaterialIssueAcceptList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetRawMaterialIssueaccPartialView.cshtml" />
     <Content Include="Views\AgroConfiguration\_RawmatiralIssueaccpet.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetAgroSalesProductEdit.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetProductSalesDropList.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetDropList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetAgroSalesProductDropDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3539,6 +3561,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptDateWiseCollection.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductionReportAccept.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductionReportSave.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductStock.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />

@@ -962,6 +962,26 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return isUpdateSucccess;
         }
 
+        public IEnumerable<AgroProductSalesInfoDTO> GetSalesDropList()
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForSalesDropList()).ToList();
+        }
+        private string QueryForSalesDropList()
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+
+            query = string.Format(@"
+select  info.InvoiceNo,info.InvoiceDate,info.ProductSalesInfoId,st.StockiestName,info.TotalAmount,info.PaidAmount,info.DueAmount from tblProductSalesInfo info
+inner join tblStockiestInfo st on info.StockiestId=st.StockiestId
+ where 1=1 and info.Status='Drop' order by info.ProductSalesInfoId desc
+			
+ {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
 
         //ExecutionStateWithText IAgroProductSalesInfoBusiness.  (AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId)
         //{

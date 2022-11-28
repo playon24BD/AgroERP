@@ -198,5 +198,43 @@ inner join tblFinishGoodProductInfo f on d.FinishGoodProductInfoId=f.FinishGoodP
 
             return query;
         }
+
+        public IEnumerable<AgroProductSalesDetailsDTO> GetSalesEditByInfoId(long ProductSalesInfoId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForGetAgroSalesEdit(ProductSalesInfoId)).ToList();
+        }
+
+        private string QueryForGetAgroSalesEdit(long ProductSalesInfoId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (ProductSalesInfoId != 0 && ProductSalesInfoId > 0)
+            {
+                param += string.Format(@" and i.ProductSalesInfoId={0}", ProductSalesInfoId);
+            }
+
+
+            query = string.Format(@"	
+select f.FinishGoodProductName,i.ProductSalesInfoId,i.InvoiceNo,d.ProductSalesDetailsId,d.FinishGoodProductInfoId,d.Quanity,d.BoxQuanity,d.Price,d.Price,d.Discount,d.DiscountTk,d.MeasurementSize,d.ReceipeBatchCode,d.QtyKG,(d.Quanity*d.Price-DiscountTk)as ProductTotal,
+ RT=ISNULL((SELECT 
+ CASE When count(*) > 0 then 1
+ else 0
+ END AS myValue
+ from tblSalesReturn sr where sr.FinishGoodProductInfoId=d.FinishGoodProductInfoId and sr.ProductSalesInfoId=d.ProductSalesInfoId and sr.FGRId=d.FGRId and  sr.Status='ADJUST'),0)
+
+from tblProductSalesInfo i
+inner join tblProductSalesDetails d on i.ProductSalesInfoId=d.ProductSalesInfoId
+inner join tblFinishGoodProductInfo f on d.FinishGoodProductInfoId=f.FinishGoodProductId
+
+
+
+                Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+
+
     }
 }

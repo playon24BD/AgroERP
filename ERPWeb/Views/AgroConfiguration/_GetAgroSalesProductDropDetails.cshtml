@@ -1,0 +1,52 @@
+﻿
+@model IEnumerable<ERPBO.Agriculture.ViewModels.AgroProductSalesDetailsViewModel>
+
+@{
+    ViewBag.Title = "_GetAgroSalesProductionDropDetails";
+    int sl = 0;
+
+}
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm " id="tblReturnItems">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th>#SL</th>
+            <th class="hide"></th>
+            <th class="hide"></th>
+            <th>ProductName</th>
+            <th>MeasurementSize</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Discount%</th>
+            <th>Total</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+
+
+                <tr>
+                    <td class="text-center">@sl</td>
+                    <td class="hide">@item.ProductSalesInfoId</td>
+                    <td class="hide">@item.ProductSalesDetailsId</td>
+                    <td class="text-center">@item.FinishGoodProductName</td>
+                    <td class="text-center">@item.MeasurementSize</td>
+                    <td class="text-center">@item.Quanity</td>
+                    <td class="text-center text-bold">@item.Price</td>
+                    <td class="text-center">@item.Discount</td>
+                    <td class="text-center">@item.ProductTotal</td>
+                    
+
+                </tr>
+
+ 
+
+
+
+        }
+    </tbody>
+</table>
+
+

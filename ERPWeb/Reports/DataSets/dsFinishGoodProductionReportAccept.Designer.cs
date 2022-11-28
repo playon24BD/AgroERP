@@ -20,17 +20,17 @@ namespace ERPWeb.Reports.DataSets {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("dsSalesReturnReportSave")]
+    [global::System.Xml.Serialization.XmlRootAttribute("dsFinishGoodProductionReportAccept")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class dsSalesReturnReportSave : global::System.Data.DataSet {
+    public partial class dsFinishGoodProductionReportAccept : global::System.Data.DataSet {
         
-        private dsSalesReturnReportSaveDataTable tabledsSalesReturnReportSave;
+        private dsFinishGoodProductionReportAcceptDataTable tabledsFinishGoodProductionReportAccept;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public dsSalesReturnReportSave() {
+        public dsFinishGoodProductionReportAccept() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace ERPWeb.Reports.DataSets {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected dsSalesReturnReportSave(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected dsFinishGoodProductionReportAccept(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace ERPWeb.Reports.DataSets {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["dsSalesReturnReportSave"] != null)) {
-                    base.Tables.Add(new dsSalesReturnReportSaveDataTable(ds.Tables["dsSalesReturnReportSave"]));
+                if ((ds.Tables["dsFinishGoodProductionReportAccept"] != null)) {
+                    base.Tables.Add(new dsFinishGoodProductionReportAcceptDataTable(ds.Tables["dsFinishGoodProductionReportAccept"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace ERPWeb.Reports.DataSets {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public dsSalesReturnReportSaveDataTable _dsSalesReturnReportSave {
+        public dsFinishGoodProductionReportAcceptDataTable _dsFinishGoodProductionReportAccept {
             get {
-                return this.tabledsSalesReturnReportSave;
+                return this.tabledsFinishGoodProductionReportAccept;
             }
         }
         
@@ -127,7 +127,7 @@ namespace ERPWeb.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            dsSalesReturnReportSave cln = ((dsSalesReturnReportSave)(base.Clone()));
+            dsFinishGoodProductionReportAccept cln = ((dsFinishGoodProductionReportAccept)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace ERPWeb.Reports.DataSets {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["dsSalesReturnReportSave"] != null)) {
-                    base.Tables.Add(new dsSalesReturnReportSaveDataTable(ds.Tables["dsSalesReturnReportSave"]));
+                if ((ds.Tables["dsFinishGoodProductionReportAccept"] != null)) {
+                    base.Tables.Add(new dsFinishGoodProductionReportAcceptDataTable(ds.Tables["dsFinishGoodProductionReportAccept"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace ERPWeb.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tabledsSalesReturnReportSave = ((dsSalesReturnReportSaveDataTable)(base.Tables["dsSalesReturnReportSave"]));
+            this.tabledsFinishGoodProductionReportAccept = ((dsFinishGoodProductionReportAcceptDataTable)(base.Tables["dsFinishGoodProductionReportAccept"]));
             if ((initTable == true)) {
-                if ((this.tabledsSalesReturnReportSave != null)) {
-                    this.tabledsSalesReturnReportSave.InitVars();
+                if ((this.tabledsFinishGoodProductionReportAccept != null)) {
+                    this.tabledsFinishGoodProductionReportAccept.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace ERPWeb.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "dsSalesReturnReportSave";
+            this.DataSetName = "dsFinishGoodProductionReportAccept";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/dsSalesReturnReportSave.xsd";
+            this.Namespace = "http://tempuri.org/dsFinishGoodProductionReportAccept.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tabledsSalesReturnReportSave = new dsSalesReturnReportSaveDataTable();
-            base.Tables.Add(this.tabledsSalesReturnReportSave);
+            this.tabledsFinishGoodProductionReportAccept = new dsFinishGoodProductionReportAcceptDataTable();
+            base.Tables.Add(this.tabledsFinishGoodProductionReportAccept);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerialize_dsSalesReturnReportSave() {
+        private bool ShouldSerialize_dsFinishGoodProductionReportAccept() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace ERPWeb.Reports.DataSets {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            dsSalesReturnReportSave ds = new dsSalesReturnReportSave();
+            dsFinishGoodProductionReportAccept ds = new dsFinishGoodProductionReportAccept();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,45 +270,37 @@ namespace ERPWeb.Reports.DataSets {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void dsSalesReturnReportSaveRowChangeEventHandler(object sender, dsSalesReturnReportSaveRowChangeEvent e);
+        public delegate void dsFinishGoodProductionReportAcceptRowChangeEventHandler(object sender, dsFinishGoodProductionReportAcceptRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class dsSalesReturnReportSaveDataTable : global::System.Data.TypedTableBase<dsSalesReturnReportSaveRow> {
+        public partial class dsFinishGoodProductionReportAcceptDataTable : global::System.Data.TypedTableBase<dsFinishGoodProductionReportAcceptRow> {
             
-            private global::System.Data.DataColumn columnReturnDate;
+            private global::System.Data.DataColumn columnEntryDate;
             
-            private global::System.Data.DataColumn columnInvoiceNo;
-            
-            private global::System.Data.DataColumn columnBoxQuanity;
-            
-            private global::System.Data.DataColumn columnReturnQuanity;
-            
-            private global::System.Data.DataColumn columnReturnPerUnitPrice;
-            
-            private global::System.Data.DataColumn columnReturnTotalPrice;
-            
-            private global::System.Data.DataColumn columnStatus;
-            
-            private global::System.Data.DataColumn columnMeasurementSize;
+            private global::System.Data.DataColumn columnFinishGoodProductionBatch;
             
             private global::System.Data.DataColumn columnFinishGoodProductName;
             
-            private global::System.Data.DataColumn columnStockiestName;
+            private global::System.Data.DataColumn columnQuanity;
             
-            private global::System.Data.DataColumn columnTotalAmount;
+            private global::System.Data.DataColumn columnTargetQuantity;
             
-            private global::System.Data.DataColumn columnPaidAmount;
+            private global::System.Data.DataColumn columnStatus;
             
-            private global::System.Data.DataColumn columnDueAmount;
+            private global::System.Data.DataColumn columnRawMaterialName;
+            
+            private global::System.Data.DataColumn columnRequiredQuantity;
+            
+            private global::System.Data.DataColumn columnUnitQuantity;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsSalesReturnReportSaveDataTable() {
-                this.TableName = "dsSalesReturnReportSave";
+            public dsFinishGoodProductionReportAcceptDataTable() {
+                this.TableName = "dsFinishGoodProductionReportAccept";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -316,7 +308,7 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal dsSalesReturnReportSaveDataTable(global::System.Data.DataTable table) {
+            internal dsFinishGoodProductionReportAcceptDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -333,72 +325,24 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected dsSalesReturnReportSaveDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected dsFinishGoodProductionReportAcceptDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ReturnDateColumn {
+            public global::System.Data.DataColumn EntryDateColumn {
                 get {
-                    return this.columnReturnDate;
+                    return this.columnEntryDate;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn InvoiceNoColumn {
+            public global::System.Data.DataColumn FinishGoodProductionBatchColumn {
                 get {
-                    return this.columnInvoiceNo;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn BoxQuanityColumn {
-                get {
-                    return this.columnBoxQuanity;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ReturnQuanityColumn {
-                get {
-                    return this.columnReturnQuanity;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ReturnPerUnitPriceColumn {
-                get {
-                    return this.columnReturnPerUnitPrice;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ReturnTotalPriceColumn {
-                get {
-                    return this.columnReturnTotalPrice;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn StatusColumn {
-                get {
-                    return this.columnStatus;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn MeasurementSizeColumn {
-                get {
-                    return this.columnMeasurementSize;
+                    return this.columnFinishGoodProductionBatch;
                 }
             }
             
@@ -412,33 +356,49 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn StockiestNameColumn {
+            public global::System.Data.DataColumn QuanityColumn {
                 get {
-                    return this.columnStockiestName;
+                    return this.columnQuanity;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn TotalAmountColumn {
+            public global::System.Data.DataColumn TargetQuantityColumn {
                 get {
-                    return this.columnTotalAmount;
+                    return this.columnTargetQuantity;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn PaidAmountColumn {
+            public global::System.Data.DataColumn StatusColumn {
                 get {
-                    return this.columnPaidAmount;
+                    return this.columnStatus;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn DueAmountColumn {
+            public global::System.Data.DataColumn RawMaterialNameColumn {
                 get {
-                    return this.columnDueAmount;
+                    return this.columnRawMaterialName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn RequiredQuantityColumn {
+                get {
+                    return this.columnRequiredQuantity;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn UnitQuantityColumn {
+                get {
+                    return this.columnUnitQuantity;
                 }
             }
             
@@ -453,57 +413,53 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsSalesReturnReportSaveRow this[int index] {
+            public dsFinishGoodProductionReportAcceptRow this[int index] {
                 get {
-                    return ((dsSalesReturnReportSaveRow)(this.Rows[index]));
+                    return ((dsFinishGoodProductionReportAcceptRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event dsSalesReturnReportSaveRowChangeEventHandler dsSalesReturnReportSaveRowChanging;
+            public event dsFinishGoodProductionReportAcceptRowChangeEventHandler dsFinishGoodProductionReportAcceptRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event dsSalesReturnReportSaveRowChangeEventHandler dsSalesReturnReportSaveRowChanged;
+            public event dsFinishGoodProductionReportAcceptRowChangeEventHandler dsFinishGoodProductionReportAcceptRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event dsSalesReturnReportSaveRowChangeEventHandler dsSalesReturnReportSaveRowDeleting;
+            public event dsFinishGoodProductionReportAcceptRowChangeEventHandler dsFinishGoodProductionReportAcceptRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event dsSalesReturnReportSaveRowChangeEventHandler dsSalesReturnReportSaveRowDeleted;
+            public event dsFinishGoodProductionReportAcceptRowChangeEventHandler dsFinishGoodProductionReportAcceptRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void AdddsSalesReturnReportSaveRow(dsSalesReturnReportSaveRow row) {
+            public void AdddsFinishGoodProductionReportAcceptRow(dsFinishGoodProductionReportAcceptRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsSalesReturnReportSaveRow AdddsSalesReturnReportSaveRow(string ReturnDate, string InvoiceNo, string BoxQuanity, string ReturnQuanity, string ReturnPerUnitPrice, string ReturnTotalPrice, string Status, string MeasurementSize, string FinishGoodProductName, string StockiestName, string TotalAmount, string PaidAmount, string DueAmount) {
-                dsSalesReturnReportSaveRow rowdsSalesReturnReportSaveRow = ((dsSalesReturnReportSaveRow)(this.NewRow()));
+            public dsFinishGoodProductionReportAcceptRow AdddsFinishGoodProductionReportAcceptRow(string EntryDate, string FinishGoodProductionBatch, string FinishGoodProductName, string Quanity, string TargetQuantity, string Status, string RawMaterialName, string RequiredQuantity, string UnitQuantity) {
+                dsFinishGoodProductionReportAcceptRow rowdsFinishGoodProductionReportAcceptRow = ((dsFinishGoodProductionReportAcceptRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        ReturnDate,
-                        InvoiceNo,
-                        BoxQuanity,
-                        ReturnQuanity,
-                        ReturnPerUnitPrice,
-                        ReturnTotalPrice,
-                        Status,
-                        MeasurementSize,
+                        EntryDate,
+                        FinishGoodProductionBatch,
                         FinishGoodProductName,
-                        StockiestName,
-                        TotalAmount,
-                        PaidAmount,
-                        DueAmount};
-                rowdsSalesReturnReportSaveRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowdsSalesReturnReportSaveRow);
-                return rowdsSalesReturnReportSaveRow;
+                        Quanity,
+                        TargetQuantity,
+                        Status,
+                        RawMaterialName,
+                        RequiredQuantity,
+                        UnitQuantity};
+                rowdsFinishGoodProductionReportAcceptRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowdsFinishGoodProductionReportAcceptRow);
+                return rowdsFinishGoodProductionReportAcceptRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                dsSalesReturnReportSaveDataTable cln = ((dsSalesReturnReportSaveDataTable)(base.Clone()));
+                dsFinishGoodProductionReportAcceptDataTable cln = ((dsFinishGoodProductionReportAcceptDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -511,84 +467,72 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new dsSalesReturnReportSaveDataTable();
+                return new dsFinishGoodProductionReportAcceptDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             internal void InitVars() {
-                this.columnReturnDate = base.Columns["ReturnDate"];
-                this.columnInvoiceNo = base.Columns["InvoiceNo"];
-                this.columnBoxQuanity = base.Columns["BoxQuanity"];
-                this.columnReturnQuanity = base.Columns["ReturnQuanity"];
-                this.columnReturnPerUnitPrice = base.Columns["ReturnPerUnitPrice"];
-                this.columnReturnTotalPrice = base.Columns["ReturnTotalPrice"];
-                this.columnStatus = base.Columns["Status"];
-                this.columnMeasurementSize = base.Columns["MeasurementSize"];
+                this.columnEntryDate = base.Columns["EntryDate"];
+                this.columnFinishGoodProductionBatch = base.Columns["FinishGoodProductionBatch"];
                 this.columnFinishGoodProductName = base.Columns["FinishGoodProductName"];
-                this.columnStockiestName = base.Columns["StockiestName"];
-                this.columnTotalAmount = base.Columns["TotalAmount"];
-                this.columnPaidAmount = base.Columns["PaidAmount"];
-                this.columnDueAmount = base.Columns["DueAmount"];
+                this.columnQuanity = base.Columns["Quanity"];
+                this.columnTargetQuantity = base.Columns["TargetQuantity"];
+                this.columnStatus = base.Columns["Status"];
+                this.columnRawMaterialName = base.Columns["RawMaterialName"];
+                this.columnRequiredQuantity = base.Columns["RequiredQuantity"];
+                this.columnUnitQuantity = base.Columns["UnitQuantity"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             private void InitClass() {
-                this.columnReturnDate = new global::System.Data.DataColumn("ReturnDate", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnReturnDate);
-                this.columnInvoiceNo = new global::System.Data.DataColumn("InvoiceNo", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnInvoiceNo);
-                this.columnBoxQuanity = new global::System.Data.DataColumn("BoxQuanity", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBoxQuanity);
-                this.columnReturnQuanity = new global::System.Data.DataColumn("ReturnQuanity", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnReturnQuanity);
-                this.columnReturnPerUnitPrice = new global::System.Data.DataColumn("ReturnPerUnitPrice", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnReturnPerUnitPrice);
-                this.columnReturnTotalPrice = new global::System.Data.DataColumn("ReturnTotalPrice", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnReturnTotalPrice);
-                this.columnStatus = new global::System.Data.DataColumn("Status", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnStatus);
-                this.columnMeasurementSize = new global::System.Data.DataColumn("MeasurementSize", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnMeasurementSize);
+                this.columnEntryDate = new global::System.Data.DataColumn("EntryDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEntryDate);
+                this.columnFinishGoodProductionBatch = new global::System.Data.DataColumn("FinishGoodProductionBatch", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFinishGoodProductionBatch);
                 this.columnFinishGoodProductName = new global::System.Data.DataColumn("FinishGoodProductName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFinishGoodProductName);
-                this.columnStockiestName = new global::System.Data.DataColumn("StockiestName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnStockiestName);
-                this.columnTotalAmount = new global::System.Data.DataColumn("TotalAmount", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTotalAmount);
-                this.columnPaidAmount = new global::System.Data.DataColumn("PaidAmount", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPaidAmount);
-                this.columnDueAmount = new global::System.Data.DataColumn("DueAmount", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDueAmount);
-                this.ExtendedProperties.Add("Generator_TablePropName", "_dsSalesReturnReportSave");
-                this.ExtendedProperties.Add("Generator_UserTableName", "dsSalesReturnReportSave");
+                this.columnQuanity = new global::System.Data.DataColumn("Quanity", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnQuanity);
+                this.columnTargetQuantity = new global::System.Data.DataColumn("TargetQuantity", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTargetQuantity);
+                this.columnStatus = new global::System.Data.DataColumn("Status", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStatus);
+                this.columnRawMaterialName = new global::System.Data.DataColumn("RawMaterialName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRawMaterialName);
+                this.columnRequiredQuantity = new global::System.Data.DataColumn("RequiredQuantity", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRequiredQuantity);
+                this.columnUnitQuantity = new global::System.Data.DataColumn("UnitQuantity", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUnitQuantity);
+                this.ExtendedProperties.Add("Generator_TablePropName", "_dsFinishGoodProductionReportAccept");
+                this.ExtendedProperties.Add("Generator_UserTableName", "dsFinishGoodProductionReportAccept");
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsSalesReturnReportSaveRow NewdsSalesReturnReportSaveRow() {
-                return ((dsSalesReturnReportSaveRow)(this.NewRow()));
+            public dsFinishGoodProductionReportAcceptRow NewdsFinishGoodProductionReportAcceptRow() {
+                return ((dsFinishGoodProductionReportAcceptRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new dsSalesReturnReportSaveRow(builder);
+                return new dsFinishGoodProductionReportAcceptRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(dsSalesReturnReportSaveRow);
+                return typeof(dsFinishGoodProductionReportAcceptRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.dsSalesReturnReportSaveRowChanged != null)) {
-                    this.dsSalesReturnReportSaveRowChanged(this, new dsSalesReturnReportSaveRowChangeEvent(((dsSalesReturnReportSaveRow)(e.Row)), e.Action));
+                if ((this.dsFinishGoodProductionReportAcceptRowChanged != null)) {
+                    this.dsFinishGoodProductionReportAcceptRowChanged(this, new dsFinishGoodProductionReportAcceptRowChangeEvent(((dsFinishGoodProductionReportAcceptRow)(e.Row)), e.Action));
                 }
             }
             
@@ -596,8 +540,8 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.dsSalesReturnReportSaveRowChanging != null)) {
-                    this.dsSalesReturnReportSaveRowChanging(this, new dsSalesReturnReportSaveRowChangeEvent(((dsSalesReturnReportSaveRow)(e.Row)), e.Action));
+                if ((this.dsFinishGoodProductionReportAcceptRowChanging != null)) {
+                    this.dsFinishGoodProductionReportAcceptRowChanging(this, new dsFinishGoodProductionReportAcceptRowChangeEvent(((dsFinishGoodProductionReportAcceptRow)(e.Row)), e.Action));
                 }
             }
             
@@ -605,8 +549,8 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.dsSalesReturnReportSaveRowDeleted != null)) {
-                    this.dsSalesReturnReportSaveRowDeleted(this, new dsSalesReturnReportSaveRowChangeEvent(((dsSalesReturnReportSaveRow)(e.Row)), e.Action));
+                if ((this.dsFinishGoodProductionReportAcceptRowDeleted != null)) {
+                    this.dsFinishGoodProductionReportAcceptRowDeleted(this, new dsFinishGoodProductionReportAcceptRowChangeEvent(((dsFinishGoodProductionReportAcceptRow)(e.Row)), e.Action));
                 }
             }
             
@@ -614,14 +558,14 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.dsSalesReturnReportSaveRowDeleting != null)) {
-                    this.dsSalesReturnReportSaveRowDeleting(this, new dsSalesReturnReportSaveRowChangeEvent(((dsSalesReturnReportSaveRow)(e.Row)), e.Action));
+                if ((this.dsFinishGoodProductionReportAcceptRowDeleting != null)) {
+                    this.dsFinishGoodProductionReportAcceptRowDeleting(this, new dsFinishGoodProductionReportAcceptRowChangeEvent(((dsFinishGoodProductionReportAcceptRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void RemovedsSalesReturnReportSaveRow(dsSalesReturnReportSaveRow row) {
+            public void RemovedsFinishGoodProductionReportAcceptRow(dsFinishGoodProductionReportAcceptRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -630,7 +574,7 @@ namespace ERPWeb.Reports.DataSets {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                dsSalesReturnReportSave ds = new dsSalesReturnReportSave();
+                dsFinishGoodProductionReportAccept ds = new dsFinishGoodProductionReportAccept();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -648,7 +592,7 @@ namespace ERPWeb.Reports.DataSets {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "dsSalesReturnReportSaveDataTable";
+                attribute2.FixedValue = "dsFinishGoodProductionReportAcceptDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -692,146 +636,48 @@ namespace ERPWeb.Reports.DataSets {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class dsSalesReturnReportSaveRow : global::System.Data.DataRow {
+        public partial class dsFinishGoodProductionReportAcceptRow : global::System.Data.DataRow {
             
-            private dsSalesReturnReportSaveDataTable tabledsSalesReturnReportSave;
+            private dsFinishGoodProductionReportAcceptDataTable tabledsFinishGoodProductionReportAccept;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal dsSalesReturnReportSaveRow(global::System.Data.DataRowBuilder rb) : 
+            internal dsFinishGoodProductionReportAcceptRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tabledsSalesReturnReportSave = ((dsSalesReturnReportSaveDataTable)(this.Table));
+                this.tabledsFinishGoodProductionReportAccept = ((dsFinishGoodProductionReportAcceptDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string ReturnDate {
+            public string EntryDate {
                 get {
                     try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.ReturnDateColumn]));
+                        return ((string)(this[this.tabledsFinishGoodProductionReportAccept.EntryDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ReturnDate\' in table \'dsSalesReturnReportSave\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'EntryDate\' in table \'dsFinishGoodProductionReportAccept\' is" +
+                                " DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsSalesReturnReportSave.ReturnDateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string InvoiceNo {
-                get {
-                    try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.InvoiceNoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'InvoiceNo\' in table \'dsSalesReturnReportSave\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledsSalesReturnReportSave.InvoiceNoColumn] = value;
+                    this[this.tabledsFinishGoodProductionReportAccept.EntryDateColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string BoxQuanity {
+            public string FinishGoodProductionBatch {
                 get {
                     try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.BoxQuanityColumn]));
+                        return ((string)(this[this.tabledsFinishGoodProductionReportAccept.FinishGoodProductionBatchColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'BoxQuanity\' in table \'dsSalesReturnReportSave\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'FinishGoodProductionBatch\' in table \'dsFinishGoodProduction" +
+                                "ReportAccept\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsSalesReturnReportSave.BoxQuanityColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string ReturnQuanity {
-                get {
-                    try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.ReturnQuanityColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ReturnQuanity\' in table \'dsSalesReturnReportSave\' is DBNull" +
-                                ".", e);
-                    }
-                }
-                set {
-                    this[this.tabledsSalesReturnReportSave.ReturnQuanityColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string ReturnPerUnitPrice {
-                get {
-                    try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.ReturnPerUnitPriceColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ReturnPerUnitPrice\' in table \'dsSalesReturnReportSave\' is D" +
-                                "BNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledsSalesReturnReportSave.ReturnPerUnitPriceColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string ReturnTotalPrice {
-                get {
-                    try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.ReturnTotalPriceColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ReturnTotalPrice\' in table \'dsSalesReturnReportSave\' is DBN" +
-                                "ull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledsSalesReturnReportSave.ReturnTotalPriceColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string Status {
-                get {
-                    try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.StatusColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Status\' in table \'dsSalesReturnReportSave\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledsSalesReturnReportSave.StatusColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string MeasurementSize {
-                get {
-                    try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.MeasurementSizeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'MeasurementSize\' in table \'dsSalesReturnReportSave\' is DBNu" +
-                                "ll.", e);
-                    }
-                }
-                set {
-                    this[this.tabledsSalesReturnReportSave.MeasurementSizeColumn] = value;
+                    this[this.tabledsFinishGoodProductionReportAccept.FinishGoodProductionBatchColumn] = value;
                 }
             }
             
@@ -840,237 +686,226 @@ namespace ERPWeb.Reports.DataSets {
             public string FinishGoodProductName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.FinishGoodProductNameColumn]));
+                        return ((string)(this[this.tabledsFinishGoodProductionReportAccept.FinishGoodProductNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FinishGoodProductName\' in table \'dsSalesReturnReportSave\' i" +
-                                "s DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'FinishGoodProductName\' in table \'dsFinishGoodProductionRepo" +
+                                "rtAccept\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsSalesReturnReportSave.FinishGoodProductNameColumn] = value;
+                    this[this.tabledsFinishGoodProductionReportAccept.FinishGoodProductNameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string StockiestName {
+            public string Quanity {
                 get {
                     try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.StockiestNameColumn]));
+                        return ((string)(this[this.tabledsFinishGoodProductionReportAccept.QuanityColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'StockiestName\' in table \'dsSalesReturnReportSave\' is DBNull" +
-                                ".", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Quanity\' in table \'dsFinishGoodProductionReportAccept\' is D" +
+                                "BNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsSalesReturnReportSave.StockiestNameColumn] = value;
+                    this[this.tabledsFinishGoodProductionReportAccept.QuanityColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string TotalAmount {
+            public string TargetQuantity {
                 get {
                     try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.TotalAmountColumn]));
+                        return ((string)(this[this.tabledsFinishGoodProductionReportAccept.TargetQuantityColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TotalAmount\' in table \'dsSalesReturnReportSave\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'TargetQuantity\' in table \'dsFinishGoodProductionReportAccep" +
+                                "t\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsSalesReturnReportSave.TotalAmountColumn] = value;
+                    this[this.tabledsFinishGoodProductionReportAccept.TargetQuantityColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string PaidAmount {
+            public string Status {
                 get {
                     try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.PaidAmountColumn]));
+                        return ((string)(this[this.tabledsFinishGoodProductionReportAccept.StatusColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PaidAmount\' in table \'dsSalesReturnReportSave\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Status\' in table \'dsFinishGoodProductionReportAccept\' is DB" +
+                                "Null.", e);
                     }
                 }
                 set {
-                    this[this.tabledsSalesReturnReportSave.PaidAmountColumn] = value;
+                    this[this.tabledsFinishGoodProductionReportAccept.StatusColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string DueAmount {
+            public string RawMaterialName {
                 get {
                     try {
-                        return ((string)(this[this.tabledsSalesReturnReportSave.DueAmountColumn]));
+                        return ((string)(this[this.tabledsFinishGoodProductionReportAccept.RawMaterialNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DueAmount\' in table \'dsSalesReturnReportSave\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'RawMaterialName\' in table \'dsFinishGoodProductionReportAcce" +
+                                "pt\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledsSalesReturnReportSave.DueAmountColumn] = value;
+                    this[this.tabledsFinishGoodProductionReportAccept.RawMaterialNameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsReturnDateNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.ReturnDateColumn);
+            public string RequiredQuantity {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsFinishGoodProductionReportAccept.RequiredQuantityColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'RequiredQuantity\' in table \'dsFinishGoodProductionReportAcc" +
+                                "ept\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsFinishGoodProductionReportAccept.RequiredQuantityColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetReturnDateNull() {
-                this[this.tabledsSalesReturnReportSave.ReturnDateColumn] = global::System.Convert.DBNull;
+            public string UnitQuantity {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsFinishGoodProductionReportAccept.UnitQuantityColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'UnitQuantity\' in table \'dsFinishGoodProductionReportAccept\'" +
+                                " is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsFinishGoodProductionReportAccept.UnitQuantityColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsInvoiceNoNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.InvoiceNoColumn);
+            public bool IsEntryDateNull() {
+                return this.IsNull(this.tabledsFinishGoodProductionReportAccept.EntryDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetInvoiceNoNull() {
-                this[this.tabledsSalesReturnReportSave.InvoiceNoColumn] = global::System.Convert.DBNull;
+            public void SetEntryDateNull() {
+                this[this.tabledsFinishGoodProductionReportAccept.EntryDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsBoxQuanityNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.BoxQuanityColumn);
+            public bool IsFinishGoodProductionBatchNull() {
+                return this.IsNull(this.tabledsFinishGoodProductionReportAccept.FinishGoodProductionBatchColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetBoxQuanityNull() {
-                this[this.tabledsSalesReturnReportSave.BoxQuanityColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsReturnQuanityNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.ReturnQuanityColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetReturnQuanityNull() {
-                this[this.tabledsSalesReturnReportSave.ReturnQuanityColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsReturnPerUnitPriceNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.ReturnPerUnitPriceColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetReturnPerUnitPriceNull() {
-                this[this.tabledsSalesReturnReportSave.ReturnPerUnitPriceColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsReturnTotalPriceNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.ReturnTotalPriceColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetReturnTotalPriceNull() {
-                this[this.tabledsSalesReturnReportSave.ReturnTotalPriceColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsStatusNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.StatusColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetStatusNull() {
-                this[this.tabledsSalesReturnReportSave.StatusColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsMeasurementSizeNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.MeasurementSizeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetMeasurementSizeNull() {
-                this[this.tabledsSalesReturnReportSave.MeasurementSizeColumn] = global::System.Convert.DBNull;
+            public void SetFinishGoodProductionBatchNull() {
+                this[this.tabledsFinishGoodProductionReportAccept.FinishGoodProductionBatchColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFinishGoodProductNameNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.FinishGoodProductNameColumn);
+                return this.IsNull(this.tabledsFinishGoodProductionReportAccept.FinishGoodProductNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetFinishGoodProductNameNull() {
-                this[this.tabledsSalesReturnReportSave.FinishGoodProductNameColumn] = global::System.Convert.DBNull;
+                this[this.tabledsFinishGoodProductionReportAccept.FinishGoodProductNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsStockiestNameNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.StockiestNameColumn);
+            public bool IsQuanityNull() {
+                return this.IsNull(this.tabledsFinishGoodProductionReportAccept.QuanityColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetStockiestNameNull() {
-                this[this.tabledsSalesReturnReportSave.StockiestNameColumn] = global::System.Convert.DBNull;
+            public void SetQuanityNull() {
+                this[this.tabledsFinishGoodProductionReportAccept.QuanityColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsTotalAmountNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.TotalAmountColumn);
+            public bool IsTargetQuantityNull() {
+                return this.IsNull(this.tabledsFinishGoodProductionReportAccept.TargetQuantityColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetTotalAmountNull() {
-                this[this.tabledsSalesReturnReportSave.TotalAmountColumn] = global::System.Convert.DBNull;
+            public void SetTargetQuantityNull() {
+                this[this.tabledsFinishGoodProductionReportAccept.TargetQuantityColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsPaidAmountNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.PaidAmountColumn);
+            public bool IsStatusNull() {
+                return this.IsNull(this.tabledsFinishGoodProductionReportAccept.StatusColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetPaidAmountNull() {
-                this[this.tabledsSalesReturnReportSave.PaidAmountColumn] = global::System.Convert.DBNull;
+            public void SetStatusNull() {
+                this[this.tabledsFinishGoodProductionReportAccept.StatusColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsDueAmountNull() {
-                return this.IsNull(this.tabledsSalesReturnReportSave.DueAmountColumn);
+            public bool IsRawMaterialNameNull() {
+                return this.IsNull(this.tabledsFinishGoodProductionReportAccept.RawMaterialNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetDueAmountNull() {
-                this[this.tabledsSalesReturnReportSave.DueAmountColumn] = global::System.Convert.DBNull;
+            public void SetRawMaterialNameNull() {
+                this[this.tabledsFinishGoodProductionReportAccept.RawMaterialNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsRequiredQuantityNull() {
+                return this.IsNull(this.tabledsFinishGoodProductionReportAccept.RequiredQuantityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetRequiredQuantityNull() {
+                this[this.tabledsFinishGoodProductionReportAccept.RequiredQuantityColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsUnitQuantityNull() {
+                return this.IsNull(this.tabledsFinishGoodProductionReportAccept.UnitQuantityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetUnitQuantityNull() {
+                this[this.tabledsFinishGoodProductionReportAccept.UnitQuantityColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1078,22 +913,22 @@ namespace ERPWeb.Reports.DataSets {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class dsSalesReturnReportSaveRowChangeEvent : global::System.EventArgs {
+        public class dsFinishGoodProductionReportAcceptRowChangeEvent : global::System.EventArgs {
             
-            private dsSalesReturnReportSaveRow eventRow;
+            private dsFinishGoodProductionReportAcceptRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsSalesReturnReportSaveRowChangeEvent(dsSalesReturnReportSaveRow row, global::System.Data.DataRowAction action) {
+            public dsFinishGoodProductionReportAcceptRowChangeEvent(dsFinishGoodProductionReportAcceptRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dsSalesReturnReportSaveRow Row {
+            public dsFinishGoodProductionReportAcceptRow Row {
                 get {
                     return this.eventRow;
                 }

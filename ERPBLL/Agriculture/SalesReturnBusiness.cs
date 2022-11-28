@@ -309,12 +309,12 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return query;
         }
 
-        public IEnumerable<SalesReturnReportData> GetSalesReturnReportSave(string InvoiceNo)
+        public IEnumerable<SalesReturnReportData> GetSalesReturnReportSave(string InvoiceNo, string returnDate)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnReportData>(QueryForSalesReturnReportDataSave(InvoiceNo)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnReportData>(QueryForSalesReturnReportDataSave(InvoiceNo,returnDate)).ToList();
         }
 
-        private string QueryForSalesReturnReportDataSave(string InvoiceNo)
+        private string QueryForSalesReturnReportDataSave(string InvoiceNo, string returnDate)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -324,13 +324,28 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                 param += string.Format(@"and sr.InvoiceNo ='{0}'", InvoiceNo);
             }
 
+            if (!string.IsNullOrEmpty(returnDate))
+            {
+                string fDate = Convert.ToDateTime(returnDate).ToString("yyyy-MM-dd");
+               
+                param += string.Format(@" and Cast(sr.ReturnDate as date)= '{0}' ", fDate);
+            }
+
+            //else if (!string.IsNullOrEmpty(returnDate) && returnDate.Trim() != "")
+            //{
+            //    string fDate = Convert.ToDateTime(returnDate).ToString("yyyy-MM-dd");
+            //    param += string.Format(@" and Cast(sr.ReturnDate as date)='{0}'", fDate);
+            //}
+
             query = string.Format(@"
 
-select convert (date,sr.ReturnDate) as ReturnDate,sr.InvoiceNo,f.FinishGoodProductName,s.StockiestName,sr.MeasurementSize,sr.ReturnQuanity,sr.QtyKG,sr.BoxQuanity,sr.ReturnPerUnitPrice,sr.Status,sr.ReturnTotalPrice
+
+select convert (date,sr.ReturnDate) as ReturnDate,sr.InvoiceNo,f.FinishGoodProductName,s.StockiestName,sr.MeasurementSize,sr.ReturnQuanity,sr.QtyKG,sr.BoxQuanity,sr.ReturnPerUnitPrice,sr.Status,sr.ReturnTotalPrice,psi.TotalAmount,psi.PaidAmount,psi.DueAmount
 
 from [Agriculture].[dbo]. tblSalesReturn sr
 inner join [Agriculture].[dbo]. tblFinishGoodProductInfo f on sr.FinishGoodProductInfoId=f.FinishGoodProductId
 inner join [Agriculture].[dbo]. tblStockiestInfo s on sr.StockiestId=s.StockiestId
+inner join [Agriculture].[dbo]. tblProductSalesInfo psi on sr.ProductSalesInfoId=psi.ProductSalesInfoId
 
 
 

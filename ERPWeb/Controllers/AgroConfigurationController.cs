@@ -1687,10 +1687,68 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(info, finishGoodProductionInfoDTO);
                 IsSuccess = _finishGoodProductionInfoBusiness.UpdateProductionStatus(finishGoodProductionDetailsDTOs, finishGoodProductionInfoDTO, User.UserId, User.OrgId);
             }
+
+            if (IsSuccess == true)
+            {
+
+                var productionBatch = _finishGoodProductionInfoBusiness.GetProductionBatch(User.OrgId).FirstOrDefault().FinishGoodProductionBatch;
+                
+
+
+                return Json(new { IsSuccess = IsSuccess, File = productionBatch });
+            }
+
+
             return Json(IsSuccess);
         }
 
+        public ActionResult GetFinishGoodAcceptReport(string FinishGoodProductionBatch,string returnDate)
+        {
+            
+            string CurrentDate = DateTime.Now.ToShortDateString();
+           
 
+            var data = _finishGoodProductionInfoBusiness.GetFinishGoodReportAccept(FinishGoodProductionBatch, returnDate);
+
+            LocalReport localReport = new LocalReport();
+
+            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptFinishGoodProductionReportAccept.rdlc");
+            if (System.IO.File.Exists(reportPath))
+            {
+                localReport.ReportPath = reportPath;
+            }
+
+            ReportDataSource dataSource1 = new ReportDataSource("dsFinishGoodProductionReportAccept", data);
+            localReport.DataSources.Add(dataSource1);
+
+            string reportType = "PDF";
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
+
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
+            return File(renderedBytes, mimeType);
+        }
 
 
         #endregion
@@ -2342,6 +2400,52 @@ namespace ERPWeb.Controllers
                 List<AgroProductSalesDetailsViewModel> detailsvm = new List<AgroProductSalesDetailsViewModel>();
                 AutoMapper.Mapper.Map(details, detailsvm);
                 return PartialView("_GetAgroSalesProductDetails", detailsvm);
+
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Edit)
+            {
+
+                var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
+
+                ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName, Value = stock.StockiestId.ToString() }).ToList();
+
+                var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
+                var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
+                var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
+                var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
+                var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
+
+                var infos = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
+                
+                
+
+                ViewBag.Info = new AgroProductSalesInfoViewModel
+                {
+                    ZoneName = ZoneName.FirstOrDefault(Z => Z.ZoneId == infos.ZoneId).ZoneName,
+                    DivisionName = DivisionName.FirstOrDefault(D => D.DivisionId == infos.DivisionId).DivisionName,
+                    RegionName = RegionName.FirstOrDefault(R => R.RegionId == infos.RegionId).RegionName,
+                    AreaName = AreaName.FirstOrDefault(A => A.AreaId == infos.AreaId).AreaName,
+                    TerritoryName = TerritoryName.FirstOrDefault(T => T.TerritoryId == infos.TerritoryId).TerritoryName,
+                    StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == infos.StockiestId).StockiestName,
+                    
+                InvoiceNo = infos.InvoiceNo,
+                    ChallanNo = infos.ChallanNo,
+                    DriverName = infos.DriverName,
+                    VehicleNumber = infos.VehicleNumber,
+                    DeliveryPlace = infos.DeliveryPlace,
+                    InvoiceDate = infos.InvoiceDate,
+
+                    
+                };
+
+                var edit = _agroProductSalesDetailsBusiness.GetSalesEditByInfoId(id.Value);
+
+
+
+                List<AgroProductSalesDetailsViewModel> editView = new List<AgroProductSalesDetailsViewModel>();
+                AutoMapper.Mapper.Map(edit, editView);
+                return PartialView("_GetAgroSalesProductEdit", editView);
 
             }
 
@@ -4379,8 +4483,6 @@ namespace ERPWeb.Controllers
             return View();
         }
 
-
-
         public ActionResult SalesReturn(long? id)
         {
             ViewBag.ddlstokiestname = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stk => new SelectListItem { Text = stk.StockiestName, Value = stk.StockiestId.ToString() });
@@ -4434,7 +4536,7 @@ namespace ERPWeb.Controllers
             bool IsSuccess = false;
 
 
-            if (details.Count > 0)
+            if (true)
             {
                 List<SalesReturnDTO> detailsDTO = new List<SalesReturnDTO>();
                 AutoMapper.Mapper.Map(details, detailsDTO);
@@ -4442,14 +4544,15 @@ namespace ERPWeb.Controllers
 
             }
 
-            //if (IsSuccess == true)
-            //{
-            //    // Report ..
-            //    var invoice = _salesReturn.GetInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
+            if (IsSuccess == true)
+            {
+                
+                var invoice = _salesReturn.GetInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
+                var returnDate=_salesReturn.GetInvoice(User.OrgId).FirstOrDefault().ReturnDate;
 
-            //    //var file = AgroProductSalesReports(invoice);
-            //    return Json(new { IsSuccess = IsSuccess, File = invoice });
-            //}
+
+                return Json(new { IsSuccess = IsSuccess, File = invoice });
+            }
 
 
             return Json(IsSuccess);
@@ -4457,7 +4560,10 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetSalesReturnReportSave(string InvoiceNo)
         {
-            var data = _salesReturn.GetSalesReturnReportSave(InvoiceNo);
+            //var returnDate=_salesReturn.GetSalesReturnsById(User.OrgId).ReturnDate
+            string CurrentDate = DateTime.Now.ToShortDateString();
+            var data = _salesReturn.GetSalesReturnReportSave(InvoiceNo, CurrentDate);
+
 
             LocalReport localReport = new LocalReport();
 
@@ -5022,6 +5128,7 @@ namespace ERPWeb.Controllers
         }
         #endregion
 
+
         #region DailySalesDashboard
         //[HttpPost, ValidateJsonAntiForgeryToken]
         //public ActionResult GetLast30DaysAgroSales()
@@ -5033,6 +5140,60 @@ namespace ERPWeb.Controllers
 
         //    return Json(new { days = days, charts = charts });
         //}
+        #endregion
+
+        #region DropList
+
+        public ActionResult GetDropList(string flag,long? id)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+
+
+                return View();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _agroProductSalesInfoBusiness.GetSalesDropList();
+
+
+                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetProductSalesDropList", viewModels);
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+                
+                var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
+                var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
+                var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
+                var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
+                var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
+                var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
+
+                
+
+
+                
+
+                var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
+
+
+
+
+                List<AgroProductSalesDetailsViewModel> dropDetails = new List<AgroProductSalesDetailsViewModel>();
+                AutoMapper.Mapper.Map(details, dropDetails);
+                return PartialView("_GetAgroSalesProductDropDetails", dropDetails);
+
+            }
+
+            return View();
+        }
+
+
         #endregion
     }
 }

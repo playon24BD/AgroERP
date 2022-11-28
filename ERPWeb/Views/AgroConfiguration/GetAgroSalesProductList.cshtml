@@ -100,6 +100,37 @@
 </div>
 
 
+<div class="modal fade" id="AgroSalesProductEdit" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title">Agro Sales Product Edit</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer3">
+
+
+            </div>
+            <div class="modal-footer btn-default">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="UpdateButton"><i class="fas fa-paper-plane"></i> <span id="spanUpdateTextZone">Update</span> </button>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
 
 @*modal*@
 <div class="modal" id="Paymentmodal" role="dialog">
@@ -325,6 +356,30 @@
                 })
             }
         })
+
+        //edit button
+
+        $(document).on('click', 'a.data-item-edit-ProductionSalesInfoId', function (e) {
+            e.preventDefault();
+            debugger;
+            $("#dataContainer3").empty();
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+            if (true) {
+                var data = { flag: "Edit", id: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAgroSalesProductList', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer3").empty();
+                        $("#dataContainer3").append(res);
+                        $("#AgroSalesProductEdit").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+
+
         //modal open
         function OpenModal() {
             $("#spanModalHead").text("Add New Zone");

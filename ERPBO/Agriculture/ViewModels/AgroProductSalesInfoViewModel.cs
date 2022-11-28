@@ -63,6 +63,11 @@ namespace ERPBO.Agriculture.ViewModels
         public string AreaName { get; set; }
         public string DivisionName { get; set; }
         public string Status { get; set; }
+        public string MeasurementSize { get; set; }
+        public double Quanity { get; set; }
+        public double Price { get; set; }
+        public double Discount { get; set; }
+        public double DiscountTK { get; set; }
 
     }
 }

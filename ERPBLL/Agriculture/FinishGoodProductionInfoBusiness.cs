@@ -545,6 +545,66 @@ inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
 
             return query;
         }
+
+        public IEnumerable<FinishGoodProductionInfoDTO> GetProductionBatch(long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForProductionBatch(orgId)).ToList();
+        }
+
+        private string QueryForProductionBatch(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            query = string.Format(@"	SELECT top 1 * FROM FinishGoodProductionInfoes
+where Status='Approved'
+ order by FinishGoodProductInfoId desc", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+        public IEnumerable<FinishGoodProductionAcceptDataReport> GetFinishGoodReportAccept(string FinishGoodProductionBatch, string returnDate)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionAcceptDataReport>(QueryForFinishGoodProductionReportDataSave(FinishGoodProductionBatch, returnDate)).ToList();
+        }
+        private string QueryForFinishGoodProductionReportDataSave(string FinishGoodProductionBatch, string returnDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (!string.IsNullOrEmpty(FinishGoodProductionBatch))
+            {
+                param += string.Format(@"and fgpi.FinishGoodProductionBatch ='{0}'", FinishGoodProductionBatch);
+            }
+
+            if (!string.IsNullOrEmpty(returnDate))
+            {
+                string fDate = Convert.ToDateTime(returnDate).ToString("yyyy-MM-dd");
+
+                param += string.Format(@" and Cast(fgpi.EntryDate as date)= '{0}' ", fDate);
+            }
+
+            
+
+            query = string.Format(@"
+
+
+ 
+
+ select distinct convert(date,fgpi.EntryDate)as EntryDate, fgpi.FinishGoodProductionBatch,fgp.FinishGoodProductName,fgpi.Quanity,UnitQuantity=CONVERT( varchar,fgpi.Quanity ) + Convert(varchar,u.UnitName),fgpi.TargetQuantity,fgpi.Status,rm.RawMaterialName,pd.RequiredQuantity from FinishGoodProductionInfoes fgpi
+ inner join tblFinishGoodProductInfo fgp on fgpi.FinishGoodProductId=fgp.FinishGoodProductId
+ inner join FinishGoodProductionDetails pd on fgpi.FinishGoodProductionBatch=pd.FinishGoodProductionBatch
+inner join tblRawMaterialInfo rm on pd.RawMaterialId=rm.RawMaterialId
+inner join tblAgroUnitInfo u on rm.UnitId=u.UnitId
+
+--Where fgpi.Status='Approved'
+
+
+
+Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }
 

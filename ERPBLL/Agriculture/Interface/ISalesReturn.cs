@@ -14,7 +14,7 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<SalesReturnDTO> GetInvoice(long orgId);
 
-        IEnumerable<SalesReturnReportData> GetSalesReturnReportSave(string InvoiceNo);
+        IEnumerable<SalesReturnReportData> GetSalesReturnReportSave(string InvoiceNo,string returnDate);
 
         IEnumerable<SalesReturnReportData> GetSalesReturnReportData(long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate);
 
