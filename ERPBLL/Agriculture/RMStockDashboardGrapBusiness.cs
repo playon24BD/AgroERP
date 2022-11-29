@@ -84,7 +84,7 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
             string param = string.Empty;
 
             query = string.Format(@"
-select Distinct concat (p.FinishGoodProductName,re.FGRQty,u.UnitName) AS FinishGoodProductName from FinishGoodProductionInfoes fp
+select Distinct concat (p.FinishGoodProductName,' ( ',re.FGRQty,u.UnitName,' )') AS FinishGoodProductName from FinishGoodProductionInfoes fp
 inner join tblFinishGoodProductInfo p on fp.FinishGoodProductId=p.FinishGoodProductId
 inner join tblFinishGoodRecipeInfo re on fp.FGRId=re.FGRId
 inner join tblAgroUnitInfo u on re.UnitId= u.UnitId
@@ -138,6 +138,27 @@ inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
             {
                 return this._agricultureUnitOfWork.Db.Database.SqlQuery<Last30DaysPaymentGraph>(
                 string.Format(@"Exec [dbo].[PaymentHistoryDashBoard] '{0}','{1}',{2}", fromDate, toDate, orgId)).ToList();
+            }
+            return data;
+        }
+
+        public IEnumerable<GetAllMonthSalesTerget> GetMonth(long orgId)
+        {
+            IEnumerable<GetAllMonthSalesTerget> data = new List<GetAllMonthSalesTerget>();
+            if (orgId!=0)
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<GetAllMonthSalesTerget>(
+                string.Format(@"Exec [dbo].[spGetAllMonth]")).ToList();
+            }
+            return data;
+        }
+        public IEnumerable<GetAllMonthSalesTerget> GetMonthsales(long orgId)
+        {
+            IEnumerable<GetAllMonthSalesTerget> data = new List<GetAllMonthSalesTerget>();
+            if (orgId != 0)
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<GetAllMonthSalesTerget>(
+                string.Format(@"Exec [dbo].[spGetAllMonthSales]")).ToList();
             }
             return data;
         }

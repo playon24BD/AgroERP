@@ -214,20 +214,20 @@
                 debugger;
 
                 //consoleLog(res.replace(/['"]+/g, ''));
-                var unit = res.replace(/['"]+/g, '');
+                var units = res.replace(/['"]+/g, '');
                 txtRawMaterialQty.val(res.RMQTY);
-                txtRawMaterialQty.val(unit);
+                txtRawMaterialQty.val(units);
 
             });
-            //$.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitID", data)).then(function (res, status) {
-            //    //  debugger;
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitID", data)).then(function (res, status) {
+                //  debugger;
 
-            //    consoleLog(res.replace(/['"]+/g, ''));
-            //    var unit = res.replace(/['"]+/g, '');
-            //    ddlUnitID.val(res.UnitIDd);
-            //    ddlUnitID.val(unit);
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnitID.val(res.UnitIDd);
+                ddlUnitID.val(unit);
 
-            //});
+            });
 
         });
         

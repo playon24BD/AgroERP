@@ -81,6 +81,31 @@ namespace ERPWeb.Controllers
             TempData["days1"] = string.Join(",", days1);
             TempData["Sells1"] = string.Join(",", Sells1);
 
+            //Sales Terget
+            //var AllMonths = _rMStockDashboardGrap.GetMonth(User.OrgId);
+
+            List<string> AllMonthname = new List<string>();
+            List<string> AllMonthSales = new List<string>();
+            //foreach (var item in AllMonths)
+            //{
+
+
+            //    AllMonthname.Add(item.monthnames.ToString());
+            //    //percentages.Add(percentage.ToString("0.00"));
+            //}
+            var AllMonthsSales = _rMStockDashboardGrap.GetMonthsales(User.OrgId);
+            foreach (var item in AllMonthsSales)
+            {
+
+
+                //platformfamily.Add(item.monthnames.ToString());
+                AllMonthname.Add(item.monthnames.ToString());
+                AllMonthSales.Add(item.monthlysales.ToString());
+
+            }
+
+            TempData["Months"] = string.Join(",", AllMonthname);
+            TempData["MonthlySales"] = string.Join(",", AllMonthSales);
             return View();
 
 

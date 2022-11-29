@@ -6,40 +6,55 @@
 
 
 <div class="container mb-5">
-    
-        <div class="row">
 
-            <div class="col-md-6">
-                <div class="card">
-                    <canvas id="lineChart" height="150" width="200"></canvas>
-                </div>
+    <div class="row">
 
+        <div class="col-md-6">
+            <div class="card">
+                <canvas id="lineChart" height="150" width="200"></canvas>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <canvas id="FGChart" height="150" width="200"></canvas>
-                </div>
 
-            </div>
         </div>
- 
-
-
-        <div class="row">
-
-            <div class="col-md-6">
-                <div class="card">
-                    <canvas id="line-chart" width="800" height="450"></canvas>
-                </div>
-
+        <div class="col-md-6">
+            <div class="card">
+                <canvas id="FGChart" height="150" width="200"></canvas>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <canvas id="line-chartpayment" width="800" height="450"></canvas>
-                </div>
 
-            </div>
         </div>
+    </div>
+
+
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card">
+                <canvas id="line-chart" width="800" height="450"></canvas>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <canvas id="line-chartpayment" width="800" height="450"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card">
+                @*<canvas id="line-chart" width="800" height="450"></canvas>*@
+                <canvas id="MonthlysalesTergetline-chart" width="800" height="450"></canvas>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            
+
+        </div>
+    </div>
 
 
 </div>
@@ -51,21 +66,22 @@
 <script type="text/javascript">
     $(document).ready(function () {
         debugger;
-        $("#cw").addClass("ccc2");
+        //$("#cw").addClass("ccc2");
         //initialLoad();
-        setInterval('refreshPage()', 300000);
+        //setInterval('refreshPage()', 300000);
         debugger;
         RMStockGrap();
         ProductStockGrap();
         GetLast30DaysSalesChart();
         GetLast30DaysPaymentChart();
+        ProductMonthlysalesTerget();
        // GetLast30DaysSalesChartTest();
        // GetTotalSRChart();
     })
-    function refreshPage() {
-        location.reload();
-    }
-    var colors = ["#27AE60", "#ffc107", "#8D6E63", "#BA68C8", "#2196F3", "#009688", "#D4E157", "#9E9E9E", "#607D8B", "#CC3333", "#DC7633", "#E91E63", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000"];
+    //function refreshPage() {
+    //    location.reload();
+    //}
+    //var colors = ["#27AE60", "#ffc107", "#8D6E63", "#BA68C8", "#2196F3", "#009688", "#D4E157", "#9E9E9E", "#607D8B", "#CC3333", "#DC7633", "#E91E63", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000"];
     function GetLast30DaysSalesChart() {
         debugger;
 
@@ -123,7 +139,7 @@
                             fontColor: "white",
                             fontSize: 10,
                             beginAtZero: true,
-                            stacked: true,
+                            //stacked: true,
                             //autoSkip: false
                         },
                         gridLines: {
@@ -138,9 +154,9 @@
                         ticks: {
                             fontColor: "white",
                             fontSize: 10,
-                            stepSize: 2000,
+                            //stepSize: 2000,
                             beginAtZero: true,
-                            stacked: true,
+                            //stacked: true,
                         },
                         gridLines: {
                             //display: true,
@@ -197,7 +213,7 @@
                             fontColor: "white",
                             fontSize: 10,
                             beginAtZero: true,
-                            stacked: true,
+                            //stacked: true,
                             //autoSkip: false
                         },
                         gridLines: {
@@ -212,9 +228,9 @@
                         ticks: {
                             fontColor: "white",
                             fontSize: 10,
-                            stepSize: 2000,
+                            //stepSize: 2000,
                             beginAtZero: true,
-                            stacked: true,
+                            //stacked: true,
                         },
                         gridLines: {
                             //display: true,
@@ -248,10 +264,10 @@
 
             data: {
                 labels: labelsArray,
-                labelFontColor: "red",
-                color:'#3EB9DC',
+                //labelFontColor: "red",
+                //color:'#3EB9DC',
                 datasets: [{
-                    label: 'Raw Material Current Stock',
+                    label: 'Material Stock',
 
                     //backgroundColor: '#3EB9DC',
                     backgroundColor: [
@@ -274,7 +290,7 @@
                         fontSize: 14
                     }
                 },
-                //tooltips: { mode: 'index', intersect: false },
+                tooltips: { mode: 'index', intersect: false },
                 responsive: true,
                 scales: {
 
@@ -283,8 +299,8 @@
                             fontColor: "white",
                             fontSize: 10,
                             beginAtZero: true,
-                            stacked: true,
-                            autoSkip: false
+                            //stacked: true,
+                            //autoSkip: false
                         },
                          gridLines: {
                             //display: false,
@@ -298,7 +314,7 @@
                         ticks: {
                             fontColor: "white",
                             fontSize: 10,
-                            stepSize: 2000,
+                            //stepSize: 2000,
                             beginAtZero: true
                         },
                         gridLines: {
@@ -331,10 +347,10 @@
 
             data: {
                 labels: labelsArray,
-                labelFontColor: "red",
-                color:'#3EB9DC',
+                //labelFontColor: "red",
+                //color:'#3EB9DC',
                 datasets: [{
-                    label: 'FG PRoduct Current Stock',
+                    label: 'PRoduct Stock',
 
                     //backgroundColor: '#3EB9DC',
                     backgroundColor: [
@@ -365,7 +381,7 @@
                             fontColor: "white",
                             fontSize: 10,
                             beginAtZero: true,
-                            stacked: true
+                            //stacked: true
                         },
                         gridLines: {
                             //display: false,
@@ -378,7 +394,7 @@
                         ticks: {
                             fontColor: "white",
                             fontSize: 10,
-                            stepSize: 1,
+                            //stepSize: 1,
                             beginAtZero: true
                         },
                         gridLines: {
@@ -392,6 +408,84 @@
                 },
             }});
     };
+    function ProductMonthlysalesTerget() {
+        debugger;
+        var labels = '@TempData["Months"]';
+        var datas = '@TempData["MonthlySales"]';
+        var labelsArray = new Array();
+        var dataArray = new Array();
+        for (var i = 0; i < labels.split(',').length; i++) {
+            labelsArray.push(labels.split(',')[i]);
+            dataArray.push(datas.split(',')[i]);
+        }
+        new Chart(document.getElementById("MonthlysalesTergetline-chart"), {
+            type: 'line',
+            data: {
+                labels: labelsArray,
+                datasets: [{
+                    data: dataArray,
+                    label: "Sales",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }, {
+                        data: [865000, 727500, 718900, 2210000, 94000, 45000, 160000, 45000, 900000, 80000, 85000],
+                    label: "Terget",
+                    borderColor: "#8e5ea2",
+                    fill: false
+                }
+                ]
+            },
+            //options: {
+            //    title: {
+            //        display: true,
+            //        text: 'World population per region (in millions)'
+            //    }
+            //}
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 14
+                    }
+                },
+                //tooltips: { mode: 'index', intersect: false },
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            beginAtZero: true,
+                            //stacked: true
+                        },
+                        gridLines: {
+                            //display: false,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }],
+
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            //stepSize: 1,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }],
+
+
+                },
+            }
+        });
+
+
+    }
 
 
 </script>

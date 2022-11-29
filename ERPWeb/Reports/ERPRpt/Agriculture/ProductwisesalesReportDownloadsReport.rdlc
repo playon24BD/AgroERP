@@ -129,7 +129,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>QtyCTN</Value>
+                              <Value>TotalQty</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -164,7 +164,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>QtyKG</Value>
+                              <Value>TotalQty</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -340,7 +340,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Total </Value>
+                              <Value>=SUM(Fields!QtyCTN.Value)</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
@@ -348,7 +348,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -787,11 +787,16 @@
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value />
-                                    <Style />
+                                    <Value>Total </Value>
+                                    <Style>
+                                      <FontWeight>Bold</FontWeight>
+                                      <Color>White</Color>
+                                    </Style>
                                   </TextRun>
                                 </TextRuns>
-                                <Style />
+                                <Style>
+                                  <TextAlign>Right</TextAlign>
+                                </Style>
                               </Paragraph>
                             </Paragraphs>
                             <rd:DefaultName>Textbox91</rd:DefaultName>

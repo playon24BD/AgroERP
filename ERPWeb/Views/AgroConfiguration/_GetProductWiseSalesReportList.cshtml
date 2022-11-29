@@ -14,7 +14,7 @@
             <th style="vertical-align:middle">#SL</th>
             <th style="vertical-align:middle" class="hide"></th>
             <th style="vertical-align:middle" class="hide"></th>
-            <th style="vertical-align:middle">InvoiceDate</th>
+            @*<th style="vertical-align:middle">InvoiceDate</th>*@
             <th style="vertical-align:middle">Product Name</th>
             <th style="vertical-align:middle">PackSize</th>
             <th style="vertical-align:middle">QtyCTN</th>
@@ -31,7 +31,7 @@
                 <td class="text-center text-bold">@sl</td>
                 <td class="hide">@item.ProductSalesInfoId</td>
                 <td class="hide">@item.FinishGoodProductId</td>
-                <td class="text-center">@item.InvoiceDate.Value.ToString("dd.MMM.yyyy")</td>
+                @*<td class="text-center">@item.InvoiceDate.Value.ToString("dd.MMM.yyyy")</td>*@
                 <td class="text-center">@item.FinishGoodProductName</td>
                 <td class="text-center">@item.PackSize</td>
                 <td class="text-center">@item.QtyCTN</td>
