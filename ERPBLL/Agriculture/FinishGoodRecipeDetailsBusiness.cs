@@ -103,5 +103,72 @@ namespace ERPBLL.Agriculture
         {
             return _finishGoodRecipeDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.ReceipeBatchCode == receipeBatchCode).ToList();
         }
+
+        public IEnumerable<FinishGoodRecipeDetailsDTO> GetAgroReciprDetailsByInfoIdRMPrice(long FGRId)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetAgroReciprDetailsByInfoIdRMPrice(FGRId)).ToList();
+        }
+
+        private string QueryForGetAgroReciprDetailsByInfoIdRMPrice(long FGRId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (FGRId != 0 && FGRId > 0)
+            {
+                param += string.Format(@" and ri.FGRId={0}", FGRId);
+            }
+
+
+            query = string.Format(@"	
+select ri.FGRId,rd.FGRDetailsId,rm.RawMaterialName,rd.FGRRawMaterQty,un.UnitName, 
+RMPrice= ISNULL((SELECT AVG(SR.UnitPrice) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0),
+
+RMPriceTotal= ISNULL((SELECT AVG(SR.UnitPrice) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0)*rd.FGRRawMaterQty
+
+from tblFinishGoodRecipeInfo ri
+inner join tblFinishGoodRecipeDetails rd on ri.FGRId= rd.FGRId
+inner join tblRawMaterialInfo rm on rm.RawMaterialId=rd.RawMaterialId
+inner join tblAgroUnitInfo un on rm.UnitId=un.UnitId
+
+                Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+        public IEnumerable<FinishGoodRecipeDetailsDTO> GetFGProductAmount(long FGRID)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetFGProductAmount(FGRID)).ToList();
+
+        }
+
+        private string QueryForGetFGProductAmount(long FGRID)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            if (FGRID > 0)
+            {
+                param += string.Format(@" and ri.FGRId={0}", FGRID);
+            }
+
+            query = string.Format(@"
+
+select t.FGRId,ISNULL(sum(t.RMPriceTotal) ,0)as GrandTotal from ( select ri.FGRId,rd.FGRDetailsId,rm.RawMaterialName,rd.FGRRawMaterQty,un.UnitName, 
+RMPrice= ISNULL((SELECT AVG(SR.UnitPrice) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0),
+
+RMPriceTotal= ISNULL((SELECT AVG(SR.UnitPrice) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0)*rd.FGRRawMaterQty
+
+from tblFinishGoodRecipeInfo ri
+inner join tblFinishGoodRecipeDetails rd on ri.FGRId= rd.FGRId
+inner join tblRawMaterialInfo rm on rm.RawMaterialId=rd.RawMaterialId
+inner join tblAgroUnitInfo un on rm.UnitId=un.UnitId
+Where 1=1 {0}
+) t
+group by t.FGRId", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }

@@ -22,5 +22,7 @@ namespace ERPBO.Agriculture.DTOModels
         public long? UpUserId { get; set; }
         public Nullable<DateTime> UpdateDate { get; set; }
         public long FGRId { get; set; }
+        public double RMPriceTotal { get; set; }
+        public double GrandTotal { get; set; }
     }
 }
