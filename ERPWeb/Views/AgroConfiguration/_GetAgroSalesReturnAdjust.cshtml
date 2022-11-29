@@ -6,7 +6,9 @@
     int sl = 0;
 
 }
-
+#cb2 {
+  accent-color: #34495e;
+}
 
 <table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" id="tblReturnItems">
     <thead class="thead-dark">
@@ -27,26 +29,26 @@
         @foreach (var item in Model)
         {
             sl = sl + 1;
-        <tr>
-            <td class="text-center">@sl</td>
-            <td class="text-center">@item.FinishGoodProductName</td>
-            <td class="text-center">@item.QtyKG</td>
-            <td class="text-center hide">@item.MeasurementName</td>
-            <td class="text-center">@item.MeasurementSize</td>
-            <td class="text-center">@item.BoxQuanity</td>
-            <td class="text-center">@item.ReturnPerUnitPrice</td>
-            <td class="text-center">@item.ReturnTotalPrice</td>
-            <td class="text-center">@item.ReturnDate</td>
-            <td class="text-center "><input type="checkbox" ></td>
-            
-
-            <td class="hide">@item.FinishGoodProductInfoId</td>
-            <td class="hide">@item.MeasurementId</td>
-            <td class="hide">@item.SalesReturnId</td>
+            <tr>
+                <td class="text-center">@sl</td>
+                <td class="text-center">@item.FinishGoodProductName</td>
+                <td class="text-center">@item.QtyKG</td>
+                <td class="text-center hide">@item.MeasurementName</td>
+                <td class="text-center">@item.MeasurementSize</td>
+                <td class="text-center">@item.BoxQuanity</td>
+                <td class="text-center">@item.ReturnPerUnitPrice</td>
+                <td class="text-center">@item.ReturnTotalPrice</td>
+                <td class="text-center">@item.ReturnDate</td>
+                <td class="text-center "><input type="checkbox"></td>
 
 
+                <td class="hide">@item.FinishGoodProductInfoId</td>
+                <td class="hide">@item.MeasurementId</td>
+                <td class="hide">@item.SalesReturnId</td>
 
-        </tr>
+
+
+            </tr>
         }
     </tbody>
 </table>

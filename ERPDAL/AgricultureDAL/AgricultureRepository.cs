@@ -17,7 +17,14 @@ namespace ERPDAL.AgricultureDAL
 
     }
 
+    //e
+    public class ProductionPerproductCostRepository : AgricultureBaseRepository<ProductionPerproductCost>
+    {
+        public ProductionPerproductCostRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
 
+
+
+    }
 
     //e
     public class ProductPricingHistoryRepository : AgricultureBaseRepository<ProductPricingHistory>
