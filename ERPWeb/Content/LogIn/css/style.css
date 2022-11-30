@@ -1,56 +1,38 @@
-/*
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
-*/
-/*--reset--*/
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
-article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
-ol,ul{list-style:none;margin:0px;padding:0px;}
-blockquote,q{quotes:none;}
-blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
-table{border-collapse:collapse;border-spacing:0;}
-/*--start editing from here--*/
-a{text-decoration:none;}
-.txt-rt{text-align:right;}/* text align right */
-.txt-lt{text-align:left;}/* text align left */
-.txt-center{text-align:center;}/* text align center */
-.float-rt{float:right;}/* float right */
-.float-lt{float:left;}/* float left */
-.clear{clear:both;}/* clear float */
-.pos-relative{position:relative;}/* Position Relative */
-.pos-absolute{position:absolute;}/* Position Absolute */
-.vertical-base{	vertical-align:baseline;}/* vertical align baseline */
-.vertical-top{	vertical-align:top;}/* vertical align top */
-nav.vertical ul li{	display:block;}/* vertical menu */
-nav.horizontal ul li{	display: inline-block;}/* horizontal menu */
-img{max-width:100%;}
-/*--end reset--*/
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800");
+@import url('https://fonts.googleapis.com/css2?family=Convergence&display=swap');
+
+
+/*====================
+** Normalize
+====================*/
+html {
+    font-family: 'Convergence', sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    overflow-x: hidden;
+}
 body {
-    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
     font-size: 100%;
-    background: url(../images/banner.jpg)no-repeat 0px 0px;
-    /* background: #b52e31; */
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    -ms-background-size: cover;
-    background-attachment: fixed;
-    text-align: center;
+    background: url(../images/ag2.jpg) no-repeat 0px 0px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
 }
 h1,h2,h3,h4,h5,h6{
 	font-family: 'Montserrat', sans-serif;
 }
 .top-img-agileits-w3layouts {
-    /*background: url(../images/right.jpg)no-repeat 0px 0px;*/
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    -ms-background-size: cover;
-    padding: 3em 2em;
+    background: url(../images/agrologo1.jpg)no-repeat 0px 0px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+     height:100px;
+}
+
+.das-logo img{
+    height:150px;
+    margin-left:35%;
 }
 /**** LOGIN_SIGNUP ******/
 .main-content-agileits {
@@ -98,16 +80,19 @@ h2.sub-head-w3-agileits span {
     font-weight: 500;
 }
 .login-form {
-    padding: 2em;
+   
+    padding-top: 2px;
+    padding-right: 2em;
+    padding-bottom: 2em;
+    padding-left: 2em;
 }
 .login-w3l {
     width: 40%;
-    float: right;
     margin: 0 auto;
-    background: rgba(0, 0, 0, 0.53);
+    background: rgba(17, 15, 15, 0.64);
     -webkit-box-shadow: 10px 10px 16px 0px rgba(255, 255, 255, 0.1);
     -moz-box-shadow: 10px 10px 16px 0px rgba(255, 255, 255, 0.1);
-    box-shadow: 10px 10px 16px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 10px 10px 16px 0px rgba(38, 35, 35, 0.3);
 }
 .login-form input[type="text"], .login-form input[type="password"] {
     width: 94%;
@@ -119,7 +104,7 @@ h2.sub-head-w3-agileits span {
     font-size: 13px;
     letter-spacing: 2px;
     margin-bottom: 15px;
-    background: rgba(255, 255, 255, 0.09);
+    background: rgba(0, 0, 0, 0.29);
     transition: 0.5s all;
     -webkit-transition: 0.5s all;
     -o-transition: 0.5s all;
@@ -133,6 +118,8 @@ h1 {
     color: #fff;
     margin: 2em 0 1.5em;
     font-weight: 600;
+    text-align: center;
+    text-transform:uppercase;
 }
 .login-form input[type="submit"] {
     background: #b52e31;
@@ -202,19 +189,19 @@ h1 {
 }
 /*-- //login --*/
 ::-webkit-input-placeholder{
-	color:#adb2bd;
+	color:#fff;
 }
 
 :-moz-placeholder { /* Firefox 18- */
-   color: #adb2bd; 
+   color: #fff; 
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: #adb2bd;  
+   color: #fff;  
 }
 
 :-ms-input-placeholder {  
-   color: #adb2bd;  
+   color: #fff;  
 }
 /*--responsive--*/
 @media(max-width:1680px){
