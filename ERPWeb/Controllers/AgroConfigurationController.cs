@@ -5388,6 +5388,17 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
 
         }
+
+        public ActionResult GetFGproductionCost(long FGRID)
+        {
+            var totalbill = _productionPerproductCost.GetProductionPerproductCostById(FGRID).PerProductMainCost;
+
+            //var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(x => x.StockiestId == id).ToList();
+            //var totalbill = stokiestid.Sum(y => y.TotalAmount);
+            return Json(totalbill, JsonRequestBehavior.AllowGet);
+
+
+        }
         #endregion
 
 
@@ -5459,6 +5470,55 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region ProductionPrice
+        public ActionResult ProductionPriceCreate(long? id)
+        {
+            ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.FGRId.ToString() }).ToList();
+
+            ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosall(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            return View();
+        }
+
+        public ActionResult ProductionPriceCreateTable(long? FGRId)
+        {
+
+
+            // var details = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoIdGet(id.Value, User.OrgId);
+            var details = _finishGoodRecipeDetailsBusiness.GetAgroReciprDetailsByInfoIdRMPrice(FGRId.Value);
+
+            List<FinishGoodRecipeDetailsViewModel> detailsViewModel = new List<FinishGoodRecipeDetailsViewModel>();
+            AutoMapper.Mapper.Map(details, detailsViewModel);
+            return PartialView("_GetPRProductionPrice", detailsViewModel);
+
+
+        }
+
+        public ActionResult GetRMAMount(long FGRID)
+        {
+
+
+            var checkFinishGoodStockValue = _finishGoodRecipeDetailsBusiness.GetFGProductAmount(FGRID);
+
+            double itemStock = 0;
+
+            itemStock = (checkFinishGoodStockValue.FirstOrDefault().GrandTotal);
+
+
+            return Json(itemStock, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        public ActionResult SaveProductionPrice(ProductionPerproductCost info)
+        {
+            bool IsSuccess = false;
+
+            ProductionPerproductCostDTO productionPerproductCostDTO= new ProductionPerproductCostDTO();
+    
+            AutoMapper.Mapper.Map(info, productionPerproductCostDTO);
+            IsSuccess = _productionPerproductCost.SaveProductionPerproductCost(productionPerproductCostDTO,User.UserId);
+
+            return Json(IsSuccess);
+        }
 
         #endregion
     }

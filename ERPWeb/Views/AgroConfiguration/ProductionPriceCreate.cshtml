@@ -1,0 +1,233 @@
+﻿
+@{
+    ViewBag.Title = "SalesReturnAdjustCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:-10px">
+
+    <div class="col-md-12">
+
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+
+                    <div class="card-header" style="text-align: center;">
+
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                <a href="/AgroConfiguration/GetSalesReturnAdjustList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                                    <i class="fas fa-arrow-alt-circle-left"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    ProductWise Production Cost
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-15px">
+                <div class="card card-gray-dark ">
+
+                    <div class="card-header text-sm ">
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <label for="ddlProductName" class="col-form-label text-white">
+                                    Product Name
+                                </label>
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ddlQtyUnit" class="col-form-label text-white">
+                                    Receipe Unit Qty
+                                </label>
+                                @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--UnitQty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-QtyUnit font-weight-bold">Unit Qty is required!</span>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="col-form-label text-white" for="ddlRMtotalprice">RM TotalPRice</label>
+                                <input type="number" id="ddlRMtotalprice" name="ddlRMtotalprice" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col-md-2">
+                                <label class="col-form-label text-white" for="ddlotherexpense">Other Expense Price</label>
+                                <input type="number" id="ddlotherexpense" name="ddlotherexpense" class="form-control form-control-sm"/>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+
+        var ddlQtyUnit = $("#ddlQtyUnit");
+        var ddlProductName = $("#ddlProductName");
+        var ddlotherexpense = $("#ddlotherexpense");
+        var ddlRMtotalprice = $("#ddlRMtotalprice");
+
+
+
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+
+        })
+
+
+        ddlProductName.change(function () {
+
+
+            LoadQtyUnit();
+
+
+
+        })
+        function LoadQtyUnit() {
+            clearDropdown("ddlQtyUnit");
+            if (ddlProductName.val() != "") {
+
+                LoadDropDown('/AgroConfiguration/GetReceipyUnitQtyByProductionId', 'POST', ddlQtyUnit, JSON.stringify({ finishGoodProductId: ddlProductName.val() }));
+            }
+
+
+        }
+
+
+
+
+        //change Invoice
+        $('#ddlQtyUnit').change(function () {
+
+            let FGRId = $("#ddlQtyUnit option:selected").val();
+            debugger;
+            var data = { FGRId: TryParseInt(FGRId, 0) };
+            console.log(data);
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/ProductionPriceCreateTable', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
+
+
+
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRMAMount", data)).then(function (res, status) {
+                debugger;
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var totalreturn = res.replace(/['"]+/g, '');
+                ddlRMtotalprice.val(totalreturn);
+
+
+            });
+
+        });
+
+         $("#saveButton").click(function (e) {
+            debugger
+            e.preventDefault();
+            if (true === true) {
+
+                bootbox.confirm("Are you sure you want to Save this", function (result) {
+                    if (result) {
+                        debugger;
+
+
+                        var info = { ProductionPerproductCostId: 0, FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), FGRId: TryParseInt(ddlQtyUnit.val(), 0), PerProductRMtotalCost: ddlRMtotalprice.val(), PerProductOtherCost: ddlotherexpense.val()};
+
+
+            
+                        console.log(info);
+
+                        var data = JSON.stringify({ info: info});
+
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveProductionPrice', data , getToken())).then(function (res, status)
+                        {
+                            debugger;
+                            if (res == true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                        
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("ProductionPriceCreate")');
+                                }, 500);
+
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+
+
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+                    }
+                })
+            }
+        })
+
+
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+
+    </script>
+}

@@ -47,6 +47,11 @@
                     @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--UnitQty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                     <span class="error hide req-QtyUnit font-weight-bold">Unit Qty is required!</span>
                 </div>
+                <div class="col-md-2">
+                    <label for="ddlRMtotalprice" class="control-label">ProductionCost/PC<span style="color:red">*</span></label>
+                    <input type="number" id="ddlRMtotalprice" name="ddlRMtotalprice" class="form-control form-control-sm" readonly />
+                    <span class="error hide required-ddlRMtotalprice font-weight-bold">Input Product Price!</span>
+                </div>
 
                 <div class="col-md-2">
                     <label for="ddlprice" class="control-label">Price/PC  <span style="color:red">*</span></label>
@@ -104,6 +109,7 @@
         var ddlProductName = $("#ddlProductName");
         var ddlQtyUnit = $("#ddlQtyUnit");
         var ddlprice = $("#ddlprice");
+        var ddlRMtotalprice = $("#ddlRMtotalprice");
         var ProductList = [];
 
 
@@ -137,7 +143,22 @@
 
         }
 
+        ddlQtyUnit.change(function () {
 
+            let FGRId = $("#ddlQtyUnit option:selected").val();
+            debugger;
+            var data = { FGRId: TryParseInt(FGRId, 0) };
+            console.log(data);
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetFGproductionCost", data)).then(function (res, status) {
+                debugger;
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var totalreturn = res.replace(/['"]+/g, '');
+                ddlRMtotalprice.val(totalreturn);
+
+
+            })
+        })
 
 
 
@@ -155,14 +176,22 @@
                 //}
          /*       else {*/
                     //debugger;
-                    console.log();
+                console.log();
+                var a = $('#ddlprice').val();
+                a = Number(a);
+
+                var b = $('#ddlRMtotalprice').val();
+                b = Number(b);
+                var sum = a + b;
+                console.log(sum);
 
                     var sl = $("#tblMargeItems tbody tr").length;
                     var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
                     var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
-                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlQtyUnit") + "</td>";
-                    var td4 = "<td class='text-center'>" + ddlprice.val() + "</td>";
-                    var td5 = "<td class='hide ddlProductName'>" + ddlProductName.val() + "</td>";
+                var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlQtyUnit") + "</td>";
+                var td4 = "<td class='text-center'>" + sum  + "</td>";
+                var td5 = "<td class='hide ddlProductName'>" + ddlProductName.val() + "</td>";
+                 //var td7 = "<td class='text-center DiscountIDCell'>" + txtQuanity.val() * txtPrice.val() / txtDiscount.val() + "</td>";
                     var td6 = "<td class='hide ddlQtyUnit'>" + ddlQtyUnit.val() + "</td>";
 
                     var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i>Remove</a></td>";
@@ -280,8 +309,8 @@
             //ddlRegionName.val("");
             ddlProductName.val("");
             ddlProductName.trigger("change");
-            ddlQtyUnit.val("");
-            ddlQtyUnit.trigger("change");
+            //ddlQtyUnit.val("");
+            //ddlQtyUnit.trigger("change");
             ddlprice.val("");
 
 

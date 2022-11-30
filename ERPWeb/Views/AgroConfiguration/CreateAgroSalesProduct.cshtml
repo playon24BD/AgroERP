@@ -947,7 +947,7 @@
                                 window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + InvoiceNo, '_blank');
                                 //window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + res.File, '_blank');
                                 setTimeout(function () {
-                                    redirectPage('@Url.Action("GetAgroSalesProductList")');
+                                    redirectPage('@Url.Action("ProductionPriceCreate")');
                                 }, 500);
                                // printJS({ printable: res.File, type: 'pdf', base64: true });
                                 
@@ -972,12 +972,7 @@
 
 
 
-        function ClearData() {
-            txtQuanity.val("");
-          /*  txtPrice.val("");*/
-            txtDiscount.val("");
 
-        }
 
 
 

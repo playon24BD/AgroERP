@@ -2804,7 +2804,6 @@
     <Content Include="Reports\DataSets\dsSendAndReceiveRequisitionReport.xss">
       <DependentUpon>dsSendAndReceiveRequisitionReport.xsd</DependentUpon>
     </Content>
-
     <Content Include="Reports\DataSets\dsFinishGoodProductionReportAccept.xsc">
       <DependentUpon>dsFinishGoodProductionReportAccept.xsd</DependentUpon>
     </Content>
@@ -3520,6 +3519,8 @@
     <Content Include="Views\AgroConfiguration\_GetProductSalesDropList.cshtml" />
     <Content Include="Views\AgroConfiguration\GetDropList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAgroSalesProductDropDetails.cshtml" />
+    <Content Include="Views\AgroConfiguration\ProductionPriceCreate.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetPRProductionPrice.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
