@@ -14,6 +14,7 @@ namespace ERPBLL.Agriculture.Interface
 
         ProductionPerproductCost GetProductionPerproductCostById(long FGRId);
 
+        IEnumerable<ProductionPerproductCostDTO> GetAllProductionPerproductCost(string name);
 
 
 

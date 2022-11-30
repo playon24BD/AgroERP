@@ -5470,6 +5470,34 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region ProductionPrice
+
+
+        public ActionResult ProductionPriceList(string flag, string name)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+
+
+                return View();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                //var dto = _agroProductSalesInfoBusiness.GetSalesDropList();
+                var dto = _productionPerproductCost.GetAllProductionPerproductCost(name ?? null);
+
+
+                List<ProductionPerproductCostViewModel> viewModels = new List<ProductionPerproductCostViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetProductionPriceList", viewModels);
+            }
+
+
+            return View();
+        }
+
+
         public ActionResult ProductionPriceCreate(long? id)
         {
             ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.FGRId.ToString() }).ToList();

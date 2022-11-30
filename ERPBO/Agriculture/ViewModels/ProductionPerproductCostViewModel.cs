@@ -24,5 +24,7 @@ namespace ERPBO.Agriculture.ViewModels
         public long? EntryUser { get; set; }
         public string Status { get; set; }
         public string Flag { get; set; }
+        public string FinishGoodProductName { get; set; }
+        public string QtyKG { get; set; }
     }
 }

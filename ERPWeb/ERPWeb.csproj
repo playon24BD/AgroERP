@@ -3521,6 +3521,8 @@
     <Content Include="Views\AgroConfiguration\_GetAgroSalesProductDropDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\ProductionPriceCreate.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetPRProductionPrice.cshtml" />
+    <Content Include="Views\AgroConfiguration\ProductionPriceList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetProductionPriceList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

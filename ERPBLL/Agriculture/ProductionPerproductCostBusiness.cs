@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
@@ -24,6 +25,31 @@ namespace ERPBLL.Agriculture
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._productionPerproductCostRepository = new ProductionPerproductCostRepository(this._agricultureUnitOfWork);
+        }
+
+        public IEnumerable<ProductionPerproductCostDTO> GetAllProductionPerproductCost(string name)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ProductionPerproductCostDTO>(QueryForPerproductCost(name)).ToList();
+        }
+        private string QueryForPerproductCost(string name)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (name != null && name != "")
+            {
+                param += string.Format(@" and fp.FinishGoodProductName like '%{0}%'", name);
+            }
+
+
+            query = string.Format(@"
+select fp.FinishGoodProductName,fr.FGRQty,un.UnitName,pc.PerProductRMtotalCost,pc.PerProductOtherCost,pc.PerProductMainCost, concat(fr.FGRQty,un.UnitName) as QtyKG from tblProductionPerproductCost pc
+inner join tblFinishGoodProductInfo fp on pc.FinishGoodProductId=fp.FinishGoodProductId
+inner join tblFinishGoodRecipeInfo fr on pc.FGRId=fr.FGRId
+inner join tblAgroUnitInfo un on fr.UnitId=un.UnitId
+            where 1=1  {0} ",
+        Utility.ParamChecker(param));
+            return query;
         }
 
         public ProductionPerproductCost GetProductionPerproductCostById(long FGRId)
