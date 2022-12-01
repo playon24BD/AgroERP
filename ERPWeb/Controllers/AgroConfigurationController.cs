@@ -76,7 +76,7 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IProductionPerproductCost productionPerproductCost,IProductPriceConfiguration productPriceConfiguration, IProductPricingHistory productPricingHistory, ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness, IRMStockDashboardGrap rMStockDashboardGrap)
+        public AgroConfigurationController(IProductionPerproductCost productionPerproductCost, IProductPriceConfiguration productPriceConfiguration, IProductPricingHistory productPricingHistory, ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness, IRMStockDashboardGrap rMStockDashboardGrap)
 
         {
 
@@ -737,9 +737,10 @@ namespace ERPWeb.Controllers
             return Json(unitname, JsonRequestBehavior.AllowGet);
 
         }
-        public ActionResult RawMaterialConverter(long FinishGoodProductId, long RawMaterialId,double FGRQty,long UnitId)
+        public ActionResult RawMaterialConverter(long FinishGoodProductId, long RawMaterialId, double FGRQty, long UnitId)
         {
             decimal convertml = 0;
+            decimal convertml1 = 0;
             decimal cpa = 0;
             decimal Chelatedzinc = 0;
             decimal SoluborBoron = 0;
@@ -749,43 +750,49 @@ namespace ERPWeb.Controllers
             decimal Zipsum = 0;
             decimal NaphtholicAceticAcid = 0;
             decimal Dolomight = 0;
+            decimal ConvertUnit = 0;
 
-            decimal RMQTY ;
+            decimal RMQTY;
             #region 50ml Measurement Size
-            if (FinishGoodProductId==1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 1)
+            if (FinishGoodProductId == 1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 1)
             {
+                ConvertUnit = 1000 / 50;
                 convertml = 50 * 1000;
                 cpa = 1250 * 50 / convertml;
-                RMQTY = cpa;
+                RMQTY = cpa / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 2)
             {
+                ConvertUnit = 1000 / 50;
                 convertml = 50 * 1000;
                 Chelatedzinc = 5 * 50 / convertml;
-                RMQTY = Chelatedzinc;
+                RMQTY = Chelatedzinc / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 3)
             {
+                ConvertUnit = 1000 / 50;
                 convertml = 50 * 1000;
                 SoluborBoron = Convert.ToDecimal(2.5 * 50);
                 decimal SoluborBoronValue = SoluborBoron / convertml;
-                RMQTY = SoluborBoronValue;
+                RMQTY = SoluborBoronValue / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 4)
             {
+                ConvertUnit = 1000 / 50;
                 convertml = 50 * 1000;
                 CMC = 5 * 50 / convertml;
-                RMQTY = CMC;
+                RMQTY = CMC / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 50 && UnitId == 4 && RawMaterialId == 5)
             {
+                ConvertUnit = 1000 / 50;
                 convertml = 50 * 1000;
                 AppleGreenColour = 250 * 50 / convertml;
-                RMQTY = AppleGreenColour;
+                RMQTY = AppleGreenColour / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             #endregion
@@ -793,77 +800,87 @@ namespace ERPWeb.Controllers
             #region 100ml Measurement Size
             if (FinishGoodProductId == 1 && FGRQty == 100 && UnitId == 4 && RawMaterialId == 1)
             {
+                ConvertUnit = 1000 / 100;
                 convertml = 100 * 1000;
                 cpa = 1250 * 100 / convertml;
-                RMQTY = cpa;
+                RMQTY = cpa / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 100 && UnitId == 4 && RawMaterialId == 2)
             {
+                ConvertUnit = 1000 / 100;
                 convertml = 100 * 1000;
                 Chelatedzinc = 5 * 100 / convertml;
-                RMQTY = Chelatedzinc;
+                RMQTY = Chelatedzinc / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 100 && UnitId == 4 && RawMaterialId == 3)
             {
+                ConvertUnit = 1000 / 100;
                 convertml = 100 * 1000;
                 SoluborBoron = Convert.ToDecimal(2.5 * 100);
                 decimal SoluborBoronValue = SoluborBoron / convertml;
-                RMQTY = SoluborBoronValue;
+                RMQTY = SoluborBoronValue / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 100 && UnitId == 4 && RawMaterialId == 4)
             {
+                ConvertUnit = 1000 / 100;
                 convertml = 100 * 1000;
                 CMC = 5 * 100 / convertml;
-                RMQTY = CMC;
+                RMQTY = CMC / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 100 && UnitId == 4 && RawMaterialId == 5)
             {
+                ConvertUnit = 1000 / 100;
                 convertml = 100 * 1000;
                 AppleGreenColour = 250 * 100 / convertml;
-                RMQTY = AppleGreenColour;
+                RMQTY = AppleGreenColour / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             #endregion
 
             #region 200ml Measurement Size
-            if (FinishGoodProductId == 1 && FGRQty ==200 && UnitId==4 && RawMaterialId == 1)
+            if (FinishGoodProductId == 1 && FGRQty == 200 && UnitId == 4 && RawMaterialId == 1)
             {
-                 convertml = 200 * 1000;
-                 cpa = 1250*200 / convertml;
-                RMQTY = cpa;
+                ConvertUnit = 1000 / 200;
+                convertml1 = 200 * 1000;
+                cpa = 1250 * 200 / convertml1;
+                RMQTY = cpa / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 200 && UnitId == 4 && RawMaterialId == 2)
             {
-                 convertml = 200 * 1000;
+                ConvertUnit = 1000 / 200;
+                convertml = 200 * 1000;
                 Chelatedzinc = 5 * 200 / convertml;
-                RMQTY = Chelatedzinc;
+                RMQTY = Chelatedzinc / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 200 && UnitId == 4 && RawMaterialId == 3)
             {
+                ConvertUnit = 1000 / 200;
                 convertml = 200 * 1000;
-                SoluborBoron =Convert.ToDecimal( 2.5 * 200);
+                SoluborBoron = Convert.ToDecimal(2.5 * 200);
                 decimal SoluborBoronValue = SoluborBoron / convertml;
-                RMQTY = SoluborBoronValue;
+                RMQTY = SoluborBoronValue / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 200 && UnitId == 4 && RawMaterialId == 4)
             {
+                ConvertUnit = 1000 / 200;
                 convertml = 200 * 1000;
                 CMC = 5 * 200 / convertml;
-                RMQTY = CMC;
+                RMQTY = CMC / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 200 && UnitId == 4 && RawMaterialId == 5)
             {
+                ConvertUnit = 1000 / 200;
                 convertml = 200 * 1000;
-                AppleGreenColour =250 * 200 / convertml;
-                RMQTY = AppleGreenColour;
+                AppleGreenColour = 250 * 200 / convertml;
+                RMQTY = AppleGreenColour / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             #endregion
@@ -871,38 +888,43 @@ namespace ERPWeb.Controllers
             #region 500ml Measurement Size
             if (FinishGoodProductId == 1 && FGRQty == 500 && UnitId == 4 && RawMaterialId == 1)
             {
+                ConvertUnit = 1000 / 500;
                 convertml = 500 * 1000;
                 cpa = 1250 * 500 / convertml;
-                RMQTY = cpa;
+                RMQTY = cpa / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 500 && UnitId == 4 && RawMaterialId == 2)
             {
+                ConvertUnit = 1000 / 500;
                 convertml = 500 * 1000;
                 Chelatedzinc = 5 * 500 / convertml;
-                RMQTY = Chelatedzinc;
+                RMQTY = Chelatedzinc / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 500 && UnitId == 4 && RawMaterialId == 3)
             {
+                ConvertUnit = 1000 / 500;
                 convertml = 500 * 1000;
                 SoluborBoron = Convert.ToDecimal(2.5 * 500);
                 decimal SoluborBoronValue = SoluborBoron / convertml;
-                RMQTY = SoluborBoronValue;
+                RMQTY = SoluborBoronValue / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 500 && UnitId == 4 && RawMaterialId == 4)
             {
+                ConvertUnit = 1000 / 500;
                 convertml = 500 * 1000;
                 CMC = 5 * 500 / convertml;
-                RMQTY = CMC;
+                RMQTY = CMC / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 500 && UnitId == 4 && RawMaterialId == 5)
             {
+                ConvertUnit = 1000 / 500;
                 convertml = 500 * 1000;
                 AppleGreenColour = 250 * 500 / convertml;
-                RMQTY = AppleGreenColour;
+                RMQTY = AppleGreenColour / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             #endregion
@@ -910,38 +932,43 @@ namespace ERPWeb.Controllers
             #region 1ltr Measurement Size
             if (FinishGoodProductId == 1 && FGRQty == 1 && UnitId == 3 && RawMaterialId == 1)
             {
+                ConvertUnit = 1000 / 1000;
                 convertml = 1 * 1000;
                 cpa = 1250 * 1 / convertml;
-                RMQTY = cpa;
+                RMQTY = cpa / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 1 && UnitId == 3 && RawMaterialId == 2)
             {
+                ConvertUnit = 1000 / 1000;
                 convertml = 1 * 1000;
                 Chelatedzinc = 5 * 1 / convertml;
-                RMQTY = Chelatedzinc;
+                RMQTY = Chelatedzinc / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 1 && UnitId == 3 && RawMaterialId == 3)
             {
+                ConvertUnit = 1000 / 1000;
                 convertml = 1 * 1000;
                 SoluborBoron = Convert.ToDecimal(2.5 * 1);
                 decimal SoluborBoronValue = SoluborBoron / convertml;
-                RMQTY = SoluborBoronValue;
+                RMQTY = SoluborBoronValue / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 1 && UnitId == 3 && RawMaterialId == 4)
             {
+                ConvertUnit = 1000 / 1000;
                 convertml = 1 * 1000;
                 CMC = 5 * 1 / convertml;
-                RMQTY = CMC;
+                RMQTY = CMC / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 1 && FGRQty == 1 && UnitId == 3 && RawMaterialId == 5)
             {
+                ConvertUnit = 1000 / 1000;
                 convertml = 1 * 1000;
                 AppleGreenColour = 250 * 1 / convertml;
-                RMQTY = AppleGreenColour;
+                RMQTY = AppleGreenColour / ConvertUnit;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             #endregion
@@ -949,6 +976,7 @@ namespace ERPWeb.Controllers
             #region 1kg Measurement Size
             if (FinishGoodProductId == 2 && FGRQty == 1 && UnitId == 1 && RawMaterialId == 6)
             {
+
                 convertml = 1 * 1000;
                 Zipsum = 500 * 1 / convertml;
                 RMQTY = Zipsum;
@@ -957,14 +985,14 @@ namespace ERPWeb.Controllers
             else if (FinishGoodProductId == 2 && FGRQty == 1 && UnitId == 1 && RawMaterialId == 7)
             {
                 convertml = 1 * 1000;
-                NaphtholicAceticAcid = 500 * 1 / convertml;
-                RMQTY = Chelatedzinc;
+                NaphtholicAceticAcid = 2 * 1 / convertml;
+                RMQTY = NaphtholicAceticAcid;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
             else if (FinishGoodProductId == 2 && FGRQty == 1 && UnitId == 1 && RawMaterialId == 8)
             {
                 convertml = 1 * 1000;
-                Dolomight = 2 * 1 / convertml;
+                Dolomight = 500 * 1 / convertml;
                 RMQTY = Dolomight;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
@@ -979,17 +1007,17 @@ namespace ERPWeb.Controllers
                 RMQTY = Zipsum;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
-            else if (FinishGoodProductId == 2 && FGRQty == 1 && UnitId == 1 && RawMaterialId == 7)
+            else if (FinishGoodProductId == 2 && FGRQty == 2 && UnitId == 1 && RawMaterialId == 7)
             {
                 convertml = 2 * 1000;
-                NaphtholicAceticAcid = 500 * 2 / convertml;
-                RMQTY = Chelatedzinc;
+                NaphtholicAceticAcid = 2 * 2 / convertml;
+                RMQTY = NaphtholicAceticAcid;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
-            else if (FinishGoodProductId == 2 && FGRQty == 1 && UnitId == 1 && RawMaterialId == 8)
+            else if (FinishGoodProductId == 2 && FGRQty == 2 && UnitId == 1 && RawMaterialId == 8)
             {
                 convertml = 2 * 1000;
-                Dolomight = 2 * 2 / convertml;
+                Dolomight = 500 * 2 / convertml;
                 RMQTY = Dolomight;
                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
             }
@@ -1725,6 +1753,35 @@ namespace ERPWeb.Controllers
 
         }
 
+        public ActionResult GetReceipyDetailsByreceipeBatchCode1(string receipeBatchCode, int targetQty)
+        {
+            try
+            {
+                var AllMetarial = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByBatchCode(receipeBatchCode, User.OrgId).Select(m => new FinishGoodRecipeDetailsDTO()
+                {
+                    FGRDetailsId = m.FGRDetailsId,
+                    RawMaterialId = m.RawMaterialId,
+                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(m.RawMaterialId, User.OrgId).RawMaterialName,
+                    UnitId = m.UnitId,
+                    UnitName = _agroUnitInfo.GetAgroInfoById(m.UnitId, User.OrgId).UnitName,
+                    FGRId = m.FGRId,
+                    FGRRawMaterQty = m.FGRRawMaterQty,
+
+                }).ToList();
+
+                List<FinishGoodRecipeDetailsViewModel> viewModels = new List<FinishGoodRecipeDetailsViewModel>();
+                AutoMapper.Mapper.Map(AllMetarial, viewModels);
+                return Json(viewModels, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                return Json($"Not Found: {ex}", JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
 
         public ActionResult GetDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty)
         {
@@ -1821,10 +1878,10 @@ namespace ERPWeb.Controllers
 
             if (isSucccess == true)
             {
-                
+
                 var receipeBatchCode = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).FirstOrDefault().FinishGoodProductionBatch;
 
-                
+
                 return Json(new { isSucccess = isSucccess, File = receipeBatchCode });
             }
 
@@ -1954,7 +2011,7 @@ namespace ERPWeb.Controllers
             {
 
                 var productionBatch = _finishGoodProductionInfoBusiness.GetProductionBatch(User.OrgId).FirstOrDefault().FinishGoodProductionBatch;
-                
+
 
 
                 return Json(new { IsSuccess = IsSuccess, File = productionBatch });
@@ -1964,11 +2021,11 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
         }
 
-        public ActionResult GetFinishGoodAcceptReport(string FinishGoodProductionBatch,string returnDate)
+        public ActionResult GetFinishGoodAcceptReport(string FinishGoodProductionBatch, string returnDate)
         {
-            
+
             string CurrentDate = DateTime.Now.ToShortDateString();
-           
+
 
             var data = _finishGoodProductionInfoBusiness.GetFinishGoodReportAccept(FinishGoodProductionBatch, returnDate);
 
@@ -2420,7 +2477,7 @@ namespace ERPWeb.Controllers
 
             var stkst = _stockiestInfo.GetAllStockiestSetup(9).ToList();
             var max = "";
-            if (stkst.Count== 0)
+            if (stkst.Count == 0)
             {
                 max = "1";
             }
@@ -2430,7 +2487,7 @@ namespace ERPWeb.Controllers
             }
             var userid = User.UserId;
             //var code = "SC-" + DateTime.Now.Year + "/U-" + userid + "/" + max;
-            var code = "SC-100000"+ max;
+            var code = "SC-100000" + max;
             ViewBag.code = code;
             return View();
         }
@@ -2441,11 +2498,11 @@ namespace ERPWeb.Controllers
             //var CheckQty = _finishGoodProductionInfoBusiness.Getcheckqty(FinishGoodProductInfoId, ProductUnitQty).FGRId;
             string StockiestCode = "";
             var checkStockiestCodeValue = _stockiestInfo.GetStockiestCodess(OrganizationId).FirstOrDefault().StockiestCode;
-            if (checkStockiestCodeValue!="0")
+            if (checkStockiestCodeValue != "0")
             {
-                StockiestCode = (checkStockiestCodeValue+1);
+                StockiestCode = (checkStockiestCodeValue + 1);
             }
-          
+
             return Json(new { txtStockiestCode = StockiestCode, JsonRequestBehavior.AllowGet });
 
 
@@ -2698,8 +2755,8 @@ namespace ERPWeb.Controllers
 
             //ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.ReceipeBatchCode + ")" + "-" + f.TargetQuantity, Value = f.FinishGoodProductId.ToString() }).ToList();
 
-           // ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-            ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosall(User.OrgId).GroupBy(t=>t.FinishGoodProductId).Select(g=>g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            // ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosall(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
 
             ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.FGRId.ToString() }).ToList();
@@ -2839,7 +2896,7 @@ namespace ERPWeb.Controllers
             return Json(isSucccess);
         }
         [HttpPost]
-        public ActionResult UpdateProductSalesEdit(AgroProductSalesInfoViewModel info,List<AgroProductSalesDetailsViewModel> details)
+        public ActionResult UpdateProductSalesEdit(AgroProductSalesInfoViewModel info, List<AgroProductSalesDetailsViewModel> details)
         {
             bool IsSuccess = false;
             AgroProductSalesInfoDTO infoDTO = new AgroProductSalesInfoDTO();
@@ -2850,7 +2907,7 @@ namespace ERPWeb.Controllers
 
             return Json(IsSuccess);
         }
-        
+
         public ActionResult AgroProductSalesReport(string InvoiceNo)
         {
             string file = string.Empty;
@@ -2866,35 +2923,35 @@ namespace ERPWeb.Controllers
                 localReport.ReportPath = reportPath;
             }
 
-                ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
-                localReport.DataSources.Add(dataSource1);
+            ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
+            localReport.DataSources.Add(dataSource1);
 
-                string reportType = "PDF";
-                string mimeType;
-                string encoding;
-                string fileNameExtension;
-                Warning[] warnings;
-                string[] streams;
-                string deviceInfo =
-                        "<DeviceInfo>" +
-                        "<OutputFormat>PDF</OutputFormat>" +
-                        "<PageWidth>8.27in</PageWidth>" +
-                        "<PageHeight>11.69in</PageHeight>" +
-                        "<MarginTop>0.25in</MarginTop>" +
-                        "<MarginLeft>0.25in</MarginLeft>" +
-                        "<MarginRight>0.25in</MarginRight>" +
-                        "<MarginBottom>0.25in</MarginBottom>" +
-                        "</DeviceInfo>";
+            string reportType = "PDF";
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            string deviceInfo =
+                    "<DeviceInfo>" +
+                    "<OutputFormat>PDF</OutputFormat>" +
+                    "<PageWidth>8.27in</PageWidth>" +
+                    "<PageHeight>11.69in</PageHeight>" +
+                    "<MarginTop>0.25in</MarginTop>" +
+                    "<MarginLeft>0.25in</MarginLeft>" +
+                    "<MarginRight>0.25in</MarginRight>" +
+                    "<MarginBottom>0.25in</MarginBottom>" +
+                    "</DeviceInfo>";
 
-                var renderedBytes = localReport.Render(
-                    reportType,
-                    deviceInfo,
-                    out mimeType,
-                    out encoding,
-                    out fileNameExtension,
-                    out streams,
-                    out warnings
-                    );
+            var renderedBytes = localReport.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+                );
             //    var base64 = Convert.ToBase64String(renderedBytes);
             ////var fs = String.Format("data:application/pdf;base64,{0}", base64);
             //var fs = String.Format("{0}", base64);
@@ -2953,10 +3010,10 @@ namespace ERPWeb.Controllers
         {
             bool isUpdateSucccess = false;
 
-            if (ProductSalesInfoId!=0)
+            if (ProductSalesInfoId != 0)
             {
 
-                isUpdateSucccess = _agroProductSalesInfoBusiness.UpdateInvoiceDrop(ProductSalesInfoId,User.UserId);
+                isUpdateSucccess = _agroProductSalesInfoBusiness.UpdateInvoiceDrop(ProductSalesInfoId, User.UserId);
             }
             var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
             var data = _agroProductSalesInfoBusiness.GetProductSalesData(InvoiceNo);
@@ -3053,7 +3110,7 @@ namespace ERPWeb.Controllers
         public ActionResult ProductPrice(long pid, long rid)
         {
             var proprice = _productPriceConfiguration.GetPriceByproandfgrId(pid, rid).ProductPrice;
-        
+
             return Json(proprice, JsonRequestBehavior.AllowGet);
 
         }
@@ -3389,7 +3446,7 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetMRawMaterialReportSave(long? rawMaterialId)
         {
-            var data = _mRawMaterialIssueStockInfo.MRawMaterialReport(rawMaterialId??0);
+            var data = _mRawMaterialIssueStockInfo.MRawMaterialReport(rawMaterialId ?? 0);
 
             LocalReport localReport = new LocalReport();
 
@@ -3452,7 +3509,7 @@ namespace ERPWeb.Controllers
                     Status = o.Status,
                     UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
 
-                }).OrderByDescending(o=>o.RawMaterialIssueStockId).ToList();
+                }).OrderByDescending(o => o.RawMaterialIssueStockId).ToList();
                 List<MRawMaterialIssueStockInfoViewModel> viewModels = new List<MRawMaterialIssueStockInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_GetRawMaterialIssueaccPartialView", viewModels);
@@ -3501,7 +3558,7 @@ namespace ERPWeb.Controllers
             {
                 var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
                 var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
-           
+
                 var info = _mRawMaterialIssueStockInfo.GetRawmaterialIssueInfoOneById(id.Value, User.OrgId);
 
                 List<MRawMaterialIssueStockDetailsViewModel> details = new List<MRawMaterialIssueStockDetailsViewModel>();
@@ -3525,8 +3582,8 @@ namespace ERPWeb.Controllers
                         Quantity = i.Quantity,
                         IssueStatus = i.IssueStatus,
                         EntryDate = i.EntryDate,
-                        RawMaterialId= i.RawMaterialId,
-                        RawMaterialIssueStockId= i.RawMaterialIssueStockId,
+                        RawMaterialId = i.RawMaterialId,
+                        RawMaterialIssueStockId = i.RawMaterialIssueStockId,
                     }).ToList();
                 }
                 else
@@ -3551,7 +3608,7 @@ namespace ERPWeb.Controllers
                 List<MRawMaterialIssueStockDetailsDTO> detailDTOs = new List<MRawMaterialIssueStockDetailsDTO>();
                 AutoMapper.Mapper.Map(info, mRawMaterialIssueStockInfoDTO);
                 AutoMapper.Mapper.Map(details, detailDTOs);
-                IsSuccess = _mRawMaterialIssueStockInfo.UpdateRawMaterialIssueStock(mRawMaterialIssueStockInfoDTO,detailDTOs ,User.UserId);
+                IsSuccess = _mRawMaterialIssueStockInfo.UpdateRawMaterialIssueStock(mRawMaterialIssueStockInfoDTO, detailDTOs, User.UserId);
             }
             return Json(IsSuccess);
         }
@@ -3665,7 +3722,7 @@ namespace ERPWeb.Controllers
         {
             bool IsSuccess = false;
             //string[] RMReturnID;
-            var RMReturnID=string.Empty;
+            var RMReturnID = string.Empty;
             int count = 0;
             var RawMaterialName = "";
             string ReturnRawMaterialId = "";
@@ -3678,7 +3735,7 @@ namespace ERPWeb.Controllers
 
             }
 
-            
+
             if (IsSuccess == true)
             {
                 //List<string> RMReturnID = new List<string>();
@@ -3686,15 +3743,15 @@ namespace ERPWeb.Controllers
                 var CheckInternalRawMaterial = _rawMaterialBusiness.CheckStatus(User.OrgId).FirstOrDefault().Status;
                 if (CheckInternalRawMaterial == "Pending")
                 {
-                     count = details.Count();
+                    count = details.Count();
 
                     IEnumerable<ReturnRawMaterialDTO> RMReturnIDs = _returnRawMaterialBusiness.GetReturnRawMaterilId(count).ToList();
 
-                    foreach(var item in RMReturnIDs)
+                    foreach (var item in RMReturnIDs)
                     {
-                        RMReturnID += item.ReturnRawMaterialId +",";
+                        RMReturnID += item.ReturnRawMaterialId + ",";
                     }
-                     ReturnRawMaterialId = RMReturnID.TrimEnd(',');
+                    ReturnRawMaterialId = RMReturnID.TrimEnd(',');
 
 
                     //foreach (var item in details)
@@ -3724,7 +3781,7 @@ namespace ERPWeb.Controllers
         public ActionResult AcceptRawMaterialReturnInfo(List<ReturnRawMaterialViewModel> details)
         {
             bool IsSuccess = false;
-            
+
             var RMReturnID = string.Empty;
             int count = 0;
             var RawMaterialName = "";
@@ -3741,7 +3798,7 @@ namespace ERPWeb.Controllers
 
             if (IsSuccess == true)
             {
-                
+
                 var CheckInternalRawMaterial = _rawMaterialBusiness.CheckStatusApproved(User.OrgId).FirstOrDefault().Status;
                 if (CheckInternalRawMaterial == "Approved")
                 {
@@ -3754,7 +3811,7 @@ namespace ERPWeb.Controllers
                         RMReturnID += item.ReturnRawMaterialId + ",";
                     }
                     ReturnRawMaterialId = RMReturnID.TrimEnd(',');
-           
+
                 }
 
 
@@ -3811,9 +3868,9 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetRawMaterialReturnReport(string ReturnRawMaterialId)
         {
-             var data = _returnRawMaterialBusiness.GetRawMaterialReturnReport(ReturnRawMaterialId);
+            var data = _returnRawMaterialBusiness.GetRawMaterialReturnReport(ReturnRawMaterialId);
 
-             LocalReport localReport = new LocalReport();
+            LocalReport localReport = new LocalReport();
 
             string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptReturnRawMaterialReportSave.rdlc");
             if (System.IO.File.Exists(reportPath))
@@ -4075,22 +4132,22 @@ namespace ERPWeb.Controllers
 
             if (IsSuccess == true)
             {
-                if(info.Status== "Send")
+                if (info.Status == "Send")
                 {
-                     requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfoReceives(User.OrgId, info.Status,info.RawMaterialRequisitionInfoId).FirstOrDefault().RawMaterialRequisitionCode;
+                    requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfoReceives(User.OrgId, info.Status, info.RawMaterialRequisitionInfoId).FirstOrDefault().RawMaterialRequisitionCode;
                 }
-                else if(info.Status== null)
+                else if (info.Status == null)
                 {
-                     requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfos(User.OrgId, info.Status).FirstOrDefault().RawMaterialRequisitionCode;
+                    requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfos(User.OrgId, info.Status).FirstOrDefault().RawMaterialRequisitionCode;
                 }
                 else if (info.Status == "Received")
                 {
                     requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfoReceives(User.OrgId, info.Status, info.RawMaterialRequisitionInfoId).FirstOrDefault().RawMaterialRequisitionCode;
                 }
-               
 
-                
-                return Json(new { IsSuccess = IsSuccess, File = requisitionCode }); 
+
+
+                return Json(new { IsSuccess = IsSuccess, File = requisitionCode });
             }
 
             return Json(IsSuccess);
@@ -4787,9 +4844,9 @@ namespace ERPWeb.Controllers
 
             if (IsSuccess == true)
             {
-                
+
                 var invoice = _salesReturn.GetInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
-                var returnDate=_salesReturn.GetInvoice(User.OrgId).FirstOrDefault().ReturnDate;
+                var returnDate = _salesReturn.GetInvoice(User.OrgId).FirstOrDefault().ReturnDate;
 
 
                 return Json(new { IsSuccess = IsSuccess, File = invoice });
@@ -4966,13 +5023,13 @@ namespace ERPWeb.Controllers
                     ReturnQuanity = i.ReturnQuanity,
                     ReturnTotalPrice = i.ReturnTotalPrice,
                     ReturnDate = i.ReturnDate,
-                    FinishGoodProductInfoId= i.FinishGoodProductInfoId,
-                    MeasurementSize= i.MeasurementSize,
-                    Status= i.Status,
-                    QtyKG= i.QtyKG,
-                    FinishGoodProductName=_finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId,User.OrgId).FinishGoodProductName,
-                    BoxQuanity= i.BoxQuanity,
-                    SalesReturnId= i.SalesReturnId,
+                    FinishGoodProductInfoId = i.FinishGoodProductInfoId,
+                    MeasurementSize = i.MeasurementSize,
+                    Status = i.Status,
+                    QtyKG = i.QtyKG,
+                    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName,
+                    BoxQuanity = i.BoxQuanity,
+                    SalesReturnId = i.SalesReturnId,
 
                 }).OrderByDescending(i => i.SalesReturnId).ToList();
 
@@ -5304,12 +5361,12 @@ namespace ERPWeb.Controllers
                 //string Status = "Pending";
                 // string ReturnType = "Damage";
 
-                List<ProductPricingHistoryViewModel> productPricingHistoryViewModels= new List<ProductPricingHistoryViewModel>();
-                productPricingHistoryViewModels=_productPricingHistory.GetPriceByproANDfgrId(pid.Value,rid.Value).Select(de => new ProductPricingHistoryViewModel
+                List<ProductPricingHistoryViewModel> productPricingHistoryViewModels = new List<ProductPricingHistoryViewModel>();
+                productPricingHistoryViewModels = _productPricingHistory.GetPriceByproANDfgrId(pid.Value, rid.Value).Select(de => new ProductPricingHistoryViewModel
                 {
-                    EntryDate= de.EntryDate,
-                    EntryUser=de.EntryUser,
-                    ProductPrice=de.ProductPrice,
+                    EntryDate = de.EntryDate,
+                    EntryUser = de.EntryUser,
+                    ProductPrice = de.ProductPrice,
                     UserName = UserForEachRecord(de.EntryUser.Value).UserName,
 
                 }).ToList();
@@ -5346,7 +5403,7 @@ namespace ERPWeb.Controllers
                 List<ProductPriceConfigurationDTO> dto = new List<ProductPriceConfigurationDTO>();
 
                 AutoMapper.Mapper.Map(details, dto);
-                IsSuccess= _productPriceConfiguration.SaveProductPrice(dto,User.UserId);
+                IsSuccess = _productPriceConfiguration.SaveProductPrice(dto, User.UserId);
 
             }
             return Json(IsSuccess);
@@ -5360,9 +5417,9 @@ namespace ERPWeb.Controllers
 
             ProductPriceConfigurationDTO updatedto = new ProductPriceConfigurationDTO();
             AutoMapper.Mapper.Map(details, updatedto);
-            IsSuccess = _productPriceConfiguration.UpdateProductPrice(updatedto,User.UserId);
+            IsSuccess = _productPriceConfiguration.UpdateProductPrice(updatedto, User.UserId);
 
- 
+
 
             return Json(IsSuccess);
 
@@ -5396,7 +5453,7 @@ namespace ERPWeb.Controllers
 
         #region DropList
 
-        public ActionResult GetDropList(string flag,long? id,string invoiceNo)
+        public ActionResult GetDropList(string flag, long? id, string invoiceNo)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -5418,7 +5475,7 @@ namespace ERPWeb.Controllers
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
             {
-                
+
                 var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
                 var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
                 var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
@@ -5426,10 +5483,10 @@ namespace ERPWeb.Controllers
                 var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
                 var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
 
-                
 
 
-                
+
+
 
                 var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
 
@@ -5515,14 +5572,14 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult SaveProductionPrice(ProductionPerproductCost info)
+        public ActionResult SaveProductionPrice(ProductionPerproductCostViewModel info)
         {
             bool IsSuccess = false;
 
-            ProductionPerproductCostDTO productionPerproductCostDTO= new ProductionPerproductCostDTO();
-    
+            ProductionPerproductCostDTO productionPerproductCostDTO = new ProductionPerproductCostDTO();
+
             AutoMapper.Mapper.Map(info, productionPerproductCostDTO);
-            IsSuccess = _productionPerproductCost.SaveProductionPerproductCost(productionPerproductCostDTO,User.UserId);
+            IsSuccess = _productionPerproductCost.SaveProductionPerproductCost(productionPerproductCostDTO, User.UserId);
 
             return Json(IsSuccess);
         }

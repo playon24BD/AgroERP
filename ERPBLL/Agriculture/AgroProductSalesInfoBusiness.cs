@@ -1069,7 +1069,7 @@ inner join tblStockiestInfo st on info.StockiestId=st.StockiestId
                 if (item.ISActive == true)
                 {
                     productSalesDetails = _agroProductSalesDetailsBusiness.GetSalesDetailsById(item.ProductSalesDetailsId, orgId);
-                    productSalesDetails.Status = "DROP";
+                    productSalesDetails.Status = "Drop";
 
                 }
                 else

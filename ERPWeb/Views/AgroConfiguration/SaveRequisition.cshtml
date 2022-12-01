@@ -467,6 +467,7 @@
         var targetQty = $("#targetQty");
         var hdTargetValue = $("#hdTargetValue");
         var qty = $("#qty");
+        var hdQuantity = $("#hdQuantity")
 
         ddlProduct.change(function () {
 
@@ -547,7 +548,7 @@
                 debugger;
                 var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
 
-                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
+                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode1", data)).then(function (res, status) {
                     debugger;
                     console.log(res);
                     var sl = 0;
