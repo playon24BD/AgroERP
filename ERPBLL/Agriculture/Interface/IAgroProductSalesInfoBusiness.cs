@@ -18,7 +18,7 @@ namespace ERPBLL.Agriculture.Interface
         
         bool UpdateProductSalesEdit(AgroProductSalesInfoDTO infoDTO, List<AgroProductSalesDetailsDTO> detailsDTO, long userId, long orgId);
         
-        IEnumerable<AgroProductSalesInfoDTO> GetSalesDropList(string invoiceNo);
+        IEnumerable<AgroProductSalesInfoDTO> GetSalesDropList(string invoiceNo,string fromDate,string toDate);
 
         IEnumerable<AgroProductSalesInfoDTO> GetProductWiseReportList(long? productId, string fromDate, string toDate);
         

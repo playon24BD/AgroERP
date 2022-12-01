@@ -964,11 +964,11 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return isUpdateSucccess;
         }
 
-        public IEnumerable<AgroProductSalesInfoDTO> GetSalesDropList(string invoiceNo)
+        public IEnumerable<AgroProductSalesInfoDTO> GetSalesDropList(string invoiceNo,string fromDate,string toDate)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForSalesDropList(invoiceNo)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForSalesDropList(invoiceNo,fromDate,toDate)).ToList();
         }
-        private string QueryForSalesDropList(string invoiceNo)
+        private string QueryForSalesDropList(string invoiceNo, string fromDate, string toDate)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -977,7 +977,23 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             {
                 param += string.Format(@"and info.InvoiceNo like '%{0}%'", invoiceNo);
             }
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(info.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
 
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(info.InvoiceDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(info.InvoiceDate as date)='{0}'", tDate);
+            }
 
             query = string.Format(@"
 select  info.InvoiceNo,info.InvoiceDate,info.ProductSalesInfoId,st.StockiestName,info.TotalAmount,info.PaidAmount,info.DueAmount from tblProductSalesInfo info

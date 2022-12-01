@@ -5453,7 +5453,9 @@ namespace ERPWeb.Controllers
 
         #region DropList
 
-        public ActionResult GetDropList(string flag, long? id, string invoiceNo)
+
+        public ActionResult GetDropList(string flag,long? id,string invoiceNo,string fromDate,string toDate)
+
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -5465,7 +5467,7 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                var dto = _agroProductSalesInfoBusiness.GetSalesDropList(invoiceNo);
+                var dto = _agroProductSalesInfoBusiness.GetSalesDropList(invoiceNo,fromDate,toDate);
 
 
                 List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();

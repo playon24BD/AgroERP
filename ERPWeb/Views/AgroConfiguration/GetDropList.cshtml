@@ -39,9 +39,29 @@
                             </div>
                             <div class="col-md-2" style="margin-left:-50px">
 
-                                    <input type="text" class="form-control form-control-sm" id="SearchInvoice" placeholder="search By invoice" />
+                                <input type="text" class="form-control form-control-sm" id="SearchInvoice" placeholder="search By invoice" />
                             </div>
-                           
+
+                            <div class="col-md-2">
+
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="From Date" />
+                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="To Date" />
+                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -89,6 +109,9 @@
         var ddlProductName = $("#ddlProductName");
         var ddlStatus = $("#ddlStatus");
 
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+
         $(document).ready(function () {
 
             $('.select2').select2();
@@ -97,7 +120,43 @@
                 theme: 'bootstrap4'
             });
 
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            
+
             LoadDropListTable()
+        })
+
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                    loadRequistion();
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                    loadRequistion();
+                }
+            }
+
         })
 
        
@@ -106,10 +165,19 @@
             LoadDropListTable()
         })
 
+        dptFromDate.change(function () {
+            LoadDropListTable();
+
+        });
+
+        dptToDate.change(function () {
+            LoadDropListTable();
+
+        });
         
 
         function LoadDropListTable() {
-            var data = { flag: "View", invoiceNo: $.trim(SearchInvoice.val())}
+            var data = { flag: "View", invoiceNo: $.trim(SearchInvoice.val()),fromDate: dptFromDate.val(), toDate: dptToDate.val()}
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetDropList', data)).then(function (res, status) {
                 console.log(res);
                 if (status == "success") {
