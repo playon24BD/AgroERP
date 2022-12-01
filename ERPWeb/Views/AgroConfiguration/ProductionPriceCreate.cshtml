@@ -4,6 +4,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .button-33 {
+        background-color: #c2fbd7;
+        border-radius: 100px;
+        box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+        color: green;
+        cursor: pointer;
+        display: inline-block;
+        font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+        padding: 7px 20px;
+        text-align: center;
+        text-decoration: none;
+        transition: all 250ms;
+        border: 0;
+        font-size: 16px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+
+        .button-33:hover {
+            box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+            transform: scale(1.05) rotate(-1deg);
+        }
+
+
+</style>
+
 <div class="row" style="margin-top:-10px">
 
     <div class="col-md-12">
@@ -28,7 +56,8 @@
                                 </h5>
                             </div>
                             <div class="col-md-3">
-                                <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                @*<button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>*@
+                                <button class="btn-sm btn float-right button-33" role="button" >Save <i class="fas fa-paper-plane"></i></button>
                             </div>
                         </div>
 
@@ -64,7 +93,7 @@
                             </div>
                             <div class="col-md-2">
                                 <label class="col-form-label text-white" for="ddlotherexpense">Other Expense Price</label>
-                                <input type="number" id="ddlotherexpense" name="ddlotherexpense" class="form-control form-control-sm"/>
+                                <input type="number" id="ddlotherexpense" name="ddlotherexpense" class="form-control form-control-sm" />
                             </div>
 
                         </div>
@@ -190,7 +219,7 @@
                         var info = { ProductionPerproductCostId: 0, FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), FGRId: TryParseInt(ddlQtyUnit.val(), 0), PerProductRMtotalCost: ddlRMtotalprice.val(), PerProductOtherCost: ddlotherexpense.val()};
 
 
-            
+
                         console.log(info);
 
                         var data = JSON.stringify({ info: info});
@@ -200,7 +229,7 @@
                             debugger;
                             if (res == true) {
                                 $('.toastrDefaultSuccess').trigger('click');
-                        
+
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("ProductionPriceCreate")');
                                 }, 500);
