@@ -83,7 +83,7 @@
 
                                 <div class="form-group">
                                     <label class="col-form-label pt-0" for="ddlInvoiceDate">Challan Date</label>
-                                    <div class="input-group-sm date" id="datePicker">
+                                    <div class="input-group-sm date" id="simple">
 
                                         <input type="text" class="form-control" id="ChallanDate" name="date" value="">
                                         <span class="input-group-addon">
@@ -368,20 +368,30 @@
 
         //date
         var date = new Date();
-        var today = new Date(date.getFullYear(), date.getDate(), date.getMonth());
+        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
         var optSimple = {
+            //format: 'mm-dd-yyyy',
+            //format: 'dd-mm-yyyy',
+            //todayHighlight: true,
+            //orientation: 'bottom right',
+            //autoclose: true,
+            //container: '#sandbox'
+
+            //format: 'dd-mm-yyyy',
             format: 'mm-dd-yyyy',
-            todayHighlight: true,
+            container: '#datePicker',
             orientation: 'bottom right',
-            autoclose: true,
-            container: '#sandbox'
+            todayHighlight: true,
+            autoclose: true
         };
 
         var optComponent = {
+            //format: 'mm-dd-yyyy',
+            //format: 'dd-mm-yyyy',
             format: 'mm-dd-yyyy',
             container: '#datePicker',
-            orientation: 'auto top',
+            orientation: 'bottom right',
             todayHighlight: true,
             autoclose: true
         };
@@ -394,21 +404,21 @@
 
         // ===================================
 
-        $('#datepicker1').datepicker({
-            format: "mm : dd : yyyy",
-            todayHighlight: true,
-            autoclose: true,
-            container: '#box1',
-            orientation: 'top right'
-        });
+        //$('#datepicker1').datepicker({
+        //    format: "mm : dd : yyyy",
+        //    todayHighlight: true,
+        //    autoclose: true,
+        //    container: '#box1',
+        //    orientation: 'top right'
+        //});
 
-        $('#datepicker2').datepicker({
-            format: 'mm \\ dd \\ yyyy',
-            todayHighlight: true,
-            autoclose: true,
-            container: '#box2',
-            orientation: 'top right'
-        });
+        //$('#datepicker2').datepicker({
+        //    format: 'mm \\ dd \\ yyyy',
+        //    todayHighlight: true,
+        //    autoclose: true,
+        //    container: '#box2',
+        //    orientation: 'top right'
+        //});
 
         $('#datepicker1, #datepicker2, #simple, #datePicker').datepicker('setDate', today);
         //dateend
@@ -433,29 +443,6 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
-            InvoiceDate.prop('readonly', true);
-            InvoiceDate.css("background-color", "#fff");
-            $('#InvoiceDate').datepicker({
-                format: "dd MM yyyy",
-                orientation: "bottom auto",
-                todayHighlight: true
-            });
-
-            ChallanDate.prop('readonly', true);
-            ChallanDate.css("background-color", "#fff");
-            $('#ChallanDate').datepicker({
-                format: "dd MM yyyy",
-                orientation: "bottom auto",
-                todayHighlight: true
-            });
-
-            //ExpireDate.prop('readonly', true);
-            //ExpireDate.css("background-color", "#fff");
-            //$('#ExpireDateExpireDate').datepicker({
-            //    format: "dd MM yyyy",
-            //    orientation: "bottom auto",
-            //    todayHighlight: true
-            //})
 
         })
 
@@ -661,7 +648,14 @@
 
         //calculatetotal
 
-        
+        function ClearData() {
+            txtQuanity.val("");
+            txtDiscount.val("");
+            
+
+         
+
+        }
 
         txtQuanity.keyup(function () {
             if (txtQuanity.val() >= 0) {
@@ -675,8 +669,20 @@
 
             }
 
-
         });
+        //txtPrice.change(function () {
+        //    debugger
+        //    if (txtPrice.val() >= 0) {
+        //        debugger;
+        //        //ddlpt.val("");
+        //        calculateTotal();
+        //        //TatalProductQty();
+        //        totalAmounts();
+        //        payabl();
+
+
+        //    }
+        //});
 
         //txtPrice.keyup(function () {
         //    if (txtPrice.val() >= 0) {
@@ -947,7 +953,7 @@
                                 window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + InvoiceNo, '_blank');
                                 //window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + res.File, '_blank');
                                 setTimeout(function () {
-                                    redirectPage('@Url.Action("ProductionPriceCreate")');
+                                    redirectPage('@Url.Action("GetAgroSalesProductList")');
                                 }, 500);
                                // printJS({ printable: res.File, type: 'pdf', base64: true });
                                 

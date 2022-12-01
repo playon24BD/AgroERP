@@ -5490,7 +5490,7 @@ namespace ERPWeb.Controllers
 
 
 
-                var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
+                var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInDropfoId(id.Value);
 
 
 

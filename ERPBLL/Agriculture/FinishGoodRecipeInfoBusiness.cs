@@ -56,8 +56,9 @@ namespace ERPBLL.Agriculture
                 param += string.Format(@" and RI.FinishGoodProductId={0}", finishGoodProductId);
             }
 
-            query = string.Format(@"SELECT DISTINCT RI.FGRId,concat(RI.FGRQty,'(',U.UnitName,')') as UnitQty
-            FROM tblFinishGoodRecipeInfo RI
+            query = string.Format(@"SELECT DISTINCT FGPI.FGRId,concat(RI.FGRQty,'(',U.UnitName,')') as UnitQty
+            FROM  FinishGoodProductionInfoes FGPI 
+			Inner JOIN tblFinishGoodRecipeInfo RI ON FGPI.FGRId=RI.FGRId
             INNER JOIN tblAgroUnitInfo U on RI.UnitId=U.UnitId	
             Where 1=1 {0}", Utility.ParamChecker(param));
 
