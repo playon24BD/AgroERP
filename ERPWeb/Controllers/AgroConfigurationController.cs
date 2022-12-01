@@ -5515,7 +5515,6 @@ namespace ERPWeb.Controllers
 
                 ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
-
                 return View();
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
