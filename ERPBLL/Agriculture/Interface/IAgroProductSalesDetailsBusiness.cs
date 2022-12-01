@@ -10,6 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAgroProductSalesDetailsBusiness
     {
+        AgroProductSalesDetails GetSalesDetailsById(long ProductSalesDetailsId, long orgId);
         IEnumerable<AgroProductSalesDetailsDTO> GetAllAgroSalesDetailsInfos( long orgId);
         IEnumerable<AgroProductSalesDetails> GetAgroSalesDetailsByInfoId(long infoId, long orgId);
         IEnumerable<AgroProductSalesDetailsDTO> GetAgroSalesDetailsByInfoIdGet(long infoId, long orgId);

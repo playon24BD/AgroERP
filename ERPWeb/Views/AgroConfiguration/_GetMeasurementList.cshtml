@@ -15,10 +15,13 @@
             </tr>
         </thead>
         <tbody>
+            
             @foreach (var item in Model)
             {
+                
                 sl++;
             <tr>
+               
                 <td class="text-center">@sl</td>
                 <td class="hide">@item.MeasurementId</td>
                 <td class="text-center">@item.MeasurementName</td>
@@ -30,7 +33,7 @@
                 <td class="hide">@item.UnitId</td>
                 <td class="text-center">@item.Status</td>
                 <td class="hide">@item.UnitKG</td>
-                <td>
+                <td class="text-center">
                     <a href="#" class="btn btn-warning btn-sm data-edit-item-measurement" data-edit-item-measurement="@item.MeasurementId"><i class="fa fa-pen"></i>Edit</a>
                 </td>
 

@@ -35,25 +35,13 @@
                     <div class="card-header">
                         <div class="row justify-content-center">
                             <div class="col-md-2">
-                                <h5 class="text-right">Search By</h5>
+                                <h5 class="text-center">Search By</h5>
                             </div>
-                            @*<div class="col-md-2">
+                            <div class="col-md-2" style="margin-left:-50px">
 
-                                    <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By invoice" />
-                                </div>*@
-                            @*<div class="col-md-2">
-
-                                    @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                </div>*@
-                            @*<div class="col-md-2">
-
-
-                                    <select class="form-control form-control-sm select2" id="ddlStatus">
-                                        <option value="" selected>--Status--</option>
-                                        <option value="ADJUST">ADJUST</option>
-                                        <option value="NOTADJUST">NOTADJUST</option>
-                                    </select>
-                                </div>*@
+                                    <input type="text" class="form-control form-control-sm" id="SearchInvoice" placeholder="search By invoice" />
+                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -96,7 +84,7 @@
 
 
 
-        var SearchAny = $("#SearchAny");
+        var SearchInvoice = $("#SearchInvoice");
 
         var ddlProductName = $("#ddlProductName");
         var ddlStatus = $("#ddlStatus");
@@ -113,23 +101,15 @@
         })
 
        
-        //SearchAny.keyup(function () {
-        //    debugger;
-        //    LoadZoneDataTable()
-        //})
+        SearchInvoice.keyup(function () {
+          
+            LoadDropListTable()
+        })
 
-        //ddlProductName.change(function () {
-
-        //    LoadZoneDataTable();
-        //})
-
-        //ddlStatus.change(function () {
-
-        //    LoadZoneDataTable();
-        //})
+        
 
         function LoadDropListTable() {
-            var data = { flag: "View" }
+            var data = { flag: "View", invoiceNo: $.trim(SearchInvoice.val())}
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetDropList', data)).then(function (res, status) {
                 console.log(res);
                 if (status == "success") {

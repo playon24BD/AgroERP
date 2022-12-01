@@ -35,6 +35,13 @@ namespace ERPBO.Agriculture.DTOModels
         public double TotalCurrentQTY { get; set; }
         public double ProductTotal { get; set; }
         public string Status { get; set; }
+        public int MasterCarton { get; set; }
+        public int InnerBox { get; set; }
+        public double PackSize { get; set; }
+        public double CurrentStock { get; set; }
+        public int MQTY { get; set; }
+        public double TotalQty { get; set; }
+        public bool ISActive { get; set; }
 
         //public string MeasurementName { get; set; }
         //public string FinishGoodProductName { get; set; }

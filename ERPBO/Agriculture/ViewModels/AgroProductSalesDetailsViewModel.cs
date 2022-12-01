@@ -38,7 +38,14 @@ namespace ERPBO.Agriculture.ViewModels
         public double ProductTotal { get; set; }
         public int RT { get; set; }
         public string Status { get; set; }
+        public int MasterCarton { get; set; }
+        public int InnerBox { get; set; }
+        public double PackSize { get; set; }
+        public double CurrentStock { get; set; }
+        public int MQTY { get; set; }
+        public double TotalQty { get; set; }
 
+        public bool ISActive { get; set; }
 
 
     }

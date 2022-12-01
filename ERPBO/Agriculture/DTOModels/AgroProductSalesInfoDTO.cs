@@ -69,6 +69,8 @@ namespace ERPBO.Agriculture.DTOModels
         public double Discount { get; set; }
         public double DiscountTK { get; set; }
 
+        
+
 
 
 

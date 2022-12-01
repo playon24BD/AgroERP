@@ -104,9 +104,55 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-gray-dark">
-                <h4 id="modalHeading" class="modal-title">Agro Sales Product Edit</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                
+               
+                <div class="col-md-12">
+                    <div class="row">
+                        <input type="hidden" id="hdSalesId" />
+                        <div class="col-md-3">
+                            <label class="text-sm">Date</label>
+                            <input id="txtinoviceDate" type="text" class="form-control form-control-sm " value="" readonly />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-sm">Invoice No</label>
+                            <input id="txtinoviceNo" type="text" class="form-control form-control-sm " value="" readonly />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-sm">Challan No</label>
+                            <input id="txtchallanNo" type="text" class="form-control form-control-sm " value="" readonly />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-sm">Stockiest Name</label>
+                            @Html.DropDownList("ddlStockiestedit", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestedit, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        </div>
+
+                    </div>
+                    <div class="row" style="margin-top:3px">
+                        <div class="col-md-4">
+                            <label class="text-sm">Driver Name</label>
+                            <input id="txtdriveName" type="text" class="form-control form-control-sm " value="" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="text-sm">Delivery Place</label>
+                            <input id="txtdeliveryPlace" type="text" class="form-control form-control-sm " value="" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="text-sm">Vehicle Type</label>
+                            <input id="txtvehicleType" type="text" class="form-control form-control-sm " value="" />
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                @*<h4 id="modalHeading" class="modal-title">Agro Sales Product Edit</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>*@
+
             </div>
+
+
             <div class="modal-body" id="dataContainer3">
 
 
@@ -271,6 +317,18 @@
         var dptToDate = $("#dptToDate");
         var searchByAny = $("#searchByAny");
         var ddlStockiest = $("#ddlStockiest");
+
+        //edit
+        var txtinoviceDate = $("#txtinoviceDate");
+        var txtinoviceNo = $("#txtinoviceNo");
+        var txtchallanNo = $("#txtchallanNo");
+        var ddlStockiestedit = $("#ddlStockiestedit");
+        var txtdriveName = $("#txtdriveName");
+        var txtdeliveryPlace = $("#txtdeliveryPlace");
+        var txtvehicleType = $("#txtvehicleType");
+        var hdSalesId = $("#hdSalesId");
+
+
         $(document).ready(function () {
 
             $('.select2').select2();
@@ -481,6 +539,103 @@
         function redirectPage(page) {
             window.location.replace(page);
         }
+
+        
+       //edit
+        $(document).on("click", "a.data-item-edit-ProductionSalesInfoId", function (e) {
+            e.preventDefault()
+            debugger;
+            var row = $(this).parent().parents('tr');
+            var salesId = row.find('td:eq(1)').html();
+            var stockiestId = row.find('td:eq(12)').html();
+            var invoiceDate = row.find('td:eq(14)').html();
+            var invoiceNo = row.find('td:eq(13)').html();
+            var challanNo = row.find('td:eq(15)').html();
+            var deliveryPlace = row.find('td:eq(16)').html();
+            var vehicleType = row.find('td:eq(17)').html();
+            var driverName = row.find('td:eq(11)').html();
+
+
+            hdSalesId.val(salesId)
+            txtinoviceDate.val(invoiceDate)
+            txtinoviceNo.val(invoiceNo)
+            txtchallanNo.val(challanNo)
+            ddlStockiestedit.val(stockiestId)
+            ddlStockiestedit.trigger("change");
+            txtdriveName.val(driverName)
+            txtdeliveryPlace.val(deliveryPlace)
+            txtvehicleType.val(vehicleType)
+
+
+        });
+
+
+
+        $("#UpdateButton").click(function (e) {
+            e.preventDefault();
+            debugger;
+
+            var info = { ProductSalesInfoId: TryParseInt(hdSalesId.val(), 0), StockiestId: TryParseInt(ddlStockiestedit.val(), 0), DeliveryPlace: txtdeliveryPlace.val(), VehicleType: txtvehicleType.val(), DriverName: txtdriveName.val() };
+
+            var details = [];
+            details.length = 0;
+
+          //  debugger;
+            $.each($("#tblAgroSalesProductEdit tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+              //  debugger;
+
+                details.push({
+                 
+
+                   
+                    BoxQuanity: tds.eq(3).children('input[type="number"]').val(),
+                    Discount: tds.eq(5).children('input[type="number"]').val(),
+                    ISActive: tds.eq(7).children("input").is(":checked"),
+                    ProductSalesDetailsId: tds.eq(10)[0].innerHTML,
+                
+                   
+                    
+
+                });
+
+            })
+            
+            console.log(info);
+            console.log(details);
+            var data = JSON.stringify({ info: info, details: details });
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/UpdateProductSalesEdit', data, getToken())).then(function (res, status) {
+                if (res == true) {
+                    debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                     setTimeout(function () {
+                          redirectPage('@Url.Action("GetAgroSalesProductList")');
+                                }, 1000);
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#UpdateButton");
+            }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#UpdateButton");
+            })
+
+        })
+       
+
+
+        //$(document).on("click", "a.data-item-edit-ProductionSalesInfoId", function (e) {
+
+
+        //    e.preventDefault()
+        //    debugger;
+
+
+        //});
+
+       //editend
+
     </script>
 
 }

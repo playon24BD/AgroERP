@@ -2606,6 +2606,7 @@ namespace ERPWeb.Controllers
             {
 
                 ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+                ViewBag.ddlStockiestedit = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
 
 
@@ -2668,42 +2669,7 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Edit)
             {
 
-                var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
-
-                ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName, Value = stock.StockiestId.ToString() }).ToList();
-
-                var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
-                var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
-                var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
-                var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
-                var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
-
-                var infos = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
-                
-                
-
-                ViewBag.Info = new AgroProductSalesInfoViewModel
-                {
-                    ZoneName = ZoneName.FirstOrDefault(Z => Z.ZoneId == infos.ZoneId).ZoneName,
-                    DivisionName = DivisionName.FirstOrDefault(D => D.DivisionId == infos.DivisionId).DivisionName,
-                    RegionName = RegionName.FirstOrDefault(R => R.RegionId == infos.RegionId).RegionName,
-                    AreaName = AreaName.FirstOrDefault(A => A.AreaId == infos.AreaId).AreaName,
-                    TerritoryName = TerritoryName.FirstOrDefault(T => T.TerritoryId == infos.TerritoryId).TerritoryName,
-                    StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == infos.StockiestId).StockiestName,
-                    
-                InvoiceNo = infos.InvoiceNo,
-                    ChallanNo = infos.ChallanNo,
-                    DriverName = infos.DriverName,
-                    VehicleNumber = infos.VehicleNumber,
-                    DeliveryPlace = infos.DeliveryPlace,
-                    InvoiceDate = infos.InvoiceDate,
-
-                    
-                };
-
                 var edit = _agroProductSalesDetailsBusiness.GetSalesEditByInfoId(id.Value);
-
-
 
                 List<AgroProductSalesDetailsViewModel> editView = new List<AgroProductSalesDetailsViewModel>();
                 AutoMapper.Mapper.Map(edit, editView);
@@ -2872,6 +2838,19 @@ namespace ERPWeb.Controllers
             // return Json(isSucccess);
             return Json(isSucccess);
         }
+        [HttpPost]
+        public ActionResult UpdateProductSalesEdit(AgroProductSalesInfoViewModel info,List<AgroProductSalesDetailsViewModel> details)
+        {
+            bool IsSuccess = false;
+            AgroProductSalesInfoDTO infoDTO = new AgroProductSalesInfoDTO();
+            List<AgroProductSalesDetailsDTO> detailsDTO = new List<AgroProductSalesDetailsDTO>();
+            AutoMapper.Mapper.Map(info, infoDTO);
+            AutoMapper.Mapper.Map(details, detailsDTO);
+            IsSuccess = _agroProductSalesInfoBusiness.UpdateProductSalesEdit(infoDTO, detailsDTO, User.UserId, User.OrgId);
+
+            return Json(IsSuccess);
+        }
+        
         public ActionResult AgroProductSalesReport(string InvoiceNo)
         {
             string file = string.Empty;
@@ -5417,7 +5396,7 @@ namespace ERPWeb.Controllers
 
         #region DropList
 
-        public ActionResult GetDropList(string flag,long? id)
+        public ActionResult GetDropList(string flag,long? id,string invoiceNo)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -5429,7 +5408,7 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                var dto = _agroProductSalesInfoBusiness.GetSalesDropList();
+                var dto = _agroProductSalesInfoBusiness.GetSalesDropList(invoiceNo);
 
 
                 List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
