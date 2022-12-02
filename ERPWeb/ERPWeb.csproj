@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -3425,6 +3425,7 @@
     <Content Include="Views\AgroConfiguration\_GetRegionPartialView.cshtml" />
     <Content Include="Views\AgroConfiguration\AreaList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAreaPartialView.cshtml" />
+
     <Content Include="Views\AgroConfiguration\CreateTerritorylist.cshtml" />
     <Content Include="Views\AgroConfiguration\Territorylist.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetTerritoryPartialView.cshtml" />
@@ -3523,6 +3524,10 @@
     <Content Include="Views\AgroConfiguration\_GetPRProductionPrice.cshtml" />
     <Content Include="Views\AgroConfiguration\ProductionPriceList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetProductionPriceList.cshtml" />
+
+    <Content Include="Views\AgroConfiguration\Territorylist.cshtml" />
+    <Content Include="Views\AgroConfiguration\CreateTerritorylist.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

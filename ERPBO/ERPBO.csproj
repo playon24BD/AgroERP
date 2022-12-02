@@ -104,6 +104,7 @@
     <Compile Include="Agriculture\DomainModels\RawMaterialStockDetail.cs" />
     <Compile Include="Agriculture\DomainModels\RawMaterialTrack.cs" />
     <Compile Include="Agriculture\DomainModels\RegionSetup.cs" />
+
     <Compile Include="Agriculture\DomainModels\RegionUser.cs" />
     <Compile Include="Agriculture\DomainModels\ReturnRawMaterial.cs" />
     <Compile Include="Agriculture\DomainModels\SalesPaymentRegister.cs" />
@@ -114,6 +115,11 @@
     <Compile Include="Agriculture\DomainModels\TerritoryUser.cs" />
     <Compile Include="Agriculture\DomainModels\UserAssign.cs" />
     <Compile Include="Agriculture\DomainModels\UserInfo.cs" />
+
+    <Compile Include="Agriculture\DomainModels\StockiestInfo.cs" />
+
+    <Compile Include="Agriculture\DomainModels\TerritorySetup.cs" />
+
     <Compile Include="Agriculture\DomainModels\Zone.cs" />
     <Compile Include="Agriculture\DomainModels\ZoneDetail.cs" />
     <Compile Include="Agriculture\DomainModels\ZoneSetup.cs" />
@@ -149,6 +155,7 @@
     <Compile Include="Agriculture\DTOModels\RawMaterialStockDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RawMaterialTrackDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RegionSetupDTO.cs" />
+
     <Compile Include="Agriculture\DTOModels\RegionUserDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ReturnRawMaterialDTO.cs" />
     <Compile Include="Agriculture\DTOModels\SalesPaymentRegisterDTO.cs" />
@@ -159,6 +166,11 @@
     <Compile Include="Agriculture\DTOModels\TerritoryUserDTO.cs" />
     <Compile Include="Agriculture\DTOModels\UserAssignDTO.cs" />
     <Compile Include="Agriculture\DTOModels\UserInfoDTO.cs" />
+
+    <Compile Include="Agriculture\DTOModels\StockiestInfoDTO.cs" />
+
+    <Compile Include="Agriculture\DTOModels\TerritorySetupDTO.cs" />
+
     <Compile Include="Agriculture\DTOModels\ZoneDetailDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneSetupDTO.cs" />
@@ -212,6 +224,7 @@
     <Compile Include="Agriculture\ViewModels\FinishGoodRecipeInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RawMaterialTrackViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RegionSetupViewModel.cs" />
+
     <Compile Include="Agriculture\ViewModels\RegionUserViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\ReturnRawMaterialViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\SalesPaymentRegisterViewModel.cs" />
@@ -222,6 +235,11 @@
     <Compile Include="Agriculture\ViewModels\TerritoryUserViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\UserAssignViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\UserInfoViewModel.cs" />
+
+    <Compile Include="Agriculture\ViewModels\StockiestInfoViewModel.cs" />
+
+    <Compile Include="Agriculture\ViewModels\TerritorySetupViewModel.cs" />
+
     <Compile Include="Agriculture\ViewModels\ZoneDetailViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\ZoneSetupViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\ZoneUserViewModel.cs" />

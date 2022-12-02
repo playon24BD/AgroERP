@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,9 @@ namespace ERPBO.Agriculture.ViewModels
     {
         public long StockiestId { get; set; }
         public string StockiestName { get; set; }
+
         public string StockiestCode { get; set; }
+
         public long OrganizationId { get; set; }
         public long TerritoryId { get; set; }
         public long RoleId { get; set; }
@@ -19,6 +21,7 @@ namespace ERPBO.Agriculture.ViewModels
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
         public string Status { get; set; }
+
         public string TerritoryName { get; set; }
 
 
@@ -32,5 +35,6 @@ namespace ERPBO.Agriculture.ViewModels
         public double CreditLimit { get; set; }
         public string AreaName { get; set; }
         public string StockiestAddress { get; set; }
+
     }
 }

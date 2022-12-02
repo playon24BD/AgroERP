@@ -187,6 +187,16 @@
     <Compile Include="AgricultureContextMigrations\202211290634382_ProductionCOst.Designer.cs">
       <DependentUpon>202211290634382_ProductionCOst.cs</DependentUpon>
     </Compile>
+<<<<<<< Updated upstream
+    <Compile Include="AgricultureContextMigrations\202210120543527_Agriculture_StockiestInfo.cs" />
+    <Compile Include="AgricultureContextMigrations\202210120543527_Agriculture_StockiestInfo.Designer.cs">
+      <DependentUpon>202210120543527_Agriculture_StockiestInfo.cs</DependentUpon>
+=======
+    <Compile Include="AgricultureContextMigrations\202210120548380_Territoryadd.cs" />
+    <Compile Include="AgricultureContextMigrations\202210120548380_Territoryadd.Designer.cs">
+      <DependentUpon>202210120548380_Territoryadd.cs</DependentUpon>
+>>>>>>> Stashed changes
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -310,6 +320,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202211290634382_ProductionCOst.resx">
       <DependentUpon>202211290634382_ProductionCOst.cs</DependentUpon>
+    </EmbeddedResource>
+<<<<<<< Updated upstream
+    <EmbeddedResource Include="AgricultureContextMigrations\202210120543527_Agriculture_StockiestInfo.resx">
+      <DependentUpon>202210120543527_Agriculture_StockiestInfo.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="AgricultureContextMigrations\202210120548380_Territoryadd.resx">
+      <DependentUpon>202210120548380_Territoryadd.cs</DependentUpon>
+>>>>>>> Stashed changes
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

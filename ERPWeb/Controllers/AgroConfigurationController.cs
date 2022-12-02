@@ -19,6 +19,7 @@ namespace ERPWeb.Controllers
 {
     public class AgroConfigurationController : BaseController
     {
+
         private readonly IProductionPerproductCost _productionPerproductCost;
         private readonly IProductPriceConfiguration _productPriceConfiguration;
         private readonly IProductPricingHistory _productPricingHistory;
@@ -41,6 +42,9 @@ namespace ERPWeb.Controllers
         private readonly IAgroUnitInfo _agroUnitInfo;
         private readonly IUserInfo _userInfo;
         private readonly IStockiestInfo _stockiestInfo;
+
+
+        public readonly IStockiestInfo _stockiestInfo;
         public readonly IDivisionInfo _divisionInfo;
         public readonly IZone _zone;
         private readonly IZoneDetail _zoneDetail;
@@ -51,7 +55,9 @@ namespace ERPWeb.Controllers
 
         private readonly IZoneSetup _zoneSetup;//e
         private readonly IRegionSetup _regionSetup;//e
-        private readonly IAreaSetupBusiness _areaSetupBusiness;//e
+        private readonly ITerritorySetup _territorySetup;//e
+
+        private readonly IAreaSetupBusiness _areaSetupBusiness;
 
         private readonly IBankSetup _bankSetup;
         private readonly IRawMaterialBusiness _rawMaterialBusiness;
@@ -73,6 +79,7 @@ namespace ERPWeb.Controllers
         private readonly ICommissionOnProductOnSalesBusiness _commissionOnProductOnSalesBusiness;
         private readonly ICommisionOnProductSalesDetailsBusiness _commisionOnProductSalesDetailsBusiness;
         private readonly IRMStockDashboardGrap _rMStockDashboardGrap;
+
 
 
 
@@ -100,9 +107,20 @@ namespace ERPWeb.Controllers
             this._pRawMaterialStockInfo = pRawMaterialStockInfo;//e
             this._pRawMaterialStockIDetails = pRawMaterialStockIDetails;//e
 
+
+        public AgroConfigurationController(IStockiestInfo stockiestInfo,IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
+
+        public AgroConfigurationController(ITerritorySetup territorySetup ,IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness)
+
+        {
+            this._stockiestInfo = stockiestInfo;
+
+
             this._zoneSetup = zoneSetup;//e
             this._territorySetup = territorySetup;//e
             this._regionSetup = regionSetup;//e
+            this._territorySetup = territorySetup;//e
+
             this._divisionInfo = divisionInfo;
             this._areaSetupBusiness = areaSetupBusiness;
             this._zoneDetail = zoneDetail;
@@ -2339,11 +2357,16 @@ namespace ERPWeb.Controllers
 
         #region Teritory List
 
+
         public ActionResult Territorylist(string flag, string name, long? areaId, long? territoryId)
+
+        public ActionResult Territorylist(string flag, string name, long? divisionId, long? regionId)
+
         {
             if (string.IsNullOrEmpty(flag))
             {
                 ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
                 ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
 
                 #region New Code
@@ -2369,6 +2392,20 @@ namespace ERPWeb.Controllers
                 return PartialView("_GetTerritoryPartialView", viewModels);
             }
 
+                return View();
+            }
+            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            //{
+            //    var dto = _regionSetup.GetRegionInfos(User.OrgId, regionId ?? 0, divisionId ?? 0);
+
+
+
+            //    List<RegionSetupViewModel> viewModels = new List<RegionSetupViewModel>();
+            //    AutoMapper.Mapper.Map(dto, viewModels);
+            //    return PartialView("_GetRegionPartialView", viewModels);
+            //}
+
+
             return View();
         }
 
@@ -2376,6 +2413,7 @@ namespace ERPWeb.Controllers
         {
 
             ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
 
             ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
             return View();
@@ -2400,6 +2438,12 @@ namespace ERPWeb.Controllers
             }
             return Json(IsSuccess);
         }
+
+           // ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+            return View();
+        }
+
+
         #endregion
 
         #region Extra Code
@@ -2423,6 +2467,9 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Stockiest List
+
+
+
 
         public ActionResult GetStockiestList(string flag, long? stockiestId, long? territoryId, long? id, string tab = "")
         {
@@ -5501,11 +5548,26 @@ namespace ERPWeb.Controllers
 
             }
 
+
+        public ActionResult GetStockiestList(string flag)
+        {
+                return View();
+        }
+
+        public ActionResult CreateStockiestList()
+        {
+            return View();
+        }
+
+        public ActionResult SaveStockiestList()
+        {
+
             return View();
         }
 
 
         #endregion
+
 
         #region ProductionPrice
 
@@ -5584,6 +5646,8 @@ namespace ERPWeb.Controllers
 
             return Json(IsSuccess);
         }
+
+
 
         #endregion
     }

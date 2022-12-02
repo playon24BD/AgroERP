@@ -47,6 +47,7 @@ namespace ERPWeb
 
             // Configuration Database
             #region Agriculture
+
             container.RegisterType<IProductionPerproductCost, ProductionPerproductCostBusiness>();
             container.RegisterType<IProductPriceConfiguration, ProductPriceConfigurationBusiness>();
             container.RegisterType<IProductPricingHistory, ProductPricingHistoryBusiness>();
@@ -55,6 +56,7 @@ namespace ERPWeb
             container.RegisterType<ISalesPaymentRegister, SalesPaymentRegisterBusiness>();//e
             container.RegisterType<IAgroUnitInfo, AgroUnitInfoBusiness>();
             container.RegisterType<IUserInfo, UserInfoBusiness>();
+
             container.RegisterType<IStockiestInfo, StockiestInfoBusiness>();
             container.RegisterType<IDivisionInfo, DivisionInfoBusiness>();
             container.RegisterType<IZoneDetail, ZoneDetailBusiness>();
@@ -69,6 +71,12 @@ namespace ERPWeb
             container.RegisterType<IZoneSetup, ZoneSetupBusiness>();
             //e
             container.RegisterType<IRegionSetup, RegionSetupBusiness>();
+
+            //e
+            container.RegisterType<ITerritorySetup, TerritorySetupBusiness>();
+
+
+            container.RegisterType<IAreaSetupBusiness, AreaSetupBusiness>();
 
             //e
             container.RegisterType<IPRawMaterialStockInfo, PRawMaterialStockInfoBusiness>();

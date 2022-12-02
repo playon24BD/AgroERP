@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "RegionList";
     var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -131,7 +131,7 @@
         var ddlstatus = $("#ddlstatus");
         var searchByAny = $("#searchByAny");
 
-        //var SearchAny = $("#SearchAny");
+        var SearchAny = $("#SearchAny");
 
 
 
@@ -149,14 +149,24 @@
             LoadRegionDataTable();
         }
 
+
+
         searchByAny.keyup(function () {
+
+        SearchAny.keyup(function () {
+
             LoadRegionDataTable()
         })
 
         function LoadRegionDataTable() {
+
             debugger
            // alert("here me 2");
             var data = { flag: "View", name: $.trim(searchByAny.val()) }
+
+            debugger;
+            var data = { flag: "View", name: $.trim(SearchAny.val()) }
+
             $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/Regionlist', data)).then(function (res, status) {
                 console.log(res);
                 if (status == "success") {

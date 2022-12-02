@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -17,6 +17,7 @@ namespace ERPDAL.AgricultureDAL
         {
 
         }
+
 
         public DbSet<ProductionPerproductCost> tblProductionPerproductCost { get; set; } //e
         public DbSet<ProductPricingHistory> tblProductPricingHistory { get; set; } //e
@@ -38,6 +39,14 @@ namespace ERPDAL.AgricultureDAL
         public DbSet<UserInfo> tblUserInfo { get; set; }
         public DbSet<StockiestInfo> tblStockiestInfo { get; set; }
         public DbSet<UserAssign> tblUserAssign { get; set; }
+
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
+        //}
+        
+        public DbSet<StockiestInfo> tblStockiestInfo { get; set; }
+
         public DbSet<DivisionInfo> tblDivisionInfo { get; set; }
         public DbSet<Zone> tblZoneInfo { get; set; }
         public DbSet<ZoneDetail> tblZoneDetail { get; set; }
@@ -59,6 +68,7 @@ namespace ERPDAL.AgricultureDAL
         public DbSet<FinishGoodProductionDetails> tblFinishGoodProductionDetails { get; set; }
         public DbSet<ZoneSetup> tblZoneInfos { get; set; } //e
         public DbSet<RegionSetup> tblRegionInfos { get; set; } //e
+
         public DbSet<AreaInfoSetup> tblAreaSetup { get; set; } //e
         public DbSet<TerritorySetup> tblTerritoryInfos { get; set; } //e
         public DbSet<AgroProductSalesInfo> tblProductSalesInfo { get; set; }
@@ -79,6 +89,9 @@ namespace ERPDAL.AgricultureDAL
         public DbSet<CommisionOnProductHistory> tblCommissionProductHistory { get; set; }
         public DbSet<CommissionOnProductOnSales> tblCommissionOnProductOnSales { get; set; }
         public DbSet<CommisionOnProductSalesDetails> tblCommisionOnProductSalesDetails { get; set; }
+        public DbSet<TerritorySetup> tblTerritoryInfos { get; set; } //e
+        public DbSet<AreaInfoSetup> tblAreaSetup { get; set; } 
+
 
 
 

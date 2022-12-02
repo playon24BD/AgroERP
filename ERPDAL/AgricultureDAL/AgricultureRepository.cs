@@ -1,4 +1,4 @@
-﻿
+
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.ControlPanel.DomainModels;
 using ERPDAL.ControlPanelDAL;
@@ -94,6 +94,7 @@ namespace ERPDAL.AgricultureDAL
         public UserInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
     }
 
+
     public class StockiestInfoRepository : AgricultureBaseRepository<StockiestInfo>
     {
         public StockiestInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
@@ -147,6 +148,12 @@ namespace ERPDAL.AgricultureDAL
     {
         public RegionSetupRepository(IAgricultureUnitOfWork AgricultureUnitOfWork) : base(AgricultureUnitOfWork) { }
     }
+    //e
+    public class TerritorySetupRepository : AgricultureBaseRepository<TerritorySetup>
+    {
+        public TerritorySetupRepository(IAgricultureUnitOfWork AgricultureUnitOfWork) : base(AgricultureUnitOfWork) { }
+    }
+
     //e
     public class TerritorySetupRepository : AgricultureBaseRepository<TerritorySetup>
     {

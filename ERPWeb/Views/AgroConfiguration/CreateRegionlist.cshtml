@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "CreateRegion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -41,6 +41,30 @@
                     <span class="error hide required-DivisionName font-weight-bold">Input DivisionName!</span>
 
                 </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
+                            <thead>
+                                <tr>
+                                    <th colspan="9">
+                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                    </th>
+                                </tr>
+
+                                <tr class="text-center btn-dark">
+                                    <th style="width:5%">#SL</th>
+                                    <th style="width:10%">DivisionName</th>
+                                    <th style="width:10%">Region Name</th>
+                                  
+                                    <th style="width:5%">Action</th>
+                                    <th class="hide ddldivname"></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
 
 
                 <div class="col-md-2">

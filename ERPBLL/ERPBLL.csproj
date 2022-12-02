@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -155,6 +155,7 @@
     <Compile Include="Agriculture\Interface\IRawMaterialStockInfo.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialTrack.cs" />
     <Compile Include="Agriculture\Interface\IRegionSetup.cs" />
+
     <Compile Include="Agriculture\Interface\IRegionUserBusiness.cs" />
     <Compile Include="Agriculture\Interface\IReturnRawMaterialBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRMStockDashboardGrap.cs" />
@@ -166,6 +167,11 @@
     <Compile Include="Agriculture\Interface\ITerritoryUserBusiness.cs" />
     <Compile Include="Agriculture\Interface\IUserAssignBussiness.cs" />
     <Compile Include="Agriculture\Interface\IUserInfo.cs" />
+
+    <Compile Include="Agriculture\Interface\IStockiestInfo.cs" />
+
+    <Compile Include="Agriculture\Interface\ITerritorySetup.cs" />
+
     <Compile Include="Agriculture\Interface\IZone.cs" />
     <Compile Include="Agriculture\Interface\IZoneDetail.cs" />
     <Compile Include="Agriculture\Interface\IZoneSetup.cs" />
@@ -189,6 +195,7 @@
     <Compile Include="Agriculture\RawMaterialSupplierBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialTrackBusiness.cs" />
     <Compile Include="Agriculture\RegionSetupBusiness.cs" />
+
     <Compile Include="Agriculture\RegionUserBusiness.cs" />
     <Compile Include="Agriculture\ReturnRawMaterialBusiness.cs" />
     <Compile Include="Agriculture\RMStockDashboardGrapBusiness.cs" />
@@ -200,6 +207,11 @@
     <Compile Include="Agriculture\TerritoryUserBusiness.cs" />
     <Compile Include="Agriculture\UserAssignBussiness.cs" />
     <Compile Include="Agriculture\UserInfoBusiness.cs" />
+
+    <Compile Include="Agriculture\StockiestInfoBusiness.cs" />
+
+    <Compile Include="Agriculture\TerritorySetupBusiness.cs" />
+
     <Compile Include="Agriculture\ZoneBusiness.cs" />
     <Compile Include="Agriculture\ZoneDetailBusiness.cs" />
     <Compile Include="Agriculture\ZoneSetupBusiness.cs" />

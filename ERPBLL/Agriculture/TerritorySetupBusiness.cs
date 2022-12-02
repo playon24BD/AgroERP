@@ -1,8 +1,13 @@
-﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Agriculture.Interface;
+
 using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
+
+using ERPBO.Agriculture.DomainModels;
+using ERPBO.Agriculture.DTOModels;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +18,7 @@ namespace ERPBLL.Agriculture
 {
     public class TerritorySetupBusiness : ITerritorySetup
     {
+
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly TerritorySetupRepository _territorySetupRepository;
 
@@ -65,10 +71,25 @@ on t.AreaId = a.AreaId
         public TerritorySetup GetTerritoryNamebyId(long territoryId, long orgId)
         {
             return _territorySetupRepository.GetOneByOrg(x => x.TerritoryId == territoryId && x.OrganizationId == orgId);
+        public IEnumerable<TerritorySetup> GetAllTerritorySetup(long OrgId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<TerritorySetupDTO> GetTerritoryInfos(long orgId, long? territoryId, long? divisionId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TerritorySetup GetTerritoryNamebyId(long territoryId, long orgId)
+        {
+            throw new NotImplementedException();
+
         }
 
         public bool SaveTerritoryInfo(List<TerritorySetupDTO> detailsDTO, long userId, long orgId)
         {
+
             bool IsSuccess = false;
             List<TerritorySetup> TerritorySetup = new List<TerritorySetup>();
 
@@ -99,10 +120,14 @@ on t.AreaId = a.AreaId
 
             IsSuccess = _territorySetupRepository.Save();
             return IsSuccess;
+
+            throw new NotImplementedException();
+
         }
 
         public bool SaveTerritoryInfoEdit(TerritorySetupDTO dTO, long userId, long orgId)
         {
+
             bool IsSuccess = false;
 
             TerritorySetup territorySetup = new TerritorySetup();
@@ -129,6 +154,8 @@ on t.AreaId = a.AreaId
         public IEnumerable<TerritorySetup> GetAllTerritoryByAreaID(long areaid)
         {
             return _territorySetupRepository.GetAll(x => x.AreaId == areaid).ToList();
+
+            throw new NotImplementedException();
         }
     }
 }
