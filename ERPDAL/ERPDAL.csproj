@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -74,149 +75,117 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgricultureContextMigrations\202209111329214_Agriculture_Depo.cs" />
-    <Compile Include="AgricultureContextMigrations\202209111329214_Agriculture_Depo.Designer.cs">
-      <DependentUpon>202209111329214_Agriculture_Depo.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202210261114499_Agriculture_test.cs" />
+    <Compile Include="AgricultureContextMigrations\202210261114499_Agriculture_test.Designer.cs">
+      <DependentUpon>202210261114499_Agriculture_test.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209121210185_Agriculture_RawMaterial.cs" />
-    <Compile Include="AgricultureContextMigrations\202209121210185_Agriculture_RawMaterial.Designer.cs">
-      <DependentUpon>202209121210185_Agriculture_RawMaterial.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202210270701388_upreturn.cs" />
+    <Compile Include="AgricultureContextMigrations\202210270701388_upreturn.Designer.cs">
+      <DependentUpon>202210270701388_upreturn.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209121335506_Agriculture_null.cs" />
-    <Compile Include="AgricultureContextMigrations\202209121335506_Agriculture_null.Designer.cs">
-      <DependentUpon>202209121335506_Agriculture_null.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202210270953504_Agriculture_RequistionRawMaterialInfoandDetails.cs" />
+    <Compile Include="AgricultureContextMigrations\202210270953504_Agriculture_RequistionRawMaterialInfoandDetails.Designer.cs">
+      <DependentUpon>202210270953504_Agriculture_RequistionRawMaterialInfoandDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209130846339_Agriculture_entryUseridNull.cs" />
-    <Compile Include="AgricultureContextMigrations\202209130846339_Agriculture_entryUseridNull.Designer.cs">
-      <DependentUpon>202209130846339_Agriculture_entryUseridNull.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202210301046165_Agriculture_MeasurementUpdate.cs" />
+    <Compile Include="AgricultureContextMigrations\202210301046165_Agriculture_MeasurementUpdate.Designer.cs">
+      <DependentUpon>202210301046165_Agriculture_MeasurementUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209131113385_Agriculture_Depo FinishProduct.cs" />
-    <Compile Include="AgricultureContextMigrations\202209131113385_Agriculture_Depo FinishProduct.Designer.cs">
-      <DependentUpon>202209131113385_Agriculture_Depo FinishProduct.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202210310842044_SalesReturn.cs" />
+    <Compile Include="AgricultureContextMigrations\202210310842044_SalesReturn.Designer.cs">
+      <DependentUpon>202210310842044_SalesReturn.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209131127549_Agriculture_Depo FinishProducts.cs" />
-    <Compile Include="AgricultureContextMigrations\202209131127549_Agriculture_Depo FinishProducts.Designer.cs">
-      <DependentUpon>202209131127549_Agriculture_Depo FinishProducts.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211010949504_datedelReturnsale.cs" />
+    <Compile Include="AgricultureContextMigrations\202211010949504_datedelReturnsale.Designer.cs">
+      <DependentUpon>202211010949504_datedelReturnsale.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209140648351_Agriculture_BankSetup.cs" />
-    <Compile Include="AgricultureContextMigrations\202209140648351_Agriculture_BankSetup.Designer.cs">
-      <DependentUpon>202209140648351_Agriculture_BankSetup.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211011106266_msizelReturnsale.cs" />
+    <Compile Include="AgricultureContextMigrations\202211011106266_msizelReturnsale.Designer.cs">
+      <DependentUpon>202211011106266_msizelReturnsale.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209140828412_Agriculture_BankMigration.cs" />
-    <Compile Include="AgricultureContextMigrations\202209140828412_Agriculture_BankMigration.Designer.cs">
-      <DependentUpon>202209140828412_Agriculture_BankMigration.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211011159259_Agriculture_typeinTractblandrequistionInfoIdandTypeinissueStock.cs" />
+    <Compile Include="AgricultureContextMigrations\202211011159259_Agriculture_typeinTractblandrequistionInfoIdandTypeinissueStock.Designer.cs">
+      <DependentUpon>202211011159259_Agriculture_typeinTractblandrequistionInfoIdandTypeinissueStock.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209141009085_Agriculture_BankUpdateAccountNumber.cs" />
-    <Compile Include="AgricultureContextMigrations\202209141009085_Agriculture_BankUpdateAccountNumber.Designer.cs">
-      <DependentUpon>202209141009085_Agriculture_BankUpdateAccountNumber.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211021305586_Agriculture_ProductSalesDetails.cs" />
+    <Compile Include="AgricultureContextMigrations\202211021305586_Agriculture_ProductSalesDetails.Designer.cs">
+      <DependentUpon>202211021305586_Agriculture_ProductSalesDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209141233027_Agriculture_Depo FinishGoodSuppliersseee.cs" />
-    <Compile Include="AgricultureContextMigrations\202209141233027_Agriculture_Depo FinishGoodSuppliersseee.Designer.cs">
-      <DependentUpon>202209141233027_Agriculture_Depo FinishGoodSuppliersseee.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211030457084_Agriculture_SalesProductTableUpdate.cs" />
+    <Compile Include="AgricultureContextMigrations\202211030457084_Agriculture_SalesProductTableUpdate.Designer.cs">
+      <DependentUpon>202211030457084_Agriculture_SalesProductTableUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209141314554_Agriculture_aftermarg.cs" />
-    <Compile Include="AgricultureContextMigrations\202209141314554_Agriculture_aftermarg.Designer.cs">
-      <DependentUpon>202209141314554_Agriculture_aftermarg.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211030832542_Agriculture_CommissionOnProductandHistoryTableAdded.cs" />
+    <Compile Include="AgricultureContextMigrations\202211030832542_Agriculture_CommissionOnProductandHistoryTableAdded.Designer.cs">
+      <DependentUpon>202211030832542_Agriculture_CommissionOnProductandHistoryTableAdded.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209150444247_Agriculture_tblMeasurement.cs" />
-    <Compile Include="AgricultureContextMigrations\202209150444247_Agriculture_tblMeasurement.Designer.cs">
-      <DependentUpon>202209150444247_Agriculture_tblMeasurement.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211070800217_Agri_startDateAndEndDate.cs" />
+    <Compile Include="AgricultureContextMigrations\202211070800217_Agri_startDateAndEndDate.Designer.cs">
+      <DependentUpon>202211070800217_Agri_startDateAndEndDate.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209150906366_Agriculture_RawMaterialSupplier.cs" />
-    <Compile Include="AgricultureContextMigrations\202209150906366_Agriculture_RawMaterialSupplier.Designer.cs">
-      <DependentUpon>202209150906366_Agriculture_RawMaterialSupplier.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211080508279_Agriculture_commissionSalesInfoandDetails.cs" />
+    <Compile Include="AgricultureContextMigrations\202211080508279_Agriculture_commissionSalesInfoandDetails.Designer.cs">
+      <DependentUpon>202211080508279_Agriculture_commissionSalesInfoandDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209180644020_Agriculture_RawMaterialStockInfoandDetail.cs" />
-    <Compile Include="AgricultureContextMigrations\202209180644020_Agriculture_RawMaterialStockInfoandDetail.Designer.cs">
-      <DependentUpon>202209180644020_Agriculture_RawMaterialStockInfoandDetail.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211080526175_Agriculture_BoxQtyInSalesReturnandSalesDetails.cs" />
+    <Compile Include="AgricultureContextMigrations\202211080526175_Agriculture_BoxQtyInSalesReturnandSalesDetails.Designer.cs">
+      <DependentUpon>202211080526175_Agriculture_BoxQtyInSalesReturnandSalesDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209221340490_Agriculture_RawMaterialStockaddExpireDate.cs" />
-    <Compile Include="AgricultureContextMigrations\202209221340490_Agriculture_RawMaterialStockaddExpireDate.Designer.cs">
-      <DependentUpon>202209221340490_Agriculture_RawMaterialStockaddExpireDate.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211080813337_stokistidaddretursale.cs" />
+    <Compile Include="AgricultureContextMigrations\202211080813337_stokistidaddretursale.Designer.cs">
+      <DependentUpon>202211080813337_stokistidaddretursale.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209240456230_Agriculture_nothinTwo.cs" />
-    <Compile Include="AgricultureContextMigrations\202209240456230_Agriculture_nothinTwo.Designer.cs">
-      <DependentUpon>202209240456230_Agriculture_nothinTwo.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211120651072_Agriculture_DepoStockiestchange.cs" />
+    <Compile Include="AgricultureContextMigrations\202211120651072_Agriculture_DepoStockiestchange.Designer.cs">
+      <DependentUpon>202211120651072_Agriculture_DepoStockiestchange.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.cs" />
-    <Compile Include="AgricultureContextMigrations\202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.Designer.cs">
-      <DependentUpon>202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211120654346_Agriculture_DepoMesurementnew.cs" />
+    <Compile Include="AgricultureContextMigrations\202211120654346_Agriculture_DepoMesurementnew.Designer.cs">
+      <DependentUpon>202211120654346_Agriculture_DepoMesurementnew.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209241120599_Agriculture_RawMaterialStockAddSupplierId.cs" />
-    <Compile Include="AgricultureContextMigrations\202209241120599_Agriculture_RawMaterialStockAddSupplierId.Designer.cs">
-      <DependentUpon>202209241120599_Agriculture_RawMaterialStockAddSupplierId.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211121251393_stokiestdomaineditadd.cs" />
+    <Compile Include="AgricultureContextMigrations\202211121251393_stokiestdomaineditadd.Designer.cs">
+      <DependentUpon>202211121251393_stokiestdomaineditadd.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209240824173_Agriculture_tblRawMaterialIssueStockInfo.cs" />
-    <Compile Include="AgricultureContextMigrations\202209240824173_Agriculture_tblRawMaterialIssueStockInfo.Designer.cs">
-      <DependentUpon>202209240824173_Agriculture_tblRawMaterialIssueStockInfo.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211121253026_stokiestdomaineditaddress.cs" />
+    <Compile Include="AgricultureContextMigrations\202211121253026_stokiestdomaineditaddress.Designer.cs">
+      <DependentUpon>202211121253026_stokiestdomaineditaddress.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209241220559_Agriculture_rffgg.cs" />
-    <Compile Include="AgricultureContextMigrations\202209241220559_Agriculture_rffgg.Designer.cs">
-      <DependentUpon>202209241220559_Agriculture_rffgg.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211160701095_issueaddfield.cs" />
+    <Compile Include="AgricultureContextMigrations\202211160701095_issueaddfield.Designer.cs">
+      <DependentUpon>202211160701095_issueaddfield.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209260609487_Agriculture_UpdateTablesdsds.cs" />
-    <Compile Include="AgricultureContextMigrations\202209260609487_Agriculture_UpdateTablesdsds.Designer.cs">
-      <DependentUpon>202209260609487_Agriculture_UpdateTablesdsds.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211160916429_Agriculture_detailsIdsales.cs" />
+    <Compile Include="AgricultureContextMigrations\202211160916429_Agriculture_detailsIdsales.Designer.cs">
+      <DependentUpon>202211160916429_Agriculture_detailsIdsales.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209260625243_Agriculture_updatedd.cs" />
-    <Compile Include="AgricultureContextMigrations\202209260625243_Agriculture_updatedd.Designer.cs">
-      <DependentUpon>202209260625243_Agriculture_updatedd.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211161036145_Agriculture_priceinde.cs" />
+    <Compile Include="AgricultureContextMigrations\202211161036145_Agriculture_priceinde.Designer.cs">
+      <DependentUpon>202211161036145_Agriculture_priceinde.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209260911503_Agriculture_productionfinishGoodInfoandDetailsAdded.cs" />
-    <Compile Include="AgricultureContextMigrations\202209260911503_Agriculture_productionfinishGoodInfoandDetailsAdded.Designer.cs">
-      <DependentUpon>202209260911503_Agriculture_productionfinishGoodInfoandDetailsAdded.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211171033546_Agriculture_stockiestAddField.cs" />
+    <Compile Include="AgricultureContextMigrations\202211171033546_Agriculture_stockiestAddField.Designer.cs">
+      <DependentUpon>202211171033546_Agriculture_stockiestAddField.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209270558481_Agriculture_ReceipeUpdate.cs" />
-    <Compile Include="AgricultureContextMigrations\202209270558481_Agriculture_ReceipeUpdate.Designer.cs">
-      <DependentUpon>202209270558481_Agriculture_ReceipeUpdate.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211200907477_Priceconfiguration.cs" />
+    <Compile Include="AgricultureContextMigrations\202211200907477_Priceconfiguration.Designer.cs">
+      <DependentUpon>202211200907477_Priceconfiguration.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202209270708152_Agriculture_AllUpdate.cs" />
-    <Compile Include="AgricultureContextMigrations\202209270708152_Agriculture_AllUpdate.Designer.cs">
-      <DependentUpon>202209270708152_Agriculture_AllUpdate.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211210730445_Agriculture_SelesStatus.cs" />
+    <Compile Include="AgricultureContextMigrations\202211210730445_Agriculture_SelesStatus.Designer.cs">
+      <DependentUpon>202211210730445_Agriculture_SelesStatus.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202210040445277_Agriculture_ZoneInfoAndDetail.cs" />
-    <Compile Include="AgricultureContextMigrations\202210040445277_Agriculture_ZoneInfoAndDetail.Designer.cs">
-      <DependentUpon>202210040445277_Agriculture_ZoneInfoAndDetail.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211231118500_RMTrack.cs" />
+    <Compile Include="AgricultureContextMigrations\202211231118500_RMTrack.Designer.cs">
+      <DependentUpon>202211231118500_RMTrack.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202210060740375_Agriculture_Zones.cs" />
-    <Compile Include="AgricultureContextMigrations\202210060740375_Agriculture_Zones.Designer.cs">
-      <DependentUpon>202210060740375_Agriculture_Zones.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211260543091_Agriculture_RMPurchaseRMCode.cs" />
+    <Compile Include="AgricultureContextMigrations\202211260543091_Agriculture_RMPurchaseRMCode.Designer.cs">
+      <DependentUpon>202211260543091_Agriculture_RMPurchaseRMCode.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202210061109237_Agriculture_Zonesup.cs" />
-    <Compile Include="AgricultureContextMigrations\202210061109237_Agriculture_Zonesup.Designer.cs">
-      <DependentUpon>202210061109237_Agriculture_Zonesup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AgricultureContextMigrations\202210080630110_Agriculture_rrrtt.cs" />
-    <Compile Include="AgricultureContextMigrations\202210080630110_Agriculture_rrrtt.Designer.cs">
-      <DependentUpon>202210080630110_Agriculture_rrrtt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AgricultureContextMigrations\202210100531575_Agriculture_DivisionInfo.cs" />
-    <Compile Include="AgricultureContextMigrations\202210100531575_Agriculture_DivisionInfo.Designer.cs">
-      <DependentUpon>202210100531575_Agriculture_DivisionInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AgricultureContextMigrations\202210100753534_regionadd.cs" />
-    <Compile Include="AgricultureContextMigrations\202210100753534_regionadd.Designer.cs">
-      <DependentUpon>202210100753534_regionadd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AgricultureContextMigrations\202210100837257_Agriculture_Depo1.cs" />
-    <Compile Include="AgricultureContextMigrations\202210100837257_Agriculture_Depo1.Designer.cs">
-      <DependentUpon>202210100837257_Agriculture_Depo1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AgricultureContextMigrations\202210101220143_Agriculture_rtdgdfgdf.cs" />
-    <Compile Include="AgricultureContextMigrations\202210101220143_Agriculture_rtdgdfgdf.Designer.cs">
-      <DependentUpon>202210101220143_Agriculture_rtdgdfgdf.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AgricultureContextMigrations\202210110558564_hh.cs" />
-    <Compile Include="AgricultureContextMigrations\202210110558564_hh.Designer.cs">
-      <DependentUpon>202210110558564_hh.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AgricultureContextMigrations\202210110624150_Agriculture_Divisiondert.cs" />
-    <Compile Include="AgricultureContextMigrations\202210110624150_Agriculture_Divisiondert.Designer.cs">
-      <DependentUpon>202210110624150_Agriculture_Divisiondert.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AgricultureContextMigrations\202210110725405_Agriculture_Areadddedee.cs" />
-    <Compile Include="AgricultureContextMigrations\202210110725405_Agriculture_Areadddedee.Designer.cs">
-      <DependentUpon>202210110725405_Agriculture_Areadddedee.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202211290634382_ProductionCOst.cs" />
+    <Compile Include="AgricultureContextMigrations\202211290634382_ProductionCOst.Designer.cs">
+      <DependentUpon>202211290634382_ProductionCOst.cs</DependentUpon>
     </Compile>
 <<<<<<< Updated upstream
     <Compile Include="AgricultureContextMigrations\202210120543527_Agriculture_StockiestInfo.cs" />
@@ -242,6 +211,18 @@
     <Compile Include="ControlPanelContextMigrations\202008050953442_ControlPanel_BranchAddress.designer.cs">
       <DependentUpon>202008050953442_ControlPanel_BranchAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="ControlPanelContextMigrations\202210170839090_ControlPanelDbInitializeaddedSomeColumntouserbranch.cs" />
+    <Compile Include="ControlPanelContextMigrations\202210170839090_ControlPanelDbInitializeaddedSomeColumntouserbranch.Designer.cs">
+      <DependentUpon>202210170839090_ControlPanelDbInitializeaddedSomeColumntouserbranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlPanelContextMigrations\202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.cs" />
+    <Compile Include="ControlPanelContextMigrations\202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.Designer.cs">
+      <DependentUpon>202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlPanelContextMigrations\202210220638118_ControlPanel_changelongtostring.cs" />
+    <Compile Include="ControlPanelContextMigrations\202210220638118_ControlPanel_changelongtostring.Designer.cs">
+      <DependentUpon>202210220638118_ControlPanel_changelongtostring.cs</DependentUpon>
+    </Compile>
     <Compile Include="ControlPanelContextMigrations\Configuration.cs" />
     <Compile Include="ControlPanelDAL\ControlPanelDbContext.cs" />
     <Compile Include="ControlPanelDAL\ControlPanelRepository.cs" />
@@ -256,113 +237,89 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209111329214_Agriculture_Depo.resx">
-      <DependentUpon>202209111329214_Agriculture_Depo.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210261114499_Agriculture_test.resx">
+      <DependentUpon>202210261114499_Agriculture_test.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209121210185_Agriculture_RawMaterial.resx">
-      <DependentUpon>202209121210185_Agriculture_RawMaterial.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210270701388_upreturn.resx">
+      <DependentUpon>202210270701388_upreturn.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209121335506_Agriculture_null.resx">
-      <DependentUpon>202209121335506_Agriculture_null.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210270953504_Agriculture_RequistionRawMaterialInfoandDetails.resx">
+      <DependentUpon>202210270953504_Agriculture_RequistionRawMaterialInfoandDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209130846339_Agriculture_entryUseridNull.resx">
-      <DependentUpon>202209130846339_Agriculture_entryUseridNull.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210301046165_Agriculture_MeasurementUpdate.resx">
+      <DependentUpon>202210301046165_Agriculture_MeasurementUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209131113385_Agriculture_Depo FinishProduct.resx">
-      <DependentUpon>202209131113385_Agriculture_Depo FinishProduct.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202210310842044_SalesReturn.resx">
+      <DependentUpon>202210310842044_SalesReturn.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209131127549_Agriculture_Depo FinishProducts.resx">
-      <DependentUpon>202209131127549_Agriculture_Depo FinishProducts.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211010949504_datedelReturnsale.resx">
+      <DependentUpon>202211010949504_datedelReturnsale.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209140648351_Agriculture_BankSetup.resx">
-      <DependentUpon>202209140648351_Agriculture_BankSetup.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211011106266_msizelReturnsale.resx">
+      <DependentUpon>202211011106266_msizelReturnsale.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209140828412_Agriculture_BankMigration.resx">
-      <DependentUpon>202209140828412_Agriculture_BankMigration.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211011159259_Agriculture_typeinTractblandrequistionInfoIdandTypeinissueStock.resx">
+      <DependentUpon>202211011159259_Agriculture_typeinTractblandrequistionInfoIdandTypeinissueStock.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209141009085_Agriculture_BankUpdateAccountNumber.resx">
-      <DependentUpon>202209141009085_Agriculture_BankUpdateAccountNumber.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211021305586_Agriculture_ProductSalesDetails.resx">
+      <DependentUpon>202211021305586_Agriculture_ProductSalesDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209141233027_Agriculture_Depo FinishGoodSuppliersseee.resx">
-      <DependentUpon>202209141233027_Agriculture_Depo FinishGoodSuppliersseee.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211030457084_Agriculture_SalesProductTableUpdate.resx">
+      <DependentUpon>202211030457084_Agriculture_SalesProductTableUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209141314554_Agriculture_aftermarg.resx">
-      <DependentUpon>202209141314554_Agriculture_aftermarg.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211030832542_Agriculture_CommissionOnProductandHistoryTableAdded.resx">
+      <DependentUpon>202211030832542_Agriculture_CommissionOnProductandHistoryTableAdded.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209150444247_Agriculture_tblMeasurement.resx">
-      <DependentUpon>202209150444247_Agriculture_tblMeasurement.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211070800217_Agri_startDateAndEndDate.resx">
+      <DependentUpon>202211070800217_Agri_startDateAndEndDate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209150906366_Agriculture_RawMaterialSupplier.resx">
-      <DependentUpon>202209150906366_Agriculture_RawMaterialSupplier.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211080508279_Agriculture_commissionSalesInfoandDetails.resx">
+      <DependentUpon>202211080508279_Agriculture_commissionSalesInfoandDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209180644020_Agriculture_RawMaterialStockInfoandDetail.resx">
-      <DependentUpon>202209180644020_Agriculture_RawMaterialStockInfoandDetail.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211080526175_Agriculture_BoxQtyInSalesReturnandSalesDetails.resx">
+      <DependentUpon>202211080526175_Agriculture_BoxQtyInSalesReturnandSalesDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209221340490_Agriculture_RawMaterialStockaddExpireDate.resx">
-      <DependentUpon>202209221340490_Agriculture_RawMaterialStockaddExpireDate.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211080813337_stokistidaddretursale.resx">
+      <DependentUpon>202211080813337_stokistidaddretursale.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209240456230_Agriculture_nothinTwo.resx">
-      <DependentUpon>202209240456230_Agriculture_nothinTwo.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211120651072_Agriculture_DepoStockiestchange.resx">
+      <DependentUpon>202211120651072_Agriculture_DepoStockiestchange.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.resx">
-      <DependentUpon>202209240815192_Agriculture_RawMaterialStocDetailkExpireDate.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211120654346_Agriculture_DepoMesurementnew.resx">
+      <DependentUpon>202211120654346_Agriculture_DepoMesurementnew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209241120599_Agriculture_RawMaterialStockAddSupplierId.resx">
-      <DependentUpon>202209241120599_Agriculture_RawMaterialStockAddSupplierId.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211121251393_stokiestdomaineditadd.resx">
+      <DependentUpon>202211121251393_stokiestdomaineditadd.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209240824173_Agriculture_tblRawMaterialIssueStockInfo.resx">
-      <DependentUpon>202209240824173_Agriculture_tblRawMaterialIssueStockInfo.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211121253026_stokiestdomaineditaddress.resx">
+      <DependentUpon>202211121253026_stokiestdomaineditaddress.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209241220559_Agriculture_rffgg.resx">
-      <DependentUpon>202209241220559_Agriculture_rffgg.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211160701095_issueaddfield.resx">
+      <DependentUpon>202211160701095_issueaddfield.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209260609487_Agriculture_UpdateTablesdsds.resx">
-      <DependentUpon>202209260609487_Agriculture_UpdateTablesdsds.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211160916429_Agriculture_detailsIdsales.resx">
+      <DependentUpon>202211160916429_Agriculture_detailsIdsales.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209260625243_Agriculture_updatedd.resx">
-      <DependentUpon>202209260625243_Agriculture_updatedd.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211161036145_Agriculture_priceinde.resx">
+      <DependentUpon>202211161036145_Agriculture_priceinde.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209260911503_Agriculture_productionfinishGoodInfoandDetailsAdded.resx">
-      <DependentUpon>202209260911503_Agriculture_productionfinishGoodInfoandDetailsAdded.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211171033546_Agriculture_stockiestAddField.resx">
+      <DependentUpon>202211171033546_Agriculture_stockiestAddField.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209270558481_Agriculture_ReceipeUpdate.resx">
-      <DependentUpon>202209270558481_Agriculture_ReceipeUpdate.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211200907477_Priceconfiguration.resx">
+      <DependentUpon>202211200907477_Priceconfiguration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202209270708152_Agriculture_AllUpdate.resx">
-      <DependentUpon>202209270708152_Agriculture_AllUpdate.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211210730445_Agriculture_SelesStatus.resx">
+      <DependentUpon>202211210730445_Agriculture_SelesStatus.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210040445277_Agriculture_ZoneInfoAndDetail.resx">
-      <DependentUpon>202210040445277_Agriculture_ZoneInfoAndDetail.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211231118500_RMTrack.resx">
+      <DependentUpon>202211231118500_RMTrack.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210060740375_Agriculture_Zones.resx">
-      <DependentUpon>202210060740375_Agriculture_Zones.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211260543091_Agriculture_RMPurchaseRMCode.resx">
+      <DependentUpon>202211260543091_Agriculture_RMPurchaseRMCode.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210061109237_Agriculture_Zonesup.resx">
-      <DependentUpon>202210061109237_Agriculture_Zonesup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210080630110_Agriculture_rrrtt.resx">
-      <DependentUpon>202210080630110_Agriculture_rrrtt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210100531575_Agriculture_DivisionInfo.resx">
-      <DependentUpon>202210100531575_Agriculture_DivisionInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210100753534_regionadd.resx">
-      <DependentUpon>202210100753534_regionadd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210100837257_Agriculture_Depo1.resx">
-      <DependentUpon>202210100837257_Agriculture_Depo1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210101220143_Agriculture_rtdgdfgdf.resx">
-      <DependentUpon>202210101220143_Agriculture_rtdgdfgdf.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210110558564_hh.resx">
-      <DependentUpon>202210110558564_hh.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210110624150_Agriculture_Divisiondert.resx">
-      <DependentUpon>202210110624150_Agriculture_Divisiondert.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202210110725405_Agriculture_Areadddedee.resx">
-      <DependentUpon>202210110725405_Agriculture_Areadddedee.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202211290634382_ProductionCOst.resx">
+      <DependentUpon>202211290634382_ProductionCOst.cs</DependentUpon>
     </EmbeddedResource>
 <<<<<<< Updated upstream
     <EmbeddedResource Include="AgricultureContextMigrations\202210120543527_Agriculture_StockiestInfo.resx">
@@ -377,6 +334,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202008050953442_ControlPanel_BranchAddress.resx">
       <DependentUpon>202008050953442_ControlPanel_BranchAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlPanelContextMigrations\202210170839090_ControlPanelDbInitializeaddedSomeColumntouserbranch.resx">
+      <DependentUpon>202210170839090_ControlPanelDbInitializeaddedSomeColumntouserbranch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlPanelContextMigrations\202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.resx">
+      <DependentUpon>202210170841323_ControlPanelDbInitializeaddedSomeColumntouserbranchandnullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlPanelContextMigrations\202210220638118_ControlPanel_changelongtostring.resx">
+      <DependentUpon>202210220638118_ControlPanel_changelongtostring.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

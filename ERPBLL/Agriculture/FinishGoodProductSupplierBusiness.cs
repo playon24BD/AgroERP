@@ -37,7 +37,7 @@ namespace ERPBLL.Agriculture
             {
                 FinishGoodSupplier finishGoodProductSupplierInfo = new FinishGoodSupplier()
                 {
-                    OrganizationId = finishGoodProductSupplier.OrganizationId,
+                    OrganizationId = orgId,
                     FinishGoodSupplierName = finishGoodProductSupplier.FinishGoodSupplierName,
                     MobileNumber = finishGoodProductSupplier.MobileNumber,
                     Address = finishGoodProductSupplier.Address,
@@ -56,10 +56,10 @@ namespace ERPBLL.Agriculture
                 finishGoodProductSupplierInfo.FinishGoodSupplierName = finishGoodProductSupplier.FinishGoodSupplierName;
                 finishGoodProductSupplierInfo.MobileNumber = finishGoodProductSupplier.MobileNumber;
                 finishGoodProductSupplierInfo.Address = finishGoodProductSupplier.Address;
-                finishGoodProductSupplierInfo.OrganizationId = finishGoodProductSupplier.OrganizationId;
+                finishGoodProductSupplierInfo.OrganizationId = orgId;
                 finishGoodProductSupplierInfo.Status = finishGoodProductSupplier.Status;
-                finishGoodProductSupplierInfo.UpdateDate = finishGoodProductSupplier.UpdateDate;
-                finishGoodProductSupplierInfo.UpdateUserId = finishGoodProductSupplier.UpdateUserId;
+                finishGoodProductSupplierInfo.UpdateDate = DateTime.Now;
+                finishGoodProductSupplierInfo.UpdateUserId = userId;
                 _finishGoodProductSupplierRepository.Update(finishGoodProductSupplierInfo);
             }
             IsSuccess = _finishGoodProductSupplierRepository.Save();

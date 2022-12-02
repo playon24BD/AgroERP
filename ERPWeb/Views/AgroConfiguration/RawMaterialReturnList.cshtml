@@ -1,0 +1,233 @@
+﻿@{
+    ViewBag.Title = "RawMaterialReturnList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+
+<div class="row"style="margin-top:-10px">
+    <div class="col-md-12">
+
+
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-two-RawMaterialReturnList" role="tabpanel" aria-labelledby="custom-tabs-two-RawMaterialReturnList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card card-navy">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    List Of Raw Material Return
+                                                </h5>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-top:-15px">
+                                <div class="card card-gray-dark">
+                                    <div class="card-header">
+                                        <div class="row ">
+                                            <div class="col-md-2 float-right">
+                                                <h5 class="text-left">Search By</h5>
+                                            </div>
+
+                                            <div class="col-md-3 ">
+                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-md-12" id="dataContainer">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="PaymentDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary">
+                <h4 id="modalHeading" class="modal-title">Return Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+            <div class="modal-footer btn-default">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="Accept"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextZone">Appreved</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts{
+
+
+    <script type="text/javascript">
+
+
+        var searchByAny = $("#searchByAny");
+
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            LoadDataTable()
+        })
+
+
+
+        function LoadDataInitializer() {
+            LoadDataTable();
+        }
+
+        searchByAny.keyup(function () {
+            LoadDataTable()
+        })
+
+        function LoadDataTable() {
+            debugger;
+
+            var data = { flag: "View", name: $.trim(searchByAny.val()) };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/RawMaterialReturnList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+            //pageNo = 1;
+        }
+
+
+
+        $(document).on('click', 'a.data-edit-item-Return', function (e) {
+            e.preventDefault();
+            debugger;
+            $("#dataContainer2").empty();
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+            if (true) {
+                var data = { flag: "Detail", id: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/RawMaterialReturnList', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res);
+                        $("#PaymentDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+
+
+
+        //update
+
+
+        $("#Accept").click(function (e) {
+            debugger
+            e.preventDefault();
+            if (true) {
+
+                        debugger;
+
+                        var details = [];
+                        details.length = 0;
+
+                $.each($("#tblReturnItems tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+                                ReturnRawMaterialId: tds.eq(3).html()
+                            });
+                        })
+
+
+                        console.log(details);
+                        var data = JSON.stringify({ details: details });
+                       
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/AcceptRawMaterialReturnInfo', data , getToken())).then(function (res, status)
+                {
+                    debugger;
+
+                    if (res.IsSuccess === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                    var ReturnRawMaterialId = res.File;
+                        window.open("/AgroConfiguration/GetRawMaterialReturnReportApproved?ReturnRawMaterialId=" + ReturnRawMaterialId, "_blank");
+                               
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("RawMaterialReturnList")');
+                                }, 500);
+                              
+                            }
+
+
+                            @*if (res === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                   
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("RawMaterialReturnList")');
+                                }, 1000);
+                               
+                            }*@
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+                function redirectPage(page) {
+                    window.location.replace(page);
+                }
+            }
+        })
+
+    </script>
+
+}

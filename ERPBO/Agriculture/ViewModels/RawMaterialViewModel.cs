@@ -9,6 +9,7 @@ namespace ERPBO.Agriculture.ViewModels
 {
     public class RawMaterialViewModel
     {
+        //public long ReturnRawMaterialId { get; set; }
         public long RawMaterialId { get; set; }
         public long OrganizationId { get; set; }
         public string OrganizationName { get; set; }
@@ -21,5 +22,10 @@ namespace ERPBO.Agriculture.ViewModels
         public long DepotId { get; set; }
         public string DepotName { get; set; }
         public DateTime? ExpireDate { get; set; }
+
+        public string Status { get; set; }
+        public string UserName { get; set; }
+        public long UnitId { get; set; }
+        public string UnitName { get; set; }
     }
 }

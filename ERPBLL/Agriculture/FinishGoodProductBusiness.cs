@@ -36,7 +36,7 @@ namespace ERPBLL.Agriculture
             {
                 FinishGoodProduct finishGoodProductName = new FinishGoodProduct()
                 {
-                    OrganizationId = finishGoodProduct.OrganizationId,
+                    OrganizationId = orgId,
                     FinishGoodProductName = finishGoodProduct.FinishGoodProductName,
                     RoleId = finishGoodProduct.RoleId,
                     EntryDate = DateTime.Now,
@@ -51,10 +51,10 @@ namespace ERPBLL.Agriculture
                 FinishGoodProduct finishGoodProductName = new FinishGoodProduct();
                 finishGoodProductName = GetFinishGoodProductById(finishGoodProduct.FinishGoodProductId, orgId);
                 finishGoodProductName.FinishGoodProductName = finishGoodProduct.FinishGoodProductName;
-                finishGoodProductName.OrganizationId = finishGoodProduct.OrganizationId;
+                finishGoodProductName.OrganizationId = orgId;
                 finishGoodProductName.Status = finishGoodProduct.Status;
-                finishGoodProductName.UpdateDate = finishGoodProduct.UpdateDate;
-                finishGoodProductName.UpdateUser = finishGoodProduct.UpdateUserId;
+                finishGoodProductName.UpdateDate = DateTime.Now;
+                finishGoodProductName.UpdateUser = userId;
                 _finishGoodProductRepository.Update(finishGoodProductName);
             }
             IsSuccess = _finishGoodProductRepository.Save();

@@ -1,85 +1,66 @@
 ﻿
 @{
     ViewBag.Title = "GetRawMaterial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-12 text-center">
-        <div class="card card-gray shadow">
-            <div class="card-header">
-                <h4>Raw Material</h4>
 
-            </div>
 
-        </div>
-
-    </div>
-
-</div>
-<div class="row">
+<div class="row" style="margin-top:-10px">
     <div class="col-md-12">
-        <div class="card shadow">
-            <div class="card-header">
-                <div class="row tex-sm">
-                    <div class="col-md-3">
-                        <h4>Search by:</h4>
 
-                    </div>
-                    <div class="col-md-3">
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header">
+                        <div class="row text-sm">
+                            <div class="col-md-3">
+                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Search by Material--", new { @class = "form-control ctrl-changed select2 setect2-danger" })
 
-                        @Html.DropDownList("ddlDepotNameforSearch", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--Search by Depot--", new { @class = "form-control ctrl-changed select2 select2-danger ctrl-changed" })
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Raw Material Setup
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-warning btn-flat btn-sm float-right" id="btnAdd"><i class="fa fa-plus"></i>Add New Metarial</button>
 
-                    </div>
-                    <div class="col-md-3">
-                        @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Search by Material--", new { @class = "form-control ctrl-changed select2 setect2-danger" })
-
-                    </div>
-                    @*<div class="col-md-3">
-
-                        </div>*@
-
-                    <div class="col-md-3 text-right">
-                        <button type="button" class="btn btn-primary btn-sm" id="btnAdd"><i class="fa-fa-plus">Add New Metarial</i></button>
-
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
 
+
     </div>
-
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card shadow">
-            <div class="card-body">
-                <div class="row text-center" id="dataContainer">
-                    @{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }
-                    @*<h4 class="text-center" style="color:red">Loading</h4>*@
-
-                </div>
+    <div class="col-md-12" style="margin-top:-10px">
+        <div class="card py-2">
+            @*<div class="card-body">*@
+            <div class="col-md-12" id="dataContainer">
+                @{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }
             </div>
-
+            @*</div>*@
         </div>
-
     </div>
-
 </div>
+
+
+
 
 
 <div class="modal" id="rawmetarialModal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header alert-secondary">
+            <div class="modal-header bg-gradient-gray-dark">
                 <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <form id="formRawMetarial">
                     <input type="hidden" id="hdmaterialId" />
-                    <div class="col-md-12">
+                    <div class="col-md-12 hide">
                         <label class="control-label font-weight-bold">Organization</label>
 
                         @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganization, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
@@ -87,15 +68,9 @@
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
 
                     </div>
-                  
-                        <div class="col-md-12">
 
-                            <label class="control-label font-weight-bold">Depot Name</label>
-                            @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "Select Depot Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+               
 
-                            <span class="error hide required-ddlDepotName font-weight-bold">Depot Name is Required</span>
-                        </div>
-                   
                     <div class="col-md-12">
                         <label class="control-label font-weight-bold">Raw Material Name</label>
                         <input type="text" id="rawMaterialName" class="form-control form-control-sm" />
@@ -103,22 +78,29 @@
 
 
                     </div>
-                    @*<div class="form-row">
-                            <label class="control-label font-weight-bold">Expiry Date</label>
-                            <input type="text" id="expairDate" class="form-control form-control-sm datepicker ctr-changed" />
-                            <span class="error hide required-expairDate"> Date is Required</span>
-                        </div>*@
+                   
+                    <input type="hidden" id="hdunitId" />
                     <div class="col-md-12">
-                        <label class="control-label font-weight-bold" for="remarks">Remarks</label>
-                        <input type="text" id="remarks" class="form-control form-control-sm" />
+                        <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
+                        @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
+                        <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="ddlStatus" class="control-label">Status</label>
+                        <select class="form-control form-control-sm" id="ddlStatus">
+                            <option selected>--Select Status--</option>
+                            <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
+                        </select>
                     </div>
 
                 </form>
 
 
             </div>
-            <div class="modal-footer btn-light">
+            <div class="modal-footer bg-gradient-gray-dark">
                 <div class="col-md-6">
                     <div id="msg1" class="alert alert-success hide float-left">
                         Data has been Successfully Saved
@@ -127,8 +109,8 @@
                         Data has been faild to Save
                     </div>
                 </div>
-                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
-                <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
+                <button id="btnCancel" type="button" class="btn btn-sm btn-outline-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
+                <button type="submit" id="btnSave" class="btn btn-sm btn-outline-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
             </div>
         </div>
     </div>
@@ -137,13 +119,16 @@
 
     <script type="text/javascript">
         var hdmaterialId = $("#hdmaterialId");
-        var ddlDepotName = $("#ddlDepotName");
-        var ddlOrganization = $("#ddlOrganization");
+        var hdunitId = $("#hdunitId");
+        //var ddlDepotName = $("#ddlDepotName");
+       // var ddlOrganization = $("#ddlOrganization");
         //var expairDate = $("#expairDate");
         var remarks = $("#remarks");
         var rawMaterialName = $("#rawMaterialName");
         var ddlRawMaterial = $("#ddlRawMaterial");
-        var ddlDepotNameforSearch = $("#ddlDepotNameforSearch");
+       // var ddlDepotNameforSearch = $("#ddlDepotNameforSearch");
+        var ddlStatus = $("#ddlStatus");
+        var ddlUnit = $("#ddlUnit");
 
 
 
@@ -170,14 +155,16 @@
 
 
         function OpenModal() {
+
             $("#spanModalHead").text("Add New Raw Material");
+            $("#spanSaveText").text('Save');
             $("#rawmetarialModal").modal("show");
             $(".error").addClass("hide");
 
 
         }
         $("#btnAdd").click(function (e) {
-
+            
             e.preventDefault();
 
             ClearCtrl();
@@ -185,18 +172,14 @@
 
 
         })
-        ddlDepotNameforSearch.change(function () {
 
-            loadRawMaterial();
-
-        })
         ddlRawMaterial.change(function () {
             loadRawMaterial();
 
         })
 
         function loadRawMaterial() {
-            data = { flag: 'Search', depotId: TryParseInt(ddlDepotNameforSearch.val(), 0), rawmaterialName: ddlRawMaterial.val() };
+            data = { flag: 'Search',rawmaterialName: ddlRawMaterial.val() };
             $.when(getReqWithData("html", 'Get', '/AgroConfiguration/GetRawMaterial', data)).then(function (res, status) {
                 if (status == "success") {
                     $("#dataContainer").fadeOut("500", function () {
@@ -216,31 +199,23 @@
         }
 
         $("#btnSave").click(function (e) {
-
+            var ee = ddlUnit.val();
+            console.log(ee);
             e.preventDefault();
-            var data = { organizationId: TryParseInt(ddlOrganization.val(), 0), depotId: TryParseInt(ddlDepotName.val(), 0), RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val() }
+            debugger;
+            var data = { RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val(), Status: ddlStatus.val(), UnitId: TryParseInt(ddlUnit.val(), 0) }
             if (formValidation() == true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
                     //console.log('respons' + JSON.parse( res));
                     console.log(status);
                     if (res == true) {
                         message("#msg1", "#rawmetarialModal");
-
-
-
-
                     }
                     else {
                         message("#msg2");
                     }
 
                 })
-
-
-
-
-
-
 
             }
 
@@ -249,7 +224,7 @@
         })
 
         $(document).on("click", "a.data-edit-item-rawMaterialId", function (e) {
-
+            debugger;
             e.preventDefault()
 
 
@@ -263,15 +238,22 @@
             var td5 = row.find('td:eq(5)').html();
             //var td6 = row.find('td:eq(6)').html();
             var td8 = row.find('td:eq(6)').html();
+            var td9 = row.find('td:eq(7)').html();
 
-            rawMaterialName.val(td5);
-            remarks.val('');
+            rawMaterialName.val(td3);
+            ddlUnit.val(td9);
+            ddlUnit.trigger("change");
+            ddlStatus.val(td5);
+            ddlStatus.trigger("change");
+            
             //expairDate.val(td6);
-            ddlOrganization.val(td8);
-            ddlOrganization.trigger("change");
+            //ddlOrganization.val(td8);
+            //ddlOrganization.trigger("change");
 
-            ddlDepotName.val(td2);
-            ddlDepotName.trigger("change");
+            //ddlDepotName.val(td2);
+            //ddlDepotName.trigger("change");
+
+            //ddlStatus.val(td6);
 
             hdmaterialId.val(td1);
 
@@ -285,14 +267,14 @@
         function formValidation() {
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlOrganization.val()) == 0) {
-                $('.required-ddlOrganization').removeClass("hide");
-                Isvalid = false;
-            }
-            if ($.trim(ddlDepotName.val()) == 0) {
-                $('.required-ddlDepotName').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlOrganization.val()) == 0) {
+            //    $('.required-ddlOrganization').removeClass("hide");
+            //    Isvalid = false;
+            //}
+            //if ($.trim(ddlDepotName.val()) == 0) {
+            //    $('.required-ddlDepotName').removeClass("hide");
+            //    Isvalid = false;
+            //}
             if ($.trim(rawMaterialName.val()) == "") {
                 $('.required-raqMaterialName').removeClass("hide");
                 Isvalid = false;
@@ -306,10 +288,13 @@
         }
         function ClearCtrl() {
             rawMaterialName.val("");
-            remarks.val('');
+            ddlUnit.val("");
+            ddlStatus.val("");
+            ddlUnit.trigger("change");
+            //remarks.val('');
             //expairDate.val('');
-            ddlOrganization.val('');
-            ddlDepotName.val('');
+            //ddlOrganization.val('');
+            //ddlDepotName.val('');
             hdmaterialId.val('0');
 
         }

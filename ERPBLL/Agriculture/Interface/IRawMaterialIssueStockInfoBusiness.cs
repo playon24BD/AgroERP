@@ -34,6 +34,6 @@ namespace ERPBLL.Agriculture.Interface
 
         bool DeleteRawMaterialIssueStock(long id, long userId, long orgId);
         IEnumerable<RawMaterialIssueStockInfoDTO> RawMaterialStockIssueMinQty(string RawMaterialIdList, long orgId);
-
+        bool UpdateRawMaterialIssueStock(MRawMaterialIssueStockInfoDTO mRawMaterialIssueStockInfoDTO, long userId);
     }
 }

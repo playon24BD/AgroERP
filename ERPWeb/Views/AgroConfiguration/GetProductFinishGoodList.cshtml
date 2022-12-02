@@ -1,20 +1,23 @@
-﻿
+﻿@{
+    ViewBag.Title = "GetProductFinishGoodList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<div class="row">
+<div class="row"  style="margin-top:-5px">
     <div class="col-md-12">
-        <div class="card  shadow card card-primary card-outline card-tabs" style="margin-top:-20px">
-            <div class="card-header p-0 pt-1 border-bottom-0">
+        <div class="card  shadow card card-outline card-tabs" style="margin-top:-20px">
+        
 
-                <ul class="nav nav-tabs nav-pills" id="custom-tabs-two-tab" role="tablist">
+                <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-two-producFinishGoodList-tab" data-toggle="pill" href="#custom-tabs-two-producFinishGoodList" role="tab" aria-controls="custom-tabs-two-producFinishGoodList" aria-selected="false">FinishGood list</a>
+                        <a class="nav-link active text-white" id="custom-tabs-two-producFinishGoodList-tab" data-toggle="pill" href="#custom-tabs-two-producFinishGoodList" role="tab" aria-controls="custom-tabs-two-producFinishGoodList" aria-selected="false">FinishGood list</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-two-finishGoodProduction-tab" data-toggle="pill" href="#custom-tabs-two-finishGoodProduction" role="tab" aria-controls="custom-tabs-two-finishGoodProduction" aria-selected="false">Finish Good Production</a>
+                        <a class="nav-link text-white" id="custom-tabs-two-finishGoodProduction-tab" data-toggle="pill" href="#custom-tabs-two-finishGoodProduction" role="tab" aria-controls="custom-tabs-two-finishGoodProduction" aria-selected="false">Finish Good Production</a>
                     </li>
                 </ul>
 
-            </div>
+  
 
         </div>
 
@@ -28,30 +31,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style=" margin-top: -30px">
                         <div class="col-md-12">
-                            <div class="card card-navy shadow">
+                            <div class="card card-gray-dark shadow">
                                 <div class="card-header">
-                                    <div class="row text-sm">
+                                    <div class="row justify-content-center">
                                         <div class="col-md-2">
-                                            <h4>Search by:</h4>
+                                            <h5 class="text-center">Search By</h5>
                                         </div>
-                                        <div class="col-md-3 float-right">
-                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
-
-                                        </div>
-                                        <div class="col-7">
-
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control form-control-sm" id="ddlReceipBatchCode1" placeholder="Search ReceipCode" />
+                                        </div>  <div class="col-md-2">
+                                            @Html.DropDownList("ddlProduct1", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                         </div>
 
                                     </div>
+
                                 </div>
+
                             </div>
-
-
                         </div>
-
-                    </div>
+                     </div>
                     <div class="row">
 
                         <div class="col-md-12" style="margin-top:-10px">
@@ -59,7 +59,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
-                                           @{Html.RenderAction("GetProductFinishGoodList", new { @flag = "Initial" });}
+                                            @{Html.RenderAction("GetProductFinishGoodList", new { @flag = "Initial" });}
                                         </div>
                                     </div>
                                 </div>
@@ -68,24 +68,21 @@
                     </div>
                 </div>
                 <div class="tab-pane fade show " id="custom-tabs-two-finishGoodProduction" role="tabpanel" aria-labelledby="custom-tabs-two-finishGoodProduction-tab">
-                    <div class="row">
+                    <div class="row" style=" margin-top: -30px">
                         <div class="col-md-12">
                             <div class="card card-navy">
                                 <div class="card-header" style="text-align: center;">
 
                                     <div class="row">
-                                        <div class="col-md-3">
 
-                                        </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
                                             <h5 class="text-center text-bold">
 
-                                               Finish Good Production
+                                                Finish Good Production
                                             </h5>
                                         </div>
-                                        <div class="col-md-3">
 
-                                        </div>
 
                                     </div>
                                 </div>
@@ -93,43 +90,46 @@
                                     <div class="row">
                                         <input type="hidden" id="hdMeasurementId" />
                                         <input type="hidden" id="hdTargetValue" />
-                                        <div class="col-md-3">
-                                            <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
-                                            <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
-                                                <option value="">Select One</option>
-                                                <option value="9">Agro Farm</option>
-                                            </select>
-                                            <span class="error hide req-ddlOrganiation">Organization is required</span>
-
-                                        </div>
+                                        <input type="hidden" id="hdQuantity" />
+                                        @*<div class="col-md-3">
+            <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
+            <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
+                <option value="">Select One</option>
+                <option value="9">Agro Farm</option>
+            </select>
+            <span class="error hide req-ddlOrganiation">Organization is required</span>
+        </div>*@
                                         <div class="col-md-3">
                                             <label class="control-label" for="ddlProduct">Product</label>
-                                            @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct,"-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                                             <span class="error hide req-ddlProduct">Product Name is Required</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="control-label" for="ddlReceipBatchCode">BatchCode</label>
-                                            @Html.DropDownList("ddlReceipBatchCode",(IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode,"--Select Batch--",new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            <label class="control-label" for="ddlReceipBatchCode">Receip Code</label>
+                                            @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, "--Select Batch--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
-
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label for="qty"> Qty</label>
-                                            <input  type="number" id="qty" name="qty" class="form-control form-control-sm" readonly/>
+                                            <input type="text" id="qty" name="qty" class="form-control form-control-sm" readonly />
                                             <span class="error hide req-qty">Qty Is Required</span>
 
                                         </div>
-                                        <div class="col-md-3">
-                                            <label  for="targetQty" class="control-label"> Target Qty</label>
-                                            <input type="number" id="targetQty" class="form-control form-control-sm"/>
-                                            <span class="error hide req-targetQty"></span>
+                                        <div class="col-md-2 hide" >
+                                            <label for="targetQty" class="control-label"> Target Qty</label>
+                                            <input type="number" id="targetQty" class="form-control form-control-sm" readonly />
+                                            <span class="error hide req-targetQty">Target Qty Is Required</span>
                                         </div>
-
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
+                                            <label for="FinishQty" class="control-label">Finish Qty</label>
+                                            <input type="number" id="FinishQty" class="form-control form-control-sm" />
+                                            <span class="error hide req-FinishQty">Oty Over</span>
+                                        </div>
+                                        <div class="col-md-2">
                                             <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
                                             <div class="clearfix">
-                                                <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolist"><i class="fas fa-plus"></i> &nbsp; ADD TO LIST </button>
+                                                <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -144,18 +144,18 @@
                                             <div class="col-md-12" style="overflow-y:scroll">
                                                 <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblFinishGoodProduction">
                                                     <thead>
-                                                        <tr>
+                                                        @*<tr>
                                                             <th colspan="6">
                                                                 <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
                                                             </th>
-                                                        </tr>
+                                                        </tr>*@
                                                         <tr class="btn-dark">
-                                             
+
                                                             <th>Raw Material</th>
                                                             <th>Per Qty</th>
                                                             <th>Total Production Qty</th>
                                                             <th>Required Qty</th>
-                                          
+
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -178,12 +178,7 @@
 <div class="modal fade" id="ModalProductionFinishGoodDetails" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header alert-secondary">
-                <h4 id="modalHeading" class="modal-title">Raw Material Consume Details</h4>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+
             <div class="modal-body" id="dataContainer2">
 
             </div>
@@ -197,8 +192,16 @@
         var ddlProduct = $("#ddlProduct");
         var qty = $("#qty");
         var targetQty = $("#targetQty");
+        var FinishQty = $("#FinishQty");
         var ddlReceipBatchCode = $("#ddlReceipBatchCode");
         var hdTargetValue = $("#hdTargetValue");
+        var searchBatchCode = $("#searchBatchCode");
+        var ddlProduct1 = $("#ddlProduct1");
+        var ddlReceipBatchCode1 = $("#ddlReceipBatchCode1");
+        var hdQuantity = $("#hdQuantity");
+       
+
+
 
 
         $(document).ready(function () {
@@ -208,26 +211,66 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
-            $("#btnSubmit").hide();
+            $("#addTolist").hide();
+
+            //$("#btnSubmit").hide();
+       
         })
 
-   
+
 
         ddlReceipBatchCode.change(function () {
 
 
-            LoadQuantityData();
+           LoadQuantityData();
             LoadTergetQuantityData();
         })
+
+        ddlReceipBatchCode1.keyup(function () {
+            LoadFinishGoodList()
+        })
+
+        ddlProduct1.change(function () {
+            LoadFinishGoodList()
+        })
+
+        function LoadFinishGoodList() {
+            debugger;
+
+            var data = { flag: "View", productId: TryParseInt(ddlProduct1.val(), 0), ReceipeBatchCode: ddlReceipBatchCode1.val()};
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
 
 
 
         $(document).on('click', 'a.data-item-detail', function (e) {
             e.preventDefault();
             $("#dataContainer2").empty();
-            var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(2).html();
-      
-                var data = { flag: "Detail", finishGoodProductionBatch: finishGoodProductionBatch };
+            debugger;
+          
+            var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(1).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(2).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(3).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(4).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(5).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(6).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(7).html();
+            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(8).html();
+
+            var data = { flag: "Detail", finishGoodProductionBatch: finishGoodProductionBatch };
                 $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
                     console.log(status);
                     if (status === "success") {
@@ -238,34 +281,45 @@
                 }).fail(function (error) {
                     console.log(error);
                 })
-       
+
         })
 
 
         ddlProduct.change(function () {
-            
+
             //debugger;
             clearDropdown("ddlReceipBatchCode");
             if (ddlProduct.val() != "") {
-           
+
                 LoadDropDown('/AgroConfiguration/GetReceipyCodeByProductionId', 'POST', ddlReceipBatchCode, JSON.stringify({ finishGoodProductId: ddlProduct.val() }));
             }
            // $("#ddlRequesition option:not(:first)").remove();
 
-          
+
         })
 
 
 
         function LoadQuantityData() {
             var data = { receipeBatchCode: ddlReceipBatchCode.val() };
-  
+
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
                 debugger;
-                qty.val(res);
-                //targetQty.val();
+                consoleLog(res.replace(/['"]+/g, ''));
+                //console.log(res);
+                console.log(res.quantity)
+                var UnitQty = res.replace(/['"]+/g, '');
+                qty.val(UnitQty);
+
+                var qa = UnitQty.split('(')
+                var qar = qa[0]
+                var fq = qar.replace(/['"]+/g, '');
+                hdQuantity.val(fq);
+      
             });
         }
+
+
         function LoadTergetQuantityData() {
             var data = { receipeBatchCode: ddlReceipBatchCode.val() };
 
@@ -273,58 +327,76 @@
                 debugger;
                 //qty.val(res);
                 targetQty.val(res);
-                hdTargetValue.val(res);
+               // hdTargetValue.val(res);
 
             });
         }
 
         $("#addTolist").click(function (e) {
             e.preventDefault();
-            debugger;
-            var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
-
-            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
+            if (validationAddToList()) {
                 debugger;
-                console.log(res);
-                var sl = 0;
-                material = JSON.parse(res)
-                console.log(material);
-                var len = material.length;
-                console.log("length: " + len);
-                console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
-                console.log(targetQty.val() <= hdTargetValue.val());
-                if (Number(targetQty.val()) <= Number( hdTargetValue.val())) {
+                var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: FinishQty.val() };
+
+                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
+                    debugger;
+                    console.log(res);
+                    var sl = 0;
+                    material = JSON.parse(res)
+                    console.log(material);
+                    var len = material.length;
+                    console.log("length: " + len);
+                    //console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
+                    // console.log(targetQty.val() <= hdTargetValue.val());
+                    if (Number(FinishQty.val()) <= Number(targetQty.val())) {
+
+                        debugger;
+
+                        //console.log(material[0].RawMaterialName);
+                        $.each(material, function (index, value) {
+
+                            var td1 = "<td>" + value.RawMaterialName + "</td>";
+                            var td5 = "<td class='hide'>" + value.RawMaterialId + "</td>";
+                            var td2 = "<td>" + value.FGRRawMaterQty + "</td>";
+                            var td3 = "<td>" + FinishQty.val() + "</td>";
+                            var td4 = "<td>" + (value.FGRRawMaterQty * FinishQty.val()) + "</td>";
+                            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + "</tr>";
+                            $("#tblFinishGoodProduction tbody").append(tr)
+                            $("#btnSubmit").show();
+                            /*$("#addTolist").hide();*/
 
 
-                    //console.log(material[0].RawMaterialName);
-                    $.each(material, function (index, value) {
-
-                        var td1 = "<td>" + value.RawMaterialName + "</td>";
-                        var td5 = "<td class='hide'>" + value.RawMaterialId + "</td>";
-                        var td2 = "<td>" + value.FGRRawMaterQty + "</td>";
-                        var td3 = "<td>" + targetQty.val() + "</td>";
-                        var td4 = "<td>" + (value.FGRRawMaterQty * targetQty.val()) + "</td>";
-                        var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + "</tr>";
-                        $("#tblFinishGoodProduction tbody").append(tr)
-                        $("#btnSubmit").show();
-
-
-                    })
-
-                }
-                else {
-                    alert("Issue Quantity Not Sufficient Please Check Target Quantity");
-                }
+                        })
+                        $("#addTolist").hide();
+                    }
+                    else {
+                        alert("Issue Quantity Not Sufficient Please Check Target Quantity");
+                    }
 
                 });
 
-
+            }
         })
 
+        function validationAddToList() {
+            debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (TryParseInt(targetQty.val(), 0) <= 0) {
+                $(".req-targetQty").removeClass('hide');
+                isValid = false;
+            }
+
+
+            return isValid;
+        }
+
         $("#btnSubmit").click(function (e) {
+            debugger;   
             e.preventDefault();
             var data = {};
-            var finishGoodProduction = { organizationId: ddlOrganiation.val(), finishGoodProductId: ddlProduct.val(), quanity: qty.val(), targetQuantity: targetQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
+            var finishGoodProduction = { finishGoodProductId: ddlProduct.val(), quanity: TryParseInt(hdQuantity.val(), 0), targetQuantity: FinishQty.val(), receipeBatchCode: ddlReceipBatchCode.val() }
 
             var details = [];
             details.length = 0;
@@ -343,24 +415,61 @@
 
             var data = JSON.stringify({ info: finishGoodProduction, details: details })
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, type.post, "/AgroConfiguration/SaveFinishGoodProduction", data, getToken())).then(function (res, status) {
-                if (status == "success") {
+                
+                            debugger;
+                            if (res.isSucccess === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                var ReceipeBatchCode = res.File;
+                                window.open('/AgroConfiguration/GetFinishGoodProductionReportSave?ReceipeBatchCode='+ReceipeBatchCode,'_blank');
+                                //window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + res.File, '_blank');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetProductFinishGoodList")');
+                                }, 500);
+                              
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                           
+
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+
+
+                @*if (status == "success") {
                     $('.toastrDefaultSuccess').trigger('click');
-                     setTimeout(function () {
+                    setTimeout(function () {
                         redirectPage('@Url.Action("GetProductFinishGoodList")');
                     }, 1000);
 
 
-                }
+                }*@
+               
 
 
-            }).fail(function (error) {
+            //}).fail(function (error) {
 
-                alert(execuStatus.fail);
-            })
+            //    alert(execuStatus.fail);
+            //})
 
         });
-       
-  
+
+
+        FinishQty.keyup(function () {
+            if (Number(FinishQty.val()) > Number( targetQty.val() )){
+
+                $("#addTolist").hide();
+
+            }
+            else {
+                $("#addTolist").show();
+            }
+
+
+        })
 
         function redirectPage(page) {
             window.location.replace(page);

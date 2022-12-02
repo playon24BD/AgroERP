@@ -54,28 +54,28 @@ namespace ERPBLL.Agriculture
                 param += string.Format(@" and rmd.Status='{0}'", Status);
             }
             query = string.Format(@"
-SELECT distinct rmd.RawMaterialId,rm.RawMaterialName,rmd.Unit,rmd.Status,
+SELECT distinct rmd.RawMaterialId,rm.RawMaterialName,rmd.UnitId,rmd.Status,
  
-  CASE WHEN Status = 'StockIn' 
+  CASE WHEN rmd.Status = 'StockIn' 
                      THEN CAST(rmd.ExpireDate as date)
                   ELSE ''
              END  as ExpireDate,
 
- CASE WHEN Status = 'StockIn' 
+ CASE WHEN rmd.Status = 'StockIn' 
                      THEN CAST(rmd.StockDate as date)
                   ELSE ''
              END  as StockDate,
-CASE WHEN Status = 'StockOut' 
+CASE WHEN rmd.Status = 'StockOut' 
 					 THEN CAST(rmd.StockIssueDate as date)
                   ELSE ''
              END  as StockIssueDate,
 
-CASE WHEN Status = 'StockIn' 
+CASE WHEN rmd.Status = 'StockIn' 
                      THEN SUM(Quantity) 
                   ELSE 0
              END  as StockIn,
 
-CASE WHEN Status = 'StockOut' 
+CASE WHEN rmd.Status = 'StockOut' 
                      THEN SUM(Quantity) 
                   ELSE 0
              END  as StockOut
@@ -84,7 +84,7 @@ CASE WHEN Status = 'StockOut'
    
     FROM [Agriculture].dbo.tblRawMaterialStockDetail rmd
 	inner join [Agriculture].dbo.tblRawMaterialInfo rm on   rmd.RawMaterialId=rm.RawMaterialId
-            where 1=1  {0} group by rmd.RawMaterialId,rm.RawMaterialName,rmd.Unit,rmd.StockDate,rmd.Status,rmd.ExpireDate,rmd.StockIssueDate",
+            where 1=1  {0} group by rmd.RawMaterialId,rm.RawMaterialName,rmd.UnitId,rmd.StockDate,rmd.Status,rmd.ExpireDate,rmd.StockIssueDate",
             Utility.ParamChecker(param));
             return query;
         }
@@ -106,7 +106,7 @@ CASE WHEN Status = 'StockOut'
             }
             
             query = string.Format(@"
-SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockDate,
+SELECT distinct rm.RawMaterialName,rmd.UnitId,CONVERT(date,rm.EntryDate) AS StockDate,
 
  
   StockIn = isnull((SELECT sum(wsd.Quantity) FROM [Agriculture].[dbo].[tblRawMaterialStockDetail] wsd where wsd.RawMaterialId=rm.RawMaterialId and Status='StockIn'),0),
@@ -120,12 +120,12 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
    
     FROM [Agriculture].dbo. tblRawMaterialStockInfo rmd
 	INNER join [Agriculture].dbo.tblRawMaterialInfo rm on   rm.RawMaterialId=rmd.RawMaterialId
-            where 1=1  {0} group by rm.EntryDate,rm.RawMaterialId,rm.RawMaterialName,rmd.Unit",
+            where 1=1  {0} group by rm.EntryDate,rm.RawMaterialId,rm.RawMaterialName,rmd.UnitId",
             Utility.ParamChecker(param));
             return query;
         }
 
-        public bool UpdateRawmaterialstockInfo(long id, double UpdateRawMaterialStock, double IssueRawMaterialStockQty, long orgId, string Unit, DateTime? EntryDate, long? EntryUserId)
+        public bool UpdateRawmaterialstockInfo(long id, double UpdateRawMaterialStock, double IssueRawMaterialStockQty, long orgId, long UnitId, DateTime? EntryDate, long? EntryUserId)
         {
             bool IsSuccess = false;
 
@@ -143,7 +143,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
             if (IsSuccess)
             {
 
-                var rawMaterialStockDetailsUpdate = _rawMaterialStockDetail.updateRawmaterialstockdetails(id, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId, Unit, EntryDate, EntryUserId);
+                var rawMaterialStockDetailsUpdate = _rawMaterialStockDetail.updateRawmaterialstockdetails(id, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId, UnitId, EntryDate, EntryUserId);
 
             }
             return IsSuccess;
@@ -175,7 +175,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
                             OrganizationId = orgId,
                             RawMaterialId = item.RawMaterialId,
                             Quantity = item.Quantity,
-                            Unit = item.Unit,
+                            UnitId = item.UnitId,
                             StockDate = DateTime.Now,
                             EntryDate = DateTime.Now,
                             EntryUserId = userId,
@@ -203,7 +203,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
                             RawMaterialId = item.RawMaterialId,
                             OrganizationId = orgId,
                             Quantity = item.Quantity,
-                            Unit = item.Unit,
+                            UnitId = item.UnitId,
                             EntryDate = DateTime.Now,
                             EntryUserId = userId,
                             ExpireDate=item.ExpireDate,
@@ -218,7 +218,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
                             OrganizationId = orgId,
                             RawMaterialId = item.RawMaterialId,
                             Quantity = item.Quantity,
-                            Unit = item.Unit,
+                            UnitId = item.UnitId,
                             StockDate = DateTime.Now,
                             EntryDate = DateTime.Now,
                             EntryUserId = userId,
@@ -244,7 +244,7 @@ SELECT distinct rm.RawMaterialName,rmd.Unit,CONVERT(date,rm.EntryDate) AS StockD
 
                         var RawMaterialStockInfoid = RawMaterialStockInfoIdGet(items.OrganizationId, items.RawMaterialId);
 
-                        isSuccess = _rawMaterialStockDetail.SaverawMaterialStockDetail(items.OrganizationId, items.RawMaterialId,items.RawMaterialSupplierId, items.Quantity, items.Unit, items.StockDate,items.StockIssueDate, items.EntryDate, items.EntryUserId, items.UpdateDate,items.ExpireDate,items.UpdateUserId, items.Status, RawMaterialStockInfoid.RawMaterialStockId);
+                        isSuccess = _rawMaterialStockDetail.SaverawMaterialStockDetail(items.OrganizationId, items.RawMaterialId,items.RawMaterialSupplierId, items.Quantity, items.UnitId, items.StockDate,items.StockIssueDate, items.EntryDate, items.EntryUserId, items.UpdateDate,items.ExpireDate,items.UpdateUserId, items.Status, RawMaterialStockInfoid.RawMaterialStockId);
                     }
 
 

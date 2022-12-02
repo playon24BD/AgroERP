@@ -18,12 +18,16 @@ namespace ERPBO.Agriculture.DomainModels
         public int MasterCarton { get; set; }
         public int InnerBox { get; set; }
         public double PackSize { get; set; }
-        public string Unit { get; set; }
+        public long UnitId { get; set; }
         public long RoleId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public long UpdateUserId { get; set; }
         public DateTime? EntryDate { get; set; }
         public long EntryUserId { get; set; }
         public string Status { get; set; }
+        public double UnitKG { get; set; }
+
+        public long FinishGoodProductId { get; set; }
+
     }
 }

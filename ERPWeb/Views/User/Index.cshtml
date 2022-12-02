@@ -3,10 +3,489 @@
     ViewBag.Title = "Index";
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <h4 class="m-0 text-dark"><i class="fas fa-fire" style="color:#ff7615"></i> Dashboard</h4>
-        <hr />
+
+
+<div class="container mb-5 bg-white" style="margin-top:0px">
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card">
+                <canvas id="lineChart" height="150" width="200"></canvas>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <canvas id="FGChart" height="150" width="200"></canvas>
+            </div>
+
+        </div>
     </div>
+
+
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card">
+                <canvas id="line-chart" width="800" height="450"></canvas>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <canvas id="line-chartpayment" width="800" height="450"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                @*<canvas id="line-chart" width="800" height="450"></canvas>*@
+                <canvas id="MonthlysalesTergetline-chart" width="800" height="350"></canvas>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            
+
+        </div>
+    </div>
+
+
 </div>
 
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        //$("#cw").addClass("ccc2");
+        //initialLoad();
+        //setInterval('refreshPage()', 300000);
+        debugger;
+        RMStockGrap();
+        ProductStockGrap();
+        GetLast30DaysSalesChart();
+        GetLast30DaysPaymentChart();
+        ProductMonthlysalesTerget();
+       // GetLast30DaysSalesChartTest();
+       // GetTotalSRChart();
+    })
+    //function refreshPage() {
+    //    location.reload();
+    //}
+    //var colors = ["#27AE60", "#ffc107", "#8D6E63", "#BA68C8", "#2196F3", "#009688", "#D4E157", "#9E9E9E", "#607D8B", "#CC3333", "#DC7633", "#E91E63", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000"];
+    function GetLast30DaysSalesChart() {
+        debugger;
+
+        var days = '@TempData["days"]';
+        var charts = '@TempData["Sells"]';
+        //Generate30DaysSalesChart(days, charts);
+        Generate30DaysSalesChartTest(days, charts);
+
+    }
+    function GetLast30DaysPaymentChart() {
+        debugger;
+
+        var days1 = '@TempData["days1"]';
+        var charts1 = '@TempData["Sells1"]';
+        //Generate30DaysSalesChart(days, charts);
+        Generate30DaysPaymentChartTest(days1, charts1);
+
+    }
+
+    function Generate30DaysPaymentChartTest(days1, data1) {
+        debugger;
+        var labelsArray1 = new Array();
+        var dataArray1 = new Array();
+        for (var i = 0; i < days1.split(',').length; i++) {
+            labelsArray1.push(days1.split(',')[i]);
+            dataArray1.push(data1.split(',')[i]);
+        }
+        new Chart(document.getElementById("line-chartpayment"), {
+            type: 'line',
+            data: {
+                labels: labelsArray1,
+                datasets: [{
+                    data: dataArray1,
+                    label: "Collection",
+                    borderColor: "#BDB76B",
+                    fill: false
+                }
+                ]
+            },
+
+            options: {
+
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 14
+                    }
+                },
+                //tooltips: { mode: 'index', intersect: false },
+                responsive: true,
+                scales: {
+
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            beginAtZero: true,
+                            //stacked: true,
+                            //autoSkip: false
+                        },
+                        gridLines: {
+                            //display: false,
+                            ////color: '#efefef',
+                            //drawBorder: false,
+                        }
+
+                    }],
+
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            //stepSize: 2000,
+                            beginAtZero: true,
+                            //stacked: true,
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }]
+                },
+
+            }
+        });
+    }
+
+
+    function Generate30DaysSalesChartTest(days, data) {
+        var labelsArray = new Array();
+        var dataArray = new Array();
+        for (var i = 0; i < days.split(',').length; i++) {
+            labelsArray.push(days.split(',')[i]);
+            dataArray.push(data.split(',')[i]);
+        }
+        new Chart(document.getElementById("line-chart"), {
+            type: 'line',
+            data: {
+                labels: labelsArray,
+                datasets: [{
+                    data: dataArray,
+                    label: "Sales",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+                ]
+            },
+            //options: {
+            //    title: {
+            //        display: true,
+            //        text: 'World population per region (in millions)'
+            //    }
+            //}
+            options: {
+
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 14
+                    }
+                },
+                //tooltips: { mode: 'index', intersect: false },
+                responsive: true,
+                scales: {
+
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            beginAtZero: true,
+                            //stacked: true,
+                            //autoSkip: false
+                        },
+                        gridLines: {
+                            //display: false,
+                            ////color: '#efefef',
+                            //drawBorder: false,
+                        }
+
+                    }],
+
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            //stepSize: 2000,
+                            beginAtZero: true,
+                            //stacked: true,
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }]
+                },
+
+            }
+        });
+    }
+
+
+
+
+    function RMStockGrap() {
+        debugger;
+        //var labels = '<%=TempData["platform_family"] %>';
+        var labels = '@TempData["platform_family"]';
+        var datas = '@TempData["CurrentStock"]';
+        var labelsArray = new Array();
+        var dataArray = new Array();
+        for (var i = 0; i < labels.split(',').length; i++) {
+            labelsArray.push(labels.split(',')[i]);
+            dataArray.push(datas.split(',')[i]);
+        }
+        var ctx1 = document.getElementById("lineChart").getContext('2d');
+        var lineChart = new Chart(ctx1, {
+            type: 'bar',
+
+            data: {
+                labels: labelsArray,
+                //labelFontColor: "red",
+                //color:'#3EB9DC',
+                datasets: [{
+                    label: 'Material Stock',
+
+                    //backgroundColor: '#3EB9DC',
+                    backgroundColor: [
+                        "#f990a7",
+                        "#aad2ed",
+                        "#9966FF",
+                        "#99e5e5",
+                        "#f7bd83",
+                        "#A52A2A",
+                        "#DC143C",
+                        "#FFA500 "
+                    ],
+                    data: dataArray
+                }]
+            },
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 14
+                    }
+                },
+                tooltips: { mode: 'index', intersect: false },
+                responsive: true,
+                scales: {
+
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            beginAtZero: true,
+                            //stacked: true,
+                            //autoSkip: false
+                        },
+                         gridLines: {
+                            //display: false,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+
+                    }],
+
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            //stepSize: 2000,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }]
+                },
+
+            }});
+    };
+
+
+    //fgstock
+    function ProductStockGrap () {
+        debugger;
+        //var labels = '<%=TempData["platform_family"] %>';
+        var labels = '@TempData["FG_NAME"]';
+        var datas = '@TempData["CurrentStockF"]';
+        var labelsArray = new Array();
+        var dataArray = new Array();
+        for (var i = 0; i < labels.split(',').length; i++) {
+            labelsArray.push(labels.split(',')[i]);
+            dataArray.push(datas.split(',')[i]);
+        }
+        var ctx1 = document.getElementById("FGChart").getContext('2d');
+        var FGChart = new Chart(ctx1, {
+            type: 'bar',
+
+            data: {
+                labels: labelsArray,
+                //labelFontColor: "red",
+                //color:'#3EB9DC',
+                datasets: [{
+                    label: 'Product Stock',
+
+                    //backgroundColor: '#3EB9DC',
+                    backgroundColor: [
+                        "#FFA500 ",
+                        "#aad2ed",
+                        "#9966FF",
+                        "#99e5e5",
+                        "#f7bd83",
+                        "#A52A2A",
+                        "#DC143C",
+                       /* "#FFA500 "*/
+                    ],
+                    data: dataArray
+                }]
+            },
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 14
+                    }
+                },
+                //tooltips: { mode: 'index', intersect: false },
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            beginAtZero: true,
+                            //stacked: true
+                        },
+                        gridLines: {
+                            //display: false,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }],
+
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            //stepSize: 1,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }],
+
+
+                },
+            }});
+    };
+    function ProductMonthlysalesTerget() {
+        debugger;
+        var labels = '@TempData["Months"]';
+        var datas = '@TempData["MonthlySales"]';
+        var labelsArray = new Array();
+        var dataArray = new Array();
+        for (var i = 0; i < labels.split(',').length; i++) {
+            labelsArray.push(labels.split(',')[i]);
+            dataArray.push(datas.split(',')[i]);
+        }
+        new Chart(document.getElementById("MonthlysalesTergetline-chart"), {
+            type: 'line',
+            data: {
+                labels: labelsArray,
+                datasets: [{
+                    data: dataArray,
+                    label: "Sales",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }, {
+                        data: [86500, 72750, 71890, 22100, 94000, 45000, 160000, 45000, 90000, 80000, 85000],
+                    label: "Terget",
+                    borderColor: "#8e5ea2",
+                    fill: false
+                }
+                ]
+            },
+            //options: {
+            //    title: {
+            //        display: true,
+            //        text: 'World population per region (in millions)'
+            //    }
+            //}
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 14
+                    }
+                },
+                //tooltips: { mode: 'index', intersect: false },
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            beginAtZero: true,
+                            //stacked: true
+                        },
+                        gridLines: {
+                            //display: false,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }],
+
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            //stepSize: 1,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }],
+
+
+                },
+            }
+        });
+
+
+    }
+
+
+</script>

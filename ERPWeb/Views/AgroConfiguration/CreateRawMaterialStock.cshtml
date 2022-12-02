@@ -23,13 +23,11 @@
 
             <div class="card-body text-sm">
                 <div class="row " style="margin-top:-8px;">
-                    <div class="col-md-2">
+                    @*<div class="col-md-2">
                         <label for="ddlOrganizationName" class="control-label">Organization Name</label>
-
                         @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
-                    </div>
+                    </div>*@
 
                     <div class="col-md-2">
                         <label for="ddlRawMaterialSupplierName" class="control-label">Supplier Name</label>
@@ -60,13 +58,14 @@
                     </div>
                     <div class="col-md-2">
                         <label for="ddlUnit" class="control-label">Unit</label>
-                        <select id="ddlUnit" class="form-control form-control-sm">
-                            <option value="">Select Unit</option>
-                            <option value="Kg">Kg</option>
-                            <option value="Gram">Gram</option>
-                            <option value="hg">hg</option>
-                            <option value="dag">dag</option>
-                        </select>
+                        @*<select id="ddlUnit" class="form-control form-control-sm" readonly>
+            <option value="">Select Unit</option>
+            <option value="Kg">Kg</option>
+            <option value="Gram">Gram</option>
+            <option value="hg">hg</option>
+            <option value="dag">dag</option>
+        </select>*@
+                        <input type="text" id="ddlUnit" name="ddlUnit" class="form-control form-control-sm" readonly />
                         <span class="error hide req-unitName">Unit is required</span>
                     </div>
 
@@ -109,12 +108,13 @@
                                     <th style="width:5%">#SL</th>
                                     <th style="width:15%">Supplier Name</th>
                                     <th style="width:15%">Raw Material Name</th>
-                                    <th style="width:10%">Unit</th>
+                                    <th style="width:10%">UnitName</th>
                                     <th style="width:10%">Quantity</th>
                                     <th style="width:10%">ExpireDate</th>
                                     <th style="width:10%">Action</th>
                                     <th class="hide RawMaterialId"></th>
                                     <th class="hide RawMaterialSupplierId"></th>
+                                    <th class="hide UnitId"></th>
 
                                 </tr>
                             </thead>
@@ -199,6 +199,24 @@
             //})
 
         })
+
+        ddlRawMaterialName.change(function () {
+            debugger;
+
+            var data = { RawMaterialId: ddlRawMaterialName.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRawMaterialStockLoadUnitName", data)).then(function (res, status) {
+                // debugger;
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnit.val(unit);
+                //targetQty.val();
+            });
+
+        })
+
+
+
         $(document).on('click', 'div.remove-date', function () {
             if ($(this).hasClass("ExpireDate")) {
                 if (ExpireDate.val() !== '') {
@@ -235,14 +253,16 @@
                 var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
                 var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialSupplierName") + "</td>";
                 var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterialName") + "</td>";
+                    //var td4 = "<td class='text-center'>" + dropDownSelectedText("ddlUnit") + "</td>";
                 var td4 = "<td class='text-center'>" + ddlUnit.val() + "</td>";
                 var td5 = "<td class='text-center text-bold'>" + ddlQuantity.val() + "</td>";
                 var td6 = "<td class='text-center text-bold'>" + ExpireDate.val() + "</td>";
                 var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
                 var td8 = "<td class='hide RawMaterialId'>" + ddlRawMaterialName.val() + "</td>";
                 var td9 = "<td class='hide RawMaterialSupplierId'>" + ddlRawMaterialSupplierName.val() + "</td>";
-                
-                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 +td9 +"</tr>";
+                var td10 = "<td class='hide UnitId'>" + ddlUnit.val() + "</td>";
+
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
 
          
                     $("#tblSingleItems tbody").append(tr);
@@ -311,7 +331,7 @@
             //if (true) {
             //bootbox.confirm("Are you sure you want to Save Database", function (result) {
             //    if (result) {
-            var info = { RawMaterialStockId: 0, OrganizationId: ddlOrganizationName.val(), RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), Unit: ddlUnit.val(), RawMaterialSupplierId: ddlRawMaterialSupplierName.val(),ExpireDate:ExpireDate.val() };
+            var info = { RawMaterialStockId: 0, RawMaterialId: ddlRawMaterialName.val(), Quantity: ddlQuantity.val(), UnitId: TryParseInt(ddlUnit.val(), 0), RawMaterialSupplierId: ddlRawMaterialSupplierName.val(),ExpireDate:ExpireDate.val() };
 
             var details = [];
             details.length = 0;
@@ -323,7 +343,7 @@
                     RawMaterialStockDetailId: 0,
                     RawMaterialId: tds.eq(7).html(),
                     Quantity: tds.eq(4).html(),
-                    Unit: tds.eq(3).html(),
+                    UnitId: tds.eq(3).html(),
                     ExpireDate: tds.eq(5).html(),
                     RawMaterialSupplierId: tds.eq(8).html()
 

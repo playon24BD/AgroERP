@@ -2,13 +2,17 @@
     ViewBag.Title = "CreateZone";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+<div class="row" style="margin-top:-25px;">
     <div class="col-md-12">
-        <div class="card card-gray shadow">
-            <div class="card-header">
+
+
+
+        <div class="card card-navy">
+            <div class="card-header" style="text-align: center;">
+
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="/AgroConfiguration/Zonelist" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                        <a href="/AgroConfiguration/GetStockiestList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
                             <i class="fas fa-arrow-alt-circle-left"></i>
                         </a>
                     </div>
@@ -16,60 +20,57 @@
                         <h5 class="text-center text-bold">Create Zone</h5>
                     </div>
                     <div class="col-md-3">
+                        <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
                     </div>
+                   
                 </div>
             </div>
-
-            <div class="card-body text-sm">
-                <div class="row " style="margin-top:-8px;">
-                    <div class="col-md-2">
-                        <label for="ddlorgname" class="control-label">OrganizationName</label>
-                        @Html.DropDownList("ddlorgname", (IEnumerable<SelectListItem>)ViewBag.ddlorgname, "Select OrgName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                        <span class="error hide required-OrganizationName font-weight-bold">Input OrganizatinName!</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="ddlZoneName" class="control-label">ZoneName</label>
-                        <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
-                        <span class="error hide required-ZoneName font-weight-bold">Input Zone Name!</span>
-                        <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
-                    </div>
-                    
-                    <div class="col-md-1 " style="margin-top:5px;">
-                        <label for="addButton" class="control-label"></label>
-                        <div class="clearfix">
-                            <button type="submit" class="btn btn-outline-primary float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
-                            <thead>
-                                <tr>
-                                    <th colspan="9">
-                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
-                                    </th>
-                                </tr>
-
-                                <tr class="text-center btn-dark">
-                                    <th style="width:5%">#SL</th>
-                                    <th style="width:15%">ORGNAME</th>
-                                    <th style="width:15%">Zone Name</th>
-                                    <th style="width:10%">Action</th>
-                                    @*<th class="hide hdzonetId"></th>*@
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-
-                </div>
-            </div>
-
-
-
         </div>
+
+
+        <div class="card-body text-sm">
+            <div class="row " style="margin-top:-18px;">
+
+                <div class="col-md-2">
+                    <label for="ddlZoneName" class="control-label">ZoneName</label>
+                    <input type="text" id="ddlZoneName" class="form-control form-control-sm" />
+                    <span class="error hide required-ZoneName font-weight-bold">Input Zone Name!</span>
+                    <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
+                </div>
+
+
+
+                <div class="col-md-1">
+                    <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-sm float-left btn-outline-success" id="addButton"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="row" style="margin-top:8px;">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
+                        <thead>
+                            <tr class="text-center btn-dark">
+                                <th style="width:5%">#SL</th>
+                                <th class="hide" style="width:15%">ORGNAME</th>
+                                <th style="width:15%">Zone Name</th>
+                                <th style="width:10%">Action</th>
+                       
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div>
+      
+
+
+
+
     </div>
 
 </div>
@@ -120,7 +121,7 @@
             else {
                 var sl = $("#tblSingleItems tbody tr").length;
                 var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlorgname") + "</td>";
+                var td2 = "<td class='hide'>" + dropDownSelectedText("ddlorgname") + "</td>";
                 var td3 = "<td class='text-center'>" + ddlZoneName.val() + "</td>";               
                 var td4 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
@@ -191,7 +192,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                        redirectPage('@Url.Action("Zonelist")');
+                        redirectPage('@Url.Action("GetStockiestList",new {tab="Zone" })');
                     }, 1000);
                 }
                 else {
@@ -215,10 +216,10 @@
             //debugger;
             Isvalid = true;
             $('.error').addClass("hide");
-            if ($.trim(ddlorgname.val()) == 0) {
-                $('.required-OrganizationName').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlorgname.val()) == 0) {
+            //    $('.required-OrganizationName').removeClass("hide");
+            //    Isvalid = false;
+            //}
             if ($.trim(ddlZoneName.val()) == 0) {
                 $('.required-ZoneName').removeClass("hide");
                 Isvalid = false;

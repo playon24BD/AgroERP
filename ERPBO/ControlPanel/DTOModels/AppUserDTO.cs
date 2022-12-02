@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ERPBO.Agriculture.DTOModels;
+using ERPBO.Agriculture.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -40,5 +42,25 @@ namespace ERPBO.ControlPanel.DTOModels
         public string StateStatusRole { get; set; }
         public string EntryUser { get; set; }
         public string UpdateUser { get; set; }
+
+        public List<string> ZoneId { get; set; }
+        public List<ZoneSetupViewModel> ZoneName { get; set; }
+        public string Zone { get; set; }
+        public string Division { get; set; }
+
+        public List<string> DivisionId { get; set; }
+        public List<DivisionInfoViewModel> DivisionName { get; set; }
+        public List<string> RegionId { get; set; }
+        public string Region { get; set; }
+        public List<RegionSetupViewModel> RegionName { get; set; }
+        public List<string> AreaId { get; set; }
+        public List<AreaSetupViewModel> AreaName { get; set; }
+        public string Area { get; set; }
+        public List<string> TerritoryId { get; set; }
+        public List<TerritorySetupViewModel> TerritoryName { get; set; }
+        public string Territory { get; set; }
+        public List<string> StockiestId { get; set; }
+        public List<StockiestInfoViewModel> StockiestName { get; set; }
+        public string Stockiest { get; set; }
     }
 }

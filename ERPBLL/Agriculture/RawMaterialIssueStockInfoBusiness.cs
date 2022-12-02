@@ -71,7 +71,7 @@ namespace ERPBLL.Agriculture
             rms.RawMaterialId,
             rm.RawMaterialName,
             rms.Quantity,
-            rms.Unit,
+            rms.UnitId,
             rms.OrganizationId
             from [Agriculture].dbo.tblRawMaterialIssueStockInfo rms
             inner join [Agriculture].dbo.tblRawMaterialInfo rm on   rms.RawMaterialId=rm.RawMaterialId
@@ -112,7 +112,7 @@ namespace ERPBLL.Agriculture
                             OrganizationId = orgId,
                             RawMaterialId = item.RawMaterialId,
                             Quantity = item.Quantity,
-                            Unit = item.Unit,
+                            UnitId = item.UnitId,
                             IssueDate = DateTime.Now,
                             EntryDate = DateTime.Now,
                             EntryUserId = userId,
@@ -136,7 +136,7 @@ namespace ERPBLL.Agriculture
                             FinishGoodProductId = 0,
                             RawMaterialId = item.RawMaterialId,
                             Quantity = item.Quantity,
-                            Unit = item.Unit,
+                            UnitId = item.UnitId,
                             EntryDate = DateTime.Now,
                             EntryUserId = userId
                         };
@@ -147,7 +147,7 @@ namespace ERPBLL.Agriculture
                             OrganizationId = orgId,
                             RawMaterialId = item.RawMaterialId,
                             Quantity = item.Quantity,
-                            Unit = item.Unit,
+                            UnitId = item.UnitId,
                             IssueDate = DateTime.Now,
                             EntryDate = DateTime.Now,
                             EntryUserId = userId,
@@ -170,7 +170,7 @@ namespace ERPBLL.Agriculture
                     {
                         var IssueRawMaterialStockInfoid = RawMaterialStockInfoCheckValues(items.RawMaterialId, items.OrganizationId);
 
-                        isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveIssuerawMaterialStockDetail(items.OrganizationId, items.RawMaterialId, items.Quantity, items.Unit, items.IssueDate, items.EntryDate, items.EntryUserId, items.UpdateDate, items.UpdateUserId, items.Status, IssueRawMaterialStockInfoid.RawMaterialIssueStockId);
+                        isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveIssuerawMaterialStockDetail(items.OrganizationId, items.RawMaterialId, items.Quantity, items.UnitId, items.IssueDate, items.EntryDate, items.EntryUserId, items.UpdateDate, items.UpdateUserId, items.Status, IssueRawMaterialStockInfoid.RawMaterialIssueStockId);
 
                         if (isSuccess)
                         {
@@ -178,7 +178,7 @@ namespace ERPBLL.Agriculture
                             var RawMaterialStockQty = RawmaterialvalueCheck.Quantity;
                             double IssueRawMaterialStockQty = items.Quantity;
                             double UpdateRawMaterialStock = RawMaterialStockQty - IssueRawMaterialStockQty;
-                            var rawMaterialStockInfoUpdate = _rawMaterialStockInfo.UpdateRawmaterialstockInfo(RawmaterialvalueCheck.RawMaterialStockId, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId, items.Unit, items.EntryDate, items.EntryUserId);
+                            var rawMaterialStockInfoUpdate = _rawMaterialStockInfo.UpdateRawmaterialstockInfo(RawmaterialvalueCheck.RawMaterialStockId, UpdateRawMaterialStock, IssueRawMaterialStockQty, orgId, items.UnitId, items.EntryDate, items.EntryUserId);
                         }
                     }
 
@@ -238,5 +238,9 @@ namespace ERPBLL.Agriculture
             return isSuccess;
         }
 
+        public bool UpdateRawMaterialIssueStock(MRawMaterialIssueStockInfoDTO mRawMaterialIssueStockInfoDTO, long userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

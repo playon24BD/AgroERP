@@ -61,7 +61,8 @@ namespace ERPBLL.Agriculture
                     details.EntryDate = DateTime.Now;
                     details.OrganizationId = orgId;
                     details.EntryUserId = userId;
-                    details.Status = "Consumed";
+                    //details.Status = "Consumed";
+                    details.Status = "Pending";
                     //finishGoodProductionlist.Add(details);
                     _finishGoodProductionDetailsRepository.Insert(details);
                     IsSuccess = _finishGoodProductionDetailsRepository.Save();

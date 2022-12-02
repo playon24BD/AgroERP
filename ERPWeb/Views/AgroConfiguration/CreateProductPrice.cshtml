@@ -1,0 +1,324 @@
+﻿@{
+    ViewBag.Title = "CreateStockiest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row" style="margin-top:-25px;">
+    <div class="col-md-12">
+
+
+        <div class="card card-navy">
+            <div class="card-header" style="text-align: center;">
+
+                <div class="row" @*style="margin-bottom:-7px"*@>
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/ProductPriceList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">
+                            Product Price Configure
+                        </h5>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="card-body text-sm">
+            <div class="row " style="margin-top:-18px;">
+
+                <div class="col-md-2">
+                    <label for="ddlProductName" class="control-label">Product Name<span style="color:red">*</span></label>
+                    @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "Select Product", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    <span class="error hide required-ddlProductName font-weight-bold">Select Area Name!</span>
+                    <span class="error hide duplicate-ddlProductName font-weight-bold">Already Area Exist!</span>
+                </div>
+
+
+                <div class="col-md-2">
+                    <label for="ddlQtyUnit" class="control-label">UnitQTY<span style="color:red">*</span></label>
+                    @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--UnitQty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    <span class="error hide req-QtyUnit font-weight-bold">Unit Qty is required!</span>
+                </div>
+                <div class="col-md-2">
+                    <label for="ddlRMtotalprice" class="control-label">ProductionCost/PC<span style="color:red">*</span></label>
+                    <input type="number" id="ddlRMtotalprice" name="ddlRMtotalprice" class="form-control form-control-sm" readonly />
+                    <span class="error hide required-ddlRMtotalprice font-weight-bold">Input Product Price!</span>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="ddlprice" class="control-label">Price/PC  <span style="color:red">*</span></label>
+                    <input type="number" id="ddlprice" class="form-control form-control-sm" />
+                    <span class="error hide required-ddlprice font-weight-bold">Input Product Price!</span>
+
+                </div>
+
+                <div class="col-md-1">
+                    <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-sm float-left btn-outline-success" id="addButton"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+
+
+            </div>
+     </div>
+
+        <div class="row" style="margin-top:8px;">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblMargeItems">
+                    <thead>
+
+
+                        <tr class="text-center btn-dark">
+                            <th style="width:5%">#SL</th>
+                            <th class="text-center">Product Name</th>
+                            <th class="text-center" >Details</th>
+                            <th class="text-center">UnitPrice</th>
+                            <th class="text-center">Action</th>
+                            <th class="hide">ProductID</th>
+                            <th class="hide">RecID</th>
+         
+
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var ddlProductName = $("#ddlProductName");
+        var ddlQtyUnit = $("#ddlQtyUnit");
+        var ddlprice = $("#ddlprice");
+        var ddlRMtotalprice = $("#ddlRMtotalprice");
+        var ProductList = [];
+
+
+
+        var StockiestNameList = [];
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+         /*   $("#txtclamount").hide();*/
+        })
+
+        ddlProductName.change(function () {
+
+
+            LoadQtyUnit();
+     
+
+        })
+        function LoadQtyUnit() {
+            clearDropdown("ddlQtyUnit");
+            if (ddlProductName.val() != "") {
+
+                LoadDropDown('/AgroConfiguration/GetReceipyUnitQtyByProductionId', 'POST', ddlQtyUnit, JSON.stringify({ finishGoodProductId: ddlProductName.val() }));
+            }
+
+
+        }
+
+        ddlQtyUnit.change(function () {
+
+            let FGRId = $("#ddlQtyUnit option:selected").val();
+            debugger;
+            var data = { FGRId: TryParseInt(FGRId, 0) };
+            console.log(data);
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetFGproductionCost", data)).then(function (res, status) {
+                debugger;
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var totalreturn = res.replace(/['"]+/g, '');
+                ddlRMtotalprice.val(totalreturn);
+
+
+            })
+        })
+
+
+
+
+
+        $("#addButton").click(function (e) {
+            e.preventDefault();
+
+            debugger;
+
+            if (FormValidations() == true) {
+
+                //if (StockiestNameList.includes(txtStockiestName.val())) {
+                //    toastrErrorAlert("Stockiest Name Already Exist");
+                //}
+         /*       else {*/
+                    //debugger;
+                console.log();
+                var a = $('#ddlprice').val();
+                a = Number(a);
+
+                var b = $('#ddlRMtotalprice').val();
+                b = Number(b);
+                var sum = a + b;
+                console.log(sum);
+
+                    var sl = $("#tblMargeItems tbody tr").length;
+                    var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
+                var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlQtyUnit") + "</td>";
+                var td4 = "<td class='text-center'>" + sum  + "</td>";
+                var td5 = "<td class='hide ddlProductName'>" + ddlProductName.val() + "</td>";
+                 //var td7 = "<td class='text-center DiscountIDCell'>" + txtQuanity.val() * txtPrice.val() / txtDiscount.val() + "</td>";
+                    var td6 = "<td class='hide ddlQtyUnit'>" + ddlQtyUnit.val() + "</td>";
+
+                    var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i>Remove</a></td>";
+
+
+
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + "</tr>";
+
+                    $("#tblMargeItems tbody").append(tr);
+                    ProductList.push(ddlProductName.val());
+              /*  }*/
+
+                clearCtrlstkst();
+            /*    $("#txtclamount").hide();*/
+            }
+
+        })
+
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+            debugger;
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+            var productid = tds.eq(4).html();
+            console.log("productid :" + productid);
+            const mid = ProductList.indexOf(productid);
+            StockiestNameList.splice(mid, 1);
+
+            removeTableRow("#tblMargeItems tbody", index);
+            fnFixTheTbodyRowSerial("#tblMargeItems tbody", index);
+        })
+
+
+
+        $("#saveButton").click(function (e) {
+            debugger;
+        e.preventDefault();
+
+            var details = [];
+            details.length = 0;
+        $.each($("#tblMargeItems tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+
+                    ProductPriceConfigurationId: 0,
+                    FinishGoodProductId: tds.eq(4).html(),
+                    FGRId: tds.eq(5).html(),
+                    ProductPrice: tds.eq(3).html(),
+                    Flag: tds.eq(2).html(),
+     
+
+                });
+            })
+            console.log(details);
+            var data = JSON.stringify({ details: details });
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveProductPrice', data, getToken())).then(function (res, status) {
+                if (res === true) {
+                    debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("ProductPriceList")');
+                    }, 1000);
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+        }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#saveButton");
+        })
+
+
+
+    });
+
+        function FormValidations() {
+            debugger;
+            Isvalid = true;
+            $('.error').addClass("hide");
+
+
+            if ($.trim(ddlProductName.val()) == "") {
+                $('.required-ddlProductName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlQtyUnit.val()) == "") {
+                $('.req-QtyUnit').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlprice.val()) == "") {
+                $('.required-ddlprice').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+
+
+
+        function clearCtrlstkst() {
+            debugger;
+            //ddldivname.val("");
+
+            //ddlRegionName.val("");
+            ddlProductName.val("");
+            ddlProductName.trigger("change");
+            //ddlQtyUnit.val("");
+            //ddlQtyUnit.trigger("change");
+            ddlprice.val("");
+
+
+        }
+
+
+
+
+
+    </script>
+}

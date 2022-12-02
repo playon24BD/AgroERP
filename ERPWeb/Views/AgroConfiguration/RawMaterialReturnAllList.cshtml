@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "RawMaterialReturnAllList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+
+<div class="row" style="margin-top:-10px">
+    <div class="col-md-12">
+
+
+
+        @Html.AntiForgeryToken()
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    List Of Raw Material Return
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+
+                                <a href="/AgroConfiguration/CreateRawMaterialReturnList" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Raw Material Return</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-15px">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <h5 class="text-center">Search By</h5>
+                            </div>
+                            <div class="col-md-2">
+                                @*<label>Raw Material Name</label>*@
+                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+
+                            <div class="col-md-2">
+                                @*<label>Return Type</label>*@
+                                <select class="form-control form-control-sm select2" id="ddlReturnType">
+                                    <option value="" selected>--ReturnType--</option>
+                                    <option value="Good">Good</option>
+                                    <option value="Damage">Damage</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                @*<label>Status</label>*@
+                                <select class="form-control form-control-sm select2" id="ddlStatus">
+                                    <option value="" selected>--Status--</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Approved">Approved</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card ">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@section scripts{
+
+
+    <script type="text/javascript">
+
+
+        var searchByAny = $("#searchByAny");
+        var ddlStatus = $("#ddlStatus");
+        var ddlReturnType = $("#ddlReturnType");
+        var ddlRawmaterialName = $("#ddlRawmaterialName");
+        var ddlRawMaterial = $("#ddlRawMaterial");
+
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            LoadDataTable()
+        })
+
+
+
+        function LoadDataInitializer() {
+            LoadDataTable();
+        }
+
+        //searchByAny.keyup(function () {
+        //    LoadDataTable()
+        //})
+
+        ddlRawmaterialName.change(function () {
+
+            LoadDataTable();
+        })
+        ddlRawMaterial.change(function () {
+            LoadDataTable();
+
+        });
+
+        ddlReturnType.change(function () {
+
+            LoadDataTable();
+        })
+
+        ddlStatus.change(function () {
+
+            LoadDataTable();
+        })
+
+
+        function LoadDataTable() {
+            debugger;
+
+            var data = { flag: "View", rawMaterialId: TryParseInt(ddlRawMaterial.val(), 0), returnType: ddlReturnType.val(), status: ddlStatus.val() };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/RawMaterialReturnAllList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+            //pageNo = 1;
+        }
+
+
+
+
+
+
+
+        //update
+
+
+
+    </script>
+
+}

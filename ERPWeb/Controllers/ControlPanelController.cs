@@ -10,6 +10,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ERPBLL.Agriculture.Interface;
+using ERPBO.Common;
+using ERPBO.Agriculture.ViewModels;
 
 namespace ERPWeb.Controllers
 {
@@ -28,7 +30,23 @@ namespace ERPWeb.Controllers
         private readonly IUserAuthorizationBusiness _userAuthorizationBusiness;
         private readonly IRoleAuthorizationBusiness _roleAuthorizationBusiness;
 
-        public ControlPanelController(IOrganizationBusiness               organizationBusiness,IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness)
+
+        private readonly IStockiestInfo _stockiestInfo;
+        public readonly IDivisionInfo _divisionInfo;
+        public readonly IZone _zone;
+
+        private readonly IZoneSetup _zoneSetup;//e
+        private readonly IRegionSetup _regionSetup;//e
+        private readonly IAreaSetupBusiness _areaSetupBusiness;//e
+        private readonly ITerritorySetup _territorySetup;//e
+        private readonly IDivisionUserBusiness _divisionUserBusiness;
+        private readonly IZoneUserBusiness _zoneUserBusiness;
+        private readonly IRegionUserBusiness _regionUserBusiness;
+        private readonly IAreaUserBusiness _areaUserBusiness;
+        private readonly ITerritoryUserBusiness _territoryUserBusiness;
+        private readonly IStockiestUserBusiness _stockiestUserBusiness;
+
+        public ControlPanelController(IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IBranchBusiness branchBusiness, IRoleBusiness roleBusiness, IAppUserBusiness appUserBusiness, IModuleBusiness moduleBusiness, IManiMenuBusiness maniMenuBusiness, ISubMenuBusiness subMenuBusiness, IOrganizationAuthBusiness organizationAuthBusiness, IUserAuthorizationBusiness userAuthorizationBusiness, IRoleAuthorizationBusiness roleAuthorizationBusiness, IZoneSetup zoneSetup, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IAreaSetupBusiness areaSetupBusiness, ITerritorySetup territorySetup, IStockiestInfo stockiestInfo,IDivisionUserBusiness divisionUserBusiness,IZoneUserBusiness zoneUserBusiness,IRegionUserBusiness regionUserBusiness,IAreaUserBusiness areaUserBusiness,ITerritoryUserBusiness territoryUserBusiness,IStockiestUserBusiness stockiestUserBusiness)
         {
             this._depotSetup = depotSetup;
             this._organizationBusiness = organizationBusiness;
@@ -41,6 +59,18 @@ namespace ERPWeb.Controllers
             this._organizationAuthBusiness = organizationAuthBusiness;
             this._userAuthorizationBusiness = userAuthorizationBusiness;
             this._roleAuthorizationBusiness = roleAuthorizationBusiness;
+            this._zoneSetup = zoneSetup;
+            this._divisionInfo = divisionInfo;
+            this._regionSetup = regionSetup;
+            this._areaSetupBusiness = areaSetupBusiness;
+            this._territorySetup = territorySetup;
+            this._stockiestInfo = stockiestInfo;
+            this._divisionUserBusiness = divisionUserBusiness;
+            this._zoneUserBusiness = zoneUserBusiness;
+            this._regionUserBusiness = regionUserBusiness;
+            this._areaUserBusiness = areaUserBusiness;
+            this._territoryUserBusiness = territoryUserBusiness;
+            this._stockiestUserBusiness = stockiestUserBusiness;
         }
         // GET: ControlPanel
 
@@ -254,6 +284,7 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Select(br => new SelectListItem { Text = br.OrganizationName, Value = br.OrganizationId.ToString() });
                 return View();
             }
+
             else if (!string.IsNullOrEmpty(flag) && flag == "Branch")
             {
 
@@ -292,10 +323,63 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "User")
             {
+                //var div="";
                 ViewBag.OPFor = "System";
-                var data = _appUserBusiness.GetAllAppUsers();
-                IEnumerable<AppUserViewModel> appUserViewModels = data.Select(user => new AppUserViewModel
+
+                //var data = _appUserBusiness.GetAllAppUsers().Select(a=>a.DivisionId).ToList();
+                var data = _appUserBusiness.GetAllAppUsers().ToList();
+                var data2 = string.Join(",", data.Where(x => x != null).Select(x => x.DivisionId));
+                //if (data.con>0)
+                //{
+                //    if(data[0]!==null)
+
+                //}
+                var div = data2.Split(',');
+
+                long divisionId = 0;
+                List<DivisionInfoViewModel> Divisions = new List<DivisionInfoViewModel>();
+                List<DivisionInfoViewModel> DivisionName = new List<DivisionInfoViewModel>();
+         
+                var Division = "";
+
+
+                if (div.Count() > 0)
                 {
+                    foreach (var d in div)
+                    {
+                        if (d != null && d != "0" && d != "")
+                        {
+                            divisionId = Convert.ToInt32(d);
+                            //var   Division = _divisionInfo.GetDivisionInfoById(divisionId, User.OrgId).DivisionName;
+                            //var Division = _divisionInfo.GetDivisionInfoById(divisionId, User.OrgId).DivisionName;
+                         DivisionName = _divisionInfo.GetAllDivisionSetup( User.OrgId).Where(a=>a.DivisionId==divisionId).Select(b=>new DivisionInfoViewModel {
+                                DivisionName=b.DivisionName,
+                                DivisionId=b.DivisionId
+
+                            }).ToList();
+
+                            Divisions.AddRange(DivisionName);
+                        }
+                     
+
+
+
+
+                    }
+
+                }
+
+
+
+                //var data3 = _appUserBusiness.GetAllAppUsers().Select(a=>a.ZoneId);
+                //var data4 = _appUserBusiness.GetAllAppUsers().Select(a=>a.AreaId);
+                //var data5 = _appUserBusiness.GetAllAppUsers().Select(a=>a.RegionId);
+
+                var data1 = _appUserBusiness.GetAllAppUsers();
+
+                IEnumerable<AppUserViewModel> appUserViewModels = data1.Select(user => new AppUserViewModel
+                {
+
                     UserId = user.UserId,
                     EmployeeId = user.EmployeeId,
                     FullName = user.FullName,
@@ -314,7 +398,14 @@ namespace ERPWeb.Controllers
                     RoleId = user.RoleId,
                     RoleName = (_roleBusiness.GetRoleOneById(user.RoleId, user.OrganizationId).RoleName),
                     EntryUser = UserForEachRecord(user.EUserId.Value).UserName,
-                    UpdateUser = !user.UpUserId.HasValue ? "" : UserForEachRecord(user.UpUserId.Value).UserName
+                    UpdateUser = !user.UpUserId.HasValue ? "" : UserForEachRecord(user.UpUserId.Value).UserName,
+                    ZoneName=_zoneUserBusiness.GetAllZone(user.UserId,User.OrgId),
+
+                    DivisionName =_divisionUserBusiness.GetAllDiv(user.UserId,User.OrgId),
+                    RegionName= _regionUserBusiness.GetAllRegion(user.UserId,User.OrgId),
+                    AreaName=_areaUserBusiness.GetAllArea(user.UserId,User.OrgId),
+                    TerritoryName=_territoryUserBusiness.GetAllTerritory(user.UserId,User.OrgId),
+                    StockiestName=_stockiestUserBusiness.GetAllStockiest(user.UserId,User.OrgId),
                 }).OrderBy(user => user.UserId).ToList();
                 return PartialView("_GetUsers", appUserViewModels);
             }
@@ -499,6 +590,8 @@ namespace ERPWeb.Controllers
         }
         #endregion
 
+
+
         #region App Config
         public ActionResult ApplicationConfig(string flag)
         {
@@ -546,6 +639,8 @@ namespace ERPWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "Submenu")
             {
+
+                var subMenuDTOs = _subMenuBusiness.GetAllSubMenu().ToList();
                 IEnumerable<SubMenuDTO> subMenuDTO = _subMenuBusiness.GetAllSubMenu().Select(sub => new SubMenuDTO
                 {
                     SubMenuId = sub.SubMenuId,
@@ -696,6 +791,15 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Select(br => new SelectListItem { Text = br.OrganizationName, Value = br.OrganizationId.ToString() });
                 ViewBag.Id = id;
                 ViewBag.PageHead = id > 0 ? "Update Application User" : "Create Application User";
+
+
+                ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+                ViewBag.ddlDivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+                ViewBag.ddlRegionName = _regionSetup.GetAllRegionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
+                ViewBag.ddlAreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
+                ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
+
+                ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.StockiestName, Value = terr.StockiestId.ToString() }).ToList();
                 return View();
             }
             else
@@ -709,6 +813,63 @@ namespace ERPWeb.Controllers
                 return Json(dto);
             }
         }
+
+        //dropDown
+
+        [HttpPost]
+        public ActionResult GetZone()
+        {
+            var data = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new Dropdown { value = org.ZoneId.ToString(), text = org.ZoneName }).ToList();
+
+
+            return Json(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetDivision()
+        {
+            var data = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new Dropdown { value = org.DivisionId.ToString(), text = org.DivisionName }).ToList();
+
+
+            return Json(data);
+        }
+
+
+        [HttpPost]
+        public ActionResult GetRegion()
+        {
+            var data = _regionSetup.GetAllRegionSetup(User.OrgId).Select(org => new Dropdown { value = org.RegionId.ToString(), text = org.RegionName }).ToList();
+
+
+            return Json(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetArea()
+        {
+            var data = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).Select(org => new Dropdown { value = org.AreaId.ToString(), text = org.AreaName }).ToList();
+
+
+            return Json(data);
+        }
+
+
+        [HttpPost]
+        public ActionResult GetTerritory()
+        {
+            var data = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(org => new Dropdown { value = org.TerritoryId.ToString(), text = org.TerritoryName }).ToList();
+
+            return Json(data);
+        }
+        [HttpPost]
+        public ActionResult GetStockiest()
+        {
+            var data = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(s => new Dropdown { value = s.StockiestId.ToString(), text = s.StockiestName }).ToList();
+
+            return Json(data);
+        }
+
+
 
         public ActionResult CreateClientUser(string flag, long id = 0)
         {
@@ -752,7 +913,7 @@ namespace ERPWeb.Controllers
             }
             return Json(isSuccess);
         }
-
+        // Working Area
         [HttpPost, ValidateJsonAntiForgeryToken]
         public ActionResult SaveApplicationUser(AppUserViewModel appUser, List<UserAuthorizationViewModel> models)
         {
@@ -768,7 +929,10 @@ namespace ERPWeb.Controllers
                 {
                     List<UserAuthorizationDTO> userAuthorizationDTOs = new List<UserAuthorizationDTO>();
                     models.FirstOrDefault().UserId = Convert.ToInt64(appExecuation.text);
+
+
                     AutoMapper.Mapper.Map(models, userAuthorizationDTOs);
+
                     isSuccess = _userAuthorizationBusiness.SaveUserAuthorization(userAuthorizationDTOs, User.UserId, User.OrgId);
                 }
             }
@@ -1056,7 +1220,7 @@ namespace ERPWeb.Controllers
             ///var pre = UserPrivilege("ControlPanel", "SetUserCustomAuthorization");
             //var permission = ((pre.Edit) || (pre.Add));
             //&& permission
-            if (models.Count > 0 )
+            if (models.Count > 0)
             {
                 List<UserAuthorizationDTO> userAuthorizationDTOs = new List<UserAuthorizationDTO>();
                 AutoMapper.Mapper.Map(models, userAuthorizationDTOs);
@@ -1131,7 +1295,7 @@ namespace ERPWeb.Controllers
             bool IsSuccess = false;
             //var pre = UserPrivilege("ControlPanel", "SetUserRoleAuthorization");
             //var permission = ((pre.Edit) || (pre.Add)); && permission
-            if (models.Count > 0 )
+            if (models.Count > 0)
             {
                 List<RoleAuthorizationDTO> roleAuthorizationDTOs = new List<RoleAuthorizationDTO>();
                 AutoMapper.Mapper.Map(models, roleAuthorizationDTOs);

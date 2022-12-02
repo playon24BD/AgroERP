@@ -45,8 +45,8 @@ namespace ERPBLL.Agriculture
                     Email = infoDTO.Email,
                     OrganizationId = orgId,
                     RoleId = infoDTO.RoleId,
-                    UpdateDate = DateTime.Now,
-                    UpdateUserId = infoDTO.UpdateUserId,
+                   //UpdateDate = DateTime.Now,
+                   //UpdateUserId = infoDTO.UpdateUserId,
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
                     Status = infoDTO.Status
@@ -66,9 +66,9 @@ namespace ERPBLL.Agriculture
                 bankSetup.OrganizationId = orgId;
                 bankSetup.RoleId = infoDTO.RoleId;
                 bankSetup.UpdateDate = DateTime.Now;
-                bankSetup.UpdateUserId = infoDTO.UpdateUserId;
-                bankSetup.EntryDate = DateTime.Now;
-                bankSetup.EntryUserId = userId;
+                bankSetup.UpdateUserId = userId;
+                bankSetup.EntryDate = bankSetup.EntryDate;
+                bankSetup.EntryUserId = bankSetup.EntryUserId;
                 bankSetup.Status = infoDTO.Status;
 
             }

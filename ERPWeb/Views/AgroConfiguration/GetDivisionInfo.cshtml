@@ -2,91 +2,78 @@
 @{
     ViewBag.Title = "GetDivisionInfo";
     var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row" style="margin-top:-10px">
     <div class="col-md-12">
-        <div class="card card-primary card-outline card-tabs" style="margin-top:-20px">
 
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-DivisionInfoList-tab" data-toggle="pill" role="tab" aria-selected="true" href="#custom-tabs-DivisionInfoList" aria-controls="custom-tabs-DivisionInfoList">DivisionInfo List</a>
-                    </li>
-                </ul>
-            </div>
 
-            <div class="card-body">
-                <div class="tab-content" id="custom-tabs-two-tabContent">
-                    @Html.AntiForgeryToken()
-                    <div class="tab-pane fade show active" id="custom-tabs-DivisionInfoList" aria-labelledby="custom-tabs-DivisionInfoList-tab" role="tabpanel">
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="card card-gray-dark">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="text-center text-bold">Division List</h4>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <a href="/AgroConfiguration/CreateDivisionInfo" class="btn btn-outline-primary btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Division</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                            <div class="col-md-3">
                             </div>
-
+                            <div class="col-md-6">
+                                <h4 class="text-center text-bold">Devision List</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/AgroConfiguration/CreateDivisionInfo" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Division</a>
+                            </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top:-5px">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <h4 class="card-title">Search By</h4>
-                                    </div>
-
-                                    <div class="card-body text-sm">
-                                        <div class="row" style="margin-top:-15px">
-                                            <div class="col-md-3">
-                                                <label for="ddlZoneName" class="control-label">Zone Name</label>
-                                                @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label for="ddlDivisionName" class="control-label">Division Name</label>
-                                                @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Division--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
-                                            </div>
-
-                                            
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
+
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-gray-dark">
+                    <div class="card-header">
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <h5 class="text-center">Search By</h5>
+                            </div>
+
+                            <div class="col-md-2">
+
+                                @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+                            <div class="col-md-2">
+
+
+                                @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Division--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
     </div>
 
 </div>
@@ -94,7 +81,7 @@
 <div class="modal" id="DivisionModal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header alert-secondary">
+            <div class="modal-header bg-gradient-gray-dark">
                 <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
@@ -107,11 +94,7 @@
 
                     </div>
 
-                    @*<div class="col-md-10">
-            <label for="ddlDivisionName" class="control-label">Division Name</label>
-            @Html.DropDownList("ddlDivisionNameInput", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
-        </div>*@
 
                     <div class="col-md-10">
                         <label for="txtDivisionName" class="control-label">DivisionName</label>
@@ -127,10 +110,9 @@
                     </div>
 
                 </form>
-
-
             </div>
-            <div class="modal-footer btn-light">
+
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
                 <div class="col-md-6">
                     <div id="msg1" class="alert alert-success hide float-left">
                         Data has been Successfully Saved
@@ -139,8 +121,8 @@
                         Data has been faild to Save
                     </div>
                 </div>
-                <button id="btnCancel" type="button" class="btn btn-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
-                <button type="submit" id="btnSave" class="btn btn-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
+                <button id="btnCancel" type="button" class="btn btn-outline-danger btn-sm float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
+                <button type="submit" id="btnSave" class="btn btn-outline-success btn-sm float-rightt"><i class="fas fa-paper-plane"></i> <span id="spanSaveText">Save</span> </button>
             </div>
         </div>
     </div>
@@ -253,6 +235,7 @@
 
 
             ddlStatus.val(Status);
+            ddlStatus.trigger("change");
             hddivisionId.val(hid);
             txtDivisionName.val(divisionId);
             txtDivisionName.trigger("change");

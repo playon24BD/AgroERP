@@ -1,0 +1,230 @@
+﻿@model ERPBO.Agriculture.ViewModels.RawMaterialRequisitionInfoViewModel
+@{
+   Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "UpdateRequistion";
+}
+
+<style>
+    .center {
+   
+        text-align:center;
+    }
+
+</style>
+@*<div class="row" style="margin-top:-15px">
+    <div class="col-md-12">
+        <div class="card card-gray-dark">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">
+                            Issue Requisition
+                        </h5>
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+<div class="row text-sm" style="margin-top:-15px">
+    <div class="col-md-12" style="margin-top:-10px">
+        <div class="card card-navy">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-10 center">
+                        <h5 class="text-bold">
+                            Issue Requisition
+                        </h5>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <select class="form-control form-control-sm" id="ddlAction">
+                                <option value="Send" selected>Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                            <div class="input-group-append" >
+
+                                <a id="btnSubmit" href="#" title="Submit Requisition" class="btn btn-sm btn-success">
+
+                                <a id="btnSubmit" href="#" title="Submit Requisition" class="btn btn-success btn-sm">
+
+                                    Save
+                                    <i class="fas fa-paper-plane"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row" style="margin-top:-15px">
+                    <div class="col-md-12">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" id="hdrawMaterialRequisitionInfoId" value="@Model.RawMaterialRequisitionInfoId" />
+                        <input type="hidden" id="hdfRequisitionCode" value="@Model.RawMaterialRequisitionCode" />
+
+                        <table class="table table-bordered table-sm table-responsive-lg text-bold text-sm" id="tblInfo">
+                            <tbody>
+                                <tr>
+                                    <td class="alert-primary" style="width:10%">Req Code</td>
+                                    <td style="width:15%; background-color:#e1dada">@Model.RawMaterialRequisitionCode</td>
+                                    <td class="alert-primary" style="width:10%">Status</td>
+                                    <td style="width:15%; background-color:#e1dada">@Model.Status</td>
+                                    <td class="alert-primary" style="width:10%">Requsition Date</td>
+                                    <td style="width:12%; background-color:#e1dada">@Model.EntryDate</td>
+                                    <td class="alert-primary" style="width:10%">Requistion by</td>
+                                    <td style="width:12%; background-color:#e1dada">@Model.FullName</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        @{Html.RenderAction("GetRequistionDetailsbyInfoId", new { @infoId = Model.RawMaterialRequisitionInfoId });}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        var ddlRawMaterial = $("#ddlRawMaterial");
+        var hdrawMaterialRequisitionInfoId = $("#hdrawMaterialRequisitionInfoId");
+        var numRequisitonQuantity = $("#numRequisitonQuantity");
+        var ddlAction = $("#ddlAction");
+        var txtRemarks = $("#txtRemarks");
+        var txtUnitName = $("#txtUnitName");
+        var hdUnitId = $("#hdUnitId");
+        var rawMaterialList = [];
+        var searchByAny = $("#searchByAny");
+        var searchByAnyy = $("#searchByAnyy");
+        var RawMaterialStockQty = $("#RawMaterialStockQty");
+        var hdfRequisitionCode = $("#hdfRequisitionCode");
+        var issueQty = $(".issueQty");
+
+
+        $(document).ready(function () {
+
+            //alert("hello");
+           
+
+        })
+
+        issueQty.on('change', function () {
+            var availableQty = $(this).parent().parent().find("td:eq(4)").text();
+            var IssueQuntity = $(this).val();
+            if (Number(IssueQuntity) <= Number(availableQty)) {
+
+                //   $(".error").addClass("hide");
+
+
+                $(this).parent().children("span").addClass("hide");
+            }
+            else {
+                //   $('.error').removeClass("hide");
+                $(this).parent().children("span").removeClass("hide");
+            }
+
+
+        });
+
+
+
+
+        $("#btnSubmit").click(function (e) {
+
+            e.preventDefault();
+            debugger;
+            var hclass = $(".error").hasClass("hide");
+
+            if (hclass == true) {
+                var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0), Status: ddlAction.val() };
+                var details = [];
+
+                $.each($("#tblRequisitonDetails tbody tr"), function (index, item) {
+                    var tds = $(this).children('td');
+                    //alert(tds.eq(5).children('input[type="number"]').val());
+                    details.push({
+                        RawMaterialIssueStockDetailId: 0,
+                        UnitID: tds.eq(8).html(),
+                        RequisitionQuantity: tds.eq(3).html(),
+                        IssueQuantity: tds.eq(5).children('input[type="number"]').val(),
+                        Status: ddlAction.val(),
+                        Remarks: tds.eq(7).html(),
+                        RawMaterialRequisitionInfoId: tds.eq(9).html(),
+                        RawMaterialRequisitionDetailsId: tds.eq(10).html(),
+                        RawMaterialId: tds.eq(11).html(),
+
+                    });
+                })
+
+                info.rawMaterialRequisitionDetailsDTO = details;
+                var data = JSON.stringify({ info });
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
+                ).then(function (res, status) {
+
+                    @*if (res === true) {
+
+
+                        $('.toastrDefaultSuccess').trigger('click');
+                        setTimeout(function () {
+                            redirectPage('@Url.Action("GetRequisition")');
+                        }, 500);
+
+                    }*@
+                    debugger;
+                    if (res.IsSuccess === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                        var RawMaterialRequisitionCode = res.File;
+                        window.open("/AgroConfiguration/GetIssueRequisitionReport?RawMaterialRequisitionCode=" + RawMaterialRequisitionCode, "_blank");
+                               
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetRequisition")');
+                                }, 500);
+                               // printJS({ printable: res.File, type: 'pdf', base64: true });
+                                
+                                //resetUI();
+                            }
+
+                    else {
+                        $('.toastrDefaultError').trigger('click');
+                    }
+                    enable("#btnSubmit");
+                }).fail(function (error) {
+                    alert(execuStatus.fail);
+                    enable("#btnSubmit");
+                })
+
+
+
+            }
+            else {
+                alert("Issue Quantity must be less then or Equal available Quantity ");
+            }
+            //return hclass;
+         
+
+
+
+        })
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+
+    </script>
+    
+    
+    
+}
+
+
+
+

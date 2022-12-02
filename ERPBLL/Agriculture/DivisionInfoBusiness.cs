@@ -27,12 +27,12 @@ namespace ERPBLL.Agriculture
             return _divisionInfoRepository.GetAll(o => o.OrganizationId == OrgId).ToList();
         }
 
-        public IEnumerable<DivisionInfoDTO> GetDivisionInfos(long? divisionId, long? zoneId, long orgId)
+        public IEnumerable<DivisionInfoDTO> GetDivisionInfos(string name,long? divisionId, long? zoneId, long orgId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<DivisionInfoDTO>(QueryForDivisionInfoss( divisionId, zoneId, orgId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<DivisionInfoDTO>(QueryForDivisionInfoss( name,divisionId, zoneId, orgId)).ToList();
         }
 
-        private string QueryForDivisionInfoss(long? divisionId, long? zoneId, long orgId)
+        private string QueryForDivisionInfoss(string name,long? divisionId, long? zoneId, long orgId)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -40,13 +40,16 @@ namespace ERPBLL.Agriculture
             param += string.Format(@" and d.OrganizationId={0}", orgId);
             if (divisionId != null && divisionId > 0)
             {
-                param += string.Format(@" and d.DivisionId={0}", divisionId);
+                param += string.Format(@" and d.DivisionId like '%{0}%'", divisionId);
             }
             if (zoneId != null && zoneId > 0)
             {
                 param += string.Format(@" and z.ZoneId={0}", zoneId);
             }
-
+            if (name != null && name != "")
+            {
+                param += string.Format(@" and d.DivisionName like '%{0}%'", name);
+            }
             query = string.Format(@"
            select d.DivisionId,z.ZoneId,d.DivisionName,z.ZoneName,d.Status
 from tblDivisionInfo d

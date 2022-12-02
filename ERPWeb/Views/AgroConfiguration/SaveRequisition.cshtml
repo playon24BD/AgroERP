@@ -1,0 +1,594 @@
+﻿
+@{
+                /**/
+
+                ViewBag.Title = "SaveRequisition";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style=" margin-top: 25px">
+    <div class="col-md-12">
+        <div class="card  shadow card card-outline card-tabs" style="margin-top:-20px">
+
+
+            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" id="custom-tabs-two-singleRequisition-tab" data-toggle="pill" href="#custom-tabs-two-singleRequisition" role="tab" aria-controls="custom-tabs-two-singleRequisition" aria-selected="false">Single Requisition</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-bundleRequisition-tab" data-toggle="pill" href="#custom-tabs-two-bundleRequisition" role="tab" aria-controls="custom-tabs-two-bundleRequisition" aria-selected="false">Bundle Requisition</a>
+                </li>
+            </ul>
+
+
+
+        </div>
+
+
+        <div class="card card-navy">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+
+                <div class="tab-pane fade show active" id="custom-tabs-two-singleRequisition" role="tabpanel" aria-labelledby="custom-tabs-two-singleRequisition-tab">
+                    <div class="col-md-12">
+                        <div class="card card-navy">
+                            <div class="card-header" style="text-align: center;">
+
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <button class="btn btn-success btn-sm btn float-right btnSubmit" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
+                                        <h5 class="text-center text-bold">
+
+                                            RM Single Requisition
+                                        </h5>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <input type="text" id="hdrawMaterialRequisitionInfoId" class="hide" />
+                                    <div class="col-md-2">
+                                        <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
+                                        @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label for="unitName">Unit</label>
+                                        <input type="text" id="txtUnitName" name="unitName" class="form-control form-control-sm" readonly />
+                                    </div>
+                                    <div class="hide">
+                                        <label for="unitID">UnitID</label>
+                                        <input type="text" id="hdUnitId" name="unitID" class="form-control form-control-sm" readonly />
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label for="requistionQuantity">Requisition Qty</label>
+                                        <input type="number" id="numRequisitonQuantity" name="requistionQuantity" class="form-control form-control-sm" />
+                                        <span class="error hide req-qty">Qty Is Required</span>
+                                        @*<span id="spanRawMaterialStockQty">Stock: <span id="RawMaterialStockQty">0</span> </span>*@
+                                        @*<span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>*@
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label for="txtRemarks">Remarks</label>
+                                        <input type="text" id="txtRemarks" name="txtRemarks" class="form-control form-control-sm" />
+                                    </div>
+
+
+                                    <div class="col-md-2">
+                                        <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
+                                        <div class="clearfix">
+                                            <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12" style="overflow-y:scroll">
+                                                <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblRawMaterialRequisiton">
+                                                    <thead class="btn-dark">
+                                                        @*<tr>
+                                                                <th colspan="6">
+                                                                    <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
+                                                                </th>
+                                                            </tr>*@
+                                                        <tr class="text-center">
+                                                            <th>#SL</th>
+                                                            <th>Raw Material</th>
+                                                            <th>Unit</th>
+                                                            <th>Requisition Qty</th>
+                                                            <th>Remarks</th>
+                                                            <th>Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade show" id="custom-tabs-two-bundleRequisition" role="tabpanel" aria-labelledby="custom-tabs-two-bundleRequisition-tab">
+                    <div class="col-md-12">
+                        <div class="card card-navy">
+                            <div class="card-header" style="text-align: center;">
+
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <button class="btn btn-success btn-sm btn float-right btnSubmit" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
+                                        <h5 class="text-center text-bold">
+
+                                            RM Bundle Requisition
+                                        </h5>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <input type="hidden" id="hdMeasurementId" />
+                                    <input type="hidden" id="hdTargetValue" />
+                                    <input type="hidden" id="hdQuantity" />
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="ddlProduct">Product</label>
+                                        @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                        <span class="error hide req-ddlProduct">Product Name is Required</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="ddlReceipBatchCode">Receip Code</label>
+                                        @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, "--Select Batch--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="qty"> Product Details</label>
+                                        <input type="text" id="qty" name="qty" class="form-control form-control-sm" readonly />
+                                        <span class="error hide req-qty-bundle">Qty Is Required</span>
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="targetQty" class="control-label"> Target Qty</label>
+                                        <input type="number" id="targetQty" class="form-control form-control-sm" />
+                                        <span class="error hide req-targetQty">Target Qty Is Required</span>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
+                                        <div class="clearfix">
+                                            <button type="submit" class="btn btn-sm btn-outline-success" id="addTolistBundle"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:-10px">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12" style="overflow-y:scroll">
+                                            <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblBundleRequisiton">
+                                                <thead class="btn-dark">
+                                                    @*<tr>
+                                                            <th colspan="6">
+                                                                <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
+                                                            </th>
+                                                        </tr>*@
+                                                    <tr class="text-center">
+                                                        <th>#SL</th>
+                                                        <th>Raw Material</th>
+                                                        <th>Unit</th>
+                                                        <th>Requisition Qty</th>
+
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var ddlRawMaterial = $("#ddlRawMaterial");
+        var hdrawMaterialRequisitionInfoId = $("#hdrawMaterialRequisitionInfoId");
+        var numRequisitonQuantity = $("#numRequisitonQuantity");
+        var txtRemarks = $("#txtRemarks");
+        var txtUnitName = $("#txtUnitName");
+        var hdUnitId = $("#hdUnitId");
+        var rawMaterialList = [];
+        var searchByAny = $("#searchByAny");
+        var searchByAnyy = $("#searchByAnyy");
+        var RawMaterialStockQty = $("#RawMaterialStockQty");
+
+
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            $(".btnSubmit").hide();
+            $("#spanRawMaterialStockQty").hide();
+
+            //LoadDataTableStock();
+            //LoadDataTable();
+
+
+
+
+        })
+        ddlRawMaterial.change(function () {
+            RawMaterialStockQty.show();
+
+            $("#spanRawMaterialStockQty").show();
+
+
+            var data = { RawMaterialId: ddlRawMaterial.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitName", data)).then(function (res, status) {
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                txtUnitName.val(res.UnitName);
+                txtUnitName.val(unit);
+
+            });
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitID", data)).then(function (res, status) {
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                hdUnitId.val(res.UnitIDd);
+                hdUnitId.val(unit);
+
+            });
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetStockQty", data)).then(function (res, status) {
+                consoleLog(res.replace(/['"]+/g, ''));
+                $('#RawMaterialStockQty').text(res);
+
+            });
+
+        })
+
+
+        $("#addTolist").click(function (e) {
+
+            e.preventDefault();
+
+
+            if (validateAddToList()) {
+
+                if (rawMaterialList.includes(ddlRawMaterial.val())) {
+                    toastrErrorAlert("Material Already Exist");
+                }
+                else {
+                    var sl = $("#tblRawMaterialRequisiton tbody tr").length;
+                    var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterial") + "</td>";
+                    var td3 = "<td class='text-center'>" + txtUnitName.val() + "</td>";
+                    var td4 = "<td class='text-center QuanityIDCell'>" + numRequisitonQuantity.val() + "</td>";
+                    var td8 = "<td class='text-center' >" + txtRemarks.val() + "</td>";
+                    var td5 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                    var td6 = "<td class='text-center hide'>" + ddlRawMaterial.val() + "</td>";
+                    var td7 = "<td class='text-center hide'>" + hdUnitId.val() + "</td>";
+                    var tr = "<tr class='text-center'>" + td1 + td2 + td3 + td4 +td8+ td5 + td6 + td7 + "</tr>";
+
+                    $("#tblRawMaterialRequisiton tbody").append(tr);
+                    $("#spanRawMaterialStockQty").hide();
+                    rawMaterialList.push(ddlRawMaterial.val());
+                    $("#btnSubmit").show();
+
+                    clearCtrl();
+
+                }
+
+            }
+
+        })
+
+
+        function clearCtrl() {
+            ddlRawMaterial.val("");
+            ddlRawMaterial.trigger("change");
+            txtUnitName.val("");
+            hdUnitId.val("0");
+            txtRemarks.val("");
+            numRequisitonQuantity.val("0");
+            RawMaterialStockQty.val("");
+        }
+        function validateAddToList() {
+
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlRawMaterial.val()) == 0) {
+                $(".req-ddlRawMaterial").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(numRequisitonQuantity.val(), 0) <= 0) {
+                $(".req-qty").removeClass('hide');
+                isValid = false;
+            }
+            //if (QuantityCheck() == true) {
+            //    $(".req-qtyChecking").removeClass('hide');
+            //    isValid = false;
+            //}
+
+            return isValid;
+        }
+
+
+
+        function QuantityCheck() {
+
+            var isValid = false;
+            var originalQty = RawMaterialStockQty.text();
+            var qty = originalQty.replace(/\(|\)/g, '');
+            console.log(qty);
+            if (TryParseInt(numRequisitonQuantity.val()) > qty) {
+                isValid = true
+            }
+            return isValid;
+        }
+
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+
+            var rId = tds.eq(5).html();
+
+            const mid = rawMaterialList.indexOf(rId);
+
+            rawMaterialList.splice(mid, 1);
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    removeTableRow("#tblRawMaterialRequisiton tbody", index);
+                    fnFixTheTbodyRowSerial("#tblRawMaterialRequisiton tbody", index);
+
+                };
+            }));
+
+        })
+
+
+        $(".btnSubmit").click(function (e) {
+            e.preventDefault();
+            debugger;
+            var info = { RawMaterialRequisitionInfoId: TryParseInt(hdrawMaterialRequisitionInfoId.val(), 0) };
+            var details = [];
+            var tblbun = $("#tblBundleRequisiton tbody tr").length;
+            var tblsin = $("#tblRawMaterialRequisiton tbody tr").length;
+            if (tblsin > 0) {
+                $.each($("#tblRawMaterialRequisiton tbody tr"), function (index, item) {
+                    var tds = $(this).children('td');
+                    details.push({
+                        RawMaterialIssueStockDetailId: 0,
+                        RawMaterialId: tds.eq(6).html(),
+                        UnitID: tds.eq(7).html(),
+                        RequisitionQuantity: tds.eq(3).html(),
+                        Remarks: tds.eq(4).html(),
+                    });
+                })
+
+            }
+            else {
+                $.each($("#tblBundleRequisiton tbody tr"), function (index, item) {
+                    var tds = $(this).children('td');
+                    details.push({
+                        RawMaterialIssueStockDetailId: 0,
+                        RawMaterialId: tds.eq(6).html(),
+                        UnitID: tds.eq(7).html(),
+                        RequisitionQuantity: tds.eq(3).html(),
+                        Remarks: "",
+                    });
+                })
+
+            }
+
+
+           info.rawMaterialRequisitionDetailsDTO = details;
+            var data = JSON.stringify({ info });
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRequisition', data, getToken())
+            ).then(function (res, status) {
+
+                @*if (res === true) {
+
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetRequisitionProduction")');
+                                }, 500);
+                            }*@
+                debugger;
+                if (res.IsSuccess === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                    var RawMaterialRequisitionCode = res.File;
+                    window.open("/AgroConfiguration/GetSendAndReceiveRequisitionReport?RawMaterialRequisitionCode="+RawMaterialRequisitionCode,"_blank");
+                                
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetRequisitionProduction")');
+                                }, 500);
+                               // printJS({ printable: res.File, type: 'pdf', base64: true });
+                                
+                                //resetUI();
+                }
+               
+
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+        })
+
+        //Bundle Requisition
+        var ddlProduct = $("#ddlProduct");
+        var ddlReceipBatchCode = $("#ddlReceipBatchCode");
+        var targetQty = $("#targetQty");
+        var hdTargetValue = $("#hdTargetValue");
+        var qty = $("#qty");
+        var hdQuantity = $("#hdQuantity")
+
+        ddlProduct.change(function () {
+
+            //debugger;
+            clearDropdown("ddlReceipBatchCode");
+            if (ddlProduct.val() != "") {
+
+                LoadDropDown('/AgroConfiguration/GetReceipyCodeByProductionId', 'POST', ddlReceipBatchCode, JSON.stringify({ finishGoodProductId: ddlProduct.val() }));
+            }
+            // $("#ddlRequesition option:not(:first)").remove();
+
+
+        })
+
+        ddlReceipBatchCode.change(function () {
+
+
+            LoadQuantityData();
+            LoadTergetQuantityData();
+        })
+
+        function LoadQuantityData() {
+            var data = { receipeBatchCode: ddlReceipBatchCode.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
+                debugger;
+                consoleLog(res.replace(/['"]+/g, ''));
+                //console.log(res);
+                console.log(res.quantity)
+                var UnitQty = res.replace(/['"]+/g, '');
+                qty.val(UnitQty);
+
+                var qa = UnitQty.split('(')
+                var qar = qa[0]
+                var fq = qar.replace(/['"]+/g, '');
+                hdQuantity.val(fq);
+
+            });
+        }
+
+
+        function LoadTergetQuantityData() {
+            var data = { receipeBatchCode: ddlReceipBatchCode.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyTergetQty", data)).then(function (res, status) {
+                debugger;
+                //qty.val(res);
+                //targetQty.val(res);
+                hdTargetValue.val(res);
+
+            });
+        }
+
+        function validateAddToListBundle() {
+
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (TryParseInt(ddlProduct.val(),0) == 0) {
+                $(".req-ddlProduct").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlReceipBatchCode.val() == "") {
+
+                $(".req-ddlReceipBatchCode").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(targetQty.val(),0) == 0) {
+                $(".req-targetQty").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+        $("#addTolistBundle").click(function (e) {
+            e.preventDefault();
+            if (validateAddToListBundle()==true) {
+                debugger;
+                var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: targetQty.val() };
+
+                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode1", data)).then(function (res, status) {
+                    debugger;
+                    console.log(res);
+                    var sl = 0;
+                    material = JSON.parse(res)
+                    console.log(material);
+                    var len = material.length;
+
+
+                        //console.log(material[0].RawMaterialName);
+                    $.each(material, function (index, value) {
+                        var len = $("#tblBundleRequisiton tbody tr").length;
+                            var sl = "<td class='text-center'><b>" + (len+1) + "</b></td>"
+                        var td1 = "<td>" + value.RawMaterialName + "</td>";
+                        var unitName = "<td>" + value.UnitName + "</td>";
+                        var unitId = "<td class='hide'>" + value.UnitId + "</td>";
+                        var td5 = "<td class='hide'>" + value.RawMaterialId + "</td>";
+
+                        var td2 = "<td class='hide'>" + value.FGRRawMaterQty + "</td>";
+                            var td3 = "<td class='hide'>" + targetQty.val() + "</td>";
+                            var td4 = "<td>" + (value.FGRRawMaterQty * targetQty.val()) + "</td>";
+                        var tr = "<tr class='text-center'>" + sl + td1 + unitName + td4 + td3 + td2 + td5 + unitId+"</tr>";
+                            $("#tblBundleRequisiton tbody").append(tr)
+                        $(".btnSubmit").show();
+                        $("#addTolistBundle").hide();
+
+
+                        })
+
+
+
+                });
+
+            }
+        })
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+    </script>
+
+}
+

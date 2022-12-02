@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,17 +100,37 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agriculture\AgroProductSalesDetailsBusiness.cs" />
+    <Compile Include="Agriculture\AgroProductSalesInfoBusiness.cs" />
+    <Compile Include="Agriculture\AgroUnitInfoBusiness.cs" />
     <Compile Include="Agriculture\AreaSetupBusiness.cs" />
+    <Compile Include="Agriculture\AreaUserBusiness.cs" />
     <Compile Include="Agriculture\BankSetupBusiness.cs" />
+    <Compile Include="Agriculture\CommisionOnProductSalesDetailsBusiness.cs" />
+    <Compile Include="Agriculture\CommissionOnProductBusiness.cs" />
+    <Compile Include="Agriculture\CommissionOnProductHistoryBusiness.cs" />
+    <Compile Include="Agriculture\CommissionOnProductOnSalesBusiness.cs" />
+    <Compile Include="Agriculture\DistributionUserBusiness.cs" />
     <Compile Include="Agriculture\DivisionInfoBusiness.cs" />
+    <Compile Include="Agriculture\DivisionUserBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductDetailsBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductionInfoBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodProductSupplierBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodRecipeDetailsBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodRecipeInfoBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IAgroProductSalesDetailsBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IAgroProductSalesInfoBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IAgroUnitInfo.cs" />
     <Compile Include="Agriculture\Interface\IAreaSetupBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IAreaUserBusiness.cs" />
+    <Compile Include="Agriculture\Interface\ICommisionOnProductSalesDetailsBusiness.cs" />
+    <Compile Include="Agriculture\Interface\ICommissionOnProductBusiness.cs" />
+    <Compile Include="Agriculture\Interface\ICommissionOnProductHistoryBusiness.cs" />
+    <Compile Include="Agriculture\Interface\ICommissionOnProductOnSalesBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IDistributionUserBusiness.cs" />
     <Compile Include="Agriculture\Interface\IDivisionInfo.cs" />
+    <Compile Include="Agriculture\Interface\IDivisionUserBusiness.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductionDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IBankSetup.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodProductBusiness.cs" />
@@ -118,37 +139,83 @@
     <Compile Include="Agriculture\Interface\IFinishGoodRecipeDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IFinishGoodRecipeInfoBusiness.cs" />
     <Compile Include="Agriculture\Interface\IMeasuremenBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IMRawMaterialIssueStockDetails.cs" />
+    <Compile Include="Agriculture\Interface\IMRawMaterialIssueStockInfo.cs" />
+    <Compile Include="Agriculture\Interface\IPRawMaterialStockIDetails.cs" />
+    <Compile Include="Agriculture\Interface\IPRawMaterialStockInfo.cs" />
+    <Compile Include="Agriculture\Interface\IProductionPerproductCost.cs" />
+    <Compile Include="Agriculture\Interface\IProductPriceConfiguration.cs" />
+    <Compile Include="Agriculture\Interface\IProductPricingHistory.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialIssueStockDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialIssueStockInfoBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IRawMaterialRequisitionDetailsBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IRawMaterialRequisitionInfoBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialStockDetail.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialStockInfo.cs" />
+    <Compile Include="Agriculture\Interface\IRawMaterialTrack.cs" />
     <Compile Include="Agriculture\Interface\IRegionSetup.cs" />
-<<<<<<< Updated upstream
+
+    <Compile Include="Agriculture\Interface\IRegionUserBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IReturnRawMaterialBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IRMStockDashboardGrap.cs" />
+    <Compile Include="Agriculture\Interface\ISalesPaymentRegister.cs" />
+    <Compile Include="Agriculture\Interface\ISalesReturn.cs" />
     <Compile Include="Agriculture\Interface\IStockiestInfo.cs" />
-=======
+    <Compile Include="Agriculture\Interface\IStockiestUserBusiness.cs" />
     <Compile Include="Agriculture\Interface\ITerritorySetup.cs" />
->>>>>>> Stashed changes
+    <Compile Include="Agriculture\Interface\ITerritoryUserBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IUserAssignBussiness.cs" />
+    <Compile Include="Agriculture\Interface\IUserInfo.cs" />
+
+    <Compile Include="Agriculture\Interface\IStockiestInfo.cs" />
+
+    <Compile Include="Agriculture\Interface\ITerritorySetup.cs" />
+
     <Compile Include="Agriculture\Interface\IZone.cs" />
     <Compile Include="Agriculture\Interface\IZoneDetail.cs" />
     <Compile Include="Agriculture\Interface\IZoneSetup.cs" />
+    <Compile Include="Agriculture\Interface\IZoneUserBusiness.cs" />
     <Compile Include="Agriculture\MeasuremenBusiness.cs" />
     <Compile Include="Agriculture\Interface\IRawMaterialSupplier.cs" />
+    <Compile Include="Agriculture\MRawMaterialIssueStockDetailsBusiness.cs" />
+    <Compile Include="Agriculture\MRawMaterialIssueStockInfoBusisness.cs" />
+    <Compile Include="Agriculture\PRawMaterialStockIDetailsBusiness.cs" />
+    <Compile Include="Agriculture\PRawMaterialStockInfoBusiness.cs" />
+    <Compile Include="Agriculture\ProductionPerproductCostBusiness.cs" />
+    <Compile Include="Agriculture\ProductPriceConfigurationBusiness.cs" />
+    <Compile Include="Agriculture\ProductPricingHistoryBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialIssueStockDetailsBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialIssueStockInfoBusiness.cs" />
+    <Compile Include="Agriculture\RawMaterialRequisitionDetailsBusiness.cs" />
+    <Compile Include="Agriculture\RawMaterialRequisitionInfoBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialStockDetailBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialStockInfoBusiness.cs" />
     <Compile Include="Agriculture\RawMaterialSupplierBusiness.cs" />
+    <Compile Include="Agriculture\RawMaterialTrackBusiness.cs" />
     <Compile Include="Agriculture\RegionSetupBusiness.cs" />
-<<<<<<< Updated upstream
+
+    <Compile Include="Agriculture\RegionUserBusiness.cs" />
+    <Compile Include="Agriculture\ReturnRawMaterialBusiness.cs" />
+    <Compile Include="Agriculture\RMStockDashboardGrapBusiness.cs" />
+    <Compile Include="Agriculture\SalesPaymentRegisterBusiness.cs" />
+    <Compile Include="Agriculture\SalesReturnBusiness.cs" />
     <Compile Include="Agriculture\StockiestInfoBusiness.cs" />
-=======
+    <Compile Include="Agriculture\StockiestUserBusiness.cs" />
     <Compile Include="Agriculture\TerritorySetupBusiness.cs" />
->>>>>>> Stashed changes
+    <Compile Include="Agriculture\TerritoryUserBusiness.cs" />
+    <Compile Include="Agriculture\UserAssignBussiness.cs" />
+    <Compile Include="Agriculture\UserInfoBusiness.cs" />
+
+    <Compile Include="Agriculture\StockiestInfoBusiness.cs" />
+
+    <Compile Include="Agriculture\TerritorySetupBusiness.cs" />
+
     <Compile Include="Agriculture\ZoneBusiness.cs" />
     <Compile Include="Agriculture\ZoneDetailBusiness.cs" />
     <Compile Include="Agriculture\ZoneSetupBusiness.cs" />
+    <Compile Include="Agriculture\ZoneUserBusiness.cs" />
     <Compile Include="Common\Status.cs" />
     <Compile Include="Common\Utility.cs" />
     <Compile Include="ControlPanel\AppUserBusiness.cs" />

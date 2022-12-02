@@ -13,6 +13,7 @@ namespace ERPBO.ControlPanel.DomainModels
     {
         [Key]
         public long UserId { get; set; }
+       // public string UserIds { get; set; }
         [StringLength(150)]
         public string FullName { get; set; }
         [StringLength(50)]
@@ -35,5 +36,13 @@ namespace ERPBO.ControlPanel.DomainModels
         public string Desigation { get; set; }
         public string ConfirmPassword { get; set; }
         public long OrganizationId { get; set; }
+
+        //public string UserName { get; set; }
+        public string ZoneId { get; set; }
+        public string DivisionId { get; set; }
+        public string RegionId { get; set; }
+        public string AreaId { get; set; }
+        public string TerritoryId { get; set; }
+        public string StockiestId { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.ControlPanel.DomainModels;
 using ERPDAL.ControlPanelDAL;
@@ -10,10 +10,96 @@ using System.Threading.Tasks;
 
 namespace ERPDAL.AgricultureDAL
 {
+
+    public class SalesReturnRepository : AgricultureBaseRepository<SalesReturn>
+    {
+        public SalesReturnRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+    }
+
+    //e
+    public class ProductionPerproductCostRepository : AgricultureBaseRepository<ProductionPerproductCost>
+    {
+        public ProductionPerproductCostRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+
+
+    }
+
+    //e
+    public class ProductPricingHistoryRepository : AgricultureBaseRepository<ProductPricingHistory>
+    {
+        public ProductPricingHistoryRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+
+    }
+    //e
+    public class ProductPriceConfigurationRepository : AgricultureBaseRepository<ProductPriceConfiguration>
+    {
+        public ProductPriceConfigurationRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+    }
+
+    //e
+    public class SalesPaymentRegisterRepository : AgricultureBaseRepository<SalesPaymentRegister>
+    {
+        public SalesPaymentRegisterRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+    }
+    //e
+    public class ReturnRawMaterialRepository : AgricultureBaseRepository<ReturnRawMaterial>
+    {
+        public ReturnRawMaterialRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+    }
+    //e
+    public class RawMaterialTrackInfoRepository : AgricultureBaseRepository<RawMaterialTrack>
+    {
+        public RawMaterialTrackInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    //e
+    public class MRawMaterialIssueStockInfoRepository : AgricultureBaseRepository<MRawMaterialIssueStockInfo>
+    {
+        public MRawMaterialIssueStockInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    //e
+    public class MRawMaterialIssueStockDetailsRepository : AgricultureBaseRepository<MRawMaterialIssueStockDetails>
+    {
+        public MRawMaterialIssueStockDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+
+    //e
+    public class PRawMaterialStockInfoRepository : AgricultureBaseRepository<PRawMaterialStockInfo>
+    {
+        public PRawMaterialStockInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    //e
+    public class PRawMaterialStockIDetailsRepository : AgricultureBaseRepository<PRawMaterialStockIDetails>
+    {
+        public PRawMaterialStockIDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+
+
+    public class AgroUnitInfoRepository : AgricultureBaseRepository<AgroUnitInfo>
+    {
+        public AgroUnitInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class UserInfoRepository : AgricultureBaseRepository<UserInfo>
+    {
+        public UserInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+
     public class StockiestInfoRepository : AgricultureBaseRepository<StockiestInfo>
     {
         public StockiestInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
     }
+
     public class AreaSetupInfoRepository : AgricultureBaseRepository<AreaInfoSetup>
     {
         public AreaSetupInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
@@ -61,6 +147,11 @@ namespace ERPDAL.AgricultureDAL
     public class RegionSetupRepository : AgricultureBaseRepository<RegionSetup>
     {
         public RegionSetupRepository(IAgricultureUnitOfWork AgricultureUnitOfWork) : base(AgricultureUnitOfWork) { }
+    }
+    //e
+    public class TerritorySetupRepository : AgricultureBaseRepository<TerritorySetup>
+    {
+        public TerritorySetupRepository(IAgricultureUnitOfWork AgricultureUnitOfWork) : base(AgricultureUnitOfWork) { }
     }
 
     //e
@@ -146,5 +237,84 @@ namespace ERPDAL.AgricultureDAL
         public FinishGoodProductionDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
         { }
     }
+    public class UserAssignRepository : AgricultureBaseRepository<UserAssign>
+    {
+        public UserAssignRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork)
+        { }
+    }
+
+    public class AgroProductSalesInfoRepository : AgricultureBaseRepository<AgroProductSalesInfo>
+    {
+        public AgroProductSalesInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+
+        public object GetInvoiceProductionInfoById(long productSalesInfoId)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class AgroProductSalesDetailsRepository : AgricultureBaseRepository<AgroProductSalesDetails>
+    {
+        public AgroProductSalesDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class DistributionUserBusinessRepository : AgricultureBaseRepository<DistributionUser>
+    {
+        public DistributionUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    public class DivisionUserBusinessRepository : AgricultureBaseRepository<DivisionUser>
+    {
+        public DivisionUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    public class ZoneUserBusinessRepository : AgricultureBaseRepository<ZoneUser>
+    {
+        public ZoneUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class RegionUserBusinessRepository : AgricultureBaseRepository<RegionUser>
+    {
+        public RegionUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class AreaUserBusinessRepository : AgricultureBaseRepository<AreaUser>
+    {
+        public AreaUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class TerritoryUserBusinessRepository : AgricultureBaseRepository<TerritoryUser>
+    {
+        public TerritoryUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    public class StockiestUserBusinessRepository : AgricultureBaseRepository<StockiestUser>
+    {
+        public StockiestUserBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    public class RawMaterialRequisitionInfoBusinessRepository : AgricultureBaseRepository<RawMaterialRequisitionInfo>
+    {
+        public RawMaterialRequisitionInfoBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class RawMaterialRequisitionDetailsBusinessRepository : AgricultureBaseRepository<RawMaterialRequisitionDetails>
+    {
+        public RawMaterialRequisitionDetailsBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class CommissionOnProductHistoryBusinessRepository : AgricultureBaseRepository<CommisionOnProductHistory>
+    {
+        public CommissionOnProductHistoryBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    public class CommissionOnProductBusinessRepository : AgricultureBaseRepository<CommisionOnProduct>
+    {
+        public CommissionOnProductBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class CommissionOnProductOnSalesBusinessRepository : AgricultureBaseRepository<CommissionOnProductOnSales>
+    {
+        public CommissionOnProductOnSalesBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+    public class CommissionOnProductOnSalesDetailsBusinessRepository : AgricultureBaseRepository<CommisionOnProductSalesDetails>
+    {
+        public CommissionOnProductOnSalesDetailsBusinessRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+
 
 }

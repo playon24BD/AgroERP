@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.ProductPriceConfigurationViewModel>
+
+@{
+    ViewBag.Title = "List of Product Price";
+    var SL = 0;
+}
+<div class="row">
+    <div class="col-md-12" style="overflow-y:scroll">
+        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblDepotData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">#SL</th>
+                    <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle">Product Name</th>
+                    <th style="vertical-align:middle">Details</th>
+                    <th style="vertical-align:middle">Price</th>
+
+                    <th style="vertical-align:middle">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    SL = SL + 1;
+                    <tr>
+
+                        <td class="text-center text-bold">@SL</td>
+                        <td class="hide">@item.ProductPriceConfigurationId</td>
+                        <td class="hide">@item.FinishGoodProductId</td>
+                        <td class="hide">@item.FGRId</td>
+                        @*<td class="hide">@item.OrganizationId</td>*@
+                        <td class="text-center">@item.FinishGoodProductName</td>
+                        <td class="text-center">@item.Flag</td>
+                        <td class="text-center">@item.ProductPrice</td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-warning btn-sm data-edit-item-price" style="line-height:1" data-edit-item-price="@item.FinishGoodProductId"><i class="fa fa-pen"></i></a>
+                            <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail" title="View Detail" data-item-detail="@item.FinishGoodProductId" style="line-height:1">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </td>
+                     
+                    </tr>
+                }
+
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="5">
+                            No Rows Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

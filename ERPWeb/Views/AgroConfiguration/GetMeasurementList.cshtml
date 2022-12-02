@@ -1,186 +1,159 @@
-﻿<div class="row">
+﻿@{
+    ViewBag.Title = "GetMeasurment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:5px">
     <div class="col-md-12">
-        <div class="card shadow card-primary card-outline card-tabs" style="margin-top:-20px">
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs nav-pills" id="custom-tabs-two-tab" role="tablist">
 
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-two-measurementList-tab" data-toggle="pill" href="#custom-tabs-two-measurementList" role="tab" aria-controls="custom-tabs-two-measurementList" aria-selected="false">Measurement list</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-two-measurementSetup-tab" data-toggle="pill" href="#custom-tabs-two-measurementSetup" role="tab" aria-controls="custom-tabs-two-measurementSetup" aria-selected="true">Measurement Setup</a>
-                    </li>
-                </ul>
-            </div>
 
-            <div class="card-body shadow">
-                <div class="tab-content" id="custom-tabs-two-tabContent">
-                    @Html.AntiForgeryToken()
-                    <div class="tab-pane fade show " id="custom-tabs-two-measurementSetup" role="tabpanel" aria-labelledby="custom-tabs-two-measurementSetup-tab">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card card-navy">
-                                    <div class="card-header" style="text-align: center;">
+        <div class="card  shadow card  card-outline card-tabs" style="margin-top:-30px">
 
-                                        <div class="row">
-                                            <div class="col-md-3">
 
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="text-center text-bold">
+            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
 
-                                                    Measurment Setup
-                                                </h5>
-                                            </div>
-                                            <div class="col-md-3">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" id="custom-tabs-two-measurementList-tab" data-toggle="pill" href="#custom-tabs-two-measurementList" role="tab" aria-controls="custom-tabs-two-measurementList" aria-selected="false">Measurement list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-measurementSetup-tab" data-toggle="pill" href="#custom-tabs-two-measurementSetup" role="tab" aria-controls="custom-tabs-two-measurementSetup" aria-selected="true">Measurement Setup</a>
+                </li>
+            </ul>
 
-                                            </div>
 
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <input type="hidden" id="hdMeasurementId" />
-                                            <div class="col-md-3">
-                                                <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
-                                                <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
-                                                    <option value="">Select One</option>
-                                                    <option value="9">Agro Farm</option>
-                                                </select>
-                                                <span class="error hide req-ddlOrganiation">Organization is required</span>
+        </div>
 
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="control-label font-weight-bold " for="measurementName">Measurement Name</label>
-                                                <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" />
-                                                <span class="error hide req-txtmeasurementName">Measurement Name is required</span>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="control-label font-weight-bold " for="masterBox">Master Box</label>
-                                                <input type="number" name="masterBox" id="txtmasterBox" class="form-control form-control-sm" />
-                                                <span class="error hide req-txtmasterBox">Master Box is required</span>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="innerBox" class="control-label font-weight-bold">Innner Box</label>
-                                                <input type="number" id="txtinnerBox" name="innerBox" class="form-control form-control-sm" />
-                                                <span class="error hide req-txtinnerBox">Inner Box is required</span>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label class="control-label" for="model">Pack Size</label>
-                                                <input type="number" id="txtpackSize" name="packSize" class="form-control form-control-sm">
-                                                <span class="error hide req-txtpackSize">Pack Size is required</span>
-                                            </div>
-                                            <div class="col-md-2">
+        <div class="card-body shadow">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+ 
+                <div class="tab-pane fade show " id="custom-tabs-two-measurementSetup" role="tabpanel" aria-labelledby="custom-tabs-two-measurementSetup-tab">
+                    <div class="row" style="margin-top:-30px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header" style="text-align: center;">
 
-                                                <label for="txtunit" class="control-label">Unit</label>
-                                                <select id="txtunit" class="form-control form-control-sm">
-                                                    <option value="">Select Unit</option>
-                                                    <option value="Kg">Kg</option>
-                                                    <option value="Gram">Gram</option>
-                                                    <option value="hg">hg</option>
-                                                    <option value="dag">dag</option>
-                                                </select>
-                                                <span class="error hide req-txtunit">Unit is required</span>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
-                                                <div class="clearfix">
-                                                    <button type="submit" class="btn btn-sm btn-outline-warning" id="addTolist"><i class="fas fa-plus"></i> &nbsp; ADD TO LIST </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
+                                    <div class="row">
+           
                                         <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-md-12" style="overflow-y:scroll">
-                                                    <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblMeasurement">
-                                                        <thead>
-                                                            <tr>
-                                                                <th colspan="6">
-                                                                    <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
-                                                                </th>
-                                                            </tr>
-                                                            <tr class="btn-dark">
-                                                                <th>Sl</th>
-                                                                <th>MeasureMent Name</th>
-                                                                <th>MeasureMent Item</th>
-                                                                <th>Unit</th>
-                                                                <th>Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody></tbody>
-                                                    </table>
+                                            <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
+                                            <h5 class="text-center text-bold">
 
-                                                </div>
+                                                Measurment Setup
+                                            </h5>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <input type="hidden" id="hdMeasurementId" />
+
+                                        <div class="col-md-2">
+                                            <label class="control-label font-weight-bold " for="measurementName">Measurement Name</label>
+                                            <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" />
+                                            <span class="error hide req-txtmeasurementName">Measurement Name is required</span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label font-weight-bold " for="masterBox">Master Box</label>
+                                            <input type="number" name="masterBox" id="txtmasterBox" class="form-control form-control-sm" />
+                                            <span class="error hide req-txtmasterBox">Master Box is required</span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="innerBox" class="control-label font-weight-bold">Innner Box</label>
+                                            <input type="number" id="txtinnerBox" name="innerBox" class="form-control form-control-sm" />
+                                            <span class="error hide req-txtinnerBox">Inner Box is required</span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label" for="model">Pack Size</label>
+                                            <input type="number" id="txtpackSize" name="packSize" class="form-control form-control-sm">
+                                            <span class="error hide req-txtpackSize">Pack Size is required</span>
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
+                                            @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                            <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
+                                        </div>
+
+
+                                        <div class="col-md-1">
+                                            <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                                            <div class="clearfix">
+                                                <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
-                    </div>
-
-                    <div class="tab-pane fade show active" id="custom-tabs-two-measurementList" role="tabpanel" aria-labelledby="custom-tabs-two-measurementList-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card shadow card-gray-dark">
-                                    @*<div class="card-header shadow">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <h5 class="text-center text-bold" style="height:10px">
-                                                        Measurement List
-                                                    </h5>
-                                                </div>
-                                                <div class="col-md-3">
-
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card card-navy shadow">
-                                    <div class="card-header">
-                                        <div class="row text-sm">
-                                            <div class="col-md-2">
-                                                <h4>Search by:</h4>
-                                            </div>
-                                            <div class="col-md-3 float-right">
-                                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
-
-                                            </div>
-                                            <div class="col-7">
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-12 text-sm text-sm" id="dataContainer3" style="overflow-y:scroll">
-                                                @{Html.RenderAction("GetMeasurementList", new { @flag = "list" });}
+                                            <div class="col-md-12" style="overflow-y:scroll">
+                                                <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblMeasurement">
+                                                    <thead>
+ 
+                                                        <tr class="btn-dark">
+                                                            <th>Sl</th>
+                                                            <th>MeasureMent Name</th>
+                                                            <th>MeasureMent Item</th>
+                                                            <th>Unit</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show active" id="custom-tabs-two-measurementList" role="tabpanel" aria-labelledby="custom-tabs-two-measurementList-tab">
+
+                    <div class="row" style="margin-top:-30px">
+                        <div class="col-md-12">
+                            <div class="card card-navy shadow">
+                                <div class="card-header">
+                                    <div class="row text-sm">
+                                        <div class="col-md-2">
+                                            <h5>Search by</h5>
+                                        </div>
+                                        <div class="col-md-3 float-right">
+                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+                                        </div>
+                                        <div class="col-7">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 text-sm text-sm" id="dataContainer3" style="overflow-y:scroll">
+                                            @{Html.RenderAction("GetMeasurementList", new { @flag = "list" });}
                                         </div>
                                     </div>
                                 </div>
@@ -189,10 +162,13 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
+
     </div>
 </div>
+
+
 
 <div class="modal" id="modalMeasurementSetup" role="dialog">
     <div class="modal-dialog " role="document">
@@ -223,7 +199,7 @@
                         </div>
 
                         <div class="form-group col-md-12">
-                            <label for="masterCartoonBox" class="control-label">Inner Box</label>
+                            <label for="innerBox" class="control-label">Inner Box</label>
                             <input type="number" id="innerBox" class="form-control form-control" />
                             <span class="error hide required-innerBox font-weight-bold">Input Inner Box</span>
 
@@ -235,19 +211,25 @@
                             <span class="error hide required-packSize font-weight-bold">Input packSize!</span>
 
                         </div>
+                        <div class="col-md-12">
+                            <label for="ddlUnits" class="control-label font-weight-bold">Unit Name</label>
+                            @*<input type="number" id="ddlUnits" class="form-control form-control-sm" />*@
+                            @Html.DropDownList("ddlUnits", (IEnumerable<SelectListItem>)ViewBag.ddlUnits, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
-                        <div class="form-group col-md-12">
-                            <label for="unit" class="control-label">Unit</label>
-                            <select id="unit" class="form-control form-control-sm">
-                                <option value="">Select Unit</option>
-                                <option value="Kg">Kg</option>
-                                <option value="Gram">Gram</option>
-                                <option value="hg">hg</option>
-                                <option value="dag">dag</option>
-                            </select>
-                            <span class="error hide required-unit font-weight-bold">Unit Is Required</span>
-
+                            <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
                         </div>
+                        @*<div class="form-group col-md-12">
+            <label for="unit" class="control-label">Unit</label>
+            <select id="unit" class="form-control form-control-sm">
+                <option value="">Select Unit</option>
+                <option value="Kg">Kg</option>
+                <option value="Gram">Gram</option>
+                <option value="hg">hg</option>
+                <option value="dag">dag</option>
+            </select>
+            <span class="error hide required-unit font-weight-bold">Unit Is Required</span>
+
+        </div>*@
 
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
@@ -264,6 +246,8 @@
                 </form>
 
             </div>
+
+
             <div class="modal-footer btn-default">
                 <div class="col-md-6">
                     <div id="msg1" class="alert alert-success hide float-left">
@@ -299,11 +283,26 @@
         var unit = $("#unit");
         var hiddenMeasureMentId = $("#hiddenMeasureMentId");
         var ddlStatus = $("#ddlStatus");
+        var ddlUnit = $("#ddlUnit");
+        var unitName = $("#unitName");
+        var unitId = $("#unitId");
+        var ddlUnits = $("#ddlUnits");
 
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+        
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+           
+        })
 
         $("#addTolist").click(function (e) {
             e.preventDefault();
             if (validate() == true) {
+                debugger;
                 var index = $("#tblMeasurement  tbody tr").length;
                 var sl = "<td>" + (index + 1) + "</td>";
                 var org = "<td class='hide'>" + ddlOrganiation.val(); + "</td>";
@@ -311,19 +310,42 @@
                 var masterBox = "<td class='hide'>" + txtmasterBox.val(); + "</td>";
                 var innerBox = "<td class='hide'>" + txtinnerBox.val(); + "</td>";
                 var packSize = "<td class='hide'>" + txtpackSize.val(); + "</td>";
-                var unit = "<td>" + txtunit.val(); + "</td>";
-                var item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
+                var unitName = "<td>" + dropDownSelectedText("ddlUnit") +  "</td>";
+                //var unitName = "<td>"+ dropDownSelectedText("ddlUnit") + "</td>";
+                var unitId = "<td class='hide UnitId'>" + ddlUnit.val() + "</td>";
+                if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
+                    item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
+                }
+                else if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() == "") {
+                    item = txtmasterBox.val().concat("X", txtinnerBox.val())
+                }
+                else if (txtmasterBox.val() != "" && txtinnerBox.val() == "" && txtpackSize.val() != "") {
+                    item = txtmasterBox.val().concat("X", txtpackSize.val())
+                }
+                else if (txtmasterBox.val() == "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
+                    item = txtinnerBox.val().concat("X", txtpackSize.val())
+                }
+                else if (txtmasterBox.val() != "" && txtinnerBox.val() == "" && txtpackSize.val() == "") {
+                    item = txtmasterBox.val()
+                }
+                else if (txtmasterBox.val() == "" && txtinnerBox.val() == "" && txtpackSize.val() != "") {
+                    item = txtpackSize.val()
+                }
+                else if (txtmasterBox.val() == "" && txtinnerBox.val() != "" && txtpackSize.val() == "") {
+                    item = txtinnerBox.val()
+                }
+
                 var measurementItem = "<td>" + item + "</td>";
                 var action = "<td><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
 
-                var tr = "<tr>" + sl + measurementName + measurementItem + unit + org + masterBox + innerBox + packSize + action + "</tr>";
+                var tr = "<tr>" + sl + measurementName + measurementItem + unitName + unitId + org + masterBox + innerBox + packSize + action  +"</tr>";
 
                 $("#tblMeasurement tbody").append(tr);
                 clearCtrl();
 
 
             }
-           
+
         });
 
         $(document).on("click", "a.data-onfly-del", function (e) {
@@ -337,22 +359,34 @@
 
 
         $("#btnSubmit").click(function (e) {
+            debugger;
             e.preventDefault();
             var tblTRLeangth = $("#tblMeasurement tbody tr").length;
             if (tblTRLeangth > 0) {
                 bootbox.confirm("Are You Sure To Save These?", function (result) {
                     if (result == true) {
                         var measureMentData = [];
-
+                        debugger;
                         $.each($("#tblMeasurement tbody tr"), function (index, item) {
                             var td = $(this).children('td');
                             measureMentData.push({
-                                OrganizationId: td.eq(4).html(),
-                                MeasurementName: td.eq(1).html(),
-                                MasterCarton: td.eq(5).html(),
-                                InnerBox: td.eq(6).html(),
-                                PackSize: td.eq(7).html(),
-                                Unit: td.eq(3).html()
+                                //OrganizationId: td.eq(4).html(),
+                                //MeasurementName: td.eq(1).html(),
+                                //MasterCarton: td.eq(5).html(),
+                                //InnerBox: td.eq(6).html(),
+                                //PackSize: td.eq(7).html(),
+                                //UnitId: td.eq(9).html()
+                                measurementName: td.eq(1).html(),
+                                measurementItem: td.eq(2).html(),
+                                unitName: td.eq(3).html(),
+                                unitId: td.eq(4).html(),
+
+                                //OrganizationId5: td.eq(5).html(),
+                                masterCarton: td.eq(6).html(),
+                                InnerBox: td.eq(7).html(),
+                                packSize: td.eq(8).html()
+                                //OrganizationId9: td.eq(9).html(),
+                                //OrganizationId10: td.eq(10).html()
 
 
                             })
@@ -388,9 +422,9 @@
         $("#btnUpdate").click(function (e) {
             e.preventDefault();
             if (validateUpdate() == true) {
-
-                 var data = {
-                measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(), Unit: unit.val(), Status: ddlStatus.val()
+                debugger;
+                var data = {
+                    measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(), UnitId: TryParseInt(ddlUnits.val(), 0), Status: ddlStatus.val()
             }
           //  var models = JSON.stringify(data);
 
@@ -413,7 +447,7 @@
 
 
             }
-           
+
 
 
         });
@@ -458,25 +492,44 @@
         $(document).on("click", "a.data-edit-item-measurement", function () {
 
             OpenModal();
+            debugger;
             var row = $(this).parent().parents("tr");
             var td1 = row.find("td:eq(1)").html();
             var td2 = row.find("td:eq(2)").html();
-
+            var td3 = row.find("td:eq(3)").html();
             var td4 = row.find("td:eq(4)").html();
             var td5 = row.find("td:eq(5)").html();
             var td6 = row.find("td:eq(6)").html();
             var td7 = row.find("td:eq(7)").html();
             var td8 = row.find("td:eq(8)").html();
-
-
-
+            var td9 = row.find("td:eq(9)").html();
+            
+            //UnitId.val();
             hiddenMeasureMentId.val(td1);
             measureMentName.val(td2);
             masterCartoonBox.val(td4);
             innerBox.val(td5);
             packSize.val(td6);
-            unit.val(td7);
-            ddlStatus.val(td8);
+            ddlUnits.val(td8);
+            ddlUnits.trigger("change");
+           // unitId.val(td8);
+            ddlStatus.val(td9);
+            ddlStatus.trigger("change");
+
+
+            //hiddenMeasureMentId.val(td1);
+            ////measureMentName.val(td2);
+            ////masterCartoonBox.val(td4);
+            ////innerBox.val(td5);
+            ////packSize.val(td6);
+            ////unitName.val(td3);
+            ////unitName.val(td7);
+            ////unitName.trigger("change");
+            ////measureMentName.val(td4);
+            ////measureMentName.val(td5);
+            ////measureMentName.val(td6);
+            
+            
 
         })
         function OpenModal() {
@@ -498,22 +551,22 @@
                 isValid = false;
             }
 
-            if (txtmasterBox.val() === "" ) {
-                $(".req-txtmasterBox").removeClass('hide');
-                isValid = false;
-            }
-            if (txtinnerBox.val() === "") {
-                $(".req-txtinnerBox").removeClass('hide');
-                isValid = false;
-            }
+            //if (txtmasterBox.val() === "" ) {
+            //    $(".req-txtmasterBox").removeClass('hide');
+            //    isValid = false;
+            //}
+            //if (txtinnerBox.val() === "") {
+            //    $(".req-txtinnerBox").removeClass('hide');
+            //    isValid = false;
+            //}
             if (txtunit.val() === "") {
                 $(".req-txtunit").removeClass('hide');
                 isValid = false;
             }
-            if (TryParseInt(txtpackSize.val(), 0) <= 0) {
-                $(".req-txtpackSize").removeClass('hide');
-                isValid = false;
-            }
+            //if (TryParseInt(txtpackSize.val(), 0) <= 0) {
+            //    $(".req-txtpackSize").removeClass('hide');
+            //    isValid = false;
+            //}
 
             return isValid;
         }

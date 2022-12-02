@@ -21,6 +21,8 @@ namespace ERPBO.Agriculture.DomainModels
         public DateTime? EntryDate { get; set; }
         public long EntryUserId { get; set; }
         public long DepotId { get; set; }
+        public string Status { get; set; }
+        public long UnitId { get; set; }
         //public DateTime? ExpireDate { get; set; }
     }
 }

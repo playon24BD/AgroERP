@@ -16,7 +16,8 @@ namespace ERPBO.Agriculture.DomainModels
         public long RawMaterialId { get; set; }
         public string ReceipeBatchCode { get; set; }
         public double FGRRawMaterQty { get; set; }
-        public string FGRRawMaterUnit { get; set; }
+        //public string FGRRawMaterUnit { get; set; }
+        public long UnitId { get; set; }
         public long OrganizationId { get; set; }
         public long? EUserId { get; set; }
         public Nullable<DateTime> EntryDate { get; set; }

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.AgroProductSalesInfoViewModel>
+@{
+    ViewBag.Title = "_GetProductSalesDropList";
+    int sl = 0;
+}
+
+<table class="table table-bordered table-sm table-striped table-responsive-lg text-sm" id="tblAgroSalesProductDropList">
+    <thead class="btn-dark">
+        <tr class="text-center text-bold">
+            <th style="vertical-align:middle">#SL</th>
+            <th style="vertical-align:middle" class="hide"></th>
+            <th style="vertical-align:middle">Invoice No</th>
+            <th style="vertical-align:middle">InvoiceDate</th>
+            <th style="vertical-align:middle">StockiestName</th>
+            <th style="vertical-align:middle">TotalAmount</th>
+            <th style="vertical-align:middle">PaidAmount</th>
+            <th style="vertical-align:middle">DueAmount</th>
+            <th style="vertical-align:middle">Action</th>
+            @*<th style="vertical-align:middle">Product Name</th>
+            <th style="vertical-align:middle">MeasurementSize</th>
+            <th style="vertical-align:middle">Quantity</th>
+            <th style="vertical-align:middle">Price</th>
+            <th style="vertical-align:middle">Discount</th>*@
+            
+           
+            
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+            <tr>
+                <td class="text-center text-bold">@sl</td>
+                <td class="hide">@item.ProductSalesInfoId</td>
+                @*<td class="hide">@item.StockiestId</td>*@
+                <td class="text-center">@item.InvoiceNo</td>
+                <td class="text-center">@item.InvoiceDate.Value.ToString("dd-MMM-yyyy")</td>
+                <td class="text-center">@item.StockiestName</td>
+                <td class="text-center">@item.TotalAmount</td>
+                <td class="text-center">@item.PaidAmount</td>
+                <td class="text-center">@item.DueAmount</td>
+                <td class="text-center">
+                    <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail-Drop-ProductionSalesInfoId" title="View Detail" data-item-detail-Drop-ProductionSalesInfoId="@item.ProductSalesInfoId" style="line-height:1">
+                        <i class="fas fa-eye"></i>
+                    </a>
+
+                </td>
+
+                @*<td class="text-center">@item.FinishGoodProductName</td>
+                <td class="text-center">@item.MeasurementSize</td>
+                <td class="text-center">@item.Quanity</td>
+                <td class="text-center">@item.Price</td>
+                <td class="text-center">@item.Discount</td>*@
+                
+                
+               
+
+                
+            </tr>
+        }
+        @if (Model.Count() == 0)
+        {
+            <tr class="text-center text-bold">
+                <td colspan="11">No data found in the table</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

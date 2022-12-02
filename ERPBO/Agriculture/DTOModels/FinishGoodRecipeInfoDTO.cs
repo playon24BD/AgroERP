@@ -13,12 +13,14 @@ namespace ERPBO.Agriculture.DTOModels
         public string FinishGoodProductName { get; set; }
         public string ReceipeBatchCode { get; set; }
         public int FGRQty { get; set; }
-        public string FGRUnit { get; set; }
+        public long UnitId { get; set; }
+        public string UnitName { get; set; }
         public long OrganizationId { get; set; }
         public long? EUserId { get; set; }
         public Nullable<DateTime> EntryDate { get; set; }
         public long? UpUserId { get; set; }
         public Nullable<DateTime> UpdateDate { get; set; }
         public string Status { get; set; }
+        public string UnitQty { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace ERPBLL.Agriculture.Interface
     public interface IDivisionInfo
     {
         DivisionInfo GetDivisionInfoById(long divisionId, long orgId);
-        IEnumerable<DivisionInfoDTO> GetDivisionInfos(long? divisionId,long? zoneId, long orgId);
+        IEnumerable<DivisionInfoDTO> GetDivisionInfos(string name,long? divisionId,long? zoneId, long orgId);
         IEnumerable<DivisionInfo> GetAllDivisionSetup(long OrgId);
         IEnumerable<DivisionInfoDTO> GetAllDivisionDetails(long ZoneId, long orgId);
 

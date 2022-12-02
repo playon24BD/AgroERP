@@ -103,5 +103,15 @@ Inner JOIN [Agriculture].[dbo].[tblRegionInfos] R on A.RegionId=R.RegionId
         {
             return _areaSetupInfoRepository.GetOneByOrg(r => r.AreaId == areaId && r.OrganizationId == orgId);
         }
+
+        public IEnumerable<AreaInfoSetup> GetAllAreaSetupV(long OrgId)
+        {
+            return _areaSetupInfoRepository.GetAll(x => x.OrganizationId == OrgId).ToList();
+        }
+
+        public AreaInfoSetup GetAreaInfoById(long areaId, long orgId)
+        {
+            return _areaSetupInfoRepository.GetOneByOrg(r => r.AreaId == areaId && r.OrganizationId == orgId);
+        }
     }
 }
