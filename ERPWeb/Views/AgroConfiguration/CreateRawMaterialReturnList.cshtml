@@ -13,7 +13,10 @@
         background-color: darkcyan !important;
         color: white !important;
     }
-
+    .form-control:focus {
+        border-color: #ff80ff;
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255, 100, 255, 0.5);
+    }
 
 </style>
 
@@ -51,7 +54,7 @@
                                     <div class="row justify-content-center">
                                         <div class="col-md-2">
                                             <label class="control-label" for="ddlRawmaterialName">RawMaterial</label>
-                                            @Html.DropDownList("ddlRawmaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawmaterialName, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            @Html.DropDownList("ddlRawmaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawmaterialName, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
                                             <span class="error hide req-ddlRawmaterialName">RawMaterial Is Required</span>
                                         </div>
 
@@ -73,7 +76,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="ddlReturnType" class="control-label">Return Type</label>
-                                            <select id="ddlReturnType" class="form-control form-control-sm" select2>
+                                            <select  id="ddlReturnType" class="form-control form-control-sm select2" >
                                                 <option value="">Select Type</option>
                                                 <option value="Good">Good</option>
                                                 <option value="Damage">Damage</option>
@@ -162,7 +165,7 @@
             });
             $("#btnSubmit").hide();
 
- 
+            
 
         })
 

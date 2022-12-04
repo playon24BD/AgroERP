@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-md-3">
                                 @*<label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>*@
-                                @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" } )
                             </div>
                             <div class="hide">
                                 <label for="ddlStokiestID">StokiestID</label>
@@ -122,9 +122,12 @@
                 theme: 'bootstrap4'
             });
 
-            $(function () {
-                $('#ddlstokiestname').focus();
-            });
+            //$(function () {
+            //   // $('#ddlstokiestname').focus();
+            //    //$('#ddlstokiestname :input:enabled:visible:first').focus();
+            //    $('#ddlstokiestname').get(0).focus();
+            //    //$("#formId input:text, #formId textarea").first().focus();
+            //});
         })
 
 

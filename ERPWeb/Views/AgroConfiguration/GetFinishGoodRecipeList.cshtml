@@ -19,6 +19,8 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-3">
+
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             </div>
                             <div class="col-md-6">
                                 <h5 class="text-center text-bold">
@@ -27,7 +29,7 @@
                             </div>
                             <div class="col-md-3">
                                 @*@if (privilege != null && privilege.Add)
-                                {*@
+            {*@
                                 <a href="/AgroConfiguration/CreateFinishGoodRecipe" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Recipe</a>
                                 @*//}*@
                             </div>
@@ -37,7 +39,7 @@
             </div>
         </div>
 
-        <div class="row" style="margin-top:-15px">
+        @*<div class="row" style="margin-top:-15px">
             <div class="col-md-12">
                 <div class="card card-gray-dark">
                     <div class="card-header">
@@ -54,7 +56,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
         <div class="row">
             <div class="col-md-12" style="margin-top:-10px">
