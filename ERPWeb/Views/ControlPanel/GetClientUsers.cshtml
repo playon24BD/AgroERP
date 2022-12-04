@@ -1,0 +1,462 @@
+﻿@model IEnumerable<ERPBO.ControlPanel.ViewModels.AppUserViewModel>
+@{
+    ViewBag.Title = "List Of User";
+    int sl = 0;
+    string badge = string.Empty;
+    string badge1 = string.Empty;
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h4><b style="color:darkblue">List Of User</b></h4>
+        <hr />
+    </div>
+    <div class="col-md-12 mb-2">
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="search" id="searchBy" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('#tblAppUserData tbody tr',this)" />
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                @if (privilege != null && privilege.Add)
+                {
+                    <button class="btn btn-primary btn-sm float-lg-right" style="background-color:darkblue" id="btnAddNew"><i class="fa fa-plus"></i> Create New User</button>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm table-striped table-responsive-lg" id="tblAppUserData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">#SL</th>
+                    <th class="hide"></th>
+                    <th style="vertical-align:middle">Employee Id</th>
+                    <th style="vertical-align:middle">Full Name</th>
+                    <th style="vertical-align:middle" class="hide">Mobile No</th>
+                    <th style="vertical-align:middle" class="hide">Address</th>
+                    <th style="vertical-align:middle">Email</th>
+                    <th style="vertical-align:middle">Desigation</th>
+                    <th style="vertical-align:middle">User Name</th>
+                    <th style="vertical-align:middle">Password</th>
+                    <th style="vertical-align:middle">User Status</th>
+                    <th style="vertical-align:middle">Role Status</th>
+                    <th class="hide"></th>
+                    <th style="vertical-align:middle">Organization</th>
+                    <th class="hide"></th>
+                    <th style="vertical-align:middle">Branch</th>
+                    <th class="hide"></th>
+                    <th style="vertical-align:middle">Role</th>
+
+                    <th style="vertical-align:middle" class="hide">Entry User</th>
+                    <th style="vertical-align:middle" class="hide">Update User</th>
+                    <th style="vertical-align:middle">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    sl += 1;
+                    badge = (user.StateStatus == "Active" ? "badge bg-success" : "badge bg-danger");
+                    badge1 = (user.StateStatusRole == "Active" ? "badge bg-success" : "badge bg-danger");
+                <tr>
+                    <td class="text-center">
+                        <b>@sl</b>
+                    </td>
+                    <td class="hide">@user.UserId</td>
+                    <td>@user.EmployeeId</td>
+                    <td>@user.FullName</td>
+                    <td class="hide">@user.MobileNo</td>
+                    <td class="hide">@user.Address</td>
+                    <td>@user.Email</td>
+                    <td>@user.Desigation</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Password</td>
+                    <td class="text-center" data-val="@user.StateStatus">
+                        <span class="@badge">@user.StateStatus</span>
+                    </td>
+                    <td class="text-center" data-val="@user.StateStatusRole">
+                        <span class="@badge1">@user.StateStatusRole</span>
+                    </td>
+                    <td class="hide">@user.OrganizationId</td>
+                    <td>@user.OrganizationName</td>
+                    <td class="hide">@user.BranchId</td>
+                    <td>@user.BranchName</td>
+                    <td class="hide">@user.RoleId</td>
+                    <td>@user.RoleName</td>
+                    <td class="text-center text-sm hide">@user.EntryUser</td>
+                    <td class="text-center text-sm hide">@user.UpdateUser</td>
+                    <td class="text-center">
+                        @if (privilege != null && privilege.Edit)
+                        {
+                            <a href="#" class="btn btn-sm btn-warning data-edit-item" data-edit-item="@user.UserId"><i class="fa fa-pen"></i> Edit</a>
+                        }
+                    </td>
+                </tr>
+                }
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="22">
+                            No data found in the table
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAppUser" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead">Add New User</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmItem">
+                    <input type="hidden" name="Id" id="hdfUserId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="txtEmployeeId" class="control-label font-weight-bold">Employee Id</label>
+                            <input type="text" id="txtEmployeeId" class="form-control form-control-sm" />
+                            <span class="error hide required-employeeId font-weight-bold">Input EmployeeId!</span>
+                            <span class="error hide duplicate-employeeId font-weight-bold">Already EmployeeId Exist!</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtFullName" class="control-label font-weight-bold">Full Name</label>
+                            <input type="text" id="txtFullName" class="form-control form-control-sm" />
+                            <span class="error hide required-fullName font-weight-bold">Input Full Name!</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtMobileNo" class="control-label font-weight-bold">Mobile No</label>
+                            <input type="text" id="txtMobileNo" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="txtAddress" class="control-label font-weight-bold">Address</label>
+                            <input type="text" id="txtAddress" class="form-control form-control-sm" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtEmail" class="control-label font-weight-bold">Email</label>
+                            <input type="email" id="txtEmail" class="form-control form-control-sm" />
+                            <span class="error hide dup-email">Email is already exist!</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtDesignation" class="control-label font-weight-bold">Designation</label>
+                            <input type="text" id="txtDesignation" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="txtUserName" class="control-label font-weight-bold">User Name</label>
+                            <input type="text" id="txtUserName" class="form-control form-control-sm" />
+                            <span class="error hide required-userName font-weight-bold">Input User Name!</span>
+                            <span class="error hide dup-userName">UserName is already exist!</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtPassword" class="control-label font-weight-bold">Password</label>
+                            <input type="text" id="txtPassword" class="form-control form-control-sm" />
+                            <span class="error hide required-password font-weight-bold">Input Password!</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="txtConfirmPassword" class="control-label font-weight-bold">Confirm Password</label>
+                            <input type="text" id="txtConfirmPassword" class="form-control form-control-sm" />
+                            <span class="error hide required-confirmPassword font-weight-bold">Input Confirm password!</span>
+                            <span class="error hide compare-password font-weight-bold">Password & Confirm Password does not match!</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        @*<div class="form-group col-md-4">
+                                <label for="ddlOrganizationName" class="control-label font-weight-bold">Organization</label>
+                                @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm" })
+                                <span class="error hide req-org">Organization is required</span>
+                            </div>*@
+                        <div class="form-group col-md-4">
+                            <label for="ddlRoleName" class="control-label font-weight-bold">Role</label>
+                            <select id="ddlRoleName" class="form-control form-control-sm">
+                                <option value="">--Select Role--</option>
+                            </select>
+                            <span class="error hide req-role">Role is required</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="ddlBranchName" class="control-label font-weight-bold">Branch</label>
+                            <select id="ddlBranchName" class="form-control form-control-sm">
+                                <option value="">--Select Branch--</option>
+                            </select>
+                            <span class="error hide req-branch">Branch is required</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="chkStatestatus" style="visibility:hidden" class="control-label font-weight-bold">User Status</label>
+                            <div class="form-control form-control-sm">
+                                <input type="checkbox" id="chkStatestatus" /> <b>Is User Active?</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <div class="form-control form-control-sm">
+                                <input type="checkbox" id="chkStatestatusRole" /> <b>Is Role Active?</b>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-success float-right" id="btnSubmit"><i class="far fa-save"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        var hdfUserId = $("#hdfUserId");
+        var txtEmployeeId = $("#txtEmployeeId");
+        var txtFullName = $("#txtFullName");
+        var txtMobileNo = $("#txtMobileNo");
+        var txtAddress = $("#txtAddress");
+        var txtEmail = $("#txtEmail");
+        var txtDesignation = $("#txtDesignation");
+        var txtUserName = $("#txtUserName");
+        var txtPassword = $("#txtPassword");
+        var txtConfirmPassword = $("#txtConfirmPassword");
+        //var ddlOrganizationName = $("#ddlOrganizationName");
+        var ddlRoleName = $("#ddlRoleName");
+        var ddlBranchName = $("#ddlBranchName");
+        var chkStatestatus = $("#chkStatestatus");
+        var chkStatestatusRole = $("#chkStatestatusRole");
+
+        $(document).ready(function ()
+        {
+            //$('#tblappuserdata').datatable({
+            //    "paging": false,
+            //    "lengthchange": false,
+            //    "searching": false,
+            //    "ordering": true,
+            //    "info": false,
+            //    "autowidth": false,
+            //});
+
+            LoadDropDown('/Common/GetBranchesByOrgId', type.post, ddlBranchName, JSON.stringify({ orgId: @User.OrgId }));
+                LoadDropDown('/Common/GetRolesByOrgId', type.post, ddlRoleName, JSON.stringify({ orgId: @User.OrgId }));
+
+        })
+
+        //ddlOrganizationName.change(function () {
+        //    clearDropdown("ddlRoleName");
+        //    clearDropdown("ddlBranchName");
+        //    if (TryParseInt(ddlOrganizationName.val(), 0) > 0)
+        //    {
+        //        LoadDropDown('/Common/GetBranchesByOrgId', type.post, ddlBranchName, JSON.stringify({ orgId: ddlOrganizationName.val() }));
+        //        LoadDropDown('/Common/GetRolesByOrgId', type.post, ddlRoleName, JSON.stringify({ orgId: ddlOrganizationName.val() }));
+        //    }
+        //})
+
+        function OpenModal() {
+            $("#spanModalHead").text('Add New AppUser');
+            $("#spanSaveText").text('Save');
+            $("#modalAppUser").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        $("#btnAddNew").click(function (e) {
+            e.preventDefault();
+            clearCtrl();
+            OpenModal();
+        })
+
+        function validateForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if ($.trim(txtEmployeeId.val()) == ""){
+                $(".required-employeeId").removeClass("hide");
+                isValid = false;
+            }
+            else {
+                    var id = TryParseInt(hdfUserId.val(), 0);
+                    if (ajaxBooleanChecker(JSON.stringify({ id: id, employeeId: txtEmployeeId.val().trim() }), '/Common/IsDuplicateEmployeeId', getToken()) == true) {
+                        $(".duplicate-employeeId").removeClass("hide");
+                        isValid = false;
+                }
+            }
+            if ($.trim(txtFullName.val()) === "") {
+                $(".required-fullName").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(txtPassword.val()) === "") {
+                $(".required-password").removeClass("hide");
+                isValid = false;
+            }
+            else {
+                if ($.trim(txtConfirmPassword.val()) === "") {
+                    $(".required-confirmPassword").removeClass("hide");
+                    isValid = false;
+                }
+                else {
+                    if ($.trim(txtConfirmPassword.val()) !== $.trim(txtPassword.val()))
+                    {
+                        $(".compare-password").removeClass("hide");
+                        isValid = false;
+                    }
+                }
+            }
+            if ($.trim(txtUserName.val()) === "") {
+                $(".required-userName").removeClass("hide");
+                isValid = false;
+            }
+            else
+            {
+                if (ajaxBooleanChecker(JSON.stringify({ userName: txtUserName.val().trim(), id: TryParseInt(hdfUserId.val(), 0) }), '/Common/IsUserExist', getToken()) === true)
+                {
+                    $('.dup-userName').removeClass('hide');
+                    isValid = false;
+                }
+            }
+            if (txtEmail.val().trim() !== '')
+            {
+                if (ajaxBooleanChecker(JSON.stringify({ email: txtEmail.val().trim(), id: TryParseInt(hdfUserId.val(), 0) }), '/Common/IsEmailExist', getToken()) === true)
+                {
+                    $('.dup-email').removeClass('hide');
+                    isValid = false;
+                }
+            }
+            //if (TryParseInt(ddlOrganizationName.val(),0) === 0) {
+            //    $(".req-org").removeClass("hide");
+            //    isValid = false;
+            //}
+            if (TryParseInt(ddlRoleName.val(), 0) === 0) {
+                $(".req-role").removeClass("hide");
+                isValid = false;
+            }
+            if (TryParseInt(ddlBranchName.val(), 0) === 0) {
+                $(".req-branch").removeClass("hide");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            $(".error").addClass("hide");
+            if (validateForm() == true) {
+                var data = JSON.stringify({
+                    UserId: TryParseInt(hdfUserId.val(), 0),
+                    EmployeeId: txtEmployeeId.val(),
+                    FullName: txtFullName.val(),
+                    MobileNo: txtMobileNo.val(),
+                    Address: txtAddress.val(),
+                    Email: txtEmail.val(),
+                    Desigation: txtDesignation.val(),
+                    UserName: txtUserName.val(),
+                    Password: txtPassword.val(),
+                    ConfirmPassword: txtConfirmPassword.val(),
+                    OrganizationId: @User.OrgId,
+                    BranchId: TryParseInt(ddlBranchName.val(), 0),
+                    RoleId: TryParseInt(ddlRoleName.val(), 0),
+                    IsActive: chkStatestatus.is(":checked"),
+                    IsRoleActive: chkStatestatusRole.is(":checked"),
+                });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/ControlPanel/SaveClientUser', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        message("#msg1", "#modalAppUser");
+                    }
+                    else {
+                        message("#msg2");
+                    }
+                    enable("#btnSubmit");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmit");
+                });
+            }
+        })
+
+        $(document).on("click", "a.data-edit-item", function (e) {
+            e.preventDefault()
+            clearCtrl();
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+            var td8 = row.find('td:eq(8)').html();
+            var td9 = row.find('td:eq(9)').html();
+            var td10 = row.find('td:eq(10)').attr("data-val");
+            var td11 = row.find('td:eq(11)').attr("data-val");
+            var td12 = row.find('td:eq(12)').html()
+            var td13 = row.find('td:eq(13)').html();
+            var td14 = row.find('td:eq(14)').html();
+            var td15 = row.find('td:eq(15)').html();
+            var td16 = row.find('td:eq(16)').html();
+            var td17 = row.find('td:eq(17)').html();
+
+            OpenModal();
+            fnModalHeadChange("Update User")
+            hdfUserId.val(td1);
+            txtEmployeeId.val(td2);
+            txtFullName.val(td3);
+            txtMobileNo.val(td4);
+            txtAddress.val(td5);
+            txtEmail.val(td6);
+            txtDesignation.val(td7);
+            txtUserName.val(td8);
+            txtPassword.val(td9);
+            txtConfirmPassword.val(td9);
+            chkStatestatus.prop("checked", false);
+            if (td10 === 'Active') {
+                chkStatestatus.prop("checked", true);
+            }
+            chkStatestatusRole.prop("checked", false);
+            if (td11 === 'Active') {
+                chkStatestatusRole.prop("checked", true);
+            }
+            ddlRoleName.val(td16);
+            ddlBranchName.val(td14);
+          
+        })
+
+        function clearCtrl()
+        {
+            hdfUserId.val('0');
+            txtEmployeeId.val('');
+            txtFullName.val('');
+            txtMobileNo.val('');
+            txtAddress.val('');
+            txtEmail.val('');
+            txtDesignation.val('');
+            txtUserName.val('');
+            txtPassword.val('');
+            txtConfirmPassword.val('');
+            chkStatestatus.prop("checked", false);
+            chkStatestatusRole.prop("checked", false);
+            //ddlOrganizationName.val('');
+            ddlBranchName.val('');
+            ddlRoleName.val('');
+        }
+
+    </script>
+}

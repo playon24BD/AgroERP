@@ -1,0 +1,383 @@
+﻿@{
+    ViewBag.Title = "User Custom Permission";
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h4>User Permission</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.DropDownList("ddlUsers", (List<SelectListItem>)ViewBag.ddlUsers, "---Select User---", new { @class = "form-control select2 select2-danger", @style = "width: 100%;" })
+                    </div>
+                    <div class="col-md-4">
+                        
+                    </div>
+                    <div class="col-md-4">
+                        @if (privilege != null && (privilege.Add || privilege.Edit))
+                        {
+                            <button type="submit" id="btnSubmit" class="btn float-right btn-outline-success"> Set User Menu <i class="fas fa-paper-plane"></i></button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            @Html.AntiForgeryToken()
+            <div class="card-header">
+                <div class="row" id="dataContainer">
+                    @*<div class="col-md-12">
+                            <table class="table table-striped table-bordered table-sm table-responsive-lg mb-0">
+                                <tr class="text-bold">
+                                    <td style="width:18%">Organization Name</td>
+                                    <td style="width:23%">PlayOn 24</td>
+                                    <td style="width:15%">User Name</td>
+                                    <td style="width:18%">yeasinahmed</td>
+                                    <td style="width:10%">Employee Id</td>
+                                    <td style="width:15%">001002</td>
+                                </tr>
+                                <tr class="text-bold">
+                                    <td style="width:18%">Full Name</td>
+                                    <td style="width:23%">Yeasin Ahmed</td>
+                                    <td style="width:15%">Email</td>
+                                    <td style="width:18%">N/A</td>
+                                    <td style="width:10%">Desigation</td>
+                                    <td style="width:15%">N/A</td>
+                                </tr>
+                                <tr class="text-bold">
+                                    <td style="width:18%">User Status</td>
+                                    <td style="width:23%">Active</td>
+                                    <td style="width:15%">Role Name</td>
+                                    <td style="width:18%">Admin</td>
+                                    <td style="width:10%">Role Status</td>
+                                    <td style="width:15%">Active</td>
+                                </tr>
+                            </table>
+                        </div>*@
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 class="text-center" id="text-unload">Please Load Menu's Data</h5>
+                        <table class="table table-sm table-avatar table-responsive-lg" id="tblMenuData">
+                            @*<tr class="btn-info">
+                                        <td colspan="9" title="Module" class="text-center text-bold text-lg">
+                                            Control Panel
+                                        </td>
+                                    </tr>
+                                <tr class="text-bold" data-item-name="menurow">
+                                        <td title="Mainmenu" class="text-center" style="vertical-align:middle" data-mainmenu-item="" data-module-item="">
+                                            User Management
+                                        </td>
+                                        <td class="btn btn-secondary" title="Submenu"><input type="checkbox" id="submenuId" data-item-sub="" data-item-menu="" data-item-module="" /> Organization List</td>
+                                        <td>
+                                            <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="allSubmenuId" value="" /> All
+                                        </td>
+                                        <td >
+                                            <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="addSubmenuId" value="" />Add
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="editSubmenuId" value="" /> Edit
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="detailSubmenuId" value="" />Detail
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="deleteSubmenuId" value="" />
+                                            Delete
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="approvalSubmenuId" value="" />
+                                            Approval
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" data-control-for="action" data-action-for="submenuId" id="reportSubmenuId" value="" />
+                                            Report
+                                        </td>
+                                    </tr>*@
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var ddlUsers = $("#ddlUsers");
+        var tblMenuData = $("#tblMenuData");
+        var btnSubmit = $("#btnSubmit");
+
+        $(document).ready(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+        })
+
+        ddlUsers.change(function () {
+            if (TryParseInt(ddlUsers.val(), 0) > 0) {
+                var data = JSON.stringify({ flag: "load", userId: ddlUsers.val(), orgId: '@User.OrgId' });
+                $.when(postReqWithData(dataType.applicationJson, dataType.json, type.post, '/ControlPanel/SetUserCustomPermission', data)).then(function (res, status) {
+                    if (status === 'success') {
+                        console.log(res);
+                        SetUserMenuUI(res);
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+            else {
+                $("#text-unload").removeClass('hide');
+                $("#dataContainer").empty();
+                tblMenuData.empty();
+            }
+        })
+
+        function SetUserMenuUI(obj) {
+            if (!$.isEmptyObject(obj)) {
+                var userDetail =
+                    (
+                        '<div class="col-md-12">' +
+                        '<table class="table table-striped table-bordered table-sm table-responsive-lg mb-0">' +
+                        '<tr class="text-bold">' +
+                        '<td style="width:18%">Organization Name</td>' +
+                        '<td style = "width:23%">' + obj.userDetail.OrganizationName + '</td >' +
+                        '<td style="width:15%">User Name</td>' +
+                        '<td style="width:18%">' + obj.userDetail.UserName + '</td>' +
+                        '<td style="width:10%">Employee Id</td>' +
+                        '<td style="width:15%">' + obj.userDetail.EmployeeId + '</td>'
+                        + '</tr>' +
+                        '<tr class="text-bold">' +
+                        '<td style="width:18%">Full Name</td>' +
+                        '<td style = "width:23%">' + obj.userDetail.FullName + '</td >' +
+                        '<td style="width:15%">Email</td>' +
+                        '<td style="width:18%">' + obj.userDetail.Email + '</td>' +
+                        '<td style="width:10%">Designation</td>' +
+                        '<td style="width:15%">' + obj.userDetail.Designation + '</td>'
+                        + '</tr>' +
+                        '<tr class="text-bold">' +
+                        '<td style="width:18%">User Status</td>' +
+                        '<td style = "width:23%">' + obj.userDetail.UserStatus + '</td >' +
+                        '<td style="width:15%">Role Name</td>' +
+                        '<td style="width:18%">' + obj.userDetail.RoleName + '</td>' +
+                        '<td style="width:10%">Role Status</td>' +
+                        '<td style="width:15%">' + obj.userDetail.RoleStatus + '</td>'
+                        + '</tr>'
+                        + '</table>'
+                        + '</div>');
+                $("#text-unload").addClass('hide');
+                $("#dataContainer").empty();
+                $("#dataContainer").append(userDetail);
+                tblMenuData.empty();
+
+                var menus = obj.menuDetail;
+                $.each(menus, function (index, item) {
+
+                    // Module
+                    var trModule = "<tr class='alert alert-secondary'><td colspan='9' title='Module' class='text-center text-bold text-lg'><b>" + item.ModuleName + "</b></td></tr>";
+                    tblMenuData.append(trModule);
+
+                    $.each(item.Menus, function (idx, itm) {
+                        // Mainmenu
+                        var tr = "";
+                        $.each(itm.SubMenus, function (ix, im) {
+                            // Submenu
+
+                            var td1 = "<td title='Mainmenu' class='text-center' style='vertical-align:middle' data-mainmenu-item='" + itm.MenuId + "' data-module-item='" + item.ModuleId + "'>" + itm.MenuName + "</td >";
+
+                            var td2 = "<td class='" + (im.TaskId > 0 ? "alert alert-warning" : "alert alert-info") + "' title='Submenu'><input type='checkbox' " + (im.TaskId > 0 ? "checked='checked'" : "") + " id='" + im.SubmenuId + "'data-val-for='submenu' data-item-sub='" + im.SubmenuId + "' data-item-menu='" + itm.MenuId + "' data-item-module='" + item.ModuleId + "' data-item-task='" + im.TaskId + "' data-item-parentsub='" + im.ParentSubMenuId + "' />" + im.SubMenuName + "</td>";
+
+                            var isAll = false;
+                            if (im.Add && im.Edit && im.Delete && im.Approval && im.Report) {
+                                isAll = true;
+                            }
+                            var isAllactive = isAll ? 'checked="checked"' : '';
+                            var td3 = "<td><input type='checkbox' data-control-for='action' data-action-for='" + im.SubmenuId + "' id='all" + im.SubmenuId + "' " + isAllactive + "/> All";
+
+                            var td4 = "<td><input type='checkbox' data-control-for='action' data-action-for='" + im.SubmenuId + "' id='add" + im.SubmenuId + "' " + (im.Add ? 'checked="checked"' : '') + "/> Add";
+
+                            var td5 = "<td><input type='checkbox' data-control-for='action' data-action-for='" + im.SubmenuId + "' id='edit" + im.SubmenuId + "' " + (im.Edit ? 'checked="checked"' : '') + "/> Edit";
+
+                            var td6 = "<td><input type='checkbox' data-control-for='action' data-action-for='" + im.SubmenuId + "' id='detail" + im.SubmenuId + "' " + (im.Detail ? 'checked="checked"' : '') + "/> Detail";
+
+                            var td7 = "<td><input type='checkbox' data-control-for='action' data-action-for='" + im.SubmenuId + "' id='delete" + im.SubmenuId + "' " + (im.Delete ? 'checked="checked"' : '') + "/> Delete";
+
+                            var td8 = "<td><input type='checkbox' data-control-for='action' data-action-for='" + im.SubmenuId + "' id='approval" + im.SubmenuId + "' " + (im.Approval ? 'checked="checked"' : '') + "/> Approval";
+
+                            var td9 = "<td><input type='checkbox' data-control-for='action' data-action-for='" + im.SubmenuId + "' id='report" + im.SubmenuId + "' " + (im.Report ? 'checked="checked"' : '') + "/> Report";
+
+                            tr += '<tr data-item-name="menurow">' + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + '</tr>';
+                        });
+                        if (itm.SubMenus.length == 0) {
+                            var td1 = "<td data-mainmenu-id='" + itm.MenuId + "' class='text-center' style='vertical-align: middle'>" + itm.MenuName + "</td>";
+                            var td2 = "<td colspan='8'>No Submenus Found.</td>";
+                            tr = "<tr data-item-name='menurow'>" + td1 + td2 + "</tr>";
+                        }
+                        tblMenuData.append(tr);
+                    });
+                    if (item.Menus.length == 0) {
+                        var trMenu = '<tr><td colspan="9" class="text-center">No Menus Found.</td></tr>';
+                        tblMenuData.append(trMenu);
+                    }
+                });
+                fixit(tblMenuData);
+            }
+        }
+
+        function fixit(selector) {
+            selector.each(function () {
+                var values = $(this).find("tr>td:first-of-type")
+                var run = 1
+                for (var i = values.length - 1; i > -1; i--) {
+                    if (values.eq(i).text() === values.eq(i - 1).text()) {
+                        values.eq(i).remove()
+                        run++
+                    } else {
+                        values.eq(i).attr("rowspan", run)
+                        run = 1
+                    }
+                }
+            })
+        }
+
+        $(document).on('click', "input[type='checkbox'][data-val-for='submenu']", function (e) {
+            var i = $(this).is(':checked')
+            console.log('checked...');
+            if (i === true) {
+                $(this).parent().removeClass('alert alert-info');
+                $(this).parent().addClass('alert alert-warning');
+            }
+            else {
+                $(this).parent().removeClass('alert alert-warning');
+                $(this).parent().addClass('alert alert-info');
+            }
+        })
+
+        $(document).on("click", "input[type='checkbox'][id^='all']", function (e) {
+            var id = $(this).attr('data-action-for');
+            if ($(this).is(":checked")) {
+                ////console.log("All is checked");
+                $("input[type='checkbox'][data-action-for='" + id + "']").prop("checked", true);
+            }
+            else {
+                ////console.log("All is UnChecked");
+                $("input[type='checkbox'][data-action-for='" + id + "']").prop("checked", false);
+            }
+        })
+
+        $(document).on('click', 'input[type="checkbox"][data-control-for="action"]', function (e) {
+            //if ($(this).is(":checked")) {
+            var tr = $(this).parent().parents('tr');
+            var tdLength = $(this).parent().parents('tr').children('td').length;
+            console.log('Tr length=' + tdLength);
+            var isReport = (tr.find('td').eq(tdLength - 1).children('input[type="checkbox"]').is(":checked")) == true ? true : false;
+            var isApproval = (tr.find('td').eq(tdLength - 2).children('input[type="checkbox"]').is(":checked")) == true ? true : false;
+            var isDelete = (tr.find('td').eq(tdLength - 3).children('input[type="checkbox"]').is(":checked")) == true ? true : false;
+
+            var isDetail = (tr.find('td').eq(tdLength - 4).children('input[type="checkbox"]').is(":checked")) == true ? true : false;
+            var isEdit = (tr.find('td').eq(tdLength - 5).children('input[type="checkbox"]').is(":checked")) == true ? true : false;
+            var isAdd = (tr.find('td').eq(tdLength - 6).children('input[type="checkbox"]').is(":checked")) == true ? true : false;
+
+            if (isReport && isApproval && isDelete && isEdit && isAdd && isDetail) {
+                tr.find('td').eq(tdLength - 7).children('input[type="checkbox"][id^="all"]').prop("checked", true);
+                //alert('data-control-for 1');
+            }
+            else {
+                tr.find('td').eq(tdLength - 7).children('input[type="checkbox"][id^="all"]').prop("checked", false);
+                //alert('data-control-for 2');
+            }
+            //}
+        })
+
+        btnSubmit.click(function (e) {
+            e.preventDefault();
+            var dataAry = [];
+            dataAry.length = 0;
+            tblMenuData.each(function () {
+                //console.log('Inside Loop');
+                var trs = $(this).find('tr[data-item-name="menurow"]');
+                ////console.log(trs);
+                $.each(trs, function (index, item) {
+                    var tdLength = $(item).children('td').length;
+                    var i = tdLength === 9 ? 1 : 0;
+                    if (($(item).find('td').eq((0 + i)).children('input[type="checkbox"]').is(":checked")) == true) {
+                        //console.log('Checked....');
+                        var submenuId = $(item).find('td').eq((0 + i)).children('input[type="checkbox"]').attr('data-item-sub');
+                        var mainmenuId = $(item).find('td').eq((0 + i)).children('input[type="checkbox"]').attr('data-item-menu');
+                        var moduleId = $(item).find('td').eq((0 + i)).children('input[type="checkbox"]').attr('data-item-module');
+                        var taskId = $(item).find('td').eq((0 + i)).children('input[type="checkbox"]').attr('data-item-task');
+                        var parentId = $(item).find('td').eq((0 + i)).children('input[type="checkbox"]').attr('data-item-parentsub');
+                        var add = $(item).find('td').eq((2 + i)).children('input[type="checkbox"]').is(":checked");
+                        var edit = $(item).find('td').eq((3 + i)).children('input[type="checkbox"]').is(":checked");
+                        var detail = $(item).find('td').eq((4 + i)).children('input[type="checkbox"]').is(":checked");
+                        var del = $(item).find('td').eq((5 + i)).children('input[type="checkbox"]').is(":checked");
+                        var approval = $(item).find('td').eq((6 + i)).children('input[type="checkbox"]').is(":checked");
+                        var rpt = $(item).find('td').eq((7 + i)).children('input[type="checkbox"]').is(":checked");
+
+                        dataAry.push({
+                            TaskId: taskId,
+                            UserId: TryParseInt(ddlUsers.val(), 0),
+                            RoleId: 0,
+                            ModuleId: moduleId,
+                            MainmenuId: mainmenuId,
+                            SubmenuId: submenuId,
+                            ParentSubmenuId: parentId,
+                            Add: add,
+                            Edit: edit,
+                            Detail: detail,
+                            Delete: del,
+                            Approval: approval,
+                            Report: rpt,
+                            OrganizationId: '@User.OrgId'
+                        })
+                    }
+                    console.log(tdLength);
+                })
+                console.log(dataAry);
+            })
+
+            if (dataAry.length > 0) {
+                
+                var data = JSON.stringify({ models: dataAry });
+                console.log(dataAry);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, type.post, '/ControlPanel/SaveUserPermission', data, getToken())).then(function (res,status) {
+                    if(res === true && status === 'success') {
+                        $('.toastrDefaultSuccess').trigger("click");
+                        $('.toastrDefaultSuccess').fadeOut(500);
+                    }
+                    else {
+                        $('.toastrDefaultError').trigger("click");
+                        $('.toastrDefaultError').fadeOut(500);
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+    </script>
+}
+
+
+
+

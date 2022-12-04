@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ERPBO.ControlPanel.ViewModels.ModuleViewModel>
+
+@{
+    int sl = 0;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm table-striped table-responsive-lg tblModuleData" id="tblModuleData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th>#SL</th>
+                    <th class="hide"></th>
+                    <th>Module Name</th>
+                    <th>Icon Name</th>
+                    <th>Icon Color</th>
+                    <th>Entry User</th>
+                    <th>Update User</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var module in Model)
+                {
+                    sl = sl + 1;
+                    <tr>
+                        <td class="text-center"><b>@sl</b></td>
+                        <td class="hide">@module.MId</td>
+                        <td>@module.ModuleName</td>
+                        <td>@module.IconName</td>
+                        <td>@module.IconColor</td>
+                        <td class="text-center text-sm">@module.EntryUser</td>
+                        <td class="text-center text-sm">@module.UpdateUser</td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-warning btn-sm data-module-item" data-module-item="@module.MId"><i class="fa fa-pen"></i> Edit</a>
+                        </td>
+                    </tr>
+                }
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="8">
+                            No Rows Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

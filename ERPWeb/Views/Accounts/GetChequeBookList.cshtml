@@ -1,0 +1,434 @@
+﻿
+@{
+    ViewBag.Title = "Cheque Book";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow card-primary card-outline card-tabs" style="margin-top:-20px">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs nav-pills" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-two-chequeList-tab" data-toggle="pill" href="#custom-tabs-two-chequeList" role="tab" aria-controls="custom-tabs-two-chequeList" aria-selected="true">Cheque Book</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body shadow">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    @Html.AntiForgeryToken()
+                    <div class="tab-pane fade show active" id="custom-tabs-two-ledgerList" role="tabpanel" aria-labelledby="custom-tabs-two-ledgerList-tab">
+                        <div class="row" style="margin-top:-15px">
+                            <div class="col-md-12">
+                                <div class="card shadow card-gray shadow">
+                                    <div class="card-header shadow">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="text-center text-bold">
+                                                    Cheque Book List
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn btn-primary btn-flat btn-sm float-right font-weight-bold" id="btnAddNew"><i class="fas fa-plus"></i> New Cheque Entry</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-sm">
+                            <div class="col-md-12" style="margin-top:-10px">
+                                <div class="card shadow">
+                                    <div class="card-body shadow">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label for="txtAccountName" class="control-label font-weight-bold">Account Name</label>
+                                                    <input type="text" name="remarks" value="" id="txtAccountName" class="form-control form-control-sm" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="ddlChequeType" class="control-label font-weight-bold">Cheque Type</label>
+                                                    @Html.DropDownList("ddlChequeType", (IEnumerable<SelectListItem>)ViewBag.ddlChequeType, "--Select One--", new { @class = "form-control form-control-sm" })
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="txtChequeNo" class="control-label font-weight-bold">Cheque No.</label>
+                                                    <input type="text" name="remarks" value="" id="txtChequeNo" class="form-control form-control-sm" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="ddlAllBankName" class="control-label font-weight-bold">Bank Name</label>
+                                                    @Html.DropDownList("ddlAllBankName", (IEnumerable<SelectListItem>)ViewBag.ddlAllBankName, "--Select One--", new { @class = "form-control form-control-sm" })
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="control-label font-weight-bold">From Date</label>
+                                                    <div class="input-group input-group-sm ">
+                                                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" name="fromDate" />
+                                                        <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                                            <span class="input-group-text">&#10008;</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="control-label font-weight-bold">To Date</label>
+                                                    <div class="input-group input-group-sm ">
+                                                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" name="toDate" />
+                                                        <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                                            <span class="input-group-text">&#10008;</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
+                                            @{Html.RenderAction("GetChequeBookList", new { @flag = "view" });}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalChequebook" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead">New Cheque Entry</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmItem">
+                    <input type="hidden" name="Id" id="hdfChequeBookId" />
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label class="control-label font-weight-bold">Cheque Date</label>
+                            <div class="input-group input-group-sm ">
+                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptChecqueDate" />
+                                <div class="input-group-prepend cursor-pointer remove-date dptChecqueDate" style="cursor:pointer">
+                                    <span class="input-group-text">&#10008;</span>
+                                </div>
+                            </div>
+                            <span class="error hide required-chequeType font-weight-bold">Required Cheque Date !</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="ddlChequeType" class="control-label font-weight-bold">Cheque Type</label>
+                            @Html.DropDownList("ddlChequeType", (IEnumerable<SelectListItem>)ViewBag.ddlChequeType, "--Select One--", new { @class = "form-control form-control-sm" })
+                            <span class="error hide required-chequeType font-weight-bold">Required Cheque Type!</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtAccountName" class="control-label font-weight-bold">Account Name</label>
+                            <input type="text" name="remarks" value="" id="txtAccountName" class="form-control form-control-sm" />
+                            <span class="error hide required-accountName font-weight-bold">Required Acc Name!</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtAccNumber" class="control-label font-weight-bold">Account No.</label>
+                            <input type="text" name="remarks" value="" id="txtAccNumber" class="form-control form-control-sm" />
+                            <span class="error hide required-accountName font-weight-bold">Required Acc No!</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtChequeNo" class="control-label font-weight-bold">Cheque No.</label>
+                            <input type="text" name="remarks" value="" id="txtChequeNo" class="form-control form-control-sm" />
+                            <span class="error hide required-chequeNo font-weight-bold">Required Cheque No.!</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtPayOrReceive" class="control-label font-weight-bold">Pay/Receive To</label>
+                            <input type="text" name="remarks" value="" id="txtPayOrReceive" class="form-control form-control-sm" />
+                            <span class="error hide required-payOrReceive font-weight-bold">Pay Or Receive To Name !</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="ddlAllBankName" class="control-label font-weight-bold">Bank Name</label>
+                            @Html.DropDownList("ddlAllBankName", (IEnumerable<SelectListItem>)ViewBag.ddlAllBankName, "--Select One--", new { @class = "form-control form-control-sm" })
+                            <span class="error hide required-bankName font-weight-bold">Required Bank Name !</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtBranchName" class="control-label font-weight-bold">Branch Name</label>
+                            <input type="text" name="remarks" value="" id="txtBranchName" class="form-control form-control-sm" />
+                            <span class="error hide required-branchName font-weight-bold">Required Branch Name !</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        
+                        <div class="form-group col-md-6">
+                            <label for="txtRemarks" class="control-label font-weight-bold">Remarks</label>
+                            <input type="text" name="remarks" value="" id="txtRemarks" class="form-control form-control-sm" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtChequeAmount" class="control-label font-weight-bold">Amount</label>
+                            <input type="number" name="remarks" value="" id="txtChequeAmount" class="form-control form-control-sm" />
+                            <span class="error hide required-chequeAmount font-weight-bold">Required Cheque Amount !</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-success btn-sm float-right" id="btnSubmit"><i class="far fa-save"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var hdfChequeBookId = $("#hdfChequeBookId");
+        var dptChecqueDate = $("#dptChecqueDate");
+        var ddlChequeType = $("#ddlChequeType");
+        var txtAccountName = $("#txtAccountName");
+        var txtAccNumber = $("#txtAccNumber");
+        var txtChequeNo = $("#txtChequeNo");
+        var txtChequeAmount = $("#txtChequeAmount")
+        var ddlAllBankName = $("#ddlAllBankName");
+        var txtBranchName = $("#txtBranchName");
+        var txtPayOrReceive = $("#txtPayOrReceive");
+        var txtRemarks = $("#txtRemarks");
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+        
+
+        $(document).ready(function () {
+            dptChecqueDate.prop('readonly', true);
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            dptChecqueDate.css("background-color", "#fff");
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptChecqueDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true,
+                showOn: "button",
+                buttonImageOnly: true,
+            });
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true,
+                showOn: "button",
+                buttonImageOnly: true,
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+        })
+
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptChecqueDate")) {
+                if (dptChecqueDate.val() !== '') {
+                    dptChecqueDate.val('');
+                }
+            }
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                    LoadDataTableForCheque();
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                    LoadDataTableForCheque();
+                }
+            }
+        })
+
+        dptFromDate.change(function () {
+            LoadDataTableForCheque();
+        })
+        dptToDate.change(function () {
+            LoadDataTableForCheque();
+        })
+        txtAccountName.keyup(function () {
+            LoadDataTableForCheque();
+        })
+        txtChequeNo.keyup(function () {
+            LoadDataTableForCheque();
+        })
+        ddlChequeType.change(function () {
+            LoadDataTableForCheque();
+        })
+        ddlAllBankName.change(function () {
+            LoadDataTableForCheque();
+        })
+
+        function LoadDataTableForCheque() {
+            var data = { flag: "cheque", accName: txtAccountName.val().trim(), chqType: ddlChequeType.val(), chqNo: txtChequeNo.val(), bankName: ddlAllBankName.val(), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+
+            console.log(data);
+            $.when(getReqWithData('html', 'GET', '/Accounts/GetChequeBookList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+        }
+
+        function OpenModal() {
+            clearCtrl();
+            $("#spanModalHead").text('New Cheque Entry');
+            $("#spanSaveText").text('Save');
+            $("#modalChequebook").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        $("#btnAddNew").click(function (e) {
+            e.preventDefault();
+            clearCtrl();
+            OpenModal();
+        })
+        function validateForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if ($.trim(ddlChequeType.val()) == "") {
+                $(".required-chequeType").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(txtAccountName.val()) == "") {
+                $(".required-accountName").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(txtChequeNo.val()) == "") {
+                $(".required-chequeNo").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(txtChequeAmount.val()) == "") {
+                $(".required-chequeAmount").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(ddlAllBankName.val()) == "") {
+                $(".required-bankName").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(txtPayOrReceive.val()) == "") {
+                $(".txtPayOrReceive").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            $(".error").addClass("hide");
+            if (validateForm() == true) {
+
+                var entryDate = null;
+                if (dptChecqueDate.val().trim() != "") {
+                    entryDate = new Date(dptChecqueDate.val());
+                }
+                var data = JSON.stringify({
+                    ChequeBookId: TryParseInt(hdfChequeBookId.val(),0),
+                    AccName: txtAccountName.val(),
+                    AccountNumber: txtAccNumber.val(),
+                    CheckDate: entryDate,
+                    CheckType: ddlChequeType.val(),
+                    CheckNo: txtChequeNo.val(),
+                    Amount: TryParseFloat(txtChequeAmount.val(), 0),
+                    BankName: ddlAllBankName.val(),
+                    BranchName: txtBranchName.val(),
+                    PayOrReceive: txtPayOrReceive.val(),
+                    Remarks: txtRemarks.val()
+                });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/Accounts/SaveChequeBook', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetChequeBookList")');
+                                }, 500);
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                    enable("#btnSubmit");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmit");
+                });
+            }
+
+        })
+
+        $(document).on("click", "a.data-edit-chequebook", function (e) {
+            e.preventDefault()
+            OpenModal()
+            $("#spanModalHead").text('Update Cheque Book');
+            $("#spanSaveText").text('Update');
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+            var td8 = row.find('td:eq(8)').html();
+            var td9 = row.find('td:eq(9)').html();
+            var td10 = row.find('td:eq(10)').html();
+            var td11 = row.find('td:eq(11)').html();
+
+            hdfChequeBookId.val(td1);
+            dptChecqueDate.val(td2);
+            txtPayOrReceive.val(td3);
+            txtAccountName.val(td4)
+            txtAccNumber.val(td5);
+            ddlChequeType.val(td6);
+            txtChequeNo.val(td7);
+            txtChequeAmount.val(td8);
+            ddlAllBankName.val(td9);
+            txtBranchName.val(td10);
+            txtRemarks.val(td11)
+
+        })
+        function clearCtrl() {
+            hdfChequeBookId.val('0');
+            dptChecqueDate.val('');
+            txtPayOrReceive.val('');
+            txtAccountName.val('');
+            txtAccNumber.val('');
+            ddlChequeType.val('');
+            txtChequeNo.val('');
+            txtChequeAmount.val('');
+            ddlAllBankName.val('');
+            txtBranchName.val('');
+            txtRemarks.val('');
+
+        }
+
+
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+    </script>
+    }

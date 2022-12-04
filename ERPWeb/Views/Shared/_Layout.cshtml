@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewBag.Title</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="~/Content/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link href="~/Content/dist/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/icheck-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/select2-bootstrap4.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/dist/css/adminlte.min.css">
+    <link href="~/Content/dist/css/OverlayScrollbars.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/Toastr/toastr.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/Site.css">
+    <link href="~/Content/printJs.css" rel="stylesheet" />
+    @RenderSection("styles", false)
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <noscript>
+        <style>
+            .wrapper {
+                display: none;
+            }
+
+            body {
+                background-color: #808080;
+            }
+        </style>
+        <div id="dvnoscript">
+            <div class='alert alert-danger alert-dismissible'>
+                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h5><i class='icon fas fa-ban'></i> Warning!</h5>Your browser does not support JavaScript!
+                Please Enable it first to use the application properly.
+            </div>
+        </div>
+    </noscript>
+    <div class="wrapper">
+        <!-- Content Wrapper. Contains page content -->
+
+        <div class="content" style="padding:0">
+            <div class="container-fluid">
+                <br />
+                <div id="body-container">
+                    @RenderBody()
+                </div>
+            </div><!-- /.container-fluid -->
+            <button type="button" class="hide toastrDefaultSuccess"></button>
+            <button type="button" class="hide toastrDefaultUpdateOnFlayData"></button>
+            <button type="button" class="hide toastrDefaultError"></button>
+            <button type="button" class="hide toastrReqSuccess"></button>
+            <button type="button" class="hide toastrReqError"></button>
+            <button type="button" class="hide toastrDefaultDelete"></button>
+            <button type="button" class="hide toastrJobOrderSuccess"></button>
+            <button type="button" class="hide toastrJobOrderError"></button>
+            <button type="button" class="hide toastrAdded"></button>
+
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="~/Content/plugins/jquery/jquery.min.js"></script>
+    <script type="module" src="~/Scripts/popper.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!--Overlay scroll bar-->
+    <script src="~/Scripts/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Scripts/Chart.min.js"></script>
+
+    <script src="~/Scripts/canvasjs.min.js"></script>
+
+    @*<script src="~/Scripts/canvasjs.min.js"></script>*@
+
+    <script src="~/Scripts/sparkline.js"></script>
+    <script src="~/Content/dist/js/adminlte.js"></script>
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Content/plugins/Toastr/toastr.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/select2.full.min.js"></script>
+    <script src="~/Content/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
+    <script src="~/Scripts/bootbox.js"></script>
+    <script src="~/Scripts/bootbox.locales.js"></script>
+    <script src="~/Scripts/site.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/download.js"></script>
+    <script src="~/Scripts/print.js"></script>
+    <script src="~/Scripts/ds.js"></script>
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+    <link href="~/Content/dist/css/dashboardCSS.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        //$(document).ready(function () {
+
+
+        //    $('#double-scroll').doubleScroll();
+        //});
+
+
+        var txtCurrentPassword = $("#txtCurrentPassword");
+        var txtPassword = $("#txtPassword");
+        var txtConfirmPassword = $("#txtConfirmPassword");
+
+        $(document).ready(function () {
+            bsCustomFileInput.init();
+
+            $('.toastrAdded').click(function () {
+                toastr.success('Added')
+            });
+            $('.toastrDefaultSuccess').click(function () {
+                toastr.success(execuStatus.successSave)
+            });
+            $('.toastrDefaultUpdateOnFlayData').click(function () {
+                toastr.success('Updated')
+            });
+            $('.toastrDefaultDelete').click(function () {
+                toastr.success(execuStatus.successDelete)
+            });
+            $('.toastrDefaultError').click(function () {
+                toastr.error(execuStatus.fail)
+            });
+            $('.toastrReqSuccess').click(function () {
+                toastr.success(execuStatus.reqStatusSave)
+            });
+            $('.toastrReqError').click(function () {
+                toastr.error(execuStatus.reqStatusFail)
+            });
+
+            $('.toastrJobOrderSuccess').click(function () {
+                toastr.success('JobOrder status has been changed successfully');
+            });
+
+            $('.toastrJobOrderError').click(function () {
+                toastr.error('JobOrder status cannot be changed');
+            });
+
+            $('.toastrDefaultInfo').click(function () {
+                toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+            });
+
+            $('.toastrDefaultError').click(function () {
+                toastr.error(execuStatus.fail)
+            });
+
+            $('.toastrDefaultWarning').click(function () {
+                toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+            });
+
+            $('.toastsDefaultDefault').click(function () {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultTopLeft').click(function () {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    position: 'topLeft',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultBottomRight').click(function () {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    position: 'bottomRight',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultBottomLeft').click(function () {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    position: 'bottomLeft',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultAutohide').click(function () {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    autohide: true,
+                    delay: 750,
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultNotFixed').click(function () {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    fixed: false,
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultFull').click(function () {
+                $(document).Toasts('create', {
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    icon: 'fas fa-envelope fa-lg',
+                })
+            });
+            $('.toastsDefaultFullImage').click(function () {
+                $(document).Toasts('create', {
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    image: '../../dist/img/user3-128x128.jpg',
+                    imageAlt: 'User Picture',
+                })
+            });
+            $('.toastsDefaultSuccess').click(function () {
+                $(document).Toasts('create', {
+                    class: 'bg-success',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultInfo').click(function () {
+                $(document).Toasts('create', {
+                    class: 'bg-info',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultWarning').click(function () {
+                $(document).Toasts('create', {
+                    class: 'bg-warning',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultDanger').click(function () {
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultMaroon').click(function () {
+                $(document).Toasts('create', {
+                    class: 'bg-maroon',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+        })
+        //logOut
+        $("#logOut").click(function (e) {
+            e.preventDefault();
+            $("#logoutModal").modal("show");
+        })
+
+        // Change Password
+        //$("#changePassword").click(function (e) {
+        //    e.preventDefault();
+        //    txtCurrentPassword.val('');
+        //    txtPassword.val('');
+        //    txtConfirmPassword.val('');
+        //    $(".error").addClass("hide");
+        //    $("#changePasswordModal").modal("show");
+        //})
+
+        //function validateChangePassword() {
+        //    var isValid = true;
+        //    $(".error").addClass("hide");
+        //    if (txtCurrentPassword.val() === "") {
+        //        $(".required-current-password").removeClass("hide");
+        //        isValid = false;
+        //    }
+        //    else {
+        //        // Checking in database//
+        //        if (ajaxBooleanChecker2(JSON.stringify({ password: txtCurrentPassword.val() }), '/Common/IsCurrentUserPasswordCorrect') === false) {
+        //            $(".incorrect-password").removeClass('hide');
+        //            isValid = false;
+        //        }
+        //    }
+        //    if (txtPassword.val() === "") {
+        //        $(".required-password").removeClass("hide");
+        //        isValid = false;
+        //    }
+        //    else {
+        //        if (txtPassword.val().length < 6) {
+        //            $(".password-lenght").removeClass("hide");
+        //            isValid = false;
+        //        }
+        //    }
+        //    if (txtConfirmPassword.val() === "") {
+        //        $(".required-confirmPassword").removeClass("hide");
+        //        isValid = false;
+        //    }
+
+        //    if (txtPassword.val() !== txtConfirmPassword.val()) {
+        //        $(".compare-password").removeClass("hide");
+        //        isValid = false;
+        //    }
+        //    return isValid;
+        //}
+
+        //$("#btnChangePassword").click(function (e) {
+        //    e.preventDefault();
+        //    if (validateChangePassword()) {
+        //        var data = JSON.stringify({ "CurrentPassword": txtCurrentPassword.val(), "NewPassword": txtPassword.val() });
+        //        console.log(data);
+        //        $.when(postReqWithData(dataType.applicationJson, dataType.json, 'POST', '/Access/ChangePassword', data)).then(function (res, status) {
+        //            console.log(status);
+        //            console.log(res);
+        //            if (res == true) {
+        //                $('.toastrDefaultSuccess').trigger('click');
+        //                $("#changePasswordModal").modal("toggle");
+        //            }
+        //            else {
+        //                $('.toastrDefaultError').trigger('click');
+        //            }
+        //        }).fail(function (err) {
+        //            $('.toastrDefaultError').trigger('click');
+        //            console.log(err);
+        //        });
+        //    }
+        //})
+
+        $(function () {
+
+            // check this out on a mobile device.
+            if (/Mobi/.test(navigator.userAgent)) {
+                setInterval(function () {
+                    // navigator.vibrate();
+                }, 3000);
+            }
+
+
+        });
+
+
+    </script>
+
+    @RenderSection("scripts", false)
+</body>
+</html>

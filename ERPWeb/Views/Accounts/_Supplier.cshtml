@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ERPBO.Accounts.ViewModels.AccountsSupplierViewModel>
+@{ 
+    int sl = 0;
+    Layout = null;
+}
+
+<div class="col-md-12 text-sm">
+    <table class="table table-bordered table-sm table-striped tblSuppliersList" id="tblSuppliersList">
+        <thead class="btn-dark">
+            <tr class="text-center">
+                <th style="vertical-align:middle">#SL</th>
+                <th style="vertical-align:middle" class="hide"></th>
+                <th style="vertical-align:middle">Name</th>
+                <th style="vertical-align:middle">Phone</th>
+                <th style="vertical-align:middle">Mobile</th>
+                <th style="vertical-align:middle">Address</th>
+                <th style="vertical-align:middle">Email</th>
+                <th style="vertical-align:middle">Remarks</th>
+                <th style="vertical-align:middle">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cus in Model)
+            {
+                sl = sl + 1;
+                <tr>
+                    <td class="text-center">@sl</td>
+                    <td class="hide">@cus.SupplierId</td>
+                    <td>@cus.SupplierName</td>
+                    <td>@cus.PhoneNumber</td>
+                    <td>@cus.MobileNumber</td>
+                    <td>@cus.Address</td>
+                    <td>@cus.Email</td>
+                    <td>@cus.Remarks</td>
+                    <td class="text-center">
+                        <a href="#" class="btn btn-warning btn-sm data-edit-supplier" title="Edit" data-edit-supplier="@cus.SupplierId"><i class="fas fa-pencil-alt"></i> </a>
+                    </td>
+                </tr>
+            }
+            @if (Model.Count() == 0)
+            {
+                <tr class="text-center empty-row">
+                    <td colspan="9">
+                        No Rows Found
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

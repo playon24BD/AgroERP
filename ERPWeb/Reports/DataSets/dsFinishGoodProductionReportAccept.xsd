@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsFinishGoodProductionReportAccept" targetNamespace="http://tempuri.org/dsFinishGoodProductionReportAccept.xsd" xmlns:mstns="http://tempuri.org/dsFinishGoodProductionReportAccept.xsd" xmlns="http://tempuri.org/dsFinishGoodProductionReportAccept.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsFinishGoodProductionReportAccept" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsFinishGoodProductionReportAccept" msprop:Generator_UserDSName="dsFinishGoodProductionReportAccept">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsFinishGoodProductionReportAccept" msprop:Generator_TableClassName="dsFinishGoodProductionReportAcceptDataTable" msprop:Generator_TableVarName="tabledsFinishGoodProductionReportAccept" msprop:Generator_TablePropName="_dsFinishGoodProductionReportAccept" msprop:Generator_RowDeletingName="dsFinishGoodProductionReportAcceptRowDeleting" msprop:Generator_RowChangingName="dsFinishGoodProductionReportAcceptRowChanging" msprop:Generator_RowEvHandlerName="dsFinishGoodProductionReportAcceptRowChangeEventHandler" msprop:Generator_RowDeletedName="dsFinishGoodProductionReportAcceptRowDeleted" msprop:Generator_UserTableName="dsFinishGoodProductionReportAccept" msprop:Generator_RowChangedName="dsFinishGoodProductionReportAcceptRowChanged" msprop:Generator_RowEvArgName="dsFinishGoodProductionReportAcceptRowChangeEvent" msprop:Generator_RowClassName="dsFinishGoodProductionReportAcceptRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EntryDate" msprop:Generator_ColumnVarNameInTable="columnEntryDate" msprop:Generator_ColumnPropNameInRow="EntryDate" msprop:Generator_ColumnPropNameInTable="EntryDateColumn" msprop:Generator_UserColumnName="EntryDate" type="xs:string" minOccurs="0" />
+              <xs:element name="FinishGoodProductionBatch" msprop:Generator_ColumnVarNameInTable="columnFinishGoodProductionBatch" msprop:Generator_ColumnPropNameInRow="FinishGoodProductionBatch" msprop:Generator_ColumnPropNameInTable="FinishGoodProductionBatchColumn" msprop:Generator_UserColumnName="FinishGoodProductionBatch" type="xs:string" minOccurs="0" />
+              <xs:element name="FinishGoodProductName" msprop:Generator_ColumnVarNameInTable="columnFinishGoodProductName" msprop:Generator_ColumnPropNameInRow="FinishGoodProductName" msprop:Generator_ColumnPropNameInTable="FinishGoodProductNameColumn" msprop:Generator_UserColumnName="FinishGoodProductName" type="xs:string" minOccurs="0" />
+              <xs:element name="Quanity" msprop:Generator_ColumnVarNameInTable="columnQuanity" msprop:Generator_ColumnPropNameInRow="Quanity" msprop:Generator_ColumnPropNameInTable="QuanityColumn" msprop:Generator_UserColumnName="Quanity" type="xs:string" minOccurs="0" />
+              <xs:element name="TargetQuantity" msprop:Generator_ColumnVarNameInTable="columnTargetQuantity" msprop:Generator_ColumnPropNameInRow="TargetQuantity" msprop:Generator_ColumnPropNameInTable="TargetQuantityColumn" msprop:Generator_UserColumnName="TargetQuantity" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" type="xs:string" minOccurs="0" />
+              <xs:element name="RawMaterialName" msprop:Generator_ColumnVarNameInTable="columnRawMaterialName" msprop:Generator_ColumnPropNameInRow="RawMaterialName" msprop:Generator_ColumnPropNameInTable="RawMaterialNameColumn" msprop:Generator_UserColumnName="RawMaterialName" type="xs:string" minOccurs="0" />
+              <xs:element name="RequiredQuantity" msprop:Generator_ColumnVarNameInTable="columnRequiredQuantity" msprop:Generator_ColumnPropNameInRow="RequiredQuantity" msprop:Generator_ColumnPropNameInTable="RequiredQuantityColumn" msprop:Generator_UserColumnName="RequiredQuantity" type="xs:string" minOccurs="0" />
+              <xs:element name="UnitQuantity" msprop:Generator_ColumnVarNameInTable="columnUnitQuantity" msprop:Generator_ColumnPropNameInRow="UnitQuantity" msprop:Generator_ColumnPropNameInTable="UnitQuantityColumn" msprop:Generator_UserColumnName="UnitQuantity" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

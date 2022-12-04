@@ -1,0 +1,660 @@
+﻿
+@{
+    ViewBag.Title = "ProductCommision";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row" style="margin-top: 5px">
+    <div class="col-md-12">
+
+
+        <div class="card  shadow card  card-outline card-tabs" style="margin-top:-30px">
+
+            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" id="custom-tabs-two-commissiononproductList-tab" data-toggle="pill" href="#custom-tabs-two-commissiononproductList" role="tab" aria-controls="custom-tabs-two-commissiononproductList" aria-selected="false">Commission On Product List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-commissiononproduct-tab" data-toggle="pill" href="#custom-tabs-two-commissiononproduct" role="tab" aria-controls="custom-tabs-two-commissiononproduct" aria-selected="false">Commission On Product</a>
+                </li>
+            </ul>
+
+        </div>
+
+
+        <div class="card-body shadow">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+                <div class="tab-pane fade show active " id="custom-tabs-two-commissiononproductList" role="tabpanel" aria-labelledby="custom-tabs-two-commissiononproductList-tab">
+
+                    <div class="row" style="margin-top:-35px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark shadow ">
+                                <div class="card-header">
+                                    <div class="row text-sm">
+                                        <div class="col-md-2">
+                                            <h5 class="text-left">Search by:</h5>
+                                        </div>
+                                        <div class="col-md-3">
+
+                                            @Html.DropDownList("ddlProductNameSearch", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "Product Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            <span class="error hide req-ddlProductName">Product Is Required</span>
+                                        </div>
+                                        <div class="col-md-2 hide">
+
+                                            <div class="input-group input-group-sm ">
+                                                <input type="number" class="form-control form-control-sm" id="dateCalenderYearSearch" placeholder="Search by Year" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade show " id="custom-tabs-two-commissiononproduct" role="tabpanel" aria-labelledby="custom-tabs-two-commissiononproduct-tab">
+
+                    <div class="row" style="margin-top:-35px">
+                        <div class="col-md-12">
+                            <div class="card card-navy">
+                                <div class="card-header" style="text-align: center;">
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5 class="text-center text-bold">
+
+                                                Commission On Product
+                                            </h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <input type="text" id="hdrawMaterialRequisitionInfoId" class="hide" />
+
+                                        <div class="col-md-2 hide">
+                                            <label class="control-label font-weight-bold">Year</label>
+                                            <div class="input-group input-group-sm ">
+                                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dateCalenderYear" />
+                                                <span class="error hide req-dateCalenderYear">Year Is Required</span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label" for="ddlProductName">Product Name</label>
+                                            @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product --", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            <span class="error hide req-ddlProductName">Product Is Required</span>
+                                            <span class="error hide duplicate-product">Product Is Already configured In This Year</span>
+                                        </div>
+
+
+
+                                        <div class="col-md-1">
+                                            <label for="credit">Credit(%)</label>
+                                            <input type="number" id="numCredit" name="credit" class="form-control form-control-sm" />
+                                            <span class="error hide req-numCredit">Credit is Required</span>
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <label for="cash">Cash(%)</label>
+                                            <input type="number" id="numCash" name="cash" class="form-control form-control-sm" />
+                                            <span class="error hide req-numCash">Credit is Required</span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label font-weight-bold">From Date</label>
+                                            <div class="input-group input-group-sm ">
+                                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
+                                                <span class="error hide req-dptFromDate">From is Required</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label font-weight-bold">To Date</label>
+                                            <div class="input-group input-group-sm ">
+                                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" />
+                                                <span class="error hide req-dptToDate">ToDate is Required</span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="txtRemarks">Remarks</label>
+                                            <input type="text" id="txtRemarks" name="txtRemarks" class="form-control form-control-sm" />
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                                            <div class="clearfix">
+                                                <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row" style="margin-top:-10px">
+                        <div class="col-md-12" style="overflow-y:scroll">
+                            <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblCommissionOnProduct">
+                                <thead>
+
+                                    <tr class="btn-dark">
+                                        <th>#SL</th>
+                                        <th>Product Name</th>
+                                        <th class="hide">Year</th>
+
+                                        <th>Credit</th>
+                                        <th>Cash Qty</th>
+                                        <th>
+                                            From Date
+                                        </th>
+                                        <th>
+                                            To Date
+                                        </th>
+                                        <th>Remarks</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal" id="modalCommissionOnProduction" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formregion">
+                    <input type="hidden" id="hdCommissionOnProductId" />
+                    <div class="form-row">
+                        <div class="col-md-2 hide">
+                            <label class="control-label font-weight-bold hide">Year</label>
+                            <div class="input-group input-group-sm hide">
+                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dateCalenderYearEdit" />
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label" for="ddlProductNameEdit">Product Name</label>
+                            @Html.DropDownList("ddlProductNameEdit", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product --", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            <span class="error hide req-ddlProductName">Product Is Required</span>
+                        </div>
+
+
+
+                        <div class="col-md-2">
+                            <label for="credit">Credit(%)</label>
+                            <input type="number" id="numCreditEdit" name="credit" class="form-control form-control-sm" />
+                            <span class="error hide req-numCredit">Credit is Required</span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="cash">Cash(%)</label>
+                            <input type="number" id="numCashEdit" name="cash" class="form-control form-control-sm" />
+                            <span class="error hide req-numCash">Credit is Required</span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="control-label font-weight-bold">From Date</label>
+                            <div class="input-group input-group-sm ">
+                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDateEdit" />
+                                <span class="error hide req-dptFromDateEdit">From is Required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label font-weight-bold">To Date</label>
+                            <div class="input-group input-group-sm ">
+                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDateEdit" />
+                                <span class="error hide req-dptToDateEdit">ToDate is Required</span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="txtRemarks">Remarks</label>
+                            <input type="text" id="txtRemarksEdit" name="txtRemarks" class="form-control form-control-sm" />
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ddlstatus" class="control-label">Status</label>
+                            <select class="form-control form-control-sm select2" id="ddlstatus">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                            <span class="error hide required-status font-weight-bold">Input status!</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="btnUpdate"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextRegion">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+
+        var dateCalenderYear = $("#dateCalenderYear");
+        var dateCalenderYearEdit = $("#dateCalenderYearEdit");
+        var dateCalenderYearSearch = $("#dateCalenderYearSearch");
+        var ddlProductName = $("#ddlProductName");
+        var ddlProductNameEdit = $("#ddlProductNameEdit");
+        var ddlProductNameSearch = $("#ddlProductNameSearch");
+        var numCredit = $("#numCredit");
+        var numCreditEdit = $("#numCreditEdit");
+        var numCash = $("#numCash");
+        var numCashEdit = $("#numCashEdit");
+        var txtRemarksEdit = $("#txtRemarksEdit");
+        var txtRemarks = $("#txtRemarks");
+        var productName = [];
+        var hdCommissionOnProductId = $("#hdCommissionOnProductId");
+        var ddlstatus = $("#ddlstatus");
+
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+
+        var dptFromDateEdit = $("#dptFromDateEdit");
+        var dptToDateEdit = $("#dptToDateEdit");
+
+
+
+        $(document).ready(function () {
+
+
+            $('.select2').select2();
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+
+
+            dptFromDateEdit.prop('readonly', true);
+            dptToDateEdit.prop('readonly', true);
+            dptFromDateEdit.css("background-color", "#fff");
+            dptToDateEdit.css("background-color", "#fff");
+
+            $('#dptFromDateEdit').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('#dptToDateEdit').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+
+
+            $('#dateCalenderYear').datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years",
+                autoclose: true
+            });
+            $("#btnSubmit").hide();
+
+            loadCommissionOnProduct();
+        })
+
+        ddlProductNameSearch.change(function () {
+            loadCommissionOnProduct();
+        })
+        dateCalenderYearSearch.change(function () {
+            loadCommissionOnProduct()
+        });
+        function loadCommissionOnProduct() {
+
+            var data = { flag: "list", product: ddlProductNameSearch.val(), year: dateCalenderYearSearch.val() };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/ProductCommision', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
+
+        function IsexistyearProduct() {
+
+            var data = {  year: dateCalenderYear.val(), product: ddlProductName.val() };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/ProductCommision', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
+
+        function OpenModal() {
+            $("#modalCommissionOnProduction").modal("show");
+
+        }
+        $("#addTolist").click(function (e) {
+            e.preventDefault();
+            if (validateAddToList()==true) {
+
+                if (productName.includes(ddlProductName.val())) {
+                    toastrErrorAlert("Product Name Already Exist");
+                }
+                else {
+                    var sl = $("#tblCommissionOnProduct tbody tr").length;
+                    var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
+                    var td3 = "<td class='text-center hide'>" + ddlProductName.val() + "</td>";
+                    var td4 = "<td class='text-center hide'>" + dateCalenderYear.val() + "</td>";
+                    var td5 = "<td class='text-center'>" + numCredit.val() + "</td>";
+                    var td6 = "<td class='text-center'>" + numCash.val() + "</td>";
+                    var td7 = "<td class='text-center'>" + dptFromDate.val() + "</td>";
+                    var td8 = "<td class='text-center'>" + dptToDate.val() + "</td>";
+                    var td9 = "<td class='text-center' >" + txtRemarks.val() + "</td>";
+                    var td10 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 +td9+td10+ "</tr>";
+
+                    $("#tblCommissionOnProduct tbody").append(tr);
+
+                    productName.push(ddlProductName.val());
+                    $("#btnSubmit").show();
+
+                    clearCtrl();
+
+                }
+
+            }
+
+        })
+
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+
+            var rId = tds.eq(2).html();
+
+            const mid = productName.indexOf(rId);
+
+            productName.splice(mid, 1);
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    removeTableRow("#tblCommissionOnProduct tbody", index);
+                    fnFixTheTbodyRowSerial("#tblCommissionOnProduct tbody", index);
+
+                };
+            }));
+
+        })
+
+        function clearCtrl() {
+
+            ddlProductName.val("");
+            ddlProductName.trigger("change");
+
+            numCredit.val("0");
+            numCash.val("0");
+            txtRemarks.val("");
+
+        }
+        function validateAddToList() {
+
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlProductName.val()) == 0) {
+                $(".req-ddlProductName").removeClass('hide');
+                isValid = false;
+            }
+            //if (TryParseInt(dateCalenderYear.val(), 0) <= 0 || dateCalenderYear.val() == null || dateCalenderYear.val() == "") {
+            //    $(".req-dateCalenderYear").removeClass('hide');
+            //    isValid = false;
+            //}
+            if (ajaxBooleanChecker(JSON.stringify({ year: 0, product: ddlProductName.val() }), '/AgroConfiguration/IsexistSameYearProduct', getToken()) == true) {
+                $(".duplicate-product").removeClass("hide");
+                isValid = false;
+            }
+
+            if ($.trim(dptFromDate.val()) == "") {
+                $(".req-dptFromDate").removeClass('hide');
+                isValid = false;
+            }
+            if ($.trim(dptToDate.val()) == "") {
+                $(".req-dptToDate").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            var model = [];
+
+
+            $.each($("#tblCommissionOnProduct tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                model.push({
+                    CommissionOnProductId: 0,
+                    FinishGoodProductId: tds.eq(2).html(),
+                    CalenderYear: 0,
+                    //CalenderYear: tds.eq(3).html(),
+                    Credit: tds.eq(4).html(),
+                    Cash: tds.eq(5).html(),
+                    StartDate: tds.eq(6).html(),
+                    EndDate: tds.eq(7).html(),
+                    Remarks: tds.eq(8).html(),
+                });
+            })
+
+
+            var data = JSON.stringify({ model });
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveProductCommision', data, getToken())
+            ).then(function (res, status) {
+
+                if (res === true) {
+
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("ProductCommision")');
+                                }, 500);
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+
+
+
+
+        })
+
+
+        $(document).on("click", "a.data-item-edit", function (e) {
+            // alert();
+
+            e.preventDefault()
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();//Status
+            var td7 = row.find('td:eq(7)').html();//fdate
+            var td9 = row.find('td:eq(8)').html();//todate
+            var td10 = row.find('td:eq(9)').html();
+            var td11 = row.find('td:eq(11)').html();
+
+
+            hdCommissionOnProductId.val(td11);//id
+            dateCalenderYearEdit.val(td1);//year
+
+            ddlProductNameEdit.val(td3);//product
+            ddlProductNameEdit.trigger("change");
+            numCreditEdit.val(td4);
+            numCashEdit.val(td5);
+            dptFromDateEdit.val(td7);
+            dptToDateEdit.val(td9);
+            txtRemarksEdit.val(td10);
+            ddlstatus.val(td6);
+            ddlstatus.trigger("change");
+            console.log(dptToDateEdit.val());
+
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update Commission On Product');
+            $("#spanSaveTextRegion").text('Update');
+
+        })
+
+
+         $("#btnUpdate").click(function (e) {
+            e.preventDefault();
+            var model = [];
+
+
+
+                model.push({
+                    CommissionOnProductId: hdCommissionOnProductId.val(),
+                    FinishGoodProductId: ddlProductNameEdit.val(),
+                    CalenderYear: dateCalenderYearEdit.val(),
+                    Credit: numCreditEdit.val(),
+                    Cash: numCashEdit.val(),
+                    StartDate: dptFromDateEdit.val(),
+                    EndDate: dptToDateEdit.val(),
+                    Remarks: txtRemarksEdit.val(),
+                    Status: ddlstatus.val()
+                });
+
+
+
+            var data = JSON.stringify({ model });
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveProductCommision', data, getToken())
+            ).then(function (res, status) {
+
+                if (res === true) {
+
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("ProductCommision")');
+                                }, 500);
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+
+
+
+
+        })
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+
+    </script>
+
+
+}
+
+

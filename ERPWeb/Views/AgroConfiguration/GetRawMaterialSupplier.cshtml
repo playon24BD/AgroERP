@@ -1,0 +1,300 @@
+﻿
+@{
+    ViewBag.Title = "GetRawMaterialSupplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row" style="margin-top:-10px">
+    <div class="col-md-12">
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-navy">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3 float-left">
+                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
+
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center text-bold">
+                                    Raw Material Supplier
+                                </h5>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-warning btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Raw Material Supplier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-12" style="margin-top:-10px">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12" id="dataContainer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal" id="modalRawmaterialSupplier" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHeadRawmaterialSupplier"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <input type="hidden" id="hdRawmaterialSupplierId" />
+                    <div class="form-group col-md-4">
+                        <label for="ddlSupplierName" class="control-label">Supplier Name</label>
+                        <input type="text" id="ddlSupplierName" class="form-control form-control-sm" />
+                        <span class="error hide required-SupplierName font-weight-bold">Input Supplier Name!</span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ddlMobileName" class="control-label">Mobile Number</label>
+                        <input type="text" id="ddlMobileNumber" class="form-control form-control-sm" onkeypress="return isNumber(event)" />
+                        <span class="error hide required-MobileNumber font-weight-bold">Input Mobile Name!</span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ddlAddress" class="control-label">Address</label>
+                        <input type="text" id="ddlAddress" class="form-control form-control-sm" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="ddlTradeLicense" class="control-label">TradeLicense</label>
+                        <input type="text" id="ddlTradeLicense" class="form-control form-control-sm" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="ddlTIN" class="control-label">TIN</label>
+                        <input type="text" id="ddlTIN" class="form-control form-control-sm" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="ddlBIN" class="control-label">BIN</label>
+                        <input type="text" id="ddlBIN" class="form-control form-control-sm" />
+                    </div>
+
+
+                    <div class="form-group col-md-2">
+                        <label for="ddlStatus" class="control-label">Status</label>
+                        <select class="form-control form-control-sm" id="ddlStatus">
+                            <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="saveButton"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextRawmaterialSupplier">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        //DepotList
+        var hdRawmaterialSupplierId = $("#hdRawmaterialSupplierId");
+        var searchByAny = $("#searchByAny");
+        var ddlOrganizationName = $("#ddlOrganizationName");
+        var ddlStatus = $("#ddlStatus");
+        var ddlSupplierName = $("#ddlSupplierName");
+        var ddlMobileNumber = $("#ddlMobileNumber");
+        var ddlAddress = $("#ddlAddress");
+
+        var ddlTradeLicense = $("#ddlTradeLicense");
+        var ddlTIN = $("#ddlTIN");
+        var ddlBIN = $("#ddlBIN");
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            LoadRawmaterialSupplierDataTable()
+        })
+        function LoadDataInitializer() {
+            LoadRawmaterialSupplierDataTable();
+        }
+
+        //#region Warehouse
+
+        searchByAny.keyup(function () {
+            LoadRawmaterialSupplierDataTable()
+        })
+        //function LoadDataInitializer() {
+        //searchByAny.keyup(function () {
+        //    LoadDepotDataTable();
+        //})
+
+        function LoadRawmaterialSupplierDataTable() {
+            debugger;
+            var data = { flag: 'Search', name: $.trim(searchByAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetRawMaterialSupplier', data)).then(function (res, status) {
+                console.log(res);
+                if (status === "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+        $("#saveButton").click(function (e) {
+            e.preventDefault();
+            debugger;
+            //console.log("btnsubmit click");
+            $(".error").addClass("hide");
+            if (formValidation() == true) {
+                debugger;
+                var data = JSON.stringify({ RawMaterialSupplierId: TryParseInt(hdRawmaterialSupplierId.val(), 0), RawMaterialSupplierName: ddlSupplierName.val(), MobileNumber: ddlMobileNumber.val(), Address: ddlAddress.val(), TradeLicense: ddlTradeLicense.val(), TIN: ddlTIN.val(), BIN: ddlBIN.val(), Status: ddlStatus.val() });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawMaterialSupplier', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        //message("#msg1", "#modalWarehouse");
+                        $("#modalRawmaterialSupplier").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        LoadRawmaterialSupplierDataTable();
+                    }
+                    else {
+                        //message("#msg2");
+                        toastrErrorAlert(execuStatus.fail);
+                    }
+                    enable("#saveButton");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#saveButton");
+                });
+            }
+
+        })
+
+        $(document).on("click", "a.data-edit-item-Supplier", function (e) {
+            //alert();
+            //debugger;
+            e.preventDefault()
+            ClearCtrl();
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+            var td8 = row.find('td:eq(8)').html();
+            var td9 = row.find('td:eq(9)').html();
+            var td10 = row.find('td:eq(10)').html();
+            var td11 = row.find('td:eq(11)').html();
+            var td12 = row.find('td:eq(12)').html();
+
+            hdRawmaterialSupplierId.val(td1);
+            ddlOrganizationName.val(td2);
+            //disable(ddlOrganizationName.val(td2));
+            ddlSupplierName.val(td4);
+            ddlMobileNumber.val(td5);
+            ddlAddress.val(td6);
+            ddlTradeLicense.val(td7);
+            ddlTIN.val(td8);
+            ddlBIN.val(td9);
+            ddlStatus.val(td11);
+            //ddlStatus.prop("checked", false);
+            //if (td6.toLowerCase() === 'active') {
+            //    ddlStatus.prop("checked", true);
+            //}
+
+
+            OpenModal();
+            $("#spanModalHead").text('Update Unit');
+            $("#spanSaveTextRawmaterialSupplier").text('Update');
+        })
+
+
+
+
+        function OpenModal() {
+            $("#spanModalHeadRawmaterialSupplier").text('Add New Raw Material Supplier');
+            $("#spanSaveTextRawmaterialSupplier").text('Save');
+            $("#modalRawmaterialSupplier").modal("show");
+            $(".error").addClass("hide");
+
+        }
+        $("#addButton").click(function (e) {
+            e.preventDefault();
+            ClearCtrl();
+            OpenModal();
+            //enable("#ddlOrganizationName");
+        })
+
+        function formValidation() {
+            Isvalid = true;
+            $('.error').addClass("hide");
+            //if ($.trim(ddlOrganizationName.val()) == 0) {
+            //    $('.required-ddlOrganization').removeClass("hide");
+            //    Isvalid = false;
+            //}
+            if ($.trim(ddlSupplierName.val()) == "") {
+                $('.required-SupplierName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlMobileNumber.val()) == "") {
+                $('.required-MobileNumber').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
+
+        }
+        function ClearCtrl() {
+            ddlSupplierName.val("");
+            //ddlOrganizationName.val('');
+            hdRawmaterialSupplierId.val('0');
+            ddlMobileNumber.val("");
+            ddlAddress.val("");
+
+            ddlTradeLicense.val("");
+            ddlTIN.val("");
+            ddlBIN.val("");
+
+        }
+
+    </script>
+
+}
+
+
+

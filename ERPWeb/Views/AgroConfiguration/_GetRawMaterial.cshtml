@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.RawMaterialViewModel>
+    @{ 
+        int sl=0;
+    }
+<div class="col-md-12">
+    <table class="table table-bordered table-striped table-hover table-sm text-sm">
+        <thead class="btn-dark">
+            <tr class="text-center">
+                <th class="hide">id</th>
+                <th>SL</th>
+                <th class="hide">depotid</th>
+                @*<th>Organization name</th>*@
+                @*<th>Depot Name</th>*@
+                <th>Raw Material</th>
+                <th>UnitName</th>
+                <th>Status</th>
+                @*<th>Expire Date</th>*@
+                <th class="hide">organizationId</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var raw in Model)
+                {
+                    sl++;
+                    
+            <tr>
+
+                <td class="hide">@raw.RawMaterialId</td>
+                <td>@sl</td>
+                @*<td class="hide">@raw.DepotId</td>*@
+                <td class="hide">@raw.OrganizationName</td>
+                @*<td>@raw.DepotName</td>*@
+                <td>@raw.RawMaterialName</td>
+                <td>@raw.UnitName</td>
+                <td>@raw.Status</td>
+                @*<td>@raw.ExpireDate.Value.ToShortDateString()</td>*@
+                <td class="hide">@raw.OrganizationId</td>
+                <td class="hide">@raw.UnitId</td>
+                <td>
+                    <a href="#" class="btn btn-warning btn-sm data-edit-item-rawMaterialId" data-edit-item-rawMaterialId="@raw.RawMaterialId"><i class="fa fa-pen"></i>Edit</a>
+                </td>
+            </tr>
+
+                }
+
+
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">No Data Found </td>
+
+                </tr>
+
+
+            }
+
+
+        </tbody>
+
+    </table>
+
+</div>

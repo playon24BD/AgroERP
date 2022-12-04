@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.FinishGoodSupplierViewModel>
+
+@{
+    ViewBag.Title = "List of Finish Good Supplier Name";
+    var SL = 0;
+}
+<div class="row">
+    <div class="col-md-12" style="overflow-y:scroll">
+        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblDepotData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">#SL</th>
+                    <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle" class="hide"></th>
+                    <th class="hide" style="vertical-align:middle">Organization Name</th>
+                    <th style="vertical-align:middle">Supplier Name</th>
+                    <th style="vertical-align:middle">Mobile Number</th>
+                    <th style="vertical-align:middle">Address</th>
+                    <th style="vertical-align:middle">EntryUser</th>
+                    <th style="vertical-align:middle">Status</th>
+                    <th style="vertical-align:middle">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    SL = SL + 1;
+                <tr>
+
+                    <td class="text-center text-bold">@SL</td>
+                    <td class="hide">@item.FinishGoodSupplierId</td>
+                    <td class="hide">@item.OrganizationId</td>
+                    <td class="hide">@item.OrganizationName</td>
+                    <td class="text-center">@item.FinishGoodSupplierName</td>
+                    <td class="text-center">@item.MobileNumber</td>
+                    <td class="text-center">@item.Address</td>
+                    <td class="text-center">@item.UserName</td>
+                    <td class="text-center">@item.Status</td>
+                    <td class="text-center">
+                        @*@if (privilege.Edit)
+            {*@
+                        <a href="#" class="btn btn-warning btn-sm data-edit-item-Supplier" style="line-height:1" data-edit-item-Supplier="@item.FinishGoodSupplierId"><i class="fa fa-pen"></i> Edit</a>
+                        @*}*@
+                    </td>
+                </tr>
+                }
+
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="5">
+                            No Rows Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

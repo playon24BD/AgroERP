@@ -1,0 +1,270 @@
+﻿
+@{
+    ViewBag.Title = "CreateUserInfoList";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-gray shadow">
+
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/GetUserInfoList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">Create UserInfo</h5>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body text-sm">
+                <div class="row" style="margin-top:-8px;">
+                    <div class="col-md-2">
+                        <label for="txtUserName" class="control-label">User Name</label>
+                        <input type="text" id="txtUserName" class="form-control form-control-sm" />
+                        <span class="error hide required-UserName font-weight-bold">Input User Name!</span>
+                        <span class="error hide duplicate-UserName font-weight-bold">Already UserName Exist!</span>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtDepartMentName" class="control-label">DepartMent Name</label>
+                        <input type="text" id="txtDepartMentName" class="form-control form-control-sm" />
+                        <span class="error hide required-DepartMentName font-weight-bold">Input DepartMent Name!</span>
+                        <span class="error hide duplicate-DepartMentName font-weight-bold">Already DepartMentName Exist!</span>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtDesignationName" class="control-label">Designation Name</label>
+                        <input type="text" id="txtDesignationName" class="form-control form-control-sm" />
+                        <span class="error hide required-DesignationName font-weight-bold">Input Designation Name!</span>
+
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtMobileNumber" class="control-label">Mobile Number</label>
+                        <input type="text" id="txtMobileNumber" class="form-control form-control-sm" />
+                        <span class="error hide required-MobileNumber font-weight-bold">Input Mobile Number!</span>
+
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtAddress" class="control-label">Address</label>
+                        <input type="text" id="txtAddress" class="form-control form-control-sm" />
+                        <span class="error hide required-Address font-weight-bold">Input Address!</span>
+
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtEmail" class="control-label">Email</label>
+                        <input type="text" id="txtEmail" class="form-control form-control-sm" />
+                        <span class="error hide required-Email font-weight-bold">Input Email !</span>
+
+                    </div>
+
+                    <div class="col-md-12" style="margin-top:-9px;">
+                        <label for="addButton" class="control-label"></label>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-outline-primary float-right " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblMargeItems">
+                            <thead>
+                                <tr>
+                                    <th colspan="9">
+                                        <button class="btn btn-outline-success btn-sm float-lg-left mt-2" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                    </th>
+                                </tr>
+
+                                <tr class="text-center btn-dark">
+                                    <th style="width:5%">#SL</th>
+                                    <th style="width:15%">User Name</th>
+                                    <th style="width:15%">DepartMent Name</th>
+                                    <th style="width:15%">Designation Name</th>
+                                    <th style="width:10%">Mobile Number</th>
+                                    <th style="width:10%">Address</th>
+                                    <th style="width:10%">Email</th>
+                                    <th style="width:10%">Action</th>
+                                    @*<th class="hide userId"></th>*@
+
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var txtUserName = $("#txtUserName");
+        var txtDepartMentName = $("#txtDepartMentName");
+        var txtDesignationName = $("#txtDesignationName");
+        var txtMobileNumber = $("#txtMobileNumber");
+        var txtAddress = $("#txtAddress");
+        var txtEmail = $("#txtEmail");
+        var UserNameList = [];
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+        })
+
+        $("#addButton").click(function (e) {
+            e.preventDefault();
+            debugger;
+            if (validation()==true) {
+
+                if (UserNameList.includes(txtUserName.val())) {
+                    toastrErrorAlert("User Name Already Exist");
+                }
+                else {
+
+                    var sl = $("#tblMargeItems tbody tr").length;
+                    var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                    var td2 = "<td class='text-center'>" + txtUserName.val() + "</td>";
+                    var td3 = "<td class='text-center'>" + txtDepartMentName.val() + "</td>";
+                    var td4 = "<td class='text-center'>" + txtDesignationName.val() + "</td>";
+                    var td5 = "<td class='text-center'>" + txtMobileNumber.val() + "</td>";
+                    var td6 = "<td class='text-center'>" + txtAddress.val() + "</td>";
+                    var td7 = "<td class='text-center'>" + txtEmail.val() + "</td>";
+
+                    var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                    //var td9 = "<td class='hide UserId'>" + txtUserName.val() + "</td>";
+
+
+                    var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + "</tr>";
+
+                    $("#tblMargeItems tbody").append(tr);
+                    UserNameList.push(txtUserName.val());
+
+                }
+
+            }
+        })
+
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+            var userId = tds.eq(5).html();
+            console.log("userId :" + userId);
+            const mid = UserNameList.indexOf(userId);
+            UserNameList.splice(mid, 1);
+
+            removeTableRow("#tblMargeItems tbody", index);
+            fnFixTheTbodyRowSerial("#tblMargeItems tbody", index);
+        })
+
+        function validation() {
+            Isvalid = true;
+            $('.error').addClass("hide");
+            if ($.trim(txtUserName.val()) == 0) {
+                $('.required-UserName').removeClass("hide");
+                Isvalid = false;
+            }
+
+            if ($.trim(txtDepartMentName.val()) == "") {
+                $('.required-DepartMentName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(txtDesignationName.val()) == "") {
+                $('.required-DesignationName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(txtMobileNumber.val()) == "") {
+                $('.required-MobileNumber').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(txtAddress.val()) == "") {
+                $('.required-Address').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(txtEmail.val()) == "") {
+                $('.required-Email').removeClass("hide");
+                Isvalid = false;
+            }
+
+
+            return Isvalid
+
+        }
+
+
+        $("#saveButton").click(function (e) {
+            debugger;
+        e.preventDefault();
+
+            var details = [];
+            details.length = 0;
+        $.each($("#tblMargeItems tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+
+                    UserId: 0,
+                    UserName: tds.eq(1).html(),
+                    DepartMentName: tds.eq(2).html(),
+                    Designation: tds.eq(3).html(),
+                    MobileNumber: tds.eq(4).html(),
+                    Address: tds.eq(5).html(),
+                    Email: tds.eq(6).html(),
+
+
+                });
+            })
+            console.log(details);
+            var data = JSON.stringify({ details: details });
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveUserInfoList', data, getToken())).then(function (res, status) {
+                if (res === true) {
+                    debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("GetUserInfoList")');
+                    }, 1000);
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+        }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#saveButton");
+        })
+
+
+
+        });
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+    </script>
+
+}
+

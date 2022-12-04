@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.MeasurementSetupViewModel>
+    @{ 
+        int sl = 0;
+    }
+<div class="col-md-12">
+    <table class="table table-bordered table-sm table-striped table-responsive-lg text-sm">
+        <thead class="btn-dark">
+            <tr class="text-center text-bold">
+                <th>SL</th>
+                <th>MeasureMent Name</th>
+                <th>MeasureMent Item</th>
+                <th>UnitName</th>
+                <th>Status</th>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            
+            @foreach (var item in Model)
+            {
+                
+                sl++;
+            <tr>
+               
+                <td class="text-center">@sl</td>
+                <td class="hide">@item.MeasurementId</td>
+                <td class="text-center">@item.MeasurementName</td>
+                <td class="text-center">@item.PackageName </td>
+                <td class="hide">@item.MasterCarton</td>
+                <td class="hide">@item.InnerBox</td>
+                <td class="hide">@item.PackSize</td>
+                <td class="text-center">@item.UnitName</td>
+                <td class="hide">@item.UnitId</td>
+                <td class="text-center">@item.Status</td>
+                <td class="hide">@item.UnitKG</td>
+                <td class="text-center">
+                    <a href="#" class="btn btn-warning btn-sm data-edit-item-measurement" data-edit-item-measurement="@item.MeasurementId"><i class="fa fa-pen"></i>Edit</a>
+                </td>
+
+            </tr>
+
+            }
+
+
+        </tbody>
+
+    </table>
+
+</div>

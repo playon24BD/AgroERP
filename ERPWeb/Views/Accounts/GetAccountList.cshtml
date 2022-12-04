@@ -1,0 +1,213 @@
+﻿@model IEnumerable<ERPBO.Accounts.ViewModels.AccountViewModel>
+@{
+    ViewBag.Title = "Accounts List";
+    int sl = 0;
+}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <div class="card card-gray shadow">
+            <div class="card-header">
+                <h4>Chart Of Account</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-header">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" name="search" id="searchBy" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('#tblAccountsHead tbody tr',this)" />
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn btn-primary btn-sm" style="background-color:darkblue" id="btnAddNew"><i class="fa fa-plus"></i> Add New Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.AntiForgeryToken()
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 text-sm">
+                        <table class="table table-bordered table-sm table-striped" id="tblAccountsHead">
+                            <thead class="btn-dark">
+                                <tr class="text-center">
+                                    <th>#SL</th>
+                                    <th class="hide"></th>
+                                    <th>Account Name</th>
+                                    <th>Account Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var acc in Model)
+                                {
+                                    sl = sl + 1;
+                                    <tr>
+                                        <td class="text-center" width="10%">@sl</td>
+                                        <td class="hide">@acc.AccountId</td>
+                                        <td>@acc.AccountName</td>
+                                        <td>@acc.AccountType</td>
+                                    </tr>
+                                }
+                                @if (Model.Count() == 0)
+                                {
+                                    <tr class="text-center empty-row">
+                                        <td colspan="5">
+                                            No Rows Found
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAccountsHead" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-secondary" style="height:60px">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead">Add Account</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmAccessories">
+                    <input type="hidden" name="Id" id="hdfAHeadId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="txtAccountHeadName" class="control-label font-weight-bold">Account Name<sup><i class="fas fa-asterisk fa-sm text-red" style="font-size:0.25rem;"></i></sup></label>
+                            <input type="text" name="txtAccountHeadName" value="" id="txtAccountHeadName" class="form-control form-control-sm" />
+                            <span class="error hide required-aHeadName font-weight-bold">Input Accounts Name!</span>
+                            <span class="error hide duplicate-aHeadName font-weight-bold">Already Accounts Head Name Exist!</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <div class="form-control text-sm">
+                                <b>Check if Group Head</b> <input type="checkbox" id="chkGroupHead" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row" id="ancestorName">
+                        <div class="form-group col-md-12">
+                            <label for="txtAncestorName" class="control-label font-weight-bold">Ancestor Name</label>
+                            @Html.DropDownList("ddlAncestorName", (IEnumerable<SelectListItem>)ViewBag.ddlAncestorName, "Select Ancestor", new { @class = "form-control form-control-sm select2 select2-danger" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="ddlAccountsType" class="control-label font-weight-bold">Accounts Type</label>
+                            @Html.DropDownList("ddlAccountsType", (IEnumerable<SelectListItem>)ViewBag.ddlAccountsType, "--Select Accounts Type--", new { @class = "form-control form-control-sm" })
+                            <span class="error hide required-accountsType font-weight-bold">Required Accounts Type!</span>
+                        </div>
+                    </div>
+                    <div class="form-row hide">
+                        <div class="form-group col-md-12">
+                            <label for="txtRemarks" class="control-label font-weight-bold">Remarks</label>
+                            <input type="text" name="remarks" value="" id="txtRemarks" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-sm btn-success float-right" id="btnSubmit"><i class="far fa-save"></i> <span id="spanSaveText">Save </span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        var hdfAHeadId = $("#hdfAHeadId");
+        var txtAccountHeadName = $("#txtAccountHeadName");
+        var ddlAncestorName = $("#ddlAncestorName");
+        var txtRemarks = $("#txtRemarks");
+        var chkGroupHead = $("#chkGroupHead");
+        var ddlAccountsType = $("#ddlAccountsType");
+
+        function OpenAHeadModal() {
+            $("#spanModalHead").text('Add Account');
+            $("#spanSaveText").text('Save');
+            $("#modalAccountsHead").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        chkGroupHead.change(function () {
+            enable("#ddlAncestorName");
+            ddlAncestorName.val("");
+            ddlAncestorName.trigger("change");
+            if (chkGroupHead.is(":checked")) {
+                disable("#ddlAncestorName");
+            }
+        })
+
+        $(document).ready(function () {
+            $('.select2').select2();
+        })
+        $("#btnAddNew").click(function (e) {
+            e.preventDefault();
+            //clearCtrl();
+            OpenAHeadModal();
+        })
+        function validateAccountForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if ($.trim(txtAccountHeadName.val()) == "") {
+                $(".required-aHeadName").removeClass("hide");
+                isValid = false;
+            }
+            if ($.trim(ddlAccountsType.val()) == "") {
+                $(".required-accountsType").removeClass("hide");
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            if (validateAccountForm() == true) {
+                $(".error").addClass("hide");
+                var data = JSON.stringify({ AccountName: txtAccountHeadName.val(), IsGroupHead: chkGroupHead.is(":checked"), AncestorId: ddlAncestorName.val(), AccountType: ddlAccountsType.val(), Remarks: txtRemarks.val() });
+                console.log("Account Info");
+                //return console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/Accounts/SaveAccount', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        message("#msg1", "#tblAccountsHead");
+                    }
+                    else {
+                        message("#msg2");
+                    }
+                    enable("#btnSubmit");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmit");
+                });
+            }
+        })
+    </script>
+}
+

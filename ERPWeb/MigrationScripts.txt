@@ -1,0 +1,12 @@
+
+To clear - cls
+Enable-Migragions:
+Enable-Migrations -ContextTypeName ERPDAL.AgricultureDAL.AgricultureDbContext –MigrationsDirectory AgricultureContextMigrations
+
+Add-Migration:
+ Add-Migration 'Agriculture_Depo' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
+
+ Update-Database:
+ Update-database -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration
+
+  Add-Migration 'ProductionCOst' -ProjectName 'ERPDAL' -ConfigurationTypeName ERPDAL.AgricultureContextMigrations.Configuration

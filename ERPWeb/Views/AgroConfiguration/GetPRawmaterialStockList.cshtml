@@ -1,0 +1,879 @@
+﻿@{
+    ViewBag.Title = "GetPRawmaterialStockList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    table.tablesubtotal tr th {
+        background-color: black !important;
+        color: white !important;
+    }
+
+    table.tadd tr th {
+        background-color: darkcyan !important;
+        color: white !important;
+    }
+
+    body {
+        margin-top: 40px;
+    }
+
+    .container {
+        margin-bottom: 60px;
+        border: 1px solid rgba( 0,0,0, .4 );
+        padding: 40px;
+        border-radius: 6px;
+    }
+    .btn1 {
+        background-color: #001F3F;
+        color: white;
+        border: 1px solid white;
+    }
+        .btn1:hover {
+            background-color: green;
+            color: white;
+            border: 1px solid;
+        }
+</style>
+<div class="row" style=" margin-top: -35px">
+    <div class="col-md-12">
+        <div class="card  shadow card card-outline card-tabs " style="margin-top:-30px">
+
+
+            <ul class="nav nav-tabs nav-pills bg-navy py-1 px-1"  id="custom-tabs-two-tab" role="tablist">
+                <li class="nav-item  btn1">
+                    <a class="nav-link active  text-white  btn" id="custom-tabs-two-pstockrawmaterialqty-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialqty" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialqty" aria-selected="false">RM Stock Summary</a>
+                </li>
+                <li class="nav-item btn1">
+                    <a class="nav-link text-white btn  mx-0" id="custom-tabs-two-pstockrawmaterialList-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialList" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialList" aria-selected="false">Purchase Details</a>
+                </li>
+                <li class="nav-item btn1">
+                    <a class="nav-link text-white btn" id="custom-tabs-two-pstockrawmaterial-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterial" role="tab" aria-controls="custom-tabs-two-pstockrawmaterial" aria-selected="false">RM Stock In</a>
+                </li>
+
+            </ul>
+
+
+        </div>
+
+        <div class="card-body shadow">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+
+                <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterialList" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialList-tab">
+
+                    <div class="row" style=" margin-top: -30px">
+                        <div class="col-md-12">
+                           
+                            <div class="card card-gray-dark">
+                                <div class="card-header">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-2">
+                                            <h5 class="text-center">Search By</h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                 
+                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
+                                        </div>
+
+                                        <div class="col-md-2">
+                            
+                                            <input type="text" class="form-control form-control-sm" id="searchByPO" placeholder="search PO" />
+                                        </div>
+
+                                        <div class="col-md-2">
+                                 
+                                            <input type="text" class="form-control form-control-sm" id="searchByChallan" placeholder="search Challan" />
+                                        </div>
+
+                                        <div class="col-md-2">
+  
+                                            @Html.DropDownList("ddlSupplierName1", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 text-sm text-sm" id="dataContainer">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterial" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterial-tab">
+                    <div class="row mb-5">
+                        <div class="col-md-12" style="margin-top: -30px">
+                            <div class="card card-navy shadow">
+                                <div class="card-header" style="text-align: center;">
+
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+
+                                            <h5 class="text-center text-bold">
+                                                Purchase And RawMaterial Stock
+                                            </h5>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+
+                                @*addbodey*@
+                                <div class="card-body " style="margin-bottom:-10px">
+                                    <div class="row small">
+
+
+
+                                        <div class="col-md-12">
+                                            <div class="container-fluid">
+                                              
+                                                <div class="row justify-content-center">
+
+                                                    <div class="col-md-3">
+                                                        <label for="ddlSupplierName" class="control-label">Supplier Name</label>
+                                                        @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                        <span class="error hide req-SupplierName font-weight-bold">Supplier Name is required!</span>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="ddlInvoiceDate">Invoice Date</label>
+                                                            <div class="input-group-sm date" id="datePicker">
+
+                                                                <input type="text" class="form-control" id="ddlInvoiceDate" name="date" value="">
+                                                                <span class="input-group-addon">
+                                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <label for="ddlChallanNo" class="control-label">Challan No.</label>
+                                                        <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
+                                                        <span class="error hide req-ddlChallanNo font-weight-bold">Chalan No is required!</span>
+
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="ddlInvoiceNo" class="control-label">Invoice No.</label>
+                                                        <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
+                                                        <span class="error hide req-ddlInvoiceNo font-weight-bold">Invoice No is required!</span>
+                                                    </div>
+
+                                                    @*<div class="col-md-2">
+                                                        <label for="ddlProductCode" class="control-label">Product Code</label>
+                                                        <input type="text" id="ddlProductCode" class="form-control form-control-sm" />
+                                                    </div>*@
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row small">
+                                        <div class="col-md-12">
+                                            <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
+                                            
+                                                <div class="row justify-content-center">
+
+                                                    <div class="col-md-12">
+
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <label class="control-label" for="ddlRawMaterial">RawMaterial</label>
+                                                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                                <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <label for="ddlrmcode">RM Code</label>
+                                                                <input type="text" id="ddlrmcode" name="qty" class="form-control form-control-sm" />
+                                                                <span class="error hide req-ddlrmcode">Code Is Required</span>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <label for="ddlUnitName">Unit</label>
+                                                                <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
+                                                            </div>
+                                                            <div class="hide">
+                                                                <label for="ddlUnitID">UnitID</label>
+                                                                <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
+                                                            </div>
+
+                                                            <div class="col-md-1">
+                                                                <label for="ddluprice">Unit Price</label>
+                                                                <input type="number" id="ddluprice" name="uprice" class="form-control form-control-sm" />
+                                                                <span class="error hide req-uprice">Unit Price Is Required</span>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <label for="ddlqty"> Qty</label>
+                                                                <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
+                                                                <span class="error hide req-qty">Qty Is Required</span>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <label>SubTotal</label>
+                                                                <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <div class="form-group">
+                                                                    <label for="ddlexpdate">Expire Date</label>
+                                                                    <div class="input-group-sm date" id="datePicker">
+
+                                                                        <input type="text" class="form-control" id="ddlexpdate" name="date" value="">
+                                                                        <span class="input-group-addon">
+                                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-1">
+                                                                <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                                                                <div class="clearfix">
+                                                                    <button type="submit" class="btn btn-sm float-right btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*addbodey*@
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="card-body" style=" margin-top: -30px">
+
+                            <div class="card-body table-responsive p-0 shadow " style="height: 200px;">
+                                <table class="table table-head-fixed text-nowrap tadd" id="tblPstockrawmaterial">
+                                    <thead>
+                                        <tr class="text-center" style="color:black">
+
+                                            <th>#SL</th>
+                                            <th>Raw Material</th>
+                                            <th>RM Code</th>
+                                            <th>Unit</th>
+                                            <th>Unit Price</th>
+                                            <th>QTY</th>
+                                            <th>Subtotal</th>
+                                            <th>Action</th>
+                                            <th class="hide DepotlId"></th>
+                                            <th class="hide RMId"></th>
+                                            <th class="hide unitId"></th>
+                                            <th class="hide ddlexpdate"></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-gradient-gray"></tbody>
+                                </table>
+                            </div>
+
+                            @*Total*@
+                            <table class="table table-head-fixed text-nowrap tablesubtotal">
+                                <thead>
+                                    <tr class="text-center">
+
+                                        <th>Total</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th class="totalqty">0</th>
+                                        <th class="totalsub">0</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-gradient-gray"></tbody>
+                            </table>
+                            @*Total*@
+                        </div>
+                    </div>
+                </div>
+
+
+                @*stock*@
+                <div class="tab-pane fade show active" id="custom-tabs-two-pstockrawmaterialqty" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialqty-tab">
+
+                    <div class="row" style="margin-top:-30px">
+                        <div class="col-md-12">
+                            <div class="card card-gray-dark shadow">
+                                <div class="card-header">
+                                    <div class="row text-sm">
+                                        <div class="col-md-2">
+                                            <h5>Search by:</h5>
+                                        </div>
+                                        <div class="col-md-3 float-right">
+                                            <input type="text" class="form-control form-control-sm" id="searchByAnyy" placeholder="Search by any" />
+
+                                        </div>
+                                        <div class="col-7">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="row">
+
+                                        <div class="col-md-12 text-sm text-sm" id="dataContainer3">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*stock*@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Modal*@
+<div class="modal fade" id="PurchaseDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title">Raw Material Stock & Purchase Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+
+
+    <script type="text/javascript">
+        var to = 0;//total
+        var to1 = 0;//qty
+
+
+
+        var ddlSupplierName = $("#ddlSupplierName");
+        var ddlInvoiceDate = $("#ddlInvoiceDate");
+        var ddlInvoiceNo = $("#ddlInvoiceNo");
+        var ddlChallanNo = $("#ddlChallanNo");
+        var ddlInvoiceDate = $("#ddlInvoiceDate");
+        var ddlProductCode = $("#ddlProductCode");
+
+        var ddlexpdate = $("#ddlexpdate");
+
+
+        var ddlDepotName = $("#ddlDepotName");
+        var ddlRawMaterial = $("#ddlRawMaterial");
+
+        var ddlqty = $("#ddlqty");
+        var ddlUnitName = $("#ddlUnitName");
+        var ddluprice = $("#ddluprice");
+        var ddlttprice = $("#ddlttprice");
+        var ddlUnitID = $("#ddlUnitID");
+        var ddlrmcode = $("#ddlrmcode");
+        var ddlRawMaterialList = [];
+        var searchByAny = $("#searchByAny");
+        var searchByAnyy = $("#searchByAnyy");
+
+
+        var ddlSupplierName1 = $("#ddlSupplierName1");
+        var searchByChallan = $("#searchByChallan");
+        var searchByPO = $("#searchByPO");
+
+        //date
+        var date = new Date();
+        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+        var optSimple = {
+            format: 'mm-dd-yyyy',
+            todayHighlight: true,
+            orientation: 'bottom right',
+            autoclose: true,
+            container: '#sandbox'
+        };
+
+        var optComponent = {
+            format: 'mm-dd-yyyy',
+            container: '#datePicker',
+            orientation: 'auto top',
+            todayHighlight: true,
+            autoclose: true
+        };
+
+        // SIMPLE
+        $('#simple').datepicker(optSimple);
+
+        // COMPONENT
+        $('#datePicker').datepicker(optComponent);
+
+        // ===================================
+
+        //$('#datepicker1').datepicker({
+        //    format: "dd-mm-yyyy",
+        //    todayHighlight: true,
+        //    autoclose: true,
+        //    container: '#box1',
+        //    orientation: 'top right'
+        //});
+
+        //$('#datepicker2').datepicker({
+        //    format: 'dd-mm-yyyy',
+        //    todayHighlight: true,
+        //    autoclose: true,
+        //    container: '#box2',
+        //    orientation: 'top right'
+        //});
+
+        $('#datepicker1, #datepicker2, #simple, #datePicker').datepicker('setDate', today);
+        //dateend
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            $("#btnSubmit").hide();
+
+            LoadDataTable();
+            LoadDataTableStock();
+
+        })
+
+        function LoadDataInitializer() {
+
+            LoadDataTable();
+        }
+
+        searchByAny.keyup(function () {
+            LoadDataTable()
+        })
+
+        //src2
+        searchByAnyy.keyup(function () {
+            LoadDataTableStock()
+        })
+
+
+        ddlSupplierName1.change(function () {
+            LoadDataTable()
+        })
+
+        searchByChallan.keyup(function () {
+            LoadDataTable()
+        })
+        searchByPO.keyup(function () {
+            LoadDataTable()
+        })
+
+
+        //load
+        function LoadDataTable() {
+            debugger;
+
+            var data = { flag: "View", name: $.trim(searchByAny.val()), supplierId: TryParseInt(ddlSupplierName1.val(), 0), PONumber: $.trim(searchByPO.val()), ChallanNo: $.trim(searchByChallan.val())};
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPRawmaterialStockList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+            //pageNo = 1;
+        }
+
+
+        //loads
+        function LoadDataTableStock() {
+            debugger;
+
+            var data = { flag: "Direct", name: $.trim(searchByAnyy.val()) };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPRawmaterialStockList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer3").fadeOut('500', function () {
+                        $("#dataContainer3").empty();
+                        $("#dataContainer3").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+            //pageNo = 1;
+        }
+         //loads
+
+
+        //details
+        $(document).on('click', 'a.data-item-detail', function (e) {
+            //alert();
+            //debugger;
+
+            e.preventDefault();
+            $("#dataContainer2").empty();
+            //$("#PurchaseDetails").modal('show');
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+            if (TryParseInt(id, 0) > 0) {
+                //debugger;
+                var data = { flag: "Detail", PRawMaterialStockId: 0, id: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPRawmaterialStockList', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res);
+                        $("#PurchaseDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+
+
+
+
+        //change
+        ddlRawMaterial.change(function () {
+
+
+            var data = { RawMaterialId: ddlRawMaterial.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitName", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnitName.val(res.UnitName);
+                ddlUnitName.val(unit);
+
+            });
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/RawMaterialStockLoadUnitID", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var unit = res.replace(/['"]+/g, '');
+                ddlUnitID.val(res.UnitIDd);
+                ddlUnitID.val(unit);
+
+            });
+
+        })
+
+
+
+
+
+        $("#addTolist").click(function (e) {
+            //alert();
+            //debugger;
+            e.preventDefault();
+
+
+            if (validateAddToList()) {
+
+            if (ddlRawMaterialList.includes(ddlRawMaterial.val())) {
+                toastrErrorAlert("Material Already Exist");
+            }
+            else {
+                var sl = $("#tblPstockrawmaterial tbody tr").length;
+                var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterial") + "</td>";
+                var td3 = "<td class='text-center'>" + ddlrmcode.val() + "</td>";
+                var td4 = "<td class='text-center'>" + ddlUnitName.val() + "</td>";
+                var td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                var td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                var td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
+                var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlttprice.val() + "' data-quentaty='" + ddlqty.val() +"'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
+                var td9 = "<td class='text-center hide'>" + ddlRawMaterial.val() + "</td>";
+                var td10 = "<td class='text-center hide'>" + ddlUnitID.val() + "</td>";
+
+                var td11 = "<td class='text-center hide'>" + ddlexpdate.val() + "</td>";
+
+                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + "</tr>";
+
+
+                //totalprice
+                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                $('.totalsub').text(to);
+                console.log(to);
+                //totalprice
+                //tqty
+                to1 = parseFloat($('.totalqty').text()) + parseFloat(ddlqty.val());
+                $('.totalqty').text(to1);
+                console.log(to1);
+                //tqty
+
+
+
+                $("#tblPstockrawmaterial tbody").append(tr);
+                ddlRawMaterialList.push(ddlRawMaterial.val());
+
+                }
+                clearCtrlStk();
+        }
+
+        })
+
+
+        //save
+        $("#saveButton").click(function (e) {
+            //alert();
+            //debugger
+            e.preventDefault();
+
+            if (validatesave()) {
+
+            if (true === true) {
+
+                bootbox.confirm("Are you sure you want to Save this", function (result) {
+                    if (result) {
+                        //alert("ok");
+                       // debugger;
+                        var totalsub = $('.totalsub').text();//initilize class total
+
+                        var info = { RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0), ChalanNo: ddlChallanNo.val(), InvoiceNo: ddlInvoiceNo.val(), InvoiceDate: ddlInvoiceDate.val(), ProductCode: ddlProductCode.val(), TotalAmount: totalsub };
+                        var details = [];
+                        details.length = 0;
+
+                        $.each($("#tblPstockrawmaterial tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+                                PRawMaterialStockDetailId: 0,
+                                RawMaterialId: tds.eq(8).html(),
+                                UnitID: tds.eq(9).html(),
+                                UnitPrice: tds.eq(4).html(),
+                                Quantity: tds.eq(5).html(),
+                                SubTotal: tds.eq(6).html(),
+
+                                ExpireDate: tds.eq(10).html(),
+                                RmMRPCode: tds.eq(2).html(),
+
+                            });
+                        })
+
+
+                        console.log(info);
+                        console.log(details);
+
+                        var data = JSON.stringify({ info: info, details: details });
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveRawmaterialPurchaseStock', data, getToken())).then(function (res, status) {
+                            if (res === true) {
+                                //debugger;
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("GetPRawmaterialStockList")');
+                                }, 1000);
+                                //resetUI();
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+                    }
+                    //clearCtrlSv();
+                })
+            }
+            }
+
+        })
+
+
+
+
+
+
+
+
+        //calculate
+        ddlqty.keyup(function () {
+            if (ddlqty.val()>=0) {
+                calculateTotal();
+            }
+
+
+        });
+
+        ddluprice.keyup(function () {
+            if (ddluprice.val()>=0) {
+                calculateTotal();
+
+            }
+
+        });
+
+        function calculateTotal() {
+
+            var sub = ddluprice.val() * ddlqty.val();
+            ddlttprice.val(sub);
+
+        }
+        //calculateend
+
+        //remove
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            //debugger;
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+            //tt
+            var subtotal = $(this).data("subtotal");
+            var row = $(this).data("quentaty");
+            console.log(row);
+            //tt
+
+            var rId = tds.eq(7).html();
+            console.log("rId :" + rId);
+            const mid = ddlRawMaterialList.indexOf(rId);
+
+            ddlRawMaterialList.splice(mid, 1);
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    removeTableRow("#tblPstockrawmaterial tbody", index);
+                    fnFixTheTbodyRowSerial("#tblPstockrawmaterial tbody", index);
+
+
+                    var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal);
+                    $('.totalsub').text(totals);
+
+                    var totalsq = parseFloat($(".totalqty").text()) - parseFloat(row);
+                    $('.totalqty').text(totalsq);
+                };
+            }));
+
+        })
+
+
+
+        //clear
+        function clearCtrlStk() {
+            //debugger;
+            ddlRawMaterial.val("");
+            ddlRawMaterial.trigger("change");
+            ddlqty.val("");
+            ddlUnitName.val("");
+            ddlUnitID.val("");
+            ddlttprice.val("");
+            ddluprice.val("");
+            ddlrmcode.val("");
+        }
+
+        //master
+        function clearCtrlSv() {
+            //debugger;
+            ddlSupplierName.val("");
+            ddlSupplierName.trigger("change");
+            ddlInvoiceDate.val("");
+            ddlChallanNo.val("");
+            ddlInvoiceNo.val("");
+        }
+
+
+        //validationadd
+        function validateAddToList() {
+            //debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlRawMaterial.val()) == 0) {
+                $(".req-ddlRawMaterial").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(ddlqty.val(), 0) <= 0) {
+                $(".req-qty").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(ddluprice.val(), 0) <= 0) {
+                $(".req-uprice").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        //validationsave
+        function validatesave() {
+            //debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlSupplierName.val()) == 0) {
+                $(".req-SupplierName").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlInvoiceDate.val() === "") {
+                $(".req-ddlInvoiceDate").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlChallanNo.val() === "") {
+                $(".req-ddlChallanNo").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlInvoiceNo.val() === "") {
+                $(".req-ddlInvoiceNo").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+
+    </script>
+}

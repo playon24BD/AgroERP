@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ERPBO.Accounts.ViewModels.ChequeBookViewModel>
+@{ 
+    int sl = 0;
+    Layout = null;
+}
+<div class="col-md-12 text-sm">
+    <table class="table table-bordered table-sm table-striped tblChequeBookList" id="tblChequeBookList">
+        <thead class="btn-dark">
+            <tr class="text-center">
+                <th style="vertical-align:middle">#SL</th>
+                <th style="vertical-align:middle" class="hide"></th>
+                <th style="vertical-align:middle">Cheque Date</th>
+                <th style="vertical-align:middle">Pay/Receive To</th>
+                <th style="vertical-align:middle">Acc Name</th>
+                <th style="vertical-align:middle">Acc No</th>
+                <th style="vertical-align:middle">Cheque Type</th>
+                <th style="vertical-align:middle">Cheque No</th>
+                <th style="vertical-align:middle">Amount</th>
+                <th style="vertical-align:middle">Bank</th>
+                <th style="vertical-align:middle">Branch</th>
+                <th style="vertical-align:middle">Remarks</th>
+                <th style="vertical-align:middle">Entry User</th>
+                <th style="vertical-align:middle">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var jor in Model)
+            {
+                sl = sl + 1;
+                string checkdate = jor.CheckDate != null ? jor.CheckDate.Value.ToString("dd-MMM-yyy") : "";
+            <tr>
+                <td class="text-center">@sl</td>
+                <td class="hide">@jor.ChequeBookId</td>
+                <td>@checkdate</td>
+                <td>@jor.PayOrReceive</td>
+                <td>@jor.AccName</td>
+                <td>@jor.AccountNumber</td>
+                <td>@jor.CheckType</td>
+                <td>@jor.CheckNo</td>
+                <td class="text-center">@jor.Amount.ToString("0.00")</td>
+                <td>@jor.BankName</td>
+                <td>@jor.BranchName</td>
+                <td >@jor.Remarks</td>
+                <td>@jor.UserName</td>
+                <td class="text-center">
+                    <a href="#" class="btn btn-warning btn-sm data-edit-chequebook" title="Edit" data-edit-chequebook="@jor.ChequeBookId"><i class="fas fa-pencil-alt"></i> </a>
+                </td>
+            </tr>
+            }
+            @if (Model.Count() == 0)
+            {
+                <tr class="text-center empty-row">
+                    <td colspan="13">
+                        No Rows Found
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

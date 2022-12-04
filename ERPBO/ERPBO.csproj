@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{83DE419F-8912-4254-A909-5F63A35EB2EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ERPBO</RootNamespace>
+    <AssemblyName>ERPBO</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Agriculture\DomainModels\AgroProductSalesDetails.cs" />
+    <Compile Include="Agriculture\DomainModels\AgroProductSalesInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\AgroUnitInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\AreaInfoSetup.cs" />
+    <Compile Include="Agriculture\DomainModels\AreaUser.cs" />
+    <Compile Include="Agriculture\DomainModels\CommisionOnProduct.cs" />
+    <Compile Include="Agriculture\DomainModels\CommisionOnProductHistory.cs" />
+    <Compile Include="Agriculture\DomainModels\CommisionOnProductSalesDetails.cs" />
+    <Compile Include="Agriculture\DomainModels\CommissionOnProductOnSales.cs" />
+    <Compile Include="Agriculture\DomainModels\DistributionUser.cs" />
+    <Compile Include="Agriculture\DomainModels\DivisionInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\DivisionUser.cs" />
+    <Compile Include="Agriculture\DomainModels\FinishGoodProductionDetails.cs" />
+    <Compile Include="Agriculture\DomainModels\FinishGoodProductionInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\MRawMaterialIssueStockDetails.cs" />
+    <Compile Include="Agriculture\DomainModels\MRawMaterialIssueStockInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\PRawMaterialStockIDetails.cs" />
+    <Compile Include="Agriculture\DomainModels\PRawMaterialStockInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\ProductionPerproductCost.cs" />
+    <Compile Include="Agriculture\DomainModels\ProductPriceConfiguration.cs" />
+    <Compile Include="Agriculture\DomainModels\ProductPricingHistory.cs" />
+    <Compile Include="Agriculture\DomainModels\RawMaterialIssueStockDetails.cs" />
+    <Compile Include="Agriculture\DomainModels\RawMaterialIssueStockInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\RawMaterialRequisitionInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\RawMaterialRequisitionDetails.cs" />
+    <Compile Include="Agriculture\DomainModels\RawMaterialStock.cs" />
+    <Compile Include="Agriculture\DomainModels\RawMaterialStockDetail.cs" />
+    <Compile Include="Agriculture\DomainModels\RawMaterialTrack.cs" />
+    <Compile Include="Agriculture\DomainModels\RegionSetup.cs" />
+    <Compile Include="Agriculture\DomainModels\RegionUser.cs" />
+    <Compile Include="Agriculture\DomainModels\ReturnRawMaterial.cs" />
+    <Compile Include="Agriculture\DomainModels\SalesPaymentRegister.cs" />
+    <Compile Include="Agriculture\DomainModels\SalesReturn.cs" />
+    <Compile Include="Agriculture\DomainModels\StockiestInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\StockiestUser.cs" />
+    <Compile Include="Agriculture\DomainModels\TerritorySetup.cs" />
+    <Compile Include="Agriculture\DomainModels\TerritoryUser.cs" />
+    <Compile Include="Agriculture\DomainModels\UserAssign.cs" />
+    <Compile Include="Agriculture\DomainModels\UserInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\Zone.cs" />
+    <Compile Include="Agriculture\DomainModels\ZoneDetail.cs" />
+    <Compile Include="Agriculture\DomainModels\ZoneSetup.cs" />
+    <Compile Include="Agriculture\DomainModels\ZoneUser.cs" />
+    <Compile Include="Agriculture\DTOModels\AgroProductSalesDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\AgroProductSalesInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\AgroUnitInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\AreaSetupDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\AreaUserDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\CommisionOnProductDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\CommisionOnProductHistoryDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\CommisionOnProductSalesDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\CommissionOnProductOnSalesDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\DistributionUserDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\DistributionUserViewModel.cs" />
+    <Compile Include="Agriculture\DTOModels\DivisionInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\DivisionUserDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\FinishGoodProductionDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\FinishGoodProductionInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\MRawMaterialIssueStockDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\MRawMaterialIssueStockInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\PRawMaterialStockIDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\PRawMaterialStockInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ProductDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ProductionPerproductCostDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ProductPriceConfigurationDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ProductPricingHistoryDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialIssueStockDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialIssueStockInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialRequisitionDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialRequisitionInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialStockDetailDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialStockDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialTrackDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RegionSetupDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RegionUserDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ReturnRawMaterialDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\SalesPaymentRegisterDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\SalesReturnDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\StockiestInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\StockiestUserDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\TerritorySetupDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\TerritoryUserDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\UserAssignDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\UserInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ZoneDetailDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ZoneDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ZoneSetupDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\ZoneUserDTO.cs" />
+    <Compile Include="Agriculture\ReportModels\DateWiseCollectionReport.cs" />
+    <Compile Include="Agriculture\ReportModels\FinishGoodProductionAcceptDataReport.cs" />
+    <Compile Include="Agriculture\ReportModels\FinishGoodProductionDataReport.cs" />
+    <Compile Include="Agriculture\ReportModels\FinishGoodStockReport.cs" />
+    <Compile Include="Agriculture\ReportModels\GetSendAndReceiveReportData.cs" />
+    <Compile Include="Agriculture\ReportModels\InvoiceWiseCollectionSalesReport.cs" />
+    <Compile Include="Agriculture\ReportModels\IssueRequisitionReportData.cs" />
+    <Compile Include="Agriculture\ReportModels\MRawMaterialDataReport.cs" />
+    <Compile Include="Agriculture\ReportModels\ProductSalesDataChallanReport.cs" />
+    <Compile Include="Agriculture\ReportModels\ProductSalesDataReport.cs" />
+    <Compile Include="Agriculture\ReportModels\ProductWiseSalesStementReport.cs" />
+    <Compile Include="Agriculture\ReportModels\ReturnRawMaterialDataReport.cs" />
+    <Compile Include="Agriculture\ReportModels\ReturnRawMaterialDataReportApproved.cs" />
+    <Compile Include="Agriculture\ReportModels\SalesCommissionData.cs" />
+    <Compile Include="Agriculture\ReportModels\SalesReturnReportData.cs" />
+    <Compile Include="Agriculture\ViewModels\AgroProductSalesDetailsViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\AgroProductSalesInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\AgroUnitInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\AreaSetupViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\AreaUserViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\CommisionOnProductHistoryViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\CommisionOnProductSalesDetailsViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\CommisionOnProductViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\CommissionOnProductOnSalesViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\DivisionInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\DivisionUserViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\FinishGoodProductionDetailViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\FinishGoodProductionInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\MRawMaterialIssueStockDetailsViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\MRawMaterialIssueStockInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\PRawMaterialStockIDetailsViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\PRawMaterialStockInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\ProductionPerproductCostViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\ProductPriceConfigurationViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\ProductPricingHistoryViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialIssueStockDetailsViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialIssueStockInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialRequisitionDetailsViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialRequisitionInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialStockDetailViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialStockViewModel.cs" />
+    <Compile Include="Agriculture\DomainModels\FinishGoodRecipeDetails.cs" />
+    <Compile Include="Agriculture\DomainModels\FinishGoodRecipeInfo.cs" />
+    <Compile Include="Agriculture\DTOModels\FinishGoodRecipeDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\FinishGoodRecipeInfoDTO.cs" />
+    <Compile Include="Agriculture\ViewModels\FinishGoodRecipeDetailsViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\FinishGoodRecipeInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialTrackViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RegionSetupViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RegionUserViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\ReturnRawMaterialViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\SalesPaymentRegisterViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\SalesReturnViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\StockiestInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\StockiestUserViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\TerritorySetupViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\TerritoryUserViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\UserAssignViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\UserInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\ZoneDetailViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\ZoneSetupViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\ZoneUserViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\ZoneViewModel.cs" />
+    <Compile Include="Common\DailySellsChart.cs" />
+    <Compile Include="Common\DayAndModelWiseProductionChart.cs" />
+    <Compile Include="Common\DaysAndLineWiseProductionChart.cs" />
+    <Compile Include="Common\CustomPrincipalSerializeModel.cs" />
+    <Compile Include="Common\Dropdown.cs" />
+    <Compile Include="Common\ExecutionStateWithText.cs" />
+    <Compile Include="Common\GetAllMonth.cs" />
+    <Compile Include="Common\Last30DaysPaymentGraph.cs" />
+    <Compile Include="Common\Last30DaysSalesGraph.cs" />
+    <Compile Include="Common\UserInformation.cs" />
+    <Compile Include="Common\UserPrivilege.cs" />
+    <Compile Include="Agriculture\DomainModels\BankSetup.cs" />
+    <Compile Include="ControlPanel\DomainModels\Branch.cs" />
+    <Compile Include="ControlPanel\DomainModels\AppUser.cs" />
+    <Compile Include="Agriculture\DomainModels\DepotSetup.cs" />
+    <Compile Include="Agriculture\DomainModels\FinishGoodProduct.cs" />
+    <Compile Include="Agriculture\DomainModels\FinishGoodSupplier.cs" />
+    <Compile Include="ControlPanel\DomainModels\MainMenu.cs" />
+    <Compile Include="Agriculture\DomainModels\MeasurementSetup.cs" />
+    <Compile Include="ControlPanel\DomainModels\Module.cs" />
+    <Compile Include="ControlPanel\DomainModels\OrganizationAuthorization.cs" />
+    <Compile Include="Agriculture\DomainModels\RawMaterial.cs" />
+    <Compile Include="Agriculture\DomainModels\RawMaterialSupplier.cs" />
+    <Compile Include="ControlPanel\DomainModels\Role.cs" />
+    <Compile Include="ControlPanel\DomainModels\RoleAuthorization.cs" />
+    <Compile Include="ControlPanel\DomainModels\SubMenu.cs" />
+    <Compile Include="ControlPanel\DomainModels\UserAuthorization.cs" />
+    <Compile Include="ControlPanel\DTOModels\AppUserDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\BankSetupDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\BranchDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\ChangePasswordDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\DepotSetupDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\FinishGoodProductDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\FinishGoodSupplierDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\ManiMenuDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\MeasurementSetupDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\ModuleDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\OrganizationAuthorizationDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\OrganizationDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\OrgAuthMenusDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RawMaterialSupplierDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\RoleDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\SubMenuDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\RoleAuthorizationDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\TechnicalServiceByRoleDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserAuthorizationDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserAuthorizeMenusDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserCustomMenusDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserDetaildDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserLogInDTO.cs" />
+    <Compile Include="ControlPanel\DTOModels\UserMenuDTO.cs" />
+    <Compile Include="ControlPanel\ViewModels\AppUserViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\BankSetupViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\BranchViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\ChangePasswordViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\DepotSetupViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\FinishGoodProductViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\FinishGoodSupplierViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\MainMenuViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\MeasurementSetupViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\ModuleViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\OrganizationAuthorizationViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\OrganizationViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\OrgAuthMenusDTO.cs" />
+    <Compile Include="ControlPanel\ViewModels\OrgAuthUIViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialSupplierViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RawMaterialViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\RoleAuthorizationViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\RoleViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\SubMenuViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\TechnicalServiceByRoleViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserAuthorizationViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserAuthorizeMenusViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserCustomMenusViewModels.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserDetaildViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserLogInViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\UserMenuViewModel.cs" />
+    <Compile Include="ControlPanel\ViewModels\VmUserMenu.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ControlPanel\DomainModels\Organization.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ControlPanel\ReportModels\" />
+    <Folder Include="CustomValidationAttribute\Agriculture\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

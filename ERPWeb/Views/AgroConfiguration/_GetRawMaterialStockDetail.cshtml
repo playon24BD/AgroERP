@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.RawMaterialStockDetailViewModel>
+
+@{
+    ViewBag.Title = "_GetRawMaterialStockDetail";
+    int sl = 0;
+    var info = (ERPBO.Agriculture.ViewModels.RawMaterialStockInfoViewModel)ViewBag.Info;
+}
+
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm">
+    @if (info != null)
+    {
+    <tr>
+        <td style="width:13%">Raw Material Name</td>
+        <td style="width:15%"><b>@info.RawMaterialName</b></td>
+        <td style="width:18%">Quantity</td>
+        <td style="width:20%"><b>@info.Quantity</b></td>
+        <td style="width:13%">Unit</td>
+        <td style="width:20%"><b>@info.Unit</b></td>
+        
+
+    </tr>
+    }
+</table>
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" id="tblReturnItems">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th>#SL</th>
+            <th>RawMaterial Name</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Status</th>
+            <th>Entry Date</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+        <tr>
+            <td class="text-center">@sl</td>
+            <td class="text-center">@item.RawMaterialName</td>
+            <td class="text-center text-bold">@item.Quantity</td>
+            <td class="text-center">@item.Unit</td>
+            <td class="text-center">@item.Status</td>
+            <td class="text-center">@item.EntryDate</td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+

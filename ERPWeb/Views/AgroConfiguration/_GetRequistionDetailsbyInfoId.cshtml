@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.RawMaterialRequisitionDetailsViewModel>
+
+@{
+
+    int sl = 0;
+}
+<div class="col-md-12">
+    <table class="table table-bordered table-striped table-hover table-sm text-sm"  id="tblRequisitonDetails">
+        <thead class="btn-dark">
+            <tr class="text-center text-sm">
+                <th style="vertical-align:middle">#SL</th>
+                <th style="vertical-align:middle">Raw Material Name</th>
+                <th style="vertical-align:middle">Unit</th>
+                <th style="vertical-align:middle">Requisition Quantity</th>
+                <th style="vertical-align:middle">AvailableQty</th>
+                <th style="vertical-align:middle">Issue Quantity</th>
+
+                <th style="vertical-align:middle">Status</th>
+                <th style="vertical-align:middle">Remarks</th>
+                @*<th>Entry Date</th>*@
+
+
+            </tr>
+
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    sl++;
+            <tr>
+                <td class="text-center">@sl</td>
+                <td class="text-center">@item.RawMaterialName</td>
+                <td class="text-center">@item.UnitName</td>
+                <td class="text-center">@item.RequisitionQuantity</td>
+                <td class="text-center" style="color:red">@item.AvailableQty</td>
+                @*<td class="text-center">@item.RequisitionQuantity</td>*@
+                @if (item.AvailableQty <= item.IssueQuantity)
+                {
+
+
+                    <td class="text-center" style="width:10%">
+                        <input type="number" class="issueQty form-control form-control-sm " value="@item.RequisitionQuantity" />
+                        <span class="error">Quantity must be <=available Quantity</span>
+                    </td>
+
+                }
+                else
+                {
+
+                    <td class="text-center" style="width:10%">
+                        <input type="number" class="issueQty form-control form-control-sm " value="@item.RequisitionQuantity" />
+                        <span class="error hide">Quantity must be <=available Quantity</span>
+                    </td>
+                }
+
+                <td class="text-center">@item.Status</td>
+                <td class="text-center">@item.Remarks</td>
+                <td class="hide unitId">@item.UnitID</td>
+                <td class="hide infoId">@item.RawMaterialRequisitionInfoId</td>
+                <td class="hide detailsId">@item.RawMaterialRequisitionDetailsId</td>
+                <td class="hide rawMaterialId">@item.RawMaterialId</td>
+                @*<td>@item.EntryDate</td>*@
+
+
+            </tr>
+
+                }
+
+
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7"></td>
+
+                </tr>
+
+            }
+
+
+        </tbody>
+
+    </table>
+
+</div>
+

@@ -1,0 +1,318 @@
+﻿@model PagedList.IPagedList<ERPBO.ControlPanel.ViewModels.BranchViewModel>
+@using PagedList;
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "GetBranchList";
+    int sl = 0;
+    string badge = string.Empty;
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h4><b style="color:darkblue">Branch List</b></h4>
+        <hr />
+    </div>
+    <div class="col-md-12 mb-2">
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="search" id="searchBy" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('#tblBranchData tbody tr',this)" />
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4 text-right">
+                @if (privilege != null && privilege.Add)
+                {
+                    <button class="btn btn-primary btn-sm" style="background-color:darkblue" id="btnAddNew"><i class="fa fa-plus"></i> Add New Branch</button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm table-striped table-responsive-lg table-valign-middle" id="tblBranchData">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th>#SL</th>
+                    <th class="hide"></th>
+                    <th>Branch</th>
+                    <th>Short Name</th>
+                    <th class="hide"></th>
+                    <th>Organization</th>
+                    <th>MobileNo</th>
+                    <th>Email</th>
+                    <th>PhoneNo</th>
+                    <th>Fax</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                    <th>Entry User</th>
+                    <th>Update User</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var br in Model)
+                {
+                    sl = sl + 1;
+                    badge = br.StateStatus.ToLower() == "active" ? "badge bg-success" : "badge bg-danger";
+                <tr>
+                    <td class="text-center" width="10%">@sl</td>
+                    <td class="hide">@br.BranchId</td>
+                    <td>@br.BranchName</td>
+                    <td>@br.ShortName</td>
+                    <td class="hide">@br.OrgId</td>
+                    <td>@br.OrganizationName</td>
+                    <td>@br.MobileNo</td>
+                    <td style="word-break:break-word">@br.Email</td>
+                    <td>@br.PhoneNo</td>
+                    <td>@br.Fax</td>
+                    <td class="text-center" data-val="@br.StateStatus">
+                        <span class="@badge">@br.StateStatus</span>
+                    </td>
+                    <td>@br.Remarks</td>
+                    <td class="text-center text-sm">@br.EntryUser</td>
+                    <td class="text-center text-sm">@br.UpdateUser</td>
+
+                    <td class="text-center">
+                        @if (privilege != null && privilege.Edit)
+                        {
+                            <a href="#" class="btn btn-warning btn-sm data-edit-item" data-edit-item="@br.BranchId"><i class="fa fa-pen"></i> Edit</a>
+                        }
+                    </td>
+                </tr>
+                }
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="14">
+                            No Rows Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="container">
+            <ul class="pagination pagination-sm float-lg-right ">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("GetBranchList", new { page }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalBranch" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead">Add New Branch</span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmBranch">
+                    <input type="hidden" name="Id" id="hdfBranchId" />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtBranchName" class="control-label font-weight-bold">Branch Name</label>
+                            <input type="text" name="branchName" value="" id="txtBranchName" class="form-control form-control-sm" />
+                            <span class="error hide required-branchName font-weight-bold">Input Branch Name!</span>
+                            <span class="error hide duplicate-branchName font-weight-bold">Already Branch Exist!</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtShortName" class="control-label font-weight-bold">Short Name</label>
+                            <input type="text" name="shortName" value="" id="txtShortName" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtMobileNo" class="control-label font-weight-bold">MobileNo</label>
+                            <input type="text" name="mobileNumber" value="" id="txtMobileNo" class="form-control form-control-sm" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtEmail" class="control-label font-weight-bold">Email</label>
+                            <input type="text" name="remarks" value="" id="txtEmail" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtPhoneNo" class="control-label font-weight-bold">PhoneNo</label>
+                            <input type="text" name="phoneNo" value="" id="txtPhoneNo" class="form-control form-control-sm" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtFax" class="control-label font-weight-bold">Fax</label>
+                            <input type="text" name="fax" value="" id="txtFax" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtRemarks" class="control-label font-weight-bold">Remarks</label>
+                            <input type="text" name="remarks" value="" id="txtRemarks" class="form-control form-control-sm" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="ddlOrganizationName" class="control-label font-weight-bold">OrganizationName</label>
+                            @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select OrganizationName--", new { @class = "form-control form-control-sm" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <div class="form-control form-control-sm">
+                                <input type="checkbox" id="chkStatestatus" /> <b>Is Active?</b>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer btn-light">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-times"></i> Cancel </button>
+                <button type="submit" class="btn btn-success float-right" id="btnSubmit"><i class="far fa-save"></i> <span id="spanSaveText">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var hdfBranchId = $("#hdfBranchId");
+        var txtBranchName = $("#txtBranchName");
+        var txtShortName = $("#txtShortName");
+        var txtMobileNo = $("#txtMobileNo");
+        var txtEmail = $("#txtEmail");
+        var txtPhoneNo = $("#txtPhoneNo");
+        var txtFax = $("#txtFax");
+        var txtRemarks = $("#txtRemarks");
+        var ddlOrganizationName = $("#ddlOrganizationName");
+        var chkStatestatus = $("#chkStatestatus");
+
+        $(document).ready(function () {
+            $('#tblBranchData').DataTable({
+                "paging": false,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": false,
+                "autoWidth": false,
+            });
+        })
+
+        function OpenModal() {
+            $("#spanModalHead").text('Add New Branch');
+            $("#spanSaveText").text('Save');
+            $("#modalBranch").modal("show");
+            $(".error").addClass("hide");
+        }
+
+        $("#btnAddNew").click(function (e) {
+            e.preventDefault();
+            clearCtrl();
+            OpenModal();
+        })
+
+        function validateForm() {
+            $(".error").addClass("hide");
+            var isValid = true;
+            if ($.trim(txtBranchName.val()) == "") {
+                $(".required-branchName").removeClass("hide");
+                isValid = false;
+            }
+            else {
+                var id = TryParseInt(hdfBranchId.val(), 0);
+                if (ajaxBooleanChecker(JSON.stringify({ id: id, branchName: txtBranchName.val().trim()}), '/Common/IsDuplicateBrachName', getToken()) == true) {
+                    $(".duplicate-branchName").removeClass("hide");
+                    isValid = false;
+                }
+            }
+            return isValid;
+        }
+
+        //Data add
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            $(".error").addClass("hide");
+            if (validateForm() == true) {
+                var data = JSON.stringify({
+                    BranchId: TryParseInt(hdfBranchId.val(), 0),
+                    BranchName: txtBranchName.val(),
+                    ShortName: txtShortName.val(),
+                    MobileNo: txtMobileNo.val(),
+                    Email: txtEmail.val(),
+                    PhoneNo: txtPhoneNo.val(),
+                    Fax: txtFax.val(),
+                    OrgId: TryParseInt(ddlOrganizationName.val(),0),
+                    Remarks: txtRemarks.val(),
+                    IsActive: chkStatestatus.is(":checked")
+                });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/ControlPanel/SaveBranchForClient', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        message("#msg1", "#modalBranch");
+                    }
+                    else {
+                        message("#msg2");
+                    }
+                    enable("#btnSubmit");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#btnSubmit");
+                });
+            }
+
+        })
+
+        //edit
+        $(document).on("click", "a.data-edit-item", function (e) {
+            e.preventDefault()
+            clearCtrl();
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+            var td5 = row.find('td:eq(4)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+            var td8 = row.find('td:eq(8)').html();
+            var td9 = row.find('td:eq(9)').html();
+            var td10 = row.find('td:eq(10)').attr("data-val");
+            var td11= row.find('td:eq(11)').html();
+
+            hdfBranchId.val(td1);
+            txtBranchName.val(td2);
+            txtShortName.val(td3);
+            ddlOrganizationName.val(td5);
+            txtMobileNo.val(td6);
+            txtEmail.val(td7);
+            txtPhoneNo.val(td8);
+            txtFax.val(td9);
+            chkStatestatus.prop("checked", false);
+            if (td10 === 'Active') {
+                chkStatestatus.prop("checked", true);
+            }
+            txtRemarks.val(td11)
+        })
+        function clearCtrl() {
+            hdfBranchId.val('0');
+            txtBranchName.val('');
+            txtShortName.val('');
+            ddlOrganizationName.val('');
+            txtMobileNo.val('');
+            txtEmail.val('');
+            txtPhoneNo.val('');
+            txtFax.val('');
+            txtRemarks.val('');
+            chkStatestatus.prop("checked", false);
+
+        }
+        $(".data-edit-item").click(function (e) {
+            e.preventDefault()
+            OpenModal()
+            $("#spanModalHead").text('Update Branch');
+            $("#spanSaveText").text('Update');
+        });
+    </script>
+    }
