@@ -60,7 +60,7 @@
                     <div class="form-row">
 
                         <div class="form-group col-md-12">
-                            <label for="txtUnitName" class="control-label">Unit Name</label>
+                            <label for="txtUnitName" class="control-label">Unit Name<span style="color:red">*</span></label>
                             <input type="text" id="txtUnitName" class="form-control form-control-sm" />
                             @*<span class="error hide required-UnitName font-weight-bold">Input Unit Name!</span>*@
                         </div>
@@ -68,7 +68,7 @@
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm select2" id="ddlStatus">
-                                <option selected>--Select Status--</option>
+                                <option value="">--Select Status--</option>
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
@@ -99,7 +99,7 @@
         var hdAgroUnitId = $("#hdAgroUnitId");
         var searchByAny = $("#searchByAny");
 
-
+         
         $(document).ready(function () {
             $('.select2').select2();
 
@@ -107,6 +107,10 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
+            $(function () {
+                $('#txtUnitName').focus();
+            });
+
             LoadAgroUnitList()
         })
 
@@ -131,7 +135,9 @@
             $("#spanSaveTextAgroUnit").text('Save');
             $("#modalAgroUnit").modal("show");
             $(".error").addClass("hide");
-            
+            $(function () {
+                $('#txtUnitName').focus();
+            });
         }
 
 

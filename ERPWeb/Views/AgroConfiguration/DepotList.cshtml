@@ -62,7 +62,7 @@
                     <div class="form-row">
 
                         <div class="form-group col-md-8">
-                            <label for="ddlDepotName" class="control-label">DepotName</label>
+                            <label for="ddlDepotName" class="control-label">DepotName<span style="color:red">*</span></label>
                             <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
                             <span class="error hide required-DepotName font-weight-bold">Input Depot Name!</span>
                             <span class="error hide duplicate-DepotName font-weight-bold">Already DepotName Exist!</span>
@@ -115,6 +115,9 @@
             //Initialize Select2 Elements
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
+            });
+            $(function () {
+                $('#ddlDepotName').focus();
             });
             LoadDepotDataTable()
         })
@@ -239,7 +242,9 @@
             $("#spanSaveTextDepot").text('Save');
             $("#depotmodal").modal("show");
             $(".error").addClass("hide");
-
+            $(function () {
+                $('#ddlDepotName').focus();
+            });
 
         }
         $("#addButton").click(function (e) {

@@ -50,7 +50,7 @@
                                         <input type="hidden" id="hdMeasurementId" />
 
                                         <div class="col-md-2">
-                                            <label class="control-label font-weight-bold " for="measurementName">Measurement Name</label>
+                                            <label class="control-label font-weight-bold " for="txtmeasurementName">Measurement Name</label>
                                             <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" />
                                             <span class="error hide req-txtmeasurementName">Measurement Name is required</span>
                                         </div>
@@ -296,6 +296,10 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
+
+            $(function () {
+                $('#txtmeasurementName').focus();
+            });
            
         })
 
@@ -456,7 +460,9 @@
             //$("#btnSubmit").hide();
             $("#addTolist").hide();
             //$("#btnUpdate").hide();
-
+            $(function () {
+                $('#txtmeasurementName').focus();
+            });
 
         })
 
@@ -536,6 +542,9 @@
             $("#modalMeasurementSetup").modal("show");
             $("#modalHeading").text("MeasureMent Setup Update");
             $("#btnMeasureMentSaveText").text("Update");
+            $(function () {
+                $('#measurementName').focus();
+            });
         }
 
         function validate() {

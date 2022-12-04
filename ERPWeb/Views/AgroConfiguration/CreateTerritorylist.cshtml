@@ -36,7 +36,7 @@
 
                 <div class="col-md-2">
                     <label for="ddlareaname" class="control-label">AreaName</label>
-                    @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select Area Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select Area Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus = "autofocus" })
                     <span class="error hide required-AreaName font-weight-bold">Input AreaName!</span>
                 </div>
 
@@ -100,7 +100,9 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
-
+            $(function () {
+                $('#ddlareaname').focus();
+            });
 
         })
 

@@ -145,6 +145,10 @@
                 theme: 'bootstrap4'
             });
             LoadRawmaterialSupplierDataTable()
+
+            $(function () {
+                $('#ddlSupplierName').focus();
+            });
         })
         function LoadDataInitializer() {
             LoadRawmaterialSupplierDataTable();
@@ -251,6 +255,9 @@
             $("#spanSaveTextRawmaterialSupplier").text('Save');
             $("#modalRawmaterialSupplier").modal("show");
             $(".error").addClass("hide");
+            $(function () {
+                $('#ddlSupplierName').focus();
+            });
 
         }
         $("#addButton").click(function (e) {

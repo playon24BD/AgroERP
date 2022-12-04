@@ -147,7 +147,7 @@
 
                                                     <div class="col-md-3">
                                                         <label for="ddlSupplierName" class="control-label">Supplier Name</label>
-                                                        @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                        @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger"})
                                                         <span class="error hide req-SupplierName font-weight-bold">Supplier Name is required!</span>
                                                     </div>
 
@@ -473,6 +473,11 @@
                 theme: 'bootstrap4'
             });
             $("#btnSubmit").hide();
+
+
+            $(function () {
+                $('#ddlSupplierName').focus();
+            });
 
             LoadDataTable();
             LoadDataTableStock();

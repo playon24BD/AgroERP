@@ -90,7 +90,7 @@
                     <div class="col-md-12">
                         <label for="ddlStatus" class="control-label">Status</label>
                         <select class="form-control form-control-sm" id="ddlStatus">
-                            <option selected>--Select Status--</option>
+                            <option value="">--Select Status--</option>
                             <option value="Active">Active</option>
                             <option value="InActive">InActive</option>
                         </select>
@@ -150,6 +150,10 @@
                 autoclose: true
             });
 
+            $(function () {
+                $('#rawMaterialName').focus();
+            });
+
 
         })
 
@@ -160,7 +164,9 @@
             $("#spanSaveText").text('Save');
             $("#rawmetarialModal").modal("show");
             $(".error").addClass("hide");
-
+            $(function () {
+                $('#rawMaterialName').focus();
+            });
 
         }
         $("#btnAdd").click(function (e) {

@@ -570,34 +570,43 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetAgroUnitList(string flag, string name, long? unitId)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-
-            }
-            else if (!string.IsNullOrEmpty(flag) && flag == "Search")
-            {
-
-                // var dto = _agroUnitInfo.GetAgroUnitInfos(unitId ?? 0,User.OrgId);
-                IEnumerable<AgroUnitInfoDTO> dto = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.UnitName.Contains(name)) || (s.Status.Contains(name))).Select(o => new AgroUnitInfoDTO
+                if (string.IsNullOrEmpty(flag))
                 {
-                    UnitId = o.UnitId,
-                    OrganizationId = o.OrganizationId,
-                    UnitName = o.UnitName,
-                    Status = o.Status,
-                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
-                    EntryDate = o.EntryDate,
-                    UpdateUserId = o.UpdateUserId,
-                    UpdateDate = o.UpdateDate
-                }).ToList();
 
-                List<AgroUnitInfoViewModel> viewModels = new List<AgroUnitInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetAgroUnitPartial", viewModels);
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == "Search")
+                {
+
+                    // var dto = _agroUnitInfo.GetAgroUnitInfos(unitId ?? 0,User.OrgId);
+                    IEnumerable<AgroUnitInfoDTO> dto = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.UnitName.Contains(name)) || (s.Status.Contains(name))).Select(o => new AgroUnitInfoDTO
+                    {
+                        UnitId = o.UnitId,
+                        OrganizationId = o.OrganizationId,
+                        UnitName = o.UnitName,
+                        Status = o.Status,
+                        UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
+                        EntryDate = o.EntryDate,
+                        UpdateUserId = o.UpdateUserId,
+                        UpdateDate = o.UpdateDate
+                    }).ToList();
+
+                    List<AgroUnitInfoViewModel> viewModels = new List<AgroUnitInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetAgroUnitPartial", viewModels);
 
 
+                }
+                return View();
             }
+            catch (Exception ex)
+            {
+                return View();
+            }
+            
 
-            return View();
+            
         }
         [HttpPost]
         public ActionResult SaveAgroUnitList(AgroUnitInfoViewModel model)

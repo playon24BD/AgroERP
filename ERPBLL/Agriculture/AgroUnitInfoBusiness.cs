@@ -48,7 +48,16 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<AgroUnitInfo> GetAllAgroUnitInfo(long OrgId)
         {
-            return _agroUnitInfoRepository.GetAll(a => a.OrganizationId == OrgId);
+            try
+            {
+                return _agroUnitInfoRepository.GetAll(a => a.OrganizationId == OrgId);
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+            
         }
 
         public bool SaveAgroUnitList(AgroUnitInfoDTO infoDTO, long userId, long orgId)
