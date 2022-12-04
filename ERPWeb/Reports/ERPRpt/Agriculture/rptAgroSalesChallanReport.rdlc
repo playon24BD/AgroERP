@@ -482,22 +482,15 @@
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
-                  <TextRun>
-                    <Value>=format(CDate(today), "dd MMM yyyy")</Value>
-                    <Style>
-                      <FontSize>8pt</FontSize>
-                      <FontWeight>Normal</FontWeight>
-                    </Style>
-                  </TextRun>
                 </TextRuns>
                 <Style />
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox26</rd:DefaultName>
             <Top>2.78in</Top>
-            <Left>6.10745in</Left>
-            <Height>0.28472in</Height>
-            <Width>1.28967in</Width>
+            <Left>6.10746in</Left>
+            <Height>0.29167in</Height>
+            <Width>0.42509in</Width>
             <ZIndex>14</ZIndex>
             <Style>
               <Border>
@@ -2046,10 +2039,45 @@
               </Border>
             </Style>
           </Tablix>
+          <Textbox Name="ChallanDate">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!ChallanDate.Value, "dsAgroSalesChallanReport")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                      <Format>dd-MMM-yy</Format>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>ChallanDate</rd:DefaultName>
+            <Top>2.78695in</Top>
+            <Left>6.45708in</Left>
+            <Height>0.25in</Height>
+            <Width>0.94005in</Width>
+            <ZIndex>40</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Height>11.04736in</Height>
-        <Width>7.72005in</Width>
+        <Width>7.81125in</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -2060,7 +2088,7 @@
     <Height>11.04736in</Height>
     <Style />
   </Body>
-  <Width>7.73047in</Width>
+  <Width>7.81125in</Width>
   <Page>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
