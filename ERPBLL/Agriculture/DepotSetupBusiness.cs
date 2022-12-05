@@ -25,7 +25,14 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<DepotSetup> GetAllDepotSetup(long OrgId)
         {
-            return _depotSetupRepository.GetAll(a=>a.OrganizationId==OrgId);
+            try
+            {
+                return _depotSetupRepository.GetAll(a => a.OrganizationId == OrgId);
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
         }
 
         public DepotSetup GetDepotNamebyId(long depotId ,long orgId)

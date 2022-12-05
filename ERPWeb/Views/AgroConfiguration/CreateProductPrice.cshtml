@@ -36,7 +36,7 @@
 
                 <div class="col-md-2">
                     <label for="ddlProductName" class="control-label">Product Name<span style="color:red">*</span></label>
-                    @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "Select Product", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "Select Product", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus="autofocus" })
                     <span class="error hide required-ddlProductName font-weight-bold">Select Area Name!</span>
                     <span class="error hide duplicate-ddlProductName font-weight-bold">Already Area Exist!</span>
                 </div>
@@ -48,7 +48,7 @@
                     <span class="error hide req-QtyUnit font-weight-bold">Unit Qty is required!</span>
                 </div>
                 <div class="col-md-2">
-                    <label for="ddlRMtotalprice" class="control-label">ProductionCost/PC<span style="color:red">*</span></label>
+                    <label for="ddlRMtotalprice" class="control-label">ProductionCost/PC</label>
                     <input type="number" id="ddlRMtotalprice" name="ddlRMtotalprice" class="form-control form-control-sm" readonly />
                     <span class="error hide required-ddlRMtotalprice font-weight-bold">Input Product Price!</span>
                 </div>

@@ -40,15 +40,25 @@
                 <div class="tab-pane fade show active" id="custom-tabs-two-StockiestList" role="tabpanel" aria-labelledby="custom-tabs-two-StockiestList-tab">
 
 
-                    <div class="row" style="margin-top:-15px">
-                        <div class="col-md-12">
+                    <div class="row" style="margin-top:-30px">
+                        <div class="col-md-12"style="height:60px;text-align:center">
                             <div class="card card-navy">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-md-3">
+
+                                        <div class="col-md-2">
+                                            <h4 class="float-left text-bold">Stockiest List</h4>
                                         </div>
-                                        <div class="col-md-6">
-                                            <h4 class="text-center text-bold">Stockiest List</h4>
+                                        <div class="col-md-2">
+
+                                            @Html.DropDownList("sddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            @Html.DropDownList("sddlTerritoryName1", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        </div>
+                                        <div class="col-md-3">
+
                                         </div>
                                         <div class="col-md-3">
                                             <a href="/AgroConfiguration/CreateStockiestList" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Stockiest</a>
@@ -64,31 +74,14 @@
                     <div class="row" style="margin-top:-15px">
                         <div class="col-md-12">
                             <div class="card card-gray-dark">
-                                <div class="card-header">
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-2">
-                                            <h5 class="text-center">Search By</h5>
-                                        </div>
-
-                                        <div class="col-md-2">
-
-                                            @Html.DropDownList("sddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                        </div>
-                                        <div class="col-md-2">
-
-
-                                            @Html.DropDownList("sddlTerritoryName1", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="margin-top:-10px">
                             <div class="card ">
-                                <div class="card-body">
+                                <div class="card-body"style="margin-top:-10px">
                                     <div class="col-md-12" id="sdataContainer">
 
                                     </div>
@@ -103,15 +96,23 @@
                 @*Territory List *@
                 <div class="tab-pane fade show" id="custom-tabs-two-Territory" role="tabpanel" aria-labelledby="custom-tabs-two-Territory-tab">
 
-                    <div class="row" style="margin-top:-15px">
-                        <div class="col-md-12">
+                    <div class="row" style="margin-top:-30px">
+                        <div class="col-md-12"style="height:60px;text-align:center">
                             <div class="card card-navy">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-md-3">
+
+                                        <div class="col-md-2 ">
+                                            <h4 class="text-center text-bold float-left">Territory List</h4>
                                         </div>
-                                        <div class="col-md-6">
-                                            <h4 class="text-center text-bold">Territory List</h4>
+                                        <div class="col-md-2 ">
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="tsearchByAny" placeholder="Search By Any" />
+                                        </div>
+                                        <div class="col-md-2 ">
+
                                         </div>
                                         <div class="col-md-3">
                                             <a href="/AgroConfiguration/CreateTerritorylist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Territory</a>
@@ -125,16 +126,7 @@
                     <div class="row" style="margin-top:-15px">
                         <div class="col-md-12">
                             <div class="card card-gray-dark">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <h5 class="text-center">Search By</h5>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control form-control-sm" id="tsearchByAny" placeholder="Search By Any" />
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -142,7 +134,7 @@
                     <div class="row">
                         <div class="col-md-12" style="margin-top:-10px">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body" style="margin-top:-10px">
                                     <div class="col-md-12" id="tdataContainer">
 
                                     </div>
@@ -157,15 +149,23 @@
                 @*Area List *@
                 <div class="tab-pane fade show" id="custom-tabs-two-Area" role="tabpanel" aria-labelledby="custom-tabs-two-Area-tab">
 
-                    <div class="row" style="margin-top:-15px">
-                        <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12"style="margin-top:-30px">
                             <div class="card card-navy">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-md-3">
+
+                                        <div class="col-md-2 ">
+                                            <h4 class="text-center text-bold float-left">Area List</h4>
                                         </div>
-                                        <div class="col-md-6">
-                                            <h4 class="text-center text-bold">Area List</h4>
+                                        <div class="col-md-2">
+
+                                        </div>
+                                        <div class="col-md-3 float-right">
+                                            <input type="text" class="form-control form-control-sm" id="asearchByAny" placeholder="Search by any" />
+                                        </div>
+                                        <div class="col-md-2">
+
                                         </div>
                                         <div class="col-md-3">
                                             <a href="/AgroConfiguration/GetArealist" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Area</a>
@@ -180,32 +180,15 @@
 
                     <div class="row" style="margin-top:-15px">
                         <div class="col-md-12">
-                            <div class="card card-gray-dark">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <h5 class="text-center">Search By</h5>
-                                        </div>
-
-
-
-
-                                        <div class="col-md-3 float-right">
-                                            <input type="text" class="form-control form-control-sm" id="asearchByAny" placeholder="Search by any" />
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
 
                     <div class="row">
 
-                        <div class="col-md-12" style="margin-top:-10px">
+                        <div class="col-md-12" style="margin-top:-15px">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body" style="margin-top:-10px">
                                     <div class="col-md-12" id="adataContainer">
 
                                     </div>
@@ -220,15 +203,23 @@
                 @*Region List *@
                 <div class="tab-pane fade show" id="custom-tabs-two-Region" role="tabpanel" aria-labelledby="custom-tabs-two-Region-tab">
 
-                    <div class="row" style="margin-top:-15px">
+                    <div class="row" style="margin-top:-30px">
                         <div class="col-md-12">
                             <div class="card card-navy">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-md-3">
+
+                                        <div class="col-md-2">
+                                            <h4 class="text-center text-bold float-left">Region List</h4>
                                         </div>
-                                        <div class="col-md-6">
-                                            <h4 class="text-center text-bold">Region List</h4>
+                                        <div class="col-md-2">
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="rsearchByAny" placeholder="search By Any" />
+                                        </div>
+                                        <div class="col-md-2">
+
                                         </div>
                                         <div class="col-md-3">
                                             <a href="/AgroConfiguration/CreateRegionlist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Region</a>
@@ -243,25 +234,14 @@
 
                     <div class="row" style="margin-top:-15px">
                         <div class="col-md-12">
-                            <div class="card card-gray-dark">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <h5 class="text-center">Search By</h5>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control form-control-sm" id="rsearchByAny" placeholder="search By Any" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
 
                     <div class="row" style="margin-top:-15px">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body" style="margin-top:-10px">
                                     <div class="col-md-12" id="rdataContainer">
 
                                     </div>
@@ -276,15 +256,20 @@
                 @*Division List *@
                 <div class="tab-pane fade show" id="custom-tabs-two-Division" role="tabpanel" aria-labelledby="custom-tabs-two-Division-tab">
 
-                    <div class="row" style="margin-top:-15px">
+                    <div class="row" style="margin-top:-30px">
                         <div class="col-md-12">
                             <div class="card card-navy">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
+                                            <h4 class="text-center text-bold float-left">Division List</h4>
                                         </div>
-                                        <div class="col-md-6">
-                                            <h4 class="text-center text-bold">Devision List</h4>
+                                        <div class="col-md-2">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="dsearchByAny" placeholder="search By Any" />
+                                        </div>
+                                        <div class="col-md-2">
                                         </div>
                                         <div class="col-md-3">
                                             <a href="/AgroConfiguration/CreateDivisionInfo" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Division</a>
@@ -297,35 +282,14 @@
 
                     <div class="row" style="margin-top:-15px">
                         <div class="col-md-12">
-                            <div class="card card-gray-dark">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <h5 class="text-center">Search By</h5>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control form-control-sm" id="dsearchByAny" placeholder="search By Any" />
-                                        </div>
-                                        @*<div class="col-md-2">
-
-                                                @Html.DropDownList("dddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                            </div>
-                                            <div class="col-md-2">
-
-
-                                                @Html.DropDownList("dddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Select Division--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
-                                            </div>*@
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12" style="margin-top:-10px">
+                        <div class="col-md-12" style="margin-top:-15px">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body"style="margin-top:-10px">
                                     <div class="col-md-12" id="ddataContainer">
 
                                     </div>
@@ -337,15 +301,20 @@
 
                 @*Zone List *@
                 <div class="tab-pane fade show " id="custom-tabs-two-Zone" role="tabpanel" aria-labelledby="custom-tabs-two-Zone-tab">
-                    <div class="row" style="margin-top:-15px">
+                    <div class="row" style="margin-top:-30px">
                         <div class="col-md-12">
                             <div class="card card-navy">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
+                                            <h4 class="text-center text-bold float-left">Zone List</h4>
                                         </div>
-                                        <div class="col-md-6">
-                                            <h4 class="text-center text-bold">Zone List</h4>
+                                        <div class="col-md-2">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-sm" id="zSearchAny" placeholder="search By Any" />
+                                        </div>
+                                        <div class="col-md-2">
                                         </div>
                                         <div class="col-md-3">
                                             <a href="/AgroConfiguration/CreateZonelist" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Zone</a>
@@ -358,23 +327,14 @@
                     </div>
                     <div class="row" style="margin-top:-15px">
                         <div class="col-md-12">
-                            <div class="card card-gray-dark">
-                                <div class="card-header">
-                                    <div class="row ">
-                                        <h5 class="text-center">Search By</h5>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control form-control-sm" id="zSearchAny" placeholder="search By Any" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12"style="margin-top:-15px">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body"style="margin-top:-10px">
                                     <div class="col-md-12" id="zdataContainer">
 
                                     </div>

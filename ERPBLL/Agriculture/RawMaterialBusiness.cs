@@ -71,7 +71,14 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<RawMaterial> GetRawMaterials(long orgId)
         {
-            return _rawMaterialRepository.GetAll(a=>a.OrganizationId==orgId);
+            try
+            {
+                return _rawMaterialRepository.GetAll(a => a.OrganizationId == orgId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool SaveRawMaterial(RawMaterialDTO rawMaterial, long userId, long orgId)

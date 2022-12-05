@@ -12,18 +12,26 @@
     <div class="col-md-12">
 
         <div class="row" style="margin-top:-15px">
-            <div class="col-md-12">
+            <div class="col-md-12" style="height:60px;text-align:center">
                 <div class="card card-navy">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-3 float-left">
+                            <div class="col-md-3">
+                                <h5 class=" text-bold float-left">
+                                    Finish Good Product
+                                </h5>
+                            </div>
+                            <div class="col-md-2">
+
+                            </div>
+                            <div class="col-md-3 text-center">
                                 <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
                             </div>
-                            <div class="col-md-6">
-                                <h5 class="text-center text-bold">
-                                    Finish Good Product
-                                </h5>
+
+
+                            <div class="col-md-1">
+
                             </div>
                             <div class="col-md-3">
                                 <button class="btn btn-outline-warning btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Product</button>
@@ -65,7 +73,7 @@
                     <div class="form-row">
 
                         <div class="form-group col-md-12">
-                            <label for="ddlProductName" class="control-label">Product Name</label>
+                            <label for="ddlProductName" class="control-label">Product Name <span style="color:red">*</span></label>
                             <input type="text" id="ddlProductName" class="form-control form-control-sm" />
                             <span class="error hide required-ProductName font-weight-bold">Input Product Name!</span>
                         </div>

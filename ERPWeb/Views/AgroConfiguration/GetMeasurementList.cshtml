@@ -36,7 +36,7 @@
            
                                         <div class="col-md-12">
                                             <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
-                                            <h5 class="text-center text-bold">
+                                            <h5 class="text-center text-bold"style="height:10px;text-align:center">
 
                                                 Measurment Setup
                                             </h5>
@@ -50,13 +50,13 @@
                                         <input type="hidden" id="hdMeasurementId" />
 
                                         <div class="col-md-2">
-                                            <label class="control-label font-weight-bold " for="txtmeasurementName">Measurement Name</label>
-                                            <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" />
+                                            <label class="control-label font-weight-bold " for="txtmeasurementName">Measurement Name<span style="color:red">*</span></label>
+                                            <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" autofocus />
                                             <span class="error hide req-txtmeasurementName">Measurement Name is required</span>
                                         </div>
                                         <div class="col-md-2">
                                             <label class="control-label font-weight-bold " for="masterBox">Master Box</label>
-                                            <input type="number" name="masterBox" id="txtmasterBox" class="form-control form-control-sm" />
+                                            <input type="number" name="masterBox" id="txtmasterBox" class="form-control form-control-sm"/>
                                             <span class="error hide req-txtmasterBox">Master Box is required</span>
                                         </div>
                                         <div class="col-md-2">
@@ -98,12 +98,12 @@
                                                 <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblMeasurement">
                                                     <thead>
  
-                                                        <tr class="btn-dark">
-                                                            <th>Sl</th>
-                                                            <th>MeasureMent Name</th>
-                                                            <th>MeasureMent Item</th>
-                                                            <th>Unit</th>
-                                                            <th>Action</th>
+                                                        <tr class="btn-dark text-center">
+                                                            <th class="text-center">Sl</th>
+                                                            <th class="text-center">MeasureMent Name</th>
+                                                            <th class="text-center">MeasureMent Item</th>
+                                                            <th class="text-center">Unit</th>
+                                                            <th class="text-center">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -123,14 +123,14 @@
                 <div class="tab-pane fade show active" id="custom-tabs-two-measurementList" role="tabpanel" aria-labelledby="custom-tabs-two-measurementList-tab">
 
                     <div class="row" style="margin-top:-30px">
-                        <div class="col-md-12">
+                        <div class="col-md-12"style="height:60px;text-align:center">
                             <div class="card card-navy shadow">
                                 <div class="card-header">
                                     <div class="row text-sm">
-                                        <div class="col-md-2">
+                                        @*<div class="col-md-2">
                                             <h5>Search by</h5>
-                                        </div>
-                                        <div class="col-md-3 float-right">
+                                        </div>*@
+                                        <div class="col-md-3 float-left">
                                             <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
                                         </div>
@@ -150,7 +150,7 @@
 
                         <div class="col-md-12" style="margin-top:-10px">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body" style="margin-top:-10px">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer3" style="overflow-y:scroll">
                                             @{Html.RenderAction("GetMeasurementList", new { @flag = "list" });}
@@ -173,7 +173,7 @@
 <div class="modal" id="modalMeasurementSetup" role="dialog">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-gradient-gray-dark">
                 <h4 class="modal-title" id="modalHeading"><span id="spanModalHeading"></span></h4>
                 <button class="close" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
 
@@ -185,7 +185,7 @@
 
                         <div class="form-row col-md-12">
                             <label for="measureMentName" class="control-label">Measurement Name </label>
-                            <input type="text" id="measureMentName" class="form-control form-control-sm" />
+                            <input type="text" id="measureMentName" class="form-control form-control-sm" autofocus />
                             <span class="error hide required-measureMentName font-weight-bold">Input MeasureMent Name !</span>
 
                         </div>
@@ -248,7 +248,7 @@
             </div>
 
 
-            <div class="modal-footer btn-default">
+            <div class="modal-footer btn-default bg-gradient-gray-dark">
                 <div class="col-md-6">
                     <div id="msg1" class="alert alert-success hide float-left">
                         Data has been saved Successful!
@@ -296,7 +296,7 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
-
+            $("#btnSubmit").hide();
             $(function () {
                 $('#txtmeasurementName').focus();
             });
@@ -308,13 +308,13 @@
             if (validate() == true) {
                 debugger;
                 var index = $("#tblMeasurement  tbody tr").length;
-                var sl = "<td>" + (index + 1) + "</td>";
+                var sl = "<td class='text-center'>" + (index + 1) + "</td>";
                 var org = "<td class='hide'>" + ddlOrganiation.val(); + "</td>";
-                var measurementName = "<td>" + txtmeasurementName.val(); + "</td>";
-                var masterBox = "<td class='hide'>" + txtmasterBox.val(); + "</td>";
-                var innerBox = "<td class='hide'>" + txtinnerBox.val(); + "</td>";
-                var packSize = "<td class='hide'>" + txtpackSize.val(); + "</td>";
-                var unitName = "<td>" + dropDownSelectedText("ddlUnit") +  "</td>";
+                var measurementName = "<td class='text-center'>" + txtmeasurementName.val(); + "</td>";
+                var masterBox = "<td class='hide text-center'>" + txtmasterBox.val(); + "</td>";
+                var innerBox = "<td class='hide text-center'>" + txtinnerBox.val(); + "</td>";
+                var packSize = "<td class='hide text-center'>" + txtpackSize.val(); + "</td>";
+                var unitName = "<td class='text-center'>" + dropDownSelectedText("ddlUnit") +  "</td>";
                 //var unitName = "<td>"+ dropDownSelectedText("ddlUnit") + "</td>";
                 var unitId = "<td class='hide UnitId'>" + ddlUnit.val() + "</td>";
                 if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
@@ -339,12 +339,13 @@
                     item = txtinnerBox.val()
                 }
 
-                var measurementItem = "<td>" + item + "</td>";
-                var action = "<td><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
+                var measurementItem = "<td class='text-center' >" + item + "</td>";
+                var action = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
 
                 var tr = "<tr>" + sl + measurementName + measurementItem + unitName + unitId + org + masterBox + innerBox + packSize + action  +"</tr>";
-
+                $("#btnSubmit").show();
                 $("#tblMeasurement tbody").append(tr);
+               
                 clearCtrl();
 
 

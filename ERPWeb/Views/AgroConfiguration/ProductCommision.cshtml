@@ -30,9 +30,7 @@
                             <div class="card card-gray-dark shadow ">
                                 <div class="card-header">
                                     <div class="row text-sm">
-                                        <div class="col-md-2">
-                                            <h5 class="text-left">Search by:</h5>
-                                        </div>
+                                        
                                         <div class="col-md-3">
 
                                             @Html.DropDownList("ddlProductNameSearch", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "Product Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
@@ -56,9 +54,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12" style="margin-top:-10px">
+                        <div class="col-md-12" style="margin-top:-20px">
                             <div class="card ">
-                                <div class="card-body">
+                                <div class="card-body"style="margin-top:-10px">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
 
@@ -105,8 +103,8 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="control-label" for="ddlProductName">Product Name</label>
-                                            @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product --", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            <label class="control-label" for="ddlProductName">Product Name<span style="color:red">*</span></label>
+                                            @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product --", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
                                             <span class="error hide req-ddlProductName">Product Is Required</span>
                                             <span class="error hide duplicate-product">Product Is Already configured In This Year</span>
                                         </div>
@@ -125,14 +123,14 @@
                                             <span class="error hide req-numCash">Credit is Required</span>
                                         </div>
                                         <div class="col-md-2">
-                                            <label class="control-label font-weight-bold">From Date</label>
+                                            <label class="control-label font-weight-bold">From Date<span style="color:red">*</span></label>
                                             <div class="input-group input-group-sm ">
                                                 <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
                                                 <span class="error hide req-dptFromDate">From is Required</span>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <label class="control-label font-weight-bold">To Date</label>
+                                            <label class="control-label font-weight-bold">To Date<span style="color:red">*</span></label>
                                             <div class="input-group input-group-sm ">
                                                 <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" />
                                                 <span class="error hide req-dptToDate">ToDate is Required</span>
@@ -163,7 +161,7 @@
                             <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblCommissionOnProduct">
                                 <thead>
 
-                                    <tr class="btn-dark">
+                                    <tr class="btn-dark text-center">
                                         <th>#SL</th>
                                         <th>Product Name</th>
                                         <th class="hide">Year</th>

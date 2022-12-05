@@ -38,7 +38,7 @@
 
                 <div class="col-md-2">
                     <label for="ddlareaname" class="control-label">Area Name<span style="color:red">*</span></label>
-                    @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select Area", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "Select Area", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus="autofocus" })
                     <span class="error hide required-AreaName font-weight-bold">Select Area Name!</span>
                     <span class="error hide duplicate-AreaName font-weight-bold">Already Area Exist!</span>
                 </div>

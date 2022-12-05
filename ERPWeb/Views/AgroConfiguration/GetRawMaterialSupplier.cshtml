@@ -10,21 +10,28 @@
     <div class="col-md-12">
 
         <div class="row" style="margin-top:-15px">
-            <div class="col-md-12">
+            <div class="col-md-12"style="height:60px;text-align:center">
                 <div class="card card-navy">
                     <div class="card-header">
                         <div class="row">
+                            <div class="col-md-3">
+                                <h5 class=" text-bold float-left">
+                                    Raw Material Supplier
+                                </h5>
+                            </div>
+                            <div class="col-md-2">
+
+                            </div>
                             <div class="col-md-3 float-left">
                                 <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
                             </div>
-                            <div class="col-md-6">
-                                <h5 class="text-center text-bold">
-                                    Raw Material Supplier
-                                </h5>
+
+                            <div class="col-md-1">
+
                             </div>
                             <div class="col-md-3">
-                                <button class="btn btn-outline-warning btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Raw Material Supplier</button>
+                                <button class="btn btn-outline-warning btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create RM Supplier</button>
                             </div>
                         </div>
                     </div>
@@ -62,12 +69,12 @@
                 <div class="row">
                     <input type="hidden" id="hdRawmaterialSupplierId" />
                     <div class="form-group col-md-4">
-                        <label for="ddlSupplierName" class="control-label">Supplier Name</label>
+                        <label for="ddlSupplierName" class="control-label">Supplier Name<span style="color:red">*</span></label>
                         <input type="text" id="ddlSupplierName" class="form-control form-control-sm" />
                         <span class="error hide required-SupplierName font-weight-bold">Input Supplier Name!</span>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="ddlMobileName" class="control-label">Mobile Number</label>
+                        <label for="ddlMobileName" class="control-label">Mobile Number<span style="color:red">*</span></label>
                         <input type="text" id="ddlMobileNumber" class="form-control form-control-sm" onkeypress="return isNumber(event)" />
                         <span class="error hide required-MobileNumber font-weight-bold">Input Mobile Name!</span>
                     </div>

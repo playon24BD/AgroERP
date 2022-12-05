@@ -53,8 +53,8 @@
 
                                     <div class="row justify-content-center">
                                         <div class="col-md-2">
-                                            <label class="control-label" for="ddlRawmaterialName">RawMaterial</label>
-                                            @Html.DropDownList("ddlRawmaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawmaterialName, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
+                                            <label class="control-label" for="ddlRawmaterialName">RawMaterial<span style="color:red">*</span></label>
+                                            @Html.DropDownList("ddlRawmaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawmaterialName, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus ="autofocus" })
                                             <span class="error hide req-ddlRawmaterialName">RawMaterial Is Required</span>
                                         </div>
 
@@ -68,14 +68,14 @@
                                         </div>
 
                                         <div class="col-md-2">
-                                            <label for="ddlreturnqty"> Qty</label>
+                                            <label for="ddlreturnqty"> Qty<span style="color:red">*</span></label>
                                             <input type="number" id="ddlreturnqty" name="qty" class="form-control form-control-sm" />
                                             <span class="error hide req-qty">Qty Is Required</span>
                                             <span>Stock: <span id="RawMaterialStockQty">0</span> </span>
                                             <span class="error hide req-qtyChecking">Quantity Must be less than or equal material Qty</span>
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="ddlReturnType" class="control-label">Return Type</label>
+                                            <label for="ddlReturnType" class="control-label">Return Type<span style="color:red">*</span></label>
                                             <select  id="ddlReturnType" class="form-control form-control-sm select2" >
                                                 <option value="">Select Type</option>
                                                 <option value="Good">Good</option>

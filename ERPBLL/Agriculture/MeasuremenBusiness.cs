@@ -30,9 +30,17 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<MeasurementSetupDTO> GetMeasurementSetups(long orgId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForAgroMasurment(orgId)).ToList();
-            //return _measurmentRepository.GetAll(a => a.OrganizationId == orgId);
-            //return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForCheckUnit(orgId)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForAgroMasurment(orgId)).ToList();
+                //return _measurmentRepository.GetAll(a => a.OrganizationId == orgId);
+                //return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForCheckUnit(orgId)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
 
         private string QueryForAgroMasurment(long orgId)

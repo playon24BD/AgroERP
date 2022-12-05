@@ -48,7 +48,14 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<CommisionOnProductDTO> GetAllCommisionOnProducts(long? product, int? year, long orgId)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<CommisionOnProductDTO>(string.Format(QueryForGellAllCommissionProduct(product,year,orgId)));
+            try
+            {
+                return _agricultureUnitOfWork.Db.Database.SqlQuery<CommisionOnProductDTO>(string.Format(QueryForGellAllCommissionProduct(product, year, orgId)));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 

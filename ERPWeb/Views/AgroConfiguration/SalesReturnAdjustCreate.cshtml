@@ -44,8 +44,8 @@
                     <div class="card-header text-sm ">
                         <div class="row justify-content-center">
                             <div class="col-md-2">
-                                <label for="ddlstokiestname">Stockiest Name </label>
-                                @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "--Select Stokiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <label for="ddlstokiestname">Stockiest Name <span style="color:red">*</span></label>
+                                @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "--Select Stokiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus="autofocus" })
                             </div>
                             <div class="col-md-2">
                                 <label for="ddltotalbill">Total Bill</label>
@@ -65,7 +65,7 @@
                             </div>
 
                             <div class="col-md-3">
-                                <label class="control-label" for="ddlinvoiceno">Invoice No</label>
+                                <label class="control-label" for="ddlinvoiceno">Invoice No <span style="color:red">*</span></label>
                                 <select id="ddlinvoiceno" class="form-control form-control-sm select2">
                                     <option value="0">Select Invoice</option>
                                 </select>

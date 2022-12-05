@@ -63,7 +63,7 @@
                                 <label for="ddlClient" class="col-form-label pt-0">
                                     Stockiest Name
                                 </label>
-                                @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "--Stockiest Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "--Stockiest Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus="autofocus" })
                                 <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
                             </div>
                             <div class="col-md-2">
@@ -163,21 +163,21 @@
                         <div class="row small">
                             <div class="col-md-2">
                                 <label for="ddlProductName" class="col-form-label text-white">
-                                    Product Name
+                                    Product Name<span style="color:red">*</span>
                                 </label>
                                 @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
                             </div>
                             <div class="col-md-2">
                                 <label for="ddlQtyUnit" class="col-form-label text-white">
-                                    Receipe Unit Qty
+                                    Receipe Unit Qty<span style="color:red">*</span>
                                 </label>
                                 @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--UnitQty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-QtyUnit font-weight-bold">Unit Qty is required!</span>
                             </div>
                             <div class="col-md-2">
                                 <label for="ddlMeasurementName" class="col-form-label text-white">
-                                    Measurement Desc
+                                    Measurement Desc<span style="color:red">*</span>
                                 </label>
                                 @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "--MeasurementName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
@@ -188,7 +188,7 @@
 
                             </div>
                             <div class="col-md-2">
-                                <label for="ddlQuanity" class="col-form-label text-white">Quanity</label>
+                                <label for="ddlQuanity" class="col-form-label text-white">Quanity<span style="color:red">*</span></label>
                                 <input type="text" id="txtQuanity" class="form-control form-control-sm" />
                                 <label for="ddlQuantity" class="control-label font-weight-bold text-white">
                                     Finish Good Qty:

@@ -75,14 +75,14 @@
                         <div class="row justify-content-center">
                             <div class="col-md-2">
                                 <label for="ddlProductName" class="col-form-label text-white">
-                                    Product Name
+                                    Product Name<span style="color:red">*</span>
                                 </label>
-                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus="autofocus" })
                                 <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
                             </div>
                             <div class="col-md-2">
                                 <label for="ddlQtyUnit" class="col-form-label text-white">
-                                    Receipe Unit Qty
+                                    Receipe Unit Qty<span style="color:red">*</span>
                                 </label>
                                 @Html.DropDownList("ddlQtyUnit", (IEnumerable<SelectListItem>)ViewBag.ddlQtyUnit, "--UnitQty--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-QtyUnit font-weight-bold">Unit Qty is required!</span>
@@ -92,7 +92,7 @@
                                 <input type="number" id="ddlRMtotalprice" name="ddlRMtotalprice" class="form-control form-control-sm" readonly />
                             </div>
                             <div class="col-md-2">
-                                <label class="col-form-label text-white" for="ddlotherexpense">Other Expense Price</label>
+                                <label class="col-form-label text-white" for="ddlotherexpense">Other Expense Price<span style="color:red">*</span></label>
                                 <input type="number" id="ddlotherexpense" name="ddlotherexpense" class="form-control form-control-sm" />
                             </div>
 

@@ -33,13 +33,13 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="ddlProductName" class="col-form-label">
-                                    Product Name
+                                    Product Name<span style="color:red">*</span>
                                 </label>
-                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ProductName, "--Select ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
                                 <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
                             </div>
                             <div class="col-md-3">
-                                <label for="txtQty" class="col-form-label">ProductQty <span id="unitName" class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
+                                <label for="txtQty" class="col-form-label">ProductQty <span style="color:red">*</span><span id="unitName" class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
                                 <input type="number" placeholder="Qty" name="quantity" id="txtProductQty" class="form-control form-control-sm" />
                                 <span class="error hide req-src-Productqty text-bold">ProductQty is required!</span>
                             </div>
@@ -67,8 +67,8 @@
                         <h5 style="border-bottom:2px solid #f87878">Source Raw Material</h5>
                         <div class="row">
                             <div class="col-md-5">
-                                <label for="ddlRawMaterialName" class="col-form-label">Raw Material</label>
-                                @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select RawMaterial Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <label for="ddlRawMaterialName" class="col-form-label">Raw Material<span style="color:red">*</span></label>
+                                @Html.DropDownList("ddlRawMaterialName", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Select RawMaterial Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
                                 <span class="error hide req-src-RawMaterialName font-weight-bold">RawMaterial Name is required !</span>
 
                             </div>

@@ -26,7 +26,14 @@ namespace ERPBLL.Agriculture
         }
         public IEnumerable<FinishGoodProduct> GetAllProductInfo(long OrgId)
         {
-            return _finishGoodProductRepository.GetAll(a => a.OrganizationId == OrgId);
+            try
+            {
+                return _finishGoodProductRepository.GetAll(a => a.OrganizationId == OrgId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool SaveFinishGoodProductName(FinishGoodProductDTO finishGoodProduct, long userId, long orgId)

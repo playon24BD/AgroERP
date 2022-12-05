@@ -37,14 +37,14 @@
             <div class="row " style="margin-top:-18px;">
 
                 <div class="col-md-2">
-                    <label for="ddlZoneName" class="control-label">ZoneName</label>
-                    @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    <label for="ddlZoneName" class="control-label">ZoneName<span style="color:red">*</span></label>
+                    @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Select Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
                     <span class="error hide required-ZoneName font-weight-bold">Select Zone Name!</span>
                     <span class="error hide duplicate-ZoneName font-weight-bold">Already ZoneName Exist!</span>
                 </div>
 
                 <div class="col-md-2">
-                    <label for="txtDivisionName" class="control-label">DivisionName</label>
+                    <label for="txtDivisionName" class="control-label">DivisionName<span style="color:red">*</span></label>
                     <input type="text" id="txtDivisionName" class="form-control form-control-sm" />
                     <span class="error hide required-DivisionName font-weight-bold">Input Division Name!</span>
                     <span class="error hide duplicate-DivisionName font-weight-bold">Already Division Exist!</span>
