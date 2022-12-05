@@ -1,0 +1,264 @@
+﻿@{
+    ViewBag.Title = "DealarLadger";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:-10px">
+
+    <div class="col-md-12">
+
+
+
+
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-15px">
+                <div class="card card-navy">
+
+                    <div class="card-header text-sm ">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h5 class="text-center text-bold">Dealer Ladger</h5>
+                            </div>
+                            <div class="col-md-2">
+                                @*<label for="ddlstokiestname">Stockiest Name </label>*@
+                                @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "--Select Stokiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" placeholder="From Date" />
+                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" placeholder="To Date" />
+                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row" >
+            <div class="col-md-12" style="margin-top:-15px">
+                <div class="card" style="background-color: #E0FFFF;">
+
+                    <div class="card-header text-sm ">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h8 class="text-bold">Name:  </h8><span class="text-black" id="ddlName"></span><br />
+                                    <h8 class="text-bold">Number:  </h8><span class="text-black" id="ddlNumber"></span><br />
+                                    <h8 class="text-bold">Address:  </h8><span class="text-black" id="ddlAddress"></span><br />
+                                    <h8 class="text-bold">Territory:  </h8><span class="text-black" id="ddlTerritory"></span><br />
+                                    <h8 class="text-bold">Territory Manager:  </h8><span class="text-black" id="ddlManager"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h8 class="text-bold">Total Bill:  </h8><span class="text-black" id="ddltotalbill"></span><br />
+                                    <h8 class="text-bold">Total Paid:  </h8><span class="text-black" id="ddltotalpaid"></span><br />
+                                    <h8 class="text-bold">Total Return: </h8><span class="text-black" id="ddltotalreturn"></span><br />
+                                    <h8 class="text-bold">Total Due: </h8> <span class="text-black" id="ddltotaldue"></span>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+
+        var ddlstokiestname = $("#ddlstokiestname");
+        var ddltotalbill = $("#ddltotalbill");
+        var ddltotalpaid = $("#ddltotalpaid");
+        var ddltotaldue = $("#ddltotaldue");
+        var ddltotalreturn = $("#ddltotalreturn");
+
+
+        var ddlinvoiceno = $("#ddlinvoiceno");
+
+        var ddlName = $("#ddlName");
+        var ddlNumber = $("#ddlNumber");
+        var ddlAddress = $("#ddlAddress");
+        var ddlTerritory = $("#ddlTerritory");
+        var ddlManager = $("#ddlManager");
+        //var regionNameList = [];
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+
+        })
+
+
+
+       //change Invoice
+        $('#ddlstokiestname').change(function () {
+
+            let Stkid = $("#ddlstokiestname option:selected").val();
+         //   debugger;
+            var data = { id: TryParseInt(Stkid,0) };
+            console.log(data);
+            debugger
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/DealarLadgerList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                    /*$("#AgroSalesProductDetails").modal('show');*/
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
+            //total
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetStokistTotalbill", data)).then(function (res, status) {
+                debugger;
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var totalbill = res.replace(/['"]+/g, '');
+                ddltotalbill.text(totalbill);
+
+            });
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetStokistTotalPaid", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var totalpaid = res.replace(/['"]+/g, '');
+
+                ddltotalpaid.text(totalpaid);
+
+            });
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetStokistTotalDue", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var totaldue = res.replace(/['"]+/g, '');
+
+                ddltotaldue.text(totaldue);
+
+            });
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetStokistTotalReturn", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var totalreturn = res.replace(/['"]+/g, '');
+
+                ddltotalreturn.text(totalreturn);
+
+            });
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/SoketistName", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var StockiestName = res.replace(/['"]+/g, '');
+
+                ddlName.text(StockiestName);
+
+            });
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/SoketistNMBR", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var StockiestPhoneNumber = res.replace(/['"]+/g, '');
+
+                ddlNumber.text(StockiestPhoneNumber);
+
+            });
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/SoketistADD", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var StockiestAddress = res.replace(/['"]+/g, '');
+
+                ddlAddress.text(StockiestAddress);
+
+            });
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/SoketistTerritoryId", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var TerritoryName = res.replace(/['"]+/g, '');
+
+                ddlTerritory.text(TerritoryName);
+
+            });
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/SoketistTerritoryManager", data)).then(function (res, status) {
+
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var userName = res.replace(/['"]+/g, '');
+
+                ddlManager.text(userName);
+
+            });
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+    </script>
+}

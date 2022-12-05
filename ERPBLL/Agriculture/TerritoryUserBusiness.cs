@@ -30,6 +30,11 @@ namespace ERPBLL.Agriculture
             throw new NotImplementedException();
         }
 
+        public TerritoryUser GetTerritoryUserById(long TerritoryId)
+        {
+            return _territoryUserBusinessRepository.GetOneByOrg(t=>t.TerritoryId == TerritoryId);
+        }
+
         public bool SaveTerritoryUser(List<string> territories, long userId, long suserId, long orgId,string action)
         {
 

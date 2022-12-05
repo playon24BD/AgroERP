@@ -56,5 +56,8 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<AgroProductSalesInfoDTO> GetAllINVBYSTOKIESTID(long StockiestId);
         bool UpdateInvoiceDrop(long productSalesInfoId, long userId);
+
+
+        IEnumerable<AgroProductSalesInfoDTO> GetDealerLadserInfos(long id, string fromDate, string toDate);
     }
 }

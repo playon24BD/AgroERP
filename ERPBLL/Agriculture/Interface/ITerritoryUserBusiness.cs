@@ -14,5 +14,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<TerritoryUser> GetAllTerritoryByUserIdAndTerritory(long userId, long orgId);
         bool UpdateTerritoryUser(List<string> territories, long userId, long suserId, long orgId);
         List<TerritorySetupViewModel> GetAllTerritory(long userId, long orgId);
+
+        TerritoryUser GetTerritoryUserById(long TerritoryId);
     }
 }

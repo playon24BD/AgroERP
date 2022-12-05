@@ -19,6 +19,7 @@ namespace ERPWeb.Controllers
 {
     public class AgroConfigurationController : BaseController
     {
+        private readonly ITerritoryUserBusiness _territoryUserBusiness;
         private readonly IProductionPerproductCost _productionPerproductCost;
         private readonly IProductPriceConfiguration _productPriceConfiguration;
         private readonly IProductPricingHistory _productPricingHistory;
@@ -76,10 +77,10 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IProductionPerproductCost productionPerproductCost, IProductPriceConfiguration productPriceConfiguration, IProductPricingHistory productPricingHistory, ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness, IRMStockDashboardGrap rMStockDashboardGrap)
+        public AgroConfigurationController(ITerritoryUserBusiness territoryUserBusiness ,IProductionPerproductCost productionPerproductCost, IProductPriceConfiguration productPriceConfiguration, IProductPricingHistory productPricingHistory, ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness, IRMStockDashboardGrap rMStockDashboardGrap)
 
         {
-
+            this._territoryUserBusiness= territoryUserBusiness;
             this._productionPerproductCost = productionPerproductCost;
             this._productPriceConfiguration = productPriceConfiguration;
             this._productPricingHistory = productPricingHistory;
@@ -5425,6 +5426,70 @@ namespace ERPWeb.Controllers
             IsSuccess = _productionPerproductCost.SaveProductionPerproductCost(productionPerproductCostDTO, User.UserId);
 
             return Json(IsSuccess);
+        }
+
+        #endregion
+
+        #region Dealar Ladger 
+        public ActionResult DealarLadger (long? id)
+        {
+
+            ViewBag.ddlstokiestname = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stk => new SelectListItem { Text = stk.StockiestName, Value = stk.StockiestId.ToString() });
+            return View();
+        }
+
+        public ActionResult SoketistName(long id)
+        {
+            var StockiestName = _stockiestInfo.GetStockiestInfoById(id, User.OrgId).StockiestName;
+    
+            return Json(StockiestName, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult SoketistADD(long id)
+        {
+            var StockiestAddress = _stockiestInfo.GetStockiestInfoById(id, User.OrgId).StockiestAddress;
+
+            return Json(StockiestAddress, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult SoketistNMBR(long id)
+        {
+            var StockiestPhoneNumber = _stockiestInfo.GetStockiestInfoById(id, User.OrgId).StockiestPhoneNumber;
+
+            return Json(StockiestPhoneNumber, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult SoketistTerritoryId(long id)
+        {
+            var TerritoryId = _stockiestInfo.GetStockiestInfoById(id, User.OrgId).TerritoryId;
+            var TerritoryName = _territorySetup.GetTerritoryNamebyId(TerritoryId, User.OrgId).TerritoryName;
+
+            return Json(TerritoryName, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult SoketistTerritoryManager(long id)
+        {
+            var TerritoryId = _stockiestInfo.GetStockiestInfoById(id, User.OrgId).TerritoryId;
+            var TerritoryManager = _territoryUserBusiness.GetTerritoryUserById(TerritoryId).UserId;
+
+            var userName = _appUserBusiness.GetId(TerritoryManager, User.OrgId).UserName;
+
+            return Json(userName, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult DealarLadgerList(long? id, string fromDate, string toDate)
+        {
+
+            var dto = _agroProductSalesInfoBusiness.GetDealerLadserInfos(id.Value ,fromDate, toDate);
+
+
+            List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+            AutoMapper.Mapper.Map(dto, viewModels);
+            return PartialView("_DealerGetAgroSalesProductList", viewModels);
+
         }
 
         #endregion
