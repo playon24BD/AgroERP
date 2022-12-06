@@ -28,25 +28,26 @@
             <tr>
                 <td class="text-center text-bold">@sl</td>
                 <td class="hide">@item.ProductSalesInfoId</td>
-                <td class="text-center">@item.InvoiceNo</td>
+                <td class="text-center ProductionSalesInfoId">@item.InvoiceNo</td>
                 <td class="text-center">@item.InvoiceDate.Value.ToString("yyyy-MMM-dd")</td>
                 <td class="text-center">@item.TotalAmount</td>
                 <td class="text-center">@item.PaidAmount</td>
                 <td class="text-center">@item.DueAmount</td>
                 <td class="text-center">@User.UserName</td>
+                @*class="btn btn-sm btn-outline-primary data-item-edit-ProductionSalesInfoId"*@
                 @*<td class="hide">@item.UnitId</td>*@
                 @*<td>@item.EntryDate.Value.ToString("dd-MMM-yyyy hh:mm tt")</td>*@
 
                 @*<td class="text-center">
 
 
-                    <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail-ProductionSalesInfoId" title="View Detail" data-item-detail-ProductionSalesInfoId="@item.ProductSalesInfoId" style="line-height:1">
-                        <i class="fas fa-eye"></i>
-                    </a>
+            <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail-ProductionSalesInfoId" title="View Detail" data-item-detail-ProductionSalesInfoId="@item.ProductSalesInfoId" style="line-height:1">
+                <i class="fas fa-eye"></i>
+            </a>
 
 
 
-                </td>*@
+        </td>*@
 
             </tr>
         }

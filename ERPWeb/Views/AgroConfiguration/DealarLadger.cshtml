@@ -51,7 +51,7 @@
 
         </div>
 
-        <div class="row" >
+        <div class="row">
             <div class="col-md-12" style="margin-top:-15px">
                 <div class="card" style="background-color: #E0FFFF;">
 
@@ -59,20 +59,20 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h8 class="text-bold">Name:  </h8><span class="text-black" id="ddlName"></span><br />
-                                    <h8 class="text-bold">Number:  </h8><span class="text-black" id="ddlNumber"></span><br />
-                                    <h8 class="text-bold">Address:  </h8><span class="text-black" id="ddlAddress"></span><br />
-                                    <h8 class="text-bold">Territory:  </h8><span class="text-black" id="ddlTerritory"></span><br />
-                                    <h8 class="text-bold">Territory Manager:  </h8><span class="text-black" id="ddlManager"></span>
+                                    <h7 class="text-bold">Name:  </h7><span class="text-black" id="ddlName"></span><br />
+                                    <h7 class="text-bold">Address:  </h7><span class="text-black" id="ddlAddress"></span><br />
+                                    <h7 class="text-bold">Number:  </h7><span class="text-black" id="ddlNumber"></span><br />
+                                    <h7 class="text-bold">Territory:  </h7><span class="text-black" id="ddlTerritory"></span><br />
+                                    <h7 class="text-bold">Territory Manager:  </h7><span class="text-black" id="ddlManager"></span>
 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <h8 class="text-bold">Total Bill:  </h8><span class="text-black" id="ddltotalbill"></span><br />
-                                    <h8 class="text-bold">Total Paid:  </h8><span class="text-black" id="ddltotalpaid"></span><br />
-                                    <h8 class="text-bold">Total Return: </h8><span class="text-black" id="ddltotalreturn"></span><br />
-                                    <h8 class="text-bold">Total Due: </h8> <span class="text-black" id="ddltotaldue"></span>
+                                    <h7 class="text-bold">Total Bill:  </h7><span class="text-black" id="ddltotalbill"></span><br />
+                                    <h7 class="text-bold">Total Paid:  </h7><span class="text-black" id="ddltotalpaid"></span><br />
+                                    <h7 class="text-bold">Total Return: </h7><span class="text-black" id="ddltotalreturn"></span><br />
+                                    <h7 class="text-bold">Total Due: </h7> <span class="text-black" id="ddltotaldue"></span>
 
                                 </div>
                             </div>
@@ -105,6 +105,20 @@
 </div>
 
 
+<div class="modal fade" id="AgroSalesProductDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title">Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section scripts{
 
@@ -125,6 +139,8 @@
         var ddlAddress = $("#ddlAddress");
         var ddlTerritory = $("#ddlTerritory");
         var ddlManager = $("#ddlManager");
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
         //var regionNameList = [];
 
 
@@ -134,31 +150,59 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true
+            }).on('change', function () {
+                $('.datepicker').hide();
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true
+            }).on('change', function () {
+                $('.datepicker').hide();
+            });
 
 
         })
 
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                }
+            }
+        })
 
+        dptFromDate.change(function () {
+            LoadSalesProducts();
+        })
+        dptToDate.change(function () {
+            LoadSalesProducts();
+        })
 
-       //change Invoice
+        //change Invoice
         $('#ddlstokiestname').change(function () {
-
+            ClearData();
             let Stkid = $("#ddlstokiestname option:selected").val();
-         //   debugger;
-            var data = { id: TryParseInt(Stkid,0) };
+            debugger;
+            var data = { id: TryParseInt(Stkid, 0), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
             console.log(data);
             debugger
-            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/DealarLadgerList', data)).then(function (res, status) {
-                console.log(status);
-                if (status === "success") {
-                    $("#dataContainer").empty();
-                    $("#dataContainer").append(res);
-                    /*$("#AgroSalesProductDetails").modal('show');*/
-                }
-            }).fail(function (error) {
-                console.log(error);
-            })
-            //total
+
+            LoadSalesProducts();
+
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetStokistTotalbill", data)).then(function (res, status) {
                 debugger;
 
@@ -247,16 +291,60 @@
             });
 
 
-
+           
 
         });
 
+        function ClearData() {
+            dptFromDate.val("");
+            dptToDate.val("");
+        }
 
 
 
+        function LoadSalesProducts() {
+            debugger;
+
+            let Stkid = $("#ddlstokiestname option:selected").val();
+            var data = { flag: "View", id: TryParseInt(Stkid, 0), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/DealarLadger', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+             
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
+        }
 
 
+        $(document).on('click', '.ProductionSalesInfoId', function (e) {
+            e.preventDefault();
+            debugger;
 
+            $("#dataContainer2").empty();
+            var id = $(this).parent().children('td').eq(1).html();
+  
+            console.log(id);
+
+
+            if (true) {
+                var data = { flag: "Detail", ProductSalesInfoId: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/DealarLadger', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res);
+                        $("#AgroSalesProductDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+
+        })
 
 
 

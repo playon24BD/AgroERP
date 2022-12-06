@@ -5431,10 +5431,64 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Dealar Ladger 
-        public ActionResult DealarLadger (long? id)
+        public ActionResult DealarLadger (long? id, string flag,string fromDate, string toDate , long? ProductSalesInfoId)
         {
+            if (string.IsNullOrEmpty(flag))
+            {
 
-            ViewBag.ddlstokiestname = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stk => new SelectListItem { Text = stk.StockiestName, Value = stk.StockiestId.ToString() });
+                ViewBag.ddlstokiestname = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stk => new SelectListItem { Text = stk.StockiestName, Value = stk.StockiestId.ToString() });
+
+
+                return View();
+            }
+          
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _agroProductSalesInfoBusiness.GetDealerLadserInfos(id.Value, fromDate, toDate);
+
+
+                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_DealerGetAgroSalesProductList", viewModels);
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+                //var FinishGoodProductName = _agroProductSalesDetailsBusiness.GetAllAgroSalesDetailsInfos(User.OrgId).ToList();
+                var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
+                var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
+                var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
+                var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
+                var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
+                var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
+
+                var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(ProductSalesInfoId.Value, User.OrgId);
+                ViewBag.Info = new AgroProductSalesInfoViewModel
+                {
+                    ZoneName = ZoneName.FirstOrDefault(Z => Z.ZoneId == info.ZoneId).ZoneName,
+                    DivisionName = DivisionName.FirstOrDefault(D => D.DivisionId == info.DivisionId).DivisionName,
+                    RegionName = RegionName.FirstOrDefault(R => R.RegionId == info.RegionId).RegionName,
+                    AreaName = AreaName.FirstOrDefault(A => A.AreaId == info.AreaId).AreaName,
+                    TerritoryName = TerritoryName.FirstOrDefault(T => T.TerritoryId == info.TerritoryId).TerritoryName,
+                    StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == info.StockiestId).StockiestName,
+                    InvoiceNo = info.InvoiceNo,
+                    ChallanNo = info.ChallanNo,
+                    DriverName = info.DriverName,
+                    VehicleNumber = info.VehicleNumber,
+                    DeliveryPlace = info.DeliveryPlace,
+                    InvoiceDate = info.InvoiceDate,
+
+                };
+
+                var details = _agroProductSalesDetailsBusiness.DealerGetSalesDetailsByInfoId(ProductSalesInfoId.Value);
+
+                List<AgroProductSalesDetailsViewModel> detailsvm = new List<AgroProductSalesDetailsViewModel>();
+                AutoMapper.Mapper.Map(details, detailsvm);
+                return PartialView("_DealerGetAgroSalesProductDetails", detailsvm);
+
+            }
+
             return View();
         }
 

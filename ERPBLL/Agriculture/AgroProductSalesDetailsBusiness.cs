@@ -158,7 +158,7 @@ INNER JOIN tblFinishGoodProductInfo FGP on SD.FinishGoodProductInfoId=FGP.Finish
 INNER JOIN tblMeasurement M on SD.MeasurementId=M.MeasurementId
 inner join tblProductSalesInfo si on SD.ProductSalesInfoId = si.ProductSalesInfoId
 
-                Where 1=1 {0}", Utility.ParamChecker(param));
+                Where 1=1 {0} and SD.Status is null", Utility.ParamChecker(param));
 
             return query;
         }
@@ -241,6 +241,56 @@ where  1=1 {0} and d.Status is null ", Utility.ParamChecker(param));
         public AgroProductSalesDetails GetSalesDetailsById(long ProductSalesDetailsId, long orgId)
         {
             return _agroProductSalesDetailsRepository.GetOneByOrg(a => a.ProductSalesDetailsId == ProductSalesDetailsId && a.OrganizationId == orgId);
+        }
+
+        public IEnumerable<AgroProductSalesDetailsDTO> DealerGetSalesDetailsByInfoId(long infoId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForDealerGetAgroSalesDetailsByInfoIdGet(infoId)).ToList();
+        }
+
+        private string QueryForDealerGetAgroSalesDetailsByInfoIdGet(long infoId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (infoId != 0 && infoId > 0)
+            {
+                param += string.Format(@" and SD.ProductSalesInfoId={0}", infoId);
+            }
+
+
+            query = string.Format(@"	
+SELECT Distinct SD.FGRId,SD.QtyKG,SD.ProductSalesDetailsId,SD.BoxQuanity,m.MeasurementId,
+SD.ProductSalesInfoId,SD.Price,SD.Discount,SD.FinishGoodProductInfoId,FGP.FinishGoodProductName,SD.MeasurementSize,
+SD.Quanity,
+ReturnQTY=ISNULL((SELECT SUM(SR.BoxQuanity) from tblSalesReturn SR where SD.ProductSalesInfoId=SR.ProductSalesInfoId and SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0),
+ReturnTotalQTY=ISNULL((SELECT SUM(SR.ReturnQuanity) from tblSalesReturn SR where SD.ProductSalesInfoId=SR.ProductSalesInfoId and  SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0),
+
+RT=ISNULL((SELECT 
+ CASE When count(*) > 0 then 1
+ else 0
+ END AS myValue
+ from tblSalesReturn sr where sr.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and sr.ProductSalesInfoId=SD.ProductSalesInfoId and sr.FGRId=SD.FGRId and  sr.Status='NOTADJUST'),0),
+
+CurrentQTY= ISNULL(SD.BoxQuanity,0)-ISNULL((SELECT SUM(SR.BoxQuanity) from tblSalesReturn SR where SD.ProductSalesInfoId=SR.ProductSalesInfoId and SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0),
+
+TotalCurrentQTY= ISNULL(SD.Quanity,0)-ISNULL((SELECT SUM(SR.ReturnQuanity) from tblSalesReturn SR where SD.ProductSalesInfoId=SR.ProductSalesInfoId and  SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0),
+
+RDiscountTk=Case When SD.Discount=0 
+then ((ISNULL(SD.Quanity,0)-ISNULL((SELECT SUM(SR.ReturnQuanity) from tblSalesReturn SR where SD.ProductSalesInfoId=SR.ProductSalesInfoId and  SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0)) * SD.Price)
+Else 
+((ISNULL(SD.Quanity,0)-ISNULL((SELECT SUM(SR.ReturnQuanity) from tblSalesReturn SR where SD.ProductSalesInfoId=SR.ProductSalesInfoId and  SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0)) * SD.Price)-((((ISNULL(SD.Quanity,0)-ISNULL((SELECT SUM(SR.ReturnQuanity) from tblSalesReturn SR where SD.ProductSalesInfoId=SR.ProductSalesInfoId and  SR.FinishGoodProductInfoId=SD.FinishGoodProductInfoId and SR.FGRId=SD.FGRId and SR.Status='ADJUST'),0)) * SD.Price) * SD.Discount)/100)
+End
+
+
+from tblProductSalesDetails SD
+INNER JOIN tblFinishGoodProductInfo FGP on SD.FinishGoodProductInfoId=FGP.FinishGoodProductId
+INNER JOIN tblMeasurement M on SD.MeasurementId=M.MeasurementId
+inner join tblProductSalesInfo si on SD.ProductSalesInfoId = si.ProductSalesInfoId
+
+                Where 1=1 {0} and SD.Status is null", Utility.ParamChecker(param));
+
+            return query;
         }
     }
 }

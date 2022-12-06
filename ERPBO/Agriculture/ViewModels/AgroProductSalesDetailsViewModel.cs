@@ -46,6 +46,7 @@ namespace ERPBO.Agriculture.ViewModels
         public double TotalQty { get; set; }
 
         public bool ISActive { get; set; }
+        public double RDiscountTk { get; set; }
 
 
     }

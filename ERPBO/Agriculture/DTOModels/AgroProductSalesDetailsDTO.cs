@@ -42,6 +42,7 @@ namespace ERPBO.Agriculture.DTOModels
         public int MQTY { get; set; }
         public double TotalQty { get; set; }
         public bool ISActive { get; set; }
+        public double RDiscountTk { get; set; }
 
         //public string MeasurementName { get; set; }
         //public string FinishGoodProductName { get; set; }
