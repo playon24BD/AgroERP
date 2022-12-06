@@ -40,6 +40,7 @@ namespace ERPBLL.Agriculture.Interface
         SalesReturn GetSalesReturnsById(long SalesReturnId);
 
         IEnumerable<SalesReturn> GetAgroSalesreturnByStokiestId(long StockiestId , string status);
+        IEnumerable<SalesReturn> AgroSalesreturnByStokiestId(long StockiestId);
 
 
 

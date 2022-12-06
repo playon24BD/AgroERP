@@ -4914,8 +4914,11 @@ namespace ERPWeb.Controllers
         public ActionResult GetStokistTotalbill(long id)
         {
             var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(x => x.StockiestId == id).ToList();
-            var totalbill = stokiestid.Sum(y => y.TotalAmount);
-
+            var totalbilll = stokiestid.Sum(y => y.TotalAmount);
+            var status = "ADJUST";
+            var sram = _salesReturn.GetAgroSalesreturnByStokiestId(id,status).Where(d => d.StockiestId == id).ToList();
+            var totalreturn = sram.Sum(rr => rr.ReturnTotalPrice);
+            var totalbill = totalbilll - totalreturn;
             return Json(totalbill, JsonRequestBehavior.AllowGet);
 
         }
@@ -4938,6 +4941,7 @@ namespace ERPWeb.Controllers
             var totaldues = stokiestid.Sum(du => du.DueAmount);
 
             var totaldue = totaldues - totalreturn;
+
 
             return Json(totaldue, JsonRequestBehavior.AllowGet);
 

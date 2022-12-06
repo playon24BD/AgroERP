@@ -368,5 +368,10 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
             return query;
         }
+
+        public IEnumerable<SalesReturn> AgroSalesreturnByStokiestId(long StockiestId)
+        {
+            return _salesReturnRepository.GetAll(a => a.StockiestId == StockiestId).ToList();
+        }
     }
 }

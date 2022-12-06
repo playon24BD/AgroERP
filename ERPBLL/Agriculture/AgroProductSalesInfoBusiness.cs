@@ -1189,7 +1189,7 @@ inner join tblStockiestInfo st on info.StockiestId=st.StockiestId
 
 
             query = string.Format(@"	
-select sales.StockiestId,sales.ChallanNo,sales.DriverName,sales.DeliveryPlace,sales.VehicleType,sales.VehicleNumber,sales.TotalAmount,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName,
+select sales.StockiestId,sales.ChallanNo,sales.DriverName,sales.DeliveryPlace,sales.VehicleType,sales.VehicleNumber,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName,
 
 Amount = ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0),
 (sales.TotalAmount)-ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0)as TotalAmount
