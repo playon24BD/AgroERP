@@ -4931,16 +4931,16 @@ namespace ERPWeb.Controllers
         }
         public ActionResult GetStokistTotalDue(long id)
         {
-            var status = "ADJUST";
-            var stokiest = _salesReturn.GetAgroSalesreturnByStokiestId(id, status).Where(d => d.StockiestId == id).ToList();
+            //var status = "ADJUST";
+            //var stokiest = _salesReturn.GetAgroSalesreturnByStokiestId(id, status).Where(d => d.StockiestId == id).ToList();
 
-            var totalreturn = stokiest.Sum(rr => rr.ReturnTotalPrice);
+            //var totalreturn = stokiest.Sum(rr => rr.ReturnTotalPrice);
 
 
             var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
             var totaldues = stokiestid.Sum(du => du.DueAmount);
 
-            var totaldue = totaldues - totalreturn;
+            var totaldue = totaldues ;
 
 
             return Json(totaldue, JsonRequestBehavior.AllowGet);
