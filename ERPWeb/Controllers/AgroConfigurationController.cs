@@ -5493,6 +5493,39 @@ namespace ERPWeb.Controllers
 
             }
 
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
+            {
+
+                var info = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(ProductSalesInfoId.Value);
+                List<SalesPaymentRegisterViewModel> details = new List<SalesPaymentRegisterViewModel>();
+
+                if (info != null)
+                {
+
+                    ViewBag.Info = new AgroProductSalesInfoViewModel
+                    {
+                        InvoiceNo = info.InvoiceNo,
+                        InvoiceDate = info.InvoiceDate,
+                        TotalAmount = info.TotalAmount,
+                        PaidAmount = info.PaidAmount,
+                        DueAmount = info.PaidAmount
+
+                    };
+                    details = _salesPaymentRegister.GetPaymentDetailsByInvoiceId(ProductSalesInfoId.Value).Select(i => new SalesPaymentRegisterViewModel
+                    {
+                        PaymentDate = i.PaymentDate,
+                        Remarks = i.Remarks,
+                        PaymentAmount = i.PaymentAmount
+                    }).ToList();
+                }
+                else
+                {
+                    ViewBag.Info = new AgroProductSalesInfoViewModel();
+                }
+                return PartialView("_PaymentHistoryDetails", details);
+
+            }
+
             return View();
         }
 

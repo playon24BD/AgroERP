@@ -4,6 +4,10 @@
     ViewBag.Title = "_GetAgroSalesProductList";
     int sl = 0;
     var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+    double total = 0;
+    double totalpaid = 0;
+    double totaldue = 0;
+    string badge = string.Empty;
 }
 
 
@@ -24,30 +28,42 @@
     <tbody>
         @foreach (var item in Model)
         {
+            badge =  "badge bg-success";
             sl = sl + 1;
             <tr>
                 <td class="text-center text-bold">@sl</td>
                 <td class="hide">@item.ProductSalesInfoId</td>
-                <td class="text-center ProductionSalesInfoId">@item.InvoiceNo</td>
+                @*<td class="text-center ProductionSalesInfoId">@item.InvoiceNo</td>*@
+                <td class="text-center ProductionSalesInfoId" data-val="@item.InvoiceNo">
+                    <span class="@badge">@item.InvoiceNo</span>
+                </td>
                 <td class="text-center">@item.InvoiceDate.Value.ToString("yyyy-MMM-dd")</td>
                 <td class="text-center">@item.TotalAmount</td>
-                <td class="text-center">@item.PaidAmount</td>
+                <td class="text-center TotalAmount">@item.PaidAmount</td>
                 <td class="text-center">@item.DueAmount</td>
                 <td class="text-center">@User.UserName</td>
-                @*class="btn btn-sm btn-outline-primary data-item-edit-ProductionSalesInfoId"*@
-                @*<td class="hide">@item.UnitId</td>*@
-                @*<td>@item.EntryDate.Value.ToString("dd-MMM-yyyy hh:mm tt")</td>*@
 
-                @*<td class="text-center">
-
-
-            <a href="#" class="btn btn-sm btn-outline-secondary data-item-detail-ProductionSalesInfoId" title="View Detail" data-item-detail-ProductionSalesInfoId="@item.ProductSalesInfoId" style="line-height:1">
-                <i class="fas fa-eye"></i>
-            </a>
-
-
-
-        </td>*@
+                <td class="hide">
+                    @{
+                        double subtotal = item.TotalAmount;
+                        total += subtotal;
+                    }
+                    @subtotal;
+                </td>
+                <td class="hide">
+                    @{
+                        double subtotalpaid = item.PaidAmount;
+                        totalpaid += subtotalpaid;
+                    }
+                    @totalpaid;
+                </td>
+                <td class="hide">
+                    @{
+                        double subtotaldue = item.DueAmount;
+                        totaldue += subtotaldue;
+                    }
+                    @totaldue;
+                </td>
 
             </tr>
         }
@@ -58,4 +74,12 @@
             </tr>
         }
     </tbody>
+    <tr>
+        <td colspan="2"></td>
+        <td class="text-bold" style="text-align:center" colspan="1">Total(TK): </td>
+        <td colspan="1" style="text-align:center"><b>@total</b></td>
+        <td colspan="1" style="text-align:center"><b>@totalpaid</b></td>
+        <td colspan="1" style="text-align:center"><b>@totaldue</b></td>
+        <td colspan="1"></td>
+    </tr>
 </table>

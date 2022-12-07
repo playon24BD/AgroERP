@@ -52,9 +52,9 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12" style="margin-top:-10px">
+            <div class="col-md-12" style="margin-top:-14px">
                 <div class="card" style="background-color: #E0FFFF;">
-                    <div class="px-4 py-2" style="margin-bottom:-8px">
+                    <div class="px-4 py-2" style="margin-bottom:-10px">
            
                             <div class="row">
                                 <div class="col-md-6">
@@ -88,15 +88,15 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-md-12" style="margin-top:-10px">
-                <div class="card">
-                    <div class="card-body">
+                @*<div class="card">
+                    <div class="card-body">*@
                         <div class="col-md-12" id="dataContainer">
 
                         </div>
-                    </div>
-                </div>
+                    @*</div>
+                </div>*@
             </div>
         </div>
 
@@ -117,6 +117,19 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="PaymentDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title">Payment Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer3">
 
             </div>
         </div>
@@ -342,6 +355,31 @@
                         $("#dataContainer2").empty();
                         $("#dataContainer2").append(res);
                         $("#AgroSalesProductDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+
+        })
+        $(document).on('click', '.TotalAmount', function (e) {
+            e.preventDefault();
+            debugger;
+
+            $("#dataContainer2").empty();
+            var id = $(this).parent().children('td').eq(1).html();
+
+            console.log(id);
+
+
+            if (true) {
+                var data = { flag: "Direct", ProductSalesInfoId: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/DealarLadger', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer3").empty();
+                        $("#dataContainer3").append(res);
+                        $("#PaymentDetails").modal('show');
                     }
                 }).fail(function (error) {
                     console.log(error);
