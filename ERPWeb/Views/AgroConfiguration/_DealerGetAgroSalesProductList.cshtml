@@ -8,6 +8,7 @@
     double totalpaid = 0;
     double totaldue = 0;
     string badge = string.Empty;
+    string badges = string.Empty;
 }
 
 
@@ -29,17 +30,19 @@
         @foreach (var item in Model)
         {
             badge =  "badge bg-success";
+            badges =  "badge bg-info";
             sl = sl + 1;
             <tr>
                 <td class="text-center text-bold">@sl</td>
                 <td class="hide">@item.ProductSalesInfoId</td>
-                @*<td class="text-center ProductionSalesInfoId">@item.InvoiceNo</td>*@
                 <td class="text-center ProductionSalesInfoId" data-val="@item.InvoiceNo">
                     <span class="@badge">@item.InvoiceNo</span>
                 </td>
                 <td class="text-center">@item.InvoiceDate.Value.ToString("yyyy-MMM-dd")</td>
                 <td class="text-center">@item.TotalAmount</td>
-                <td class="text-center TotalAmount">@item.PaidAmount</td>
+                <td class="text-center TotalAmount" data-val="@item.PaidAmount">
+                    <span class="@badges">@item.PaidAmount</span>
+                </td>
                 <td class="text-center">@item.DueAmount</td>
                 <td class="text-center">@User.UserName</td>
 
