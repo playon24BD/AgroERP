@@ -51,7 +51,14 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<FinishGoodRecipeDetails> GetFinishGoodRecipeDetailsByInfoId(long infoId, long orgId)
         {
-            return _finishGoodRecipeDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.FGRId == infoId).ToList();
+            try
+            {
+                return _finishGoodRecipeDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.FGRId == infoId).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 

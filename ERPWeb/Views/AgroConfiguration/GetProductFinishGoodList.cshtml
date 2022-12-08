@@ -31,17 +31,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" style=" margin-top: -30px">
+                    <div class="row" style=" margin-top: -35px">
                         <div class="col-md-12">
-                            <div class="card card-gray-dark shadow">
-                                <div class="card-header">
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-2">
-                                            <h5 class="text-center">Search By</h5>
-                                        </div>
+                            <div class="card" style="background-color:#001f3f">
+                                <div class="px-2 py-1">
+                                    <div class="row">
+                                        
                                         <div class="col-md-2">
                                             <input type="text" class="form-control form-control-sm" id="ddlReceipBatchCode1" placeholder="Search ReceipCode" />
-                                        </div>  <div class="col-md-2">
+                                        </div> 
+
+                                        <div class="col-md-2">
                                             @Html.DropDownList("ddlProduct1", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                         </div>
 
@@ -52,11 +52,11 @@
                             </div>
                         </div>
                      </div>
-                    <div class="row">
+                    <div class="row"style="margin-top:-3px">
 
                         <div class="col-md-12" style="margin-top:-10px">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body"style="margin-top:-10px">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
                                             @{Html.RenderAction("GetProductFinishGoodList", new { @flag = "Initial" });}
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade show " id="custom-tabs-two-finishGoodProduction" role="tabpanel" aria-labelledby="custom-tabs-two-finishGoodProduction-tab">
-                    <div class="row" style=" margin-top: -30px">
+                    <div class="row" style=" margin-top: -35px">
                         <div class="col-md-12">
                             <div class="card card-navy">
                                 <div class="card-header" style="text-align: center;">
@@ -136,11 +136,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12" style="margin-top:-10px">
+                        <div class="col-md-12" style="margin-top:-13px">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="col-md-12">
-                                        <div class="row">
+                                        <div class="row"style="margin-top:-10px">
                                             <div class="col-md-12" style="overflow-y:scroll">
                                                 <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblFinishGoodProduction">
                                                     <thead>
@@ -149,7 +149,7 @@
                                                                 <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
                                                             </th>
                                                         </tr>*@
-                                                        <tr class="btn-dark">
+                                                        <tr class="btn-dark text-center">
 
                                                             <th>Raw Material</th>
                                                             <th>Per Qty</th>
@@ -360,11 +360,11 @@
                         //console.log(material[0].RawMaterialName);
                         $.each(material, function (index, value) {
 
-                            var td1 = "<td>" + value.RawMaterialName + "</td>";
-                            var td5 = "<td class='hide'>" + value.RawMaterialId + "</td>";
-                            var td2 = "<td>" + value.FGRRawMaterQty + "</td>";
-                            var td3 = "<td>" + FinishQty.val() + "</td>";
-                            var td4 = "<td>" + (value.FGRRawMaterQty * FinishQty.val()) + "</td>";
+                            var td1 = "<td class='text-center'>" + value.RawMaterialName + "</td>";
+                            var td5 = "<td class='hide text-center'>" + value.RawMaterialId + "</td>";
+                            var td2 = "<td class='text-center'>" + value.FGRRawMaterQty + "</td>";
+                            var td3 = "<td class='text-center'>" + FinishQty.val() + "</td>";
+                            var td4 = "<td class='text-center'>" + (value.FGRRawMaterQty * FinishQty.val()) + "</td>";
                             var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + "</tr>";
                             $("#tblFinishGoodProduction tbody").append(tr)
                             $("#btnSubmit").show();

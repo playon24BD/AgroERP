@@ -11,37 +11,18 @@
 
         @Html.AntiForgeryToken()
 
-        <div class="row" style="margin-top:-15px">
+        <div class="row" style="margin-top:-12px">
             <div class="col-md-12">
-                <div class="card card-navy">
-                    <div class="card-header">
+                <div class="card" style="background-color:#001f3f">
+                    <div class="px-2 py-1">
                         <div class="row">
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-6">
-                                <h5 class="text-center text-bold">
-                                    List Of Raw Material Return
+                            
+                            <div class="col-md-2">
+                                <h5 class="float-left text-bold text-white">
+                                    RM Return
                                 </h5>
                             </div>
-                            <div class="col-md-3">
 
-                                <a href="/AgroConfiguration/CreateRawMaterialReturnList" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Raw Material Return</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" style="margin-top:-15px">
-                <div class="card card-gray-dark">
-                    <div class="card-header">
-
-                        <div class="row justify-content-center">
-                            <div class="col-md-2">
-                                <h5 class="text-center">Search By</h5>
-                            </div>
                             <div class="col-md-2">
                                 @*<label>Raw Material Name</label>*@
                                 @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
@@ -63,18 +44,33 @@
                                     <option value="Approved">Approved</option>
                                 </select>
                             </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-3">
+
+                                <a href="/AgroConfiguration/CreateRawMaterialReturnList" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Raw Material Return</a>
+
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-15px">
+                <div class="card card-gray-dark">
+                    
 
                 </div>
             </div>
 
 
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:-4px">
             <div class="col-md-12" style="margin-top:-10px">
                 <div class="card ">
-                    <div class="card-body">
+                    <div class="card-body" style="margin-top:-10px">
                         <div class="col-md-12" id="dataContainer">
 
                         </div>

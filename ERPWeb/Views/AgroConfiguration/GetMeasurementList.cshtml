@@ -27,7 +27,7 @@
             <div class="tab-content" id="custom-tabs-two-tabContent">
  
                 <div class="tab-pane fade show " id="custom-tabs-two-measurementSetup" role="tabpanel" aria-labelledby="custom-tabs-two-measurementSetup-tab">
-                    <div class="row" style="margin-top:-30px">
+                    <div class="row" style="margin-top:-35px">
                         <div class="col-md-12">
                             <div class="card card-navy">
                                 <div class="card-header" style="text-align: center;">
@@ -89,9 +89,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12" style="margin-top:-10px">
-                            <div class="card">
-                                <div class="card-body">
+                        <div class="col-md-12" style="margin-top:-13px">
+                            <div class="card" >
+                                <div class="card-body" style="margin-top:-10px">
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-12" style="overflow-y:scroll">
@@ -122,10 +122,10 @@
 
                 <div class="tab-pane fade show active" id="custom-tabs-two-measurementList" role="tabpanel" aria-labelledby="custom-tabs-two-measurementList-tab">
 
-                    <div class="row" style="margin-top:-30px">
-                        <div class="col-md-12"style="height:60px;text-align:center">
-                            <div class="card card-navy shadow">
-                                <div class="card-header">
+                    <div class="row" style="margin-top:-35px">
+                        <div class="col-md-12">
+                            <div class="card shadow"style="background-color:#001f3f">
+                                <div class="px-2 py-1">
                                     <div class="row text-sm">
                                         @*<div class="col-md-2">
                                             <h5>Search by</h5>
@@ -148,12 +148,12 @@
                     </div>
                     <div class="row">
 
-                        <div class="col-md-12" style="margin-top:-10px">
+                        <div class="col-md-12" style="margin-top:-12px">
                             <div class="card">
                                 <div class="card-body" style="margin-top:-10px">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer3" style="overflow-y:scroll">
-                                            @{Html.RenderAction("GetMeasurementList", new { @flag = "list" });}
+                                            @*@{Html.RenderAction("GetMeasurementList", new { @flag = "list" });}*@
                                         </div>
                                     </div>
                                 </div>
@@ -218,18 +218,7 @@
 
                             <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
                         </div>
-                        @*<div class="form-group col-md-12">
-            <label for="unit" class="control-label">Unit</label>
-            <select id="unit" class="form-control form-control-sm">
-                <option value="">Select Unit</option>
-                <option value="Kg">Kg</option>
-                <option value="Gram">Gram</option>
-                <option value="hg">hg</option>
-                <option value="dag">dag</option>
-            </select>
-            <span class="error hide required-unit font-weight-bold">Unit Is Required</span>
-
-        </div>*@
+                       
 
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
@@ -257,8 +246,8 @@
                         Data has been failed to save!
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline-danger float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
-                <button type="submit" class="btn btn-outline-success float-right" id="btnUpdate"><i class="fas fa-paper-plane"></i> <span id="btnMeasureMentSaveText">Save</span> </button>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="btnUpdate"><i class="fas fa-paper-plane"></i> <span id="btnMeasureMentSaveText">Save</span> </button>
 
             </div>
         </div>
@@ -287,6 +276,7 @@
         var unitName = $("#unitName");
         var unitId = $("#unitId");
         var ddlUnits = $("#ddlUnits");
+        var searchByAny = $("#searchByAny");
 
 
         $(document).ready(function () {
@@ -300,8 +290,33 @@
             $(function () {
                 $('#txtmeasurementName').focus();
             });
+            LoadMeasurement();
            
         })
+
+        searchByAny.keyup(function () {
+            LoadMeasurement()
+        })
+       
+
+
+        function LoadMeasurement() {
+            debugger;
+            var data = { flag: "list", id: 0, status: $.trim(searchByAny.val()) };
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetMeasurementList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer3").fadeOut('500', function () {
+                        $("#dataContainer3").empty();
+                        $("#dataContainer3").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
 
         $("#addTolist").click(function (e) {
             e.preventDefault();

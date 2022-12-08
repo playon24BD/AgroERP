@@ -31,42 +31,56 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<PRawMaterialStockInfoDTO> GetAllPRawMaterialStockInfo(long OrgId, string name, string ChallanNo, string PONumber, long? supplierId, long? rsupid)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<PRawMaterialStockInfoDTO>(QueryForRMPurchaseMinfo(OrgId, name,ChallanNo,PONumber,supplierId, rsupid)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<PRawMaterialStockInfoDTO>(QueryForRMPurchaseMinfo(OrgId, name, ChallanNo, PONumber, supplierId, rsupid)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private string QueryForRMPurchaseMinfo(long OrgId, string name, string ChallanNo, string PONumber, long? supplierId, long? rsupid)
         {
-            string query = string.Empty;
-            string param = string.Empty;
+            try
+            {
+                string query = string.Empty;
+                string param = string.Empty;
 
-            if (rsupid != null && rsupid > 0)
-            {
-                param += string.Format(@" and i.RawMaterialSupplierId={0}", rsupid);
-            }
-            if (name != null && name != "")
-            {
-                param += string.Format(@" and i.InvoiceNo like '%{0}%'", name);
-            }
-            if (ChallanNo != null && ChallanNo != "")
-            {
-                param += string.Format(@" and i.ChalanNo like '%{0}%'", ChallanNo);
-            }
-            if (PONumber != null && PONumber != "")
-            {
-                param += string.Format(@" and i.BatchCode like '%{0}%'", PONumber);
-            }
-            if (supplierId != null && supplierId >0)
-            {
-                param += string.Format(@" and i.RawMaterialSupplierId= {0}", supplierId);
-            }
+                if (rsupid != null && rsupid > 0)
+                {
+                    param += string.Format(@" and i.RawMaterialSupplierId={0}", rsupid);
+                }
+                if (name != null && name != "")
+                {
+                    param += string.Format(@" and i.InvoiceNo like '%{0}%'", name);
+                }
+                if (ChallanNo != null && ChallanNo != "")
+                {
+                    param += string.Format(@" and i.ChalanNo like '%{0}%'", ChallanNo);
+                }
+                if (PONumber != null && PONumber != "")
+                {
+                    param += string.Format(@" and i.BatchCode like '%{0}%'", PONumber);
+                }
+                if (supplierId != null && supplierId > 0)
+                {
+                    param += string.Format(@" and i.RawMaterialSupplierId= {0}", supplierId);
+                }
 
-            query = string.Format(@"
+                query = string.Format(@"
            select i.PRawMaterialStockId, s.RawMaterialSupplierName,i.RawMaterialSupplierId,i.BatchCode,i.ChalanNo,i.ChalanDate,i.InvoiceNo,i.InvoiceDate,i.TotalAmount from tblPRawMaterialStockInfo i
 inner join tblRawMaterialSupplierInfo s
 on i.RawMaterialSupplierId=s.RawMaterialSupplierId
             where 1=1  {0} order by i.PRawMaterialStockId Desc",
-Utility.ParamChecker(param));
-            return query;
+    Utility.ParamChecker(param));
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
@@ -156,8 +170,15 @@ Utility.ParamChecker(param));
 
         public PRawMaterialStockInfo GetRawmaterialPuschaseInfoOneById(long id, long orgId)
         {
-            
-            return _pRawMaterialStockInfoRepository.GetOneByOrg(p => p.PRawMaterialStockId == id && p.OrganizationId == orgId);
+
+            try
+            {
+                return _pRawMaterialStockInfoRepository.GetOneByOrg(p => p.PRawMaterialStockId == id && p.OrganizationId == orgId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

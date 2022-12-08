@@ -48,32 +48,46 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<StockiestInfoDTO> GetStockiestInfos(long? stockiestId, long? territoryId, long orgId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<StockiestInfoDTO>(QueryForStockiestInfoss(stockiestId, territoryId, orgId)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<StockiestInfoDTO>(QueryForStockiestInfoss(stockiestId, territoryId, orgId)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private string QueryForStockiestInfoss(long? stockiestId, long? territoryId, long orgId)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-            param += string.Format(@" and s.OrganizationId={0}", orgId);
-            if (stockiestId != null && stockiestId > 0)
+            try
             {
-                param += string.Format(@" and s.StockiestId={0}", stockiestId);
-            }
-            if (territoryId != null && territoryId > 0)
-            {
-                param += string.Format(@" and t.TerritoryId={0}", territoryId);
-            }
+                string query = string.Empty;
+                string param = string.Empty;
 
-            query = string.Format(@"
+                param += string.Format(@" and s.OrganizationId={0}", orgId);
+                if (stockiestId != null && stockiestId > 0)
+                {
+                    param += string.Format(@" and s.StockiestId={0}", stockiestId);
+                }
+                if (territoryId != null && territoryId > 0)
+                {
+                    param += string.Format(@" and t.TerritoryId={0}", territoryId);
+                }
+
+                query = string.Format(@"
            select s.StockiestAddress,a.AreaId,s.StockiestId,t.TerritoryId,t.TerritoryName,s.StockiestName,s.StockiestCode,s.Status,a.AreaName,s.StockiestPhoneNumber,s.StockiestMail,s.StockiestTradeLicense,s.StockiestNID,s.StockiestContactPerson,s.StockiestContactPersonPHNumber,s.CreditLimit
 from tblStockiestInfo s
 inner join tblTerritoryInfos t on s.TerritoryId=t.TerritoryId
 inner join tblAreaSetup a on s.AreaId=a.AreaId
             where 1=1  {0}",
-            Utility.ParamChecker(param));
-            return query;
+                Utility.ParamChecker(param));
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool SaveStockiestList(List<StockiestInfoDTO> infoDTO, long userId, long orgId)

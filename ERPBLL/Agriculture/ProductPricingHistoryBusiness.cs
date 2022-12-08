@@ -26,7 +26,15 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<ProductPricingHistory> GetPriceByproANDfgrId(long pid, long rid)
         {
-            return _productPricingHistoryRepository.GetAll(h => h.FinishGoodProductId == pid && h.FGRId == rid).ToList();
+            try
+            {
+                return _productPricingHistoryRepository.GetAll(h => h.FinishGoodProductId == pid && h.FGRId == rid).ToList();
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

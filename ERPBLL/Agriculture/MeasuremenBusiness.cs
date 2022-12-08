@@ -32,7 +32,43 @@ namespace ERPBLL.Agriculture
         {
             try
             {
-                return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForAgroMasurment(orgId)).ToList();
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForAgroMasurment( orgId)).ToList();
+                //return _measurmentRepository.GetAll(a => a.OrganizationId == orgId);
+                //return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForCheckUnit(orgId)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+
+        private string QueryForAgroMasurment(long orgId)
+        {
+            try
+            {
+                string query = string.Empty;
+                string param = string.Empty;
+                // param += string.Format(@" and OrganizationId={0}", orgId);
+
+
+                query = string.Format(@"SELECT * FROM PackageDetails	
+Where 1=1 ", Utility.ParamChecker(param));
+
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
+        public IEnumerable<MeasurementSetupDTO> GetMeasurementListSearch(long? unitId, string status, long orgId)
+        {
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForAgroMasurment(unitId,status,orgId)).ToList();
                 //return _measurmentRepository.GetAll(a => a.OrganizationId == orgId);
                 //return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForCheckUnit(orgId)).ToList();
             }
@@ -43,17 +79,32 @@ namespace ERPBLL.Agriculture
             
         }
 
-        private string QueryForAgroMasurment(long orgId)
+        private string QueryForAgroMasurment(long? unitId, string status, long orgId)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-           // param += string.Format(@" and OrganizationId={0}", orgId);
+            try
+            {
+                string query = string.Empty;
+                string param = string.Empty;
+                // param += string.Format(@" and OrganizationId={0}", orgId);
 
+                if (unitId != null && unitId > 0)
+                {
+                    param += string.Format(@" and UnitId={0}", unitId);
+                }
 
-            query = string.Format(@"SELECT * FROM PackageDetails	
-Where 1=1 ", Utility.ParamChecker(param));
+                if (!string.IsNullOrEmpty(status))
+                {
+                    param += string.Format(@"and Status like '%{0}%'", status);
+                }
+                query = string.Format(@"SELECT * FROM PackageDetails	
+Where 1=1 {0}", Utility.ParamChecker(param));
 
-            return query;
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 

@@ -84,27 +84,41 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<FinishGoodRecipeInfoDTO> GetFinishGoodRecipeInfos(long orgId, long? ProductId)
         {
-            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeInfoss(orgId, ProductId)).ToList();
+            try
+            {
+                return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeInfoss(orgId, ProductId)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         
         private string QueryForFinishGoodRecipeInfoss(long orgId, long? productId)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-            param += string.Format(@" and fgr.OrganizationId={0}", orgId);
-            if (productId != null && productId > 0)
+            try
             {
-                param += string.Format(@" and fgr.FinishGoodProductId={0}", productId);
-            }
-            query = string.Format(@"SELECT fgr.FGRId,fgr.FinishGoodProductId,fg.FinishGoodProductName,
+                string query = string.Empty;
+                string param = string.Empty;
+
+                param += string.Format(@" and fgr.OrganizationId={0}", orgId);
+                if (productId != null && productId > 0)
+                {
+                    param += string.Format(@" and fgr.FinishGoodProductId={0}", productId);
+                }
+                query = string.Format(@"SELECT fgr.FGRId,fgr.FinishGoodProductId,fg.FinishGoodProductName,
                   fgr.FGRQty,fgr.UnitId,unit.UnitName,fgr.OrganizationId 
                  FROM [Agriculture].dbo.tblFinishGoodRecipeInfo fgr
                  INNER JOIN [Agriculture].dbo.tblFinishGoodProductInfo fg on fgr.FinishGoodProductId=fg.FinishGoodProductId 
 inner join tblAgroUnitInfo unit on unit.UnitId=fgr.UnitId	
 Where 1=1 {0}", Utility.ParamChecker(param));
 
-            return query;
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool SaveFinishGoodRecipe(FinishGoodRecipeInfoDTO info, List<FinishGoodRecipeDetailsDTO> details, long userId, long orgId)

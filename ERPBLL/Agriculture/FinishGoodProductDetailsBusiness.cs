@@ -29,7 +29,14 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<FinishGoodProductionDetails> GetFinishGoodProductionDetails(string finishGoodProductionBatch,long orgId)
         {
-            return _finishGoodProductionDetailsRepository.GetAll(f => f.FinishGoodProductionBatch == finishGoodProductionBatch);
+            try
+            {
+                return _finishGoodProductionDetailsRepository.GetAll(f => f.FinishGoodProductionBatch == finishGoodProductionBatch);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public FinishGoodProductionDetails GetFinishGoodProductionDetailsByAny(string any, long orgId)

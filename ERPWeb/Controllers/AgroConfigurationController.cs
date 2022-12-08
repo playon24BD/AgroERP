@@ -182,102 +182,109 @@ namespace ERPWeb.Controllers
         #region Raw Material Setup
         public ActionResult GetRawMaterial(string flag, long? depotId, string rawmaterialName)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
+                if (string.IsNullOrEmpty(flag))
+                {
 
-                ViewBag.ddlOrganization = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == User.OrgId).Select(des => new SelectListItem { Text = des.OrganizationName, Value = des.OrganizationId.ToString() }).ToList();
-                ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
-                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialName });
+                    ViewBag.ddlOrganization = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == User.OrgId).Select(des => new SelectListItem { Text = des.OrganizationName, Value = des.OrganizationId.ToString() }).ToList();
+                    ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
+                    ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialName });
 
-                ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
+                    ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
 
+                    return View();
+                }
+
+                else if (flag == "Search" && rawmaterialName != "")
+                {
+
+                    IEnumerable<RawMaterialDTO> dto = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
+                    {
+                        //OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
+                        // DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
+                        RawMaterialName = a.RawMaterialName,
+                        Status = a.Status,
+                        //ExpireDate = a.ExpireDate,
+                        //DepotId = a.DepotId,
+                        RawMaterialId = a.RawMaterialId,
+                        UnitId = a.UnitId,
+
+                        // OrganizationId = a.OrganizationId,
+                        //UserName = UserForEachRecord(a.EntryUserId).UserName
+
+
+
+                    }).Where(a => (a.RawMaterialName == rawmaterialName) && (a.RawMaterialName == rawmaterialName)).ToList();
+
+                    //dto.Where(a =>a.DepotId == depotId).ToList();
+                    //dto.Where(a => (a.DepotId == depotId || a.DepotId == 0) && (a.RawMaterialName == rawmaterialName || a.RawMaterialName == "")).ToList();
+                    List<RawMaterialViewModel> viewModels = new List<RawMaterialViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+
+                    return PartialView("_GetRawMaterial", viewModels);
+                }
+                else if (flag == "Search" && (rawmaterialName != "" || depotId != 0))
+                {
+                    //(rawmaterialName != "" || depotId != 0) || (rawmaterialName != "" && depotId != 0)
+
+
+                    var dto = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
+                    {
+                        OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
+                        DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
+                        RawMaterialName = a.RawMaterialName,
+                        Status = a.Status,
+                        //ExpireDate = a.ExpireDate,
+                        DepotId = a.DepotId,
+                        RawMaterialId = a.RawMaterialId,
+                        OrganizationId = a.OrganizationId,
+
+
+                    }).Where(a => a.DepotId == depotId || a.RawMaterialName == rawmaterialName).ToList();
+
+                    //dto.Where(a =>a.DepotId == depotId).ToList();
+                    //dto.Where(a => (a.DepotId == depotId || a.DepotId == 0) && (a.RawMaterialName == rawmaterialName || a.RawMaterialName == "")).ToList();
+                    List<RawMaterialViewModel> viewModels = new List<RawMaterialViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+
+                    return PartialView("_GetRawMaterial", viewModels);
+
+                }
+                else
+                {
+                    IEnumerable<RawMaterialDTO> dto1 = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
+                    {
+                        OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
+
+                        //DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
+
+                        //DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
+
+                        RawMaterialName = a.RawMaterialName,
+                        Status = a.Status,
+                        //ExpireDate = a.ExpireDate,
+                        // DepotId = a.DepotId,
+                        RawMaterialId = a.RawMaterialId,
+                        OrganizationId = a.OrganizationId,
+                        UnitId = a.UnitId,
+                        UnitName = _agroUnitInfo.GetAgroInfoById(a.UnitId, User.OrgId).UnitName,
+                        //UserName = UserForEachRecord(a.EntryUserId).UserName
+
+
+                    }).ToList();
+
+                    List<RawMaterialViewModel> viewModels1 = new List<RawMaterialViewModel>();
+                    AutoMapper.Mapper.Map(dto1, viewModels1);
+
+                    return PartialView("_GetRawMaterial", viewModels1);
+
+
+                }
+            }
+            catch(Exception e)
+            {
                 return View();
-            }
-
-            else if (flag == "Search" && rawmaterialName != "")
-            {
-
-                IEnumerable<RawMaterialDTO> dto = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
-                {
-                    //OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
-                    // DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
-                    RawMaterialName = a.RawMaterialName,
-                    Status = a.Status,
-                    //ExpireDate = a.ExpireDate,
-                    //DepotId = a.DepotId,
-                    RawMaterialId = a.RawMaterialId,
-                    UnitId = a.UnitId,
-
-                    // OrganizationId = a.OrganizationId,
-                    //UserName = UserForEachRecord(a.EntryUserId).UserName
-
-
-
-                }).Where(a => (a.RawMaterialName == rawmaterialName) && (a.RawMaterialName == rawmaterialName)).ToList();
-
-                //dto.Where(a =>a.DepotId == depotId).ToList();
-                //dto.Where(a => (a.DepotId == depotId || a.DepotId == 0) && (a.RawMaterialName == rawmaterialName || a.RawMaterialName == "")).ToList();
-                List<RawMaterialViewModel> viewModels = new List<RawMaterialViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-
-                return PartialView("_GetRawMaterial", viewModels);
-            }
-            else if (flag == "Search" && (rawmaterialName != "" || depotId != 0))
-            {
-                //(rawmaterialName != "" || depotId != 0) || (rawmaterialName != "" && depotId != 0)
-
-
-                var dto = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
-                {
-                    OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
-                    DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
-                    RawMaterialName = a.RawMaterialName,
-                    Status = a.Status,
-                    //ExpireDate = a.ExpireDate,
-                    DepotId = a.DepotId,
-                    RawMaterialId = a.RawMaterialId,
-                    OrganizationId = a.OrganizationId,
-
-
-                }).Where(a => a.DepotId == depotId || a.RawMaterialName == rawmaterialName).ToList();
-
-                //dto.Where(a =>a.DepotId == depotId).ToList();
-                //dto.Where(a => (a.DepotId == depotId || a.DepotId == 0) && (a.RawMaterialName == rawmaterialName || a.RawMaterialName == "")).ToList();
-                List<RawMaterialViewModel> viewModels = new List<RawMaterialViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-
-                return PartialView("_GetRawMaterial", viewModels);
-
-            }
-            else
-            {
-                IEnumerable<RawMaterialDTO> dto1 = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new RawMaterialDTO()
-                {
-                    OrganizationName = _organizationBusiness.GetOrganizationById(a.OrganizationId).OrganizationName,
-
-                    //DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
-
-                    //DepotName = _depotSetup.GetDepotNamebyId(a.DepotId, User.OrgId).DepotName,
-
-                    RawMaterialName = a.RawMaterialName,
-                    Status = a.Status,
-                    //ExpireDate = a.ExpireDate,
-                    // DepotId = a.DepotId,
-                    RawMaterialId = a.RawMaterialId,
-                    OrganizationId = a.OrganizationId,
-                    UnitId = a.UnitId,
-                    UnitName = _agroUnitInfo.GetAgroInfoById(a.UnitId, User.OrgId).UnitName,
-                    //UserName = UserForEachRecord(a.EntryUserId).UserName
-
-
-                }).ToList();
-
-                List<RawMaterialViewModel> viewModels1 = new List<RawMaterialViewModel>();
-                AutoMapper.Mapper.Map(dto1, viewModels1);
-
-                return PartialView("_GetRawMaterial", viewModels1);
-
-
             }
 
         }
@@ -298,42 +305,49 @@ namespace ERPWeb.Controllers
         #region Raw Material Supplier Setup
         public ActionResult GetRawMaterialSupplier(string flag, string name)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
-            }
-            else if (!string.IsNullOrEmpty(flag) && flag == "Search")
-            {
-                IEnumerable<RawMaterialSupplierDTO> dto = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.RawMaterialSupplierName.Contains(name)) || (s.MobileNumber.ToString().Contains(name))).Select(o => new RawMaterialSupplierDTO
+                if (string.IsNullOrEmpty(flag))
                 {
-                    RawMaterialSupplierId = o.RawMaterialSupplierId,
-                    OrganizationId = o.OrganizationId,
-                    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
-                    RawMaterialSupplierName = o.RawMaterialSupplierName,
-                    MobileNumber = o.MobileNumber,
-                    Address = o.Address,
-                    Status = o.Status,
+                    ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == "Search")
+                {
+                    IEnumerable<RawMaterialSupplierDTO> dto = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.RawMaterialSupplierName.Contains(name)) || (s.MobileNumber.ToString().Contains(name))).Select(o => new RawMaterialSupplierDTO
+                    {
+                        RawMaterialSupplierId = o.RawMaterialSupplierId,
+                        OrganizationId = o.OrganizationId,
+                        OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
+                        RawMaterialSupplierName = o.RawMaterialSupplierName,
+                        MobileNumber = o.MobileNumber,
+                        Address = o.Address,
+                        Status = o.Status,
 
-                    TradeLicense = o.TradeLicense,
-                    TIN = o.TIN,
-                    BIN = o.BIN,
+                        TradeLicense = o.TradeLicense,
+                        TIN = o.TIN,
+                        BIN = o.BIN,
 
-                    RoleId = o.RoleId,
-                    //EntryUserId=o.EntryUserId.ToString(),
-                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
-                    EntryDate = o.EntryDate,
-                    UpdateUserId = o.UpdateUserId,
-                    UpdateDate = o.UpdateDate
-                }).ToList();
+                        RoleId = o.RoleId,
+                        //EntryUserId=o.EntryUserId.ToString(),
+                        UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
+                        EntryDate = o.EntryDate,
+                        UpdateUserId = o.UpdateUserId,
+                        UpdateDate = o.UpdateDate
+                    }).ToList();
 
-                List<RawMaterialSupplierViewModel> viewModel = new List<RawMaterialSupplierViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModel);
-                return PartialView("_GetRawMaterialSupplierPartialView", viewModel);
+                    List<RawMaterialSupplierViewModel> viewModel = new List<RawMaterialSupplierViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModel);
+                    return PartialView("_GetRawMaterialSupplierPartialView", viewModel);
 
 
 
+                }
+                return View();
             }
-            return View();
+            catch(Exception e)
+            {
+                return View();
+            }
         }
         public ActionResult SaveRawMaterialSupplier(RawMaterialSupplierViewModel model)
         {
@@ -353,35 +367,42 @@ namespace ERPWeb.Controllers
         #region Finish Good Product Setup
         public ActionResult GetFinishGoodProduct(string flag, string name)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
-            }
-            else if (!string.IsNullOrEmpty(flag) && flag == "Search")
-            {
-                IEnumerable<FinishGoodProductDTO> dto = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.FinishGoodProductName.Contains(name))).Select(o => new FinishGoodProductDTO
+                if (string.IsNullOrEmpty(flag))
                 {
-                    FinishGoodProductId = o.FinishGoodProductId,
-                    OrganizationId = o.OrganizationId,
-                    OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
-                    FinishGoodProductName = o.FinishGoodProductName,
-                    Status = o.Status,
-                    RoleId = o.RoleId,
-                    //EntryUserId=o.EntryUserId.ToString(),
-                    UserName = UserForEachRecord(o.EntryUser.Value).UserName,
-                    EntryDate = o.EntryDate,
-                    UpdateUserId = o.UpdateUser,
-                    UpdateDate = o.UpdateDate
-                }).ToList();
+                    ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == "Search")
+                {
+                    IEnumerable<FinishGoodProductDTO> dto = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Where(s => (name == "" || name == null) || (s.FinishGoodProductName.Contains(name))).Select(o => new FinishGoodProductDTO
+                    {
+                        FinishGoodProductId = o.FinishGoodProductId,
+                        OrganizationId = o.OrganizationId,
+                        OrganizationName = _organizationBusiness.GetOrganizationById(o.OrganizationId).OrganizationName,
+                        FinishGoodProductName = o.FinishGoodProductName,
+                        Status = o.Status,
+                        RoleId = o.RoleId,
+                        //EntryUserId=o.EntryUserId.ToString(),
+                        UserName = UserForEachRecord(o.EntryUser.Value).UserName,
+                        EntryDate = o.EntryDate,
+                        UpdateUserId = o.UpdateUser,
+                        UpdateDate = o.UpdateDate
+                    }).ToList();
 
-                List<FinishGoodProductViewModel> viewModel = new List<FinishGoodProductViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModel);
-                return PartialView("_GetFinishGoodProductPartialView", viewModel);
+                    List<FinishGoodProductViewModel> viewModel = new List<FinishGoodProductViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModel);
+                    return PartialView("_GetFinishGoodProductPartialView", viewModel);
 
 
 
+                }
+                return View();
             }
-            return View();
+            catch(Exception e)
+            {
+                return View();
+            }
         }
         public ActionResult SaveFinishGoodProduct(FinishGoodProductViewModel model)
         {
@@ -450,31 +471,38 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Measurement Setup
-        public ActionResult GetMeasurementList(string flag, string name)
+        public ActionResult GetMeasurementList(string flag, string name,long? unitId,string status)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                //ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == User.OrgId).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+                    //ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == User.OrgId).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-                ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
+                    ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
 
-                ViewBag.ddlUnits = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
+                    ViewBag.ddlUnits = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
 
+                    return View();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == "list")
+                {
+                    //var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
+
+                    IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementListSearch(unitId ?? 0, status, User.OrgId);
+
+                    List<MeasurementSetupViewModel> viewModels = new List<MeasurementSetupViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+
+
+                    return PartialView("_GetMeasurementList", viewModels);
+                }
                 return View();
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == "list")
+            catch(Exception e)
             {
-                //var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
-
-                IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
-
-                List<MeasurementSetupViewModel> viewModels = new List<MeasurementSetupViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-
-
-                return PartialView("_GetMeasurementList", viewModels);
+                return View();
             }
-            return View();
 
         }
         public ActionResult SaveMeasurement(List<MeasurementSetupViewModel> models)
@@ -873,108 +901,115 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetFinishGoodRecipeList(string flag, long? ProductId, long? id)
         {
-            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetFinishGoodRecipeList");
-
-            if (string.IsNullOrEmpty(flag))
+            try
             {
+                ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetFinishGoodRecipeList");
 
-                ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+
+                    ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
 
 
 
+                    return View();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    var dto = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfos(User.OrgId, ProductId ?? 0);
+
+
+                    List<FinishGoodRecipeInfoViewModel> viewModels = new List<FinishGoodRecipeInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetFinishGoodRecipeList", viewModels);
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+                    var ProductNames = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).ToList();
+                    var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                    var info = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(id.Value, User.OrgId);
+                    List<FinishGoodRecipeDetailsViewModel> details = new List<FinishGoodRecipeDetailsViewModel>();
+                    if (info != null)
+                    {
+
+
+                        ViewBag.Info = new FinishGoodRecipeInfoViewModel
+                        {
+                            FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
+
+                            FGRQty = info.FGRQty,
+                            UnitId = info.UnitId,
+                            UnitName = _agroUnitInfo.GetAgroInfoById(info.UnitId, User.OrgId).UnitName
+                        };
+                        details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
+                        {
+                            RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                            FGRRawMaterQty = i.FGRRawMaterQty,
+                            UnitId = i.UnitId,
+                            UnitName = _agroUnitInfo.GetAgroInfoById(i.UnitId, User.OrgId).UnitName
+                        }).ToList();
+                    }
+                    else
+                    {
+                        ViewBag.Info = new FinishGoodRecipeInfoViewModel();
+                    }
+                    return PartialView("_GetFinishGoodRecipeDetail", details);
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Edit)
+                {
+                    var ProductNames = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).ToList();
+                    var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                    var info = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(id.Value, User.OrgId);
+                    List<FinishGoodRecipeDetailsViewModel> details = new List<FinishGoodRecipeDetailsViewModel>();
+                    if (info != null)
+                    {
+
+
+                        ViewBag.Info = new FinishGoodRecipeInfoViewModel
+                        {
+                            FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
+                            FGRId = info.FGRId,
+                            FGRQty = info.FGRQty,
+                            UnitId = info.UnitId,
+                            UnitName = _agroUnitInfo.GetAgroInfoById(info.UnitId, User.OrgId).UnitName,
+                            FinishGoodProductId = info.FinishGoodProductId,
+                            Status = info.Status,
+                        };
+                        details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
+                        {
+                            RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                            FGRRawMaterQty = i.FGRRawMaterQty,
+                            UnitId = i.UnitId,
+                            UnitName = _agroUnitInfo.GetAgroInfoById(i.UnitId, User.OrgId).UnitName,
+                            FGRDetailsId = i.FGRDetailsId,
+
+                        }).ToList();
+                    }
+                    else
+                    {
+                        ViewBag.Info = new FinishGoodRecipeInfoViewModel();
+                    }
+                    return PartialView("_GetFinishGoodRecipeEdit", details);
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(flag) && flag == Flag.Delete)
+                    {
+                        bool IsSuccess = false;
+                        if (id != null && id > 0)
+                        {
+                            IsSuccess = _finishGoodRecipeInfoBusiness.DeletefinishGoodRecipe(id.Value, User.UserId, User.OrgId);
+                        }
+                        return Json(IsSuccess);
+                    }
+                }
                 return View();
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception)
             {
-                var dto = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfos(User.OrgId, ProductId ?? 0);
-
-
-                List<FinishGoodRecipeInfoViewModel> viewModels = new List<FinishGoodRecipeInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetFinishGoodRecipeList", viewModels);
+                return View();
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-                var ProductNames = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).ToList();
-                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
-                var info = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(id.Value, User.OrgId);
-                List<FinishGoodRecipeDetailsViewModel> details = new List<FinishGoodRecipeDetailsViewModel>();
-                if (info != null)
-                {
-
-
-                    ViewBag.Info = new FinishGoodRecipeInfoViewModel
-                    {
-                        FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
-
-                        FGRQty = info.FGRQty,
-                        UnitId = info.UnitId,
-                        UnitName = _agroUnitInfo.GetAgroInfoById(info.UnitId, User.OrgId).UnitName
-                    };
-                    details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
-                    {
-                        RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
-                        FGRRawMaterQty = i.FGRRawMaterQty,
-                        UnitId = i.UnitId,
-                        UnitName = _agroUnitInfo.GetAgroInfoById(i.UnitId, User.OrgId).UnitName
-                    }).ToList();
-                }
-                else
-                {
-                    ViewBag.Info = new FinishGoodRecipeInfoViewModel();
-                }
-                return PartialView("_GetFinishGoodRecipeDetail", details);
-            }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Edit)
-            {
-                var ProductNames = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).ToList();
-                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
-                var info = _finishGoodRecipeInfoBusiness.GetFinishGoodRecipeInfoOneByOrgId(id.Value, User.OrgId);
-                List<FinishGoodRecipeDetailsViewModel> details = new List<FinishGoodRecipeDetailsViewModel>();
-                if (info != null)
-                {
-
-
-                    ViewBag.Info = new FinishGoodRecipeInfoViewModel
-                    {
-                        FinishGoodProductName = ProductNames.FirstOrDefault(it => it.FinishGoodProductId == info.FinishGoodProductId).FinishGoodProductName,
-                        FGRId = info.FGRId,
-                        FGRQty = info.FGRQty,
-                        UnitId = info.UnitId,
-                        UnitName = _agroUnitInfo.GetAgroInfoById(info.UnitId, User.OrgId).UnitName,
-                        FinishGoodProductId = info.FinishGoodProductId,
-                        Status = info.Status,
-                    };
-                    details = _finishGoodRecipeDetailsBusiness.GetFinishGoodRecipeDetailsByInfoId(id.Value, User.OrgId).Select(i => new FinishGoodRecipeDetailsViewModel
-                    {
-                        RawMaterialName = RawMaterialNames.FirstOrDefault(w => w.RawMaterialId == i.RawMaterialId).RawMaterialName,
-                        FGRRawMaterQty = i.FGRRawMaterQty,
-                        UnitId = i.UnitId,
-                        UnitName = _agroUnitInfo.GetAgroInfoById(i.UnitId, User.OrgId).UnitName,
-                        FGRDetailsId = i.FGRDetailsId,
-
-                    }).ToList();
-                }
-                else
-                {
-                    ViewBag.Info = new FinishGoodRecipeInfoViewModel();
-                }
-                return PartialView("_GetFinishGoodRecipeEdit", details);
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(flag) && flag == Flag.Delete)
-                {
-                    bool IsSuccess = false;
-                    if (id != null && id > 0)
-                    {
-                        IsSuccess = _finishGoodRecipeInfoBusiness.DeletefinishGoodRecipe(id.Value, User.UserId, User.OrgId);
-                    }
-                    return Json(IsSuccess);
-                }
-            }
-            return View();
         }
 
         [HttpGet]
@@ -1183,118 +1218,125 @@ namespace ERPWeb.Controllers
         public ActionResult GetProductFinishGoodList(string flag, string ReceipeBatchCode, long? productId, string finishGoodProductionBatch)
         {
 
-
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
-
-                ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
-
-                //ViewBag.ddlProduct = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-                // ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-                ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-
-
-                return View();
-
-            }
-            else if (!string.IsNullOrEmpty(flag) && flag == "Detail")
-            {
-                IEnumerable<FinishGoodProductionDetailsDTO> dto = _finishGoodProductionDetailsBusiness.GetFinishGoodProductionDetails(finishGoodProductionBatch, User.OrgId).Select(a => new FinishGoodProductionDetailsDTO
+                if (string.IsNullOrEmpty(flag))
                 {
-                    RawMaterialId = a.RawMaterialId,
-                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(a.RawMaterialId, User.OrgId).RawMaterialName,
-                    RequiredQuantity = a.RequiredQuantity,
-                    Status = a.Status,
-                    EntryDate = a.EntryDate
+                    ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-                }).ToList();
-                List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTO = new List<FinishGoodProductionDetailsDTO>();
-                List<FinishGoodProductionDetailViewModel> finishGoodProductionDetailViewModels = new List<FinishGoodProductionDetailViewModel>();
-                AutoMapper.Mapper.Map(dto, finishGoodProductionDetailViewModels);
+                    ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
 
-                return PartialView("_GetProductFinishGoodDetails", finishGoodProductionDetailViewModels);
-            }
-
-            //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
-            //{
-
-            //    var dto = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosList(productId?? 0,finishGoodProductionBatch);
+                    //ViewBag.ddlProduct = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                    // ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                    ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
 
+                    return View();
 
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == "Detail")
+                {
+                    IEnumerable<FinishGoodProductionDetailsDTO> dto = _finishGoodProductionDetailsBusiness.GetFinishGoodProductionDetails(finishGoodProductionBatch, User.OrgId).Select(a => new FinishGoodProductionDetailsDTO
+                    {
+                        RawMaterialId = a.RawMaterialId,
+                        RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(a.RawMaterialId, User.OrgId).RawMaterialName,
+                        RequiredQuantity = a.RequiredQuantity,
+                        Status = a.Status,
+                        EntryDate = a.EntryDate
 
-            //    List<FinishGoodProductionInfoViewModel> viewModels = new List<FinishGoodProductionInfoViewModel>();
-            //    AutoMapper.Mapper.Map(dto, viewModels);
-            //    return PartialView("_GetProductFinishGoodList", viewModels);
-            //}
+                    }).ToList();
+                    List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTO = new List<FinishGoodProductionDetailsDTO>();
+                    List<FinishGoodProductionDetailViewModel> finishGoodProductionDetailViewModels = new List<FinishGoodProductionDetailViewModel>();
+                    AutoMapper.Mapper.Map(dto, finishGoodProductionDetailViewModels);
 
-            else
-            {
-                //var finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId);
+                    return PartialView("_GetProductFinishGoodDetails", finishGoodProductionDetailViewModels);
+                }
 
-                //IEnumerable<FinishGoodProductionInfoDTO> finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f => new FinishGoodProductionInfoDTO
+                //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
                 //{
-                //    FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
-                //    FinishGoodProductionBatch = f.FinishGoodProductionBatch,
-                //    TargetQuantity = f.TargetQuantity,
 
-                //    Quanity =  f.Quanity,
-                //    //flag= _agroUnitInfo.UnitIdwiseUnitNameList(f.Quanity).UnitName,
-                //    Status = f.Status,
-                //    ReceipeBatchCode = f.ReceipeBatchCode,
-                //    UnitQty=_finishGoodRecipeInfoBusiness.GetUnitId(f.ReceipeBatchCode, f.Quanity).UnitId,
-                //    //flag = _agroUnitInfo.UnitIdwiseUnitNameList(UnitQty).UnitName,
-                //    FinishGoodProductId = f.FinishGoodProductId,
-                //    FGRId=f.FGRId,
-
-                //    Quanity = f.Quanity,
-                //    Status = f.Status,
-                //    ReceipeBatchCode = f.ReceipeBatchCode,
-                //    FinishGoodProductId = f.FinishGoodProductId,
-                //    FGRId = f.FGRId,
-
-                //    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
-
-
-                //}).ToList();
-
-                //List<FinishGoodProductionInfoViewModel> viewModel = new List<FinishGoodProductionInfoViewModel>();
-                //AutoMapper.Mapper.Map(finishGoodProduction, viewModel);
-                //return PartialView("_GetProductFinishGoodList", viewModel);
-
-                //var dto = _mRawMaterialIssueStockDetails.GetIssueInOutInfos(name ?? null);
-
-                //List<MRawMaterialIssueStockDetailsViewModel> viewModels = new List<MRawMaterialIssueStockDetailsViewModel>();
-                //AutoMapper.Mapper.Map(dto, viewModels);
-                //return PartialView("_GetRawMaterialIssueView", viewModels);
-
-                var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos(ReceipeBatchCode, productId).ToList();
-                List<FinishGoodProductionInfoViewModel> finishGoodProductionInfos = new List<FinishGoodProductionInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, finishGoodProductionInfos);
-                return PartialView("_GetStockProductFinishGoodList", finishGoodProductionInfos);
+                //    var dto = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosList(productId?? 0,finishGoodProductionBatch);
 
 
 
 
-                //    IEnumerable<FinishGoodProductionInfoDTO> finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f => new FinishGoodProductionInfoDTO
-                //    {
-                //        FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
-                //        FinishGoodProductionBatch = f.FinishGoodProductionBatch,
-                //        TargetQuantity = f.TargetQuantity,
-                //        Quanity = f.Quanity,
-                //        Status = f.Status,
-                //        ReceipeBatchCode = f.ReceipeBatchCode,
-                //        FinishGoodProductId = f.FinishGoodProductId,
-                //        FGRId = f.FGRId,
-                //        FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
-
-
-
-
+                //    List<FinishGoodProductionInfoViewModel> viewModels = new List<FinishGoodProductionInfoViewModel>();
+                //    AutoMapper.Mapper.Map(dto, viewModels);
+                //    return PartialView("_GetProductFinishGoodList", viewModels);
                 //}
 
+                else
+                {
+                    //var finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId);
+
+                    //IEnumerable<FinishGoodProductionInfoDTO> finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f => new FinishGoodProductionInfoDTO
+                    //{
+                    //    FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
+                    //    FinishGoodProductionBatch = f.FinishGoodProductionBatch,
+                    //    TargetQuantity = f.TargetQuantity,
+
+                    //    Quanity =  f.Quanity,
+                    //    //flag= _agroUnitInfo.UnitIdwiseUnitNameList(f.Quanity).UnitName,
+                    //    Status = f.Status,
+                    //    ReceipeBatchCode = f.ReceipeBatchCode,
+                    //    UnitQty=_finishGoodRecipeInfoBusiness.GetUnitId(f.ReceipeBatchCode, f.Quanity).UnitId,
+                    //    //flag = _agroUnitInfo.UnitIdwiseUnitNameList(UnitQty).UnitName,
+                    //    FinishGoodProductId = f.FinishGoodProductId,
+                    //    FGRId=f.FGRId,
+
+                    //    Quanity = f.Quanity,
+                    //    Status = f.Status,
+                    //    ReceipeBatchCode = f.ReceipeBatchCode,
+                    //    FinishGoodProductId = f.FinishGoodProductId,
+                    //    FGRId = f.FGRId,
+
+                    //    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
+
+
+                    //}).ToList();
+
+                    //List<FinishGoodProductionInfoViewModel> viewModel = new List<FinishGoodProductionInfoViewModel>();
+                    //AutoMapper.Mapper.Map(finishGoodProduction, viewModel);
+                    //return PartialView("_GetProductFinishGoodList", viewModel);
+
+                    //var dto = _mRawMaterialIssueStockDetails.GetIssueInOutInfos(name ?? null);
+
+                    //List<MRawMaterialIssueStockDetailsViewModel> viewModels = new List<MRawMaterialIssueStockDetailsViewModel>();
+                    //AutoMapper.Mapper.Map(dto, viewModels);
+                    //return PartialView("_GetRawMaterialIssueView", viewModels);
+
+                    var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos(ReceipeBatchCode, productId).ToList();
+                    List<FinishGoodProductionInfoViewModel> finishGoodProductionInfos = new List<FinishGoodProductionInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, finishGoodProductionInfos);
+                    return PartialView("_GetStockProductFinishGoodList", finishGoodProductionInfos);
+
+
+
+
+                    //    IEnumerable<FinishGoodProductionInfoDTO> finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f => new FinishGoodProductionInfoDTO
+                    //    {
+                    //        FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
+                    //        FinishGoodProductionBatch = f.FinishGoodProductionBatch,
+                    //        TargetQuantity = f.TargetQuantity,
+                    //        Quanity = f.Quanity,
+                    //        Status = f.Status,
+                    //        ReceipeBatchCode = f.ReceipeBatchCode,
+                    //        FinishGoodProductId = f.FinishGoodProductId,
+                    //        FGRId = f.FGRId,
+                    //        FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
+
+
+
+
+                    //}
+
+                }
             }
+            catch(Exception e)
+            {
+                return View();
+            }
+           
         }
 
         public ActionResult GetReceipyByProductionId(string receipeBatchCode)
@@ -1781,60 +1823,67 @@ namespace ERPWeb.Controllers
         public ActionResult FGProductAccept(string flag, long? rawMaterialId, long? id, string name, string finishGoodProductionBatch)
         {
 
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-                ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
+                    ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
 
-                //ViewBag.ddlProduct = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-                ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                    //ViewBag.ddlProduct = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                    ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
 
+                    return View();
+
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == "View")
+                {
+
+
+                    var dto = _finishGoodProductionInfoBusiness.GetPendingFinishGoodInfos(name ?? null);
+                    List<FinishGoodProductionInfoViewModel> viewModels = new List<FinishGoodProductionInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetPendingFGProduct", viewModels);
+
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+
+
+                    var info = _finishGoodProductionInfoBusiness.GetFGProductionInfoBybatchcode(finishGoodProductionBatch);
+
+                    ViewBag.Info = new FinishGoodProductionInfoViewModel
+                    {
+                        FinishGoodProductionBatch = info.FinishGoodProductionBatch
+
+                    };
+                    IEnumerable<FinishGoodProductionDetailsDTO> dto = _finishGoodProductionDetailsBusiness.GetFinishGoodProductionDetails(finishGoodProductionBatch, User.OrgId).Select(a => new FinishGoodProductionDetailsDTO
+                    {
+                        RawMaterialId = a.RawMaterialId,
+                        RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(a.RawMaterialId, User.OrgId).RawMaterialName,
+                        RequiredQuantity = a.RequiredQuantity,
+                        Status = a.Status,
+                        EntryDate = a.EntryDate,
+                        FinishGoodProductionBatch = a.FinishGoodProductionBatch,
+                        FinishGoodProductionDetailId = a.FinishGoodProductDetailId
+
+                    }).ToList();
+                    List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTO = new List<FinishGoodProductionDetailsDTO>();
+                    List<FinishGoodProductionDetailViewModel> finishGoodProductionDetailViewModels = new List<FinishGoodProductionDetailViewModel>();
+                    AutoMapper.Mapper.Map(dto, finishGoodProductionDetailViewModels);
+
+                    return PartialView("_GetProductFinishGoodDetails", finishGoodProductionDetailViewModels);
+                }
                 return View();
-
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == "View")
+            catch (Exception)
             {
-
-
-                var dto = _finishGoodProductionInfoBusiness.GetPendingFinishGoodInfos(name ?? null);
-                List<FinishGoodProductionInfoViewModel> viewModels = new List<FinishGoodProductionInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetPendingFGProduct", viewModels);
-
-
+                return View();
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-
-
-                var info = _finishGoodProductionInfoBusiness.GetFGProductionInfoBybatchcode(finishGoodProductionBatch);
-
-                ViewBag.Info = new FinishGoodProductionInfoViewModel
-                {
-                    FinishGoodProductionBatch = info.FinishGoodProductionBatch
-
-                };
-                IEnumerable<FinishGoodProductionDetailsDTO> dto = _finishGoodProductionDetailsBusiness.GetFinishGoodProductionDetails(finishGoodProductionBatch, User.OrgId).Select(a => new FinishGoodProductionDetailsDTO
-                {
-                    RawMaterialId = a.RawMaterialId,
-                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(a.RawMaterialId, User.OrgId).RawMaterialName,
-                    RequiredQuantity = a.RequiredQuantity,
-                    Status = a.Status,
-                    EntryDate = a.EntryDate,
-                    FinishGoodProductionBatch = a.FinishGoodProductionBatch,
-                    FinishGoodProductionDetailId = a.FinishGoodProductDetailId
-
-                }).ToList();
-                List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTO = new List<FinishGoodProductionDetailsDTO>();
-                List<FinishGoodProductionDetailViewModel> finishGoodProductionDetailViewModels = new List<FinishGoodProductionDetailViewModel>();
-                AutoMapper.Mapper.Map(dto, finishGoodProductionDetailViewModels);
-
-                return PartialView("_GetProductFinishGoodDetails", finishGoodProductionDetailViewModels);
-            }
-            return View();
 
         }
 
@@ -2270,48 +2319,55 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetStockiestList(string flag, long? stockiestId, long? territoryId, long? id, string tab = "")
         {
-            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetStockiestList");
-
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
-                ViewBag.ddlRegionname = _regionSetup.GetAllRegionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
+                ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetStockiestList");
 
-                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
+                    ViewBag.ddlRegionname = _regionSetup.GetAllRegionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
 
-                ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName, Value = stock.StockiestId.ToString() }).ToList();
+                    ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
-                ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
+                    ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName, Value = stock.StockiestId.ToString() }).ToList();
 
-                //division
-                ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+                    ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
 
-                ViewBag.ddlDivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+                    //division
+                    ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
 
-                //ViewBag.ddldivname = _divisionInfo.GetAllDivisionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+                    ViewBag.ddlDivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
 
-                ViewBag.tab = tab;
+                    //ViewBag.ddldivname = _divisionInfo.GetAllDivisionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+
+                    ViewBag.tab = tab;
+
+                    return View();
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
+
+                    ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
+
+                    var dto = _stockiestInfo.GetStockiestInfos(stockiestId ?? 0, territoryId ?? 0, User.OrgId);
+
+                    List<StockiestInfoViewModel> viewModels = new List<StockiestInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetStockiestPartialView", viewModels);
+
+
+                }
 
                 return View();
-
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch(Exception e)
             {
-                ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terr => new SelectListItem { Text = terr.TerritoryName, Value = terr.TerritoryId.ToString() }).ToList();
-
-                ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
-
-                var dto = _stockiestInfo.GetStockiestInfos(stockiestId ?? 0, territoryId ?? 0, User.OrgId);
-
-                List<StockiestInfoViewModel> viewModels = new List<StockiestInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetStockiestPartialView", viewModels);
-
-
+                return View();
             }
-
-            return View();
         }
 
         public ActionResult CreateStockiestList(long? id)
@@ -2502,84 +2558,91 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetAgroSalesProductList(string flag, long? id, long? stockiestId, string invoiceNo, string fromDate, string toDate)
         {
-            ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetAgroSalesProductList");
-            if (string.IsNullOrEmpty(flag))
+            try
             {
+                ViewBag.UserPrivilege = UserPrivilege("AgroConfiguration", "GetAgroSalesProductList");
+                if (string.IsNullOrEmpty(flag))
+                {
 
-                ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
-                ViewBag.ddlStockiestedit = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+                    ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+                    ViewBag.ddlStockiestedit = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
 
+
+
+                    return View();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    var dto = _agroProductSalesInfoBusiness.GetAgroSalesInfos(stockiestId ?? 0, invoiceNo ?? null, fromDate, toDate);
+
+
+                    List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetAgroSalesProductList", viewModels);
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+                    //var FinishGoodProductName = _agroProductSalesDetailsBusiness.GetAllAgroSalesDetailsInfos(User.OrgId).ToList();
+                    var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
+                    var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
+                    var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
+                    var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
+                    var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
+                    var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
+
+                    var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
+                    // List<AgroProductSalesDetailsViewModel> details = new List<AgroProductSalesDetailsViewModel>();
+                    //if (info != null)
+                    //{
+
+
+                    ViewBag.Info = new AgroProductSalesInfoViewModel
+                    {
+                        ZoneName = ZoneName.FirstOrDefault(Z => Z.ZoneId == info.ZoneId).ZoneName,
+                        DivisionName = DivisionName.FirstOrDefault(D => D.DivisionId == info.DivisionId).DivisionName,
+                        RegionName = RegionName.FirstOrDefault(R => R.RegionId == info.RegionId).RegionName,
+                        AreaName = AreaName.FirstOrDefault(A => A.AreaId == info.AreaId).AreaName,
+                        TerritoryName = TerritoryName.FirstOrDefault(T => T.TerritoryId == info.TerritoryId).TerritoryName,
+                        StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == info.StockiestId).StockiestName,
+                        InvoiceNo = info.InvoiceNo,
+                        ChallanNo = info.ChallanNo,
+                        DriverName = info.DriverName,
+                        VehicleNumber = info.VehicleNumber,
+                        DeliveryPlace = info.DeliveryPlace,
+                        InvoiceDate = info.InvoiceDate,
+
+                        //StockiestName = _stockiestInfo.GetAllStockiestSetup(info.StockiestId, User.OrgId).StockiestName
+                    };
+
+                    var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
+
+
+
+                    List<AgroProductSalesDetailsViewModel> detailsvm = new List<AgroProductSalesDetailsViewModel>();
+                    AutoMapper.Mapper.Map(details, detailsvm);
+                    return PartialView("_GetAgroSalesProductDetails", detailsvm);
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Edit)
+                {
+
+                    var edit = _agroProductSalesDetailsBusiness.GetSalesEditByInfoId(id.Value);
+
+                    List<AgroProductSalesDetailsViewModel> editView = new List<AgroProductSalesDetailsViewModel>();
+                    AutoMapper.Mapper.Map(edit, editView);
+                    return PartialView("_GetAgroSalesProductEdit", editView);
+
+                }
 
 
                 return View();
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch(Exception e)
             {
-                var dto = _agroProductSalesInfoBusiness.GetAgroSalesInfos(stockiestId ?? 0, invoiceNo ?? null, fromDate, toDate);
-
-
-                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetAgroSalesProductList", viewModels);
+                return View();
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-                //var FinishGoodProductName = _agroProductSalesDetailsBusiness.GetAllAgroSalesDetailsInfos(User.OrgId).ToList();
-                var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
-                var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
-                var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
-                var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
-                var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
-                var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
-
-                var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(id.Value, User.OrgId);
-                // List<AgroProductSalesDetailsViewModel> details = new List<AgroProductSalesDetailsViewModel>();
-                //if (info != null)
-                //{
-
-
-                ViewBag.Info = new AgroProductSalesInfoViewModel
-                {
-                    ZoneName = ZoneName.FirstOrDefault(Z => Z.ZoneId == info.ZoneId).ZoneName,
-                    DivisionName = DivisionName.FirstOrDefault(D => D.DivisionId == info.DivisionId).DivisionName,
-                    RegionName = RegionName.FirstOrDefault(R => R.RegionId == info.RegionId).RegionName,
-                    AreaName = AreaName.FirstOrDefault(A => A.AreaId == info.AreaId).AreaName,
-                    TerritoryName = TerritoryName.FirstOrDefault(T => T.TerritoryId == info.TerritoryId).TerritoryName,
-                    StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == info.StockiestId).StockiestName,
-                    InvoiceNo = info.InvoiceNo,
-                    ChallanNo = info.ChallanNo,
-                    DriverName = info.DriverName,
-                    VehicleNumber = info.VehicleNumber,
-                    DeliveryPlace = info.DeliveryPlace,
-                    InvoiceDate = info.InvoiceDate,
-
-                    //StockiestName = _stockiestInfo.GetAllStockiestSetup(info.StockiestId, User.OrgId).StockiestName
-                };
-
-                var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
-
-
-
-                List<AgroProductSalesDetailsViewModel> detailsvm = new List<AgroProductSalesDetailsViewModel>();
-                AutoMapper.Mapper.Map(details, detailsvm);
-                return PartialView("_GetAgroSalesProductDetails", detailsvm);
-
-            }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Edit)
-            {
-
-                var edit = _agroProductSalesDetailsBusiness.GetSalesEditByInfoId(id.Value);
-
-                List<AgroProductSalesDetailsViewModel> editView = new List<AgroProductSalesDetailsViewModel>();
-                AutoMapper.Mapper.Map(edit, editView);
-                return PartialView("_GetAgroSalesProductEdit", editView);
-
-            }
-
-
-            return View();
         }
         [HttpGet]
         public ActionResult CreateAgroSalesProduct(long? id, long? finishGoodProductId)
@@ -2965,60 +3028,68 @@ namespace ERPWeb.Controllers
 
         public ActionResult SalesPaymentList(string flag, string name, long? id, string fromDate, string toDate)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                // ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
-                ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+                    // ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+                    ViewBag.ddlorgname = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                    return View();
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+                    var dto = _agroProductSalesInfoBusiness.GetPaymentListInfos(name ?? null, fromDate, toDate);
+
+                    List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetDueInvoicePartialView", viewModels);
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+
+                    var info = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(id.Value);
+                    List<SalesPaymentRegisterViewModel> details = new List<SalesPaymentRegisterViewModel>();
+
+                    if (info != null)
+                    {
+
+                        ViewBag.Info = new AgroProductSalesInfoViewModel
+                        {
+                            InvoiceNo = info.InvoiceNo,
+                            InvoiceDate = info.InvoiceDate,
+                            TotalAmount = info.TotalAmount,
+                            PaidAmount = info.PaidAmount,
+                            DueAmount = info.PaidAmount
+
+                        };
+                        details = _salesPaymentRegister.GetPaymentDetailsByInvoiceId(id.Value).Select(i => new SalesPaymentRegisterViewModel
+                        {
+                            PaymentDate = i.PaymentDate,
+                            Remarks = i.Remarks,
+                            PaymentAmount = i.PaymentAmount
+                        }).ToList();
+                    }
+                    else
+                    {
+                        ViewBag.Info = new AgroProductSalesInfoViewModel();
+                    }
+                    return PartialView("_PaymentHistoryDetails", details);
+
+                }
+
 
                 return View();
 
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception e)
             {
-
-                var dto = _agroProductSalesInfoBusiness.GetPaymentListInfos(name ?? null, fromDate, toDate);
-
-                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetDueInvoicePartialView", viewModels);
+                return View();
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-
-                var info = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(id.Value);
-                List<SalesPaymentRegisterViewModel> details = new List<SalesPaymentRegisterViewModel>();
-
-                if (info != null)
-                {
-
-                    ViewBag.Info = new AgroProductSalesInfoViewModel
-                    {
-                        InvoiceNo = info.InvoiceNo,
-                        InvoiceDate = info.InvoiceDate,
-                        TotalAmount = info.TotalAmount,
-                        PaidAmount = info.PaidAmount,
-                        DueAmount = info.PaidAmount
-
-                    };
-                    details = _salesPaymentRegister.GetPaymentDetailsByInvoiceId(id.Value).Select(i => new SalesPaymentRegisterViewModel
-                    {
-                        PaymentDate = i.PaymentDate,
-                        Remarks = i.Remarks,
-                        PaymentAmount = i.PaymentAmount
-                    }).ToList();
-                }
-                else
-                {
-                    ViewBag.Info = new AgroProductSalesInfoViewModel();
-                }
-                return PartialView("_PaymentHistoryDetails", details);
-
-            }
-
-
-            return View();
         }
 
 
@@ -3048,76 +3119,83 @@ namespace ERPWeb.Controllers
         public ActionResult GetPRawmaterialStockList(string flag, string name, long? rsupid, long? id, string ChallanNo, string PONumber, long? supplierId)
         {
 
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
-                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
-                //ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
-                //ViewBag.ddlUnitName = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() });
-                ViewBag.ddlSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialSupplierName, Value = a.RawMaterialSupplierId.ToString() });
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                    ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+                    //ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
+                    //ViewBag.ddlUnitName = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() });
+                    ViewBag.ddlSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialSupplierName, Value = a.RawMaterialSupplierId.ToString() });
+                    return View();
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    var dto = _pRawMaterialStockInfo.GetAllPRawMaterialStockInfo(User.OrgId, name ?? null, ChallanNo ?? null, PONumber ?? null, supplierId ?? 0, rsupid ?? 0);
+
+                    List<PRawMaterialStockInfoViewModel> viewModels = new List<PRawMaterialStockInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetRawMaterialStockpurchaseList", viewModels);
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
+                {
+                    var dto = _rawMaterialTrack.GetMainStockInOutInfos(name ?? null);
+
+                    List<RawMaterialTrackViewModel> viewModels = new List<RawMaterialTrackViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetRawMaterialMainView", viewModels);
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+
+                    var SupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).ToList();
+                    var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                    var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
+
+                    var info = _pRawMaterialStockInfo.GetRawmaterialPuschaseInfoOneById(id.Value, User.OrgId);
+                    List<PRawMaterialStockIDetailsViewModel> details = new List<PRawMaterialStockIDetailsViewModel>();
+
+                    if (info != null)
+                    {
+                        ViewBag.Info = new PRawMaterialStockInfoViewModel
+                        {
+                            RawMaterialSupplierName = SupplierName.FirstOrDefault(x => x.RawMaterialSupplierId == info.RawMaterialSupplierId).RawMaterialSupplierName,
+                            BatchCode = info.BatchCode,
+                            EntryDate = info.EntryDate,
+                            TotalAmount = info.TotalAmount,
+                        };
+
+                        details = _pRawMaterialStockIDetails.GetRawMatwrialPurchaseDetailsByInfoId(id.Value).Select(i => new PRawMaterialStockIDetailsViewModel
+                        {
+                            RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                            UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
+                            Quantity = i.Quantity,
+                            UnitPrice = i.UnitPrice,
+                            SubTotal = i.SubTotal,
+                            StockDate = i.StockDate
+
+                        }).ToList();
+                    }
+                    else
+                    {
+                        ViewBag.Info = new PRawMaterialStockInfoViewModel();
+                    }
+                    return PartialView("_RawmatiralPurchaseDetails", details);
+
+                }
+
                 return View();
-
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch(Exception e)
             {
-                var dto = _pRawMaterialStockInfo.GetAllPRawMaterialStockInfo(User.OrgId, name ?? null, ChallanNo ?? null, PONumber ?? null, supplierId ?? 0, rsupid ?? 0);
-
-                List<PRawMaterialStockInfoViewModel> viewModels = new List<PRawMaterialStockInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetRawMaterialStockpurchaseList", viewModels);
+                return View();
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
-            {
-                var dto = _rawMaterialTrack.GetMainStockInOutInfos(name ?? null);
-
-                List<RawMaterialTrackViewModel> viewModels = new List<RawMaterialTrackViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetRawMaterialMainView", viewModels);
-
-            }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-
-                var SupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).ToList();
-                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
-                var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
-
-                var info = _pRawMaterialStockInfo.GetRawmaterialPuschaseInfoOneById(id.Value, User.OrgId);
-                List<PRawMaterialStockIDetailsViewModel> details = new List<PRawMaterialStockIDetailsViewModel>();
-
-                if (info != null)
-                {
-                    ViewBag.Info = new PRawMaterialStockInfoViewModel
-                    {
-                        RawMaterialSupplierName = SupplierName.FirstOrDefault(x => x.RawMaterialSupplierId == info.RawMaterialSupplierId).RawMaterialSupplierName,
-                        BatchCode = info.BatchCode,
-                        EntryDate = info.EntryDate,
-                        TotalAmount = info.TotalAmount,
-                    };
-
-                    details = _pRawMaterialStockIDetails.GetRawMatwrialPurchaseDetailsByInfoId(id.Value).Select(i => new PRawMaterialStockIDetailsViewModel
-                    {
-                        RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
-                        UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
-                        Quantity = i.Quantity,
-                        UnitPrice = i.UnitPrice,
-                        SubTotal = i.SubTotal,
-                        StockDate = i.StockDate
-
-                    }).ToList();
-                }
-                else
-                {
-                    ViewBag.Info = new PRawMaterialStockInfoViewModel();
-                }
-                return PartialView("_RawmatiralPurchaseDetails", details);
-
-            }
-
-            return View();
 
         }
 
@@ -3164,85 +3242,92 @@ namespace ERPWeb.Controllers
         public ActionResult GetMRawmaterialIssueList(string flag, string name, long? id)
         {
 
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
-                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                    ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
 
+
+                    return View();
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    IEnumerable<MRawMaterialIssueStockInfoDTO> dto = _mRawMaterialIssueStockInfo.GetAllRawMaterialIssue(User.OrgId).Where(s => (name == "" || name == null) || (s.ProductBatchCode.Contains(name))).Select(o => new MRawMaterialIssueStockInfoDTO
+                    {
+                        RawMaterialIssueStockId = o.RawMaterialIssueStockId,
+                        ProductBatchCode = o.ProductBatchCode,
+                        EntryDate = o.EntryDate,
+                        Status = o.Status,
+                        UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
+
+
+                    }).ToList();
+
+                    List<MRawMaterialIssueStockInfoViewModel> viewModels = new List<MRawMaterialIssueStockInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetRawMaterialIssuePartialView", viewModels);
+                }
+
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
+                {
+                    var dto = _mRawMaterialIssueStockDetails.GetIssueInOutInfos(name ?? null);
+
+                    List<MRawMaterialIssueStockDetailsViewModel> viewModels = new List<MRawMaterialIssueStockDetailsViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetRawMaterialIssueView", viewModels);
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+
+                    var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
+                    var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
+                    string Status = "StockIn";
+                    var info = _mRawMaterialIssueStockInfo.GetRawmaterialIssueInfoOneById(id.Value, User.OrgId);
+
+                    List<MRawMaterialIssueStockDetailsViewModel> details = new List<MRawMaterialIssueStockDetailsViewModel>();
+
+                    if (info != null)
+                    {
+                        ViewBag.Info = new MRawMaterialIssueStockInfoViewModel
+                        {
+
+                            ProductBatchCode = info.ProductBatchCode,
+                            EntryDate = info.EntryDate,
+                            Status = info.Status,
+
+
+                        };
+
+                        details = _mRawMaterialIssueStockDetails.GetRawMatwrialissueDetailsByInfoId(id.Value).Select(i => new MRawMaterialIssueStockDetailsViewModel
+                        {
+                            RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
+                            UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
+                            Quantity = i.Quantity,
+                            IssueStatus = i.IssueStatus,
+                            EntryDate = i.EntryDate
+                        }).ToList();
+
+                    }
+                    else
+                    {
+                        ViewBag.Info = new MRawMaterialIssueStockInfoViewModel();
+                    }
+                    return PartialView("_RawmatiralIssueDetails", details);
+
+                }
 
                 return View();
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch(Exception e)
             {
-                IEnumerable<MRawMaterialIssueStockInfoDTO> dto = _mRawMaterialIssueStockInfo.GetAllRawMaterialIssue(User.OrgId).Where(s => (name == "" || name == null) || (s.ProductBatchCode.Contains(name))).Select(o => new MRawMaterialIssueStockInfoDTO
-                {
-                    RawMaterialIssueStockId = o.RawMaterialIssueStockId,
-                    ProductBatchCode = o.ProductBatchCode,
-                    EntryDate = o.EntryDate,
-                    Status = o.Status,
-                    UserName = UserForEachRecord(o.EntryUserId.Value).UserName,
-
-
-                }).ToList();
-
-                List<MRawMaterialIssueStockInfoViewModel> viewModels = new List<MRawMaterialIssueStockInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetRawMaterialIssuePartialView", viewModels);
+                return View();
             }
-
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
-            {
-                var dto = _mRawMaterialIssueStockDetails.GetIssueInOutInfos(name ?? null);
-
-                List<MRawMaterialIssueStockDetailsViewModel> viewModels = new List<MRawMaterialIssueStockDetailsViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetRawMaterialIssueView", viewModels);
-
-            }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-
-                var RawMaterialNames = _rawMaterialBusiness.GetRawMaterialByOrgId(User.OrgId).ToList();
-                var Unitsname = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).ToList();
-                string Status = "StockIn";
-                var info = _mRawMaterialIssueStockInfo.GetRawmaterialIssueInfoOneById(id.Value, User.OrgId);
-
-                List<MRawMaterialIssueStockDetailsViewModel> details = new List<MRawMaterialIssueStockDetailsViewModel>();
-
-                if (info != null)
-                {
-                    ViewBag.Info = new MRawMaterialIssueStockInfoViewModel
-                    {
-
-                        ProductBatchCode = info.ProductBatchCode,
-                        EntryDate = info.EntryDate,
-                        Status = info.Status,
-
-
-                    };
-
-                    details = _mRawMaterialIssueStockDetails.GetRawMatwrialissueDetailsByInfoId(id.Value).Select(i => new MRawMaterialIssueStockDetailsViewModel
-                    {
-                        RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
-                        UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
-                        Quantity = i.Quantity,
-                        IssueStatus = i.IssueStatus,
-                        EntryDate = i.EntryDate
-                    }).ToList();
-
-                }
-                else
-                {
-                    ViewBag.Info = new MRawMaterialIssueStockInfoViewModel();
-                }
-                return PartialView("_RawmatiralIssueDetails", details);
-
-            }
-
-            return View();
 
         }
 
@@ -3462,72 +3547,87 @@ namespace ERPWeb.Controllers
         #region  InternalReturn
         public ActionResult RawMaterialReturnList(string flag, long? id, string name)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+
+                    return View();
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+                    var dto = _returnRawMaterialBusiness.GetReturnRawMaterialInfos(name ?? null);
+                    List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetReturnRawMaterial", viewModels);
+
+
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+                    string Status = "Pending";
+                    // string ReturnType = "Damage";
+
+                    List<ReturnRawMaterialViewModel> details = new List<ReturnRawMaterialViewModel>();
+
+                    details = _returnRawMaterialBusiness.GetReturnRawMaterialBYRMId(id.Value, Status).Select(i => new ReturnRawMaterialViewModel
+                    {
+                        EntryDate = i.EntryDate,
+                        Quantity = i.Quantity,
+                        ReturnRawMaterialId = i.ReturnRawMaterialId,
+                        ReturnType = i.ReturnType
+
+                    }).ToList();
+
+                    return PartialView("_ReturnDetails", details);
+                }
+
+
 
                 return View();
-
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception)
             {
-
-                var dto = _returnRawMaterialBusiness.GetReturnRawMaterialInfos(name ?? null);
-                List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetReturnRawMaterial", viewModels);
-
-
+                return View();
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-                string Status = "Pending";
-                // string ReturnType = "Damage";
-
-                List<ReturnRawMaterialViewModel> details = new List<ReturnRawMaterialViewModel>();
-
-                details = _returnRawMaterialBusiness.GetReturnRawMaterialBYRMId(id.Value, Status).Select(i => new ReturnRawMaterialViewModel
-                {
-                    EntryDate = i.EntryDate,
-                    Quantity = i.Quantity,
-                    ReturnRawMaterialId = i.ReturnRawMaterialId,
-                    ReturnType = i.ReturnType
-
-                }).ToList();
-
-                return PartialView("_ReturnDetails", details);
-            }
-
-
-
-            return View();
         }
 
 
         public ActionResult RawMaterialReturnAllList(string flag, long? id, long? rawMaterialId, string returnType, string status)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
 
+
+                    return View();
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+                    var dto = _returnRawMaterialBusiness.GetallReturns(rawMaterialId ?? 0, returnType ?? null, status ?? null);
+
+                    List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_ALLRawMaterialReturnListview", viewModels);
+
+                }
 
                 return View();
 
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception e)
             {
-
-                var dto = _returnRawMaterialBusiness.GetallReturns(rawMaterialId ?? 0, returnType ?? null, status ?? null);
-
-                List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_ALLRawMaterialReturnListview", viewModels);
-
+                return View();
             }
-
-            return View();
         }
 
 
@@ -3761,54 +3861,61 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetRequisition(string flag, string RequisitonCode, long? infoId, string status, string fdate, string tdate)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-
-                return View();
-            }
-            else if (!string.IsNullOrEmpty(flag) && flag == "Details" && infoId > 0)
-            {
-                var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+                if (string.IsNullOrEmpty(flag))
                 {
-                    RawMaterialId = d.RawMaterialId,
-                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
-                    RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
-                    RequisitionQuantity = d.RequisitionQuantity,
-                    IssueQuantity = d.IssueQuantity,
-                    Status = d.Status,
 
-                    Remarks = d.Remarks,
-                    //EntryDate=d.EntryDate,
-                    UnitID = d.UnitID,
-                    UnitName = _agroUnitInfo.GetAgroInfoById(d.UnitID, User.OrgId).UnitName
+                    return View();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == "Details" && infoId > 0)
+                {
+                    var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+                    {
+                        RawMaterialId = d.RawMaterialId,
+                        RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
+                        RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
+                        RequisitionQuantity = d.RequisitionQuantity,
+                        IssueQuantity = d.IssueQuantity,
+                        Status = d.Status,
+
+                        Remarks = d.Remarks,
+                        //EntryDate=d.EntryDate,
+                        UnitID = d.UnitID,
+                        UnitName = _agroUnitInfo.GetAgroInfoById(d.UnitID, User.OrgId).UnitName
+
+                    }).ToList();
+
+                    List<RawMaterialRequisitionDetailsViewModel> rawMaterialRequisitionDetailsViewModel = new List<RawMaterialRequisitionDetailsViewModel>();
+                    AutoMapper.Mapper.Map(dto, rawMaterialRequisitionDetailsViewModel);
+                    return PartialView("_GetRequisitionDetails", rawMaterialRequisitionDetailsViewModel);
+
+
+                }
+
+                IEnumerable<RawMaterialRequisitionInfoDTO> rawMaterialRequisitionInfoDTO = _rawMaterialRequisitionInfoBusiness.GetAllRawMaterialRequisitionInfos(RequisitonCode, status, fdate, tdate, User.OrgId).Select(r => new RawMaterialRequisitionInfoDTO
+                {
+                    RawMaterialRequisitionInfoId = r.RawMaterialRequisitionInfoId,
+                    RawMaterialRequisitionCode = r.RawMaterialRequisitionCode,
+                    Status = r.Status,
+                    Remarks = r.Remarks,
+                    EntryDate = r.EntryDate,
+                    EntryUserId = r.EntryUserId,
+                    FullName = _appUserBusiness.GetAppUserOneById(r.EntryUserId.Value, User.OrgId).FullName,
+
+                    UpdateDate = r.UpdateDate,
+                    UpdateUserId = r.UpdateUserId,
 
                 }).ToList();
 
-                List<RawMaterialRequisitionDetailsViewModel> rawMaterialRequisitionDetailsViewModel = new List<RawMaterialRequisitionDetailsViewModel>();
-                AutoMapper.Mapper.Map(dto, rawMaterialRequisitionDetailsViewModel);
-                return PartialView("_GetRequisitionDetails", rawMaterialRequisitionDetailsViewModel);
-
-
+                List<RawMaterialRequisitionInfoViewModel> rawMaterialRequisitionInfoViewModels = new List<RawMaterialRequisitionInfoViewModel>();
+                AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
+                return PartialView("_GetRequisition", rawMaterialRequisitionInfoViewModels);
             }
-
-            IEnumerable<RawMaterialRequisitionInfoDTO> rawMaterialRequisitionInfoDTO = _rawMaterialRequisitionInfoBusiness.GetAllRawMaterialRequisitionInfos(RequisitonCode, status, fdate, tdate, User.OrgId).Select(r => new RawMaterialRequisitionInfoDTO
+            catch(Exception e)
             {
-                RawMaterialRequisitionInfoId = r.RawMaterialRequisitionInfoId,
-                RawMaterialRequisitionCode = r.RawMaterialRequisitionCode,
-                Status = r.Status,
-                Remarks = r.Remarks,
-                EntryDate = r.EntryDate,
-                EntryUserId = r.EntryUserId,
-                FullName = _appUserBusiness.GetAppUserOneById(r.EntryUserId.Value, User.OrgId).FullName,
-
-                UpdateDate = r.UpdateDate,
-                UpdateUserId = r.UpdateUserId,
-
-            }).ToList();
-
-            List<RawMaterialRequisitionInfoViewModel> rawMaterialRequisitionInfoViewModels = new List<RawMaterialRequisitionInfoViewModel>();
-            AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
-            return PartialView("_GetRequisition", rawMaterialRequisitionInfoViewModels);
+                return View();
+            }
         }
         [HttpGet]
         public ActionResult GetRequistionDetailsbyInfoId(long infoId)
@@ -3963,38 +4070,45 @@ namespace ERPWeb.Controllers
         public ActionResult SaveRequisition(RawMaterialRequisitionInfoViewModel info)
         {
 
-
-            bool IsSuccess = false;
-            var requisitionCode = "";
-            if (ModelState.IsValid)
+            try
             {
-                RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO = new RawMaterialRequisitionInfoDTO();
-                AutoMapper.Mapper.Map(info, rawMaterialRequisitionInfoDTO);
-                IsSuccess = _rawMaterialRequisitionInfoBusiness.SaveRawMaterialRequisition(rawMaterialRequisitionInfoDTO, User.UserId, User.OrgId);
 
+                bool IsSuccess = false;
+                var requisitionCode = "";
+                if (ModelState.IsValid)
+                {
+                    RawMaterialRequisitionInfoDTO rawMaterialRequisitionInfoDTO = new RawMaterialRequisitionInfoDTO();
+                    AutoMapper.Mapper.Map(info, rawMaterialRequisitionInfoDTO);
+                    IsSuccess = _rawMaterialRequisitionInfoBusiness.SaveRawMaterialRequisition(rawMaterialRequisitionInfoDTO, User.UserId, User.OrgId);
+
+                }
+
+                if (IsSuccess == true)
+                {
+                    if (info.Status == "Send")
+                    {
+                        requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfoReceives(User.OrgId, info.Status, info.RawMaterialRequisitionInfoId).FirstOrDefault().RawMaterialRequisitionCode;
+                    }
+                    else if (info.Status == null)
+                    {
+                        requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfos(User.OrgId, info.Status).FirstOrDefault().RawMaterialRequisitionCode;
+                    }
+                    else if (info.Status == "Received")
+                    {
+                        requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfoReceives(User.OrgId, info.Status, info.RawMaterialRequisitionInfoId).FirstOrDefault().RawMaterialRequisitionCode;
+                    }
+
+
+
+                    return Json(new { IsSuccess = IsSuccess, File = requisitionCode });
+                }
+
+                return Json(IsSuccess);
             }
-
-            if (IsSuccess == true)
+            catch(Exception e)
             {
-                if (info.Status == "Send")
-                {
-                    requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfoReceives(User.OrgId, info.Status, info.RawMaterialRequisitionInfoId).FirstOrDefault().RawMaterialRequisitionCode;
-                }
-                else if (info.Status == null)
-                {
-                    requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfos(User.OrgId, info.Status).FirstOrDefault().RawMaterialRequisitionCode;
-                }
-                else if (info.Status == "Received")
-                {
-                    requisitionCode = _rawMaterialRequisitionInfoBusiness.GetRawMaterialRequisitionInfoReceives(User.OrgId, info.Status, info.RawMaterialRequisitionInfoId).FirstOrDefault().RawMaterialRequisitionCode;
-                }
-
-
-
-                return Json(new { IsSuccess = IsSuccess, File = requisitionCode });
+                return View();
             }
-
-            return Json(IsSuccess);
         }
 
         //Production
@@ -4087,52 +4201,59 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetRequisitionProduction(string flag, string RequisitonCode, long? infoId, string status, string fdate, string tdate)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-
-                return View();
-            }
-            else if (!string.IsNullOrEmpty(flag) && flag == "Details" && infoId > 0)
-            {
-                var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+                if (string.IsNullOrEmpty(flag))
                 {
-                    RawMaterialId = d.RawMaterialId,
-                    RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
-                    RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
-                    RequisitionQuantity = d.RequisitionQuantity,
-                    IssueQuantity = d.IssueQuantity,
-                    Status = d.Status,
-                    Remarks = d.Remarks,
-                    //EntryDate=d.EntryDate,
-                    UnitID = d.UnitID,
-                    UnitName = _agroUnitInfo.GetAgroInfoById(d.UnitID, User.OrgId).UnitName
+
+                    return View();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == "Details" && infoId > 0)
+                {
+                    var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+                    {
+                        RawMaterialId = d.RawMaterialId,
+                        RawMaterialName = _rawMaterialBusiness.GetRawMaterialById(d.RawMaterialId, User.OrgId).RawMaterialName,
+                        RawMaterialRequisitionInfoId = d.RawMaterialRequisitionInfoId,
+                        RequisitionQuantity = d.RequisitionQuantity,
+                        IssueQuantity = d.IssueQuantity,
+                        Status = d.Status,
+                        Remarks = d.Remarks,
+                        //EntryDate=d.EntryDate,
+                        UnitID = d.UnitID,
+                        UnitName = _agroUnitInfo.GetAgroInfoById(d.UnitID, User.OrgId).UnitName
+
+                    }).ToList();
+
+                    List<RawMaterialRequisitionDetailsViewModel> rawMaterialRequisitionDetailsViewModel = new List<RawMaterialRequisitionDetailsViewModel>();
+                    AutoMapper.Mapper.Map(dto, rawMaterialRequisitionDetailsViewModel);
+                    return PartialView("_GetRequisitionDetails", rawMaterialRequisitionDetailsViewModel);
+
+
+                }
+
+                IEnumerable<RawMaterialRequisitionInfoDTO> rawMaterialRequisitionInfoDTO = _rawMaterialRequisitionInfoBusiness.GetAllRawMaterialRequisitionInfos(RequisitonCode, status, fdate, tdate, User.OrgId).Select(r => new RawMaterialRequisitionInfoDTO
+                {
+                    RawMaterialRequisitionInfoId = r.RawMaterialRequisitionInfoId,
+                    RawMaterialRequisitionCode = r.RawMaterialRequisitionCode,
+                    Status = r.Status,
+                    Remarks = r.Remarks,
+                    EntryDate = r.EntryDate,
+                    EntryUserId = r.EntryUserId,
+                    FullName = _appUserBusiness.GetAppUserOneById(r.EntryUserId.Value, User.OrgId).FullName,
+                    UpdateDate = r.UpdateDate,
+                    UpdateUserId = r.UpdateUserId,
 
                 }).ToList();
 
-                List<RawMaterialRequisitionDetailsViewModel> rawMaterialRequisitionDetailsViewModel = new List<RawMaterialRequisitionDetailsViewModel>();
-                AutoMapper.Mapper.Map(dto, rawMaterialRequisitionDetailsViewModel);
-                return PartialView("_GetRequisitionDetails", rawMaterialRequisitionDetailsViewModel);
-
-
+                List<RawMaterialRequisitionInfoViewModel> rawMaterialRequisitionInfoViewModels = new List<RawMaterialRequisitionInfoViewModel>();
+                AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
+                return PartialView("_GetRequisitionProduction", rawMaterialRequisitionInfoViewModels);
             }
-
-            IEnumerable<RawMaterialRequisitionInfoDTO> rawMaterialRequisitionInfoDTO = _rawMaterialRequisitionInfoBusiness.GetAllRawMaterialRequisitionInfos(RequisitonCode, status, fdate, tdate, User.OrgId).Select(r => new RawMaterialRequisitionInfoDTO
+            catch (Exception e)
             {
-                RawMaterialRequisitionInfoId = r.RawMaterialRequisitionInfoId,
-                RawMaterialRequisitionCode = r.RawMaterialRequisitionCode,
-                Status = r.Status,
-                Remarks = r.Remarks,
-                EntryDate = r.EntryDate,
-                EntryUserId = r.EntryUserId,
-                FullName = _appUserBusiness.GetAppUserOneById(r.EntryUserId.Value, User.OrgId).FullName,
-                UpdateDate = r.UpdateDate,
-                UpdateUserId = r.UpdateUserId,
-
-            }).ToList();
-
-            List<RawMaterialRequisitionInfoViewModel> rawMaterialRequisitionInfoViewModels = new List<RawMaterialRequisitionInfoViewModel>();
-            AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
-            return PartialView("_GetRequisitionProduction", rawMaterialRequisitionInfoViewModels);
+                return View();
+            }
         }
 
 
@@ -4185,50 +4306,66 @@ namespace ERPWeb.Controllers
         #region AgroReport
         public ActionResult GetProductwisesalesReport(string flag, long? productId, string fromDate, string toDate, string rptType)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
 
-                ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+
+                    ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+                    return View();
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+                    var dto = _agroProductSalesInfoBusiness.GetProductWiseReportList(productId ?? 0, fromDate, toDate);
+                    List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetProductWiseSalesReportList", viewModels);
+
+
+                }
+
 
                 return View();
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception e)
             {
-
-                var dto = _agroProductSalesInfoBusiness.GetProductWiseReportList(productId ?? 0, fromDate, toDate);
-                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetProductWiseSalesReportList", viewModels);
-
-
+                return View();
             }
-
-
-            return View();
         }
 
         public ActionResult GetInvoiceWiseSales(string flag, long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
-                ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(d => new SelectListItem { Text = d.TerritoryName, Value = d.TerritoryId.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
+                    ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(d => new SelectListItem { Text = d.TerritoryName, Value = d.TerritoryId.ToString() }).ToList();
+
+                    return View();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+                    var dto = _agroProductSalesInfoBusiness.GetInvoiceReportList(stockiestId ?? 0, territoryId ?? 0, invoiceNo, fromDate, toDate);
+                    List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetInvoiceWiseSalesReportList", viewModels);
+
+
+                }
                 return View();
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception e)
             {
-
-                var dto = _agroProductSalesInfoBusiness.GetInvoiceReportList(stockiestId ?? 0, territoryId ?? 0, invoiceNo, fromDate, toDate);
-                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetInvoiceWiseSalesReportList", viewModels);
-
-
+                return View();
             }
-            return View();
 
         }
 
@@ -4241,93 +4378,107 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetInvoiceWiseSalesReport(long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate, string rptType)
         {
-            var data = _agroProductSalesInfoBusiness.GetInvoiceWiseSalesReport(stockiestId, territoryId, invoiceNo, fromDate, toDate);
-
-            LocalReport localReport = new LocalReport();
-
-            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptInvoiceWiseSalesReport.rdlc");
-            if (System.IO.File.Exists(reportPath))
+            try
             {
-                localReport.ReportPath = reportPath;
+                var data = _agroProductSalesInfoBusiness.GetInvoiceWiseSalesReport(stockiestId, territoryId, invoiceNo, fromDate, toDate);
+
+                LocalReport localReport = new LocalReport();
+
+                string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptInvoiceWiseSalesReport.rdlc");
+                if (System.IO.File.Exists(reportPath))
+                {
+                    localReport.ReportPath = reportPath;
+                }
+
+                ReportDataSource dataSource1 = new ReportDataSource("dsInvoiceWiseCollectionSalesReport", data);
+                localReport.DataSources.Add(dataSource1);
+
+                string reportType = rptType;
+                string mimeType;
+                string encoding;
+                string fileNameExtension;
+                Warning[] warnings;
+                string[] streams;
+                string deviceInfo =
+                        "<DeviceInfo>" +
+                        "<OutputFormat>PDF</OutputFormat>" +
+                        "<PageWidth>29.7cm</PageWidth>" +
+                        "<PageHeight>21cm</PageHeight>" +
+                        "<MarginTop>0.25in</MarginTop>" +
+                        "<MarginLeft>0.25in</MarginLeft>" +
+                        "<MarginRight>0.25in</MarginRight>" +
+                        "<MarginBottom>0.25in</MarginBottom>" +
+                        "</DeviceInfo>";
+
+                var renderedBytes = localReport.Render(
+                    reportType,
+                    deviceInfo,
+                    out mimeType,
+                    out encoding,
+                    out fileNameExtension,
+                    out streams,
+                    out warnings
+                    );
+                return File(renderedBytes, mimeType);
             }
-
-            ReportDataSource dataSource1 = new ReportDataSource("dsInvoiceWiseCollectionSalesReport", data);
-            localReport.DataSources.Add(dataSource1);
-
-            string reportType = rptType;
-            string mimeType;
-            string encoding;
-            string fileNameExtension;
-            Warning[] warnings;
-            string[] streams;
-            string deviceInfo =
-                    "<DeviceInfo>" +
-                    "<OutputFormat>PDF</OutputFormat>" +
-                    "<PageWidth>29.7cm</PageWidth>" +
-                    "<PageHeight>21cm</PageHeight>" +
-                    "<MarginTop>0.25in</MarginTop>" +
-                    "<MarginLeft>0.25in</MarginLeft>" +
-                    "<MarginRight>0.25in</MarginRight>" +
-                    "<MarginBottom>0.25in</MarginBottom>" +
-                    "</DeviceInfo>";
-
-            var renderedBytes = localReport.Render(
-                reportType,
-                deviceInfo,
-                out mimeType,
-                out encoding,
-                out fileNameExtension,
-                out streams,
-                out warnings
-                );
-            return File(renderedBytes, mimeType);
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
 
         public ActionResult GetProductwisesalesReportDownload(long? productId, string fromDate, string toDate, string rptType)
         {
-            var data = _agroProductSalesInfoBusiness.GetProductwisesalesReportDownloadRpt(productId, fromDate, toDate);
-            LocalReport localReport = new LocalReport();
-            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/ProductwisesalesReportDownloadsReport.rdlc");
-            if (System.IO.File.Exists(reportPath))
+            try
             {
-                localReport.ReportPath = reportPath;
-                ReportDataSource dataSource1 = new ReportDataSource("dsProductwisesalesReportDownloadReport", data);
-                localReport.DataSources.Clear();
-                localReport.DataSources.Add(dataSource1);
-                localReport.Refresh();
-                localReport.DisplayName = "Product Wise Sales Statement";
+                var data = _agroProductSalesInfoBusiness.GetProductwisesalesReportDownloadRpt(productId, fromDate, toDate);
+                LocalReport localReport = new LocalReport();
+                string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/ProductwisesalesReportDownloadsReport.rdlc");
+                if (System.IO.File.Exists(reportPath))
+                {
+                    localReport.ReportPath = reportPath;
+                    ReportDataSource dataSource1 = new ReportDataSource("dsProductwisesalesReportDownloadReport", data);
+                    localReport.DataSources.Clear();
+                    localReport.DataSources.Add(dataSource1);
+                    localReport.Refresh();
+                    localReport.DisplayName = "Product Wise Sales Statement";
 
-                string mimeType;
-                string encoding;
-                string fileNameExtension;
-                Warning[] warnings;
-                string[] streams;
-                byte[] renderedBytes;
-                string deviceInfo =
-                    "<DeviceInfo>" +
-                    "<OutputFormat>PDF</OutputFormat>" +
-                    "<PageWidth>8.27in</PageWidth>" +
-                    "<PageHeight>11.69in</PageHeight>" +
-                    "<MarginTop>0.25in</MarginTop>" +
-                    "<MarginLeft>0.25in</MarginLeft>" +
-                    "<MarginRight>0.25in</MarginRight>" +
-                    "<MarginBottom>0.25in</MarginBottom>" +
-                    "</DeviceInfo>";
+                    string mimeType;
+                    string encoding;
+                    string fileNameExtension;
+                    Warning[] warnings;
+                    string[] streams;
+                    byte[] renderedBytes;
+                    string deviceInfo =
+                        "<DeviceInfo>" +
+                        "<OutputFormat>PDF</OutputFormat>" +
+                        "<PageWidth>8.27in</PageWidth>" +
+                        "<PageHeight>11.69in</PageHeight>" +
+                        "<MarginTop>0.25in</MarginTop>" +
+                        "<MarginLeft>0.25in</MarginLeft>" +
+                        "<MarginRight>0.25in</MarginRight>" +
+                        "<MarginBottom>0.25in</MarginBottom>" +
+                        "</DeviceInfo>";
 
-                renderedBytes = localReport.Render(
-                    rptType,
-                     deviceInfo,
-                    out mimeType,
+                    renderedBytes = localReport.Render(
+                        rptType,
+                         deviceInfo,
+                        out mimeType,
 
-                    out encoding,
-                    out fileNameExtension,
-                    out streams,
-                    out warnings);
-                return File(renderedBytes, mimeType);
+                        out encoding,
+                        out fileNameExtension,
+                        out streams,
+                        out warnings);
+                    return File(renderedBytes, mimeType);
+                }
+                return new EmptyResult();
             }
-            return new EmptyResult();
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public ActionResult DateWiseCollection()
@@ -4346,250 +4497,294 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetDateWiseCollectionReport(long? zoneId, long? divisonId, long? regionId, long? areaId, long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate, string rptType)
         {
-            var data = _salesPaymentRegister.GetDateWiseCollectionReport(zoneId, divisonId, regionId, areaId, stockiestId, territoryId, invoiceNo, fromDate, toDate);
-
-            LocalReport localReport = new LocalReport();
-
-            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptDateWiseCollection.rdlc");
-            if (System.IO.File.Exists(reportPath))
+            try
             {
-                localReport.ReportPath = reportPath;
+                var data = _salesPaymentRegister.GetDateWiseCollectionReport(zoneId, divisonId, regionId, areaId, stockiestId, territoryId, invoiceNo, fromDate, toDate);
+
+                LocalReport localReport = new LocalReport();
+
+                string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptDateWiseCollection.rdlc");
+                if (System.IO.File.Exists(reportPath))
+                {
+                    localReport.ReportPath = reportPath;
+                }
+
+                ReportDataSource dataSource1 = new ReportDataSource("DateWiseCollection", data);
+                localReport.DataSources.Add(dataSource1);
+
+                string reportType = rptType;
+                string mimeType;
+                string encoding;
+                string fileNameExtension;
+                Warning[] warnings;
+                string[] streams;
+                string deviceInfo =
+                        "<DeviceInfo>" +
+                        "<OutputFormat>PDF</OutputFormat>" +
+                        "<PageWidth>29.7cm</PageWidth>" +
+                        "<PageHeight>21cm</PageHeight>" +
+                        "<MarginTop>0.25in</MarginTop>" +
+                        "<MarginLeft>0.25in</MarginLeft>" +
+                        "<MarginRight>0.25in</MarginRight>" +
+                        "<MarginBottom>0.25in</MarginBottom>" +
+                        "</DeviceInfo>";
+
+                var renderedBytes = localReport.Render(
+                    reportType,
+                    deviceInfo,
+                    out mimeType,
+                    out encoding,
+                    out fileNameExtension,
+                    out streams,
+                    out warnings
+                    );
+                return File(renderedBytes, mimeType);
             }
-
-            ReportDataSource dataSource1 = new ReportDataSource("DateWiseCollection", data);
-            localReport.DataSources.Add(dataSource1);
-
-            string reportType = rptType;
-            string mimeType;
-            string encoding;
-            string fileNameExtension;
-            Warning[] warnings;
-            string[] streams;
-            string deviceInfo =
-                    "<DeviceInfo>" +
-                    "<OutputFormat>PDF</OutputFormat>" +
-                    "<PageWidth>29.7cm</PageWidth>" +
-                    "<PageHeight>21cm</PageHeight>" +
-                    "<MarginTop>0.25in</MarginTop>" +
-                    "<MarginLeft>0.25in</MarginLeft>" +
-                    "<MarginRight>0.25in</MarginRight>" +
-                    "<MarginBottom>0.25in</MarginBottom>" +
-                    "</DeviceInfo>";
-
-            var renderedBytes = localReport.Render(
-                reportType,
-                deviceInfo,
-                out mimeType,
-                out encoding,
-                out fileNameExtension,
-                out streams,
-                out warnings
-                );
-            return File(renderedBytes, mimeType);
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
         public ActionResult GetFinishGoodStockQtyReport(long? productId, string fromDate, string toDate, string rptType)
 
         {
-            var data = _finishGoodProductionInfoBusiness.GetFinishGoodStockReport(productId, fromDate, toDate);
-            LocalReport localReport = new LocalReport();
-            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptFinishGoodProductStock.rdlc");
-            if (System.IO.File.Exists(reportPath))
+            try
             {
-                localReport.ReportPath = reportPath;
-                ReportDataSource dataSource1 = new ReportDataSource("dsFinishGoodQtyStocks", data);
-                localReport.DataSources.Clear();
-                localReport.DataSources.Add(dataSource1);
-                localReport.Refresh();
-                localReport.DisplayName = "Finish Good Product Stock";
+                var data = _finishGoodProductionInfoBusiness.GetFinishGoodStockReport(productId, fromDate, toDate);
+                LocalReport localReport = new LocalReport();
+                string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptFinishGoodProductStock.rdlc");
+                if (System.IO.File.Exists(reportPath))
+                {
+                    localReport.ReportPath = reportPath;
+                    ReportDataSource dataSource1 = new ReportDataSource("dsFinishGoodQtyStocks", data);
+                    localReport.DataSources.Clear();
+                    localReport.DataSources.Add(dataSource1);
+                    localReport.Refresh();
+                    localReport.DisplayName = "Finish Good Product Stock";
 
+                    string mimeType;
+                    string encoding;
+                    string fileNameExtension;
+                    Warning[] warnings;
+                    string[] streams;
+                    byte[] renderedBytes;
+                    string deviceInfo =
+                        "<DeviceInfo>" +
+                        "<OutputFormat>PDF</OutputFormat>" +
+                        "<PageWidth>8.27in</PageWidth>" +
+                        "<PageHeight>11.69in</PageHeight>" +
+
+                        "<MarginTop>0.25in</MarginTop>" +
+                        "<MarginLeft>0.25in</MarginLeft>" +
+                        "<MarginRight>0.25in</MarginRight>" +
+                        "<MarginBottom>0.25in</MarginBottom>" +
+                        "</DeviceInfo>";
+
+
+                    //var renderedBytes = localReport.Render(
+                    //    reportType,
+                    //    deviceInfo,
+                    //    out mimeType,
+                    //    out encoding,
+                    //    out fileNameExtension,
+                    //    out streams,
+                    //    out warnings
+                    //    );
+                    //return File(renderedBytes, mimeType);
+
+                    renderedBytes = localReport.Render(
+                        rptType,
+                         deviceInfo,
+                        out mimeType,
+
+                        out encoding,
+                        out fileNameExtension,
+                        out streams,
+                        out warnings);
+                    return File(renderedBytes, mimeType);
+                }
+                return new EmptyResult();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+
+        
+        public ActionResult GetReturnRawMaterialReportList(string flag, long? rawMaterialId, string returnType, string status, string fromDate, string toDate)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
+
+
+                    return View();
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+                    var dto = _returnRawMaterialBusiness.GetReturnReportList(rawMaterialId, returnType, status, fromDate, toDate);
+                    List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetReturnReportListView", viewModels);
+
+
+                }
+
+                return View();
+            }
+            catch (Exception e)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult GetReturnRawMaterialReport(long? rawMaterialId, string returnType, string status, string fromDate, string toDate, string rptType)
+        {
+            try
+            {
+                var data = _returnRawMaterialBusiness.GetReturnRawMaterialDataReport(rawMaterialId, returnType, status, fromDate, toDate);
+
+                LocalReport localReport = new LocalReport();
+
+                string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptReturnRawMaterialReport.rdlc");
+                if (System.IO.File.Exists(reportPath))
+                {
+                    localReport.ReportPath = reportPath;
+                }
+
+                ReportDataSource dataSource1 = new ReportDataSource("dsReturnRawMaterialReport", data);
+                localReport.DataSources.Add(dataSource1);
+
+                string reportType = rptType;
                 string mimeType;
                 string encoding;
                 string fileNameExtension;
                 Warning[] warnings;
                 string[] streams;
-                byte[] renderedBytes;
                 string deviceInfo =
-                    "<DeviceInfo>" +
-                    "<OutputFormat>PDF</OutputFormat>" +
-                    "<PageWidth>8.27in</PageWidth>" +
-                    "<PageHeight>11.69in</PageHeight>" +
+                        "<DeviceInfo>" +
+                        "<OutputFormat>PDF</OutputFormat>" +
+                          "<PageWidth>8.27in</PageWidth>" +
+                        "<PageHeight>11.69in</PageHeight>" +
+                        "<MarginTop>0.25in</MarginTop>" +
+                        "<MarginLeft>0.25in</MarginLeft>" +
+                        "<MarginRight>0.25in</MarginRight>" +
+                        "<MarginBottom>0.25in</MarginBottom>" +
+                        "</DeviceInfo>";
 
-                    "<MarginTop>0.25in</MarginTop>" +
-                    "<MarginLeft>0.25in</MarginLeft>" +
-                    "<MarginRight>0.25in</MarginRight>" +
-                    "<MarginBottom>0.25in</MarginBottom>" +
-                    "</DeviceInfo>";
-
-
-                //var renderedBytes = localReport.Render(
-                //    reportType,
-                //    deviceInfo,
-                //    out mimeType,
-                //    out encoding,
-                //    out fileNameExtension,
-                //    out streams,
-                //    out warnings
-                //    );
-                //return File(renderedBytes, mimeType);
-
-                renderedBytes = localReport.Render(
-                    rptType,
-                     deviceInfo,
+                var renderedBytes = localReport.Render(
+                    reportType,
+                    deviceInfo,
                     out mimeType,
-
                     out encoding,
                     out fileNameExtension,
                     out streams,
-                    out warnings);
+                    out warnings
+                    );
                 return File(renderedBytes, mimeType);
             }
-            return new EmptyResult();
-
-        }
-
-
-        public ActionResult GetReturnRawMaterialReportList(string flag, long? rawMaterialId, string returnType, string status, string fromDate, string toDate)
-        {
-            if (string.IsNullOrEmpty(flag))
+            catch (Exception)
             {
-                ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
-
-
-                return View();
-
+                return null;
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
-            {
-
-                var dto = _returnRawMaterialBusiness.GetReturnReportList(rawMaterialId, returnType, status, fromDate, toDate);
-                List<ReturnRawMaterialViewModel> viewModels = new List<ReturnRawMaterialViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetReturnReportListView", viewModels);
-
-
-            }
-
-            return View();
-        }
-
-        public ActionResult GetReturnRawMaterialReport(long? rawMaterialId, string returnType, string status, string fromDate, string toDate, string rptType)
-        {
-            var data = _returnRawMaterialBusiness.GetReturnRawMaterialDataReport(rawMaterialId, returnType, status, fromDate, toDate);
-
-            LocalReport localReport = new LocalReport();
-
-            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptReturnRawMaterialReport.rdlc");
-            if (System.IO.File.Exists(reportPath))
-            {
-                localReport.ReportPath = reportPath;
-            }
-
-            ReportDataSource dataSource1 = new ReportDataSource("dsReturnRawMaterialReport", data);
-            localReport.DataSources.Add(dataSource1);
-
-            string reportType = rptType;
-            string mimeType;
-            string encoding;
-            string fileNameExtension;
-            Warning[] warnings;
-            string[] streams;
-            string deviceInfo =
-                    "<DeviceInfo>" +
-                    "<OutputFormat>PDF</OutputFormat>" +
-                      "<PageWidth>8.27in</PageWidth>" +
-                    "<PageHeight>11.69in</PageHeight>" +
-                    "<MarginTop>0.25in</MarginTop>" +
-                    "<MarginLeft>0.25in</MarginLeft>" +
-                    "<MarginRight>0.25in</MarginRight>" +
-                    "<MarginBottom>0.25in</MarginBottom>" +
-                    "</DeviceInfo>";
-
-            var renderedBytes = localReport.Render(
-                reportType,
-                deviceInfo,
-                out mimeType,
-                out encoding,
-                out fileNameExtension,
-                out streams,
-                out warnings
-                );
-            return File(renderedBytes, mimeType);
         }
 
         public ActionResult GetSalesReturnReportList(string flag, long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
 
+                if (string.IsNullOrEmpty(flag))
+                {
 
-                ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(des => new SelectListItem { Text = des.FinishGoodProductName, Value = des.FinishGoodProductId.ToString() }).ToList();
 
-                ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(des => new SelectListItem { Text = des.StockiestName, Value = des.StockiestId.ToString() }).ToList();
+                    ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(des => new SelectListItem { Text = des.FinishGoodProductName, Value = des.FinishGoodProductId.ToString() }).ToList();
+
+                    ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(des => new SelectListItem { Text = des.StockiestName, Value = des.StockiestId.ToString() }).ToList();
+
+                    return View();
+
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+                    var dto = _salesReturn.GetSalesReturnReportList(productId, stockiestId, invoiceNo, status, fromDate, toDate);
+                    List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetSalesReturnReportList", viewModels);
+
+
+                }
+
 
                 return View();
-
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception e)
             {
-
-                var dto = _salesReturn.GetSalesReturnReportList(productId, stockiestId, invoiceNo, status, fromDate, toDate);
-                List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetSalesReturnReportList", viewModels);
-
-
+                return View();
             }
-
-
-            return View();
         }
 
 
         public ActionResult GetSalesReturnReport(string rptType, long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate)
         {
-            var data = _salesReturn.GetSalesReturnReportList(productId, stockiestId, invoiceNo, status, fromDate, toDate);
-
-            LocalReport localReport = new LocalReport();
-
-            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptSalesReturnReport.rdlc");
-            if (System.IO.File.Exists(reportPath))
+            try
             {
-                localReport.ReportPath = reportPath;
+                var data = _salesReturn.GetSalesReturnReportList(productId, stockiestId, invoiceNo, status, fromDate, toDate);
+
+                LocalReport localReport = new LocalReport();
+
+                string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptSalesReturnReport.rdlc");
+                if (System.IO.File.Exists(reportPath))
+                {
+                    localReport.ReportPath = reportPath;
+                }
+
+                ReportDataSource dataSource1 = new ReportDataSource("dsSalesReturnReport", data);
+                localReport.DataSources.Add(dataSource1);
+
+                string reportType = rptType;
+                string mimeType;
+                string encoding;
+                string fileNameExtension;
+                Warning[] warnings;
+                string[] streams;
+                string deviceInfo =
+                        "<DeviceInfo>" +
+                        "<OutputFormat>PDF</OutputFormat>" +
+                        "<PageWidth>8.27in</PageWidth>" +
+                        "<PageHeight>11.69in</PageHeight>" +
+                        "<MarginTop>0.25in</MarginTop>" +
+                        "<MarginLeft>0.25in</MarginLeft>" +
+                        "<MarginRight>0.25in</MarginRight>" +
+                        "<MarginBottom>0.25in</MarginBottom>" +
+                        "</DeviceInfo>";
+
+                var renderedBytes = localReport.Render(
+                    reportType,
+                    deviceInfo,
+                    out mimeType,
+                    out encoding,
+                    out fileNameExtension,
+                    out streams,
+                    out warnings
+                    );
+                return File(renderedBytes, mimeType);
             }
-
-            ReportDataSource dataSource1 = new ReportDataSource("dsSalesReturnReport", data);
-            localReport.DataSources.Add(dataSource1);
-
-            string reportType = rptType;
-            string mimeType;
-            string encoding;
-            string fileNameExtension;
-            Warning[] warnings;
-            string[] streams;
-            string deviceInfo =
-                    "<DeviceInfo>" +
-                    "<OutputFormat>PDF</OutputFormat>" +
-                    "<PageWidth>8.27in</PageWidth>" +
-                    "<PageHeight>11.69in</PageHeight>" +
-                    "<MarginTop>0.25in</MarginTop>" +
-                    "<MarginLeft>0.25in</MarginLeft>" +
-                    "<MarginRight>0.25in</MarginRight>" +
-                    "<MarginBottom>0.25in</MarginBottom>" +
-                    "</DeviceInfo>";
-
-            var renderedBytes = localReport.Render(
-                reportType,
-                deviceInfo,
-                out mimeType,
-                out encoding,
-                out fileNameExtension,
-                out streams,
-                out warnings
-                );
-            return File(renderedBytes, mimeType);
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
@@ -4599,30 +4794,38 @@ namespace ERPWeb.Controllers
 
         public ActionResult SalesReturnList(string flag, long? id, string name, long? ProductId, string status)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
 
-                ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(des => new SelectListItem { Text = des.FinishGoodProductName, Value = des.FinishGoodProductId.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+
+                    ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(des => new SelectListItem { Text = des.FinishGoodProductName, Value = des.FinishGoodProductId.ToString() }).ToList();
+
+                    return View();
+
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+
+                    var dto = _salesReturn.GetSalesReturns(ProductId ?? 0, name ?? null, status ?? null);
+
+                    List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_SalesReturnListview", viewModels);
+
+                }
+
+
 
                 return View();
-
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception)
             {
-
-
-                var dto = _salesReturn.GetSalesReturns(ProductId ?? 0, name ?? null, status ?? null);
-
-                List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_SalesReturnListview", viewModels);
-
+                return null;
             }
-
-
-
-            return View();
         }
 
         public ActionResult SalesReturn(long? id)
@@ -4839,51 +5042,59 @@ namespace ERPWeb.Controllers
         public ActionResult GetSalesReturnAdjustList(string flag, long? id, string invoiceNo, string fromDate, string toDate)
         {
 
+            try
+            {
 
-            if (string.IsNullOrEmpty(flag))
+
+                if (string.IsNullOrEmpty(flag))
+                {
+                    return View();
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+                    //var dto = _salesReturn.GetSalesAdjustInfos();
+                    var dto = _agroProductSalesInfoBusiness.GetSalesAdjustInfos(invoiceNo ?? null, fromDate, toDate);
+                    List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetSalesReturnAdjustListview", viewModels);
+
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+
+
+                    //var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
+                    IEnumerable<SalesReturnDTO> dto = _salesReturn.GetSalesReturnsAdjustById(id.Value, User.OrgId).Select(i => new SalesReturnDTO
+                    {
+                        AdjustmentDate = i.AdjustmentDate,
+                        ReturnPerUnitPrice = i.ReturnPerUnitPrice,
+                        ReturnQuanity = i.ReturnQuanity,
+                        ReturnTotalPrice = i.ReturnTotalPrice,
+                        ReturnDate = i.ReturnDate,
+                        FinishGoodProductInfoId = i.FinishGoodProductInfoId,
+                        MeasurementSize = i.MeasurementSize,
+                        Status = i.Status,
+                        QtyKG = i.QtyKG,
+                        FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName,
+                        BoxQuanity = i.BoxQuanity,
+                        SalesReturnId = i.SalesReturnId,
+
+                    }).OrderByDescending(i => i.SalesReturnId).ToList();
+
+                    List<SalesReturnViewModel> details = new List<SalesReturnViewModel>();
+                    AutoMapper.Mapper.Map(dto, details);
+
+                    return PartialView("_GetSalesReturnAdjustDetails", details);
+                }
+
+                return View();
+            }
+            catch (Exception e)
             {
                 return View();
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
-            {
-
-                //var dto = _salesReturn.GetSalesAdjustInfos();
-                var dto = _agroProductSalesInfoBusiness.GetSalesAdjustInfos(invoiceNo ?? null, fromDate, toDate);
-                List<SalesReturnViewModel> viewModels = new List<SalesReturnViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetSalesReturnAdjustListview", viewModels);
-
-            }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-
-
-                //var dto = _rawMaterialRequisitionDetailsBusiness.GetRawMaterialRequisitionDetailsbyInfo(infoId.Value, User.OrgId).Select(d => new RawMaterialRequisitionDetailsDTO
-                IEnumerable<SalesReturnDTO> dto = _salesReturn.GetSalesReturnsAdjustById(id.Value, User.OrgId).Select(i => new SalesReturnDTO
-                {
-                    AdjustmentDate = i.AdjustmentDate,
-                    ReturnPerUnitPrice = i.ReturnPerUnitPrice,
-                    ReturnQuanity = i.ReturnQuanity,
-                    ReturnTotalPrice = i.ReturnTotalPrice,
-                    ReturnDate = i.ReturnDate,
-                    FinishGoodProductInfoId = i.FinishGoodProductInfoId,
-                    MeasurementSize = i.MeasurementSize,
-                    Status = i.Status,
-                    QtyKG = i.QtyKG,
-                    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(i.FinishGoodProductInfoId, User.OrgId).FinishGoodProductName,
-                    BoxQuanity = i.BoxQuanity,
-                    SalesReturnId = i.SalesReturnId,
-
-                }).OrderByDescending(i => i.SalesReturnId).ToList();
-
-                List<SalesReturnViewModel> details = new List<SalesReturnViewModel>();
-                AutoMapper.Mapper.Map(dto, details);
-
-                return PartialView("_GetSalesReturnAdjustDetails", details);
-            }
-
-            return View();
         }
 
         public ActionResult SalesReturnAdjustCreate(long? id)
@@ -5006,39 +5217,46 @@ namespace ERPWeb.Controllers
         #region Commision
         public ActionResult ProductCommision(string flag, long? product, int? year)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-                return View();
-
-
-            }
-            else
-            {
-
-
-                var dto = _commissionOnProductBusiness.GetAllCommisionOnProducts(product, year, User.OrgId).Select(a => new CommisionOnProductDTO
+                if (string.IsNullOrEmpty(flag))
                 {
-                    CommissionOnProductId = a.CommissionOnProductId,
-                    FinishGoodProductId = a.FinishGoodProductId,
-                    FinishGoodProductName = a.FinishGoodProductName,
-                    CalenderYear = a.CalenderYear,
-                    Credit = a.Credit,
-                    Cash = a.Cash,
-                    Status = a.Status,
-                    Remarks = a.Remarks,
-                    EntryDate = a.EntryDate,
-                    StartDate = a.StartDate,
-                    EndDate = a.EndDate,
-                    Quantity = (a.EndDate.Value.Date - a.StartDate.Value.Date).Days,
-                    EntryUserId = a.EntryUserId
+                    ViewBag.ddlProductName = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                    return View();
 
 
-                }).ToList();
-                List<CommisionOnProductViewModel> commisionOnProductViewModel = new List<CommisionOnProductViewModel>();
-                AutoMapper.Mapper.Map(dto, commisionOnProductViewModel);
-                return PartialView("_ProductCommision", commisionOnProductViewModel);
+                }
+                else
+                {
 
+
+                    var dto = _commissionOnProductBusiness.GetAllCommisionOnProducts(product, year, User.OrgId).Select(a => new CommisionOnProductDTO
+                    {
+                        CommissionOnProductId = a.CommissionOnProductId,
+                        FinishGoodProductId = a.FinishGoodProductId,
+                        FinishGoodProductName = a.FinishGoodProductName,
+                        CalenderYear = a.CalenderYear,
+                        Credit = a.Credit,
+                        Cash = a.Cash,
+                        Status = a.Status,
+                        Remarks = a.Remarks,
+                        EntryDate = a.EntryDate,
+                        StartDate = a.StartDate,
+                        EndDate = a.EndDate,
+                        Quantity = (a.EndDate.Value.Date - a.StartDate.Value.Date).Days,
+                        EntryUserId = a.EntryUserId
+
+
+                    }).ToList();
+                    List<CommisionOnProductViewModel> commisionOnProductViewModel = new List<CommisionOnProductViewModel>();
+                    AutoMapper.Mapper.Map(dto, commisionOnProductViewModel);
+                    return PartialView("_ProductCommision", commisionOnProductViewModel);
+
+                }
+            }
+            catch(Exception e)
+            {
+                return View();
             }
 
         }
@@ -5064,116 +5282,199 @@ namespace ERPWeb.Controllers
             return Json(Isexist);
         }
 
-
+        
         public ActionResult SalesCommission(string flag, long? id, string invoiceNo, long? stockiestId, string fdate, string tdate)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlInvoiceNo = _agroProductSalesInfoBusiness.GetAgroProductionSalesInfo(User.OrgId).Select(inv => new SelectListItem { Text = inv.InvoiceNo, Value = inv.InvoiceNo.ToString() });
-                ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlInvoiceNo = _agroProductSalesInfoBusiness.GetAgroProductionSalesInfo(User.OrgId).Select(inv => new SelectListItem { Text = inv.InvoiceNo, Value = inv.InvoiceNo.ToString() });
+                    ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
-                return View();
+                    return View();
 
-            }
-            else if (flag == "view")
-            {
-
-
-
-                var commision = _commisionOnProductSalesDetailsBusiness.GetCommisionOnProductSalesDetails(0).Where(a => a.CommissionOnProductOnSalesId == id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
-                {//75
-
-                    QtyKG = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyId(c.ProductSalesDetailsId).QtyKG,
-
-                    CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
-                    FinishGoodProductId = c.FinishGoodProductId,
-                    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(c.FinishGoodProductId, User.OrgId).FinishGoodProductName,
-                    PaymentMode = c.PaymentMode,
-                    TotalCommission = (c.Cash == 0 ? c.Credit * c.price : c.Cash * c.price) / 100,
-                    InvoiceNo = _commissionOnProductOnSalesBusiness.GetCommissionOnProductById(c.CommissionOnProductOnSalesId, User.OrgId).InvoiceNo,
-                    EntryDate = c.EntryDate
-
-
-                }).ToList();
-                List<CommisionOnProductSalesDetailsViewModel> productOnSalesViewModels = new List<CommisionOnProductSalesDetailsViewModel>();
-                AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
-
-
-                return PartialView("_SalesCommissionDetails", productOnSalesViewModels);
-            }
-            else
-            {
-                var commision = _commissionOnProductOnSalesBusiness.GetAllCommissionOnProductOnSales(invoiceNo, stockiestId, fdate, tdate, User.OrgId).Select(c => new CommissionOnProductOnSalesDTO
+                }
+                else if (flag == "view")
                 {
 
-                    CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
+                    var commision = _commisionOnProductSalesDetailsBusiness.GetCommisionOnProductSalesDetails(0).Where(a => a.CommissionOnProductOnSalesId == id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
+                    {//75
 
-                    //FinishGoodProductId = c.FinishGoodProductId,
-                    //FinishGoodProductName = c.FinishGoodProductName,
-                    //Flag=_stockiestInfo.GetStockiestInfoById(_agroProductSalesInfoBusiness.GetAgroProductionInfoById(c.ProductSalesInfoId,User.OrgId).StockiestId,User.OrgId).StockiestName,
-                    PaymentMode = c.PaymentMode,
-                    TotalAmount = c.TotalAmount,
-                    TotalCommission = c.TotalCommission,
-                    InvoiceNo = c.InvoiceNo,
-                    EntryDate = c.EntryDate,
-                    StockiestName = c.StockiestName,
+                        QtyKG = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyId(c.ProductSalesDetailsId).QtyKG,
 
-
-
-                }).ToList();
-                List<CommissionOnProductOnSalesViewModel> productOnSalesViewModels = new List<CommissionOnProductOnSalesViewModel>();
-                AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
+                        CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
+                        FinishGoodProductId = c.FinishGoodProductId,
+                        FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(c.FinishGoodProductId, User.OrgId).FinishGoodProductName,
+                        PaymentMode = c.PaymentMode,
+                        TotalCommission = (c.Cash == 0 ? c.Credit * c.price : c.Cash * c.price) / 100,
+                        InvoiceNo = _commissionOnProductOnSalesBusiness.GetCommissionOnProductById(c.CommissionOnProductOnSalesId, User.OrgId).InvoiceNo,
+                        EntryDate = c.EntryDate
 
 
-                return PartialView("_SalesCommission", productOnSalesViewModels);
+                    }).ToList();
+                    List<CommisionOnProductSalesDetailsViewModel> productOnSalesViewModels = new List<CommisionOnProductSalesDetailsViewModel>();
+                    AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
 
+
+                    return PartialView("_SalesCommissionDetails", productOnSalesViewModels);
+                }
+                else
+                {
+                    var commision = _commissionOnProductOnSalesBusiness.GetAllCommissionOnProductOnSales(invoiceNo, stockiestId, fdate, tdate, User.OrgId).Select(c => new CommissionOnProductOnSalesDTO
+                    {
+
+                        CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
+
+                        //FinishGoodProductId = c.FinishGoodProductId,
+                        //FinishGoodProductName = c.FinishGoodProductName,
+                        //Flag=_stockiestInfo.GetStockiestInfoById(_agroProductSalesInfoBusiness.GetAgroProductionInfoById(c.ProductSalesInfoId,User.OrgId).StockiestId,User.OrgId).StockiestName,
+                        PaymentMode = c.PaymentMode,
+                        TotalAmount = c.TotalAmount,
+                        TotalCommission = c.TotalCommission,
+                        InvoiceNo = c.InvoiceNo,
+                        EntryDate = c.EntryDate,
+                        StockiestName = c.StockiestName,
+
+
+
+                    }).ToList();
+                    List<CommissionOnProductOnSalesViewModel> productOnSalesViewModels = new List<CommissionOnProductOnSalesViewModel>();
+                    AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
+
+
+                    return PartialView("_SalesCommission", productOnSalesViewModels);
+
+                }
+            }
+            catch(Exception e)
+            {
+                return View();
+            }
+
+        }
+        
+        public ActionResult SalesCommissionReportList(string flag, long? id, string invoiceNo, long? stockiestId, string fdate, string tdate)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlInvoiceNo = _agroProductSalesInfoBusiness.GetAgroProductionSalesInfo(User.OrgId).Select(inv => new SelectListItem { Text = inv.InvoiceNo, Value = inv.InvoiceNo.ToString() });
+                    ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+
+                    return View();
+
+                }
+                else if (flag == "view")
+                {
+
+                    var commision = _commisionOnProductSalesDetailsBusiness.GetCommisionOnProductSalesDetails(0).Where(a => a.CommissionOnProductOnSalesId == id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
+                    {//75
+
+                        QtyKG = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyId(c.ProductSalesDetailsId).QtyKG,
+
+                        CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
+                        FinishGoodProductId = c.FinishGoodProductId,
+                        FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(c.FinishGoodProductId, User.OrgId).FinishGoodProductName,
+                        PaymentMode = c.PaymentMode,
+                        TotalCommission = (c.Cash == 0 ? c.Credit * c.price : c.Cash * c.price) / 100,
+                        InvoiceNo = _commissionOnProductOnSalesBusiness.GetCommissionOnProductById(c.CommissionOnProductOnSalesId, User.OrgId).InvoiceNo,
+                        EntryDate = c.EntryDate
+
+
+                    }).ToList();
+                    List<CommisionOnProductSalesDetailsViewModel> productOnSalesViewModels = new List<CommisionOnProductSalesDetailsViewModel>();
+                    AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
+
+
+                    return PartialView("_SalesCommissionDetails", productOnSalesViewModels);
+                }
+                else
+                {
+                    var commision = _commissionOnProductOnSalesBusiness.GetAllCommissionOnProductOnSales(invoiceNo, stockiestId, fdate, tdate, User.OrgId).Select(c => new CommissionOnProductOnSalesDTO
+                    {
+
+                        CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
+
+                        //FinishGoodProductId = c.FinishGoodProductId,
+                        //FinishGoodProductName = c.FinishGoodProductName,
+                        //Flag=_stockiestInfo.GetStockiestInfoById(_agroProductSalesInfoBusiness.GetAgroProductionInfoById(c.ProductSalesInfoId,User.OrgId).StockiestId,User.OrgId).StockiestName,
+                        PaymentMode = c.PaymentMode,
+                        TotalAmount = c.TotalAmount,
+                        TotalCommission = c.TotalCommission,
+                        InvoiceNo = c.InvoiceNo,
+                        EntryDate = c.EntryDate,
+                        StockiestName = c.StockiestName,
+
+
+
+                    }).ToList();
+                    List<CommissionOnProductOnSalesViewModel> productOnSalesViewModels = new List<CommissionOnProductOnSalesViewModel>();
+                    AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
+
+
+                    return PartialView("_SalesCommission", productOnSalesViewModels);
+
+                }
+            }
+            catch (Exception e)
+            {
+                return View();
             }
 
         }
 
-        public ActionResult SalesCommissionReport(string invoiceNo, long? stockiestId, string fromDate, string toDate, string rptType)
+        public ActionResult SalesCommissionReportt(string invoiceNo, long? stockiestId, string fromDate, string toDate, string rptType)
         {
 
-            var data = _commissionOnProductOnSalesBusiness.GetSalesCommissionDataReport(invoiceNo, stockiestId, fromDate, toDate);
-
-            LocalReport localReport = new LocalReport();
-
-            string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptSalesCommissionReport.rdlc");
-            if (System.IO.File.Exists(reportPath))
+            try
             {
-                localReport.ReportPath = reportPath;
+                var data = _commissionOnProductOnSalesBusiness.GetSalesCommissionDataReport(invoiceNo, stockiestId, fromDate, toDate);
+
+                LocalReport localReport = new LocalReport();
+
+                string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptSalesCommissionReport.rdlc");
+                if (System.IO.File.Exists(reportPath))
+                {
+                    localReport.ReportPath = reportPath;
+                }
+
+                ReportDataSource dataSource1 = new ReportDataSource("dsSalesCommissionReport", data);
+                localReport.DataSources.Add(dataSource1);
+
+                string reportType = rptType;
+                string mimeType;
+                string encoding;
+                string fileNameExtension;
+                Warning[] warnings;
+                string[] streams;
+                string deviceInfo =
+                        "<DeviceInfo>" +
+                        "<OutputFormat>PDF</OutputFormat>" +
+                        "<PageWidth>29.7cm</PageWidth>" +
+                        "<PageHeight>21cm</PageHeight>" +
+                        "<MarginTop>0.25in</MarginTop>" +
+                        "<MarginLeft>0.25in</MarginLeft>" +
+                        "<MarginRight>0.25in</MarginRight>" +
+                        "<MarginBottom>0.25in</MarginBottom>" +
+                        "</DeviceInfo>";
+
+                var renderedBytes = localReport.Render(
+                    reportType,
+                    deviceInfo,
+                    out mimeType,
+                    out encoding,
+                    out fileNameExtension,
+                    out streams,
+                    out warnings
+                    );
+                return File(renderedBytes, mimeType);
             }
-
-            ReportDataSource dataSource1 = new ReportDataSource("dsSalesCommissionReport", data);
-            localReport.DataSources.Add(dataSource1);
-
-            string reportType = rptType;
-            string mimeType;
-            string encoding;
-            string fileNameExtension;
-            Warning[] warnings;
-            string[] streams;
-            string deviceInfo =
-                    "<DeviceInfo>" +
-                    "<OutputFormat>PDF</OutputFormat>" +
-                    "<PageWidth>29.7cm</PageWidth>" +
-                    "<PageHeight>21cm</PageHeight>" +
-                    "<MarginTop>0.25in</MarginTop>" +
-                    "<MarginLeft>0.25in</MarginLeft>" +
-                    "<MarginRight>0.25in</MarginRight>" +
-                    "<MarginBottom>0.25in</MarginBottom>" +
-                    "</DeviceInfo>";
-
-            var renderedBytes = localReport.Render(
-                reportType,
-                deviceInfo,
-                out mimeType,
-                out encoding,
-                out fileNameExtension,
-                out streams,
-                out warnings
-                );
-            return File(renderedBytes, mimeType);
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         #endregion
@@ -5182,50 +5483,58 @@ namespace ERPWeb.Controllers
 
         public ActionResult ProductPriceList(string flag, long? id, string name, long? ProductId, long? pid, long? rid)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
-                ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
+                    ViewBag.ddlRawmaterialName = _returnRawMaterialBusiness.GetIssueRawMaterials(User.OrgId).Select(des => new SelectListItem { Text = des.text, Value = des.value.ToString() }).ToList();
 
-                //ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(des => new SelectListItem { Text = des.FinishGoodProductName, Value = des.FinishGoodProductId.ToString() }).ToList();
-                ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                    //ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(des => new SelectListItem { Text = des.FinishGoodProductName, Value = des.FinishGoodProductId.ToString() }).ToList();
+                    ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+                    return View();
+
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    var dto = _productPriceConfiguration.GetAllproductPRicelist(name ?? null);
+
+
+
+
+                    List<ProductPriceConfigurationViewModel> viewModels = new List<ProductPriceConfigurationViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_ProductPriceListview", viewModels);
+
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+                    //string Status = "Pending";
+                    // string ReturnType = "Damage";
+
+                    List<ProductPricingHistoryViewModel> productPricingHistoryViewModels = new List<ProductPricingHistoryViewModel>();
+                    productPricingHistoryViewModels = _productPricingHistory.GetPriceByproANDfgrId(pid.Value, rid.Value).Select(de => new ProductPricingHistoryViewModel
+                    {
+                        EntryDate = de.EntryDate,
+                        EntryUser = de.EntryUser,
+                        ProductPrice = de.ProductPrice,
+                        UserName = UserForEachRecord(de.EntryUser.Value).UserName,
+
+                    }).ToList();
+                    return PartialView("_ProductPaymentHistoryDetails", productPricingHistoryViewModels);
+
+
+                }
+
+
 
                 return View();
 
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception e)
             {
-                var dto = _productPriceConfiguration.GetAllproductPRicelist(name ?? null);
-
-
-
-
-                List<ProductPriceConfigurationViewModel> viewModels = new List<ProductPriceConfigurationViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_ProductPriceListview", viewModels);
-
+                return View();
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-                //string Status = "Pending";
-                // string ReturnType = "Damage";
-
-                List<ProductPricingHistoryViewModel> productPricingHistoryViewModels = new List<ProductPricingHistoryViewModel>();
-                productPricingHistoryViewModels = _productPricingHistory.GetPriceByproANDfgrId(pid.Value, rid.Value).Select(de => new ProductPricingHistoryViewModel
-                {
-                    EntryDate = de.EntryDate,
-                    EntryUser = de.EntryUser,
-                    ProductPrice = de.ProductPrice,
-                    UserName = UserForEachRecord(de.EntryUser.Value).UserName,
-
-                }).ToList();
-                return PartialView("_ProductPaymentHistoryDetails", productPricingHistoryViewModels);
-
-
-            }
-
-
-
-            return View();
         }
 
 
@@ -5303,51 +5612,59 @@ namespace ERPWeb.Controllers
 
         public ActionResult GetDropList(string flag, long? id, string invoiceNo)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
 
-                ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+                if (string.IsNullOrEmpty(flag))
+                {
 
+                    ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+
+
+                    return View();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    var dto = _agroProductSalesInfoBusiness.GetSalesDropList(invoiceNo);
+
+
+                    List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetProductSalesDropList", viewModels);
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+
+                    var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
+                    var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
+                    var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
+                    var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
+                    var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
+                    var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
+
+
+
+
+
+
+                    var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
+
+
+
+
+                    List<AgroProductSalesDetailsViewModel> dropDetails = new List<AgroProductSalesDetailsViewModel>();
+                    AutoMapper.Mapper.Map(details, dropDetails);
+                    return PartialView("_GetAgroSalesProductDropDetails", dropDetails);
+
+                }
 
                 return View();
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception e)
             {
-                var dto = _agroProductSalesInfoBusiness.GetSalesDropList(invoiceNo);
-
-
-                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetProductSalesDropList", viewModels);
+                return View();
             }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-
-                var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
-                var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
-                var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
-                var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
-                var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
-                var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
-
-
-
-
-
-
-                var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
-
-
-
-
-                List<AgroProductSalesDetailsViewModel> dropDetails = new List<AgroProductSalesDetailsViewModel>();
-                AutoMapper.Mapper.Map(details, dropDetails);
-                return PartialView("_GetAgroSalesProductDropDetails", dropDetails);
-
-            }
-
-            return View();
         }
 
 
@@ -5358,27 +5675,34 @@ namespace ERPWeb.Controllers
 
         public ActionResult ProductionPriceList(string flag, string name)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
+                if (string.IsNullOrEmpty(flag))
+                {
 
-                ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+                    ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+
+
+                    return View();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    //var dto = _agroProductSalesInfoBusiness.GetSalesDropList();
+                    var dto = _productionPerproductCost.GetAllProductionPerproductCost(name ?? null);
+
+
+                    List<ProductionPerproductCostViewModel> viewModels = new List<ProductionPerproductCostViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetProductionPriceList", viewModels);
+                }
 
 
                 return View();
             }
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception e)
             {
-                //var dto = _agroProductSalesInfoBusiness.GetSalesDropList();
-                var dto = _productionPerproductCost.GetAllProductionPerproductCost(name ?? null);
-
-
-                List<ProductionPerproductCostViewModel> viewModels = new List<ProductionPerproductCostViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_GetProductionPriceList", viewModels);
+                return View();
             }
-
-
-            return View();
         }
 
 
@@ -5437,96 +5761,106 @@ namespace ERPWeb.Controllers
         #region Dealar Ladger 
         public ActionResult DealarLadger (long? id, string flag,string fromDate, string toDate , long? ProductSalesInfoId)
         {
-            if (string.IsNullOrEmpty(flag))
+            try
             {
 
-                ViewBag.ddlstokiestname = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stk => new SelectListItem { Text = stk.StockiestName, Value = stk.StockiestId.ToString() });
+                if (string.IsNullOrEmpty(flag))
+                {
 
+                    ViewBag.ddlstokiestname = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stk => new SelectListItem { Text = stk.StockiestName, Value = stk.StockiestId.ToString() });
+
+
+                    return View();
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+                    var dto = _agroProductSalesInfoBusiness.GetDealerLadserInfos(id.Value, fromDate, toDate);
+
+
+                    List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_DealerGetAgroSalesProductList", viewModels);
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+                    //var FinishGoodProductName = _agroProductSalesDetailsBusiness.GetAllAgroSalesDetailsInfos(User.OrgId).ToList();
+                    var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
+                    var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
+                    var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
+                    var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
+                    var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
+                    var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
+
+                    var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(ProductSalesInfoId.Value, User.OrgId);
+                    ViewBag.Info = new AgroProductSalesInfoViewModel
+                    {
+                        ZoneName = ZoneName.FirstOrDefault(Z => Z.ZoneId == info.ZoneId).ZoneName,
+                        DivisionName = DivisionName.FirstOrDefault(D => D.DivisionId == info.DivisionId).DivisionName,
+                        RegionName = RegionName.FirstOrDefault(R => R.RegionId == info.RegionId).RegionName,
+                        AreaName = AreaName.FirstOrDefault(A => A.AreaId == info.AreaId).AreaName,
+                        TerritoryName = TerritoryName.FirstOrDefault(T => T.TerritoryId == info.TerritoryId).TerritoryName,
+                        StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == info.StockiestId).StockiestName,
+                        InvoiceNo = info.InvoiceNo,
+                        ChallanNo = info.ChallanNo,
+                        DriverName = info.DriverName,
+                        VehicleNumber = info.VehicleNumber,
+                        DeliveryPlace = info.DeliveryPlace,
+                        InvoiceDate = info.InvoiceDate,
+
+                    };
+
+                    var details = _agroProductSalesDetailsBusiness.DealerGetSalesDetailsByInfoId(ProductSalesInfoId.Value);
+
+                    List<AgroProductSalesDetailsViewModel> detailsvm = new List<AgroProductSalesDetailsViewModel>();
+                    AutoMapper.Mapper.Map(details, detailsvm);
+                    return PartialView("_DealerGetAgroSalesProductDetails", detailsvm);
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
+                {
+
+                    var info = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(ProductSalesInfoId.Value);
+                    List<SalesPaymentRegisterViewModel> details = new List<SalesPaymentRegisterViewModel>();
+
+                    if (info != null)
+                    {
+
+                        ViewBag.Info = new AgroProductSalesInfoViewModel
+                        {
+                            InvoiceNo = info.InvoiceNo,
+                            InvoiceDate = info.InvoiceDate,
+                            TotalAmount = info.TotalAmount,
+                            PaidAmount = info.PaidAmount,
+                            DueAmount = info.PaidAmount
+
+                        };
+                        details = _salesPaymentRegister.GetPaymentDetailsByInvoiceId(ProductSalesInfoId.Value).Select(i => new SalesPaymentRegisterViewModel
+                        {
+                            PaymentDate = i.PaymentDate,
+                            Remarks = i.Remarks,
+                            PaymentAmount = i.PaymentAmount
+                        }).ToList();
+                    }
+                    else
+                    {
+                        ViewBag.Info = new AgroProductSalesInfoViewModel();
+                    }
+                    return PartialView("_PaymentHistoryDetails", details);
+
+                }
 
                 return View();
             }
-          
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            catch (Exception e)
             {
-
-                var dto = _agroProductSalesInfoBusiness.GetDealerLadserInfos(id.Value, fromDate, toDate);
-
-
-                List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
-                AutoMapper.Mapper.Map(dto, viewModels);
-                return PartialView("_DealerGetAgroSalesProductList", viewModels);
+                return View();
             }
 
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
-            {
-                //var FinishGoodProductName = _agroProductSalesDetailsBusiness.GetAllAgroSalesDetailsInfos(User.OrgId).ToList();
-                var StockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).ToList();
-                var TerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).ToList();
-                var RegionName = _regionSetup.GetAllRegionSetup(User.OrgId).ToList();
-                var AreaName = _areaSetupBusiness.GetAllAreaSetupV(User.OrgId).ToList();
-                var DivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).ToList();
-                var ZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).ToList();
 
-                var info = _agroProductSalesInfoBusiness.GetAgroProductionInfoById(ProductSalesInfoId.Value, User.OrgId);
-                ViewBag.Info = new AgroProductSalesInfoViewModel
-                {
-                    ZoneName = ZoneName.FirstOrDefault(Z => Z.ZoneId == info.ZoneId).ZoneName,
-                    DivisionName = DivisionName.FirstOrDefault(D => D.DivisionId == info.DivisionId).DivisionName,
-                    RegionName = RegionName.FirstOrDefault(R => R.RegionId == info.RegionId).RegionName,
-                    AreaName = AreaName.FirstOrDefault(A => A.AreaId == info.AreaId).AreaName,
-                    TerritoryName = TerritoryName.FirstOrDefault(T => T.TerritoryId == info.TerritoryId).TerritoryName,
-                    StockiestName = StockiestName.FirstOrDefault(it => it.StockiestId == info.StockiestId).StockiestName,
-                    InvoiceNo = info.InvoiceNo,
-                    ChallanNo = info.ChallanNo,
-                    DriverName = info.DriverName,
-                    VehicleNumber = info.VehicleNumber,
-                    DeliveryPlace = info.DeliveryPlace,
-                    InvoiceDate = info.InvoiceDate,
-
-                };
-
-                var details = _agroProductSalesDetailsBusiness.DealerGetSalesDetailsByInfoId(ProductSalesInfoId.Value);
-
-                List<AgroProductSalesDetailsViewModel> detailsvm = new List<AgroProductSalesDetailsViewModel>();
-                AutoMapper.Mapper.Map(details, detailsvm);
-                return PartialView("_DealerGetAgroSalesProductDetails", detailsvm);
-
-            }
-
-            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
-            {
-
-                var info = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(ProductSalesInfoId.Value);
-                List<SalesPaymentRegisterViewModel> details = new List<SalesPaymentRegisterViewModel>();
-
-                if (info != null)
-                {
-
-                    ViewBag.Info = new AgroProductSalesInfoViewModel
-                    {
-                        InvoiceNo = info.InvoiceNo,
-                        InvoiceDate = info.InvoiceDate,
-                        TotalAmount = info.TotalAmount,
-                        PaidAmount = info.PaidAmount,
-                        DueAmount = info.PaidAmount
-
-                    };
-                    details = _salesPaymentRegister.GetPaymentDetailsByInvoiceId(ProductSalesInfoId.Value).Select(i => new SalesPaymentRegisterViewModel
-                    {
-                        PaymentDate = i.PaymentDate,
-                        Remarks = i.Remarks,
-                        PaymentAmount = i.PaymentAmount
-                    }).ToList();
-                }
-                else
-                {
-                    ViewBag.Info = new AgroProductSalesInfoViewModel();
-                }
-                return PartialView("_PaymentHistoryDetails", details);
-
-            }
-
-            return View();
         }
 
         public ActionResult SoketistName(long id)

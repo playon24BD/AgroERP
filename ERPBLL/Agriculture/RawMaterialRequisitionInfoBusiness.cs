@@ -81,46 +81,53 @@ namespace ERPBLL.Agriculture
         public IEnumerable<RawMaterialRequisitionInfoDTO> GetAllRawMaterialRequisitionInfos(string RequisitonCode, string status, string fdate,string tdate,long orgId)
         {
 
-            string query = string.Empty;
-            string param = string.Empty;
+            try
+            {
+                string query = string.Empty;
+                string param = string.Empty;
 
-            if (orgId > 0)
-            {
-                param += string.Format(@"and OrganizationId={0}", orgId);
-            }
-            if (RequisitonCode != null && RequisitonCode != "")
-            {
-                param += string.Format(@" and RawMaterialRequisitionCode ='{0}'", RequisitonCode);
-            }
+                if (orgId > 0)
+                {
+                    param += string.Format(@"and OrganizationId={0}", orgId);
+                }
+                if (RequisitonCode != null && RequisitonCode != "")
+                {
+                    param += string.Format(@" and RawMaterialRequisitionCode ='{0}'", RequisitonCode);
+                }
 
-            if (status != null && status != "")
-            {
-                param += string.Format(@" and Status ='{0}'", status);
-            }
-            if (!string.IsNullOrEmpty(fdate) && fdate.Trim() != "" && !string.IsNullOrEmpty(tdate) && tdate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fdate).ToString("yyyy-MM-dd");
-                string tDate = Convert.ToDateTime(tdate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
-            }
-            else if (!string.IsNullOrEmpty(fdate) && fdate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fdate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(EntryDate as date)='{0}'", fDate);
-            }
-            else if (!string.IsNullOrEmpty(tdate) && tdate.Trim() != "")
-            {
-                string tDate = Convert.ToDateTime(tdate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(EntryDate as date)='{0}'", tDate);
-            }
+                if (status != null && status != "")
+                {
+                    param += string.Format(@" and Status ='{0}'", status);
+                }
+                if (!string.IsNullOrEmpty(fdate) && fdate.Trim() != "" && !string.IsNullOrEmpty(tdate) && tdate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fdate).ToString("yyyy-MM-dd");
+                    string tDate = Convert.ToDateTime(tdate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+                }
+                else if (!string.IsNullOrEmpty(fdate) && fdate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fdate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(EntryDate as date)='{0}'", fDate);
+                }
+                else if (!string.IsNullOrEmpty(tdate) && tdate.Trim() != "")
+                {
+                    string tDate = Convert.ToDateTime(tdate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(EntryDate as date)='{0}'", tDate);
+                }
 
-       
-            query = string.Format(@"select * FROM [dbo].[tblRawMaterialRequisitionInfo] R  where 1=1  {0} Order By R.RawMaterialRequisitionInfoId DESC",
-           Utility.ParamChecker(param));
 
-            var allRequistion = _agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialRequisitionInfoDTO>(string.Format(query));
+                query = string.Format(@"select * FROM [dbo].[tblRawMaterialRequisitionInfo] R  where 1=1  {0} Order By R.RawMaterialRequisitionInfoId DESC",
+               Utility.ParamChecker(param));
 
-            return allRequistion;
+                var allRequistion = _agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialRequisitionInfoDTO>(string.Format(query));
+
+                return allRequistion;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 

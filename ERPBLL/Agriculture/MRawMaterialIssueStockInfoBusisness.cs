@@ -32,7 +32,14 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<MRawMaterialIssueStockInfo> GetAllRawMaterialIssue(long OrgId)
         {
-            return _mRawMaterialIssueStockInfoRepository.GetAll(x => x.OrganizationId == OrgId).ToList();
+            try
+            {
+                return _mRawMaterialIssueStockInfoRepository.GetAll(x => x.OrganizationId == OrgId).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
             //return this._agricultureUnitOfWork.Db.Database.SqlQuery<MRawMaterialIssueStockInfoDTO>(QueryForFinishGoodProductInfoss(OrgId)).ToList();
         }
 
@@ -53,7 +60,14 @@ namespace ERPBLL.Agriculture
 
         public MRawMaterialIssueStockInfo GetRawmaterialIssueInfoOneById(long id,  long orgId)
         {
-            return _mRawMaterialIssueStockInfoRepository.GetOneByOrg(p => p.RawMaterialIssueStockId == id && p.OrganizationId == orgId);
+            try
+            {
+                return _mRawMaterialIssueStockInfoRepository.GetOneByOrg(p => p.RawMaterialIssueStockId == id && p.OrganizationId == orgId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool SaveRawMaterialIssueStock(MRawMaterialIssueStockInfoDTO info, List<MRawMaterialIssueStockDetailsDTO> details, long userId, long orgId)

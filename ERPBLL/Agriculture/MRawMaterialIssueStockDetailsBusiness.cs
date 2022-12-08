@@ -33,19 +33,28 @@ namespace ERPBLL.Agriculture
         public IEnumerable<MRawMaterialIssueStockDetailsDTO> GetIssueInOutInfos(string name)
         {
             //return this._agricultureUnitOfWork.Db.Database.SqlQuery<RegionSetupDTO>(QueryForRegion(orgId, name, regionId, divisionId)).ToList();
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<MRawMaterialIssueStockDetailsDTO>(QueryForRawMaterialIssueINOUTQTY(name)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<MRawMaterialIssueStockDetailsDTO>(QueryForRawMaterialIssueINOUTQTY(name)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         private string QueryForRawMaterialIssueINOUTQTY(string name)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-         
-            if (name != null && name != "")
+            try
             {
-                param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
-            }
-            query = string.Format(@"
+                string query = string.Empty;
+                string param = string.Empty;
+
+
+                if (name != null && name != "")
+                {
+                    param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
+                }
+                query = string.Format(@"
      
 
      
@@ -78,14 +87,26 @@ tblMRawMaterialIssueStockDetails t
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
       where 1=1  {0}",
-            Utility.ParamChecker(param));
-            return query;
+                Utility.ParamChecker(param));
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
      
         public IEnumerable<MRawMaterialIssueStockDetails> GetRawMatwrialissueDetailsByInfoId(long infoId)
         {
-            return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialIssueStockId == infoId).ToList();
+            try
+            {
+                return _mRawMaterialIssueStockDetailsRepository.GetAll(i => i.RawMaterialIssueStockId == infoId).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
 
         }
 

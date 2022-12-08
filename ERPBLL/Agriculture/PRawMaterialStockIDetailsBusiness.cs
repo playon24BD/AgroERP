@@ -35,7 +35,14 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<PRawMaterialStockIDetails> GetRawMatwrialPurchaseDetailsByInfoId(long infoId)
         {
-            return _pRawMaterialStockIDetailsRepository.GetAll(i => i.PRawMaterialStockId == infoId).ToList();
+            try
+            {
+                return _pRawMaterialStockIDetailsRepository.GetAll(i => i.PRawMaterialStockId == infoId).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
            
         }
     }

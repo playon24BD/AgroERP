@@ -3,22 +3,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" style="margin-top:-10px">
+<div class="row" style="margin-top:-8px">
 
     <div class="col-md-12">
 
-
-
-
-
         <div class="row">
             <div class="col-md-12" style="margin-top:-14px">
-                <div class="card card-navy">
+                <div class="card" style="background-color:#001f3f">
 
-                    <div class="card-header text-sm ">
+                    <div class="px-2 py-1">
                         <div class="row">
                             <div class="col-md-2">
-                                <h5 class="text-center text-bold">Dealer Ladger</h5>
+                                <h5 class="text-center text-bold text-white">Dealer Ladger</h5>
                             </div>
                             <div class="col-md-2">
                                 @*<label for="ddlstokiestname">Stockiest Name </label>*@
@@ -55,30 +51,30 @@
             <div class="col-md-12" style="margin-top:-14px">
                 <div class="card" style="background-color: #E0FFFF;">
                     <div class="px-4 py-2" style="margin-bottom:-10px">
-           
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <h7 class="text-bold ">Name:  </h7><span class="text-black font-italic" id="ddlName"></span><br />
-                                        <h7 class="text-bold">Address:  </h7><span class="text-black font-italic" id="ddlAddress"></span><br />
-                                        <h7 class="text-bold">Number:  </h7><span class="text-black font-italic" id="ddlNumber"></span><br />
-                                        <h7 class="text-bold">Territory:  </h7><span class="text-black font-italic" id="ddlTerritory"></span><br />
-                                        <h7 class="text-bold">Territory Manager:  </h7><span class="text-black" id="ddlManager"></span>
 
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h7 class="text-bold ">Name:  </h7><span class="text-black font-italic" id="ddlName"></span><br />
+                                    <h7 class="text-bold">Address:  </h7><span class="text-black font-italic" id="ddlAddress"></span><br />
+                                    <h7 class="text-bold">Number:  </h7><span class="text-black font-italic" id="ddlNumber"></span><br />
+                                    <h7 class="text-bold">Territory:  </h7><span class="text-black font-italic" id="ddlTerritory"></span><br />
+                                    <h7 class="text-bold">Territory Manager:  </h7><span class="text-black" id="ddlManager"></span>
+
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <h7 class="text-bold">Total Bill:  </h7><span class="text-black font-italic" id="ddltotalbill"></span><br />
-                                        <h7 class="text-bold">Total Paid:  </h7><span class="text-black font-italic" id="ddltotalpaid"></span><br />
-                                        <h7 class="text-bold">Total Return: </h7><span class="text-black font-italic" id="ddltotalreturn"></span><br />
-                                        <h7 class="text-bold">Total Due: </h7> <span class="text-black font-italic" id="ddltotaldue"></span>
-
-                                    </div>
-                                </div>
-
                             </div>
-     
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h7 class="text-bold">Total Bill:  </h7><span class="text-black font-italic" id="ddltotalbill"></span><br />
+                                    <h7 class="text-bold">Total Paid:  </h7><span class="text-black font-italic" id="ddltotalpaid"></span><br />
+                                    <h7 class="text-bold">Total Return: </h7><span class="text-black font-italic" id="ddltotalreturn"></span><br />
+                                    <h7 class="text-bold">Total Due: </h7> <span class="text-black font-italic" id="ddltotaldue"></span>
+
+                                </div>
+                            </div>
+
+                        </div>
+
 
                     </div>
 
@@ -88,49 +84,62 @@
             </div>
         </div>
 
+
         <div class="row mb-5">
             <div class="col-md-12" style="margin-top:-10px">
                 @*<div class="card">
                     <div class="card-body">*@
-                        <div class="col-md-12" id="dataContainer">
 
+                <div class="row" style="margin-top:-3px">
+                    <div class="col-md-12" style="margin-top:-10px">
+                        <div class="card">
+                            <div class="card-body" style="margin-top:-10px">
+
+                                <div class="col-md-12" id="dataContainer">
+
+                                </div>
+                                @*</div>
+                                    </div>*@
+                            </div>
                         </div>
-                    @*</div>
-                </div>*@
+
+
+
+
+                    </div>
+
+
+                </div>
             </div>
+
+
         </div>
 
 
+        <div class="modal fade" id="AgroSalesProductDetails" role="dialog" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-gradient-gray-dark">
+                        <h4 id="modalHeading" class="modal-title">Details</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body" id="dataContainer2">
 
-
-    </div>
-
-
-</div>
-
-
-<div class="modal fade" id="AgroSalesProductDetails" role="dialog" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-gradient-gray-dark">
-                <h4 id="modalHeading" class="modal-title">Details</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body" id="dataContainer2">
-
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="modal fade" id="PaymentDetails" role="dialog" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-gradient-gray-dark">
-                <h4 id="modalHeading" class="modal-title">Payment Details</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body" id="dataContainer3">
+        <div class="modal fade" id="PaymentDetails" role="dialog" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-gradient-gray-dark">
+                        <h4 id="modalHeading" class="modal-title">Payment Details</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body" id="dataContainer3">
 
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -308,7 +317,7 @@
             });
 
 
-           
+
 
         });
 
@@ -329,7 +338,7 @@
                 if (status === "success") {
                     $("#dataContainer").empty();
                     $("#dataContainer").append(res);
-             
+
                 }
             }).fail(function (error) {
                 console.log(error);
@@ -343,7 +352,7 @@
 
             $("#dataContainer2").empty();
             var id = $(this).parent().children('td').eq(1).html();
-  
+
             console.log(id);
 
 
@@ -390,5 +399,7 @@
 
 
 
+
     </script>
 }
+

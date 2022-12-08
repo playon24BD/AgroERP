@@ -30,38 +30,54 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<SalesReturnDTO> GetSalesReturns(long? ProductId, string name,string status)
         {
-           // return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfoss(orgId, ProductId)).ToList();
-           return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnDTO>(QueryForSalesReturn(ProductId,name,status)).ToList();
+            // return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForAgroSalesInfoss(orgId, ProductId)).ToList();
+            try
+            {
+
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnDTO>(QueryForSalesReturn(ProductId, name, status)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         private string QueryForSalesReturn(long? ProductId, string name,string status)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-         
-            if (ProductId != null && ProductId > 0)
+            try
             {
-                param += string.Format(@" and sr.FinishGoodProductInfoId like '%{0}%'", ProductId);
-            }
-            if (name != null && name != "")
-            {
-                param += string.Format(@" and sr.InvoiceNo like '%{0}%'", name);
-            }
+                string query = string.Empty;
+                string param = string.Empty;
 
-            if (status != null && status != "")
-            {
-                param += string.Format(@" and sr.Status= '{0}'", status);
-            }
-            //query = string.Format(@"	select  sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,CONVERT(date,sr.ReturnDate) AS ReturnDate FROM  
 
-            query = string.Format(@"select sr.SalesReturnId,sr.BoxQuanity, sr.QtyKG,sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,sr.ReturnDate 
+                if (ProductId != null && ProductId > 0)
+                {
+                    param += string.Format(@" and sr.FinishGoodProductInfoId like '%{0}%'", ProductId);
+                }
+                if (name != null && name != "")
+                {
+                    param += string.Format(@" and sr.InvoiceNo like '%{0}%'", name);
+                }
+
+                if (status != null && status != "")
+                {
+                    param += string.Format(@" and sr.Status= '{0}'", status);
+                }
+                //query = string.Format(@"	select  sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,CONVERT(date,sr.ReturnDate) AS ReturnDate FROM  
+
+                query = string.Format(@"select sr.SalesReturnId,sr.BoxQuanity, sr.QtyKG,sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,sr.ReturnDate 
 FROM tblSalesReturn sr 
 INNER JOIN tblProductSalesInfo si on sr.ProductSalesInfoId = si.ProductSalesInfoId
 inner join tblFinishGoodProductInfo fpi on sr.FinishGoodProductInfoId = fpi.FinishGoodProductId 
 inner join tblMeasurement m on sr.MeasurementId = m.MeasurementId
 where 1=1 {0} order by sr.SalesReturnId Desc", Utility.ParamChecker(param));
 
-            return query;
+                return query;
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
@@ -165,7 +181,15 @@ where 1=1 {0} order by sr.SalesReturnId Desc", Utility.ParamChecker(param));
         public IEnumerable<SalesReturn> GetSalesReturnsAdjustById(long id, long orgId)
         {
             //return _salesReturnRepository.GetOneByOrg(f => f.SalesReturnId == id);
-            return _salesReturnRepository.GetAll(i => i.ProductSalesInfoId == id).ToList();
+            try
+            {
+                return _salesReturnRepository.GetAll(i => i.ProductSalesInfoId == id).ToList();
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId)
@@ -186,52 +210,63 @@ where 1=1 {0} order by sr.SalesReturnId Desc", Utility.ParamChecker(param));
 
         public IEnumerable<SalesReturnDTO> GetSalesReturnReportList( long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnDTO>(QueryForSalesReturnReportList(productId,stockiestId,invoiceNo, status, fromDate, toDate)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesReturnDTO>(QueryForSalesReturnReportList(productId, stockiestId, invoiceNo, status, fromDate, toDate)).ToList();
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private string QueryForSalesReturnReportList(long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate)
         {
-            string query = string.Empty;
-            string param = string.Empty;
+            try
+            {
+
+                string query = string.Empty;
+                string param = string.Empty;
 
 
-            if (productId != null && productId > 0)
-            {
-                param += string.Format(@" and f.FinishGoodProductId ={0}", productId);
-            }
+                if (productId != null && productId > 0)
+                {
+                    param += string.Format(@" and f.FinishGoodProductId ={0}", productId);
+                }
 
-            else if (stockiestId != null && stockiestId > 0)
-            {
-                param += string.Format(@" and s.StockiestId ={0}", stockiestId);
-            }
+                else if (stockiestId != null && stockiestId > 0)
+                {
+                    param += string.Format(@" and s.StockiestId ={0}", stockiestId);
+                }
 
-            else if (invoiceNo != null && invoiceNo != "")
-            {
-                param += string.Format(@" and sr.InvoiceNo like '%{0}%'", invoiceNo);
-            }
+                else if (invoiceNo != null && invoiceNo != "")
+                {
+                    param += string.Format(@" and sr.InvoiceNo like '%{0}%'", invoiceNo);
+                }
 
-            else if (status != null && status != "")
-            {
-                param += string.Format(@" and sr.Status= '{0}'", status);
-            }
+                else if (status != null && status != "")
+                {
+                    param += string.Format(@" and sr.Status= '{0}'", status);
+                }
 
-             if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(sr.ReturnDate as date) between '{0}' and '{1}'", fDate, tDate);
-            }
-            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(sr.ReturnDate as date)='{0}'", fDate);
-            }
-            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-            {
-                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(sr.ReturnDate as date)='{0}'", tDate);
-            }
-            query = string.Format(@"
+                if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(sr.ReturnDate as date) between '{0}' and '{1}'", fDate, tDate);
+                }
+                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(sr.ReturnDate as date)='{0}'", fDate);
+                }
+                else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                {
+                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(sr.ReturnDate as date)='{0}'", tDate);
+                }
+                query = string.Format(@"
 
             
 
@@ -244,7 +279,12 @@ inner join [Agriculture].[dbo]. tblStockiestInfo s on sr.StockiestId=s.Stockiest
 
 Where 1=1 {0}", Utility.ParamChecker(param));
 
-            return query;
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public IEnumerable<SalesReturnReportData> GetSalesReturnReportData(long? productId, long? stockiestId, string invoiceNo, string status, string fromDate, string toDate)

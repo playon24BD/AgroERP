@@ -4,37 +4,54 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@*<style>
+    .glow {
+        text-shadow: 0 0 115px #fff, 0 0 115px #fff, 0 0 12px #0fa, 0 0 52px #0fa,0 0 50px #0fa;
+        color: white;
+        font-size: 25px;
+    }
 
+    .glow {
+        /*background-color: gray;*/
+    }
+</style>*@
+
+@*<style>
+    .glow {
+    }
+</style>*@
 
 <div class="row" style="margin-top:-10px">
     <div class="col-md-12">
 
-        <div class="row" style="margin-top:-15px">
-            <div class="col-md-12"style="height:60px;text-align:center">
-                <div class="card card-navy">
-                    <div class="card-header" >
-                        <div class="row">
-                            <div class="col-md-2">
-                                <h5 class="text-bold float-left glow">
-                                    Depot Setup
-                                </h5>
-                            </div>
-                            <div class="col-md-2">
+        <div class="row" style="margin-top:-12px">
+            <div class="col-md-12 " style="height:60px;text-align:center">
+                <div class="card" style="background-color:#001f3f">
 
-                            </div>
-                            <div class="col-md-3 text-center">
-                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by Depot" />
+                        <div class="px-2 py-1">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h5 class="text-bold float-left text-white">
+                                        Depot Setup
+                                    </h5>
+                                </div>
+                                <div class="col-md-2">
 
-                            </div>
-                            <div class="col-md-2">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by Depot" />
 
-                            </div>
+                                </div>
+                                <div class="col-md-2">
 
-                            <div class="col-md-3">
-                                <button class="btn btn-outline-warning btn-flat btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Depot</button>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <button class="btn btn-outline-warning  btn-sm float-right" id="addButton"><i class="fa fa-plus"></i> Create New Depot</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -42,9 +59,9 @@
 
     </div>
 
-    <div class="col-md-12" style="margin-top:-10px">
+    <div class="col-md-12" style="margin-top:-15px">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body" style="margin-top:-10px">
                 <div class="col-md-12" id="dataContainer">
 
                 </div>
@@ -52,6 +69,7 @@
         </div>
     </div>
 </div>
+
 
 
 
@@ -69,13 +87,13 @@
                     <input type="hidden" id="hddepotId" />
                     <div class="form-row">
 
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                             <label for="ddlDepotName" class="control-label">DepotName<span style="color:red">*</span></label>
                             <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
                             <span class="error hide required-DepotName font-weight-bold">Input Depot Name!</span>
                             <span class="error hide duplicate-DepotName font-weight-bold">Already DepotName Exist!</span>
                         </div>
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm" id="ddlStatus">
                                 <option value="Active">Active</option>
@@ -112,7 +130,7 @@
         //DepotList
         var hddepotId = $("#hddepotId");
         var searchByAny = $("#searchByAny");
-        
+
         var ddlStatus = $("#ddlStatus");
         var ddlDepotName = $("#ddlDepotName");
 
@@ -172,7 +190,7 @@
                         //message("#msg1", "#modalWarehouse");
                         $("#depotmodal").modal("hide");
                         toastrSuccessAlert(execuStatus.successSave);
-                        
+
                         LoadDepotDataTable();
                     }
                     else {
@@ -199,7 +217,7 @@
                 $('.required-DepotName').removeClass("hide");
                 Isvalid = false;
             }
-           
+
             //if ($.trim(ddlDepotName.val()) ==0) {
             //    $('.duplicate-DepotName').removeClass("hide");
             //    Isvalid = false;
@@ -229,18 +247,18 @@
             var td4 = row.find('td:eq(4)').html();
             var td5 = row.find('td:eq(5)').html();
             var td6 = row.find('td:eq(6)').html();
-            
+
 
             hddepotId.val(td1);
-            
+
             ddlDepotName.val(td4);
             ddlStatus.val(td6);
             ddlStatus.trigger("change");
-            
-           
+
+
 
             OpenModal();
-            $("#spanModalHead").text('Update Unit');
+            $("#spanModalHead").text('Update Depot');
             $("#spanSaveTextDepot").text('Update');
         })
 
@@ -264,9 +282,9 @@
         })
         function clearCtrlDepot() {
             ddlDepotName.val("");
-           // ddlOrganizationName.val('');
+            // ddlOrganizationName.val('');
             hddepotId.val('0');
-           // ddlStatus.val("");
+            // ddlStatus.val("");
 
         }
 

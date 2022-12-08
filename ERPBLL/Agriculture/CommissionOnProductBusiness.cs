@@ -62,30 +62,37 @@ namespace ERPBLL.Agriculture
 
         private string QueryForGellAllCommissionProduct(long? product, int? year, long orgId)
         {
-            string param = string.Empty;
-            string query = string.Empty;
-
-            if (orgId>0)
+            try
             {
-                param += string.Format(@"and cp.OrganizationId={0}", orgId);
+                string param = string.Empty;
+                string query = string.Empty;
 
-            }
-            if (product>0)
-            {
-                param += string.Format(@"and cp.FinishGoodProductId={0}", product);
-            }
-            if (year>0)
-            {
-                param += string.Format(@"and cp.CalenderYear={0}", year);
-            }
+                if (orgId > 0)
+                {
+                    param += string.Format(@"and cp.OrganizationId={0}", orgId);
 
-            query = string.Format(@"SELECT cp.CommissionOnProductId,cp.FinishGoodProductId,cp.CalenderYear,cp.Credit,cp.Cash,cp.Status,cp.EntryDate,cp.EntryUserId,cp.Remarks,cp.UpdateUserId,cp.OrganizationId,cp.StartDate,cp.EndDate, fp.FinishGoodProductName
+                }
+                if (product > 0)
+                {
+                    param += string.Format(@"and cp.FinishGoodProductId={0}", product);
+                }
+                if (year > 0)
+                {
+                    param += string.Format(@"and cp.CalenderYear={0}", year);
+                }
+
+                query = string.Format(@"SELECT cp.CommissionOnProductId,cp.FinishGoodProductId,cp.CalenderYear,cp.Credit,cp.Cash,cp.Status,cp.EntryDate,cp.EntryUserId,cp.Remarks,cp.UpdateUserId,cp.OrganizationId,cp.StartDate,cp.EndDate, fp.FinishGoodProductName
               FROM [dbo].[tblCommissionOnProduct] cp
               Inner Join tblFinishGoodProductInfo fp
               on cp.FinishGoodProductId=fp.FinishGoodProductId  where 1=1  {0}",
-         Utility.ParamChecker(param));
+             Utility.ParamChecker(param));
 
-            return query;
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool SaveCommisionOnProductby(List<CommisionOnProductDTO> commisionOnProductDTOs, long userId, long orgId)

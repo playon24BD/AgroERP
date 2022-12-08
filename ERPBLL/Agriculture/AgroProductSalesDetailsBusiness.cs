@@ -32,7 +32,15 @@ namespace ERPBLL.Agriculture
         }
         public AgroProductSalesDetails AgroProductSalesDetailsbyId(long id)
         {
-            return _agroProductSalesDetailsRepository.GetOneByOrg(a => a.ProductSalesDetailsId == id);
+            try
+            {
+
+                return _agroProductSalesDetailsRepository.GetOneByOrg(a => a.ProductSalesDetailsId == id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public IEnumerable<AgroProductSalesDetailsDTO> GetAllAgroSalesDetailsInfos(long orgId)
@@ -165,22 +173,33 @@ inner join tblProductSalesInfo si on SD.ProductSalesInfoId = si.ProductSalesInfo
 
         public IEnumerable<AgroProductSalesDetailsDTO> GetSalesDetailsByInfoId(long ProductSalesInfoId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForGetAgroSalesDetailsmain(ProductSalesInfoId)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForGetAgroSalesDetailsmain(ProductSalesInfoId)).ToList();
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
         private string QueryForGetAgroSalesDetailsmain(long ProductSalesInfoId)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-            if (ProductSalesInfoId != 0 && ProductSalesInfoId > 0)
+            try
             {
-                param += string.Format(@" and i.ProductSalesInfoId={0}", ProductSalesInfoId);
-            }
+
+                string query = string.Empty;
+                string param = string.Empty;
+
+                if (ProductSalesInfoId != 0 && ProductSalesInfoId > 0)
+                {
+                    param += string.Format(@" and i.ProductSalesInfoId={0}", ProductSalesInfoId);
+                }
 
 
-            query = string.Format(@"	
+                query = string.Format(@"	
 select f.FinishGoodProductName,i.ProductSalesInfoId,i.InvoiceNo,d.ProductSalesDetailsId,d.FinishGoodProductInfoId,d.Quanity,d.BoxQuanity,d.Price,d.Price,d.Discount,d.DiscountTk,d.MeasurementSize,d.ReceipeBatchCode,d.QtyKG,(d.Quanity*d.Price-DiscountTk)as ProductTotal,
  RT=ISNULL((SELECT 
  CASE When count(*) > 0 then 1
@@ -193,26 +212,42 @@ inner join tblProductSalesDetails d on i.ProductSalesInfoId=d.ProductSalesInfoId
 inner join tblFinishGoodProductInfo f on d.FinishGoodProductInfoId=f.FinishGoodProductId
 where 1=1 {0} and d.Status is null", Utility.ParamChecker(param));
 
-            return query;
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public IEnumerable<AgroProductSalesDetailsDTO> GetSalesEditByInfoId(long ProductSalesInfoId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForGetAgroSalesEdit(ProductSalesInfoId)).ToList();
+            try
+            {
+
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForGetAgroSalesEdit(ProductSalesInfoId)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private string QueryForGetAgroSalesEdit(long ProductSalesInfoId)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-            if (ProductSalesInfoId != 0 && ProductSalesInfoId > 0)
+            try
             {
-                param += string.Format(@" and i.ProductSalesInfoId={0}", ProductSalesInfoId);
-            }
+
+                string query = string.Empty;
+                string param = string.Empty;
+
+                if (ProductSalesInfoId != 0 && ProductSalesInfoId > 0)
+                {
+                    param += string.Format(@" and i.ProductSalesInfoId={0}", ProductSalesInfoId);
+                }
 
 
-            query = string.Format(@"	
+                query = string.Format(@"	
 
 
 
@@ -235,7 +270,12 @@ inner join tblFinishGoodProductInfo f on d.FinishGoodProductInfoId=f.FinishGoodP
 inner join tblMeasurement m on m.MeasurementId= d.MeasurementId
 where  1=1 {0} and d.Status is null ", Utility.ParamChecker(param));
 
-            return query;
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public AgroProductSalesDetails GetSalesDetailsById(long ProductSalesDetailsId, long orgId)
@@ -245,21 +285,31 @@ where  1=1 {0} and d.Status is null ", Utility.ParamChecker(param));
 
         public IEnumerable<AgroProductSalesDetailsDTO> DealerGetSalesDetailsByInfoId(long infoId)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForDealerGetAgroSalesDetailsByInfoIdGet(infoId)).ToList();
+            try
+            {
+
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForDealerGetAgroSalesDetailsByInfoIdGet(infoId)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private string QueryForDealerGetAgroSalesDetailsByInfoIdGet(long infoId)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-            if (infoId != 0 && infoId > 0)
+            try
             {
-                param += string.Format(@" and SD.ProductSalesInfoId={0}", infoId);
-            }
+                string query = string.Empty;
+                string param = string.Empty;
+
+                if (infoId != 0 && infoId > 0)
+                {
+                    param += string.Format(@" and SD.ProductSalesInfoId={0}", infoId);
+                }
 
 
-            query = string.Format(@"	
+                query = string.Format(@"	
 SELECT Distinct SD.FGRId,SD.QtyKG,SD.ProductSalesDetailsId,SD.BoxQuanity,m.MeasurementId,
 SD.ProductSalesInfoId,SD.Price,SD.Discount,SD.FinishGoodProductInfoId,FGP.FinishGoodProductName,SD.MeasurementSize,
 SD.Quanity,
@@ -290,7 +340,13 @@ inner join tblProductSalesInfo si on SD.ProductSalesInfoId = si.ProductSalesInfo
 
                 Where 1=1 {0} and SD.Status is null", Utility.ParamChecker(param));
 
-            return query;
+                return query;
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

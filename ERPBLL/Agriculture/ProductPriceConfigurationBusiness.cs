@@ -27,22 +27,38 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<ProductPriceConfigurationDTO> GetAllproductPRicelist(string name)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ProductPriceConfigurationDTO>(QueryforProductpricelist(name)).ToList();
+            try
+            {
+
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<ProductPriceConfigurationDTO>(QueryforProductpricelist(name)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private string QueryforProductpricelist(string name)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-            if (name != null && name != "")
+            try
             {
-                param += string.Format(@" and fn.FinishGoodProductName like '%{0}%'", name);
-            }
-            query = string.Format(@"select p.UpdateDate,p.UpdateUser,fn.FinishGoodProductName,fn.FinishGoodProductId,p.FGRId,p.ProductPriceConfigurationId,p.ProductPrice,p.Flag,p.EntryDate,p.EntryUser from tblProductPriceConfiguration p
+
+                string query = string.Empty;
+                string param = string.Empty;
+                if (name != null && name != "")
+                {
+                    param += string.Format(@" and fn.FinishGoodProductName like '%{0}%'", name);
+                }
+                query = string.Format(@"select p.UpdateDate,p.UpdateUser,fn.FinishGoodProductName,fn.FinishGoodProductId,p.FGRId,p.ProductPriceConfigurationId,p.ProductPrice,p.Flag,p.EntryDate,p.EntryUser from tblProductPriceConfiguration p
 inner join tblFinishGoodProductInfo fn on p.FinishGoodProductId=fn.FinishGoodProductId
 Where 1=1 {0}", Utility.ParamChecker(param));
 
-            return query;
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 

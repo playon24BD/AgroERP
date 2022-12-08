@@ -26,7 +26,15 @@ namespace ERPBLL.Agriculture
         }
         public IEnumerable<CommisionOnProductSalesDetails> GetCommisionOnProductSalesDetails(long orgId)
         {
-            return _commissionSalesDetailsRepository.GetAll(c => c.OrganizationId == orgId).ToList();
+            try
+            {
+
+                return _commissionSalesDetailsRepository.GetAll(c => c.OrganizationId == orgId).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public CommisionOnProductSalesDetails GetCommisionOnProductSalesDetailsbyId(long commisionOnProductSalesDetailsId, long orgId)

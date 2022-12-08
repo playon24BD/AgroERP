@@ -31,19 +31,28 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<RawMaterialTrackDTO> GetMainStockInOutInfos(string name)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialTrackDTO>(QueryForRawMaterialMainINOUTQTY(name)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialTrackDTO>(QueryForRawMaterialMainINOUTQTY(name)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         private string QueryForRawMaterialMainINOUTQTY(string name)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-
-            if (name != null && name != "")
+            try
             {
-                param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
-            }
-            query = string.Format(@"
+                string query = string.Empty;
+                string param = string.Empty;
+
+
+                if (name != null && name != "")
+                {
+                    param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
+                }
+                query = string.Format(@"
 SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,
 StockIN= isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
 where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),0),
@@ -65,8 +74,13 @@ tblRawMaterialTrackInfo t
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
       where 1=1    {0}",
-            Utility.ParamChecker(param));
-            return query;
+                Utility.ParamChecker(param));
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

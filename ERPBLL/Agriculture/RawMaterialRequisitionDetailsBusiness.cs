@@ -34,8 +34,15 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<RawMaterialRequisitionDetails> GetRawMaterialRequisitionDetailsbyInfo(long InfoId, long orgId)
         {
-            var requisitionDetailsbyInfo = _rawMaterialRequisitionDetailsBusinessRepository.GetAll(a=>a.RawMaterialRequisitionInfoId==InfoId && a.OrganizationId == orgId);
-            return requisitionDetailsbyInfo.ToList();
+            try
+            {
+                var requisitionDetailsbyInfo = _rawMaterialRequisitionDetailsBusinessRepository.GetAll(a => a.RawMaterialRequisitionInfoId == InfoId && a.OrganizationId == orgId);
+                return requisitionDetailsbyInfo.ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool SaveRawMaterialRequisitionDetails(List<RawMaterialRequisitionDetailsDTO> rawMaterialRequisitionDetailsDTO,long infoId, long userId, long orgId)

@@ -1,8 +1,11 @@
-﻿@{
-    ViewBag.Title = "SalesCommision";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿
+@{
+                /**/
+
+                ViewBag.Title = "SalesCommissionReportList";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row"  style="margin-top:-10px">
+<div class="row" style="margin-top:-10px">
     <div class="col-md-12">
 
         <div class="row" style="margin-top:-12px">
@@ -46,7 +49,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-1 hide">
+                            <div class="col-md-1">
                                 <div class="input-group input-group-sm">
                                     <select class="form-control form-control-sm float-right select2" id="rptType" name="rptType">
                                         <option value="PDF">PDF</option>
@@ -57,24 +60,24 @@
                                     </span>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         @*<div class="row" style="margin-top:-15px">
-            <div class="col-md-12">
-                <div class="card card-gray-dark">
-                    
-                </div>
+                <div class="col-md-12">
+                    <div class="card card-gray-dark">
 
-            </div>
-        </div>*@
-        <div class="row"style="margin-top:-3px">
+                    </div>
+
+                </div>
+            </div>*@
+        <div class="row" style="margin-top:-3px">
             <div class="col-md-12" style="margin-top:-10px">
                 <div class="card ">
-                    <div class="card-body"style="margin-top:-10px">
+                    <div class="card-body" style="margin-top:-10px">
                         <div class="row">
                             <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
 
@@ -207,7 +210,7 @@
             var id = $(this).attr("data-item-detail");
             if (TryParseInt(id, 0) > 0) {
                 var data = { flag: "view", id: id };
-                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesCommission', data)).then(function (res, status) {
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesCommissionReportList', data)).then(function (res, status) {
                     console.log(status);
                     if (status === "success") {
                         $("#dataContainer2").empty();
@@ -222,12 +225,9 @@
 
 
          $("#btnDownload").click(function () {
-            // if (dptFromDate.val() == "" && dptToDate.val() == "" && ddlInvoiceNo.val() == "" && ddlStockiest.val()=="") {
-            //    bootbox.alert("Please Select Anyone");
-            //}
-            //else {
-                 window.open("/AgroConfiguration/SalesCommissionReport?stockiestId=" + TryParseInt(ddlStockiest.val(), 0) + " &fromDate=" + dptFromDate.val() + " &toDate=" + dptToDate.val() + " &rptType=" + rptType.val() + "&invoiceNo=" + ddlInvoiceNo.val());
-            //}
+           
+             window.open("/AgroConfiguration/SalesCommissionReportt?stockiestId=" + TryParseInt(ddlStockiest.val(), 0) + " &fromDate=" + dptFromDate.val() + " &toDate=" + dptToDate.val() + " &rptType=" + rptType.val() + "&invoiceNo=" + ddlInvoiceNo.val());
+            
         })
 
 
@@ -236,5 +236,3 @@
 
 
 }
-
-

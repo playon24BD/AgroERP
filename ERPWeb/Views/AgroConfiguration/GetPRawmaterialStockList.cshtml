@@ -60,15 +60,13 @@
 
                 <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterialList" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialList-tab">
 
-                    <div class="row" style=" margin-top: -30px">
+                    <div class="row" style=" margin-top: -35px">
                         <div class="col-md-12">
                            
-                            <div class="card card-gray-dark">
-                                <div class="card-header">
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-2">
-                                            <h5 class="text-center">Search By</h5>
-                                        </div>
+                            <div class="card" style="background-color:#001f3f">
+                                <div class="px-2 py-1">
+                                    <div class="row float-left">
+                                        
                                         <div class="col-md-2">
                                  
                                             <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
@@ -84,7 +82,7 @@
                                             <input type="text" class="form-control form-control-sm" id="searchByChallan" placeholder="search Challan" />
                                         </div>
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
   
                                             @Html.DropDownList("ddlSupplierName1", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
@@ -95,10 +93,10 @@
 
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top:-1px">
                         <div class="col-md-12" style="margin-top:-10px">
                             <div class="card ">
-                                <div class="card-body">
+                                <div class="card-body"  style="margin-top:-10px">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer">
 
@@ -114,7 +112,7 @@
 
                 <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterial" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterial-tab">
                     <div class="row mb-5">
-                        <div class="col-md-12" style="margin-top: -30px">
+                        <div class="col-md-12" style="margin-top: -35px">
                             <div class="card card-navy shadow">
                                 <div class="card-header" style="text-align: center;">
 
@@ -318,15 +316,15 @@
                 @*stock*@
                 <div class="tab-pane fade show active" id="custom-tabs-two-pstockrawmaterialqty" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialqty-tab">
 
-                    <div class="row" style="margin-top:-30px">
+                    <div class="row" style="margin-top:-35px">
                         <div class="col-md-12">
-                            <div class="card card-gray-dark shadow">
-                                <div class="card-header">
+                            <div class="card" style="background-color:#001f3f">
+                                <div class="px-2 py-1">
                                     <div class="row text-sm">
-                                        <div class="col-md-2">
+                                        @*<div class="col-md-2">
                                             <h5>Search by:</h5>
-                                        </div>
-                                        <div class="col-md-3 float-right">
+                                        </div>*@
+                                        <div class="col-md-3 float-right text-white">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnyy" placeholder="Search by any" />
 
                                         </div>
@@ -340,10 +338,10 @@
 
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row"style="margin-top:-2px">
                         <div class="col-md-12" style="margin-top:-10px">
                             <div class="card ">
-                                <div class="card-body">
+                                <div class="card-body"style="margin-top:-10px">
                                     <div class="row">
 
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer3">

@@ -29,27 +29,41 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<ProductionPerproductCostDTO> GetAllProductionPerproductCost(string name)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ProductionPerproductCostDTO>(QueryForPerproductCost(name)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<ProductionPerproductCostDTO>(QueryForPerproductCost(name)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         private string QueryForPerproductCost(string name)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-            if (name != null && name != "")
+            try
             {
-                param += string.Format(@" and fp.FinishGoodProductName like '%{0}%'", name);
-            }
+                string query = string.Empty;
+                string param = string.Empty;
+
+                if (name != null && name != "")
+                {
+                    param += string.Format(@" and fp.FinishGoodProductName like '%{0}%'", name);
+                }
 
 
-            query = string.Format(@"
+                query = string.Format(@"
 select fp.FinishGoodProductName,fr.FGRQty,un.UnitName,pc.PerProductRMtotalCost,pc.PerProductOtherCost,pc.PerProductMainCost, concat(fr.FGRQty,un.UnitName) as QtyKG from tblProductionPerproductCost pc
 inner join tblFinishGoodProductInfo fp on pc.FinishGoodProductId=fp.FinishGoodProductId
 inner join tblFinishGoodRecipeInfo fr on pc.FGRId=fr.FGRId
 inner join tblAgroUnitInfo un on fr.UnitId=un.UnitId
             where 1=1  {0} ",
-        Utility.ParamChecker(param));
-            return query;
+            Utility.ParamChecker(param));
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public ProductionPerproductCost GetProductionPerproductCostById(long FGRId)

@@ -55,21 +55,30 @@ namespace ERPBLL.Agriculture
 
         public IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialInfos(string name)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForReturnRawMaterial(name)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForReturnRawMaterial(name)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
         private string QueryForReturnRawMaterial(string name)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-
-            if (name != null && name != "")
+            try
             {
-                param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
-            }
-            query = string.Format(@"
+                string query = string.Empty;
+                string param = string.Empty;
+
+
+                if (name != null && name != "")
+                {
+                    param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
+                }
+                query = string.Format(@"
             SELECT distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,t.Status,
 TQuantity=(SELECT sum(t.Quantity) FROM  tblReturnRawMaterial t
 where  t.Status='Pending' and t.RawMaterialId=RM.RawMaterialId)
@@ -79,8 +88,13 @@ tblReturnRawMaterial t
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
 where 1=1  and t.Status='Pending'  {0}",
-            Utility.ParamChecker(param));
-            return query;
+                Utility.ParamChecker(param));
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
@@ -118,7 +132,14 @@ where 1=1  and t.Status='Pending'  {0}",
 
         public IEnumerable<ReturnRawMaterial> GetReturnRawMaterialBYRMId(long Id, /*string ReturnType,*/ string Status)
         {
-            return _returnRawMaterialRepository.GetAll(j => j.RawMaterialId == Id /*&& j.ReturnType == ReturnType*/ && j.Status == Status).ToList();
+            try
+            {
+                return _returnRawMaterialRepository.GetAll(j => j.RawMaterialId == Id /*&& j.ReturnType == ReturnType*/ && j.Status == Status).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool updateReturnStatus(List<ReturnRawMaterialDTO> returnRawMaterialDTOs, long userId, long orgId)
@@ -152,32 +173,43 @@ where 1=1  and t.Status='Pending'  {0}",
         public IEnumerable<ReturnRawMaterialDTO> GetallReturns(long?
             rawMaterialId, string returnType,string status)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForallReturnRM(rawMaterialId, returnType,status)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(QueryForallReturnRM(rawMaterialId, returnType, status)).ToList();
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
 
         }
 
         private string QueryForallReturnRM(long? rawMaterialId, string returnType,string status)
         {
-            string query = string.Empty;
-            string param = string.Empty;
-
-
-
-            if (rawMaterialId != 0)
+            try
             {
-                //param += string.Format(@" and rm.RawMaterialName like '%{0}%'", name);
-                param += string.Format(@" and rr.RawMaterialId ={0}", rawMaterialId);
-            }
-            if (returnType != null && returnType != "")
-            {
-                param += string.Format(@" and rr.ReturnType = '{0}'", returnType);
-            }
-            if (status != null && status != "")
-            {
-                param += string.Format(@" and rr.Status like '%{0}%'", status);
-            }
 
-            query = string.Format(@"	
+                string query = string.Empty;
+                string param = string.Empty;
+
+
+
+                if (rawMaterialId != 0)
+                {
+                    //param += string.Format(@" and rm.RawMaterialName like '%{0}%'", name);
+                    param += string.Format(@" and rr.RawMaterialId ={0}", rawMaterialId);
+                }
+                if (returnType != null && returnType != "")
+                {
+                    param += string.Format(@" and rr.ReturnType = '{0}'", returnType);
+                }
+                if (status != null && status != "")
+                {
+                    param += string.Format(@" and rr.Status like '%{0}%'", status);
+                }
+
+                query = string.Format(@"	
   select distinct rr.RawMaterialId,rm.RawMaterialName,Sum(rr.Quantity) as Quantity,
  rr.UnitId,un.UnitName,rr.ReturnType, rr.Status from tblReturnRawMaterial rr
  inner join tblRawMaterialInfo rm on rr.RawMaterialId = rm.RawMaterialId
@@ -186,7 +218,12 @@ where 1=1  and t.Status='Pending'  {0}",
 Where 1=1  {0}
 group by rr.RawMaterialId,rm.RawMaterialName, rr.UnitId,un.UnitName,rr.ReturnType, rr.Status ", Utility.ParamChecker(param));
 
-            return query;
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public IEnumerable<ReturnRawMaterialDTO> GetReturnRawMaterialSearch()
@@ -285,103 +322,125 @@ where 1=1 and  t.ReturnType='Damage' and t.Status='Pending' {0}",
         
         public IEnumerable<ReturnRawMaterialDataReport> GetReturnRawMaterialDataReport(long? rawMaterialId, string returnType, string status, string fromDate, string toDate)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDataReport>(QueryForReturnRawMaterialReport(rawMaterialId, returnType, status,fromDate, toDate)).ToList();
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDataReport>(QueryForReturnRawMaterialReport(rawMaterialId, returnType, status, fromDate, toDate)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         
         public string QueryForReturnRawMaterialReport(long? rawMaterialId, string returnType, string status, string fromDate, string toDate)
         {
-            string param = string.Empty;
-            string query = string.Empty;
+            try
+            {
+                string param = string.Empty;
+                string query = string.Empty;
 
-            if (rawMaterialId != 0 && rawMaterialId > 0)
-            {
-                param += string.Format(@" and rm.RawMaterialId={0}", rawMaterialId);
-            }
-            
-            else if (!string.IsNullOrEmpty(status))
-            {
-                param += string.Format(@"and rrm.Status = '{0}'", status);
-            }
+                if (rawMaterialId != 0 && rawMaterialId > 0)
+                {
+                    param += string.Format(@" and rm.RawMaterialId={0}", rawMaterialId);
+                }
 
-            else if (returnType!=" " && returnType !=null)
-            {
-                param += string.Format(@"and rrm.ReturnType = '{0}'", returnType);
-            }
+                else if (!string.IsNullOrEmpty(status))
+                {
+                    param += string.Format(@"and rrm.Status = '{0}'", status);
+                }
 
-            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(rrm.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
-            }
-            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(rrm.EntryDate as date)='{0}'", fDate);
-            }
-            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-            {
-                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(rrm.EntryDate as date)='{0}'", tDate);
-            }
+                else if (returnType != " " && returnType != null)
+                {
+                    param += string.Format(@"and rrm.ReturnType = '{0}'", returnType);
+                }
 
-            
+                if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(rrm.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+                }
+                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(rrm.EntryDate as date)='{0}'", fDate);
+                }
+                else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                {
+                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(rrm.EntryDate as date)='{0}'", tDate);
+                }
 
-            query = string.Format(@"
+                query = string.Format(@"
                    select rm.RawMaterialId, convert(date,rrm.EntryDate) as EntryDate,RawMaterialName=(rm.RawMaterialName+' '+u.UnitName),UnitName=(Convert(nvarchar,rrm.Quantity)+' '+ u.UnitName),rrm.Quantity,rrm.ReturnType,rrm.Status
  from [Agriculture].[dbo].tblReturnRawMaterial rrm
 inner join [Agriculture].[dbo].tblRawMaterialInfo rm on  rrm.RawMaterialId=rm.RawMaterialId
 inner join [Agriculture].[dbo].tblAgroUnitInfo u on rrm.UnitId=u.UnitId
 
   where 1=1 {0}", Utility.ParamChecker(param));
-            return query;
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public IEnumerable<ReturnRawMaterialDTO> GetReturnReportList(long? rawMaterialId, string returnType, string status, string fromDate, string toDate)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(ReturnRawMaterialReportList(rawMaterialId, returnType, status, fromDate, toDate)).ToList();
+            try
+            {
+
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<ReturnRawMaterialDTO>(ReturnRawMaterialReportList(rawMaterialId, returnType, status, fromDate, toDate)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         
         public string ReturnRawMaterialReportList(long? rawMaterialId, string returnType, string status, string fromDate, string toDate)
         {
-            string param = string.Empty;
-            string query = string.Empty;
-
-            if (rawMaterialId != 0 && rawMaterialId > 0)
+            try
             {
-                param += string.Format(@" and rm.RawMaterialId={0}", rawMaterialId);
-            }
+                string param = string.Empty;
+                string query = string.Empty;
 
-            else if (!string.IsNullOrEmpty(status))
-            {
-                param += string.Format(@"and rrm.Status = '{0}'", status);
-            }
+                if (rawMaterialId != 0 && rawMaterialId > 0)
+                {
+                    param += string.Format(@" and rm.RawMaterialId={0}", rawMaterialId);
+                }
 
-            else if (returnType != "" && returnType != null)
-            {
-                param += string.Format(@"and rrm.ReturnType = '{0}'", returnType);
-            }
+                else if (!string.IsNullOrEmpty(status))
+                {
+                    param += string.Format(@"and rrm.Status = '{0}'", status);
+                }
 
-            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(rrm.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
-            }
-            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(rrm.EntryDate as date)='{0}'", fDate);
-            }
-            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-            {
-                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(rrm.EntryDate as date)='{0}'", tDate);
-            }
+                else if (returnType != "" && returnType != null)
+                {
+                    param += string.Format(@"and rrm.ReturnType = '{0}'", returnType);
+                }
+
+                if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(rrm.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+                }
+                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(rrm.EntryDate as date)='{0}'", fDate);
+                }
+                else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                {
+                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(rrm.EntryDate as date)='{0}'", tDate);
+                }
 
 
 
-            query = string.Format(@"
+                query = string.Format(@"
                    select rm.RawMaterialId, convert(date,rrm.EntryDate) as EntryDate,RawMaterialName=(rm.RawMaterialName+' '+u.UnitName),UnitName=(Convert(nvarchar,rrm.Quantity)+' '+ u.UnitName),rrm.Quantity,rrm.ReturnType,rrm.Status
  from [Agriculture].[dbo].tblReturnRawMaterial rrm
 inner join [Agriculture].[dbo].tblRawMaterialInfo rm on  rrm.RawMaterialId=rm.RawMaterialId
@@ -390,7 +449,13 @@ inner join [Agriculture].[dbo].tblAgroUnitInfo u on rrm.UnitId=u.UnitId
 
 
   where 1=1 {0}", Utility.ParamChecker(param));
-            return query;
+                return query;
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public IEnumerable<ReturnRawMaterialDataReport> GetRawMaterialReturnReport(string ReturnRawMaterialId)

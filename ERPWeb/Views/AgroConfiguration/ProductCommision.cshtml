@@ -27,13 +27,13 @@
 
                     <div class="row" style="margin-top:-35px">
                         <div class="col-md-12">
-                            <div class="card card-gray-dark shadow ">
-                                <div class="card-header">
+                            <div class="card "style="background-color:#001f3f">
+                                <div class="px-2 py-1">
                                     <div class="row text-sm">
                                         
                                         <div class="col-md-3">
 
-                                            @Html.DropDownList("ddlProductNameSearch", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "Product Name", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            @Html.DropDownList("ddlProductNameSearch", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             <span class="error hide req-ddlProductName">Product Is Required</span>
                                         </div>
                                         <div class="col-md-2 hide">
@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12" style="margin-top:-20px">
+                        <div class="col-md-12" style="margin-top:-13px">
                             <div class="card ">
                                 <div class="card-body"style="margin-top:-10px">
                                     <div class="row">
