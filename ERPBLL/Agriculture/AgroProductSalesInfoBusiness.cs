@@ -731,7 +731,7 @@ namespace ERPBLL.Agriculture
                     param += string.Format(@" and FGPN.FinishGoodProductId={0}", productId);
                 }
 
-                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
                 {
                     string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
                     string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
@@ -1007,27 +1007,25 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                     param += string.Format(@" and FGPN.FinishGoodProductId={0}", productId);
                 }
 
-                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                 if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
                 {
                     string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
                     string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(sales.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+                    param += string.Format(@" and Cast(sales.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
                 }
 
                 else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
                 {
                     string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", fDate);
+                    param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", fDate);
                 }
                 else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
                 {
                     string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", tDate);
+                    param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", tDate);
                 }
 
-
-
-                query = string.Format(@"SELECT DISTINCT FGPN.FinishGoodProductName,salesD.MeasurementSize AS PackSize, QtyCTN=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId),QtyKG=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId) * M.UnitKG,Total=(SELECT SUM(sd.Price) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId)FROM [Agriculture].[dbo].[tblProductSalesDetails] salesD INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId INNER JOIN [Agriculture].[dbo].[tblMeasurement] M on salesD.MeasurementId=M.MeasurementId  Inner Join [Agriculture].[dbo].[tblProductSalesInfo] sales  on sales.ProductSalesInfoId=salesD.ProductSalesInfoId Where 1=1{0} Group by FGPN.FinishGoodProductName, M.MeasurementName,salesD.MeasurementId,salesD.FinishGoodProductInfoId,  salesD.Quanity,M.UnitKG,salesD.Price,salesD.EntryDate,sales.TotalAmount,salesD.ProductSalesInfoId,M.MasterCarton,M.InnerBox,M.PackSize,salesD.MeasurementSize", Utility.ParamChecker(param));
+                query = string.Format(@"SELECT DISTINCT  todate='" + fromDate + "', fromDate='" + toDate + "', FGPN.FinishGoodProductName,salesD.MeasurementSize AS PackSize, QtyCTN=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId),QtyKG=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId) * M.UnitKG,Total=(SELECT SUM(sd.Price) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId)FROM [Agriculture].[dbo].[tblProductSalesDetails] salesD INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId INNER JOIN [Agriculture].[dbo].[tblMeasurement] M on salesD.MeasurementId=M.MeasurementId  Inner Join [Agriculture].[dbo].[tblProductSalesInfo] sales  on sales.ProductSalesInfoId=salesD.ProductSalesInfoId Where 1=1{0} Group by FGPN.FinishGoodProductName, M.MeasurementName,salesD.MeasurementId,salesD.FinishGoodProductInfoId,  salesD.Quanity,M.UnitKG,salesD.Price,salesD.EntryDate,sales.TotalAmount,salesD.ProductSalesInfoId,M.MasterCarton,M.InnerBox,M.PackSize,salesD.MeasurementSize", Utility.ParamChecker(param));
                 return query;
 
             }
@@ -1344,7 +1342,7 @@ inner join tblStockiestInfo st on info.StockiestId=st.StockiestId
 
                 query = string.Format(@"	
 select sales.StockiestId,sales.ChallanNo,sales.DriverName,sales.DeliveryPlace,sales.VehicleType,sales.VehicleNumber,sales.TotalAmount,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName,
->>>>>>> Stashed changes
+
 
 Amount = ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0),
 (sales.TotalAmount)-ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0)as TotalAmount

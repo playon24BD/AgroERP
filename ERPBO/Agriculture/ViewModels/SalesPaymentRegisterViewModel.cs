@@ -20,6 +20,17 @@ namespace ERPBO.Agriculture.ViewModels
 
         public string PaymentMode { get; set; }
         public string AccounrNumber { get; set; }
+        public string AccountNumber { get; set; }
+        public string ZoneName { get; set; }
+        public string DivisionName { get; set; }
+        public string RegionName { get; set; }
+        public string AreaName { get; set; }
+        public string TerritoryName { get; set; }
+        public string StockiestName { get; set; }
+        public string InvoiceNo { get; set; }
+        public double TotalAmount { get; set; }
+        
+        
 
     }
 }

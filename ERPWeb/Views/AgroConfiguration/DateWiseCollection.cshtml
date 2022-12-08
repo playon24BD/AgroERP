@@ -19,69 +19,72 @@
 
         <div class="row" style="margin-top:-5px">
             <div class="col-md-12">
-                <div class="card "style="background-color:#001f3f">
+                <div class="card " style="background-color:#001f3f">
                     <div class="px-2 py-1" style="text-align: center;">
-                        <div class="row">
-
-                            <div class="col-md-2">
-                                <h5 class="float-left text-bold text-white" style="">
+                        <div >
+                                <h5 class="float-left text-bold text-white" style="vertical-align:middle;margin-top:20px">
                                     Date Collection
                                 </h5>
-                            </div>
-                            <div class="col-md-2">
-                                @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                            </div>
-                            <div class="col-md-2">
-                                @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Division--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                            </div>
-                            <div class="col-md-2">
-                                @Html.DropDownList("ddlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "--Region--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                            </div>
-                            <div class="col-md-2">
-                                @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "--Area--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                            </div>
+                            <div class="row">
+
+                                <div class="col-md-1">
+
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.DropDownList("ddlZoneName", (IEnumerable<SelectListItem>)ViewBag.ddlZoneName, "--Zone--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.DropDownList("ddlDivisionName", (IEnumerable<SelectListItem>)ViewBag.ddlDivisionName, "--Division--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.DropDownList("ddlRegionname", (IEnumerable<SelectListItem>)ViewBag.ddlRegionname, "--Region--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.DropDownList("ddlareaname", (IEnumerable<SelectListItem>)ViewBag.ddlareaname, "--Area--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                </div>
 
 
-                            <div class="col-md-2">
-                                @Html.DropDownList("ddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger pad" })
-                            </div>
-                            
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
+                                <div class="col-md-2">
+                                    @Html.DropDownList("ddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger pad" })
+                                </div>
 
                             </div>
-                            <div class="col-md-2" style="margin-top:3px">
-                                @Html.DropDownList("ddlStokiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStokiestName, "--Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
 
-                            <div class="col-md-2 pad">
-                                <div class="input-group input-group-sm">
-                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed pad" id="dptFromDate" placeholder="FromDate" name="dptFromDate" />
-                                    <div class="input-group-prepend cursor-pointer remove-list-date dptFromDate" style="cursor:pointer">
-                                        <span class="input-group-text">&#10008;</span>
+                                </div>
+                                <div class="col-md-2" style="margin-top:3px">
+                                    @Html.DropDownList("ddlStokiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStokiestName, "--Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                </div>
+
+                                <div class="col-md-2 pad">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed pad" id="dptFromDate" placeholder="FromDate" name="dptFromDate" />
+                                        <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                            <span class="input-group-text">&#10008;</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 pad">
-                                <div class="input-group input-group-sm">
-                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed pad" id="dptToDate" placeholder="ToDate" name="dptToDate" />
-                                    <div class="input-group-prepend cursor-pointer remove-list-date dptToDate" style="cursor:pointer">
-                                        <span class="input-group-text">&#10008;</span>
+                                <div class="col-md-2 pad">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed pad" id="dptToDate" placeholder="ToDate" name="dptToDate" />
+                                        <div class="input-group-prepend cursor-pointer remove-date dptToDate" style="cursor:pointer">
+                                            <span class="input-group-text">&#10008;</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
 
-                            <div class="col-md-1 pad">
-                                <div class="input-group input-group-sm">
-                                    <select class="form-control form-control-sm float-right without-icon pad" id="rptType" name="rptType">
-                                        <option style="font-size:15px" value="PDF">PDF</option>
-                                        <option value="EXCEL">EXCEL</option>
-                                    </select>
-                                    <span class="input-group-append">
-                                        <button type="button" id="btnDownload" title="Download" class="btn btn-block btn-info btn-flat"><i class="fas fa-download"></i></button>
-                                    </span>
+                                <div class="col-md-1 pad">
+                                    <div class="input-group input-group-sm">
+                                        <select class="form-control form-control-sm float-right without-icon pad" id="rptType" name="rptType">
+                                            <option style="font-size:15px" value="PDF">PDF</option>
+                                            <option value="EXCEL">EXCEL</option>
+                                        </select>
+                                        <span class="input-group-append">
+                                            <button type="button" id="btnDownload" title="Download" class="btn btn-block btn-info btn-flat"><i class="fas fa-download"></i></button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -91,13 +94,26 @@
         </div>
 
 
-        <div class="row" style="margin-top:-10px">
+        @*<div class="row" style="margin-top:-10px">
             <div class="col-md-12">
                 <div class="card card-gray-dark">
-                    
+
                 </div>
             </div>
+        </div>*@
+        <div class="row" style="margin-top:-3px">
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body" style="margin-top:-10px">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
 
 
     </div>
@@ -150,6 +166,8 @@
             //$("#dptToDate").datepicker({ dateFormat: 'dd-mm-yy', changeYear: true, defaultDate: new Date() });
             //$("#dptFromDate").datepicker({ dateFormat: 'dd-mm-yy', changeYear: true, defaultDate: +15 }); 
 
+            LoadDateWiseCollectionReportList();
+
         })
 
         $(document).on('click', 'div.remove-date', function () {
@@ -166,6 +184,52 @@
                 }
             }
         })
+
+
+        ddlZoneName.change(function () {
+            LoadDateWiseCollectionReportList();
+        })
+        ddlDivisionName.change(function () {
+            LoadDateWiseCollectionReportList();
+        })
+        ddlRegionname.change(function () {
+            LoadDateWiseCollectionReportList();
+        })
+        ddlareaname.change(function () {
+            LoadDateWiseCollectionReportList();
+        })
+        ddlTerritoryName.change(function () {
+            LoadDateWiseCollectionReportList();
+        })
+        ddlStokiestName.change(function () {
+            LoadDateWiseCollectionReportList();
+        })
+        dptFromDate.change(function () {
+            LoadDateWiseCollectionReportList();
+        })
+        dptToDate.change(function () {
+            LoadDateWiseCollectionReportList();
+        })
+
+        function LoadDateWiseCollectionReportList() {
+            debugger;
+
+            var data = { flag: "View", zoneId: ddlZoneName.val(), divisonId: ddlDivisionName.val(), regionId: ddlRegionname.val(), areaId: ddlareaname.val(), stockiestId: ddlStokiestName.val(), territoryId: ddlTerritoryName.val(), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/DateWiseCollection', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
 
         $("#btnDownload").click(function () {
             if (dptFromDate.val() == "" && dptToDate.val() == "" && ddlStokiestName.val() == "" && searchByAny.val() == "" && ddlTerritoryName.val()=="") {

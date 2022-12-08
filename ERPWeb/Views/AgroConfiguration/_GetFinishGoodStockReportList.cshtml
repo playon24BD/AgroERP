@@ -1,0 +1,59 @@
+﻿
+
+@model IEnumerable<ERPBO.Agriculture.ViewModels.FinishGoodProductionInfoViewModel>
+
+@{
+    ViewBag.Title = "_GetFinishGoodStockReportList";
+    int sl = 0;
+    
+}
+
+
+<table class="table table-bordered table-sm table-striped table-responsive-lg text-sm" id="tblAgroSalesProductList">
+    <thead class="btn-dark">
+        <tr class="text-center text-bold">
+            <th style="vertical-align:middle">#SL</th>
+            <th style="vertical-align:middle" class="hide"></th>
+            <th style="vertical-align:middle">Entry Date</th>
+            <th style="vertical-align:middle">Product Name</th>
+            <th style="vertical-align:middle">Production Batch Code</th>
+            <th style="vertical-align:middle">Recipe Batch Code</th>
+            <th style="vertical-align:middle">Production Total</th>
+            <th style="vertical-align:middle">Sales Total</th>
+            <th style="vertical-align:middle">Return Total</th>
+            <th style="vertical-align:middle">Current Total</th>
+
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+            <tr>
+                <td class="text-center text-bold">@sl</td>
+                <td class="hide">@item.FinishGoodProductionInfoId</td>
+                <td class="text-center">@item.EntryDate.Value.ToString("dd.MMM.yyyy")</td>
+                <td class="text-center">@item.FinishGoodProductName</td>
+                <td class="text-center">@item.FinishGoodProductionBatch</td>
+                <td class="text-center">@item.ReceipeBatchCode</td>
+                <td class="text-center">@item.ProductionTotal</td>
+                <td class="text-center">@item.SalesTotal</td>
+                <td class="text-center">@item.ReturnTotal</td>
+                <td class="text-center">@item.CurrentPices</td>
+
+              
+            </tr>
+        }
+        @if (Model.Count() == 0)
+        {
+            <tr class="text-center text-bold">
+                <td colspan="11">No data found in the table</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+

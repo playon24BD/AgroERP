@@ -26,7 +26,7 @@
                             <div class="col-md-2">
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="FromDate" />
-                                    <div class="input-group-prepend cursor-pointer remove-list-date dptFromDate" style="cursor:pointer">
+                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
                                         <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
@@ -34,7 +34,7 @@
                             <div class="col-md-2">
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="ToDate" />
-                                    <div class="input-group-prepend cursor-pointer remove-list-date dptToDate" style="cursor:pointer">
+                                    <div class="input-group-prepend cursor-pointer remove-date dptToDate" style="cursor:pointer">
                                         <span class="input-group-text">&#10008;</span>
                                     </div>
                                 </div>
@@ -59,12 +59,30 @@
         </div>
 
 
-        <div class="row" style="margin-top:-10px">
+        @*<div class="row" style="margin-top:-10px">
             <div class="col-md-12">
                 <div class="card card-gray-dark">
-                    
+
                 </div>
             </div>
+        </div>*@
+        <div class="row" style="margin-top:-3px">
+            @*<div class="col-md-12">
+                <div class="card card-gray-dark">
+
+                </div>
+            </div>*@
+
+            <div class="col-md-12" style="margin-top:-10px">
+                <div class="card">
+                    <div class="card-body" style="margin-top:-10px">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -97,14 +115,19 @@
                 format: "dd MM yyyy",
                 orientation: "bottom auto",
                 todayHighlight: true,
-                autoclose: true
+
+            }).on('change', function () {
+                $('.datepicker').hide();
             });
             $('#dptToDate').datepicker({
                 format: "dd MM yyyy",
                 orientation: "bottom auto",
                 todayHighlight: true,
-                autoclose: true
+
+            }).on('change', function () {
+                $('.datepicker').hide();
             });
+            LoadFinishGoodReportList()
 
         })
 
@@ -122,6 +145,37 @@
                 }
             }
         })
+
+        dptFromDate.change(function () {
+            LoadFinishGoodReportList();
+        })
+
+        dptToDate.change(function () {
+            LoadFinishGoodReportList();
+        })
+        ddlProductName.change(function () {
+            LoadFinishGoodReportList();
+        })
+        function LoadFinishGoodReportList() {
+            debugger;
+
+            var data = { flag: "View", productId: TryParseInt(ddlProductName.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetFinishGoodStockReport', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
+
 
         $("#btnDownload").click(function () {
             //if (dptFromDate.val() == "" && dptToDate.val() == "" && ddlProductName.val() == "") {

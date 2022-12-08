@@ -39,7 +39,8 @@ namespace ERPBLL.Agriculture.Interface
         FinishGoodProductionInfo Getcheckqty(long FinishGoodProductInfoId, string ProductUnitQty);
 
         IEnumerable<FinishGoodStockReport> GetFinishGoodStockReport(long? productId, string fromDate, string toDate);
-
+        IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodStockReportList(long? productId, string fromDate, string toDate);
+        
         IEnumerable<FinishGoodProductionInfoDTO> GetPendingFinishGoodInfos(string name);
 
         FinishGoodProductionInfo GetFGProductionInfoBybatchcode(string finishGoodProductionBatch);

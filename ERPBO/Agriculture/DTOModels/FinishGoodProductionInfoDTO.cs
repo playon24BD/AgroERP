@@ -31,6 +31,7 @@ namespace ERPBO.Agriculture.DTOModels
         public double SalesTotal { get; set; }
         public double ReturnTotal { get; set; }
         public double CurrentStock { get; set; }
+        public double CurrentPices { get; set; }
         public int FGRQty { get; set; }
         public long UnitId { get; set; }
 

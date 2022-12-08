@@ -77,10 +77,10 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(ITerritoryUserBusiness territoryUserBusiness ,IProductionPerproductCost productionPerproductCost, IProductPriceConfiguration productPriceConfiguration, IProductPricingHistory productPricingHistory, ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness, IRMStockDashboardGrap rMStockDashboardGrap)
+        public AgroConfigurationController(ITerritoryUserBusiness territoryUserBusiness, IProductionPerproductCost productionPerproductCost, IProductPriceConfiguration productPriceConfiguration, IProductPricingHistory productPricingHistory, ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness, IRMStockDashboardGrap rMStockDashboardGrap)
 
         {
-            this._territoryUserBusiness= territoryUserBusiness;
+            this._territoryUserBusiness = territoryUserBusiness;
             this._productionPerproductCost = productionPerproductCost;
             this._productPriceConfiguration = productPriceConfiguration;
             this._productPricingHistory = productPricingHistory;
@@ -282,7 +282,7 @@ namespace ERPWeb.Controllers
 
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -344,7 +344,7 @@ namespace ERPWeb.Controllers
                 }
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -399,7 +399,7 @@ namespace ERPWeb.Controllers
                 }
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -471,7 +471,7 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Measurement Setup
-        public ActionResult GetMeasurementList(string flag, string name,long? unitId,string status)
+        public ActionResult GetMeasurementList(string flag, string name, long? unitId, string status)
         {
             try
             {
@@ -499,7 +499,7 @@ namespace ERPWeb.Controllers
                 }
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -633,9 +633,9 @@ namespace ERPWeb.Controllers
             {
                 return View();
             }
-            
 
-            
+
+
         }
         [HttpPost]
         public ActionResult SaveAgroUnitList(AgroUnitInfoViewModel model)
@@ -778,7 +778,7 @@ namespace ERPWeb.Controllers
         #region 
         public ActionResult RawMaterialConverter(long FinishGoodProductId, long RawMaterialId, double FGRQty, long UnitId)
         {
- 
+
             double ConvertUnit = 0;
             double convertml = 0;
             double cpa = 0;
@@ -790,7 +790,7 @@ namespace ERPWeb.Controllers
 
             if (FinishGoodProductId == 1 && UnitId == 4)
             {
-                if(RawMaterialId == 1)
+                if (RawMaterialId == 1)
                 {
                     ConvertUnit = 1000 / FGRQty;
                     convertml = FGRQty * 1000;
@@ -836,7 +836,7 @@ namespace ERPWeb.Controllers
             {
                 if (RawMaterialId == 1)
                 {
-                    ConvertUnit = 1250f / 1000f ;
+                    ConvertUnit = 1250f / 1000f;
                     RMQTY = ConvertUnit * FGRQty;
                     return Json(RMQTY, JsonRequestBehavior.AllowGet);
                 }
@@ -868,11 +868,11 @@ namespace ERPWeb.Controllers
             }
             else if (FinishGoodProductId == 2 && UnitId == 1)
             {
-                if(RawMaterialId == 6)
+                if (RawMaterialId == 6)
                 {
-                 convertml = 500f / 1000f;
-                 RMQTY = convertml* FGRQty;
-                 return Json(RMQTY, JsonRequestBehavior.AllowGet);
+                    convertml = 500f / 1000f;
+                    RMQTY = convertml * FGRQty;
+                    return Json(RMQTY, JsonRequestBehavior.AllowGet);
 
                 }
                 if (RawMaterialId == 8)
@@ -1332,11 +1332,11 @@ namespace ERPWeb.Controllers
 
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
-           
+
         }
 
         public ActionResult GetReceipyByProductionId(string receipeBatchCode)
@@ -2364,7 +2364,7 @@ namespace ERPWeb.Controllers
 
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -2639,7 +2639,7 @@ namespace ERPWeb.Controllers
 
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -3192,7 +3192,7 @@ namespace ERPWeb.Controllers
 
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -3324,7 +3324,7 @@ namespace ERPWeb.Controllers
 
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -3912,7 +3912,7 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(rawMaterialRequisitionInfoDTO, rawMaterialRequisitionInfoViewModels);
                 return PartialView("_GetRequisition", rawMaterialRequisitionInfoViewModels);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -4105,7 +4105,7 @@ namespace ERPWeb.Controllers
 
                 return Json(IsSuccess);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -4369,10 +4369,24 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetFinishGoodStockReport()
+        public ActionResult GetFinishGoodStockReport(string flag, long? productId, string fromDate, string toDate)
         {
-            ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+            if (string.IsNullOrEmpty(flag))
+            {
 
+                ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                return View();
+            }
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _finishGoodProductionInfoBusiness.GetFinishGoodStockReportList(productId ?? 0, fromDate, toDate);
+                List<FinishGoodProductionInfoViewModel> viewModels = new List<FinishGoodProductionInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetFinishGoodStockReportList", viewModels);
+
+
+            }
             return View();
         }
 
@@ -4481,17 +4495,32 @@ namespace ERPWeb.Controllers
             }
         }
 
-        public ActionResult DateWiseCollection()
+        public ActionResult DateWiseCollection(string flag, long? zoneId, long? divisonId, long? regionId, long? areaId, long? stockiestId, long? territoryId, string fromDate, string toDate)
         {
-            ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlZoneName = _zoneSetup.GetAllZoneSetup(User.OrgId).Select(org => new SelectListItem { Text = org.ZoneName, Value = org.ZoneId.ToString() }).ToList();
 
-            ViewBag.ddlDivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
-            ViewBag.ddlRegionname = _regionSetup.GetAllRegionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
-            ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
-            ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+                ViewBag.ddlDivisionName = _divisionInfo.GetAllDivisionSetup(User.OrgId).Select(org => new SelectListItem { Text = org.DivisionName, Value = org.DivisionId.ToString() }).ToList();
+                ViewBag.ddlRegionname = _regionSetup.GetAllRegionSetup(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.RegionName, Value = org.RegionId.ToString() }).ToList();
+                ViewBag.ddlareaname = _areaSetupBusiness.GetAllAreaSetupV(9).Where(x => x.OrganizationId == 9).Select(org => new SelectListItem { Text = org.AreaName, Value = org.AreaId.ToString() }).ToList();
+                ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
-            ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(d => new SelectListItem { Text = d.TerritoryName, Value = d.TerritoryId.ToString() }).ToList();
+                ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(d => new SelectListItem { Text = d.TerritoryName, Value = d.TerritoryId.ToString() }).ToList();
 
+                return View();
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+
+                var dto = _salesPaymentRegister.GetSalesPaymentRegisterList(zoneId??0, divisonId??0, regionId??0, areaId??0, stockiestId??0, territoryId??0, fromDate, toDate);
+                List<SalesPaymentRegisterViewModel> viewModels = new List<SalesPaymentRegisterViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetSalesPaymentRegisterList", viewModels);
+
+
+            }
             return View();
         }
 
@@ -4614,7 +4643,7 @@ namespace ERPWeb.Controllers
 
         }
 
-        
+
         public ActionResult GetReturnRawMaterialReportList(string flag, long? rawMaterialId, string returnType, string status, string fromDate, string toDate)
         {
             try
@@ -5127,7 +5156,7 @@ namespace ERPWeb.Controllers
             var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(x => x.StockiestId == id).ToList();
             var totalbilll = stokiestid.Sum(y => y.TotalAmount);
             var status = "ADJUST";
-            var sram = _salesReturn.GetAgroSalesreturnByStokiestId(id,status).Where(d => d.StockiestId == id).ToList();
+            var sram = _salesReturn.GetAgroSalesreturnByStokiestId(id, status).Where(d => d.StockiestId == id).ToList();
             var totalreturn = sram.Sum(rr => rr.ReturnTotalPrice);
             var totalbill = totalbilll - totalreturn;
             return Json(totalbill, JsonRequestBehavior.AllowGet);
@@ -5151,7 +5180,7 @@ namespace ERPWeb.Controllers
             var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
             var totaldues = stokiestid.Sum(du => du.DueAmount);
 
-            var totaldue = totaldues ;
+            var totaldue = totaldues;
 
 
             return Json(totaldue, JsonRequestBehavior.AllowGet);
@@ -5254,7 +5283,7 @@ namespace ERPWeb.Controllers
 
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -5282,7 +5311,7 @@ namespace ERPWeb.Controllers
             return Json(Isexist);
         }
 
-        
+
         public ActionResult SalesCommission(string flag, long? id, string invoiceNo, long? stockiestId, string fdate, string tdate)
         {
             try
@@ -5347,13 +5376,13 @@ namespace ERPWeb.Controllers
 
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
 
         }
-        
+
         public ActionResult SalesCommissionReportList(string flag, long? id, string invoiceNo, long? stockiestId, string fdate, string tdate)
         {
             try
@@ -5759,7 +5788,7 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Dealar Ladger 
-        public ActionResult DealarLadger (long? id, string flag,string fromDate, string toDate , long? ProductSalesInfoId)
+        public ActionResult DealarLadger(long? id, string flag, string fromDate, string toDate, long? ProductSalesInfoId)
         {
             try
             {
@@ -5866,7 +5895,7 @@ namespace ERPWeb.Controllers
         public ActionResult SoketistName(long id)
         {
             var StockiestName = _stockiestInfo.GetStockiestInfoById(id, User.OrgId).StockiestName;
-    
+
             return Json(StockiestName, JsonRequestBehavior.AllowGet);
 
         }
@@ -5908,7 +5937,7 @@ namespace ERPWeb.Controllers
         public ActionResult DealarLadgerList(long? id, string fromDate, string toDate)
         {
 
-            var dto = _agroProductSalesInfoBusiness.GetDealerLadserInfos(id.Value ,fromDate, toDate);
+            var dto = _agroProductSalesInfoBusiness.GetDealerLadserInfos(id.Value, fromDate, toDate);
 
 
             List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();

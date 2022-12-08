@@ -1,0 +1,69 @@
+﻿
+
+@model IEnumerable<ERPBO.Agriculture.ViewModels.SalesPaymentRegisterViewModel>
+
+@{
+    ViewBag.Title = "_GetSalesPaymentRegisterList";
+    int sl = 0;
+
+}
+
+
+<table class="table table-bordered table-sm table-striped table-responsive-lg text-sm" id="tblAgroSalesProductList">
+    <thead class="btn-dark">
+        <tr class="text-center text-bold">
+            <th style="vertical-align:middle">#SL</th>
+            <th style="vertical-align:middle" class="hide"></th>
+            <th style="vertical-align:middle">Payment Date</th>
+            <th style="vertical-align:middle">Invoice No</th>
+            <th style="vertical-align:middle">Zone Name</th>
+            <th style="vertical-align:middle">Division Name</th>
+            <th style="vertical-align:middle">Region Name</th>
+            <th style="vertical-align:middle">Area Name</th>
+            <th style="vertical-align:middle">Territory Name</th>
+            <th style="vertical-align:middle">Stockiest Name</th>
+            <th style="vertical-align:middle">Payment Mode</th>
+            <th style="vertical-align:middle">Account Number</th>
+            <th style="vertical-align:middle">Total Amount</th>
+            <th style="vertical-align:middle">Payment Amount</th>
+            
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+            <tr>
+                <td class="text-center text-bold">@sl</td>
+                <td class="hide">@item.PaymentRegisterID</td>
+                <td class="text-center">@item.PaymentDate.ToString("dd-MMM-yyyy")</td>
+                <td class="text-center">@item.InvoiceNo</td>
+                <td class="text-center">@item.ZoneName</td>
+                <td class="text-center">@item.DivisionName</td>
+                <td class="text-center">@item.RegionName</td>
+                <td class="text-center">@item.AreaName</td>
+                <td class="text-center">@item.TerritoryName</td>
+                <td class="text-center">@item.StockiestName</td>
+                <td class="text-center">@item.PaymentMode</td>
+                <td class="text-center">@item.AccountNumber</td>
+                <td class="text-center">@item.TotalAmount</td>
+                <td class="text-center">@item.PaymentAmount</td>
+
+
+            </tr>
+        }
+        @if (Model.Count() == 0)
+        {
+            <tr class="text-center text-bold">
+                <td colspan="11">No data found in the table</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+

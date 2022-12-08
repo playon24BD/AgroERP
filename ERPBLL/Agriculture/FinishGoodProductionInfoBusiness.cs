@@ -316,24 +316,21 @@ inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
                     param += string.Format(@" and fgp.FinishGoodProductId={0}", productId);
                 }
 
-                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
                 {
                     string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
                     string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
                     param += string.Format(@" and Cast(fgp.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
                 }
-
-
-
                 else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
                 {
                     string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                    FromDate += string.Format(@" and Cast(fgp.EntryDate as date)='{0}'", fDate);
+                    param += string.Format(@" and Cast(fgp.EntryDate as date)='{0}'", fDate);
                 }
                 else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
                 {
                     string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                    ToDate += string.Format(@" and Cast(fgp.EntryDate as date)='{0}'", tDate);
+                    param += string.Format(@" and Cast(fgp.EntryDate as date)='{0}'", tDate);
                 }
 
                 query = string.Format(@"select Distinct todate='" + fromDate + "', fromDate='" + toDate + "', fgp.FinishGoodProductId ,fgp.FGRId ,CONCAT(p.FinishGoodProductName,' ', fr.FGRQty,' ( ',un.UnitName,')') as FinishGoodProductName ,convert(date, fgp.EntryDate) as EntryDate,fgp.FinishGoodProductionBatch,fr.ReceipeBatchCode,CONCAT( fr.FGRQty,' ( ',un.UnitName,')') AS ProductDetails,ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0) ,SalesTotal =isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0) ,ReturnTotal = isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) ,CurrentPices=isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) from FinishGoodProductionInfoes fgp inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId where 1=1 {0}", Utility.ParamChecker(param));
@@ -654,6 +651,58 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
             return query;
         }
+
+        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodStockReportList(long? productId, string fromDate, string toDate)
+        {
+            try
+            {
+                return _agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryFinishGoodStockReportList(productId, fromDate, toDate));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        private string QueryFinishGoodStockReportList(long? productId, string fromDate, string toDate)
+        {
+            try
+            {
+                string query = string.Empty;
+                string param = string.Empty;
+                string FromDate = string.Empty;
+                string ToDate = string.Empty;
+
+                if (productId != 0 && productId > 0)
+                {
+                    param += string.Format(@" and fgp.FinishGoodProductId={0}", productId);
+                }
+
+                if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(fgp.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+                }
+                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(fgp.EntryDate as date)='{0}'", fDate);
+                }
+                else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                {
+                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(fgp.EntryDate as date)='{0}'", tDate);
+                }
+
+                query = string.Format(@"select Distinct todate='" + fromDate + "', fromDate='" + toDate + "', fgp.FinishGoodProductId ,fgp.FGRId ,CONCAT(p.FinishGoodProductName,' ', fr.FGRQty,' ( ',un.UnitName,')') as FinishGoodProductName ,convert(date, fgp.EntryDate) as EntryDate,fgp.FinishGoodProductionBatch,fr.ReceipeBatchCode,CONCAT( fr.FGRQty,' ( ',un.UnitName,')') AS ProductDetails,ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0) ,SalesTotal =isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0) ,ReturnTotal = isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) ,CurrentPices=isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) from FinishGoodProductionInfoes fgp inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId where 1=1 {0}", Utility.ParamChecker(param));
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
     }
 }
 

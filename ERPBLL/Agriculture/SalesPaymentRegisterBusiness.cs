@@ -156,5 +156,77 @@ namespace ERPBLL.Agriculture
                 return null;
             }
         }
+
+        public IEnumerable<SalesPaymentRegisterDTO> GetSalesPaymentRegisterList(long? zoneId, long? divisonId, long? regionId, long? areaId, long? stockiestId, long? territoryId, string fromDate, string toDate)
+        {
+            try
+            {
+                return _agricultureUnitOfWork.Db.Database.SqlQuery<SalesPaymentRegisterDTO>(QueryForDateWiseCollectionReportList(zoneId, divisonId, regionId, areaId, stockiestId, territoryId, fromDate, toDate));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public string QueryForDateWiseCollectionReportList(long? zoneId, long? divisonId, long? regionId, long? areaId, long? stockiestId, long? territoryId, string fromDate, string toDate)
+        {
+            try
+            {
+                string param = string.Empty;
+                string query = string.Empty;
+
+                if (stockiestId != null && stockiestId > 0)
+                {
+                    param += string.Format(@" and info.StockiestId={0}", stockiestId);
+                }
+                if (territoryId != null && territoryId > 0)
+                {
+                    param += string.Format(@" and info.TerritoryId={0}", territoryId);
+                }
+                if (areaId != null && areaId > 0)
+                {
+                    param += string.Format(@" and info.AreaId={0}", areaId);
+                }
+                if (regionId != null && regionId > 0)
+                {
+                    param += string.Format(@" and info.RegionId={0}", regionId);
+                }
+
+                if (divisonId != null && divisonId > 0)
+                {
+                    param += string.Format(@" and info.DivisionId={0}", divisonId);
+                }
+                if (zoneId != null && zoneId > 0)
+                {
+                    param += string.Format(@" and info.ZoneId={0}", zoneId);
+                }
+
+                if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(ph.PaymentDate as date) between '{0}' and '{1}'", fDate, tDate);
+                }
+                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+                {
+                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(ph.PaymentDate as date)='{0}'", fDate);
+                }
+                else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+                {
+                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                    param += string.Format(@" and Cast(ph.PaymentDate as date)='{0}'", tDate);
+                }
+
+                query = string.Format(@"SELECT  todate='" + fromDate + "', fromDate='" + toDate + "', ph.PaymentRegisterID,z.ZoneName,d.DivisionName,r.RegionName,a.AreaName,  t.TerritoryName,s.StockiestName, info.InvoiceNo,info.TotalAmount,ph.PaymentAmount,ph.PaymentDate,ph.PaymentMode,Case When ph.AccounrNumber IS Null Then 'N/A' Else ph.AccounrNumber End As AccountNumber from tblProductSalesPaymentHistory ph Inner Join tblProductSalesInfo info on ph.ProductSalesInfoId=info.ProductSalesInfoId inner join tblZoneInfos z on info.ZoneId=z.ZoneId inner join tblDivisionInfo d on info.DivisionId=d.DivisionId inner join tblRegionInfos r on info.RegionId=r.RegionId inner join tblAreaSetup a on info.AreaId=a.AreaId inner join tblTerritoryInfos t on info.TerritoryId=t.TerritoryId inner join tblStockiestInfo s on info.StockiestId=s.StockiestId Where ph.PaymentAmount>0  and ph.PaymentMode IS NOT NULL {0}", Utility.ParamChecker(param));
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
     }
 }

@@ -15,5 +15,6 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<SalesPaymentRegister> GetPaymentDetailsByInvoiceId(long infoId);
         IEnumerable<DateWiseCollectionReport> GetDateWiseCollectionReport(long? zoneId, long? divisonId, long? regionId, long? areaId, long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate);
+        IEnumerable<SalesPaymentRegisterDTO> GetSalesPaymentRegisterList(long? zoneId, long? divisonId, long? regionId, long? areaId, long? stockiestId, long? territoryId, string fromDate, string toDate);
     }
 }
