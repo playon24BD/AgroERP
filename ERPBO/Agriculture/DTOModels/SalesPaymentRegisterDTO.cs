@@ -29,5 +29,6 @@ namespace ERPBO.Agriculture.DTOModels
         public string StockiestName { get; set; }
         public string InvoiceNo { get; set; }
         public double TotalAmount { get; set; }
+        public long PaymentMoneyReciptId { get; set; }
     }
 }

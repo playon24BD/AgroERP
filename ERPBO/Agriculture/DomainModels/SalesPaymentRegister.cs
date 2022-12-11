@@ -23,5 +23,7 @@ namespace ERPBO.Agriculture.DomainModels
         public string AccounrNumber { get; set; }
 
 
+        public long PaymentMoneyReciptId { get; set; }
+
     }
 }
