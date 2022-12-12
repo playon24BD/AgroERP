@@ -20,5 +20,7 @@ namespace ERPBLL.Agriculture.Interface
         bool SaveCommissionOnProductOnSales(AgroProductSalesInfo agroProductSalesInfo , long userId,long orgId);
         IEnumerable<CommissionOnProductOnSalesDTO> GetAllCommissionOnProductOnSales(string invoice, long? stockiestId, string fdate, string tdate, long orgId);
         bool UpdateCommissionOnProductOnSales(AgroProductSalesInfo agroProductSalesInfo, long userId, long orgId);
+
+        CommissionOnProductOnSales GetCommissionOnProductBySalesId(long ProductSalesInfoId);
     }
 }

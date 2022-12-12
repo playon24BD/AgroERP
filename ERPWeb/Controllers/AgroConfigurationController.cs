@@ -3098,19 +3098,12 @@ namespace ERPWeb.Controllers
 
         public ActionResult SaveSalesPayment(SalesPaymentRegisterViewModel info)
         {
-            //
 
             bool isSucccess = false;
             var salesID = info.ProductSalesInfoId;
-
-
             SalesPaymentRegisterDTO salesPaymentRegisterDTO = new SalesPaymentRegisterDTO();
-
             AutoMapper.Mapper.Map(info, salesPaymentRegisterDTO);
             isSucccess = _salesPaymentRegister.SaveSalesPayment(salesPaymentRegisterDTO, User.UserId);
-
-            //isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
-
             return Json(isSucccess);
         }
 
@@ -3153,7 +3146,17 @@ namespace ERPWeb.Controllers
             return View();
         }
 
+        public ActionResult SaveProSalesPayment(PaymentMoneyReciptViewModel info, List<SalesPaymentRegisterViewModel> details)
+        {
+            bool isSucccess = false;
+            PaymentMoneyReciptDTO infoDTO = new PaymentMoneyReciptDTO();
+            List<SalesPaymentRegisterDTO> detailsDTO = new List<SalesPaymentRegisterDTO>();
+            AutoMapper.Mapper.Map(info, infoDTO);
+            AutoMapper.Mapper.Map(details, detailsDTO);
+            isSucccess = _paymentMoneyRecipt.SavePaymentMOneyReciept(infoDTO, detailsDTO, User.UserId,User.OrgId);
 
+            return Json(isSucccess);
+        }
 
 
 
