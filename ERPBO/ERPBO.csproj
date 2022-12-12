@@ -172,6 +172,7 @@
     <Compile Include="Agriculture\ReportModels\GetSendAndReceiveReportData.cs" />
     <Compile Include="Agriculture\ReportModels\InvoiceWiseCollectionSalesReport.cs" />
     <Compile Include="Agriculture\ReportModels\IssueRequisitionReportData.cs" />
+    <Compile Include="Agriculture\ReportModels\MoneyReciptRepotData.cs" />
     <Compile Include="Agriculture\ReportModels\MRawMaterialDataReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductSalesDataChallanReport.cs" />
     <Compile Include="Agriculture\ReportModels\ProductSalesDataReport.cs" />

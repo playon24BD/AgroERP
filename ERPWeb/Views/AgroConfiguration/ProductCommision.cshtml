@@ -30,8 +30,12 @@
                             <div class="card "style="background-color:#001f3f">
                                 <div class="px-2 py-1">
                                     <div class="row text-sm">
-                                        
-                                        <div class="col-md-3">
+
+
+                                        <div class="col-5">
+
+                                        </div>
+                                        <div class="col-md-2">
 
                                             @Html.DropDownList("ddlProductNameSearch", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             <span class="error hide req-ddlProductName">Product Is Required</span>
@@ -43,7 +47,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-4">
 
                                         </div>
 

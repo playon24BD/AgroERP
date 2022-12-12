@@ -1,4 +1,8 @@
+
 ﻿using ERPBO.Agriculture.DomainModels;
+
+﻿using ERPBO.Agriculture.ReportModels;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +13,11 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IPaymentMoneyRecipt
     {
+
         IEnumerable<PaymentMoneyRecipt> GetAllPaymentMoneyRecipt();
+
+
+        IEnumerable<MoneyReciptRepotData> GetMoneyReciptReport(string moneyReceipt);
 
     }
 }

@@ -311,6 +311,17 @@
     <Content Include="Content\LogIn\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\LogIn\fonts\FontAwesome.otf" />
     <Content Include="Scripts\Chart.js" />
+    <Content Include="Reports\DataSets\dsMoneyReciptReport.xsc">
+      <DependentUpon>dsMoneyReciptReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsMoneyReciptReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsMoneyReciptReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsMoneyReciptReport.xss">
+      <DependentUpon>dsMoneyReciptReport.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.0.js" />
     <Content Include="Scripts\jquery-1.11.0.min.js" />
@@ -3264,6 +3275,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsIssueRequisitionReport.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsMoneyReciptReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsMoneyReciptReport.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsMRawMaterialReportSave.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3529,8 +3545,12 @@
     <Content Include="Views\AgroConfiguration\SalesCommissionReportList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetFinishGoodStockReportList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetSalesPaymentRegisterList.cshtml" />
+
     <Content Include="Views\AgroConfiguration\SalesPaymentCreate.cshtml" />
     <Content Include="Views\AgroConfiguration\_PaymentAgroSalesProductList.cshtml" />
+
+    <Content Include="Views\AgroConfiguration\GetFinishGoodList.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3577,6 +3597,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductStock.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptInvoiceWiseSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptIssueRequisitionReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptMoneyReciptReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptMRawMaterialReportSave.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptRawMaterialReturnReportApproved.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptReturnRawMaterialReport.rdlc" />
