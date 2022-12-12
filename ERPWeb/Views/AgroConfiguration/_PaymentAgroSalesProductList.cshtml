@@ -1,0 +1,90 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.AgroProductSalesInfoViewModel>
+
+@{
+    ViewBag.Title = "_PaymentAgroSalesProductList";
+    int sl = 0;
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
+    double total = 0;
+    double totalpaid = 0;
+    double totaldue = 0;
+    string badge = string.Empty;
+    string badges = string.Empty;
+}
+
+
+<table class="table table-bordered table-sm table-striped table-responsive-lg text-sm" id="tblAgroSalesProductList">
+    <thead class="btn-dark">
+        <tr class="text-center text-bold">
+            <th style="vertical-align:middle">#SL</th>
+            <th style="vertical-align:middle" class="hide"></th>
+            <th style="vertical-align:middle">Invoice No</th>
+            <th style="vertical-align:middle">Invoice Date</th>
+            <th style="vertical-align:middle">Total Amount</th>
+            <th style="vertical-align:middle">PaidAmount</th>
+            <th style="vertical-align:middle">DueAmount</th>
+            <th style="vertical-align:middle">Payment</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            badge = "badge bg-success";
+            badges = "badge bg-info";
+            sl = sl + 1;
+            <tr>
+                <td class="text-center text-bold">@sl</td>
+                <td class="hide">@item.ProductSalesInfoId</td>
+                <td class="text-center ProductionSalesInfoId" data-val="@item.InvoiceNo">
+                    <span class="@badge">@item.InvoiceNo</span>
+                </td>
+                <td class="text-center">@item.InvoiceDate.Value.ToString("yyyy-MMM-dd")</td>
+                <td class="text-center">@item.TotalAmount</td>
+                <td class="text-center TotalAmount" data-val="@item.PaidAmount">
+                    <span class="@badges">@item.PaidAmount</span>
+                </td>
+                <td class="text-center">@item.DueAmount</td>
+                <td class="text-center" style="width:15%">
+                    <input type="number" class="text-center paidamount form-control form-control-sm " value="0" />
+                </td>
+
+                <td class="hide">
+                    @{
+                        double subtotal = item.TotalAmount;
+                        total += subtotal;
+                    }
+                    @subtotal;
+                </td>
+                <td class="hide">
+                    @{
+                        double subtotalpaid = item.PaidAmount;
+                        totalpaid += subtotalpaid;
+                    }
+                    @totalpaid;
+                </td>
+                <td class="hide">
+                    @{
+                        double subtotaldue = item.DueAmount;
+                        totaldue += subtotaldue;
+                    }
+                    @totaldue;
+                </td>
+
+            </tr>
+        }
+        @if (Model.Count() == 0)
+        {
+            <tr class="text-center text-bold">
+                <td colspan="11">No data found in the table</td>
+            </tr>
+        }
+    </tbody>
+    <tr>
+        <td colspan="2"></td>
+        <td class="text-bold" style="text-align:center" colspan="1">Total(TK): </td>
+        <td colspan="1" style="text-align:center"><b>@total</b></td>
+        <td colspan="1" style="text-align:center"><b>@totalpaid</b></td>
+        <td colspan="1" style="text-align:center"><b>@totaldue</b></td>
+        <td colspan="1"></td>
+    </tr>
+</table>

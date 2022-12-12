@@ -1,5 +1,6 @@
 ﻿using ERPBLL.Agriculture.Interface;
 using ERPBLL.ControlPanel.Interface;
+using ERPBO.Agriculture.DomainModels;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,11 @@ namespace ERPBLL.Agriculture
 
             this._paymentMoneyReciptRepository = new PaymentMoneyReciptRepository(this._agricultureUnitOfWork);
 
+        }
+
+        public IEnumerable<PaymentMoneyRecipt> GetAllPaymentMoneyRecipt()
+        {
+            return _paymentMoneyReciptRepository.GetAll().ToList();
         }
     }
 }

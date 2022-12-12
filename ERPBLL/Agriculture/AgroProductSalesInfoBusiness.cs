@@ -1362,6 +1362,55 @@ and sales.Status is null  order by sales.ProductSalesInfoId desc
             }
         }
 
+        public IEnumerable<AgroProductSalesInfoDTO> GetPaymentLadserInfos(long StockiestId)
+        {
+            try
+            {
+
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForGetPaymentLadserInfos(StockiestId)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private string QueryForGetPaymentLadserInfos(long StockiestId)
+        {
+            try
+            {
+
+                string query = string.Empty;
+                string param = string.Empty;
+
+
+                if (StockiestId != 0 && StockiestId > 0)
+                {
+                    param += string.Format(@" and sales.StockiestId={0}", StockiestId);
+                }
+
+                query = string.Format(@"	
+select sales.StockiestId,sales.ChallanNo,sales.DriverName,sales.DeliveryPlace,sales.VehicleType,sales.VehicleNumber,sales.TotalAmount,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName,
+
+
+Amount = ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0),
+(sales.TotalAmount)-ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0)as TotalAmount
+
+
+from tblProductSalesInfo sales
+inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId  Where 1=1 {0}              
+and sales.Status is null  order by sales.ProductSalesInfoId desc
+
+", Utility.ParamChecker(param));
+
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
 
 
         //ExecutionStateWithText IAgroProductSalesInfoBusiness.  (AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId)

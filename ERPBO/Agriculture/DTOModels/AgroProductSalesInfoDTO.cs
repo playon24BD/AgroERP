@@ -68,8 +68,11 @@ namespace ERPBO.Agriculture.DTOModels
         public double Price { get; set; }
         public double Discount { get; set; }
         public double DiscountTK { get; set; }
+        public double CommisionPercent { get; set; }
+        public double CommisionAmount { get; set; }
+        public string flag { get; set; }
 
-        
+
 
 
 

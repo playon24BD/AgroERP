@@ -44,6 +44,10 @@ namespace ERPBO.Agriculture.DomainModels
 
         public string Status { get; set; }
 
+        public double CommisionPercent { get; set; }
+        public double CommisionAmount { get; set; }
+        public string flag { get; set; }
+
         public ICollection<AgroProductSalesDetails> AgroProductSalesDetails { get; set; }
 
        

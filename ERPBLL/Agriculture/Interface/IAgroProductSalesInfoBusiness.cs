@@ -59,5 +59,7 @@ namespace ERPBLL.Agriculture.Interface
 
 
         IEnumerable<AgroProductSalesInfoDTO> GetDealerLadserInfos(long id, string fromDate, string toDate);
+
+        IEnumerable<AgroProductSalesInfoDTO> GetPaymentLadserInfos(long StockiestId);
     }
 }

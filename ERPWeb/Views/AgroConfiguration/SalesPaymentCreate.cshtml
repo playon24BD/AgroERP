@@ -1,0 +1,239 @@
+﻿@{
+    ViewBag.Title = "SalesPaymentCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:-8px">
+
+    <div class="col-md-12">
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-14px">
+                <div class="card" style="background-color:#001f3f">
+
+                    <div class="px-2 py-1">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h5 class="text-left text-bold text-white">Payment</h5>
+                            </div>
+                            <div class="col-md-3">
+                                @*<label for="ddlstokiestname">Stockiest Name </label>*@
+                                @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "Select Stokiest", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+
+                            <div class="col-md-6">
+                                <button class="btn btn-success btn-sm float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                @*btn btn-outline-primary btn-sm float-lg-right*@
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:-14px">
+                <div class="card" style="background-color: #E0FFFF;">
+                    <div class="px-4 py-2" style="margin-bottom:-3px">
+
+                        <div class="row">
+
+                            <div class="col-md-2">
+                                <label for="txtMoneyRecipt" class="control-label">
+                                    Money Recipt
+                                </label>
+                                <input type="text" id="txtMoneyRecipt" class="form-control form-control-sm" value="@ViewBag.code" readonly />
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ddlBankname">BnakName</label>
+                                @Html.DropDownList("ddlBankname", (IEnumerable<SelectListItem>)ViewBag.ddlBankname, "Select Bank", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ddlBranch">Branch</label>
+                                <input type="text" id="ddlBranch" name="ddlBranch" class="form-control form-control-sm" />
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ddlPaymentMode" class="control-label">Payment Mode</label>
+                                <select id="ddlPaymentMode" class="form-control form-control-sm" select2>
+                                    <option value="">Select Mode</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Cheque">Cheque</option>
+                                </select>
+                                <span class="error hide req-ddlPaymentMode">ddlPaymentMode Is Required</span>
+                            </div>
+                            <div class="col-md-2" id="divAccountNumber">
+                                <label for="ddlAccountNumber" class="control-label">Account Number</label>
+                                <input type="number" id="ddlAccountNumber" class="form-control form-control-sm" />
+                                <span class="error hide req-ddlAccountNumber font-weight-bold">Account is required!</span>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ddlAmount" class="control-label">Commision(%)</label>
+                                <input type="number" id="ddlAmount" class="form-control form-control-sm" />
+                                <span class="error hide req-ddlAmount font-weight-bold">Amount is required!</span>
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:0px">
+
+                <div class="row" style="margin-top:-3px">
+                    <div class="col-md-12" style="margin-top:-10px">
+                        <div class="card">
+                            <div class="card-body" style="margin-top:-5px">
+
+                                <div class="col-md-12" id="dataContainer">
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+
+        var ddlstokiestname = $("#ddlstokiestname");
+        var ddlBankname = $("#ddlBankname");
+        var ddlBranch = $("#ddlBranch");
+        var txtMoneyRecipt = $("#txtMoneyRecipt");
+        var divAccountNumber = $("#divAccountNumber");
+        var ddlPaymentMode = $("#ddlPaymentMode");
+        var ddlAccountNumber = $("#ddlAccountNumber");
+
+
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            $("#divAccountNumber").hide();
+
+        })
+
+        ddlPaymentMode.change(function () {
+            if (ddlPaymentMode.val() == "Cheque") {
+                $("#divAccountNumber").show();
+
+            }
+            if (ddlPaymentMode.val() == "Cash") {
+                $("#divAccountNumber").hide();
+
+            }
+
+        })
+
+        //change Invoice
+        $('#ddlstokiestname').change(function () {
+
+            let Stkid = $("#ddlstokiestname option:selected").val();
+            debugger;
+            var data = { flag: "View", StockiestId: TryParseInt(Stkid, 0) };
+            console.log(data);
+            debugger
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesPaymentCreate', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
+
+
+
+
+        });
+
+
+
+
+                //save
+         $("#saveButton").click(function (e) {
+            //alert();
+            debugger;
+            e.preventDefault();
+
+            var details = [];
+            details.length = 0;
+             $.each($("#tblAgroSalesProductList tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                 details.push({
+                    //StockiestId: TryParseInt(ddlStokiestID.val(), 0),
+                    //ProductSalesInfoId: TryParseInt(ddlInvoiceNo.val(), 0),
+                    ProductSalesInfoId: tds.eq(1).html(),
+                    PaymentAmount: tds.eq(7).children('input[type="number"]').val(),
+
+
+
+                });
+            })
+             console.log(details);
+             var info = { PaymentMoneyReciptId: 0, StockiestId: TryParseInt(ddlstokiestname.val(), 0), MoneyReciptNo: txtMoneyRecipt.val(), BankName: $("#ddlBankname option:selected").text(), BranchName: ddlBranch.val(), PaymentMode: ddlPaymentMode.val(), AccounrNumber: ddlAccountNumber.val() };
+
+             var data = JSON.stringify({ info: info, details: details });
+
+             @*$.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveSalesReturn', data, getToken())).then(function (res, status) {
+                 debugger;
+                if (res === true) {
+
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("SalesReturnList")');
+                    }, 1000);
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+            }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#saveButton");
+            })
+
+            function redirectPage(page) {
+                window.location.replace(page);
+            }*@
+
+        });
+
+
+
+
+    </script>
+}
