@@ -30,5 +30,8 @@ namespace ERPBO.Agriculture.DTOModels
         public string InvoiceNo { get; set; }
         public double TotalAmount { get; set; }
         public long PaymentMoneyReciptId { get; set; }
+
+        public double CommisionPercent { get; set; }
+        public double CommisionAmount { get; set; }
     }
 }

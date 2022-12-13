@@ -29,7 +29,7 @@ namespace ERPBO.Agriculture.DomainModels
         public string AccounrNumber { get; set; }
 
 
-        public double CommisionPercent { get; set; }
+
         public string flag { get; set; }
 
 

@@ -147,7 +147,6 @@ namespace ERPBLL.Agriculture
             if (isSuccess)
             {
                 _commisionOnProductSalesDetailsBusiness.SaveCommisionOnProductSalesDetails(agroProductSalesInfo.AgroProductSalesDetails.ToList(), commissionOnProductOnSales.CommissionOnProductOnSalesId, agroProductSalesInfo.PaymentMode, userId, orgId);
-
             }
             return isSuccess;
 
