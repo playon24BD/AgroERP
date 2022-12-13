@@ -236,6 +236,11 @@ namespace ERPBLL.Agriculture
             }
         }
 
+        public CommissionOnProductOnSales GetCommissionOnProductBySalesId(long ProductSalesInfoId)
+        {
+            return _commissionOnProductOnSalesRepository.GetOneByOrg(c => c.ProductSalesInfoId == ProductSalesInfoId);
+        }
+
         //public IEnumerable<CommissionOnProductOnSalesDTO> GetSalesCommissionListInfos(string invoiceNo, long? stockiestId, string fromDate, string toDate)
         //{
         //    return _agricultureUnitOfWork.Db.Database.SqlQuery<CommissionOnProductOnSalesDTO>(string.Format(QueryForSalesCommissionList(invoiceNo, stockiestId, fromDate, toDate)));

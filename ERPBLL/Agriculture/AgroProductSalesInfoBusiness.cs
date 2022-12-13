@@ -1398,7 +1398,7 @@ Amount = ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr
 
 
 from tblProductSalesInfo sales
-inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId  Where 1=1 {0}              
+inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId  Where 1=1 and sales.DueAmount !< 1 {0}              
 and sales.Status is null  order by sales.ProductSalesInfoId desc
 
 ", Utility.ParamChecker(param));
