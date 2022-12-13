@@ -71,7 +71,8 @@ namespace ERPBLL.Agriculture
 
                         Credit = (flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : 0,
 
-                        Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash : 0,
+                        //Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash : 0,
+                        Cash = (flag == "Cash") ? 0 : 0,
                         //TotalCommission = item.TotalCommission,
                         //Status = item.Status,
                        price= (item.Price * item.Quanity) - item.DiscountTk,

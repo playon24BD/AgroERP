@@ -25,5 +25,8 @@ namespace ERPBO.Agriculture.DomainModels
 
         public long PaymentMoneyReciptId { get; set; }
 
+        public double CommisionPercent { get; set; }
+        public double CommisionAmount { get; set; }
+
     }
 }

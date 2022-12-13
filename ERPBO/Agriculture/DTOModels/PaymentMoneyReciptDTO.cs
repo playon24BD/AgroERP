@@ -25,7 +25,7 @@ namespace ERPBO.Agriculture.DTOModels
         public string AccounrNumber { get; set; }
 
         public string StockiestName { get; set; }
-        public double CommisionPercent { get; set; }
+
         public string flag { get; set; }
     }
 }

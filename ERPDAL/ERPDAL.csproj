@@ -195,6 +195,10 @@
     <Compile Include="AgricultureContextMigrations\202212120729019_moneyreciptdomainaddfield.Designer.cs">
       <DependentUpon>202212120729019_moneyreciptdomainaddfield.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202212130646420_Agriculture_PaymentTableCreate.cs" />
+    <Compile Include="AgricultureContextMigrations\202212130646420_Agriculture_PaymentTableCreate.Designer.cs">
+      <DependentUpon>202212130646420_Agriculture_PaymentTableCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -324,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202212120729019_moneyreciptdomainaddfield.resx">
       <DependentUpon>202212120729019_moneyreciptdomainaddfield.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202212130646420_Agriculture_PaymentTableCreate.resx">
+      <DependentUpon>202212130646420_Agriculture_PaymentTableCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

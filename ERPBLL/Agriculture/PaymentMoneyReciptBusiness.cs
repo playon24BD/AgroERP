@@ -48,6 +48,8 @@ namespace ERPBLL.Agriculture
 
             List<SalesPaymentRegister> salesPaymentRegisters = new List<SalesPaymentRegister>();
 
+            //if (infoDTO.CommisionPercent == 0)
+            //{
 
 
                 paymentMoneyRecipt.PaymentMoneyReciptId = infoDTO.PaymentMoneyReciptId;
@@ -59,7 +61,7 @@ namespace ERPBLL.Agriculture
                 paymentMoneyRecipt.BranchName = infoDTO.BranchName;
                 paymentMoneyRecipt.PaymentMode= infoDTO.PaymentMode;
                 paymentMoneyRecipt.AccounrNumber= infoDTO.AccounrNumber;
-                paymentMoneyRecipt.CommisionPercent = infoDTO.CommisionPercent;
+                //paymentMoneyRecipt.CommisionPercent = infoDTO.CommisionPercent;
                 paymentMoneyRecipt.EntryUserId = userId;
                 _paymentMoneyReciptRepository.Insert(paymentMoneyRecipt);
                 isSucccess = _paymentMoneyReciptRepository.Save();
@@ -90,56 +92,57 @@ namespace ERPBLL.Agriculture
                 isSucccess= _salesPaymentRegisterRepository.Save();
 
 
+            //}
 
 
-//            else
-//            {
+            //else
+            //{
 
 
-//                paymentMoneyRecipt.PaymentMoneyReciptId = infoDTO.PaymentMoneyReciptId;
-//                paymentMoneyRecipt.MoneyReciptNo = infoDTO.MoneyReciptNo;
-//                paymentMoneyRecipt.StockiestId = infoDTO.StockiestId;
-//                //paymentMoneyRecipt.TotalAmount = (total * infoDTO.CommisionPercent)/100;
-//                paymentMoneyRecipt.TotalAmount = total;
-//                paymentMoneyRecipt.EntryDate = DateTime.Now;
-//                paymentMoneyRecipt.BankName = infoDTO.BankName;
-//                paymentMoneyRecipt.BranchName = infoDTO.BranchName;
-//                paymentMoneyRecipt.PaymentMode = infoDTO.PaymentMode;
-//                paymentMoneyRecipt.AccounrNumber = infoDTO.AccounrNumber;
-//                paymentMoneyRecipt.CommisionPercent = infoDTO.CommisionPercent;
-//                paymentMoneyRecipt.EntryUserId = userId;
-//                _paymentMoneyReciptRepository.Insert(paymentMoneyRecipt);
-//                isSucccess = _paymentMoneyReciptRepository.Save();
+            //    paymentMoneyRecipt.PaymentMoneyReciptId = infoDTO.PaymentMoneyReciptId;
+            //    paymentMoneyRecipt.MoneyReciptNo = infoDTO.MoneyReciptNo;
+            //    paymentMoneyRecipt.StockiestId = infoDTO.StockiestId;
+            //    //paymentMoneyRecipt.TotalAmount = (total * infoDTO.CommisionPercent)/100;
+            //    paymentMoneyRecipt.TotalAmount = total;
+            //    paymentMoneyRecipt.EntryDate = DateTime.Now;
+            //    paymentMoneyRecipt.BankName = infoDTO.BankName;
+            //    paymentMoneyRecipt.BranchName = infoDTO.BranchName;
+            //    paymentMoneyRecipt.PaymentMode = infoDTO.PaymentMode;
+            //    paymentMoneyRecipt.AccounrNumber = infoDTO.AccounrNumber;
+            //    paymentMoneyRecipt.CommisionPercent = infoDTO.CommisionPercent;
+            //    paymentMoneyRecipt.EntryUserId = userId;
+            //    _paymentMoneyReciptRepository.Insert(paymentMoneyRecipt);
+            //    isSucccess = _paymentMoneyReciptRepository.Save();
 
-//                foreach (var item in detailsDTO)
-//                {
-//                    if (item.PaymentAmount > 0)
-//                    {
-//                        SalesPaymentRegister salesPaymentRegister = new SalesPaymentRegister()
-//                        {
-//                            PaymentAmount = item.PaymentAmount,
-//                            ProductSalesInfoId = item.ProductSalesInfoId,
-//                            PaymentMode = infoDTO.PaymentMode,
-//                            AccounrNumber = infoDTO.AccounrNumber,
-//                            PaymentMoneyReciptId = paymentMoneyRecipt.PaymentMoneyReciptId,
-//                            EntryUserId = userId,
-//                            PaymentDate = DateTime.Now,
+            //    foreach (var item in detailsDTO)
+            //    {
+            //        if (item.PaymentAmount > 0)
+            //        {
+            //            SalesPaymentRegister salesPaymentRegister = new SalesPaymentRegister()
+            //            {
+            //                PaymentAmount = item.PaymentAmount,
+            //                ProductSalesInfoId = item.ProductSalesInfoId,
+            //                PaymentMode = infoDTO.PaymentMode,
+            //                AccounrNumber = infoDTO.AccounrNumber,
+            //                PaymentMoneyReciptId = paymentMoneyRecipt.PaymentMoneyReciptId,
+            //                EntryUserId = userId,
+            //                PaymentDate = DateTime.Now,
 
-//                        };
-//                        _salesPaymentRegisterRepository.Insert(salesPaymentRegister);
+            //            };
+            //            _salesPaymentRegisterRepository.Insert(salesPaymentRegister);
 
-//                        var salesPayment = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(item.ProductSalesInfoId);
-//                        salesPayment.PaidAmount += item.PaymentAmount;
-//                        salesPayment.DueAmount -= item.PaymentAmount;
-//                        _agroProductSalesInfoRepository.Update(salesPayment);
-//;
-//                    }
-//                }
-//                isSucccess = _salesPaymentRegisterRepository.Save();
+            //            var salesPayment = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(item.ProductSalesInfoId);
+            //            salesPayment.PaidAmount += item.PaymentAmount;
+            //            salesPayment.DueAmount -= item.PaymentAmount;
+            //            _agroProductSalesInfoRepository.Update(salesPayment);
+            //            ;
+            //        }
+            //    }
+            //    isSucccess = _salesPaymentRegisterRepository.Save();
 
 
-//            }
-            
+            //}
+
             return isSucccess;
         }
     }

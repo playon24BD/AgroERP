@@ -31,6 +31,8 @@ namespace ERPBO.Agriculture.ViewModels
         public double TotalAmount { get; set; }
 
         public long PaymentMoneyReciptId { get; set; }
+        public double CommisionPercent { get; set; }
+        public double CommisionAmount { get; set; }
 
 
 
