@@ -40,6 +40,17 @@ namespace ERPBLL.Agriculture
                 return null;
             }
         }
+
+        public IEnumerable<RawMaterialTrack> RawMaterialStockInbyRawMaterialid(long rawMaterialId)
+        {
+            return _rawMaterialTrackInfoRepository.GetAll(t => t.RawMaterialId== rawMaterialId && t.IssueStatus== "StockIn").ToList();
+        }
+
+        public IEnumerable<RawMaterialTrack> RawMaterialStockoutbyRawMaterialid(long rawMaterialId)
+        {
+            return _rawMaterialTrackInfoRepository.GetAll(t => t.RawMaterialId == rawMaterialId && t.IssueStatus == "StockOut").ToList();
+        }
+
         private string QueryForRawMaterialMainINOUTQTY(string name)
         {
             try

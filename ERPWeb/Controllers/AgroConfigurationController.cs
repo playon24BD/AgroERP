@@ -1233,6 +1233,7 @@ namespace ERPWeb.Controllers
                     // ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
                     ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
+                    ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.PackageName, Value = d.MeasurementId.ToString() }).ToList();
 
                     return View();
 
@@ -1398,25 +1399,17 @@ namespace ERPWeb.Controllers
                 foreach (var rawMaterial in recipeDetailsRawMaterials)
                 {
 
-                    //issueQunatitys = _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
-                    var StocInkqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    var StocInkqty = _rawMaterialTrack.RawMaterialStockInbyRawMaterialid(rawMaterial.RawMaterialId).ToList();
                     var SumStockinQty = StocInkqty.Sum(c => c.Quantity);
 
-
-                    var StockOutqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialidOut(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    var StockOutqty = _rawMaterialTrack.RawMaterialStockoutbyRawMaterialid(rawMaterial.RawMaterialId).ToList();
                     var SumStockOutQty = StockOutqty.Sum(d => d.Quantity);
 
-                    var Stockpending = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialidPending(rawMaterial.RawMaterialId, User.OrgId).ToList();
-                    var SumStockpendingQty = Stockpending.Sum(d => d.Quantity);
-
-                    issueQunatitys = SumStockinQty - SumStockOutQty - SumStockpendingQty;
-                    //myList += string.Format("{0},", rawMaterial.RawMaterialId);
-
+                    issueQunatitys = SumStockinQty - SumStockOutQty;
 
                     perRecepQuantitys = rawMaterial.FGRRawMaterQty;//0.3
                     double PerDividetQty = (issueQunatitys / perRecepQuantitys);//6/0.3=20
                     myList += string.Format("{0},", PerDividetQty);
-
 
                 }
                 string RawMaterialIdList = myList.TrimEnd(',');
@@ -1670,7 +1663,7 @@ namespace ERPWeb.Controllers
 
         }
 
-
+             
 
         public ActionResult GetDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty)
         {
@@ -1966,6 +1959,28 @@ namespace ERPWeb.Controllers
         }
 
 
+        #endregion
+        #region
+        public ActionResult ProductionProcess()
+        {
+
+            try
+            {
+
+                    ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+                    ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
+                    ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+
+                    return View();
+
+            }
+            catch (Exception e)
+            {
+                return View();
+            }
+
+        }
         #endregion
 
         #region Sales and Distribution

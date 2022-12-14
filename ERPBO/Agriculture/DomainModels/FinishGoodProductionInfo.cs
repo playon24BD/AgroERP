@@ -26,6 +26,9 @@ namespace ERPBO.Agriculture.DomainModels
         public long? EntryUserId { get; set; }
         public long FGRId { get; set; }
 
+        public double MFGQuanity { get; set; }
+        public long MeasurementId { get; set; }
+
 
 
     }
