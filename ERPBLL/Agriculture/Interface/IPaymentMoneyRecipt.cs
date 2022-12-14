@@ -21,6 +21,8 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<MoneyReciptRepotData> GetMoneyReciptReport(string moneyReceipt);
         IEnumerable<PaymentMoneyReciptDTO> GetLastMoneyRecipt(long orgId);
+        IEnumerable<PaymentMoneyReciptDTO> GetMoneyReceiptList(string moneyReceiptNo, long? stockiestId, string fromDate, string toDate);
+        IEnumerable<PaymentMoneyReciptDTO> GetMoneyReceiptById(long id, long orgId);
 
     }
 }

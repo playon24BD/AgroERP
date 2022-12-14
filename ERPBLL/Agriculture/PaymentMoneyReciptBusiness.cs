@@ -192,6 +192,85 @@ order by PaymentMoneyReciptId desc
             return query;
         }
 
+        public IEnumerable<PaymentMoneyReciptDTO> GetMoneyReceiptList(string moneyReceiptNo, long? stockiestId, string fromDate, string toDate)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<PaymentMoneyReciptDTO>(QueryForMoneyReceiptList(moneyReceiptNo,stockiestId,fromDate,toDate)).ToList();
+        }
+
+        private string QueryForMoneyReceiptList(string moneyReceiptNo, long? stockiestId, string fromDate, string toDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (!string.IsNullOrEmpty(moneyReceiptNo))
+            {
+                param += string.Format(@"and PMR.MoneyReciptNo like '%{0}%'", moneyReceiptNo);
+            }
+            if (stockiestId != null && stockiestId > 0)
+            {
+                param += string.Format(@" and PMR.StockiestId={0}", stockiestId);
+            }
+
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(PMR.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(PMR.EntryDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(PMR.EntryDate as date)='{0}'", tDate);
+            }
+
+
+            query = string.Format(@"
+
+SELECT PMR.PaymentMoneyReciptId,PMR.MoneyReciptNo,PMR.StockiestId,f.StockiestName,PMR.BankName,PMR.BranchName,PMR.TotalAmount,PMR.EntryDate
+ FROM tblPaymentMoneyRecipt PMR 
+ INNER JOIN  tblStockiestInfo f
+ on PMR.StockiestId=f.StockiestId
+ 
+where 1=1 {0}
+
+", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+        public IEnumerable<PaymentMoneyReciptDTO> GetMoneyReceiptById(long id, long orgId)
+        {
+
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<PaymentMoneyReciptDTO>(QueryForMoneyReceiptDetails(id,orgId)).ToList();
+
+        }
+
+        private string QueryForMoneyReceiptDetails(long id, long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (id != 0 && id > 0)
+            {
+                param += string.Format(@" and h.PaymentMoneyReciptId={0}", id);
+            }
+
+            query = string.Format(@"
+
+
+
+select h.PaymentMoneyReciptId,i.InvoiceNo,h.PaymentAmount,h.CommisionPercent, h.CommisionAmount from tblPaymentMoneyRecipt m
+inner join tblProductSalesPaymentHistory h on m.PaymentMoneyReciptId= h.PaymentMoneyReciptId
+inner join tblProductSalesInfo i on h.ProductSalesInfoId=i.ProductSalesInfoId
+Where 1=1 {0} ", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }
 

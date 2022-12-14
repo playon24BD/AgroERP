@@ -3111,7 +3111,52 @@ namespace ERPWeb.Controllers
         }
 
 
-        
+        public ActionResult MoneyReceiptList( string flag, long? id,string moneyReceiptNo,long? stockiestId,string fromDate, string toDate)
+        {
+            try
+            {
+
+
+                if (string.IsNullOrEmpty(flag))
+                {
+
+                    ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName, Value = stock.StockiestId.ToString() }).ToList();
+
+                    return View();
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+                    
+                    var dto = _paymentMoneyRecipt.GetMoneyReceiptList(moneyReceiptNo,stockiestId??0,fromDate,toDate);
+                    List<PaymentMoneyReciptViewModel> viewModels = new List<PaymentMoneyReciptViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                  
+                    return PartialView("_GetMoneyReceiptListview", viewModels);
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+                    var details = _paymentMoneyRecipt.GetMoneyReceiptById(id.Value, User.OrgId);
+
+                    List<MonyReceptDetails> moneyDetails = new List<MonyReceptDetails>();
+                    AutoMapper.Mapper.Map(details, moneyDetails);
+
+                    return PartialView("_GetMoneyReceiptListDetails", moneyDetails);
+
+                }
+
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
 
 
         public ActionResult SaveSalesPayment(SalesPaymentRegisterViewModel info)
@@ -3124,7 +3169,6 @@ namespace ERPWeb.Controllers
             isSucccess = _salesPaymentRegister.SaveSalesPayment(salesPaymentRegisterDTO, User.UserId);
             return Json(isSucccess);
         }
-
 
 
         public ActionResult SalesPaymentCreate(long? StockiestId, string flag)

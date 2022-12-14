@@ -47,6 +47,7 @@ namespace ERPWeb
 
             // Configuration Database
             #region Agriculture
+            container.RegisterType<IStockiestWiseYearlyTarget, StockiestWiseYearlyTargetBusiness>();
             container.RegisterType<IPaymentMoneyRecipt, PaymentMoneyReciptBusiness>();
             container.RegisterType<IProductionPerproductCost, ProductionPerproductCostBusiness>();
             container.RegisterType<IProductPriceConfiguration, ProductPriceConfigurationBusiness>();

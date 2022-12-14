@@ -111,6 +111,7 @@
     <Compile Include="Agriculture\DomainModels\SalesReturn.cs" />
     <Compile Include="Agriculture\DomainModels\StockiestInfo.cs" />
     <Compile Include="Agriculture\DomainModels\StockiestUser.cs" />
+    <Compile Include="Agriculture\DomainModels\StockiestWiseYearlyTarget.cs" />
     <Compile Include="Agriculture\DomainModels\TerritorySetup.cs" />
     <Compile Include="Agriculture\DomainModels\TerritoryUser.cs" />
     <Compile Include="Agriculture\DomainModels\UserAssign.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Agriculture\DTOModels\SalesReturnDTO.cs" />
     <Compile Include="Agriculture\DTOModels\StockiestInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\StockiestUserDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\StockiestWiseYearlyTargetDTO.cs" />
     <Compile Include="Agriculture\DTOModels\TerritorySetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\TerritoryUserDTO.cs" />
     <Compile Include="Agriculture\DTOModels\UserAssignDTO.cs" />
@@ -194,6 +196,7 @@
     <Compile Include="Agriculture\ViewModels\DivisionUserViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionDetailViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\MonyReceptDetails.cs" />
     <Compile Include="Agriculture\ViewModels\MRawMaterialIssueStockDetailsViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\MRawMaterialIssueStockInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\PaymentMoneyReciptViewModel.cs" />
@@ -222,6 +225,7 @@
     <Compile Include="Agriculture\ViewModels\SalesReturnViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\StockiestInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\StockiestUserViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\StockiestWiseYearlyTargetViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\TerritorySetupViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\TerritoryUserViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\UserAssignViewModel.cs" />

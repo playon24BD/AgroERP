@@ -27,5 +27,14 @@ namespace ERPBO.Agriculture.DTOModels
         public string StockiestName { get; set; }
 
         public string flag { get; set; }
+        public double DueAmount { get; set; }
+        public string InvoiceNo { get; set; }
+        public DateTime? InvoiceDate { get; set; }
+        public double TAmount { get; set; }
+        public double PAmount { get; set; }
+        public double DAmount { get; set; }
+        public double PaymentAmount { get; set; }
+        public double CommisionPercent { get; set; }
+        public double CommisionAmount { get; set; }
     }
 }

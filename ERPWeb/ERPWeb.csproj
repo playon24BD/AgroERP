@@ -3545,12 +3545,12 @@
     <Content Include="Views\AgroConfiguration\SalesCommissionReportList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetFinishGoodStockReportList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetSalesPaymentRegisterList.cshtml" />
-
     <Content Include="Views\AgroConfiguration\SalesPaymentCreate.cshtml" />
     <Content Include="Views\AgroConfiguration\_PaymentAgroSalesProductList.cshtml" />
-
     <Content Include="Views\AgroConfiguration\GetFinishGoodList.cshtml" />
-
+    <Content Include="Views\AgroConfiguration\MoneyReceiptList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetMoneyReceiptListview.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetMoneyReceiptListDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
