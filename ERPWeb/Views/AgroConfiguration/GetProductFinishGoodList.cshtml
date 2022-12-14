@@ -101,11 +101,16 @@
         </div>*@
                                         <div class="col-md-3">
                                             <label class="control-label" for="ddlProduct">Product<span style="color:red">*</span></label>
-                                            @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus ="autofocus" })
+                                            @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
 
                                             <span class="error hide req-ddlProduct">Product Name is Required</span>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
+                                            <label class="control-label" for="ddlMeasurementName">Measurment<span style="color:red">*</span></label>
+                                            @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Select Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        <span class="error hide req-ddlMeasurementName">MeasurementName Is Required</span>
+                                        </div>
+                                        <div class="col-md-2">
                                             <label class="control-label" for="ddlReceipBatchCode">Recipe Code<span style="color:red">*</span></label>
                                             @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, "--Select Batch--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                             <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
@@ -116,7 +121,7 @@
                                             <span class="error hide req-qty">Qty Is Required</span>
 
                                         </div>
-                                        <div class="col-md-2 hide" >
+                                        <div class="col-md-2">
                                             <label for="targetQty" class="control-label"> Target Qty</label>
                                             <input type="number" id="targetQty" class="form-control form-control-sm" readonly />
                                             <span class="error hide req-targetQty">Target Qty Is Required</span>
@@ -199,6 +204,7 @@
         var ddlProduct1 = $("#ddlProduct1");
         var ddlReceipBatchCode1 = $("#ddlReceipBatchCode1");
         var hdQuantity = $("#hdQuantity");
+        var ddlMeasurementName = $("#ddlMeasurementName");
        
 
 

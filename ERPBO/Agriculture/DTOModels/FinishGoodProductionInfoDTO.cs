@@ -38,5 +38,8 @@ namespace ERPBO.Agriculture.DTOModels
         public string UnitName { get; set; }
 
         public long FinishGoodProductInfoId { get; set; }
+
+        public double MFGQuanity { get; set; }
+        public long MeasurementId { get; set; }
     }
 }

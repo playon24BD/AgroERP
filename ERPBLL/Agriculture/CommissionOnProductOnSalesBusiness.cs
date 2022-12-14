@@ -87,7 +87,11 @@ namespace ERPBLL.Agriculture
                 }
 
 
-                query = string.Format(@"Select cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,si.TotalAmount,cps.InvoiceNo,SUM((cpsd.price* (Case When cpsd.cash=0 Then cpsd.Credit Else cpsd.Cash End)/100 ) ) As TotalCommission,cpsd.PaymentMode,Cast (cps.EntryDate as date) As EntryDate,StockiestName
+                query = string.Format(@"Select cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,
+si.TotalAmount,cps.InvoiceNo,
+SUM((cpsd.price* (Case When cpsd.cash=0 Then cpsd.Credit Else cpsd.Cash End)/100 ) +H.CommisionAmount) As TotalCommission,
+cpsd.PaymentMode,
+Cast (cps.EntryDate as date) As EntryDate,StockiestName
             from tblCommissionOnProductSales cps
             Inner join tblCommisionOnProductSalesDetails cpsd
             on cps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId
@@ -97,6 +101,8 @@ namespace ERPBLL.Agriculture
             on si.ProductSalesInfoId=cps.ProductSalesInfoId
             Inner join tblStockiestInfo f
             on si.StockiestId=f.StockiestId
+			INNER JOIN tblProductSalesPaymentHistory H
+			ON cps.ProductSalesInfoId=H.ProductSalesInfoId
             where 1=1 {0}
      Group by cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,cpsd.PaymentMode,Cast (cps.EntryDate as date),StockiestName,si.TotalAmount
 	 Order by Cast (cps.EntryDate as date) desc ,cps.CommissionOnProductOnSalesId DESC ",

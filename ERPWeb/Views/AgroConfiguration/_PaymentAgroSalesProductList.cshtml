@@ -23,6 +23,7 @@
             <th style="vertical-align:middle">PaidAmount</th>
             <th style="vertical-align:middle">DueAmount</th>
             <th style="vertical-align:middle">Payment</th>
+            <th style="vertical-align:middle">Commision(%)</th>
 
         </tr>
     </thead>
@@ -46,6 +47,9 @@
                 <td class="text-center">@item.DueAmount</td>
                 <td class="text-center" style="width:15%">
                     <input type="number" class="text-center paidamount form-control form-control-sm " value="0" />
+                </td>
+                <td class="text-center" style="width:15%">
+                    <input type="number" class="text-center commision form-control form-control-sm " value="0" />
                 </td>
 
                 <td class="hide">
@@ -85,6 +89,7 @@
         <td colspan="1" style="text-align:center"><b>@total</b></td>
         <td colspan="1" style="text-align:center"><b>@totalpaid</b></td>
         <td colspan="1" style="text-align:center"><b>@totaldue</b></td>
+        <td colspan="1"></td>
         <td colspan="1"></td>
     </tr>
 </table>

@@ -33,5 +33,7 @@ namespace ERPBO.Agriculture.ViewModels
         public int FGRQty { get; set; }
         public long UnitId { get; set; }
         public long FinishGoodProductInfoId { get; set; }
+        public double MFGQuanity { get; set; }
+        public long MeasurementId { get; set; }
     }
 }
