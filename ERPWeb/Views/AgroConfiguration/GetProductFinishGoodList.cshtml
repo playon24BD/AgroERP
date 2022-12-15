@@ -108,12 +108,13 @@
                                         <div class="col-md-2">
                                             <label class="control-label" for="ddlMeasurementName">Measurment<span style="color:red">*</span></label>
                                             @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Select Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                        <span class="error hide req-ddlMeasurementName">MeasurementName Is Required</span>
+                                            <span class="error hide req-ddlMeasurementName">MeasurementName Is Required</span>
                                         </div>
                                         <div class="col-md-2">
-                                            <label class="control-label" for="ddlReceipBatchCode">Recipe Code<span style="color:red">*</span></label>
-                                            @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, "--Select Batch--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                            <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>
+                                            <input type="text" value="none" id="ddlReceipBatchCode" name="ddlReceipBatchCode" class="form-control form-control-sm" readonly />
+                                            @*<label class="control-label" for="ddlReceipBatchCode">Recipe Code<span style="color:red">*</span></label>
+            @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+            <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>*@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="qty"> Qty</label>
@@ -130,6 +131,15 @@
                                             <label for="FinishQty" class="control-label">Finish Qty<span style="color:red">*</span></label>
                                             <input type="number" id="FinishQty" class="form-control form-control-sm" />
                                             <span class="error hide req-FinishQty">Oty Over</span>
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <label>TotalProductQty</label>
+                                            <input type="number" id="txtTotalProductQty" name="TotalProductQty" class="form-control form-control-sm" readonly />
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label>TotalQty</label>
+                                            <input type="number" id="txtTotalQty" name="TotalQty" class="form-control form-control-sm" readonly />
                                         </div>
                                         <div class="col-md-2">
                                             <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
@@ -205,6 +215,9 @@
         var ddlReceipBatchCode1 = $("#ddlReceipBatchCode1");
         var hdQuantity = $("#hdQuantity");
         var ddlMeasurementName = $("#ddlMeasurementName");
+
+        var txtTotalProductQty = $("#txtTotalProductQty");
+        var txtTotalQty = $("#txtTotalQty");
        
 
 
@@ -229,13 +242,35 @@
         })
 
 
+        ddlMeasurementName.change(function () {
 
-        ddlReceipBatchCode.change(function () {
+            LoadbatchCodeData();
 
 
-           LoadQuantityData();
-            LoadTergetQuantityData();
-        })
+        });
+        //calculate
+        FinishQty.keyup(function () {
+            if (FinishQty.val() >= 0) {
+                debugger;
+
+                TatalProductQty();
+
+
+
+
+            }
+
+
+        });
+        function TatalProductQty() {
+
+            var sub = FinishQty.val() * txtTotalProductQty.val();
+            txtTotalQty.val(sub);
+
+
+        }
+        //calculate
+
 
         ddlReceipBatchCode1.keyup(function () {
             LoadFinishGoodList()
@@ -264,6 +299,61 @@
 
         }
 
+        function LoadbatchCodeData() {
+            debugger;
+            var data = { FinishGoodProductId: TryParseInt(ddlProduct.val(),0), MeasurementId: TryParseInt(ddlMeasurementName.val(),0) };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetrecipieBYmeasurmentId", data)).then(function (res, status) {
+                debugger;
+                consoleLog(res.replace(/['"]+/g, ''));
+                var recipes = res.replace(/['"]+/g, '');
+                ddlReceipBatchCode.val(recipes);
+
+
+
+                debugger
+                var data = { receipeBatchCode: recipes, MeasurementId: TryParseInt(ddlMeasurementName.val(), 0) };
+
+                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
+                    debugger;
+                    consoleLog(res.replace(/['"]+/g, ''));
+                    //console.log(res);
+                    console.log(res.quantity)
+                    var UnitQty = res.replace(/['"]+/g, '');
+                    qty.val(UnitQty);
+
+                    var qa = UnitQty.split('(')
+                    var qar = qa[0]
+                    var fq = qar.replace(/['"]+/g, '');
+                    hdQuantity.val(fq);
+
+                });
+
+                //var data = { receipeBatchCode: ddlReceipBatchCode.val() };
+
+                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyTergetQty", data)).then(function (res, status) {
+                    debugger;
+                    targetQty.val(res);
+
+
+                });
+
+
+                var data = { MeasurementId: TryParseInt(ddlMeasurementName.val(), 0) };
+                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetMeasurementTotalProductQty", data)).then(function (res, status) {
+                    debugger;
+                    console.log(res);
+
+                    consoleLog(res.replace(/['"]+/g, ''));
+                    var TotalQtyProduct = res.replace(/['"]+/g, '');
+                    txtTotalProductQty.val(TotalQtyProduct);
+                    console.log(txtTotalProductQty.val());
+
+                });
+
+            });
+        }
+
 
 
 
@@ -273,13 +363,7 @@
             debugger;
           
             var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(1).html();
-            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(2).html();
-            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(3).html();
-            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(4).html();
-            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(5).html();
-            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(6).html();
-            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(7).html();
-            //var finishGoodProductionBatch = $(this).parent().parents('tr').children('td').eq(8).html();
+
 
             var data = { flag: "Detail", finishGoodProductionBatch: finishGoodProductionBatch };
                 $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
@@ -296,39 +380,9 @@
         })
 
 
-        ddlProduct.change(function () {
-
-            //debugger;
-            clearDropdown("ddlReceipBatchCode");
-            if (ddlProduct.val() != "") {
-
-                LoadDropDown('/AgroConfiguration/GetReceipyCodeByProductionId', 'POST', ddlReceipBatchCode, JSON.stringify({ finishGoodProductId: ddlProduct.val() }));
-            }
-           // $("#ddlRequesition option:not(:first)").remove();
-
-
-        })
 
 
 
-        function LoadQuantityData() {
-            var data = { receipeBatchCode: ddlReceipBatchCode.val() };
-
-            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyByProductionId", data)).then(function (res, status) {
-                debugger;
-                consoleLog(res.replace(/['"]+/g, ''));
-                //console.log(res);
-                console.log(res.quantity)
-                var UnitQty = res.replace(/['"]+/g, '');
-                qty.val(UnitQty);
-
-                var qa = UnitQty.split('(')
-                var qar = qa[0]
-                var fq = qar.replace(/['"]+/g, '');
-                hdQuantity.val(fq);
-      
-            });
-        }
 
 
         function LoadTergetQuantityData() {
@@ -336,9 +390,8 @@
 
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyTergetQty", data)).then(function (res, status) {
                 debugger;
-                //qty.val(res);
                 targetQty.val(res);
-               // hdTargetValue.val(res);
+      
 
             });
         }
@@ -347,7 +400,7 @@
             e.preventDefault();
             if (validationAddToList()) {
                 debugger;
-                var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: FinishQty.val() };
+                var data = { receipeBatchCode: ddlReceipBatchCode.val(), targetQty: FinishQty.val(), MeasurementId: TryParseInt(ddlMeasurementName.val(), 0) };
 
                 $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
                     debugger;
@@ -370,7 +423,7 @@
                             var td5 = "<td class='hide text-center'>" + value.RawMaterialId + "</td>";
                             var td2 = "<td class='text-center'>" + value.FGRRawMaterQty + "</td>";
                             var td3 = "<td class='text-center'>" + FinishQty.val() + "</td>";
-                            var td4 = "<td class='text-center'>" + (value.FGRRawMaterQty * FinishQty.val()) + "</td>";
+                            var td4 = "<td class='text-center'>" + (value.FGRRawMaterQty * txtTotalQty.val()) + "</td>";
                             var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + "</tr>";
                             $("#tblFinishGoodProduction tbody").append(tr)
                             $("#btnSubmit").show();

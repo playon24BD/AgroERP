@@ -34,6 +34,8 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<MeasurementSetupDTO> GetAllMEarusmentUnitQty(long fgrid);
 
+        IEnumerable<FinishGoodRecipeInfoDTO> GetAllRecipeBYmeasurment(long FinishGoodProductId, long MeasurementId);
+
 
     }
 }

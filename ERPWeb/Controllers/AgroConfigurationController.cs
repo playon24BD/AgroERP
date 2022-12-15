@@ -11,6 +11,7 @@ using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -1343,6 +1344,8 @@ namespace ERPWeb.Controllers
 
         }
 
+
+
         public ActionResult GetReceipyByProductionId(string receipeBatchCode)
         {
             try
@@ -1364,7 +1367,31 @@ namespace ERPWeb.Controllers
 
 
         }
-        public ActionResult GetReceipyTergetQty(string receipeBatchCode)
+
+
+
+
+        public ActionResult GetrecipieBYmeasurmentId(long FinishGoodProductId, long MeasurementId)
+        {
+            try
+            {
+
+                var measurments = _finishGoodRecipeInfoBusiness.GetAllRecipeBYmeasurment(FinishGoodProductId, MeasurementId);
+                var batchCode = measurments.FirstOrDefault().ReceipeBatchCode;
+
+                return Json(batchCode, JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
+
+        public ActionResult GetReceipyTergetQty(string receipeBatchCode, long MeasurementId)
         {
             try
             {
@@ -1399,6 +1426,16 @@ namespace ERPWeb.Controllers
                 foreach (var rawMaterial in recipeDetailsRawMaterials)
                 {
 
+                    double PerDividetQty = 0;
+                    double TotalreturnproductQty = 0;
+
+                    double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId,User.OrgId).MasterCarton;
+                    double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId,User.OrgId).InnerBox;
+                    double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId,User.OrgId).PackSize;
+
+
+
+
                     var StocInkqty = _rawMaterialTrack.RawMaterialStockInbyRawMaterialid(rawMaterial.RawMaterialId).ToList();
                     var SumStockinQty = StocInkqty.Sum(c => c.Quantity);
 
@@ -1407,8 +1444,22 @@ namespace ERPWeb.Controllers
 
                     issueQunatitys = SumStockinQty - SumStockOutQty;
 
+
+
                     perRecepQuantitys = rawMaterial.FGRRawMaterQty;//0.3
-                    double PerDividetQty = (issueQunatitys / perRecepQuantitys);//6/0.3=20
+                   // double PerDividetQty = (issueQunatitys / perRecepQuantitys);//6/0.3=20
+
+                    if (MasterCartonMasurement != 0)
+                    {
+                        TotalreturnproductQty = MasterCartonMasurement * InnerBoxMasurement * 1;
+                        PerDividetQty = (issueQunatitys / perRecepQuantitys)/TotalreturnproductQty;
+
+                    }
+                    else
+                    {
+                        TotalreturnproductQty = InnerBoxMasurement * 1;
+                        PerDividetQty = (issueQunatitys / perRecepQuantitys)/TotalreturnproductQty;
+                    }
                     myList += string.Format("{0},", PerDividetQty);
 
                 }
@@ -1496,34 +1547,34 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetReceipyCodeByProductionId(long finishGoodProductId)
-        {
-            try
-            {
+        //public ActionResult GetReceipyCodeByProductionId(long finishGoodProductId)
+        //{
+        //    try
+        //    {
 
-                var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipCode(finishGoodProductId, User.OrgId).Select(a => new FinishGoodRecipeInfoViewModel
-                {
+        //        var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipCode(finishGoodProductId, User.OrgId).Select(a => new FinishGoodRecipeInfoViewModel
+        //        {
 
-                    UnitName = _agroUnitInfo.GetAgroInfoById(a.UnitId, User.OrgId).UnitName,
-                    FGRQty = a.FGRQty,
-                    ReceipeBatchCode = a.ReceipeBatchCode
-                }).ToList();
+        //            UnitName = _agroUnitInfo.GetAgroInfoById(a.UnitId, User.OrgId).UnitName,
+        //            FGRQty = a.FGRQty,
+        //            ReceipeBatchCode = a.ReceipeBatchCode
+        //        }).ToList();
 
-                // var ddlProductList = product.GroupBy(t => t.FinishGoodProductInfoId).Select(g => g.First()).Select(p => new SelectListItem { Text = p.FinishGoodProductName, Value = p.FinishGoodProductInfoId.ToString() }).ToList();
-                // var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipCode(finishGoodProductId, User.OrgId);
+        //        // var ddlProductList = product.GroupBy(t => t.FinishGoodProductInfoId).Select(g => g.First()).Select(p => new SelectListItem { Text = p.FinishGoodProductName, Value = p.FinishGoodProductInfoId.ToString() }).ToList();
+        //        // var receipeBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceipCode(finishGoodProductId, User.OrgId);
 
-                // var dropDown = receipeBatchCode.Where(a => a.ReceipeBatchCode != null).Select(s => new Dropdown { text = s.ReceipeBatchCode +s.Status + s.FGRQty, value = s.ReceipeBatchCode }).ToList();
-                var dropDown = receipeBatchCode.Where(b => b.ReceipeBatchCode != null).Select(s => new Dropdown { text = s.ReceipeBatchCode + "(" + s.FGRQty + s.UnitName + ")", value = s.ReceipeBatchCode }).ToList();
+        //        // var dropDown = receipeBatchCode.Where(a => a.ReceipeBatchCode != null).Select(s => new Dropdown { text = s.ReceipeBatchCode +s.Status + s.FGRQty, value = s.ReceipeBatchCode }).ToList();
+        //        var dropDown = receipeBatchCode.Where(b => b.ReceipeBatchCode != null).Select(s => new Dropdown { text = s.ReceipeBatchCode + "(" + s.FGRQty + s.UnitName + ")", value = s.ReceipeBatchCode }).ToList();
 
-                return Json(dropDown, JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json("Not Found", JsonRequestBehavior.AllowGet);
-            }
+        //        return Json(dropDown, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch
+        //    {
+        //        return Json("Not Found", JsonRequestBehavior.AllowGet);
+        //    }
 
 
-        }
+        //}
 
 
         //Not Need at this time
@@ -1555,7 +1606,7 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetReceipyDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty)
+        public ActionResult GetReceipyDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty , long MeasurementId)
         {
             double issueQunatity = 0;
             double perRecepQuantity = 0;
@@ -1569,20 +1620,39 @@ namespace ERPWeb.Controllers
                 foreach (var rawMaterial in recipeDetailsRawMaterials)
                 {
 
-                    //issueQunatity = _rawMaterialIssueStockInfoBusiness.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).Quantity;
+                    double TotalreturnproductQty = 0;
 
-                    var StocInkqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialid(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).MasterCarton;
+                    double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).InnerBox;
+                    double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).PackSize;
+
+                    var StocInkqty = _rawMaterialTrack.RawMaterialStockInbyRawMaterialid(rawMaterial.RawMaterialId).ToList();
                     var SumStockinQty = StocInkqty.Sum(c => c.Quantity);
 
-
-                    var StockOutqty = _mRawMaterialIssueStockDetails.RawMaterialStockIssueInfobyRawMaterialidOut(rawMaterial.RawMaterialId, User.OrgId).ToList();
+                    var StockOutqty = _rawMaterialTrack.RawMaterialStockoutbyRawMaterialid(rawMaterial.RawMaterialId).ToList();
                     var SumStockOutQty = StockOutqty.Sum(d => d.Quantity);
 
                     issueQunatity = SumStockinQty - SumStockOutQty;
 
 
-                    perRecepQuantity = rawMaterial.FGRRawMaterQty;
-                    requirdQuantity = (perRecepQuantity * targetQty);
+                    if (MasterCartonMasurement != 0)
+                    {
+                        TotalreturnproductQty = MasterCartonMasurement * InnerBoxMasurement * 1;
+                        perRecepQuantity = rawMaterial.FGRRawMaterQty;
+                        requirdQuantity = (perRecepQuantity * targetQty * TotalreturnproductQty);
+   
+
+                    }
+                    else
+                    {
+                        TotalreturnproductQty = InnerBoxMasurement * 1;
+                        perRecepQuantity = rawMaterial.FGRRawMaterQty;
+                        requirdQuantity = (perRecepQuantity * targetQty * TotalreturnproductQty);
+
+                    }
+
+                    //perRecepQuantity = rawMaterial.FGRRawMaterQty;
+                    //requirdQuantity = (perRecepQuantity * targetQty);
                     if (requirdQuantity > issueQunatity)
                     {
 
@@ -2671,7 +2741,6 @@ namespace ERPWeb.Controllers
 
 
 
-
             //  ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Where(o => o.RoleId == 34).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
 
             //ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
@@ -2776,6 +2845,7 @@ namespace ERPWeb.Controllers
 
 
         }
+
         public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string FGRID)
         {
             //var UnitQtys = QtyKG.Split('(', ')');

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace ERPBLL.Agriculture
 {
@@ -246,6 +247,36 @@ select  distinct p.PackageName,m.MeasurementId from tblMeasurement m
  inner join tblAgroUnitInfo un on m.UnitId=un.UnitId
  inner join tblFinishGoodRecipeInfo r on r.UnitId = un.UnitId
 Where 1=1 {0} and r.FGRQty=m.PackSize and r.UnitId=m.UnitId"
+
+, Utility.ParamChecker(param));
+
+            return query;
+        }
+
+        public IEnumerable<FinishGoodRecipeInfoDTO> GetAllRecipeBYmeasurment(long FinishGoodProductId, long MeasurementId)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForGetAllRecipiebyMeasurment(FinishGoodProductId, MeasurementId)).ToList();
+        }
+        private string QueryForGetAllRecipiebyMeasurment(long? FinishGoodProductId, long? MeasurementId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            if (FinishGoodProductId != null && FinishGoodProductId > 0)
+            {
+                param += string.Format(@" and r.FinishGoodProductId={0}", FinishGoodProductId);
+            }
+            if (MeasurementId != null && MeasurementId > 0)
+            {
+                param += string.Format(@" and m.MeasurementId={0}", MeasurementId);
+            }
+            query = string.Format(@" 
+select distinct m.MeasurementId,r.FinishGoodProductId,r.ReceipeBatchCode,r.FGRQty,u.UnitName,r.FGRId from tblFinishGoodRecipeInfo r
+inner join tblFinishGoodProductInfo p on r.FinishGoodProductId=p.FinishGoodProductId
+inner join  tblAgroUnitInfo u on r.UnitId=u.UnitId
+inner join tblMeasurement m on u.UnitId= m.UnitId
+where 1=1 {0} and r.FGRQty=m.PackSize and r.UnitId=m.UnitId and r.FinishGoodProductId=p.FinishGoodProductId"
 
 , Utility.ParamChecker(param));
 
