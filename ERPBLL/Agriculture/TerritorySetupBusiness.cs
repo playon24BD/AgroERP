@@ -130,5 +130,29 @@ on t.AreaId = a.AreaId
         {
             return _territorySetupRepository.GetAll(x => x.AreaId == areaid).ToList();
         }
+
+        public IEnumerable<TerritorySetupDTO> GetAllTerritoryWiseStockiest(long TerritoryId, long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<TerritorySetupDTO>(QueryForTerritoryWiseStockiest(TerritoryId, orgId)).ToList();
+        }
+
+        private string QueryForTerritoryWiseStockiest(long TerritoryId, long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+            
+            if (TerritoryId > 0)
+            {
+                param += string.Format(@" and t.TerritoryId={0}", TerritoryId);
+            }
+
+            query = string.Format(@"	
+select t.TerritoryId,t.TerritoryName, s.StockiestId,s.StockiestName from tblStockiestInfo s
+			inner join tblTerritoryInfos t on t.TerritoryId=s.TerritoryId
+
+            Where 1=1 {0}", Utility.ParamChecker(param));
+
+            return query;
+        }
     }
 }

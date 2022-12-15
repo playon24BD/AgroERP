@@ -3551,6 +3551,7 @@
     <Content Include="Views\AgroConfiguration\MoneyReceiptList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetMoneyReceiptListview.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetMoneyReceiptListDetails.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetStockiestWiseYearlyTargetList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

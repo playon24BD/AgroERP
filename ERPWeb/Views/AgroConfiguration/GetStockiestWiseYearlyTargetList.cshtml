@@ -1,0 +1,307 @@
+﻿
+@{
+    ViewBag.Title = "GetStockiestWiseYearlyTargetList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:-25px">
+    <div class="col-md-12">
+
+        <div class="card card-navy">
+            <div class="card-header">
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/GetStockiestWiseYearlyTargetList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="text-center text-bold">
+                            Create Stockiest Wise Target
+                        </h4>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-body text-sm">
+            <div class="row " style="margin-top:-18px;">
+
+                <div class="col-md-2">
+                    <label for="ddlTeritoryName">Territory Name</label>
+                    @Html.DropDownList("ddlTeritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTeritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    <span class="error hide req-ddlTeritoryName">Territory Name is required</span>
+                </div>
+                <div class="col-md-2">
+                    <label for="ddlStockiestName">Stockiest Name</label>
+                    @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    @*<input type="text" id="ddlStockiestName" name="ddlStockiestName" class="form-control form-control-sm" readonly />*@
+                    <span class="error hide req-ddlStockiestName">Stockiest Name is required</span>
+                </div>
+                @*<div class="hide">
+                    <label for="ddlStockiestId">Stockiest Name</label>
+                    @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                    <input type="text" id="ddlStockiestId" name="ddlStockiestId" class="form-control form-control-sm" readonly />
+                </div>*@
+                
+                <div class="col-md-2">
+                    <label for="ddlYear">Year</label>
+                    <input type="text" class="form-control form-control-sm datepicker" name="datepicker" id="ddlYear" />
+                </div>
+                <div class="col-md-2">
+                    <label for="ddlMonth">Month Name</label>
+                    <select id="ddlMonth" class="form-control form-control-sm ctrl-changed select2 select2-danger">
+                        <option selected>--Select Month--</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <span class="error hide req-Month">Month Name is required</span>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="txtTargetQty">Target Qty</label>
+                    <input type="number" class="form-control form-control-sm" id="txtTargetQty" />
+                    <span class="error hide req-txtTargetQty">TargetQty is required</span>
+                </div>
+
+                <div class="col-md-1 " style="margin-top:5px;">
+                    <label for="addButton" class="control-label"></label>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-outline-success float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped table-sm text-sm table-responsive-lg" id="tblSingleItems">
+                        <thead>
+                            <tr>
+                                <th colspan="9">
+                                    
+                                </th>
+                            </tr>
+
+                            <tr class="text-center btn-dark">
+                                <th style="width:5%">#SL</th>
+                                <th style="width:15%">Territory Name</th>
+                                <th style="width:15%">Stockiest Name</th>
+                                <th style="width:10%">Year</th>
+                                <th style="width:10%">Month Name</th>
+                                <th style="width:10%">Target Qty</th>
+                                <th style="width:10%">Action</th>
+                                <th class="hide">TerritoryId</th>
+                                <th class="hide">StockiestId</th>
+                                <th class="hide">Month</th>
+                                @*<th class="hide">Year</th>*@
+                                
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section scripts{
+    
+<script type="text/javascript">
+
+    var ddlStockiestName = $("#ddlStockiestName");
+    var ddlMonth = $("#ddlMonth");
+    var txtTargetQty = $("#txtTargetQty");
+    var datepicker = $(".datepicker");
+    var ddlYear = $("#ddlYear");
+    var ddlTeritoryName = $("#ddlTeritoryName");
+
+    $(".datepicker").datepicker({
+        format: "yyyy",
+        viewMode: "years",
+        minViewMode: "years",
+        autoclose: true
+    });
+
+    $(document).ready(function () {
+        $('.select2').select2();
+
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+    })
+
+
+
+    $("#addButton").click(function (e) {
+        e.preventDefault();
+
+
+        if (validate()==true) {
+
+
+                var sl = $("#tblSingleItems tbody tr").length;
+                var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlTeritoryName") + "</td>";
+                var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlStockiestName") + "</td>";
+                //var td4 = "<td class='text-center'>" + dropDownSelectedText("ddlYear") + "</td>";
+                var td4 = "<td class='text-center'>" + ddlYear.val() + "</td>";
+                var td5 = "<td class='text-center'>" + dropDownSelectedText("ddlMonth") + "</td>";
+                var td6 = "<td class='text-center text-bold'>" + txtTargetQty.val() + "</td>";
+                var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td8 = "<td class='hide TerritoryId'>" + ddlTeritoryName.val() + "</td>";
+                var td9 = "<td class='hide StockiestId'>" + ddlStockiestName.val() + "</td>";
+                var td10 = "<td class='hide Month'>" + ddlMonth.val() + "</td>";
+                
+            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
+
+
+                $("#tblSingleItems tbody").append(tr);
+               
+
+
+        }
+
+       
+    })
+
+
+    $(document).on("click", "a.data-onfly-del", function (e) {
+        e.preventDefault();
+        var index = $(this).parent().parents('tbody tr').index();
+        var tds = $(this).parent().parents('tbody tr').children('td');
+
+        removeTableRow("#tblSingleItems tbody", index);
+        fnFixTheTbodyRowSerial("#tblSingleItems tbody", index);
+    })
+
+    function validate() {
+        var isValid = true;
+        $(".error").addClass('hide');
+        debugger;
+        
+        if (ddlStockiestName.val() === "") {
+            $(".req-ddlStockiestName").removeClass('hide');
+            isValid = false;
+        }
+        if (ddlMonth.val() === "") {
+            $(".req-Month").removeClass('hide');
+            isValid = false;
+        }
+        
+        if (TryParseInt(txtTargetQty.val(), 0) <= 0) {
+            $(".req-txtTargetQty").removeClass('hide');
+            isValid = false;
+        }
+
+
+        return isValid;
+    }
+
+
+    $("#saveButton").click(function (e) {
+           
+            e.preventDefault();
+        debugger;
+            var details = [];
+            details.length = 0;
+            $.each($("#tblSingleItems tbody tr"), function (index, item) {
+                var tds = $(this).children('td');
+                details.push({
+
+                    
+                    TerritoryId: tds.eq(7).html(),
+                    StockiestId: tds.eq(8).html(),
+                    Month: tds.eq(9).html(),
+                    TargetQty: tds.eq(5).html(),
+                    Year: tds.eq(3).html(),
+
+
+                });
+            })
+            console.log(details);
+            var data = JSON.stringify({ details: details });
+
+        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveStockiestWiseYearlyTargetList', data, getToken())).then(function (res, status) {
+                if (res === true) {
+                    debugger;
+                    $('.toastrDefaultSuccess').trigger('click');
+                    @*setTimeout(function () {
+                        redirectPage('@Url.Action("GetStockiestWiseYearlyTargetList")');
+                    }, 1000);*@
+                }
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+            }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#saveButton");
+            })
+
+            
+
+        });
+
+
+    //ddlTeritoryName.change(function () {
+    //    debugger;
+
+    //    var data = { TerritoryId: ddlTeritoryName.val() };
+
+    //    $.when(getReqWithData('Html', "Get", "/AgroConfiguration/TerritoryLoadStockiestChange", data)).then(function (res, status) {
+
+    //        debugger;
+    //        consoleLog(res.replace(/['"]+/g, ''));
+    //        var terri = res.replace(/['"]+/g, '');
+    //        ddlStockiestName.val(res.StockiestName);
+    //        ddlStockiestName.val(terri);
+
+    //    });
+        
+
+    //})
+
+    ddlTeritoryName.change(function () {
+
+        debugger;
+        LoadStockiestName();
+
+
+
+    })
+
+    function LoadStockiestName() {
+        clearDropdown("ddlStockiestName");
+        if (ddlTeritoryName.val() != "") {
+
+            LoadDropDown('/AgroConfiguration/TerritoryLoadStockiestChange', 'POST', ddlStockiestName, JSON.stringify({ TerritoryId: ddlTeritoryName.val() }));
+        }
+
+
+    }
+
+    </script>
+    
+    }

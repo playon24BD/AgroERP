@@ -24,5 +24,7 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<TerritorySetup> GetAllTerritoryByAreaID(long areaid);
 
+        IEnumerable<TerritorySetupDTO> GetAllTerritoryWiseStockiest(long TerritoryId, long orgId);
+
     }
 }

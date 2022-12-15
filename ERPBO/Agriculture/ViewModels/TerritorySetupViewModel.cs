@@ -27,5 +27,7 @@ namespace ERPBO.Agriculture.ViewModels
         public string UserName { get; set; }
         public string OrganizationName { get; set; }
         public string AreaName { get; set; }
+        public long StockiestId { get; set; }
+        public string StockiestName { get; set; }
     }
 }

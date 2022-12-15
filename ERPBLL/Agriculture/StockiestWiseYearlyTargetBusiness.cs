@@ -1,4 +1,6 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBO.Agriculture.DomainModels;
+using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,33 @@ namespace ERPBLL.Agriculture
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._stockiestWiseYearlyTargetRepository = new StockiestWiseYearlyTargetRepository(this._agricultureUnitOfWork);
 
+        }
+
+        public bool SaveStockiestWiseYearlyTargetList(List<StockiestWiseYearlyTargetDTO> detailsDTO, long userId, long orgId)
+        {
+            bool isSuccess = false;
+            List<StockiestWiseYearlyTarget> stockiestWiseYearlies = new List<StockiestWiseYearlyTarget>();
+
+            foreach(var item in detailsDTO)
+            {
+                StockiestWiseYearlyTarget yearlyTarget = new StockiestWiseYearlyTarget()
+                {
+                    OrganizationId = orgId,
+                    EntryDate=DateTime.Now,
+                    EntryUserId=userId,
+                    StockiestId=item.StockiestId,
+                    Flag=item.Flag,
+                    Month=item.Month,
+                    Year=item.Year,
+                    TargetQty=item.TargetQty,
+                    TerritoryId=item.TerritoryId,
+                    Day=item.Day
+                };
+                _stockiestWiseYearlyTargetRepository.Insert(yearlyTarget);
+            }
+
+            isSuccess = _stockiestWiseYearlyTargetRepository.Save();
+            return isSuccess;
         }
     }
 }

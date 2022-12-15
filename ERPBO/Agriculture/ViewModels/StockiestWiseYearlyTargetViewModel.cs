@@ -10,8 +10,10 @@ namespace ERPBO.Agriculture.ViewModels
     {
         public long StockiestWiseYearlyTargetId { get; set; }
         public long StockiestId { get; set; }
+        public long TerritoryId { get; set; }
         public int Year { get; set; }
         public int Month { get; set; }
+        public int Day { get; set; }
         public double TargetQty { get; set; }
         public string Flag { get; set; }
         public long OrganizationId { get; set; }
