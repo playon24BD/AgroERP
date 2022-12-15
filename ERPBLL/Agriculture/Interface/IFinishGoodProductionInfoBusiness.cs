@@ -26,7 +26,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<FinishGoodProductionInfoDTO> GetReceiveBatchCode(long orgId);
         IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionInfo(long orgId);
         //FinishGoodProductionInfo GetCheckFinishGoodQuantity(long FinishGoodProductInfoId, long orgId);
-        IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,int FGRID, long orgId);
+        IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,int FGRID, long orgId, long MeasurementId);
 
         FinishGoodProductionInfo GetProductionInfoById(long id, long orgId);
         FinishGoodProductionInfo GetFinishGoodProductionByAny(string any, long orgId);
@@ -52,6 +52,8 @@ namespace ERPBLL.Agriculture.Interface
         MRawMaterialIssueStockDetails getissueidbyrmidprobatch(string FinishGoodProductionBatch, long RawMaterialId);
 
         IEnumerable<FinishGoodProductionInfo> GetFinishGoodProductInfosall(long orgId);
+
+        RawMaterialTrack getrmtrackidbyrmidprobatch(string FinishGoodProductionBatch, long RawMaterialId);
 
 
 

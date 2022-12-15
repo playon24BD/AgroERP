@@ -13,8 +13,9 @@
                     <th style="vertical-align:middle" class="hide"></th>
                     <th style="vertical-align:middle">PO Number</th>
                     <th style="vertical-align:middle">Product Name</th>
+                    <th style="vertical-align:middle">Measurment</th>
                     <th style="vertical-align:middle" class="hide">BatchCode</th>
-                    <th style="vertical-align:middle">Product Details</th>
+                    <th style="vertical-align:middle" class="hide">Product Details</th>
                     <th style="vertical-align:middle">Quantity</th>
                     <th style="vertical-align:middle">Date</th>
                     <th style="vertical-align:middle">Status</th>
@@ -31,8 +32,9 @@
                         <td class="hide">@item.FinishGoodProductInfoId</td>
                         <td class="text-center">@item.FinishGoodProductionBatch</td>
                         <td class="text-center">@item.FinishGoodProductName</td>
+                        <td class="text-center">@item.MeasurementName</td>
                         <td class="hide">@item.ReceipeBatchCode</td>
-                        <td class="text-center">@item.FGRQty@(" ("+@item.UnitName+" )")</td>
+                        <td class="hide">@item.FGRQty@(" ("+@item.UnitName+" )")</td>
                         <td class="text-center">@item.TargetQuantity</td>
                         <td class="text-center">@item.EntryDate</td>
                         <td class="text-center">@item.Status</td>

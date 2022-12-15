@@ -225,27 +225,29 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.ReceipeBatchCode == ReceipeBatchCode && i.UnitId == UnitId);
         }
 
-        public IEnumerable<MeasurementSetupDTO> GetAllMEarusmentUnitQty(long FGRID)
+        public IEnumerable<MeasurementSetupDTO> GetAllMEarusmentUnitQty(long FinishGoodProductInfoId)
         {
-            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForGetAllMEarusmentUnitQty(FGRID)).ToList();
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForGetAllMEarusmentUnitQty(FinishGoodProductInfoId)).ToList();
         }
 
 
-        private string QueryForGetAllMEarusmentUnitQty(long? FGRID)
+        private string QueryForGetAllMEarusmentUnitQty(long? FinishGoodProductInfoId)
         {
             string query = string.Empty;
             string param = string.Empty;
 
        
-            if (FGRID != null && FGRID > 0)
+            if (FinishGoodProductInfoId != null && FinishGoodProductInfoId > 0)
             {
-                param += string.Format(@" and r.FGRId={0}", FGRID);
+                param += string.Format(@" and f.FinishGoodProductId={0}", FinishGoodProductInfoId);
             }
             query = string.Format(@" 
-select  distinct p.PackageName,m.MeasurementId from tblMeasurement m
+select  distinct p.PackageName,m.MeasurementId, f.FinishGoodProductId
+from tblMeasurement m
  inner join PackageDetails p on m.MeasurementId = p.MeasurementId
  inner join tblAgroUnitInfo un on m.UnitId=un.UnitId
  inner join tblFinishGoodRecipeInfo r on r.UnitId = un.UnitId
+ inner join tblFinishGoodProductInfo f on f.FinishGoodProductId = r.FinishGoodProductId
 Where 1=1 {0} and r.FGRQty=m.PackSize and r.UnitId=m.UnitId"
 
 , Utility.ParamChecker(param));

@@ -41,5 +41,6 @@ namespace ERPBO.Agriculture.DTOModels
 
         public double MFGQuanity { get; set; }
         public long MeasurementId { get; set; }
+        public string MeasurementName { get; set; }
     }
 }

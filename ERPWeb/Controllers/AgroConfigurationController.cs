@@ -2032,28 +2032,6 @@ namespace ERPWeb.Controllers
 
 
         #endregion
-        #region
-        public ActionResult ProductionProcess()
-        {
-
-            try
-            {
-
-                    ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
-                    ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
-                    ViewBag.ddlProduct = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-
-
-                    return View();
-
-            }
-            catch (Exception e)
-            {
-                return View();
-            }
-
-        }
-        #endregion
 
         #region Sales and Distribution
 
@@ -2741,17 +2719,6 @@ namespace ERPWeb.Controllers
 
             ViewBag.ddlClientName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName + " (" + stock.StockiestCode + ")", Value = stock.StockiestId.ToString() }).ToList();
 
-
-
-            //  ViewBag.ddlClientName = _appUserBusiness.GetAllAppUserByOrgId(User.OrgId).Where(o => o.RoleId == 34).Select(d => new SelectListItem { Text = d.FullName, Value = d.UserId.ToString() }).ToList();
-
-            //ViewBag.ddlProductName = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
-
-            //var targetQuantity=_finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User)
-
-            //ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfos(User.OrgId).Select(f => new SelectListItem { Text = f.FinishGoodProductName + "(" + f.ReceipeBatchCode + ")" + "-" + f.TargetQuantity, Value = f.FinishGoodProductId.ToString() }).ToList();
-
-            // ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
             ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosall(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
 
@@ -2791,6 +2758,45 @@ namespace ERPWeb.Controllers
 
 
         }
+        public ActionResult GetFGRId(long FinishGoodProductId, long MeasurementId)
+        {
+            try
+            {
+
+                var measurments = _finishGoodRecipeInfoBusiness.GetAllRecipeBYmeasurment(FinishGoodProductId, MeasurementId);
+                var batchCode = measurments.FirstOrDefault().FGRId;
+
+                return Json(batchCode, JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
+        public ActionResult GetQtyKG(long FinishGoodProductId, long MeasurementId)
+        {
+            try
+            {
+
+                var measurments = _finishGoodRecipeInfoBusiness.GetAllRecipeBYmeasurment(FinishGoodProductId, MeasurementId);
+                var batchCode = measurments.FirstOrDefault().FGRQty;
+                var batchCodes = measurments.FirstOrDefault().UnitName;
+                var bb = batchCode + "("+batchCodes+")";
+
+                return Json(bb, JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
         public ActionResult GetMeasurementIdWiseSize(long MeasurementId)
         {
             var MasterCarton = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).MasterCarton;
@@ -2826,17 +2832,17 @@ namespace ERPWeb.Controllers
             return Json(TotalQtyProduct, JsonRequestBehavior.AllowGet);
 
         }
-        public ActionResult GetmeasurmentUnitQtyByProductionId(long FinishGoodProductInfoId, long FGRID)
+        public ActionResult GetmeasurmentUnitQtyByProductionId(long FinishGoodProductInfoId)
         {
 
 
             try
             {
 
-                var measurments = _finishGoodRecipeInfoBusiness.GetAllMEarusmentUnitQty(FGRID);
+                var measurments = _finishGoodRecipeInfoBusiness.GetAllMEarusmentUnitQty(FinishGoodProductInfoId);
                 var dropDown = measurments.Select(m => new Dropdown { text = m.PackageName, value = m.MeasurementId.ToString() }).ToList();
 
-
+             
                 return Json(dropDown, JsonRequestBehavior.AllowGet);
             }
             catch
@@ -2848,13 +2854,13 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string FGRID)
+        public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string FGRID , long MeasurementId)
         {
             //var UnitQtys = QtyKG.Split('(', ')');
             //string ProductUnitQty = UnitQtys[0];
             //var CheckQty = _finishGoodProductionInfoBusiness.Getcheckqty(FinishGoodProductInfoId, ProductUnitQty).FGRId;
 
-            var checkFinishGoodStockValue = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(FinishGoodProductInfoId, Convert.ToInt32(FGRID), User.OrgId);
+            var checkFinishGoodStockValue = _finishGoodProductionInfoBusiness.GetCheckFinishGoodQuantity(FinishGoodProductInfoId, Convert.ToInt32(FGRID), User.OrgId, MeasurementId);
 
             double itemStock = 0;
 
@@ -2877,19 +2883,19 @@ namespace ERPWeb.Controllers
             List<AgroProductSalesDetailsDTO> agroSalesDetailsDTOs = new List<AgroProductSalesDetailsDTO>();
             AutoMapper.Mapper.Map(info, agroSalesInfoDTO);
             AutoMapper.Mapper.Map(details, agroSalesDetailsDTOs);
-            //isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
+
             isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
 
             if (isSucccess == true)
             {
-                // Report ..
+   
                 var invoice = _agroProductSalesInfoBusiness.GetLastInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
 
-                //var file = AgroProductSalesReports(invoice);
+            
                 return Json(new { isSucccess = isSucccess, File = invoice });
             }
 
-            // return Json(isSucccess);
+
             return Json(isSucccess);
         }
         [HttpPost]

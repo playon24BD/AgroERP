@@ -96,12 +96,12 @@ where 1=1 {0} order by sr.SalesReturnId Desc", Utility.ParamChecker(param));
 
                 if (MasterCartonMasurement != 0)
                 {
-                    TotalreturnproductQty = MasterCartonMasurement * InnerBoxMasurement * item.ReturnQuanity ;
+                    TotalreturnproductQty = MasterCartonMasurement * InnerBoxMasurement ;
 
                 }
                 else
                 {
-                    TotalreturnproductQty = InnerBoxMasurement * item.ReturnQuanity;
+                    TotalreturnproductQty = InnerBoxMasurement;
                 }
                 //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
 
@@ -118,8 +118,8 @@ where 1=1 {0} order by sr.SalesReturnId Desc", Utility.ParamChecker(param));
                         MeasurementSize = item.MeasurementSize,
                         MeasurementId = item.MeasurementId,
 
-                        ReturnQuanity = TotalreturnproductQty,
-                        BoxQuanity = item.ReturnQuanity,
+                        ReturnQuanity = item.ReturnQuanity,
+                        BoxQuanity = TotalreturnproductQty,
                         ReturnPerUnitPrice = item.ReturnPerUnitPrice,
                         Status = "NOTADJUST",
                         FinishGoodProductInfoId = item.FinishGoodProductInfoId,
@@ -127,7 +127,7 @@ where 1=1 {0} order by sr.SalesReturnId Desc", Utility.ParamChecker(param));
                         ProductSalesInfoId = item.ProductSalesInfoId,
                         ReturnDate = DateTime.Now,
                         EntryUserId = userId,
-                        ReturnTotalPrice = (TotalreturnproductQty * item.ReturnPerUnitPrice),
+                        ReturnTotalPrice = (item.ReturnQuanity * item.ReturnPerUnitPrice),
                         FGRId = item.FGRId,
                         QtyKG = item.QtyKG,
                         StockiestId = item.StockiestId,

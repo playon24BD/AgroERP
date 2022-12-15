@@ -254,28 +254,28 @@ namespace ERPBLL.Agriculture
 
                     foreach (var item in details)
                     {
-                        //double ProductMesurement = 0;
-                        //double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
-                        //double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
-                        //double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
+                        double ProductMesurement = 0;
+                        double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
+                        double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
+                        double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
+
                         var UnitQtys = item.QtyKG.Split('(', ')');
                         int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
                         string ProductUnit = UnitQtys[1];
-                        //if (MasterCartonMasurement != 0)
-                        //{
-                        //     ProductMesurement = MasterCartonMasurement * InnerBoxMasurement ;
-                        //}
-                        //else
-                        //{
-                        //     ProductMesurement = InnerBoxMasurement;
-                        //}
-                        //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+
+                        if (MasterCartonMasurement != 0)
+                        {
+                            ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
+                        }
+                        else
+                        {
+                            ProductMesurement = InnerBoxMasurement;
+                        }
+
 
 
 
                         var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
-                        //var receipeBatch=_finishGoodRecipeInfoBusiness
-                        //var receipeBatch = item.ReceipeBatchCode.Split('(',')');
                         var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
                         var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
 
@@ -297,7 +297,7 @@ namespace ERPBLL.Agriculture
                             ReceipeBatchCode = receipeBatch,
                             FGRId = FGRId,
                             QtyKG = item.QtyKG,
-                            BoxQuanity = item.BoxQuanity
+                            BoxQuanity = ProductMesurement
 
 
 
@@ -373,28 +373,28 @@ namespace ERPBLL.Agriculture
 
                     foreach (var item in details)
                     {
-                        //double ProductMesurement = 0;
-                        //double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
-                        //double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
-                        //double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
+                        double ProductMesurement = 0;
+                        double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
+                        double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
+                        double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
+
                         var UnitQtys = item.QtyKG.Split('(', ')');
                         int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
                         string ProductUnit = UnitQtys[1];
-                        //if (MasterCartonMasurement != 0)
-                        //{
-                        //     ProductMesurement = MasterCartonMasurement * InnerBoxMasurement ;
-                        //}
-                        //else
-                        //{
-                        //     ProductMesurement = InnerBoxMasurement;
-                        //}
+                        if (MasterCartonMasurement != 0)
+                        {
+                            ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
+                        }
+                        else
+                        {
+                            ProductMesurement = InnerBoxMasurement;
+                        }
                         //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
 
 
 
                         var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
-                        //var receipeBatch=_finishGoodRecipeInfoBusiness
-                        //var receipeBatch = item.ReceipeBatchCode.Split('(',')');
+
                         var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
                         var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
 
@@ -416,7 +416,7 @@ namespace ERPBLL.Agriculture
                             ReceipeBatchCode = receipeBatch,
                             FGRId = FGRId,
                             QtyKG = item.QtyKG,
-                            BoxQuanity = item.BoxQuanity
+                            BoxQuanity = ProductMesurement
 
 
 

@@ -15,5 +15,7 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<RawMaterialTrack> RawMaterialStockInbyRawMaterialid(long rawMaterialId);
         IEnumerable<RawMaterialTrack> RawMaterialStockoutbyRawMaterialid(long rawMaterialId);
+
+        RawMaterialTrack GetRawMaterialStockByMeterialId(long rawMaterialId);
     }
 }

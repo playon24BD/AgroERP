@@ -23,27 +23,31 @@ namespace ERPBLL.Agriculture
         private readonly IMRawMaterialIssueStockDetails _rawMaterialIssueStockDetailsBusiness;
         private readonly IRawMaterialStockInfo _rawMaterialStockInfo;
         private readonly IFinishGoodRecipeInfoBusiness _finishGoodRecipeInfoBusiness;
-        public FinishGoodProductionInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IMRawMaterialIssueStockInfo rawMaterialIssueStockInfoBusiness, IMRawMaterialIssueStockDetails rawMaterialIssueStockDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness)
+        private readonly IRawMaterialTrack _rawMaterialTrack;
+        private readonly RawMaterialTrackInfoRepository _rawMaterialTrackInfoRepository;
+        public FinishGoodProductionInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork,IRawMaterialTrack rawMaterialTrackBusiness ,IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IMRawMaterialIssueStockInfo rawMaterialIssueStockInfoBusiness, IMRawMaterialIssueStockDetails rawMaterialIssueStockDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._finishGoodProductionInfoRepository = new FinishGoodProductionInfoRepository(this._agricultureUnitOfWork);
             this._finishGoodProductionDetailsRepository = new FinishGoodProductionDetailsRepository(this._agricultureUnitOfWork);
             this._mRawMaterialIssueStockDetailsRepository = new MRawMaterialIssueStockDetailsRepository(this._agricultureUnitOfWork);
+            this._rawMaterialTrackInfoRepository = new RawMaterialTrackInfoRepository(this._agricultureUnitOfWork);
             this.finishGoodProductionDetailsBusiness = finishGoodProductionDetailsBusiness;
             this._rawMaterialIssueStockInfoBusiness = rawMaterialIssueStockInfoBusiness;
             this._rawMaterialIssueStockDetailsBusiness = rawMaterialIssueStockDetailsBusiness;
             this._rawMaterialStockInfo = rawMaterialStockInfo;
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
+            this._rawMaterialTrack = rawMaterialTrackBusiness;
         }
 
-        public IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,int FGRID, long orgId)
+        public IEnumerable<FinishGoodProductionInfoDTO> GetCheckFinishGoodQuantity(long FinishGoodProductInfoId,int FGRID, long orgId , long MeasurementId)
         {
             //return _finishGoodProductionInfoRepository.GetOneByOrg(o => o.OrganizationId == orgId && o.FinishGoodProductId == FinishGoodProductInfoId);
 
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductCheckQty(FinishGoodProductInfoId, FGRID, orgId)).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductCheckQty(FinishGoodProductInfoId, FGRID, orgId, MeasurementId)).ToList();
         }
 
-        private string QueryForFinishGoodProductCheckQty(long finishGoodProductInfoId, int FGRID, long orgId)
+        private string QueryForFinishGoodProductCheckQty(long finishGoodProductInfoId, int FGRID, long orgId, long MeasurementId)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -57,6 +61,10 @@ namespace ERPBLL.Agriculture
             if (FGRID > 0)
             {
                 param += string.Format(@" and FI.FGRId={0}", FGRID);
+            }
+            if (MeasurementId > 0)
+            {
+                param += string.Format(@" and m.MeasurementId={0}", MeasurementId);
             }
 
             query = string.Format(@"
@@ -78,6 +86,7 @@ Where sa.FGRId=FI.FGRId and sa.Status is null),0)+ISNull((SELECT SUM(sr.ReturnQu
 where  sr.Status='ADJUST' and sr.FGRId =FI.FGRId),0))
 
 FROM FinishGoodProductionInfoes FI
+inner join tblMeasurement m on m.MeasurementId = FI.MeasurementId
 inner join tblFinishGoodRecipeInfo FGR on FGR.FGRId=FI.FGRId
 inner join [dbo].[tblFinishGoodProductInfo] FGPI on FGPI.FinishGoodProductId=FGR.FinishGoodProductId 
 Where 1=1 and FI.Status='Approved'  {0}
@@ -171,6 +180,8 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
                     EntryUserId = userId,
                     OrganizationId = orgId,
                     FGRId= receiID,
+                    MeasurementId= finishGoodProductionInfoDTO.MeasurementId,
+                    MFGQuanity= finishGoodProductionInfoDTO.MFGQuanity
 
 
                 };
@@ -191,29 +202,21 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
                 {
 
                     List<MRawMaterialIssueStockDetailsDTO> rawMaterialIssueStockDetailsDTOList = new List<MRawMaterialIssueStockDetailsDTO>();
-                    List<MRawMaterialIssueStockInfoDTO> rawMaterialIssueStockInfoList = new List<MRawMaterialIssueStockInfoDTO>();
-
-                    foreach (var item in details)
+                   //List<RawMaterialTrack> rawMaterialTracks = new List<RawMaterialTrack>();
+                   RawMaterialTrack rawMaterialTrack = new RawMaterialTrack();
+                    foreach(var item in details)
                     {
-                        //Test!
-
-                        var rawMaterialStockInfoId = _rawMaterialIssueStockDetailsBusiness.GetRawMaterialIssueStockByMeterialId(item.RawMaterialId, orgId);
-
-                        var checkRawMaterialStockValue = _rawMaterialStockInfo.GetCheckRawmeterislQuantity(item.RawMaterialId, orgId);
-
-                        List<MRawMaterialIssueStockDetailsDTO> issuedetails = new List<MRawMaterialIssueStockDetailsDTO> { new MRawMaterialIssueStockDetailsDTO { RawMaterialIssueStockId = rawMaterialStockInfoId.RawMaterialIssueStockId,RawMaterialId=item.RawMaterialId,Quantity=item.RequiredQuantity, UnitID =rawMaterialStockInfoId.UnitID
-
-                        } };
-                        rawMaterialIssueStockDetailsDTOList.AddRange(issuedetails);
-
-                        List<MRawMaterialIssueStockInfoDTO> rawMaterialIssueStockInfos = new List<MRawMaterialIssueStockInfoDTO>() { new MRawMaterialIssueStockInfoDTO { RawMaterialIssueStockId = rawMaterialStockInfoId.RawMaterialIssueStockId, RawMaterialId = item.RawMaterialId, Quantity = item.RequiredQuantity, OrganizationId = orgId } };
-                        rawMaterialIssueStockInfoList.AddRange(rawMaterialIssueStockInfos);
-
+                        rawMaterialTrack.RawMaterialId = item.RawMaterialId;
+                        rawMaterialTrack.Quantity = item.RequiredQuantity;
+                        rawMaterialTrack.IssueStatus = "Pending";
+                        rawMaterialTrack.EntryDate = DateTime.Now;
+                        rawMaterialTrack.EntryUserId = userId;
+                        rawMaterialTrack.type = finishGoodProductionBatch;
+                        rawMaterialTrack.IssueDate= DateTime.Now;
+                        _rawMaterialTrackInfoRepository.Insert(rawMaterialTrack);
+                        isSuccess= _rawMaterialTrackInfoRepository.Save();
+         
                     }
-
-
-
-                    isSuccess = _rawMaterialIssueStockDetailsBusiness.SaveRawMaterialIssueDetails(rawMaterialIssueStockDetailsDTOList, userId, orgId, finishGoodProductionBatch);
 
 
                 }
@@ -367,11 +370,12 @@ inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
                     param += string.Format(@" and p.FinishGoodProductName like '%{0}%'", name);
                 }
                 query = string.Format(@"
-            SELECT a.EntryDate,r.FGRQty,a.FinishGoodProductInfoId,a.FinishGoodProductionBatch,a.ReceipeBatchCode,a.Quanity,
+SELECT m.MeasurementName,a.EntryDate,r.FGRQty,a.FinishGoodProductInfoId,a.FinishGoodProductionBatch,a.ReceipeBatchCode,a.Quanity,
 a.TargetQuantity,a.Status,a.Remarks,a.flag,a.OrganizationId,a.FGRId,
 U.UnitName,p.FinishGoodProductName 
 
 FROM FinishGoodProductionInfoes a
+inner join tblMeasurement m on a.MeasurementId=m.MeasurementId
 Inner Join tblFinishGoodProductInfo p on a.FinishGoodProductId=p.FinishGoodProductId
 
 Inner Join tblFinishGoodRecipeInfo r on a.FGRId=r.FGRId
@@ -429,22 +433,22 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId
                 }
                 if (_finishGoodProductionDetailsRepository.Save())
                 {
-                    List<MRawMaterialIssueStockDetails> rawMaterialIssueStockDetails = new List<MRawMaterialIssueStockDetails>();
-                    MRawMaterialIssueStockDetails rawMaterialIssueStockDetails1 = new MRawMaterialIssueStockDetails();
-                    foreach (var item in finishGoodProductionDetailsDTOs)
+                    List<RawMaterialTrack> rawMaterialTracks = new List<RawMaterialTrack>();
+                    RawMaterialTrack rawMaterialTrack = new RawMaterialTrack();
+                    foreach(var item in finishGoodProductionDetailsDTOs)
                     {
-                        rawMaterialIssueStockDetails1 = getissueidbyrmidprobatch(item.FinishGoodProductionBatch, item.RawMaterialId);
-                        rawMaterialIssueStockDetails1.IssueStatus = "StockOut";
-                        rawMaterialIssueStockDetails.Add(rawMaterialIssueStockDetails1);
+                        rawMaterialTrack = getrmtrackidbyrmidprobatch(item.FinishGoodProductionBatch, item.RawMaterialId);
+                        rawMaterialTrack.IssueStatus = "StockOut";
+                        rawMaterialTracks.Add(rawMaterialTrack);
 
                     }
-                    _mRawMaterialIssueStockDetailsRepository.UpdateAll(rawMaterialIssueStockDetails);
+                    _rawMaterialTrackInfoRepository.UpdateAll(rawMaterialTracks);
 
                 }
 
                
 
-                  IsSuccess = _mRawMaterialIssueStockDetailsRepository.Save();
+                  IsSuccess = _rawMaterialTrackInfoRepository.Save();
 
 
 
@@ -480,22 +484,22 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId
                 }
                 if (_finishGoodProductionDetailsRepository.Save())
                 {
-                    List<MRawMaterialIssueStockDetails> rawMaterialIssueStockDetails = new List<MRawMaterialIssueStockDetails>();
-                    MRawMaterialIssueStockDetails rawMaterialIssueStockDetails1 = new MRawMaterialIssueStockDetails();
+                    List<RawMaterialTrack> rawMaterialTracks = new List<RawMaterialTrack>();
+                    RawMaterialTrack rawMaterialTrack = new RawMaterialTrack();
                     foreach (var item in finishGoodProductionDetailsDTOs)
                     {
-                        rawMaterialIssueStockDetails1 = getissueidbyrmidprobatch(item.FinishGoodProductionBatch, item.RawMaterialId);
-                        rawMaterialIssueStockDetails1.IssueStatus = "StockIn";
-                        rawMaterialIssueStockDetails.Add(rawMaterialIssueStockDetails1);
+                        rawMaterialTrack = getrmtrackidbyrmidprobatch(item.FinishGoodProductionBatch, item.RawMaterialId);
+                        rawMaterialTrack.IssueStatus = "None";
+                        rawMaterialTracks.Add(rawMaterialTrack);
 
                     }
-                    _mRawMaterialIssueStockDetailsRepository.UpdateAll(rawMaterialIssueStockDetails);
+                    _rawMaterialTrackInfoRepository.UpdateAll(rawMaterialTracks);
 
                 }
 
 
 
-                IsSuccess = _mRawMaterialIssueStockDetailsRepository.Save();
+                IsSuccess = _rawMaterialTrackInfoRepository.Save();
 
 
 
@@ -703,6 +707,10 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             }
         }
 
+        public RawMaterialTrack getrmtrackidbyrmidprobatch(string FinishGoodProductionBatch, long RawMaterialId)
+        {
+            return _rawMaterialTrackInfoRepository.GetOneByOrg(df => df.type == FinishGoodProductionBatch && df.RawMaterialId == RawMaterialId);
+        }
     }
 }
 
