@@ -211,6 +211,10 @@
     <Compile Include="AgricultureContextMigrations\202212150939595_StockiestWiseTargetAddField.Designer.cs">
       <DependentUpon>202212150939595_StockiestWiseTargetAddField.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202212171343119_Package.cs" />
+    <Compile Include="AgricultureContextMigrations\202212171343119_Package.Designer.cs">
+      <DependentUpon>202212171343119_Package.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -352,6 +356,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202212150939595_StockiestWiseTargetAddField.resx">
       <DependentUpon>202212150939595_StockiestWiseTargetAddField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202212171343119_Package.resx">
+      <DependentUpon>202212171343119_Package.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

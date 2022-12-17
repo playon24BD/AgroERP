@@ -17,6 +17,8 @@ namespace ERPDAL.AgricultureDAL
         {
 
         }
+        public DbSet<PackageInfo> tblPackageInfo { get; set; }//e
+        public DbSet<PackageDetails> tblPackageDetails { get; set; }//e
         public DbSet<StockiestWiseYearlyTarget> tblStockiestWiseYearlyTarget { get; set; }
         public DbSet<PaymentMoneyRecipt> tblPaymentMoneyRecipt { get; set; } //e SSSS
         public DbSet<ProductionPerproductCost> tblProductionPerproductCost { get; set; } //e
