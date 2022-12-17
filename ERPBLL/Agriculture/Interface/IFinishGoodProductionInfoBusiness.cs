@@ -56,7 +56,7 @@ namespace ERPBLL.Agriculture.Interface
         RawMaterialTrack getrmtrackidbyrmidprobatch(string FinishGoodProductionBatch, long RawMaterialId);
 
 
-
+        IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionListView();
 
     }
 }

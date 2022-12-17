@@ -1221,7 +1221,7 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetProductFinishGoodList(string flag, string ReceipeBatchCode, long? productId, string finishGoodProductionBatch)
+        public ActionResult GetProductFinishGoodList(string flag, string ReceipeBatchCode, long? productId, string finishGoodProductionBatch,long? id)
         {
 
             try
@@ -1241,6 +1241,28 @@ namespace ERPWeb.Controllers
                     return View();
 
                 }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    var dto = _finishGoodProductionInfoBusiness.GetFinishGoodProductionListView();
+
+
+                    List<FinishGoodProductionInfoViewModel> viewModels = new List<FinishGoodProductionInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetFinishGoodProductionList", viewModels);
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+                    var details = _finishGoodProductionDetailsBusiness.GetFinishGoodDetailsListView(finishGoodProductionBatch, User.OrgId);
+
+                    List<FinishGoodProductionDetailViewModel> productionDetails = new List<FinishGoodProductionDetailViewModel>();
+                    AutoMapper.Mapper.Map(details, productionDetails);
+
+                    return PartialView("_GetFinishGoodProductionDetails", productionDetails);
+
+                }
+
+
                 else if (!string.IsNullOrEmpty(flag) && flag == "Detail")
                 {
                     IEnumerable<FinishGoodProductionDetailsDTO> dto = _finishGoodProductionDetailsBusiness.GetFinishGoodProductionDetails(finishGoodProductionBatch, User.OrgId).Select(a => new FinishGoodProductionDetailsDTO
@@ -6239,5 +6261,9 @@ namespace ERPWeb.Controllers
 
             return Json(dropDown, JsonRequestBehavior.AllowGet);
         }
+
+
+        
+
     }
 }

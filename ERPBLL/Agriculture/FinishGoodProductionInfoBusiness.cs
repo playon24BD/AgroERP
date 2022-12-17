@@ -707,9 +707,35 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             }
         }
 
+
         public RawMaterialTrack getrmtrackidbyrmidprobatch(string FinishGoodProductionBatch, long RawMaterialId)
         {
             return _rawMaterialTrackInfoRepository.GetOneByOrg(df => df.type == FinishGoodProductionBatch && df.RawMaterialId == RawMaterialId);
+
+        }
+        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionListView()
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryFinishGoodStockReportList());
+        }
+
+        private string QueryFinishGoodStockReportList()
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+           
+
+            
+
+            query = string.Format(@"
+
+
+select infoes.FinishGoodProductInfoId,infoes.FinishGoodProductionBatch,info.FinishGoodProductName,infoes.Quanity,infoes.EntryDate from FinishGoodProductionInfoes infoes
+inner join tblFinishGoodProductInfo info on infoes.FinishGoodProductId=info.FinishGoodProductId
+
+
+where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+
         }
     }
 }

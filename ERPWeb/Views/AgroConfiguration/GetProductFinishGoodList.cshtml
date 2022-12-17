@@ -10,7 +10,10 @@
 
                 <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active text-white" id="custom-tabs-two-producFinishGoodList-tab" data-toggle="pill" href="#custom-tabs-two-producFinishGoodList" role="tab" aria-controls="custom-tabs-two-producFinishGoodList" aria-selected="false">FinishGood list</a>
+                        <a class="nav-link active text-white" id="custom-tabs-two-producFinishGoodList-tab" data-toggle="pill" href="#custom-tabs-two-producFinishGoodList" role="tab" aria-controls="custom-tabs-two-producFinishGoodList" aria-selected="false">Finish Good Stock list</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" id="custom-tabs-two-finishGoodProductList-tab" data-toggle="pill" href="#custom-tabs-two-finishGoodProductList" role="tab" aria-controls="custom-tabs-two-finishGoodProductList" aria-selected="false">Finish Good Production list</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" id="custom-tabs-two-finishGoodProduction-tab" data-toggle="pill" href="#custom-tabs-two-finishGoodProduction" role="tab" aria-controls="custom-tabs-two-finishGoodProduction" aria-selected="false">Finish Good Production</a>
@@ -36,10 +39,10 @@
                             <div class="card" style="background-color:#001f3f">
                                 <div class="px-2 py-1">
                                     <div class="row">
-                                        
+
                                         <div class="col-md-2">
                                             <input type="text" class="form-control form-control-sm" id="ddlReceipBatchCode1" placeholder="Search ReceipCode" />
-                                        </div> 
+                                        </div>
 
                                         <div class="col-md-2">
                                             @Html.DropDownList("ddlProduct1", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
@@ -51,15 +54,59 @@
 
                             </div>
                         </div>
-                     </div>
-                    <div class="row"style="margin-top:-3px">
+                    </div>
+                    <div class="row" style="margin-top:-3px">
 
                         <div class="col-md-12" style="margin-top:-10px">
                             <div class="card">
-                                <div class="card-body"style="margin-top:-10px">
+                                <div class="card-body" style="margin-top:-10px">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
                                             @{Html.RenderAction("GetProductFinishGoodList", new { @flag = "Initial" });}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade show" id="custom-tabs-two-finishGoodProductList" role="tabpanel" aria-labelledby="custom-tabs-two-finishGoodProductList-tab">
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card shadow card-gray-dark">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style=" margin-top: -35px">
+                        <div class="col-md-12">
+                            <div class="card" style="background-color:#001f3f">
+                                <div class="px-2 py-1">
+                                    <div class="row">
+
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control form-control-sm" id="SearchBatchCode" placeholder="Search BatchCode" />
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            @Html.DropDownList("dProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:-3px">
+
+                        <div class="col-md-12" style="margin-top:-10px">
+                            <div class="card">
+                                <div class="card-body" style="margin-top:-10px">
+                                    <div class="row">
+                                        <div class="col-md-12 text-sm text-sm" id="dataContainer1" style="overflow-y:scroll">
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -92,13 +139,13 @@
                                         <input type="hidden" id="hdTargetValue" />
                                         <input type="hidden" id="hdQuantity" />
                                         @*<div class="col-md-3">
-            <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
-            <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
-                <option value="">Select One</option>
-                <option value="9">Agro Farm</option>
-            </select>
-            <span class="error hide req-ddlOrganiation">Organization is required</span>
-        </div>*@
+                                    <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
+                                    <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
+                                        <option value="">Select One</option>
+                                        <option value="9">Agro Farm</option>
+                                    </select>
+                                    <span class="error hide req-ddlOrganiation">Organization is required</span>
+                                </div>*@
                                         <div class="col-md-3">
                                             <label class="control-label" for="ddlProduct">Product<span style="color:red">*</span></label>
                                             @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
@@ -113,8 +160,8 @@
                                         <div class="col-md-2 hide">
                                             <input type="text" value="none" id="ddlReceipBatchCode" name="ddlReceipBatchCode" class="form-control form-control-sm" readonly />
                                             @*<label class="control-label" for="ddlReceipBatchCode">Recipe Code<span style="color:red">*</span></label>
-            @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-            <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>*@
+                                    @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                    <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>*@
                                         </div>
                                         <div class="col-md-2 hide">
                                             <label for="qty"> Qty</label>
@@ -155,15 +202,15 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="col-md-12">
-                                        <div class="row"style="margin-top:-10px">
+                                        <div class="row" style="margin-top:-10px">
                                             <div class="col-md-12" style="overflow-y:scroll">
                                                 <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblFinishGoodProduction">
                                                     <thead>
                                                         @*<tr>
-                                                            <th colspan="6">
-                                                                <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
-                                                            </th>
-                                                        </tr>*@
+                                                    <th colspan="6">
+                                                        <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
+                                                    </th>
+                                                </tr>*@
                                                         <tr class="btn-dark text-center">
 
                                                             <th>Raw Material</th>
@@ -201,6 +248,21 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="FinishGoodListDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title">Finish Good List Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer3">
+
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts{
     <script type="text/javascript">
         var ddlOrganiation = $("#ddlOrganiation");
@@ -218,6 +280,7 @@
 
         var txtTotalProductQty = $("#txtTotalProductQty");
         var txtTotalQty = $("#txtTotalQty");
+        var FinishGoodListDetails = $("#FinishGoodListDetails");
        
 
 
@@ -237,9 +300,51 @@
             $(function () {
                 $('#ddlProduct').focus();
             });
+            LoadFinishGoodProductList()
             
-       
         })
+
+        function LoadFinishGoodProductList() {
+            debugger;
+
+            var data = { flag: "View" };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer1").fadeOut('500', function () {
+                        $("#dataContainer1").empty();
+                        $("#dataContainer1").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+            //pageNo = 1;
+        }
+
+
+        $(document).on('click', 'a.data-detail-item-Product', function (e) {
+            e.preventDefault();
+            debugger;
+            var id = $(this).parent().parents('tr').children('td').eq(2).html();
+            var data = { flag: "Detail", finishGoodProductionBatch: id };
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
+                debugger;
+                console.log(status);
+                if (status === "success") {
+                    debugger;
+                    $("#dataContainer3").empty();
+                    $("#dataContainer3").append(res);
+                    $("#FinishGoodListDetails").modal('show');
+
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
+
+        })
+
 
 
         ddlMeasurementName.change(function () {

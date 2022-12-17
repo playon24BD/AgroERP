@@ -17,5 +17,7 @@ namespace ERPBLL.Agriculture.Interface
         FinishGoodProductionDetails GetFinishGoodProductionDetailsByAny(string any, long orgId);
         bool SaveFinishGoodDetails(List<FinishGoodProductionDetailsDTO> finishGoodProductionDetailsDTO,string finishGoodProductionBatch, long userId, long orgId);
 
+        IEnumerable<FinishGoodProductionDetailsDTO> GetFinishGoodDetailsListView(string finishGoodProductionBatch, long orgId);
+        
     }
 }

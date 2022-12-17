@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
@@ -21,6 +22,33 @@ namespace ERPBLL.Agriculture
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._finishGoodProductionDetailsRepository = new FinishGoodProductionDetailsRepository(this._agricultureUnitOfWork);
 
+        }
+
+        public IEnumerable<FinishGoodProductionDetailsDTO> GetFinishGoodDetailsListView(string finishGoodProductionBatch, long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionDetailsDTO>(QueryForFinishGoodProductionDetails(finishGoodProductionBatch, orgId)).ToList();
+        }
+
+        private string QueryForFinishGoodProductionDetails(string finishGoodProductionBatch, long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (!string.IsNullOrEmpty(finishGoodProductionBatch))
+            {
+                param += string.Format(@" and d.FinishGoodProductionBatch ='{0}'", finishGoodProductionBatch);
+            }
+
+            query = string.Format(@"
+
+
+
+select d.FinishGoodProductDetailId,d.FinishGoodProductionBatch, rm.RawMaterialName,d.FGRRawMaterQty,d.TotalQuantity,d.RequiredQuantity from FinishGoodProductionDetails d
+inner join tblRawMaterialInfo rm on d.RawMaterialId=rm.RawMaterialId
+
+Where 1=1 {0} ", Utility.ParamChecker(param));
+
+            return query;
         }
         public IEnumerable<FinishGoodProductionDetails> GetFinishGoodProductionDetails(long orgId)
         {

@@ -194,6 +194,7 @@
     <Compile Include="Agriculture\ViewModels\CommissionOnProductOnSalesViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\DivisionInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\DivisionUserViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\FinishGoodDetails.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionDetailViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\FinishGoodProductionInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\MonyReceptDetails.cs" />

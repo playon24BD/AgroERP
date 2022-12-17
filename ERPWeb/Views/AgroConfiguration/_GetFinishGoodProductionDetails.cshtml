@@ -1,0 +1,49 @@
+﻿
+@model IEnumerable<ERPBO.Agriculture.ViewModels.FinishGoodProductionDetailViewModel>
+
+@{
+    ViewBag.Title = "List of Finish Good Details";
+    var SL = 0;
+}
+<div class="row">
+    <div class="col-md-12" style="overflow-y:scroll">
+        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblFinishGoodProductDetail">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">#SL</th>
+                    <th style="vertical-align:middle">Raw Material Name</th>
+                    <th style="vertical-align:middle">Quantity</th>
+                    <th style="vertical-align:middle">Total Qty</th>
+                    <th style="vertical-align:middle">Required Qty</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    SL = SL + 1;
+                    <tr>
+
+                        <td class="text-center text-bold">@SL</td>
+                        <td class="text-center">@item.RawMaterialName</td>
+                        <td class="text-center">@item.FGRRawMaterQty</td>
+                        <td class="text-center">@item.TotalQuantity</td>
+                        <td class="text-center">@item.RequiredQuantity</td>
+                        
+                    </tr>
+                }
+
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="5">
+                            No Rows Found in the table
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
