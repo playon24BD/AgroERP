@@ -241,27 +241,29 @@ where 1=1 {0} and d.Status is null", Utility.ParamChecker(param));
 
 
                 query = string.Format(@"	
+select  d.ProductSalesDetailsId,MQTY=Case When m.MasterCarton=0 Then m.InnerBox*1 Else m.MasterCarton * m.InnerBox End,f.FinishGoodProductName,i.ProductSalesInfoId,i.InvoiceNo,d.ProductSalesDetailsId,d.FinishGoodProductInfoId,d.BoxQuanity,d.Price,d.Price,d.Discount,d.DiscountTk,d.MeasurementSize,d.ReceipeBatchCode,d.QtyKG,(d.Quanity*d.Price-DiscountTk)as ProductTotal, m.MeasurementId,m.MasterCarton,m.InnerBox,m.PackSize,
 
-
-
-
-select  d.ProductSalesDetailsId,MQTY=Case When m.MasterCarton=0 Then m.InnerBox*1 Else m.MasterCarton * m.InnerBox End,f.FinishGoodProductName,i.ProductSalesInfoId,i.InvoiceNo,d.ProductSalesDetailsId,d.FinishGoodProductInfoId,d.Quanity,d.BoxQuanity,d.Price,d.Price,d.Discount,d.DiscountTk,d.MeasurementSize,d.ReceipeBatchCode,d.QtyKG,(d.Quanity*d.Price-DiscountTk)as ProductTotal, m.MeasurementId,m.MasterCarton,m.InnerBox,m.PackSize,
-
-thisstock=isnull((select sum(ds.Quanity) from tblProductSalesDetails ds 
+Quanity=isnull((select sum(ds.Quanity) from tblProductSalesDetails ds 
 where ds.ProductSalesInfoId=d.ProductSalesInfoId and ds.FinishGoodProductInfoId= d.FinishGoodProductInfoId and ds.FGRId=d.FGRId ),0),
+
+ RT=ISNULL((SELECT 
+ CASE When count(*) > 0 then 1
+ else 0
+ END AS myValue
+ from tblSalesReturn sr where sr.FinishGoodProductInfoId=d.FinishGoodProductInfoId and sr.ProductSalesInfoId=d.ProductSalesInfoId and sr.FGRId=d.FGRId ),0),
 
 CurrentStock=isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
 where fgp.FinishGoodProductId = d.FinishGoodProductInfoId and fgp.FGRId = d.FGRId and fgp.Status='Approved'),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
 where sd.FinishGoodProductInfoId = d.FinishGoodProductInfoId and sd.FGRId = d.FGRId and sd.Status is null),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr
-where sr.FinishGoodProductInfoId = d.FinishGoodProductInfoId and sr.FGRId = d.FGRId and sr.Status='ADJUST'),0)+isnull((select sum(ds.Quanity) from tblProductSalesDetails ds 
-where ds.ProductSalesInfoId=d.ProductSalesInfoId and ds.FinishGoodProductInfoId= d.FinishGoodProductInfoId and ds.FGRId=d.FGRId ),0)
+where sr.FinishGoodProductInfoId = d.FinishGoodProductInfoId and sr.FGRId = d.FGRId and sr.Status='ADJUST'),0) + isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
+where sd.FinishGoodProductInfoId = d.FinishGoodProductInfoId and sd.ProductSalesInfoId = i.ProductSalesInfoId and sd.FGRId = d.FGRId and sd.Status is null),0)
 
 
-from tblProductSalesInfo i
+from tblProductSalesInfo i 
 inner join tblProductSalesDetails d on i.ProductSalesInfoId=d.ProductSalesInfoId
 inner join tblFinishGoodProductInfo f on d.FinishGoodProductInfoId=f.FinishGoodProductId
 inner join tblMeasurement m on m.MeasurementId= d.MeasurementId
-where  1=1 {0} and d.Status is null ", Utility.ParamChecker(param));
+where  1=1 {0}  and d.Status is null ", Utility.ParamChecker(param));
 
                 return query;
             }

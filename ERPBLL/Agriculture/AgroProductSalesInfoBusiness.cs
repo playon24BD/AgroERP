@@ -1152,11 +1152,11 @@ inner join tblStockiestInfo st on info.StockiestId=st.StockiestId
 
                     if (MasterCartonMasurement != 0)
                     {
-                        TotalproductQtyinfo = MasterCartonMasurement * InnerBoxMasurement * tom.BoxQuanity;
+                        TotalproductQtyinfo = tom.Quanity;
                     }
                     else
                     {
-                        TotalproductQtyinfo = InnerBoxMasurement * tom.BoxQuanity;
+                        TotalproductQtyinfo = tom.Quanity;
                     }
 
                     productSalesDetailss = _agroProductSalesDetailsBusiness.GetSalesDetailsById(tom.ProductSalesDetailsId, orgId);
@@ -1226,12 +1226,12 @@ inner join tblStockiestInfo st on info.StockiestId=st.StockiestId
 
                     if (MasterCartonMasurement != 0)
                     {
-                        TotalproductQty = MasterCartonMasurement * InnerBoxMasurement * item.BoxQuanity;
+                        TotalproductQty = item.Quanity;
 
                     }
                     else
                     {
-                        TotalproductQty = InnerBoxMasurement * item.BoxQuanity;
+                        TotalproductQty = item.Quanity;
                     }
 
 

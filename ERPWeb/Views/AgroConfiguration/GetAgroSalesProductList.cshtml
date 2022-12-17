@@ -577,19 +577,20 @@
             var details = [];
             details.length = 0;
 
-          //  debugger;
+            debugger;
             $.each($("#tblAgroSalesProductEdit tbody tr"), function (index, item) {
                 var tds = $(this).children('td');
-              //  debugger;
+                debugger;
 
                 details.push({
                  
 
                    
-                    BoxQuanity: tds.eq(3).children('input[type="number"]').val(),
+                    Quanity: tds.eq(3).children('input[type="number"]').val(),
                     Discount: tds.eq(5).children('input[type="number"]').val(),
                     ISActive: tds.eq(7).children("input").is(":checked"),
                     ProductSalesDetailsId: tds.eq(10)[0].innerHTML,
+                    BoxQuanity: tds.eq(8)[0].innerHTML,
                 
                    
                     

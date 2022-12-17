@@ -347,6 +347,38 @@
 
 
 
+
+        ddlProduct.change(function () {
+
+
+
+            Loadmeasurment();
+
+
+        })
+
+
+
+
+
+        function Loadmeasurment() {
+            debugger;
+            clearDropdown("ddlMeasurementName");
+            if (ddlProduct.val() != "") {
+                var FinishGoodProductInfoId = ddlProduct.val();
+
+                LoadDropDown('/AgroConfiguration/GetmeasurmentUnitQtyByProductionId', 'POST', ddlMeasurementName, JSON.stringify({ FinishGoodProductInfoId: ddlProduct.val() }));
+                debugger;
+            }
+            else {
+                clearDropdown("ddlMeasurementName");
+
+            }
+        }
+
+
+
+
         ddlMeasurementName.change(function () {
 
             LoadbatchCodeData();
