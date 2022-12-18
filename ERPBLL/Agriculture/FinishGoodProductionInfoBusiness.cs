@@ -175,7 +175,7 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
                     Quanity = finishGoodProductionInfoDTO.Quanity,
                     TargetQuantity = finishGoodProductionInfoDTO.TargetQuantity,
                     Remarks = finishGoodProductionInfoDTO.Remarks,
-                    Status = "Pending",
+                    Status = "Approved",
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
                     OrganizationId = orgId,
@@ -208,7 +208,7 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
                     {
                         rawMaterialTrack.RawMaterialId = item.RawMaterialId;
                         rawMaterialTrack.Quantity = item.RequiredQuantity;
-                        rawMaterialTrack.IssueStatus = "Pending";
+                        rawMaterialTrack.IssueStatus = "StockOut";
                         rawMaterialTrack.EntryDate = DateTime.Now;
                         rawMaterialTrack.EntryUserId = userId;
                         rawMaterialTrack.type = finishGoodProductionBatch;

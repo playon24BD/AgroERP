@@ -1686,6 +1686,7 @@ namespace ERPWeb.Controllers
                     {
 
                         Checked = false;
+                        break;
                     }
                     else
                     {
@@ -1720,7 +1721,8 @@ namespace ERPWeb.Controllers
                 }
                 else
                 {
-                    return Json("Issue Quantity Not Sufficient Please Check Target Quantity...", JsonRequestBehavior.AllowGet);
+                    //return Json("Issue Quantity Not Sufficient Please Check Target Quantity...", JsonRequestBehavior.AllowGet);
+                    return Json("False", JsonRequestBehavior.AllowGet);
                 }
 
 
@@ -1796,6 +1798,7 @@ namespace ERPWeb.Controllers
                     {
 
                         Checked = false;
+                     
                     }
                     else
                     {

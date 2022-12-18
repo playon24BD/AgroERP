@@ -294,7 +294,7 @@
                 theme: 'bootstrap4'
             });
             $("#btnSubmit").hide();
-            $("#addTolist").hide();
+           // $("#addTolist").hide();
 
             //$("#btnSubmit").hide();
             $(function () {
@@ -542,18 +542,19 @@
                 $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyDetailsByreceipeBatchCode", data)).then(function (res, status) {
                     debugger;
                     console.log(res);
+
                     var sl = 0;
                     material = JSON.parse(res)
                     console.log(material);
                     var len = material.length;
                     console.log("length: " + len);
-                    //console.log("Target Value: " + targetQty.val() + " Hidden Target Value: " + hdTargetValue.val());
-                    // console.log(targetQty.val() <= hdTargetValue.val());
-                    if (Number(FinishQty.val()) <= Number(targetQty.val())) {
 
+                    if (material == "False") {
                         debugger;
-
-                        //console.log(material[0].RawMaterialName);
+                        alert("Insufficient RawMaterial");
+                    }
+                    else {
+                        debugger;
                         $.each(material, function (index, value) {
 
                             var td1 = "<td class='text-center'>" + value.RawMaterialName + "</td>";
@@ -569,10 +570,9 @@
 
                         })
                         $("#addTolist").hide();
+
                     }
-                    else {
-                        alert("Issue Quantity Not Sufficient Please Check Target Quantity");
-                    }
+
 
                 });
 
@@ -584,8 +584,8 @@
             var isValid = true;
             $(".error").addClass('hide');
 
-            if (TryParseInt(targetQty.val(), 0) <= 0) {
-                $(".req-targetQty").removeClass('hide');
+            if (TryParseInt(FinishQty.val(), 0) <= 0) {
+                $(".req-FinishQty").removeClass('hide');
                 isValid = false;
             }
 
@@ -658,18 +658,18 @@
         });
 
 
-        FinishQty.keyup(function () {
-            if (Number(FinishQty.val()) > Number( targetQty.val() )){
+        //FinishQty.keyup(function () {
+        //    if (Number(FinishQty.val()) > Number( targetQty.val() )){
 
-                $("#addTolist").hide();
+        //        $("#addTolist").hide();
 
-            }
-            else {
-                $("#addTolist").show();
-            }
+        //    }
+        //    else {
+        //        $("#addTolist").show();
+        //    }
 
 
-        })
+        //})
 
         function redirectPage(page) {
             window.location.replace(page);

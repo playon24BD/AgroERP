@@ -126,8 +126,8 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                             PaymentMoneyReciptId = paymentMoneyRecipt.PaymentMoneyReciptId,
                             EntryUserId = userId,
                             PaymentDate = DateTime.Now,
-                            CommisionPercent = item.CommisionPercent,
-                            CommisionAmount = (item.PaymentAmount * item.CommisionPercent)/100,
+                            CommisionPercent = 0,
+                            CommisionAmount = item.CommisionPercent,
 
                         };
                         _salesPaymentRegisterRepository.Insert(salesPaymentRegister);

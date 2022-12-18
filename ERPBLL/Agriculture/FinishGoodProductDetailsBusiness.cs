@@ -97,7 +97,7 @@ Where 1=1 {0} ", Utility.ParamChecker(param));
                     details.OrganizationId = orgId;
                     details.EntryUserId = userId;
                     //details.Status = "Consumed";
-                    details.Status = "Pending";
+                    details.Status = "Consumed";
                     //finishGoodProductionlist.Add(details);
                     _finishGoodProductionDetailsRepository.Insert(details);
                     IsSuccess = _finishGoodProductionDetailsRepository.Save();
