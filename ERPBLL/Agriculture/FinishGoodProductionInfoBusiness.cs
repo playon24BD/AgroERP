@@ -260,7 +260,7 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
                     param += string.Format(@" and fgp.FinishGoodProductId ={0}", productId);
                 }
                 query = string.Format(@"
-select Distinct fgp.FinishGoodProductId , fgp.FGRId , p.FinishGoodProductName,fr.ReceipeBatchCode,fr.FGRQty,un.UnitName,
+select Distinct m.MeasurementName,fgp.FinishGoodProductId , fgp.FGRId , p.FinishGoodProductName,fr.ReceipeBatchCode,fr.FGRQty,un.UnitName,
 
 ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
 where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0) ,
@@ -283,6 +283,7 @@ from FinishGoodProductionInfoes fgp
 inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId
 inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId
 inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
+inner join tblMeasurement m on m.MeasurementId=fgp.MeasurementId
       where 1=1  {0}",
                 Utility.ParamChecker(param));
                 return query;
@@ -729,7 +730,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             query = string.Format(@"
 
 
-select infoes.FinishGoodProductInfoId,infoes.FinishGoodProductionBatch,info.FinishGoodProductName,infoes.Quanity,infoes.EntryDate from FinishGoodProductionInfoes infoes
+select infoes.FinishGoodProductInfoId,infoes.FinishGoodProductionBatch,info.FinishGoodProductName,infoes.TargetQuantity,infoes.EntryDate from FinishGoodProductionInfoes infoes
 inner join tblFinishGoodProductInfo info on infoes.FinishGoodProductId=info.FinishGoodProductId
 
 

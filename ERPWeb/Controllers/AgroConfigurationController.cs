@@ -6270,8 +6270,30 @@ namespace ERPWeb.Controllers
             return Json(dropDown, JsonRequestBehavior.AllowGet);
         }
 
+        #region Package
+        public ActionResult PackageCreate(long? id, string flag, string fromDate, string toDate, long? ProductSalesInfoId)
+        {
+            try
+            {
 
-        
+                ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosall(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.FGRId.ToString() }).ToList();
+                ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.PackageName, Value = d.MeasurementId.ToString() }).ToList();
+                ViewBag.ddlMeasurementSize = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MasterCarton.ToString() + "*" + d.InnerBox.ToString() + "*" + d.PackSize.ToString() + "(" + d.UnitId + ")", Value = d.MeasurementId.ToString() }).ToList();
+
+                return View();
+            }
+
+            catch (Exception e)
+            {
+                return View();
+
+            }
+
+
+        }
+        #endregion
+
 
     }
 }

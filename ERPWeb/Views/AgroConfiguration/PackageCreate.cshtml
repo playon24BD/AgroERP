@@ -1,0 +1,377 @@
+﻿@{
+    ViewBag.Title = "CreatePackage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text-sm" style="margin-top:-25px">
+    <div class="col-md-12">
+        <div class="card card-navy shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/GetFinishGoodRecipeList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center text-bold">Create Package</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-right">
+                            <i class="fas fa-paper-plane"></i> Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12" style="border-right:2px solid #efefef">
+
+                        <div class="row justify-content-center">
+
+                            <div class="col-md-2">
+                                <label for="ddlpackagename" class="control-label">PackageName <span style="color:red">*</span><span id="ddlpackagename" class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
+                                <input type="text" placeholder="PackageName" name="ddlpackagename" id="ddlpackagename" class="form-control form-control-sm" />
+                                <span class="error hide req-src-ddlpackagenameddlpackagename text-bold">ProductQty is required!</span>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="control-label font-weight-bold">Start Date<span style="color:red">*</span></label>
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
+                                    <span class="error hide req-dptFromDate">From is Required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="control-label font-weight-bold">End Date<span style="color:red">*</span></label>
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" />
+                                    <span class="error hide req-dptToDate">ToDate is Required</span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="col-form-label pt-0" for="model">Payable Amount</label>
+                                <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold" readonly />
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="ddlProductName" class="col-form-label text-black">
+                                    Product<span style="color:red">*</span>
+                                </label>
+                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "Product", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
+                            </div>
+                            <div class="hide">
+                                <input type="text" id="ddlfgrid" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="ddlMeasurementName" class="col-form-label text-black">
+                                    Measurement<span style="color:red">*</span>
+                                </label>
+                                @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label for="txtQuanity" class="col-form-label text-black">Quantity<span style="color:red">*</span></label>
+                                <input type="number" id="txtQuanity" class="form-control form-control-sm" />
+                                <span class="error hide req-Quanity">Quantity is required</span>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ddlPrice" class="col-form-label text-black">Rate/PC</label>
+                                <input type="text" id="txtPrice" class="form-control form-control-sm" />
+                                <span class="error hide req-txtPrice">Price not Configure</span>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ddlMode" class="col-form-label">Status</label>
+                                <select id="ddlMode" class="form-control form-control-sm select2">
+                                    <option value="">Select</option>
+                                    <option value="Paid">Paid</option>
+                                    <option value="Gift">Gift</option>
+                                </select>
+                                <span class="error hide req-ddlMode">Mode Is Required</span>
+                            </div>
+                            <div class="col-md-1">
+                                <label for="" class="col-form-label font-weight-bold" style="visibility:hidden">Add</label>
+                                <div class="clearfix">
+                                    <button type="submit" class="btn btn-sm float-right btn-outline-success" id="btnAddToList" title="Add"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>TotalAmount</label>
+                                <input type="number" id="txtTotalAmount" name="TotalAmount" class="form-control form-control-sm" readonly />
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    @Html.AntiForgeryToken()
+                    <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg" id="tblList">
+                        <thead>
+                            <tr>
+                                <th colspan="11" class="text-center">
+                                    <span class="error hide no-items">Please load the table first.</span>
+                                    @*<button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-right">
+                                    <i class="fas fa-paper-plane"></i> Save
+                                </button>*@
+                                </th>
+                            </tr>
+                            <tr class="text-center btn-dark">
+                                <th style="width:8%">#SL</th>
+                                <th style="width:20%">Product</th>
+                                <th style="width:10%">Measurment</th>
+                                <th style="width:10%">Quantity</th>
+                                <th style="width:10%">Amount</th>
+                                <th style="width:10%">Status</th>
+                                <th style="width:12%">Action</th>
+                                <th class="hide RawMaterialId"></th>
+                                <th class="hide UnitId"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            @*Total*@
+            <table class="table table-head-fixed text-nowrap tablesubtotal">
+                <thead>
+                    <tr class="text-center">
+
+                        <th>Total</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th class="totalsub">0</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="bg-gradient-gray"></tbody>
+            </table>
+            @*Total*@
+
+
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var dateCalenderYear = $("#dateCalenderYear");
+        var dateCalenderYearEdit = $("#dateCalenderYearEdit");
+        var dateCalenderYearSearch = $("#dateCalenderYearSearch");
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+        var dptFromDateEdit = $("#dptFromDateEdit");
+        var dptToDateEdit = $("#dptToDateEdit");
+
+
+        //nec
+        var ddlpackagename = $("#ddlpackagename");
+        var ddlProductName = $("#ddlProductName");
+        var ddlMeasurementName = $("#ddlMeasurementName");
+        var ddlMeasurementSize = $("#ddlMeasurementSize");
+        var ddlQuanity = $("#ddlQuanity");
+        var txtPrice = $("#txtPrice");
+        var ddlfgrid = $("#ddlfgrid");
+        var txtTotalAmount = $("#txtTotalAmount");
+
+
+        $(document).ready(function () {
+
+
+            $('.select2').select2();
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            $(function () {
+                $('#ddlProductName').focus();
+            });
+
+
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+
+
+           
+        })
+
+
+
+
+        ddlProductName.change(function () {
+            Loadmeasurment();
+
+        })
+        function Loadmeasurment() {
+            debugger;
+            clearDropdown("ddlMeasurementName");
+            if (ddlProductName.val() != "") {
+                var FinishGoodProductInfoId = ddlProductName.val();
+
+                LoadDropDown('/AgroConfiguration/GetmeasurmentUnitQtyByProductionId', 'POST', ddlMeasurementName, JSON.stringify({ FinishGoodProductInfoId: ddlProductName.val() }));
+                debugger;
+            }
+            else {
+                clearDropdown("ddlMeasurementName");
+
+            }
+        }
+
+
+
+        ddlMeasurementName.change(function () {
+            debugger;
+            //alert("test");
+
+
+            var data = { FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), MeasurementId: TryParseInt(ddlMeasurementName.val(), 0) };
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetFGRId", data)).then(function (res, status) {
+                // debugger;
+                console.log(res);
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var FGRId = res.replace(/['"]+/g, '');
+                ddlfgrid.val(FGRId);
+                console.log(ddlfgrid.val());
+
+
+
+                let proid = $("#ddlProductName option:selected").val();
+                let fgrid = FGRId;
+                debugger;
+                var data = { pid: TryParseInt(proid, 0), rid: TryParseInt(fgrid, 0) };
+                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/ProductPrice", data)).then(function (res, status) {
+
+
+                    consoleLog(res.replace(/['"]+/g, ''));
+                    var proprice = res.replace(/['"]+/g, '');
+                    txtPrice.val(res.proprice);
+                    txtPrice.val(proprice);
+
+                });
+
+
+
+            });
+
+
+        })
+
+
+
+
+
+        $("#btnAddToList").click(function (e) {
+            e.preventDefault();
+            debugger;
+
+            if (validates() == true) {
+
+                var sl = $("#tblList tbody tr").length;
+                var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
+                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
+                var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "</td>";
+                var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
+                var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
+                var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
+                var td7 = "<td class='text-center'>" + txtDiscount.val() + "</td>";
+                var td8 = "<td class='text-center DiscountIDCell'>" + ddlttdis.val() + "</td>";
+                var td9 = "<td class='text-center TotalIDCell'>" + ddlpt.val() + "</td>";
+                var td10 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
+
+                var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
+                var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
+
+
+
+                var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + "</tr>";
+
+
+
+                //totalprice
+                to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
+                $('.totalsub').text(to);
+                console.log(to);
+                //totalprice
+
+
+                var totalsu = $('.totalsub').text();//initilize class total
+                ddlpayableamount.val(totalsu);
+
+                $("#tblList tbody").append(tr);
+
+
+
+            }
+
+            //ClearData();
+        })
+
+
+        txtQuanity.change(function () {
+            debugger;
+
+            if (txtQuanity.val() >= 0) {
+                debugger;
+
+                totalAmounts();
+
+            }
+
+
+        });
+
+
+        function totalAmounts() {
+            debugger;
+            var sub = txtQuanity.val() * txtPrice.val();
+            txtTotalAmount.val(sub);
+
+
+        }
+
+
+    </script>
+
+
+}
