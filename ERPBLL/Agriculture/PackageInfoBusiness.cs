@@ -27,7 +27,7 @@ namespace ERPBLL.Agriculture
             this._packageDetailsRepository = new PackageDetailsRepository(this._agricultureUnitOfWork);
         }
 
-        public bool SaveAgroProductSalesInfo(PackageInfoDTO packageInfoDTO, List<PackageDetailsDTO> details, long userId, long orgId)
+        public bool SaveAgroProductPackageInfo(PackageInfoDTO packageInfoDTO, List<PackageDetailsDTO> details, long userId, long orgId)
         {
             bool isSuccess = false;
 

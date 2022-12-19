@@ -169,11 +169,11 @@
                                             <span class="error hide req-qty">Qty Is Required</span>
 
                                         </div>
-                                        <div class="col-md-2 hide">
+                                        @*<div class="col-md-2 ">
                                             <label for="targetQty" class="control-label"> Target Qty</label>
                                             <input type="number" id="targetQty" class="form-control form-control-sm" readonly />
                                             <span class="error hide req-targetQty">Target Qty Is Required</span>
-                                        </div>
+                                        </div>*@
                                         <div class="col-md-2">
                                             <label for="FinishQty" class="control-label">Finish Qty<span style="color:red">*</span></label>
                                             <input type="number" id="FinishQty" class="form-control form-control-sm" />
@@ -466,14 +466,7 @@
 
                 });
 
-                //var data = { receipeBatchCode: ddlReceipBatchCode.val() };
 
-                $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyTergetQty", data)).then(function (res, status) {
-                    debugger;
-                    targetQty.val(res);
-
-
-                });
 
 
                 var data = { MeasurementId: TryParseInt(ddlMeasurementName.val(), 0) };
@@ -519,20 +512,6 @@
 
 
 
-
-
-
-        function LoadTergetQuantityData() {
-            var data = { receipeBatchCode: ddlReceipBatchCode.val() };
-
-            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetReceipyTergetQty", data)).then(function (res, status) {
-                debugger;
-                targetQty.val(res);
-      
-
-            });
-        }
-
         $("#addTolist").click(function (e) {
             e.preventDefault();
             if (validationAddToList()) {
@@ -556,6 +535,7 @@
                     else {
                         debugger;
                         $.each(material, function (index, value) {
+                            debugger;
 
                             var td1 = "<td class='text-center'>" + value.RawMaterialName + "</td>";
                             var td5 = "<td class='hide text-center'>" + value.RawMaterialId + "</td>";
@@ -565,7 +545,7 @@
                             var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + "</tr>";
                             $("#tblFinishGoodProduction tbody").append(tr)
                             $("#btnSubmit").show();
-                            /*$("#addTolist").hide();*/
+                  
 
 
                         })
@@ -639,37 +619,12 @@
                         })
 
 
-                @*if (status == "success") {
-                    $('.toastrDefaultSuccess').trigger('click');
-                    setTimeout(function () {
-                        redirectPage('@Url.Action("GetProductFinishGoodList")');
-                    }, 1000);
 
-
-                }*@
-               
-
-
-            //}).fail(function (error) {
-
-            //    alert(execuStatus.fail);
-            //})
 
         });
 
 
-        //FinishQty.keyup(function () {
-        //    if (Number(FinishQty.val()) > Number( targetQty.val() )){
 
-        //        $("#addTolist").hide();
-
-        //    }
-        //    else {
-        //        $("#addTolist").show();
-        //    }
-
-
-        //})
 
         function redirectPage(page) {
             window.location.replace(page);

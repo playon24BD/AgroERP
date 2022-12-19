@@ -2894,7 +2894,13 @@ namespace ERPWeb.Controllers
 
             double itemStock = 0;
 
-            if (checkFinishGoodStockValue != null)
+
+            if (checkFinishGoodStockValue.Count() == 0)
+            {
+                itemStock = 0;
+            }
+
+            else
             {
                 itemStock = (checkFinishGoodStockValue.FirstOrDefault().TargetQuantity);
 
@@ -3143,6 +3149,7 @@ namespace ERPWeb.Controllers
         public ActionResult ProductPrice(long pid, long rid)
         {
             var proprice = _productPriceConfiguration.GetPriceByproandfgrId(pid, rid).ProductPrice;
+
 
             return Json(proprice, JsonRequestBehavior.AllowGet);
 
@@ -6304,7 +6311,7 @@ namespace ERPWeb.Controllers
             List<PackageDetailsDTO> packageDetailsDTOs = new List<PackageDetailsDTO>();
             AutoMapper.Mapper.Map(info, packageInfoDTO);
             AutoMapper.Mapper.Map(details, packageDetailsDTOs);
-            isSucccess = _packageInfo.SaveAgroProductSalesInfo(packageInfoDTO, packageDetailsDTOs, User.UserId, User.OrgId);
+            isSucccess = _packageInfo.SaveAgroProductPackageInfo(packageInfoDTO, packageDetailsDTOs, User.UserId, User.OrgId);
 
             return Json(isSucccess);
         }

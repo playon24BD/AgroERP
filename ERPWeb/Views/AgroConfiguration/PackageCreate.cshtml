@@ -9,7 +9,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="/AgroConfiguration/GetFinishGoodRecipeList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                        <a href="/AgroConfiguration/GetPackageList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
                             <i class="fas fa-arrow-alt-circle-left"></i>
                         </a>
                     </div>
@@ -31,21 +31,21 @@
 
                             <div class="col-md-2">
                                 <label for="ddlpackagename" class="control-label">PackageName <span style="color:red">*</span><span class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
-                                <input type="text" placeholder="PackageName" name="ddlpackagename" id="ddlpackagename" class="form-control form-control-sm" />
+                                <input type="text" placeholder="PACKAGE NAME" name="ddlpackagename" id="ddlpackagename" class="form-control form-control-sm" />
                                 <span class="error hide req-src-ddlpackagenameddlpackagename text-bold">ProductQty is required!</span>
                             </div>
 
                             <div class="col-md-2">
                                 <label class="control-label font-weight-bold">Start Date<span style="color:red">*</span></label>
                                 <div class="input-group input-group-sm ">
-                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="START DATE" />
                                     <span class="error hide req-dptFromDate">From is Required</span>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <label class="control-label font-weight-bold">End Date<span style="color:red">*</span></label>
                                 <div class="input-group input-group-sm ">
-                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" />
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="END DATE"/>
                                     <span class="error hide req-dptToDate">ToDate is Required</span>
 
                                 </div>
@@ -85,12 +85,12 @@
 
                             <div class="col-md-2">
                                 <label for="txtQuanity" class="col-form-label text-black">Quantity<span style="color:red">*</span></label>
-                                <input type="number" id="txtQuanity" class="form-control form-control-sm" />
+                                <input type="number" id="txtQuanity" class="form-control form-control-sm" placeholder="QTY" />
                                 <span class="error hide req-Quanity">Quantity is required</span>
                             </div>
                             <div class="col-md-2">
                                 <label for="ddlPrice" class="col-form-label text-black">Rate/PC</label>
-                                <input type="text" id="txtPrice" class="form-control form-control-sm" />
+                                <input type="text" id="txtPrice" class="form-control form-control-sm" placeholder="PRICE"/>
                                 <span class="error hide req-txtPrice">Price not Configure</span>
                             </div>
                             <div class="col-md-2">
@@ -512,7 +512,7 @@
 
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                        redirectPage('@Url.Action("PackageCreate")');
+                        redirectPage('@Url.Action("GetPackageList")');
                     }, 1000);
                 }
 

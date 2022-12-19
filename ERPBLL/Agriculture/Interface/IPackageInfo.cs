@@ -11,7 +11,7 @@ namespace ERPBLL.Agriculture.Interface
     {
 
 
-        bool SaveAgroProductSalesInfo(PackageInfoDTO packageInfoDTO, List<PackageDetailsDTO> details, long userId, long orgId);
+        bool SaveAgroProductPackageInfo(PackageInfoDTO packageInfoDTO, List<PackageDetailsDTO> details, long userId, long orgId);
 
         IEnumerable<PackageInfoDTO> GetPackageListView();
 
