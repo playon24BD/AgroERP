@@ -3556,6 +3556,9 @@
     <Content Include="Views\AgroConfiguration\_GetFinishGoodProductionList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetFinishGoodProductionDetails.cshtml" />
     <Content Include="Views\AgroConfiguration\PackageCreate.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetPackageList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetPackageListview.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetPackageDetailsView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

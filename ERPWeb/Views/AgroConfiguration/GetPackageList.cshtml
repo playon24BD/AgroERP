@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "GetPackageList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:-10px">
+    <div class="col-md-12">
+
+        <div class="row" style="margin-top:-12px">
+            <div class="col-md-12">
+                <div class="card" style="background-color:#001f3f">
+                    <div class="px-2 py-1">
+                        <div class="row">
+
+                            <div class="col-md-2">
+                                <h5 class="float-left text-bold text-white">Package List</h5>
+                            </div>
+
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-2">
+
+                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By any" />
+                            </div>
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-2">
+                                <a href="/AgroConfiguration/PackageCreate" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Package</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12">
+                <div class="card card-gray-dark">
+
+                </div>
+            </div>
+
+            <div class="col-md-12" style="margin-top:-13px">
+                <div class="card">
+                    <div class="card-body" style="margin-top:-10px">
+                        <div class="col-md-12" id="dataContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="PackageListDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title">Package Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+
+
+    <script type="text/javascript">
+
+        var SearchAny = $("#SearchAny");
+        
+
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadPackageListView()
+
+        })
+
+
+        function LoadPackageListView() {
+            debugger;
+
+            var data = { flag: "View" };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPackageList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
+
+        $(document).on('click', 'a.data-item-detail-PackageId', function (e) {
+            e.preventDefault();
+            debugger;
+
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+
+            var data = { flag: "Detail", id: id };
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPackageList', data)).then(function (res, status) {
+                debugger;
+                console.log(status);
+                if (status === "success") {
+                    debugger;
+                    $("#dataContainer2").empty();
+                    $("#dataContainer2").append(res);
+                    $("#PackageListDetails").modal('show');
+
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
+
+        })
+
+
+
+    </script>
+}

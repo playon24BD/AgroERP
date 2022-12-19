@@ -44,15 +44,11 @@
                     @*<input type="text" id="ddlStockiestName" name="ddlStockiestName" class="form-control form-control-sm" readonly />*@
                     <span class="error hide req-ddlStockiestName">Stockiest Name is required</span>
                 </div>
-                @*<div class="hide">
-                    <label for="ddlStockiestId">Stockiest Name</label>
-                    @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                    <input type="text" id="ddlStockiestId" name="ddlStockiestId" class="form-control form-control-sm" readonly />
-                </div>*@
-                
+               
                 <div class="col-md-2">
                     <label for="ddlYear">Year</label>
                     <input type="text" class="form-control form-control-sm datepicker" name="datepicker" id="ddlYear" />
+                    <span class="error hide req-ddlYear">Year is required</span>
                 </div>
                 <div class="col-md-2">
                     <label for="ddlMonth">Month Name</label>
@@ -71,7 +67,7 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
-                    <span class="error hide req-Month">Month Name is required</span>
+                    <span class="error hide req-ddlMonth">Month Name is required</span>
                 </div>
 
                 <div class="col-md-2">
@@ -83,7 +79,7 @@
                 <div class="col-md-1 " style="margin-top:5px;">
                     <label for="addButton" class="control-label"></label>
                     <div class="clearfix">
-                        <button type="submit" class="btn btn-outline-success float-left " id="addButton" title="Add To List"><i class="fas fa-plus"></i> Add</button>
+                        <button type="submit" class="btn btn-outline-success float-left btn-sm " id="addButton" title="Add To List"><i class="fas fa-plus "></i></button>
                     </div>
                 </div>
 
@@ -205,8 +201,16 @@
             $(".req-ddlStockiestName").removeClass('hide');
             isValid = false;
         }
+        if (ddlTeritoryName.val() === "") {
+            $(".req-ddlTeritoryName").removeClass('hide');
+            isValid = false;
+        }
+        if (ddlYear.val() === "") {
+            $(".req-ddlYear").removeClass('hide');
+            isValid = false;
+        }
         if (ddlMonth.val() === "") {
-            $(".req-Month").removeClass('hide');
+            $(".req-ddlMonth").removeClass('hide');
             isValid = false;
         }
         

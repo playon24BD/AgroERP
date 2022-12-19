@@ -1,5 +1,9 @@
 ﻿using ERPBLL.Agriculture.Interface;
+
 using ERPBO.Agriculture.DomainModels;
+
+using ERPBLL.Common;
+
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
 using System;
@@ -27,7 +31,7 @@ namespace ERPBLL.Agriculture
         {
             bool isSuccess = false;
 
-            if(packageInfoDTO.PackageName != null && packageInfoDTO.StartDate != null && packageInfoDTO.EndDate != null && packageInfoDTO.TotalAmount != 0)
+            if (packageInfoDTO.PackageName != null && packageInfoDTO.StartDate != null && packageInfoDTO.EndDate != null && packageInfoDTO.TotalAmount != 0)
             {
                 var PackageCodeG = "Pac-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
@@ -46,7 +50,6 @@ namespace ERPBLL.Agriculture
                 };
                 _packageInfoRepository.Insert(packageInfo);
                 isSuccess = _packageInfoRepository.Save();
-
 
                 List<PackageDetails> detailsList = new List<PackageDetails>();
                 foreach (var item in details)
@@ -69,12 +72,31 @@ namespace ERPBLL.Agriculture
 
             }
 
-
-           
-
-
-
             return isSuccess;
+
+        }
+
+        public IEnumerable<PackageInfoDTO> GetPackageListView()
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<PackageInfoDTO>(QueryForPackageList()).ToList();
+        }
+
+        private string QueryForPackageList()
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            query = string.Format(@"
+
+select PackageId, PackageCode,PackageName,TotalAmount,StartDate,EndDate from tblPackageInfo
+
+ 
+where 1=1 {0}
+
+", Utility.ParamChecker(param));
+
+            return query;
+
         }
     }
 }

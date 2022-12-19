@@ -6294,6 +6294,7 @@ namespace ERPWeb.Controllers
         }
 
 
+
         public ActionResult SavePackageCreate(PackageInfoViewModel info, List<PackageDetailsViewModel> details)
         {
            
@@ -6307,6 +6308,48 @@ namespace ERPWeb.Controllers
 
             return Json(isSucccess);
         }
+
+        public ActionResult GetPackageList(string flag,long? id)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(flag))
+                {
+
+                    return View();
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+
+                    var dto = _packageInfo.GetPackageListView();
+                    List<PackageInfoViewModel> viewModels = new List<PackageInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+
+                    return PartialView("_GetPackageListview", viewModels);
+
+                }
+
+                else if(!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+                    var dto = _packageDetails.GetPackageDetailsView(id.Value,User.OrgId);
+                    List<PackageDetailsViewModel> packageDetails = new List<PackageDetailsViewModel>();
+                    AutoMapper.Mapper.Map(dto, packageDetails);
+                    return PartialView("_GetPackageDetailsView",packageDetails);
+                }
+
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+
         #endregion
 
 
