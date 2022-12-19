@@ -17,15 +17,31 @@
                                 <h5 class="float-left text-bold text-white">Package List</h5>
                             </div>
 
-                            <div class="col-md-3">
 
+                            <div class="col-md-2">
+
+                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="Search Package Code" />
+                            </div>
+                            <div class="col-md-2">
+                                @Html.DropDownList("ddlPackageName", (IEnumerable<SelectListItem>)ViewBag.ddlPackageName, "--Select Package--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             </div>
                             <div class="col-md-2">
 
-                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By any" />
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="Start Date" />
+                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
 
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="End Date" />
+                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                        <span class="input-group-text">&#10008;</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-2">
                                 <a href="/AgroConfiguration/PackageCreate" class="btn btn-outline-warning btn-sm float-lg-right" id="createButton"><i class="fa fa-plus"></i> Create New Package</a>
@@ -82,7 +98,9 @@
     <script type="text/javascript">
 
         var SearchAny = $("#SearchAny");
-        
+        var ddlPackageName = $("#ddlPackageName");
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
 
 
         $(document).ready(function () {
@@ -93,15 +111,68 @@
                 theme: 'bootstrap4'
             });
 
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+
             LoadPackageListView()
 
         })
 
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                    LoadPackageListView();
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                    LoadPackageListView();
+                }
+            }
+
+        })
+
+
+        SearchAny.keyup(function () {
+            LoadPackageListView()
+        })
+
+        ddlPackageName.change(function () {
+
+            LoadPackageListView();
+
+        });
+        dptFromDate.change(function () {
+            LoadPackageListView();
+
+        });
+
+        dptToDate.change(function () {
+            LoadPackageListView();
+
+        });
 
         function LoadPackageListView() {
             debugger;
 
-            var data = { flag: "View" };
+            var data = { flag: "View", packageCode: $.trim(SearchAny.val()), packageId: TryParseInt(ddlPackageName.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val()};
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPackageList', data)).then(function (res, status) {
                 console.log(status);

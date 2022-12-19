@@ -6316,13 +6316,15 @@ namespace ERPWeb.Controllers
             return Json(isSucccess);
         }
 
-        public ActionResult GetPackageList(string flag,long? id)
+        public ActionResult GetPackageList(string flag,long? id,string packageCode,long? packageId,string fromDate,string toDate)
         {
             try
             {
 
                 if (string.IsNullOrEmpty(flag))
                 {
+                    ViewBag.ddlPackageName = _packageInfo.GetAllPackageName(User.OrgId).Select(d => new SelectListItem { Text = d.PackageName, Value = d.PackageId.ToString() }).ToList();
+                    
 
                     return View();
                 }
@@ -6331,7 +6333,7 @@ namespace ERPWeb.Controllers
                 {
 
 
-                    var dto = _packageInfo.GetPackageListView();
+                    var dto = _packageInfo.GetPackageListView(packageCode,packageId??0,fromDate,toDate);
                     List<PackageInfoViewModel> viewModels = new List<PackageInfoViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModels);
 

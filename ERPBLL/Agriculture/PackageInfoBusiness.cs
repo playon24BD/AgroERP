@@ -76,15 +76,55 @@ namespace ERPBLL.Agriculture
 
         }
 
-        public IEnumerable<PackageInfoDTO> GetPackageListView()
+        public IEnumerable<PackageInfoDTO> GetPackageListView(string packageCode, long? packageId, string fromDate, string toDate)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<PackageInfoDTO>(QueryForPackageList()).ToList();
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<PackageInfoDTO>(QueryForPackageList(packageCode,packageId,fromDate,toDate)).ToList();
         }
 
-        private string QueryForPackageList()
+        private string QueryForPackageList(string packageCode, long? packageId, string fromDate, string toDate)
         {
             string query = string.Empty;
             string param = string.Empty;
+
+            if (packageId != null && packageId > 0)
+            {
+                param += string.Format(@" and PackageId={0}", packageId);
+            }
+
+            if (!string.IsNullOrEmpty(packageCode))
+            {
+                param += string.Format(@"and PackageCode like '%{0}%'", packageCode);
+            }
+
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(StartDate as date) between '{0}' and '{1}'", fDate, tDate);
+                //param += string.Format(@" and between Cast(StartDate as date) = '{0}' and Cast(EndDate as date) = '{1}'", fDate, tDate);
+
+            }
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(EndDate as date) between '{0}' and '{1}'", fDate, tDate);
+                
+
+            }
+
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(StartDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(EndDate as date)='{0}'", tDate);
+            }
+
+
 
             query = string.Format(@"
 
@@ -98,5 +138,38 @@ where 1=1 {0}
             return query;
 
         }
+
+        public IEnumerable<PackageInfoDTO> GetAllPackageName(long orgId)
+        {
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<PackageInfoDTO>(QueryForAllPackageName(orgId)).ToList();
+                
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private string QueryForAllPackageName(long orgId)
+        {
+            try
+            {
+                string query = string.Empty;
+                string param = string.Empty;
+
+                query = string.Format(@"SELECT * FROM tblPackageInfo	
+Where 1=1 ", Utility.ParamChecker(param));
+
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
     }
 }
