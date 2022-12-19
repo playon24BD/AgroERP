@@ -84,7 +84,7 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IPackageInfo packageInfo,IPackageDetails packageDetails ,IStockiestWiseYearlyTarget stockiestWiseYearlyTarget,IPaymentMoneyRecipt paymentMoneyRecipt, ITerritoryUserBusiness territoryUserBusiness, IProductionPerproductCost productionPerproductCost, IProductPriceConfiguration productPriceConfiguration, IProductPricingHistory productPricingHistory, ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness, IRMStockDashboardGrap rMStockDashboardGrap)
+        public AgroConfigurationController(IPackageInfo packageInfo, IPackageDetails packageDetails, IStockiestWiseYearlyTarget stockiestWiseYearlyTarget, IPaymentMoneyRecipt paymentMoneyRecipt, ITerritoryUserBusiness territoryUserBusiness, IProductionPerproductCost productionPerproductCost, IProductPriceConfiguration productPriceConfiguration, IProductPricingHistory productPricingHistory, ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness, IRMStockDashboardGrap rMStockDashboardGrap)
 
         {
             this._packageInfo = packageInfo;//e  
@@ -1226,7 +1226,7 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetProductFinishGoodList(string flag, string ReceipeBatchCode, long? productId, string finishGoodProductionBatch,long? id)
+        public ActionResult GetProductFinishGoodList(string flag, string ReceipeBatchCode, long? productId, string finishGoodProductionBatch, long? id)
         {
 
             try
@@ -1458,9 +1458,9 @@ namespace ERPWeb.Controllers
                     double PerDividetQty = 0;
                     double TotalreturnproductQty = 0;
 
-                    double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId,User.OrgId).MasterCarton;
-                    double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId,User.OrgId).InnerBox;
-                    double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId,User.OrgId).PackSize;
+                    double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).MasterCarton;
+                    double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).InnerBox;
+                    double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(MeasurementId, User.OrgId).PackSize;
 
 
 
@@ -1476,18 +1476,18 @@ namespace ERPWeb.Controllers
 
 
                     perRecepQuantitys = rawMaterial.FGRRawMaterQty;//0.3
-                   // double PerDividetQty = (issueQunatitys / perRecepQuantitys);//6/0.3=20
+                                                                   // double PerDividetQty = (issueQunatitys / perRecepQuantitys);//6/0.3=20
 
                     if (MasterCartonMasurement != 0)
                     {
                         TotalreturnproductQty = MasterCartonMasurement * InnerBoxMasurement * 1;
-                        PerDividetQty = (issueQunatitys / perRecepQuantitys)/TotalreturnproductQty;
+                        PerDividetQty = (issueQunatitys / perRecepQuantitys) / TotalreturnproductQty;
 
                     }
                     else
                     {
                         TotalreturnproductQty = InnerBoxMasurement * 1;
-                        PerDividetQty = (issueQunatitys / perRecepQuantitys)/TotalreturnproductQty;
+                        PerDividetQty = (issueQunatitys / perRecepQuantitys) / TotalreturnproductQty;
                     }
                     myList += string.Format("{0},", PerDividetQty);
 
@@ -1635,7 +1635,7 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetReceipyDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty , long MeasurementId)
+        public ActionResult GetReceipyDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty, long MeasurementId)
         {
             double issueQunatity = 0;
             double perRecepQuantity = 0;
@@ -1669,7 +1669,7 @@ namespace ERPWeb.Controllers
                         TotalreturnproductQty = MasterCartonMasurement * InnerBoxMasurement * 1;
                         perRecepQuantity = rawMaterial.FGRRawMaterQty;
                         requirdQuantity = (perRecepQuantity * targetQty * TotalreturnproductQty);
-   
+
 
                     }
                     else
@@ -1764,7 +1764,7 @@ namespace ERPWeb.Controllers
 
         }
 
-             
+
 
         public ActionResult GetDetailsByreceipeBatchCode(string receipeBatchCode, int targetQty)
         {
@@ -1798,7 +1798,7 @@ namespace ERPWeb.Controllers
                     {
 
                         Checked = false;
-                     
+
                     }
                     else
                     {
@@ -2815,7 +2815,7 @@ namespace ERPWeb.Controllers
                 var measurments = _finishGoodRecipeInfoBusiness.GetAllRecipeBYmeasurment(FinishGoodProductId, MeasurementId);
                 var batchCode = measurments.FirstOrDefault().FGRQty;
                 var batchCodes = measurments.FirstOrDefault().UnitName;
-                var bb = batchCode + "("+batchCodes+")";
+                var bb = batchCode + "(" + batchCodes + ")";
 
                 return Json(bb, JsonRequestBehavior.AllowGet);
 
@@ -2872,7 +2872,7 @@ namespace ERPWeb.Controllers
                 var measurments = _finishGoodRecipeInfoBusiness.GetAllMEarusmentUnitQty(FinishGoodProductInfoId);
                 var dropDown = measurments.Select(m => new Dropdown { text = m.PackageName, value = m.MeasurementId.ToString() }).ToList();
 
-             
+
                 return Json(dropDown, JsonRequestBehavior.AllowGet);
             }
             catch
@@ -2884,7 +2884,7 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string FGRID , long MeasurementId)
+        public ActionResult GetFinishGoodstockCheck(long FinishGoodProductInfoId, string FGRID, long MeasurementId)
         {
             //var UnitQtys = QtyKG.Split('(', ')');
             //string ProductUnitQty = UnitQtys[0];
@@ -2918,10 +2918,10 @@ namespace ERPWeb.Controllers
 
             if (isSucccess == true)
             {
-   
+
                 var invoice = _agroProductSalesInfoBusiness.GetLastInvoice(User.OrgId).FirstOrDefault().InvoiceNo;
 
-            
+
                 return Json(new { isSucccess = isSucccess, File = invoice });
             }
 
@@ -3038,7 +3038,7 @@ namespace ERPWeb.Controllers
                 );
             return File(renderedBytes, mimeType);
         }
-        
+
         public ActionResult AgroProductSalesInvoiceDropReports(long ProductSalesInfoId)
         {
             bool isUpdateSucccess = false;
@@ -3219,7 +3219,7 @@ namespace ERPWeb.Controllers
         }
 
 
-        public ActionResult MoneyReceiptList( string flag, long? id,string moneyReceiptNo,long? stockiestId,string fromDate, string toDate)
+        public ActionResult MoneyReceiptList(string flag, long? id, string moneyReceiptNo, long? stockiestId, string fromDate, string toDate)
         {
             try
             {
@@ -3236,11 +3236,11 @@ namespace ERPWeb.Controllers
                 else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
                 {
 
-                    
-                    var dto = _paymentMoneyRecipt.GetMoneyReceiptList(moneyReceiptNo,stockiestId??0,fromDate,toDate);
+
+                    var dto = _paymentMoneyRecipt.GetMoneyReceiptList(moneyReceiptNo, stockiestId ?? 0, fromDate, toDate);
                     List<PaymentMoneyReciptViewModel> viewModels = new List<PaymentMoneyReciptViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModels);
-                  
+
                     return PartialView("_GetMoneyReceiptListview", viewModels);
 
                 }
@@ -3324,14 +3324,14 @@ namespace ERPWeb.Controllers
             List<SalesPaymentRegisterDTO> detailsDTO = new List<SalesPaymentRegisterDTO>();
             AutoMapper.Mapper.Map(info, infoDTO);
             AutoMapper.Mapper.Map(details, detailsDTO);
-            isSucccess = _paymentMoneyRecipt.SavePaymentMOneyReciept(infoDTO, detailsDTO, User.UserId,User.OrgId);
+            isSucccess = _paymentMoneyRecipt.SavePaymentMOneyReciept(infoDTO, detailsDTO, User.UserId, User.OrgId);
 
 
             if (isSucccess == true)
             {
-                
+
                 var moneyRecipt = _paymentMoneyRecipt.GetLastMoneyRecipt(User.OrgId).FirstOrDefault().MoneyReciptNo;
-                
+
                 return Json(new { isSucccess = isSucccess, File = moneyRecipt });
             }
 
@@ -6250,7 +6250,7 @@ namespace ERPWeb.Controllers
             if (true)
             {
                 List<StockiestWiseYearlyTargetDTO> detailsDTO = new List<StockiestWiseYearlyTargetDTO>();
-                AutoMapper.Mapper.Map(details,detailsDTO);
+                AutoMapper.Mapper.Map(details, detailsDTO);
                 isSuccess = _stockiestWiseYearlyTarget.SaveStockiestWiseYearlyTargetList(detailsDTO, User.UserId, User.OrgId);
             }
 
@@ -6259,13 +6259,13 @@ namespace ERPWeb.Controllers
 
         public ActionResult TerritoryLoadStockiestChange(long TerritoryId)
         {
-            
+
 
 
             var Stockiest = _territorySetup.GetAllTerritoryWiseStockiest(TerritoryId, User.OrgId);
 
 
-            var dropDown = Stockiest.Where(a => a.StockiestName != null).Select(s => new Dropdown { text =s.StockiestName, value = s.StockiestId.ToString() }).ToList();
+            var dropDown = Stockiest.Where(a => a.StockiestName != null).Select(s => new Dropdown { text = s.StockiestName, value = s.StockiestId.ToString() }).ToList();
 
             return Json(dropDown, JsonRequestBehavior.AllowGet);
         }
@@ -6291,6 +6291,21 @@ namespace ERPWeb.Controllers
             }
 
 
+        }
+
+
+        public ActionResult SavePackageCreate(PackageInfoViewModel info, List<PackageDetailsViewModel> details)
+        {
+           
+            bool isSucccess = false;
+
+            PackageInfoDTO packageInfoDTO = new PackageInfoDTO();
+            List<PackageDetailsDTO> packageDetailsDTOs = new List<PackageDetailsDTO>();
+            AutoMapper.Mapper.Map(info, packageInfoDTO);
+            AutoMapper.Mapper.Map(details, packageDetailsDTOs);
+            isSucccess = _packageInfo.SaveAgroProductSalesInfo(packageInfoDTO, packageDetailsDTOs, User.UserId, User.OrgId);
+
+            return Json(isSucccess);
         }
         #endregion
 

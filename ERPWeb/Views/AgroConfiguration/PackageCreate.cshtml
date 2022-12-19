@@ -30,7 +30,7 @@
                         <div class="row justify-content-center">
 
                             <div class="col-md-2">
-                                <label for="ddlpackagename" class="control-label">PackageName <span style="color:red">*</span><span id="ddlpackagename" class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
+                                <label for="ddlpackagename" class="control-label">PackageName <span style="color:red">*</span><span class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
                                 <input type="text" placeholder="PackageName" name="ddlpackagename" id="ddlpackagename" class="form-control form-control-sm" />
                                 <span class="error hide req-src-ddlpackagenameddlpackagename text-bold">ProductQty is required!</span>
                             </div>
@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <label class="col-form-label pt-0" for="model">Payable Amount</label>
+                                <label class="col-form-label pt-0" for="model">Total Amount</label>
                                 <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold" readonly />
                             </div>
 
@@ -108,7 +108,7 @@
                                     <button type="submit" class="btn btn-sm float-right btn-outline-success" id="btnAddToList" title="Add"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="hide">
                                 <label>TotalAmount</label>
                                 <input type="number" id="txtTotalAmount" name="TotalAmount" class="form-control form-control-sm" readonly />
                             </div>
@@ -132,8 +132,8 @@
                                 <th colspan="11" class="text-center">
                                     <span class="error hide no-items">Please load the table first.</span>
                                     @*<button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-right">
-                                    <i class="fas fa-paper-plane"></i> Save
-                                </button>*@
+                                            <i class="fas fa-paper-plane"></i> Save
+                                        </button>*@
                                 </th>
                             </tr>
                             <tr class="text-center btn-dark">
@@ -198,6 +198,11 @@
         var txtPrice = $("#txtPrice");
         var ddlfgrid = $("#ddlfgrid");
         var txtTotalAmount = $("#txtTotalAmount");
+        var txtQuanity = $("#txtQuanity");
+        var ddlMode = $("#ddlMode");
+        var ddlpayableamount = $("#ddlpayableamount");
+
+        var ddlRawMaterialList = [];
 
 
         $(document).ready(function () {
@@ -232,7 +237,7 @@
             });
 
 
-           
+
         })
 
 
@@ -243,13 +248,13 @@
 
         })
         function Loadmeasurment() {
-            debugger;
+           // debugger;
             clearDropdown("ddlMeasurementName");
             if (ddlProductName.val() != "") {
                 var FinishGoodProductInfoId = ddlProductName.val();
 
                 LoadDropDown('/AgroConfiguration/GetmeasurmentUnitQtyByProductionId', 'POST', ddlMeasurementName, JSON.stringify({ FinishGoodProductInfoId: ddlProductName.val() }));
-                debugger;
+               // debugger;
             }
             else {
                 clearDropdown("ddlMeasurementName");
@@ -260,7 +265,7 @@
 
 
         ddlMeasurementName.change(function () {
-            debugger;
+           // debugger;
             //alert("test");
 
 
@@ -278,7 +283,7 @@
 
                 let proid = $("#ddlProductName option:selected").val();
                 let fgrid = FGRId;
-                debugger;
+               // debugger;
                 var data = { pid: TryParseInt(proid, 0), rid: TryParseInt(fgrid, 0) };
                 $.when(getReqWithData('Html', "Get", "/AgroConfiguration/ProductPrice", data)).then(function (res, status) {
 
@@ -303,33 +308,30 @@
 
         $("#btnAddToList").click(function (e) {
             e.preventDefault();
-            debugger;
+           // debugger;
 
-            if (validates() == true) {
+           if (validates() == true) {
 
                 var sl = $("#tblList tbody tr").length;
                 var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
                 var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
                 var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "</td>";
-                var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
-                var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
-                var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
-                var td7 = "<td class='text-center'>" + txtDiscount.val() + "</td>";
-                var td8 = "<td class='text-center DiscountIDCell'>" + ddlttdis.val() + "</td>";
-                var td9 = "<td class='text-center TotalIDCell'>" + ddlpt.val() + "</td>";
-                var td10 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
-
-                var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
-                var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
+                var td4 = "<td class='text-center'>" + txtQuanity.val() + "</td>";
+                var td5 = "<td class='text-center'>" + txtTotalAmount.val() + "</td>";
+                var td6 = "<td class='text-center'>" + ddlMode.val() + "</td>";
+                var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + txtTotalAmount.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td8 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
+                var td9 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
+                var td10 = "<td class='hide fgrid'>" + ddlfgrid.val() + "</td>";
 
 
 
-                var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + "</tr>";
+                var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
 
 
 
                 //totalprice
-                to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
+                to = parseFloat($('.totalsub').text()) + parseFloat(txtTotalAmount.val());
                 $('.totalsub').text(to);
                 console.log(to);
                 //totalprice
@@ -344,15 +346,74 @@
 
             }
 
-            //ClearData();
+            ClearData();
         })
 
 
-        txtQuanity.change(function () {
-            debugger;
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+           // debugger;
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
 
-            if (txtQuanity.val() >= 0) {
-                debugger;
+
+
+            //tt
+            var subtotal = $(this).data("subtotal");
+
+            console.log(subtotal);
+
+            //tt
+
+
+            var rId = tds.eq(7).html();
+            console.log("rId :" + rId);
+            const mid = ddlRawMaterialList.indexOf(rId);
+
+            ddlRawMaterialList.splice(mid, 1);
+
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    //debugger;
+                    removeTableRow("#tblList tbody", index);
+                    fnFixTheTbodyRowSerialInDecsOrder("#tblList", index);
+
+
+
+                    var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal);
+                    $('.totalsub').text(totals);
+
+
+
+                    ddlpayableamount.val(totals);
+
+                };
+            }));
+
+
+        })
+
+        txtQuanity.keyup(function ()
+        {
+            //debugger;
+
+            if (txtQuanity.val() >= 0 && txtPrice.val() >= 0) {
+                //debugger;
+
+                totalAmounts();
+
+            }
+
+
+        });
+
+        txtPrice.keyup(function () {
+           // debugger;
+
+            if (txtQuanity.val() >= 0 && txtPrice.val() >= 0)
+            {
+               // debugger;
 
                 totalAmounts();
 
@@ -363,11 +424,117 @@
 
 
         function totalAmounts() {
-            debugger;
+           // debugger;
             var sub = txtQuanity.val() * txtPrice.val();
             txtTotalAmount.val(sub);
 
 
+        }
+
+        function ClearData() {
+            txtQuanity.val("");
+            ddlMode.val("");
+            ddlMode.trigger("change");
+            txtTotalAmount.val("");
+        }
+
+
+        function validates() {
+           // debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (ddlProductName.val() === "") {
+                $(".req-ProductName").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlMeasurementName.val() === "") {
+                $(".req-MeasurementName").removeClass('hide');
+                isValid = false;
+            }
+            if (txtQuanity.val() === "") {
+                $(".req-Quanity").removeClass('hide');
+                isValid = false;
+            }
+            if (txtPrice.val() === "") {
+                $(".req-txtPrice").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlMode.val() === "") {
+                $(".req-ddlMode").removeClass('hide');
+                isValid = false;
+            }
+
+
+
+
+            return isValid;
+        }
+
+
+
+
+
+
+        $("#btnSubmit").click(function (e) {
+
+            debugger;
+            e.preventDefault();
+
+                     var info = { PackageId: 0, PackageName: ddlpackagename.val(), StartDate: dptFromDate.val(), EndDate: dptToDate.val(), TotalAmount: ddlpayableamount.val() };
+
+
+                     var details = [];
+                     details.length = 0;
+
+                     $.each($("#tblList tbody tr"), function (index, item) {
+                         var tds = $(this).children('td');
+                         debugger;
+                         details.push({
+                             PackageDetailsId: 0,
+                             FinishGoodProductId: tds.eq(7).html(),
+                             MeasurementId: tds.eq(8).html(),
+                             FGRId: tds.eq(9).html(),
+                             Quanity: tds.eq(3).html(),
+                             Amount: tds.eq(4).html(),
+                             Status: tds.eq(5).html(),
+
+                         });
+                     })
+                     console.log(info);
+                     console.log(details);
+
+                  var data = JSON.stringify({ info: info, details: details });
+
+            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SavePackageCreate', data, getToken())).then(function (res, status) {
+                 debugger;
+                if (res === true) {
+
+                    $('.toastrDefaultSuccess').trigger('click');
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("PackageCreate")');
+                    }, 1000);
+                }
+
+                else {
+                    $('.toastrDefaultError').trigger('click');
+                }
+                enable("#saveButton");
+            }).fail(function (error) {
+                alert(execuStatus.fail);
+                enable("#saveButton");
+            })
+
+
+
+        });
+
+
+
+
+        function redirectPage(page)
+        {
+          window.location.replace(page);
         }
 
 
