@@ -1,5 +1,6 @@
 ﻿using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
+using ERPDAL.AgricultureDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace ERPBLL.Agriculture.Interface
         bool SaveAgroProductPackageInfo(PackageInfoDTO packageInfoDTO, List<PackageDetailsDTO> details, long userId, long orgId);
 
         IEnumerable<PackageInfoDTO> GetPackageListView(string packageCode, long? packageId, string fromDate, string toDate);
+
+
 
     }
 }

@@ -38,7 +38,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<AgroProductSalesInfo> GetAgroProductionSalesInfo(long orgId);
         IEnumerable<AgroProductSalesInfoDTO> GetLastInvoice(long orgId);
         AgroProductSalesInfo CheckBYProductSalesInfoId(long? ProductSalesInfoId);
-        bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId);
+        bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, List<AgroProductSalesDetailsDTO> details2, long userId, long orgId);
         //ExecutionStateWithText SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId);
 
 

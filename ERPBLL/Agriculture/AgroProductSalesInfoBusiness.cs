@@ -184,7 +184,7 @@ namespace ERPBLL.Agriculture
         }
         // Working here
 
-        public bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId)
+        public bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, List<AgroProductSalesDetailsDTO> details2, long userId, long orgId)
         {
 
             bool isSuccess = false;
@@ -370,66 +370,126 @@ namespace ERPBLL.Agriculture
 
                     };
                     List<AgroProductSalesDetails> agroDetails = new List<AgroProductSalesDetails>();
-
-                    foreach (var item in details)
+                    if (details.Count > 0)
                     {
-                        double ProductMesurement = 0;
-                        double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
-                        double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
-                        double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
-
-                        var UnitQtys = item.QtyKG.Split('(', ')');
-                        int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
-                        string ProductUnit = UnitQtys[1];
-                        if (MasterCartonMasurement != 0)
+                        foreach (var item in details)
                         {
-                            ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
+                            double ProductMesurement = 0;
+                            double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
+                            double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
+                            double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
+
+                            var UnitQtys = item.QtyKG.Split('(', ')');
+                            int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
+                            string ProductUnit = UnitQtys[1];
+                            if (MasterCartonMasurement != 0)
+                            {
+                                ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
+                            }
+                            else
+                            {
+                                ProductMesurement = InnerBoxMasurement;
+                            }
+                            //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+
+
+
+                            var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
+
+                            var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
+                            var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
+
+                            AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
+                            {
+                                //Details
+                                Discount = item.Discount,
+                                DiscountTk = item.DiscountTk,
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                MeasurementId = item.MeasurementId,
+                                MeasurementSize = item.MeasurementSize,
+                                OrganizationId = orgId,
+                                Price = item.Price,
+                                ProductSalesInfoId = item.ProductSalesInfoId,
+                                Quanity = item.Quanity,
+                                FinishGoodProductInfoId = item.FinishGoodProductInfoId,
+                                ProductSalesDetailsId = item.ProductSalesDetailsId,
+                                ReceipeBatchCode = receipeBatch,
+                                FGRId = FGRId,
+                                QtyKG = item.QtyKG,
+                                BoxQuanity = ProductMesurement
+
+                            };
+                            agroDetails.Add(agroSalesDetails);
                         }
-                        else
+
+                    }
+
+                    if(details2.Count > 0)
+                    {
+
+                        foreach (var bom in details)
                         {
-                            ProductMesurement = InnerBoxMasurement;
+                            double ProductMesurement = 0;
+                            double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(bom.MeasurementId, orgId).MasterCarton;
+                            double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(bom.MeasurementId, orgId).InnerBox;
+                            double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(bom.MeasurementId, orgId).PackSize;
+
+                            var measurments = _finishGoodRecipeInfoBusiness.GetAllRecipeBYmeasurment(bom.FinishGoodProductInfoId, bom.MeasurementId);
+                            var batchCode = measurments.FirstOrDefault().FGRQty;
+                            var batchCodes = measurments.FirstOrDefault().UnitName;
+                            var bb = batchCode + "(" + batchCodes + ")";
+
+                            var UnitQtys = bb.Split('(', ')');
+                            int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
+                            string ProductUnit = UnitQtys[1];
+
+                            if (MasterCartonMasurement != 0)
+                            {
+                                ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
+                            }
+                            else
+                            {
+                                ProductMesurement = InnerBoxMasurement;
+                            }
+ 
+
+
+
+                            var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
+
+                            var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(bom.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
+                            var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(bom.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
+
+                            AgroProductSalesDetails agroSalesDetailss = new AgroProductSalesDetails()
+                            {
+                                //Details
+
+                                EntryDate = DateTime.Now,
+                                EntryUserId = userId,
+                                MeasurementId = bom.MeasurementId,
+                                MeasurementSize = bom.MeasurementSize,
+                                OrganizationId = orgId,
+                                Price = bom.Price,
+                                Quanity = bom.Quanity,
+                                FinishGoodProductInfoId = bom.FinishGoodProductInfoId,
+                                ReceipeBatchCode = receipeBatch,
+                                FGRId = bom.FGRId,
+                                QtyKG = bb,
+                                BoxQuanity = ProductMesurement,
+                                PackageId = bom.PackageId
+
+                            };
+                            agroDetails.Add(agroSalesDetailss);
                         }
-                        //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
 
-
-
-                        var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
-
-                        var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
-                        var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
-
-                        AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
-                        {
-                            //Details
-                            Discount = item.Discount,
-                            DiscountTk = item.DiscountTk,
-                            EntryDate = DateTime.Now,
-                            EntryUserId = userId,
-                            MeasurementId = item.MeasurementId,
-                            MeasurementSize = item.MeasurementSize,
-                            OrganizationId = orgId,
-                            Price = item.Price,
-                            ProductSalesInfoId = item.ProductSalesInfoId,
-                            Quanity = item.Quanity,
-                            FinishGoodProductInfoId = item.FinishGoodProductInfoId,
-                            ProductSalesDetailsId = item.ProductSalesDetailsId,
-                            ReceipeBatchCode = receipeBatch,
-                            FGRId = FGRId,
-                            QtyKG = item.QtyKG,
-                            BoxQuanity = ProductMesurement
-
-
-
-
-                        };
-                        agroDetails.Add(agroSalesDetails);
                     }
                     agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
                     _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
-
-
-
                     isSuccess = _agroProductSalesInfoRepository.Save();
+
+
+
                     if (isSuccess)
                     {
                         //Commission on Sales 

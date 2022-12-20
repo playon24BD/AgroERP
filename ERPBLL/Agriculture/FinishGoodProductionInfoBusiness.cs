@@ -738,6 +738,11 @@ where 1=1 {0}", Utility.ParamChecker(param));
             return query;
 
         }
+
+        public IEnumerable<FinishGoodProductionInfo> GetProductStockINbyPMRid(long MeasurementId, long FinishGoodProductId, long FGRId)
+        {
+            return _finishGoodProductionInfoRepository.GetAll(g => g.MeasurementId == MeasurementId && g.FinishGoodProductId == FinishGoodProductId && g.FGRId == FGRId).ToList();
+        }
     }
 }
 

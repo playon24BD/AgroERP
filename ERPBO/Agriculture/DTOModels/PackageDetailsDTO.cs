@@ -29,5 +29,8 @@ namespace ERPBO.Agriculture.DTOModels
         public string FinishGoodProductName { get; set; }
         public string MeasurementName { get; set; }
         public double Rate { get; set; }
+
+
+        public string QtyKG { get; set; }
     }
 }

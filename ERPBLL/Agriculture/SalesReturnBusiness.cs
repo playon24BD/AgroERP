@@ -413,5 +413,10 @@ Where 1=1 {0}", Utility.ParamChecker(param));
         {
             return _salesReturnRepository.GetAll(a => a.StockiestId == StockiestId).ToList();
         }
+
+        public IEnumerable<SalesReturn> GetProductReturnbyPMRid(long MeasurementId, long FinishGoodProductId, long FGRId)
+        {
+            return _salesReturnRepository.GetAll(r => r.MeasurementId == MeasurementId && r.FinishGoodProductInfoId == FinishGoodProductId && r.FGRId == FGRId && r.Status == "ADJUST").ToList();
+        }
     }
 }

@@ -33,6 +33,8 @@ namespace ERPBO.Agriculture.DomainModels
         public string QtyKG { get; set; }
         public string Status { get; set; }
 
+        public long PackageId { get; set; }
+
         [ForeignKey("AgroProductSalesInfo")]
         public long ProductSalesInfoId { get; set; }
         public AgroProductSalesInfo AgroProductSalesInfo { get; set; }

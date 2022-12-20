@@ -5,9 +5,14 @@
 }
 <style>
     table.tablesubtotal tr th {
-        background-color: darkcyan !important;
+        background-color: #2E8B57 !important;
         color: black !important;
     }
+    table.tablesubtotalpackage tr th {
+        background-color: #2F4F4F !important;
+        color: white !important;
+    }
+
 
     table.tadd tr th {
         background-color: darkcyan !important;
@@ -74,9 +79,9 @@
                                 <span class="error hide req-DepotName font-weight-bold">Depot Name is required!</span>
                             </div>
                             @*<div class="col-md-2">
-                                    <label for="ddlDepotName" class="col-form-label pt-0">Depot</label>
-                                    <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
-                                </div>*@
+                        <label for="ddlDepotName" class="col-form-label pt-0">Depot</label>
+                        <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
+                    </div>*@
 
                             <div class="col-md-2">
 
@@ -174,7 +179,7 @@
                             <div class="hide">
                                 <input type="text" id="ddlQtyUnitname" class="form-control form-control-sm" readonly />
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label for="ddlMeasurementName" class="col-form-label text-white">
                                     Measurement Desc<span style="color:red">*</span>
                                 </label>
@@ -201,7 +206,7 @@
                                 <input type="text" id="txtPrice" class="form-control form-control-sm" readonly />
                                 <span class="error hide req-txtPrice">Price not Configure</span>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <label for="ddlPrice" class="col-form-label text-white">Discount %</label>
                                 <input type="text" id="txtDiscount" class="form-control form-control-sm" />
 
@@ -249,77 +254,198 @@
 
                 </div>
 
+                @*Package*@
+                <div class="card card-default" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
+                    <div class="card-header">
+                        <h3 class="card-title text-white">Package Sale</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool bg-black" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body px-0 py-0" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: 0px; ">
+
+
+                        <div class="px-0 py-1">
+
+                            <div class="row small justify-content-center">
+                                <div class="col-md-3">
+                                    <label for="ddlPackageName" class="col-form-label text-white pt-0">
+                                        Package Name<span style="color:red">*</span>
+                                    </label>
+                                    @Html.DropDownList("ddlPackageName", (IEnumerable<SelectListItem>)ViewBag.ddlPackageName, "PackageName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                    <span class="error hide req-ProductName font-weight-bold">Package Name is required!</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="ddlPQuanity" class="col-form-label pt-0 text-white">P.Qty<span style="color:red">*</span></label>
+                                    <input type="text" id="ddlPQuanity" class="form-control form-control-sm" />
+                                    <span class="error hide req-ddlPQuanity">Quantity is required</span>
+                                </div>
+
+                                <div class="col-md-1 pr-xl-4  pr-lg-3 pr-md-2">
+                                    <label for="" class="col-form-label pt-0" style="visibility:hidden">Add To List</label>
+                                    <div>
+                                        <button type="submit" class="btn btn-sm btn-success float-left float-md-start text-bold" id="btnAddPackage" title="Save"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
 
 
 
 
 
+                <div class="card card-default" id="card1" style="background-color: #2E8B57; margin-top: 10px; margin-bottom: -5px;">
+                    <div class="card-header">
+                        <h3 class="card-title text-white">Product Sales Details</h3>
 
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool bg-black" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body px-0 py-0" >
+                        <div class="card-body table-responsive p-0" style="height: 200px;">
+                            <table class="table table-head-fixed text-nowrap tadd" id="tblList">
+                                <thead>
+                                    <tr class="text-center" style="color:black">
 
-                <div class="card-body">
-                    <div class="card-body table-responsive p-0 shadow" style="height: 200px;">
-                        <table class="table table-head-fixed text-nowrap tadd" id="tblList">
+                                        <th style="width:5%">#SL</th>
+                                        <th style="width:10%">Name</th>
+                                        <th style="width:10%">Measurement Desc</th>
+                                        <th style="width:5%">Quanity</th>
+                                        <th class="hide" style="width:5%">Total Pc</th>
+                                        <th style="width:5%">Rate/PC</th>
+                                        <th style="width:5%">Discount%</th>
+                                        <th style="width:5%">Discount(Tk.)</th>
+                                        <th style="width:10%">Amount(Tk.)</th>
+                                        <th style="width:10%">Action</th>
+                                        <th style="width:1%" class="hide ProductId"></th>
+                                        <th style="width:1%" class="hide MeasurementId"></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-gradient-gray"></tbody>
+                            </table>
+                        </div>
+
+                        @*Total*@
+                        <table class="table table-head-fixed text-nowrap tablesubtotal">
                             <thead>
-                                <tr class="text-center" style="color:black">
+                                <tr class="text-center">
 
-                                    <th style="width:5%">#SL</th>
-                                    <th style="width:10%">Name</th>
-                                    <th style="width:10%">Measurement Desc</th>
-                                    <th style="width:5%">Quanity</th>
-                                    <th class="hide" style="width:5%">Total Pc</th>
-                                    <th style="width:5%">Rate/PC</th>
-                                    <th style="width:5%">Discount%</th>
-                                    <th style="width:5%">Discount(Tk.)</th>
-                                    <th style="width:10%">Amount(Tk.)</th>
-                                    <th style="width:10%">Action</th>
-                                    <th style="width:1%" class="hide ProductId"></th>
-                                    <th style="width:1%" class="hide MeasurementId"></th>
-
+                                    <th>Total</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="totalqty">0</th>
+                                    <th class="totaldis">0</th>
+                                    <th class="totalsub">0</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody class="bg-gradient-gray"></tbody>
                         </table>
+                        @*Total*@
+                    </div>
+                </div>
+
+
+                   
+                    @*E*@
+
+
+                    <div class="card card-default" id="card2" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
+                        <div class="card-header">
+                            <h3 class="card-title text-white">Package Sales Details</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool bg-black" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 py-0">
+                            <div class="card-body table-responsive p-0" style="height: 200px;">
+                                <table class="table table-head-fixed text-nowrap tadd" id="tblListpackage">
+                                    <thead>
+                                        <tr class="text-center" style="color:black">
+                                            <th style="width:10%">Product Name</th>
+                                            <th style="width:10%">Measurement Desc</th>
+                                            <th style="width:5%">Quanity</th>
+                                            <th style="width:10%">Amount(Tk.)</th>
+                                            <th style="width:1%" class="hide ProductId"></th>
+                                            <th style="width:1%" class="hide MeasurementId"></th>
+                                            <th style="width:1%" class="hide FGRID"></th>
+                                            <th style="width:1%" class="hide Packageid"></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-gradient-gray"></tbody>
+                                </table>
+                            </div>
+
+                            @*Total*@
+                            <table class="table table-head-fixed text-nowrap tablesubtotalpackage">
+                                <thead>
+                                    <tr class="text-center">
+
+                                        <th>Total</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th class="totalsubpackage">0</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-gradient-gray"></tbody>
+                            </table>
+                            @*Total*@
+                        </div>
+
                     </div>
 
-                    @*Total*@
-                    <table class="table table-head-fixed text-nowrap tablesubtotal">
-                        <thead>
-                            <tr class="text-center">
 
-                                <th>Total</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th class="totalqty">0</th>
-                                <th class="totaldis">0</th>
-                                <th class="totalsub">0</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-gradient-gray"></tbody>
-                    </table>
-                    @*Total*@
+
+
+
+
                 </div>
-                @*E*@
-
 
 
 
             </div>
-
-
-
-        </div>
     </div>
 </div>
 
 
 
 
+        <!-- SELECT2 EXAMPLE -->
 
-@section scripts{
 
-    <script type="text/javascript">
+
+
+
+
+        @section scripts{
+
+            <script type="text/javascript">
 
         var ddlClientName = $("#ddlClientName");
         var ddlDepotName = $("#ddlDepotName");
@@ -358,6 +484,12 @@
         var ddlQtyUnitname = $("#ddlQtyUnitname");
 
         var ddlRawMaterialList = [];
+
+        //package
+        var ddlPackageName = $("#ddlPackageName");
+        var ddlPQuanity = $("#ddlPQuanity");
+
+
 
 
 
@@ -421,6 +553,16 @@
                 $('#ddlClientName').focus();
             });
 
+            $('#card1').hide();
+            $('#card2').hide();
+
+
+            //$('#tblList').hide();
+            //$('.tablesubtotal').hide();
+
+            //package
+            //$('#tblListpackage').hide();
+            //$('.tablesubtotalpackage').hide();
 
         })
 
@@ -597,17 +739,87 @@
                     //tqty
 
 
-                var totalsu = $('.totalsub').text();//initilize class total
+                var totalsu = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
                 ddlpayableamount.val(totalsu);
 
                     $("#tblList tbody").append(tr);
 
 
+                $('#card1').show();
 
             }
 
             ClearData();
         })
+
+
+        //pacakgeadd
+        $("#btnAddPackage").click(function (e) {
+            e.preventDefault();
+/*            if (validationAddToList()) {*/
+            debugger;
+            var data = { PackageId: TryParseInt(ddlPackageName.val(), 0), Qty: ddlPQuanity.val() };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetPackagedetailsandstockchk", data)).then(function (res, status) {
+                    debugger;
+                    console.log(res);
+
+                    var sl = 0;
+                    material = JSON.parse(res)
+                    console.log(material);
+                    var len = material.length;
+                    console.log("length: " + len);
+
+                    if (material == "False") {
+                        debugger;
+                        alert("Insufficient RawMaterial");
+                    }
+                    else {
+                        debugger;
+                        $.each(material, function (index, value) {
+                            debugger;
+/*                            var sl = $("#tblListpackage tbody tr").length;*/
+                            var td1 = "<td class='text-center'>" + value.FinishGoodProductName + "</td>";
+                            var td2 = "<td class='text-center'>" + value.MeasurementName + "</td>";
+                            var td3 = "<td class='text-center'>" + (value.Quanity * ddlPQuanity.val()) + "</td>";
+                            var td4 = "<td class='text-center'>" + (value.Amount * ddlPQuanity.val()) + "</td>";
+                            var td5 = "<td class='text-center hide'>" + value.FinishGoodProductId + "</td>";
+                            var td6 = "<td class='text-center hide'>" + value.MeasurementId + "</td>";
+                            var td7 = "<td class='text-center hide'>" + value.FGRId + "</td>";
+                            var td8 = "<td class='text-center hide'>" + value.PackageId + "</td>";
+
+
+                            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + "</tr>";
+                            $("#tblListpackage tbody").append(tr)
+                            debugger;
+                            console.log((value.Amount * ddlPQuanity.val()));
+
+
+                            to = parseFloat($('.totalsubpackage').text()) + (value.Amount * ddlPQuanity.val()) ;
+                            $('.totalsubpackage').text(to);
+                            console.log(to);
+
+
+
+
+                        })
+                        $('#card2').show();
+                        var totalsut = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
+                        ddlpayableamount.val(totalsut);
+
+
+                    }
+
+
+                });
+
+           /* }*/
+        })
+        //pacakgeaddend
+
+
+
+
 
         function ClearData() {
             txtQuanity.val("");
@@ -820,7 +1032,7 @@
 
 
 
-                    var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal);
+                    var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal) + parseFloat($('.totalsubpackage').text());
                     $('.totalsub').text(totals);
 
                     var totalsq = parseFloat($(".totalqty").text()) - parseFloat(row);
@@ -872,17 +1084,42 @@
                                DiscountTk: tds.eq(7).html(),
                                QtyKG: tds.eq(12).html(),
 
-               
+
 
 
                             });
+                        })
+
+
+
+                        var details2 = [];
+                        details2.length = 0;
+
+                        $.each($("#tblListpackage tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            debugger;
+                            details2.push({
+                                ProductSalesDetailsId: 0,
+                                MeasurementId: tds.eq(5).html(),
+                                Quanity: tds.eq(2).html(),
+                                Price: tds.eq(3).html(),
+                                FinishGoodProductInfoId: tds.eq(4).html(),
+                                MeasurementSize: tds.eq(1).html(),
+                                FGRId: tds.eq(6).html(),
+                                PackageId: tds.eq(7).html(),
+                            });
+
                         })
 
                         console.log('Info');
                         console.log(info);
                         console.log('Detail');
                         console.log(details);
-                        var data = JSON.stringify({ info: info, details: details });
+                        console.log('Detail2');
+                        console.log(details2);
+
+
+                        var data = JSON.stringify({ info: info, details: details, details2: details2 });
                         //return;
                         $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAgroProductSalesInfo', data , getToken())).then(function (res, status)
                         {
@@ -927,6 +1164,6 @@
             window.location.replace(page);
         }
 
-    </script>
+            </script>
 
-}
+        }

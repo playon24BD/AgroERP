@@ -343,6 +343,18 @@ inner join tblProductSalesInfo si on SD.ProductSalesInfoId = si.ProductSalesInfo
                 return null;
             }
         }
+
+        public IEnumerable<AgroProductSalesDetails> GetProductSalesbyPMRid(long MeasurementId, long FinishGoodProductId, long FGRId)
+        {
+            // return _packageDetailsRepository.GetAll(i => i.MeasurementId == MeasurementId).ToList();
+            return _agroProductSalesDetailsRepository.GetAll(i => i.MeasurementId == MeasurementId && i.FinishGoodProductInfoId == FinishGoodProductId && i.FGRId == FGRId && i.Status == null).ToList();
+        }
+
+        public IEnumerable<AgroProductSalesDetails> GetProductSalesbyPMRidDRP(long MeasurementId, long FinishGoodProductId, long FGRId)
+        {
+            return _agroProductSalesDetailsRepository.GetAll(j => j.MeasurementId == MeasurementId && j.FinishGoodProductInfoId == FinishGoodProductId && j.FGRId == FGRId && j.Status == "Drop").ToList();
+
+        }
     }
 }
 

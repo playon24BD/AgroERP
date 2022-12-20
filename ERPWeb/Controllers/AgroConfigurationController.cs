@@ -2761,6 +2761,7 @@ namespace ERPWeb.Controllers
 
             ViewBag.ddlMeasurementSize = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.MasterCarton.ToString() + "*" + d.InnerBox.ToString() + "*" + d.PackSize.ToString() + "(" + d.UnitId + ")", Value = d.MeasurementId.ToString() }).ToList();
 
+            ViewBag.ddlPackageName = _packageInfo.GetAllPackageName(9).Select(d => new SelectListItem { Text = d.PackageName, Value = d.PackageId.ToString() }).ToList();
 
 
             return View();
@@ -2910,17 +2911,19 @@ namespace ERPWeb.Controllers
 
 
         }
-        public ActionResult SaveAgroProductSalesInfo(AgroProductSalesInfoViewModel info, List<AgroProductSalesDetailsViewModel> details)
+        public ActionResult SaveAgroProductSalesInfo(AgroProductSalesInfoViewModel info, List<AgroProductSalesDetailsViewModel> details, List<AgroProductSalesDetailsViewModel> details2)
         {
             ExecutionStateWithText executionState = new ExecutionStateWithText();
             bool isSucccess = false;
 
             AgroProductSalesInfoDTO agroSalesInfoDTO = new AgroProductSalesInfoDTO();
             List<AgroProductSalesDetailsDTO> agroSalesDetailsDTOs = new List<AgroProductSalesDetailsDTO>();
+            List<AgroProductSalesDetailsDTO> agroProductSalesDetailsDTOs = new List<AgroProductSalesDetailsDTO>();
             AutoMapper.Mapper.Map(info, agroSalesInfoDTO);
             AutoMapper.Mapper.Map(details, agroSalesDetailsDTOs);
+            AutoMapper.Mapper.Map(details2, agroProductSalesDetailsDTOs);
 
-            isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
+            isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs,agroProductSalesDetailsDTOs, User.UserId, User.OrgId);
 
             if (isSucccess == true)
             {
@@ -3152,6 +3155,88 @@ namespace ERPWeb.Controllers
 
 
             return Json(proprice, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        public ActionResult GetPackagedetailsandstockchk(int Qty, long PackageId)
+        {
+            double issueQunatity = 0;
+
+            double requirdQuantity = 0;
+            bool Checked = false;
+
+            try
+            {
+                var packagedetails = _packageDetails.GetPackageDetailsBY(PackageId);
+                foreach(var product in packagedetails)
+                {
+                    var Productstockin = _finishGoodProductionInfoBusiness.GetProductStockINbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
+                    var SumProductStockin = Productstockin.Sum(c => c.TargetQuantity);
+
+                    var ProductSales = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
+                    var SumProductSales = ProductSales.Sum(s => s.Quanity);
+
+                    var ProductSalesDrop = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRidDRP(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
+                    var SumProductSalesDrop = ProductSalesDrop.Sum(d => d.Quanity); 
+                    
+                    var ProductSalesReturn = _salesReturn.GetProductReturnbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
+                    var SumProductSalesReturn = ProductSalesReturn.Sum(r => r.ReturnQuanity);
+
+
+                    issueQunatity = SumProductStockin - SumProductSales + SumProductSalesDrop + SumProductSalesReturn;
+
+                    requirdQuantity = product.Quanity * Qty ;
+
+                    if (requirdQuantity > issueQunatity)
+                    {
+
+                        Checked = false;
+                        break;
+                    }
+                    else
+                    {
+                        Checked = true;
+
+                    }
+                }
+
+                if (Checked)
+                {
+        
+
+                    var AllProduct = _packageDetails.GetPackageDetailsBY(PackageId).Select(p => new PackageDetailsDTO()
+                    {
+                        FinishGoodProductId = p.FinishGoodProductId,
+                        FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(p.FinishGoodProductId, User.OrgId).FinishGoodProductName,
+                        MeasurementName = _measuremenBusiness.GetMeasurementById(p.MeasurementId, User.OrgId).MeasurementName,
+                        MeasurementId = p.MeasurementId,
+                        FGRId = p.FGRId,
+                        Quanity = p.Quanity,
+                        Amount = p.Amount,
+                        PackageId = p.PackageId,
+
+                    }).ToList();
+
+                    List<PackageDetailsViewModel> packageDetailsViewModels = new List<PackageDetailsViewModel>();
+                    AutoMapper.Mapper.Map(AllProduct, packageDetailsViewModels);
+                    return Json(packageDetailsViewModels, JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    
+                    return Json("False", JsonRequestBehavior.AllowGet);
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return Json($"Not Found: {ex}", JsonRequestBehavior.AllowGet);
+            }
+
 
         }
 
@@ -6231,11 +6316,7 @@ namespace ERPWeb.Controllers
         #endregion
 
 
-        //public ActionResult GetFinishGoodList()
-        //{
-        //    return View();
-        //}
-
+        #region StokiestWiseTarget
         public ActionResult GetStockiestWiseYearlyTargetList(string flag)
         {
             if (string.IsNullOrEmpty(flag))
@@ -6276,6 +6357,7 @@ namespace ERPWeb.Controllers
 
             return Json(dropDown, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
         #region Package
         public ActionResult PackageCreate(long? id, string flag, string fromDate, string toDate, long? ProductSalesInfoId)

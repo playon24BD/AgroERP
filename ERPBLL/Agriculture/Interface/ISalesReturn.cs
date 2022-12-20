@@ -50,6 +50,8 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<SalesReturn> GetAgroSalesreturnByFGRandproductId(long FGRId,long FinishGoodProductInfoId);
 
+        IEnumerable<SalesReturn> GetProductReturnbyPMRid(long MeasurementId, long FinishGoodProductId, long FGRId);
+
 
     }
 }

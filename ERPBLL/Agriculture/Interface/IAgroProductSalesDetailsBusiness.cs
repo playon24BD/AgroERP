@@ -25,5 +25,8 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<AgroProductSalesDetailsDTO> DealerGetSalesDetailsByInfoId(long infoId);
 
+
+        IEnumerable<AgroProductSalesDetails> GetProductSalesbyPMRid(long MeasurementId, long FinishGoodProductId, long FGRId);
+        IEnumerable<AgroProductSalesDetails> GetProductSalesbyPMRidDRP(long MeasurementId, long FinishGoodProductId, long FGRId);
     }
 }

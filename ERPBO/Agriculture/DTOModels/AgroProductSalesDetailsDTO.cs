@@ -44,6 +44,8 @@ namespace ERPBO.Agriculture.DTOModels
         public bool ISActive { get; set; }
         public double RDiscountTk { get; set; }
 
+        public long PackageId { get; set; }
+
         //public string MeasurementName { get; set; }
         //public string FinishGoodProductName { get; set; }
 
