@@ -71,7 +71,7 @@
         </tr>
     }
 </table>
-<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm " id="tblReturnItems">
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm " id="tblReturnItems" style="margin-top:-15px;">
     <thead class="thead-dark">
         <tr class="text-center">
             <th>#SL</th>
@@ -88,35 +88,105 @@
         @foreach (var item in Model)
         {
             sl = sl + 1;
-
-            if (item.RT == 1)
+            if (item.PackageId == 0)
             {
-                <tr style="background-color: #008B8B;">
-                    <td class="text-center">@sl</td>
-                    <td class="text-center">@item.FinishGoodProductName</td>
-                    <td class="text-center">@item.MeasurementSize</td>
-                    <td class="text-center">@item.Quanity</td>
-                    <td class="text-center text-bold">@item.Price</td>
-                    <td class="text-center">@item.Discount</td>
-                    <td class="text-center">@item.ProductTotal</td>
-                    @*<td class="hide">@item</td>*@
+                if (item.RT == 1)
+                {
+                    <tr style="background-color: #008B8B;">
+                        <td class="text-center">@sl</td>
+                        <td class="text-center">@item.FinishGoodProductName</td>
+                        <td class="text-center">@item.MeasurementSize</td>
+                        <td class="text-center">@item.Quanity</td>
+                        <td class="text-center text-bold">@item.Price</td>
+                        <td class="text-center">@item.Discount</td>
+                        <td class="text-center">@item.ProductTotal</td>
+                        @*<td class="hide">@item</td>*@
 
-                </tr>
+                    </tr>
+
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-center">@sl</td>
+                        <td class="text-center">@item.FinishGoodProductName</td>
+                        <td class="text-center">@item.MeasurementSize</td>
+                        <td class="text-center">@item.Quanity</td>
+                        <td class="text-center text-bold">@item.Price</td>
+                        <td class="text-center">@item.Discount</td>
+                        <td class="text-center">@item.ProductTotal</td>
+                        @*<td class="hide">@item</td>*@
+
+                    </tr>
+
+                }
 
             }
-            else
-            {
-                <tr >
-                    <td class="text-center">@sl</td>
-                    <td class="text-center">@item.FinishGoodProductName</td>
-                    <td class="text-center">@item.MeasurementSize</td>
-                    <td class="text-center">@item.Quanity</td>
-                    <td class="text-center text-bold">@item.Price</td>
-                    <td class="text-center">@item.Discount</td>
-                    <td class="text-center">@item.ProductTotal</td>
-                    @*<td class="hide">@item</td>*@
 
-                </tr>
+        }
+    </tbody>
+</table>
+
+
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" style="margin-bottom: 0px; margin-top:5px">
+    @if (info != null)
+    {
+
+        <tr style="width: 100%; background-color: #DC143C ">
+            <td class="text-center text-white text-bold" style="width:100%">Package Sales</td>
+        </tr>
+    }
+</table>
+
+
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm " id="tblReturnItemss">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th>#SL</th>
+            <th>ProductName</th>
+            <th>MeasurementSize</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Package</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+            if (item.PackageId != 0)
+            {
+                if (item.RT == 1)
+                {
+                    <tr style="background-color: #008B8B;">
+                        <td class="text-center">@sl</td>
+                        <td class="text-center">@item.FinishGoodProductName</td>
+                        <td class="text-center">@item.MeasurementSize</td>
+                        <td class="text-center">@item.Quanity</td>
+                        <td class="text-center text-bold">@item.Price</td>
+                        <td class="text-center">@item.ProductTotal</td>
+                        <td class="text-center text-bold">@item.PackageName</td>
+                        @*<td class="hide">@item</td>*@
+
+                    </tr>
+
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-center">@sl</td>
+                        <td class="text-center">@item.FinishGoodProductName</td>
+                        <td class="text-center">@item.MeasurementSize</td>
+                        <td class="text-center">@item.Quanity</td>
+                        <td class="text-center text-bold">@item.Price</td>
+                        <td class="text-center">@item.ProductTotal</td>
+                        <td class="text-center text-bold">@item.PackageName</td>
+                        @*<td class="hide">@item</td>*@
+
+                    </tr>
+
+                }
 
             }
 

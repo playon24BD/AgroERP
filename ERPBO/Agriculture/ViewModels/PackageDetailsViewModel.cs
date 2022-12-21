@@ -30,5 +30,8 @@ namespace ERPBO.Agriculture.ViewModels
         public string MeasurementName { get; set; }
         public double Rate { get; set; }
         public string QtyKG { get; set; }
+        public string batchCode { get; set; }
+        public string batchCodes { get; set; }
+
     }
 }

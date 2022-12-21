@@ -184,7 +184,7 @@ namespace ERPBLL.Agriculture
         }
         // Working here
 
-        public bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, List<AgroProductSalesDetailsDTO> details2, long userId, long orgId)
+        public bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details,long userId, long orgId)
         {
 
             bool isSuccess = false;
@@ -366,7 +366,7 @@ namespace ERPBLL.Agriculture
                         Do_ADO_DA = agroSalesInfoDTO.Do_ADO_DA,
                         TotalAmount = agroSalesInfoDTO.TotalAmount,
                         PaidAmount = 0,
-                        DueAmount = agroSalesInfoDTO.TotalAmount
+                        DueAmount = agroSalesInfoDTO.TotalAmount,
 
                     };
                     List<AgroProductSalesDetails> agroDetails = new List<AgroProductSalesDetails>();
@@ -417,7 +417,8 @@ namespace ERPBLL.Agriculture
                                 ReceipeBatchCode = receipeBatch,
                                 FGRId = FGRId,
                                 QtyKG = item.QtyKG,
-                                BoxQuanity = ProductMesurement
+                                BoxQuanity = ProductMesurement,
+                                PackageId = item.PackageId,
 
                             };
                             agroDetails.Add(agroSalesDetails);
@@ -428,76 +429,6 @@ namespace ERPBLL.Agriculture
                         isSuccess = _agroProductSalesInfoRepository.Save();
 
                     }
-
-
-
-                    List<AgroProductSalesDetails> agroDetailss = new List<AgroProductSalesDetails>();
-                    if (details2.Count > 0)
-                    {
-
-                        foreach (var bom in details)
-                        {
-                            double ProductMesurement = 0;
-                            double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(bom.MeasurementId, orgId).MasterCarton;
-                            double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(bom.MeasurementId, orgId).InnerBox;
-                            double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(bom.MeasurementId, orgId).PackSize;
-
-                            var measurments = _finishGoodRecipeInfoBusiness.GetAllRecipeBYmeasurment(bom.FinishGoodProductInfoId, bom.MeasurementId);
-                            var batchCode = measurments.FirstOrDefault().FGRQty;
-                            var batchCodes = measurments.FirstOrDefault().UnitName;
-                            var bb = batchCode + "(" + batchCodes + ")";
-
-                            var UnitQtys = bb.Split('(', ')');
-                            int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
-                            string ProductUnit = UnitQtys[1];
-
-                            if (MasterCartonMasurement != 0)
-                            {
-                                ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
-                            }
-                            else
-                            {
-                                ProductMesurement = InnerBoxMasurement;
-                            }
- 
-
-
-
-                            var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
-
-                            var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(bom.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
-                            var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(bom.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
-
-                            AgroProductSalesDetails agroSalesDetailss = new AgroProductSalesDetails()
-                            {
-                                //Details
-
-                                EntryDate = DateTime.Now,
-                                EntryUserId = userId,
-                                MeasurementId = bom.MeasurementId,
-                                MeasurementSize = bom.MeasurementSize,
-                                OrganizationId = orgId,
-                                Price = bom.Price,
-                                Quanity = bom.Quanity,
-                                FinishGoodProductInfoId = bom.FinishGoodProductInfoId,
-                                ReceipeBatchCode = receipeBatch,
-                                FGRId = bom.FGRId,
-                                QtyKG = bb,
-                                BoxQuanity = ProductMesurement,
-                                PackageId = bom.PackageId
-
-                            };
-                            agroDetailss.Add(agroSalesDetailss);
-                        }
-
-                        agroSalesProductionInfo.AgroProductSalesDetails = agroDetailss;
-                        _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
-                        isSuccess = _agroProductSalesInfoRepository.Save();
-
-                    }
-
-
-
 
                     if (isSuccess)
                     {

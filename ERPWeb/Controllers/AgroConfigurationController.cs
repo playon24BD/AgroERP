@@ -2715,6 +2715,8 @@ namespace ERPWeb.Controllers
 
                     var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
 
+                   // var detailspackage = _agroProductSalesDetailsBusiness.GetSalesDetailsByPackageProduct(id.Value);
+
 
 
                     List<AgroProductSalesDetailsViewModel> detailsvm = new List<AgroProductSalesDetailsViewModel>();
@@ -2911,19 +2913,19 @@ namespace ERPWeb.Controllers
 
 
         }
-        public ActionResult SaveAgroProductSalesInfo(AgroProductSalesInfoViewModel info, List<AgroProductSalesDetailsViewModel> details, List<AgroProductSalesDetailsViewModel> details2)
+        public ActionResult SaveAgroProductSalesInfo(AgroProductSalesInfoViewModel info, List<AgroProductSalesDetailsViewModel> details)
         {
             ExecutionStateWithText executionState = new ExecutionStateWithText();
             bool isSucccess = false;
 
             AgroProductSalesInfoDTO agroSalesInfoDTO = new AgroProductSalesInfoDTO();
             List<AgroProductSalesDetailsDTO> agroSalesDetailsDTOs = new List<AgroProductSalesDetailsDTO>();
-            List<AgroProductSalesDetailsDTO> agroProductSalesDetailsDTOs = new List<AgroProductSalesDetailsDTO>();
+
             AutoMapper.Mapper.Map(info, agroSalesInfoDTO);
             AutoMapper.Mapper.Map(details, agroSalesDetailsDTOs);
-            AutoMapper.Mapper.Map(details2, agroProductSalesDetailsDTOs);
 
-            isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs,agroProductSalesDetailsDTOs, User.UserId, User.OrgId);
+
+            isSucccess = _agroProductSalesInfoBusiness.SaveAgroProductSalesInfo(agroSalesInfoDTO, agroSalesDetailsDTOs, User.UserId, User.OrgId);
 
             if (isSucccess == true)
             {
@@ -3203,7 +3205,6 @@ namespace ERPWeb.Controllers
 
                 if (Checked)
                 {
-        
 
                     var AllProduct = _packageDetails.GetPackageDetailsBY(PackageId).Select(p => new PackageDetailsDTO()
                     {
@@ -3215,6 +3216,9 @@ namespace ERPWeb.Controllers
                         Quanity = p.Quanity,
                         Amount = p.Amount,
                         PackageId = p.PackageId,
+                        QtyKG = _finishGoodRecipeInfoBusiness.GetQTKGBYmeasurment(p.FinishGoodProductId, p.MeasurementId).FirstOrDefault().QtyKG
+
+
 
                     }).ToList();
 

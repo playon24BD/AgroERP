@@ -32,5 +32,10 @@ namespace ERPBO.Agriculture.DTOModels
 
 
         public string QtyKG { get; set; }
+        public string batchCode { get; set; }
+        public string batchCodes { get; set; }
+
+
+
     }
 }

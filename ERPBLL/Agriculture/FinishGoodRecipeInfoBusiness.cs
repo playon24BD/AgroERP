@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Controls;
 
 namespace ERPBLL.Agriculture
@@ -18,20 +19,20 @@ namespace ERPBLL.Agriculture
         private readonly FinishGoodRecipeInfoRepository _finishGoodRecipeInfoRepository;
         private readonly IFinishGoodRecipeDetailsBusiness _fDetail;
         //, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness
-        public FinishGoodRecipeInfoBusiness(IAgricultureUnitOfWork AgricultureUnitOfWork,IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness)
+        public FinishGoodRecipeInfoBusiness(IAgricultureUnitOfWork AgricultureUnitOfWork, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness)
         {
             this._AgricultureUnitOfWork = AgricultureUnitOfWork;
             this._fDetail = finishGoodRecipeDetailsBusiness;
             this._finishGoodRecipeInfoRepository = new FinishGoodRecipeInfoRepository(this._AgricultureUnitOfWork);
-   
+
         }
         public FinishGoodRecipeInfo GetFinishGoodRecipeInfoOneByOrgId(long id, long orgId)
         {
             return _finishGoodRecipeInfoRepository.GetOneByOrg(i => i.FGRId == id && i.OrganizationId == orgId);
         }
-        public FinishGoodRecipeInfo GetReceipId(long ProductId,int ProductUnitQty,long UnitId)
+        public FinishGoodRecipeInfo GetReceipId(long ProductId, int ProductUnitQty, long UnitId)
         {
-            return _finishGoodRecipeInfoRepository.GetOneByOrg(r => r.FinishGoodProductId == ProductId && r.FGRQty==  ProductUnitQty && r.UnitId==UnitId);
+            return _finishGoodRecipeInfoRepository.GetOneByOrg(r => r.FinishGoodProductId == ProductId && r.FGRQty == ProductUnitQty && r.UnitId == UnitId);
         }
         public FinishGoodRecipeInfo GetReceipbachcodeid(string ReceipeBatchCode)
         {
@@ -42,9 +43,9 @@ namespace ERPBLL.Agriculture
             _finishGoodRecipeInfoRepository.DeleteAll(i => i.FGRId == id && i.OrganizationId == orgId);
             return _finishGoodRecipeInfoRepository.Save();
         }
-         public IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodReceipUnitQty(long finishGoodProductId, long orgId)
+        public IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodReceipUnitQty(long finishGoodProductId, long orgId)
         {
-            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeUnitQtyProductwise(finishGoodProductId,orgId)).ToList();
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(QueryForFinishGoodRecipeUnitQtyProductwise(finishGoodProductId, orgId)).ToList();
         }
 
         private string QueryForFinishGoodRecipeUnitQtyProductwise(long finishGoodProductId, long orgId)
@@ -94,7 +95,7 @@ namespace ERPBLL.Agriculture
                 return null;
             }
         }
-        
+
         private string QueryForFinishGoodRecipeInfoss(long orgId, long? productId)
         {
             try
@@ -132,14 +133,14 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                 FinishGoodRecipeInfo model = new FinishGoodRecipeInfo
                 {
                     FinishGoodProductId = info.FinishGoodProductId,
-                    ReceipeBatchCode= ReceipeBatchCodes,
+                    ReceipeBatchCode = ReceipeBatchCodes,
                     FGRQty = info.FGRQty,
                     UnitId = info.UnitId,
                     OrganizationId = orgId,
-                    Status=info.Status,
+                    Status = info.Status,
                     EUserId = userId,
                     EntryDate = DateTime.Now
-                   
+
                 };
                 List<FinishGoodRecipeDetails> modelDetails = new List<FinishGoodRecipeDetails>();
 
@@ -148,7 +149,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                     FinishGoodRecipeDetails FinishGoodRecipeDetails = new FinishGoodRecipeDetails()
                     {
                         RawMaterialId = item.RawMaterialId,
-                        ReceipeBatchCode= ReceipeBatchCodes,
+                        ReceipeBatchCode = ReceipeBatchCodes,
                         FGRRawMaterQty = item.FGRRawMaterQty,
                         UnitId = item.UnitId,
                         OrganizationId = orgId,
@@ -165,13 +166,13 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             else
             {
 
-             IsSuccess=   _fDetail.updateFinishGoodRecipDetails(info,details,userId, orgId);
+                IsSuccess = _fDetail.updateFinishGoodRecipDetails(info, details, userId, orgId);
 
             }
             return IsSuccess;
         }
 
-        
+
 
         public IEnumerable<FinishGoodRecipeInfo> GetAllFinishGoodReceif(long orgId)
         {
@@ -180,7 +181,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
 
         public IEnumerable<FinishGoodRecipeInfo> GetCheckDupliketReceipeProduct(long FinishGoodProductId, int FGRQty, long UnitId)
         {
-            return _finishGoodRecipeInfoRepository.GetAll(f => f.FinishGoodProductId == FinishGoodProductId && f.FGRQty==FGRQty && f.UnitId==UnitId);
+            return _finishGoodRecipeInfoRepository.GetAll(f => f.FinishGoodProductId == FinishGoodProductId && f.FGRQty == FGRQty && f.UnitId == UnitId);
         }
         //public IEnumerable<FinishGoodRecipeInfoDTO> GetAllFinishGoodReceif(long orgId)
         //{
@@ -236,7 +237,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             string query = string.Empty;
             string param = string.Empty;
 
-       
+
             if (FinishGoodProductInfoId != null && FinishGoodProductInfoId > 0)
             {
                 param += string.Format(@" and f.FinishGoodProductId={0}", FinishGoodProductInfoId);
@@ -284,5 +285,40 @@ where 1=1 {0} and r.FGRQty=m.PackSize and r.UnitId=m.UnitId and r.FinishGoodProd
 
             return query;
         }
+
+        public IEnumerable<FinishGoodRecipeInfoDTO> GetQTKGBYmeasurment(long FinishGoodProductId, long MeasurementId)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeInfoDTO>(GetRacpbyPIDandMids(FinishGoodProductId, MeasurementId)).ToList();
+        }
+
+        private string GetRacpbyPIDandMids(long FinishGoodProductId, long MeasurementId)
+        {
+
+
+
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            if (FinishGoodProductId != null && FinishGoodProductId > 0)
+            {
+                param += string.Format(@" and r.FinishGoodProductId={0}", FinishGoodProductId);
+            }
+            if (MeasurementId != null && MeasurementId > 0)
+            {
+                param += string.Format(@" and m.MeasurementId={0}", MeasurementId);
+            }
+            query = string.Format(@" 
+            select distinct concat(r.FGRQty,'(',u.UnitName,')') as QtyKG from tblFinishGoodRecipeInfo r
+            inner join tblFinishGoodProductInfo p on r.FinishGoodProductId=p.FinishGoodProductId
+            inner join  tblAgroUnitInfo u on r.UnitId=u.UnitId
+            inner join tblMeasurement m on u.UnitId= m.UnitId
+            where 1=1 {0} and r.FGRQty=m.PackSize and r.UnitId=m.UnitId and r.FinishGoodProductId=p.FinishGoodProductId", Utility.ParamChecker(param));
+            return query;
+
+
+        }
+
+
     }
 }

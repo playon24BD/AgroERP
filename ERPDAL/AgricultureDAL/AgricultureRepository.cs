@@ -211,6 +211,7 @@ namespace ERPDAL.AgricultureDAL
 
         }
 
+       
     }
     public class FinishGoodRecipeDetailsRepository : AgricultureBaseRepository<FinishGoodRecipeDetails>
     {

@@ -787,9 +787,11 @@
                             var td6 = "<td class='text-center hide'>" + value.MeasurementId + "</td>";
                             var td7 = "<td class='text-center hide'>" + value.FGRId + "</td>";
                             var td8 = "<td class='text-center hide'>" + value.PackageId + "</td>";
+                            var td9 = "<td class='text-center hide'>" + value.QtyKG + "</td>";
+                            var td10 = "<td class='text-center hide'>" + (value.Amount / value.Quanity) + "</td>";
 
 
-                            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + "</tr>";
+                            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
                             $("#tblListpackage tbody").append(tr)
                             debugger;
                             console.log((value.Amount * ddlPQuanity.val()));
@@ -1065,7 +1067,7 @@
                         //disable("#btnSubmit");
                         //getTargetItemAndItemTypeAndWarehouse();
                         var totalsub = $('.totalsub').text();//initilize class total
-                        var info = { ProductSalesInfoId: 0, UserId: TryParseInt(ddlClientName.val(), 0), Depot: ddlDepotName.val(), InvoiceDate: InvoiceDate.val(), ChallanDate: ChallanDate.val(), VehicleType: txtVehicleType.val(), VehicleNumber: txtVehicleNumber.val(), DriverName: txtDriverName.val(), DeliveryPlace: txtDeliveryPlace.val(), Do_ADO_DA: txtDo_ADO_DA.val(), DoADO_Name: txtDoADO_Name.val(), PaymentMode: ddlPaymentMode.val(), TotalAmount: totalsub, PaidAmount: ddlpayment.val() };
+                        var info = { ProductSalesInfoId: 0, UserId: TryParseInt(ddlClientName.val(), 0), Depot: ddlDepotName.val(), InvoiceDate: InvoiceDate.val(), ChallanDate: ChallanDate.val(), VehicleType: txtVehicleType.val(), VehicleNumber: txtVehicleNumber.val(), DriverName: txtDriverName.val(), DeliveryPlace: txtDeliveryPlace.val(), Do_ADO_DA: txtDo_ADO_DA.val(), DoADO_Name: txtDoADO_Name.val(), PaymentMode: ddlPaymentMode.val(), TotalAmount: ddlpayableamount.val(), PaidAmount: ddlpayment.val() };
 
                         var details = [];
                         details.length = 0;
@@ -1092,21 +1094,21 @@
 
 
 
-                        var details2 = [];
-                        details2.length = 0;
+
 
                         $.each($("#tblListpackage tbody tr"), function (index, item) {
                             var tds = $(this).children('td');
                             debugger;
-                            details2.push({
+                            details.push({
                                 ProductSalesDetailsId: 0,
                                 MeasurementId: tds.eq(5).html(),
                                 Quanity: tds.eq(2).html(),
-                                Price: tds.eq(3).html(),
+                                Price: tds.eq(9).html(),
                                 FinishGoodProductInfoId: tds.eq(4).html(),
                                 MeasurementSize: tds.eq(1).html(),
                                 FGRId: tds.eq(6).html(),
                                 PackageId: tds.eq(7).html(),
+                                QtyKG: tds.eq(8).html(),
                             });
 
                         })
@@ -1115,11 +1117,10 @@
                         console.log(info);
                         console.log('Detail');
                         console.log(details);
-                        console.log('Detail2');
-                        console.log(details2);
 
 
-                        var data = JSON.stringify({ info: info, details: details, details2: details2 });
+
+                        var data = JSON.stringify({ info: info, details: details });
                         //return;
                         $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAgroProductSalesInfo', data , getToken())).then(function (res, status)
                         {

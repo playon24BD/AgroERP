@@ -22,5 +22,7 @@ namespace ERPBO.Agriculture.DTOModels
         public Nullable<DateTime> UpdateDate { get; set; }
         public string Status { get; set; }
         public string UnitQty { get; set; }
+        public string QtyKG { get; set; }
+
     }
 }
