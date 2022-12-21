@@ -423,9 +423,16 @@ namespace ERPBLL.Agriculture
                             agroDetails.Add(agroSalesDetails);
                         }
 
+                        agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
+                        _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
+                        isSuccess = _agroProductSalesInfoRepository.Save();
+
                     }
 
-                    if(details2.Count > 0)
+
+
+                    List<AgroProductSalesDetails> agroDetailss = new List<AgroProductSalesDetails>();
+                    if (details2.Count > 0)
                     {
 
                         foreach (var bom in details)
@@ -480,13 +487,15 @@ namespace ERPBLL.Agriculture
                                 PackageId = bom.PackageId
 
                             };
-                            agroDetails.Add(agroSalesDetailss);
+                            agroDetailss.Add(agroSalesDetailss);
                         }
 
+                        agroSalesProductionInfo.AgroProductSalesDetails = agroDetailss;
+                        _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
+                        isSuccess = _agroProductSalesInfoRepository.Save();
+
                     }
-                    agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
-                    _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
-                    isSuccess = _agroProductSalesInfoRepository.Save();
+
 
 
 
