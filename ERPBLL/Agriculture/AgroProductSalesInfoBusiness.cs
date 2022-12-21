@@ -5,6 +5,7 @@ using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPBO.Agriculture.ReportModels;
 using ERPBO.Common;
+using ERPDAL.AgricultureContextMigrations;
 using ERPDAL.AgricultureDAL;
 using ERPDAL.ControlPanelDAL;
 using System;
@@ -39,8 +40,10 @@ namespace ERPBLL.Agriculture
         private readonly IMeasuremenBusiness _measuremenBusiness;
         private readonly ICommissionOnProductOnSalesBusiness _commissionOnProductOnSalesBusiness;
         private readonly IStockiestUserBusiness _stockiestUserBusiness;
+        private readonly IFinishGoodProductionInfoBusiness _finishGoodProductionInfoBusiness;
+        private readonly ISalesReturn _salesReturn;
 
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, IStockiestUserBusiness stockiestUserBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness)
+        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork,ISalesReturn salesReturn, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness,IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, IStockiestUserBusiness stockiestUserBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
@@ -62,6 +65,8 @@ namespace ERPBLL.Agriculture
             this._commissionOnProductOnSalesBusiness = commissionOnProductOnSalesBusiness;
             this._stockiestUserBusiness = stockiestUserBusiness;
             this._agroProductSalesDetailsBusiness = agroProductSalesDetailsBusiness;
+            this._finishGoodProductionInfoBusiness= finishGoodProductionInfoBusiness;
+            this._salesReturn = salesReturn;
         }
 
 
@@ -189,189 +194,123 @@ namespace ERPBLL.Agriculture
 
             bool isSuccess = false;
 
+            double issueQunatity = 0;
+            double requirdQuantity = 0;
+            bool Checked = false;
+
+
             var ChallanNo = "CHA-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
             var InvoiceNo = "INV-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
 
-
-            if (agroSalesInfoDTO.ProductSalesInfoId == 0)
+            var pro = details.GroupBy(r => new { r.FinishGoodProductInfoId, r.MeasurementId,r.FGRId }).Select( g => new AgroProductSalesDetailsDTO
             {
-                var UserId = _stockiestUserBusiness.GetStockiestInfoById(agroSalesInfoDTO.UserId, orgId).UserId;
-                var stockeiestId = _appUserBusiness.GetId(UserId, orgId).StockiestId;
-                long stockId = agroSalesInfoDTO.UserId;
+                FinishGoodProductInfoId = g.Key.FinishGoodProductInfoId,
+                MeasurementId = g.Key.MeasurementId,
+                FGRId = g.Key.FGRId,
+                Quanity = g.Sum(r => r.Quanity),
+               
+            
+            });
 
-                var territoryId = _stockiestInfo.GetStockiestInfoById(stockId, orgId).TerritoryId;
 
-                var areaId = _territorySetup.GetTerritoryNamebyId(territoryId, orgId).AreaId;
 
-                var regionId = _areaSetupBusiness.GetAreaInfoById(areaId, orgId).RegionId;
+            foreach (var product in pro)
+            {
 
-                var divisionId = _regionSetup.GetRegionNamebyId(regionId, orgId).DivisionId;
+                var Productstockin = _finishGoodProductionInfoBusiness.GetProductStockINbyPMRid(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
+                var SumProductStockin = Productstockin.Sum(c => c.TargetQuantity);
 
-                var zoneId = _divisionInfo.GetDivisionInfoById(divisionId, orgId).ZoneId;
+                var ProductSales = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRid(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
+                var SumProductSales = ProductSales.Sum(s => s.Quanity);
 
-                ExecutionStateWithText executionState = new ExecutionStateWithText();
-                //paymenttable
-                if (agroSalesInfoDTO.PaymentMode == "Cash")
+                var ProductSalesDrop = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRidDRP(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
+                var SumProductSalesDrop = ProductSalesDrop.Sum(d => d.Quanity);
+
+                var ProductSalesReturn = _salesReturn.GetProductReturnbyPMRid(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
+                var SumProductSalesReturn = ProductSalesReturn.Sum(r => r.ReturnQuanity);
+
+
+                issueQunatity = SumProductStockin - SumProductSales + SumProductSalesDrop + SumProductSalesReturn;
+
+                requirdQuantity = product.Quanity;
+
+
+                if (requirdQuantity > issueQunatity)
                 {
 
-                    AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo
-                    {
-                        //Info
-                        ChallanNo = ChallanNo,
-                        InvoiceNo = InvoiceNo,
-                        VehicleNumber = agroSalesInfoDTO.VehicleNumber,
-                        ProductSalesInfoId = agroSalesInfoDTO.ProductSalesInfoId,
-                        DeliveryPlace = agroSalesInfoDTO.DeliveryPlace,
-                        DoADO_Name = agroSalesInfoDTO.DoADO_Name,
-                        DriverName = agroSalesInfoDTO.DriverName,
-                        InvoiceDate = agroSalesInfoDTO.InvoiceDate,
-                        PaymentMode = agroSalesInfoDTO.PaymentMode,
-                        VehicleType = agroSalesInfoDTO.VehicleType,
-                        UserAssignId = agroSalesInfoDTO.UserAssignId,
-                        UserId = UserId,
-                        StockiestId = stockId,
-                        TerritoryId = territoryId,
-                        AreaId = areaId,
-                        DivisionId = divisionId,
-                        RegionId = regionId,
-                        ZoneId = zoneId,
-                        ChallanDate = agroSalesInfoDTO.ChallanDate,
-                        EntryDate = DateTime.Now,
-                        EntryUserId = userId,
-                        OrganizationId = orgId,
-                        Depot = agroSalesInfoDTO.Depot,
-                        Do_ADO_DA = agroSalesInfoDTO.Do_ADO_DA,
-                        TotalAmount = agroSalesInfoDTO.TotalAmount,
-                        PaidAmount = agroSalesInfoDTO.TotalAmount,
-                        DueAmount = 0
-
-                    };
-
-
-                    List<AgroProductSalesDetails> agroDetails = new List<AgroProductSalesDetails>();
-
-                    foreach (var item in details)
-                    {
-                        double ProductMesurement = 0;
-                        double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
-                        double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
-                        double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
-
-                        var UnitQtys = item.QtyKG.Split('(', ')');
-                        int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
-                        string ProductUnit = UnitQtys[1];
-
-                        if (MasterCartonMasurement != 0)
-                        {
-                            ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
-                        }
-                        else
-                        {
-                            ProductMesurement = InnerBoxMasurement;
-                        }
-
-
-
-
-                        var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
-                        var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
-                        var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
-
-                        AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
-                        {
-                            //Details
-                            Discount = item.Discount,
-                            DiscountTk = item.DiscountTk,
-                            EntryDate = DateTime.Now,
-                            EntryUserId = userId,
-                            MeasurementId = item.MeasurementId,
-                            MeasurementSize = item.MeasurementSize,
-                            OrganizationId = orgId,
-                            Price = item.Price,
-                            ProductSalesInfoId = item.ProductSalesInfoId,
-                            Quanity = item.Quanity,
-                            FinishGoodProductInfoId = item.FinishGoodProductInfoId,
-                            ProductSalesDetailsId = item.ProductSalesDetailsId,
-                            ReceipeBatchCode = receipeBatch,
-                            FGRId = FGRId,
-                            QtyKG = item.QtyKG,
-                            BoxQuanity = ProductMesurement
-
-
-
-
-                        };
-                        agroDetails.Add(agroSalesDetails);
-                    }
-                    agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
-                    _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
-
-
-
-                    isSuccess = _agroProductSalesInfoRepository.Save();
-
-                    if (isSuccess)
-                    {
-                        //Commission on Sales 
-                        executionState.text = InvoiceNo;
-                        isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
-
-
-                    }
-
-
-                    SalesPaymentRegister salesPayment = new SalesPaymentRegister
-                    {
-                        PaymentDate = DateTime.Now,
-                        PaymentAmount = agroSalesInfoDTO.TotalAmount,
-                        ProductSalesInfoId = agroSalesProductionInfo.ProductSalesInfoId,
-                        Remarks = "SalesTime",
-                        EntryUserId = userId
-                    };
-                    //paymenttable
-                    _salesPaymentRegisterRepository.Insert(salesPayment);
-                    isSuccess = _salesPaymentRegisterRepository.Save();
+                    Checked = false;
+                    break;
                 }
-
                 else
                 {
-                    AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo
-                    {
-                        //Info
-                        ChallanNo = ChallanNo,
-                        InvoiceNo = InvoiceNo,
-                        VehicleNumber = agroSalesInfoDTO.VehicleNumber,
-                        ProductSalesInfoId = agroSalesInfoDTO.ProductSalesInfoId,
-                        DeliveryPlace = agroSalesInfoDTO.DeliveryPlace,
-                        DoADO_Name = agroSalesInfoDTO.DoADO_Name,
-                        DriverName = agroSalesInfoDTO.DriverName,
-                        InvoiceDate = agroSalesInfoDTO.InvoiceDate,
-                        PaymentMode = agroSalesInfoDTO.PaymentMode,
-                        VehicleType = agroSalesInfoDTO.VehicleType,
-                        UserAssignId = agroSalesInfoDTO.UserAssignId,
-                        UserId = UserId,
-                        StockiestId = stockId,
-                        TerritoryId = territoryId,
-                        AreaId = areaId,
-                        DivisionId = divisionId,
-                        RegionId = regionId,
-                        ZoneId = zoneId,
-                        ChallanDate = agroSalesInfoDTO.ChallanDate,
-                        EntryDate = DateTime.Now,
-                        EntryUserId = userId,
-                        OrganizationId = orgId,
-                        Depot = agroSalesInfoDTO.Depot,
-                        Do_ADO_DA = agroSalesInfoDTO.Do_ADO_DA,
-                        TotalAmount = agroSalesInfoDTO.TotalAmount,
-                        PaidAmount = 0,
-                        DueAmount = agroSalesInfoDTO.TotalAmount,
+                    Checked = true;
+                   
 
-                    };
-                    List<AgroProductSalesDetails> agroDetails = new List<AgroProductSalesDetails>();
-                    if (details.Count > 0)
+                }
+
+            }
+
+            if (Checked)
+            {
+                if (agroSalesInfoDTO.ProductSalesInfoId == 0)
+                {
+                    var UserId = _stockiestUserBusiness.GetStockiestInfoById(agroSalesInfoDTO.UserId, orgId).UserId;
+                    var stockeiestId = _appUserBusiness.GetId(UserId, orgId).StockiestId;
+                    long stockId = agroSalesInfoDTO.UserId;
+
+                    var territoryId = _stockiestInfo.GetStockiestInfoById(stockId, orgId).TerritoryId;
+
+                    var areaId = _territorySetup.GetTerritoryNamebyId(territoryId, orgId).AreaId;
+
+                    var regionId = _areaSetupBusiness.GetAreaInfoById(areaId, orgId).RegionId;
+
+                    var divisionId = _regionSetup.GetRegionNamebyId(regionId, orgId).DivisionId;
+
+                    var zoneId = _divisionInfo.GetDivisionInfoById(divisionId, orgId).ZoneId;
+
+                    ExecutionStateWithText executionState = new ExecutionStateWithText();
+                    //paymenttable
+                    if (agroSalesInfoDTO.PaymentMode == "Cash")
                     {
+
+                        AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo
+                        {
+                            //Info
+                            ChallanNo = ChallanNo,
+                            InvoiceNo = InvoiceNo,
+                            VehicleNumber = agroSalesInfoDTO.VehicleNumber,
+                            ProductSalesInfoId = agroSalesInfoDTO.ProductSalesInfoId,
+                            DeliveryPlace = agroSalesInfoDTO.DeliveryPlace,
+                            DoADO_Name = agroSalesInfoDTO.DoADO_Name,
+                            DriverName = agroSalesInfoDTO.DriverName,
+                            InvoiceDate = agroSalesInfoDTO.InvoiceDate,
+                            PaymentMode = agroSalesInfoDTO.PaymentMode,
+                            VehicleType = agroSalesInfoDTO.VehicleType,
+                            UserAssignId = agroSalesInfoDTO.UserAssignId,
+                            UserId = UserId,
+                            StockiestId = stockId,
+                            TerritoryId = territoryId,
+                            AreaId = areaId,
+                            DivisionId = divisionId,
+                            RegionId = regionId,
+                            ZoneId = zoneId,
+                            ChallanDate = agroSalesInfoDTO.ChallanDate,
+                            EntryDate = DateTime.Now,
+                            EntryUserId = userId,
+                            OrganizationId = orgId,
+                            Depot = agroSalesInfoDTO.Depot,
+                            Do_ADO_DA = agroSalesInfoDTO.Do_ADO_DA,
+                            TotalAmount = agroSalesInfoDTO.TotalAmount,
+                            PaidAmount = agroSalesInfoDTO.TotalAmount,
+                            DueAmount = 0
+
+                        };
+
+
+                        List<AgroProductSalesDetails> agroDetails = new List<AgroProductSalesDetails>();
+
                         foreach (var item in details)
                         {
                             double ProductMesurement = 0;
@@ -382,6 +321,7 @@ namespace ERPBLL.Agriculture
                             var UnitQtys = item.QtyKG.Split('(', ')');
                             int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
                             string ProductUnit = UnitQtys[1];
+
                             if (MasterCartonMasurement != 0)
                             {
                                 ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
@@ -390,12 +330,11 @@ namespace ERPBLL.Agriculture
                             {
                                 ProductMesurement = InnerBoxMasurement;
                             }
-                            //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+
 
 
 
                             var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
-
                             var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
                             var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
 
@@ -417,46 +356,169 @@ namespace ERPBLL.Agriculture
                                 ReceipeBatchCode = receipeBatch,
                                 FGRId = FGRId,
                                 QtyKG = item.QtyKG,
-                                BoxQuanity = ProductMesurement,
-                                PackageId = item.PackageId,
+                                BoxQuanity = ProductMesurement
+
+
+
 
                             };
                             agroDetails.Add(agroSalesDetails);
                         }
-
                         agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
                         _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
+
+
+
                         isSuccess = _agroProductSalesInfoRepository.Save();
 
+                        if (isSuccess)
+                        {
+                            //Commission on Sales 
+                            executionState.text = InvoiceNo;
+                            isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
+
+
+                        }
+
+
+                        SalesPaymentRegister salesPayment = new SalesPaymentRegister
+                        {
+                            PaymentDate = DateTime.Now,
+                            PaymentAmount = agroSalesInfoDTO.TotalAmount,
+                            ProductSalesInfoId = agroSalesProductionInfo.ProductSalesInfoId,
+                            Remarks = "SalesTime",
+                            EntryUserId = userId
+                        };
+                        //paymenttable
+                        _salesPaymentRegisterRepository.Insert(salesPayment);
+                        isSuccess = _salesPaymentRegisterRepository.Save();
                     }
 
-                    if (isSuccess)
+                    else
                     {
-                        //Commission on Sales 
-                        executionState.text = InvoiceNo;
-                        isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
+                        AgroProductSalesInfo agroSalesProductionInfo = new AgroProductSalesInfo
+                        {
+                            //Info
+                            ChallanNo = ChallanNo,
+                            InvoiceNo = InvoiceNo,
+                            VehicleNumber = agroSalesInfoDTO.VehicleNumber,
+                            ProductSalesInfoId = agroSalesInfoDTO.ProductSalesInfoId,
+                            DeliveryPlace = agroSalesInfoDTO.DeliveryPlace,
+                            DoADO_Name = agroSalesInfoDTO.DoADO_Name,
+                            DriverName = agroSalesInfoDTO.DriverName,
+                            InvoiceDate = agroSalesInfoDTO.InvoiceDate,
+                            PaymentMode = agroSalesInfoDTO.PaymentMode,
+                            VehicleType = agroSalesInfoDTO.VehicleType,
+                            UserAssignId = agroSalesInfoDTO.UserAssignId,
+                            UserId = UserId,
+                            StockiestId = stockId,
+                            TerritoryId = territoryId,
+                            AreaId = areaId,
+                            DivisionId = divisionId,
+                            RegionId = regionId,
+                            ZoneId = zoneId,
+                            ChallanDate = agroSalesInfoDTO.ChallanDate,
+                            EntryDate = DateTime.Now,
+                            EntryUserId = userId,
+                            OrganizationId = orgId,
+                            Depot = agroSalesInfoDTO.Depot,
+                            Do_ADO_DA = agroSalesInfoDTO.Do_ADO_DA,
+                            TotalAmount = agroSalesInfoDTO.TotalAmount,
+                            PaidAmount = 0,
+                            DueAmount = agroSalesInfoDTO.TotalAmount,
+
+                        };
+                        List<AgroProductSalesDetails> agroDetails = new List<AgroProductSalesDetails>();
+                        if (details.Count > 0)
+                        {
+                            foreach (var item in details)
+                            {
+                                double ProductMesurement = 0;
+                                double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
+                                double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
+                                double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
+
+                                var UnitQtys = item.QtyKG.Split('(', ')');
+                                int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
+                                string ProductUnit = UnitQtys[1];
+                                if (MasterCartonMasurement != 0)
+                                {
+                                    ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
+                                }
+                                else
+                                {
+                                    ProductMesurement = InnerBoxMasurement;
+                                }
+                                //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+
+
+
+                                var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
+
+                                var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
+                                var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
+
+                                AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
+                                {
+                                    //Details
+                                    Discount = item.Discount,
+                                    DiscountTk = item.DiscountTk,
+                                    EntryDate = DateTime.Now,
+                                    EntryUserId = userId,
+                                    MeasurementId = item.MeasurementId,
+                                    MeasurementSize = item.MeasurementSize,
+                                    OrganizationId = orgId,
+                                    Price = item.Price,
+                                    ProductSalesInfoId = item.ProductSalesInfoId,
+                                    Quanity = item.Quanity,
+                                    FinishGoodProductInfoId = item.FinishGoodProductInfoId,
+                                    ProductSalesDetailsId = item.ProductSalesDetailsId,
+                                    ReceipeBatchCode = receipeBatch,
+                                    FGRId = FGRId,
+                                    QtyKG = item.QtyKG,
+                                    BoxQuanity = ProductMesurement,
+                                    PackageId = item.PackageId,
+
+                                };
+                                agroDetails.Add(agroSalesDetails);
+                            }
+
+                            agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
+                            _agroProductSalesInfoRepository.Insert(agroSalesProductionInfo);
+                            isSuccess = _agroProductSalesInfoRepository.Save();
+
+                        }
+
+                        if (isSuccess)
+                        {
+                            //Commission on Sales 
+                            executionState.text = InvoiceNo;
+                            isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
+
+                        }
+
+
+                        SalesPaymentRegister salesPayment = new SalesPaymentRegister
+                        {
+                            PaymentDate = DateTime.Now,
+                            PaymentAmount = 0,
+                            ProductSalesInfoId = agroSalesProductionInfo.ProductSalesInfoId,
+                            Remarks = "SalesTime",
+                            EntryUserId = userId
+                        };
+                        //paymenttable
+                        _salesPaymentRegisterRepository.Insert(salesPayment);
+                        isSuccess = _salesPaymentRegisterRepository.Save();
+
+
 
                     }
-
-
-                    SalesPaymentRegister salesPayment = new SalesPaymentRegister
-                    {
-                        PaymentDate = DateTime.Now,
-                        PaymentAmount = 0,
-                        ProductSalesInfoId = agroSalesProductionInfo.ProductSalesInfoId,
-                        Remarks = "SalesTime",
-                        EntryUserId = userId
-                    };
-                    //paymenttable
-                    _salesPaymentRegisterRepository.Insert(salesPayment);
-                    isSuccess = _salesPaymentRegisterRepository.Save();
-
 
 
                 }
-
-
             }
+
+
 
             return isSuccess;
         }

@@ -567,7 +567,7 @@
         })
 
         ddlMeasurementName.change(function () {
-            debugger;
+            //debugger;
             //alert("test");
             var data = { MeasurementId: ddlMeasurementName.val() };
 
@@ -585,7 +585,7 @@
 
             var data = { FinishGoodProductId: TryParseInt(ddlProductName.val(), 0), MeasurementId: TryParseInt(ddlMeasurementName.val(), 0) };
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetQtyKG", data)).then(function (res, status) {
-                 debugger;
+                // debugger;
                 console.log(res);
 
                 consoleLog(res.replace(/['"]+/g, ''));
@@ -609,7 +609,7 @@
 
                 let proid = $("#ddlProductName option:selected").val();
                 let fgrid = FGRId;
-                  debugger;
+                 // debugger;
                 var data = { pid: TryParseInt(proid, 0), rid: TryParseInt(fgrid, 0) };
                 $.when(getReqWithData('Html', "Get", "/AgroConfiguration/ProductPrice", data)).then(function (res, status) {
 
@@ -623,18 +623,18 @@
 
 
 
-                debugger;
+               // debugger;
                 $("#txtQuanity").text('(0)');
                 var FinishGoodProductInfoId = ddlProductName.val();
                 var QtyKG = FGRId;
                 if (FinishGoodProductInfoId != "") {
-                    debugger;
+                   // debugger;
                     $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/GetFinishGoodstockCheck', JSON.stringify({ FinishGoodProductInfoId: TryParseInt(ddlProductName.val()), FGRID: QtyKG, MeasurementId: TryParseInt(ddlMeasurementName.val()) }), getToken())).then(function (res, status) {
-                        debugger;
+                      //  debugger;
                         console.log(res);
                         console.log(status);
                         if (status == "success") {
-                            debugger;
+                          //  debugger;
                             disable("#FinishGoodStockQty");
 
 
@@ -671,13 +671,13 @@
 
         function Loadmeasurment()
         {
-            debugger;
+           // debugger;
             clearDropdown("ddlMeasurementName");
             if (ddlProductName.val() != "") {
                 var FinishGoodProductInfoId = ddlProductName.val();
 
                 LoadDropDown('/AgroConfiguration/GetmeasurmentUnitQtyByProductionId', 'POST', ddlMeasurementName, JSON.stringify({ FinishGoodProductInfoId: ddlProductName.val() }));
-                debugger;
+               // debugger;
             }
             else {
                 clearDropdown("ddlMeasurementName");
@@ -689,7 +689,7 @@
 
         $("#btnAddToList").click(function (e) {
             e.preventDefault();
-            debugger;
+            //debugger;
 
             if (validates() == true) {
 
@@ -716,9 +716,10 @@
                 var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
                 var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
                 var td13 = "<td class='hide '>" + ddlQtyUnitname.val() + "</td>";
+                var td14 = "<td class='hide '>" + ddlQtyUnit.val() + "</td>"; 
 
 
-                var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + "</tr>";
+                var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + "</tr>";
 
 
 
@@ -771,13 +772,13 @@
                     console.log("length: " + len);
 
                     if (material == "False") {
-                        debugger;
-                        alert("Insufficient RawMaterial");
+                        //debugger;
+                        toastrErrorAlert("Insufficient Product");
                     }
                     else {
-                        debugger;
+                        //debugger;
                         $.each(material, function (index, value) {
-                            debugger;
+                           // debugger;
 /*                            var sl = $("#tblListpackage tbody tr").length;*/
                             var td1 = "<td class='text-center'>" + value.FinishGoodProductName + "</td>";
                             var td2 = "<td class='text-center'>" + value.MeasurementName + "</td>";
@@ -840,7 +841,7 @@
 
         txtQuanity.keyup(function () {
             if (txtQuanity.val() >= 0) {
-                debugger;
+                //debugger;
 
                 calculateTotal();
 
@@ -873,7 +874,7 @@
 
 
         function payabl() {
-            debugger;
+           // debugger;
             consoleLog(txtTotalAmount.val());
             consoleLog(ddlttdis.val());
             var pay = txtTotalAmount.val() - ddlttdis.val();
@@ -1063,7 +1064,7 @@
 
                 bootbox.confirm("Are you sure you want to Save this Sales", function (result) {
                     if (result) {
-                        debugger;
+                        //debugger;
                         //disable("#btnSubmit");
                         //getTargetItemAndItemTypeAndWarehouse();
                         var totalsub = $('.totalsub').text();//initilize class total
@@ -1074,7 +1075,7 @@
 
                         $.each($("#tblList tbody tr"), function (index, item) {
                             var tds = $(this).children('td');
-                            debugger;
+                            //debugger;
                             details.push({
                                ProductSalesDetailsId: 0,
                                MeasurementId: tds.eq(11).html(),
@@ -1085,6 +1086,7 @@
                                MeasurementSize: tds.eq(2).html(),
                                DiscountTk: tds.eq(7).html(),
                                QtyKG: tds.eq(12).html(),
+                               FGRId: tds.eq(13).html(),
 
 
 
@@ -1098,7 +1100,7 @@
 
                         $.each($("#tblListpackage tbody tr"), function (index, item) {
                             var tds = $(this).children('td');
-                            debugger;
+                           // debugger;
                             details.push({
                                 ProductSalesDetailsId: 0,
                                 MeasurementId: tds.eq(5).html(),
@@ -1125,23 +1127,26 @@
                         $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAgroProductSalesInfo', data , getToken())).then(function (res, status)
                         {
                             debugger;
-                            if (res.isSucccess === true) {
+                            if (res.isSucccess === true)
+                            {
                                 $('.toastrDefaultSuccess').trigger('click');
                                 var InvoiceNo = res.File;
                                 window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + InvoiceNo, '_blank');
-                                //window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + res.File, '_blank');
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("GetAgroSalesProductList")');
                                 }, 500);
-                               // printJS({ printable: res.File, type: 'pdf', base64: true });
 
-                                //resetUI();
                             }
-                            else {
+                            if (res === false)
+                            {
+                                toastrErrorAlert("Insufficient Product");
+                                //alert("Insufficient Product");
+                            }
+                            else
+                            {
                                 $('.toastrDefaultError').trigger('click');
                             }
-                            //var InvoiceNo = res.File;
-                            //window.open("/AgroConfiguration/AgroProductSalesReport?InvoiceNo=" + InvoiceNo);
+
 
                             enable("#btnSubmit");
                         }).fail(function (error) {
