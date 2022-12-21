@@ -263,6 +263,9 @@
                             <button type="button" class="btn btn-tool bg-black" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
                             </button>
+                            <button type="button" class="btn btn-tool bg-red" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -376,6 +379,10 @@
                                 <button type="button" class="btn btn-tool bg-black" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>
+                                <button type="button" id="rrrr" class="btn btn-tool bg-red" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+
                             </div>
                         </div>
                         <div class="card-body px-0 py-0">
@@ -1170,6 +1177,33 @@
             window.location.replace(page);
         }
 
+
+
+                $(document).on("click", "#rrrr", function (e) {
+                    e.preventDefault();
+                    debugger;
+
+                    if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                        if (result === true) {
+                            debugger;
+   
+                            $("#tblListpackage tbody").empty();
+
+                            var tt = parseFloat($(".totalsubpackage").text())
+
+                            var mtotal = parseFloat(ddlpayableamount.val()) - parseFloat($(".totalsubpackage").text())
+                            ddlpayableamount.val(mtotal);
+
+                            var rtotal = 0;
+                            $('.totalsubpackage').text(rtotal);
+
+
+
+                        };
+                    }));
+
+
+                })
             </script>
 
         }

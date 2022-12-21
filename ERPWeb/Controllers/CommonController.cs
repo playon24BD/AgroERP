@@ -79,7 +79,7 @@ namespace ERPWeb.Controllers
         [HttpPost, ValidateJsonAntiForgeryToken]
         public ActionResult IsEmailExist(string email, long id)
         {
-            bool isEmailExist = _appUserBusiness.GetAllAppUsers().Where(u => u.Email.ToLower() == email.ToLower() && u.UserId != id).FirstOrDefault() != null;
+            bool isEmailExist = _appUserBusiness.GetAllAppUsers().Where(u => u.Email == email && u.UserId != id).FirstOrDefault() != null;
 
             return Json(isEmailExist);
         }
