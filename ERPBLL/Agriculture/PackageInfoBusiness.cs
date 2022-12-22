@@ -159,8 +159,9 @@ where 1=1 {0}
                 string query = string.Empty;
                 string param = string.Empty;
 
-                query = string.Format(@"SELECT * FROM tblPackageInfo	
-Where 1=1 ", Utility.ParamChecker(param));
+                query = string.Format(@"SELECT * FROM tblPackageInfo g
+where 1=1 and g.EndDate > GETDATE()	
+", Utility.ParamChecker(param));
 
                 return query;
             }
