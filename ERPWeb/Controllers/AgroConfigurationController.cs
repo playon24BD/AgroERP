@@ -2485,7 +2485,7 @@ namespace ERPWeb.Controllers
             }
             var userid = User.UserId;
             //var code = "SC-" + DateTime.Now.Year + "/U-" + userid + "/" + max;
-            var code = "SC-100000" + max;
+            var code = "ST-000" + max;
             ViewBag.code = code;
             return View();
         }

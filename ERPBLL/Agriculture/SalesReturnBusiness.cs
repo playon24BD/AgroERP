@@ -84,6 +84,7 @@ where 1=1 {0} order by sr.SalesReturnId Desc", Utility.ParamChecker(param));
         public bool SaveSalesReturn(List<SalesReturnDTO> detailsDTO, long userId , long orgid)
         {
             bool IsSuccess = false;
+            var Returncode = "RC-" + DateTime.Now.ToString("ss") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("yy");
             List<SalesReturn> salesReturns = new List<SalesReturn>();
             foreach (var item in detailsDTO)
             {
@@ -109,7 +110,7 @@ where 1=1 {0} order by sr.SalesReturnId Desc", Utility.ParamChecker(param));
                 {
 
 
-                    var Returncode = "RC-" + DateTime.Now.ToString("ss") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("yy");
+                    
 
                     SalesReturn salesReturn = new SalesReturn()
                     {
@@ -121,7 +122,7 @@ where 1=1 {0} order by sr.SalesReturnId Desc", Utility.ParamChecker(param));
                         ReturnQuanity = item.ReturnQuanity,
                         BoxQuanity = TotalreturnproductQty,
                         ReturnPerUnitPrice = item.ReturnPerUnitPrice,
-                        Status = "NOTADJUST",
+                        Status = "ADJUST",
                         FinishGoodProductInfoId = item.FinishGoodProductInfoId,
                        
                         ProductSalesInfoId = item.ProductSalesInfoId,

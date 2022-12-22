@@ -1403,16 +1403,26 @@ inner join tblStockiestInfo st on info.StockiestId=st.StockiestId
 
 
                 query = string.Format(@"	
-select sales.StockiestId,sales.ChallanNo,sales.DriverName,sales.DeliveryPlace,sales.VehicleType,sales.VehicleNumber,sales.TotalAmount,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName,
-
-
+select distinct *,(t.copsdSum+t.phsum)CommisionAmount from (select sales.StockiestId,sales.ChallanNo,sales.DriverName,sales.DeliveryPlace,
+sales.VehicleType,sales.VehicleNumber,sales.DueAmount,
+sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName,
 Amount = ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0),
-(sales.TotalAmount)-ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0)as TotalAmount
+
+TotalAmount=(sales.TotalAmount)-ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0),
 
 
-from tblProductSalesInfo sales
-inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId  Where 1=1 {0}              
-and sales.Status is null  order by sales.ProductSalesInfoId desc
+	  (select sum(TotalCommission) from tblCommisionOnProductSalesDetails copsd where copsd.CommissionOnProductOnSalesId=tconps.CommissionOnProductOnSalesId )copsdSum,
+	  ( select sum(isnull(CommisionAmount,0)) from tblProductSalesPaymentHistory psph where psph.ProductSalesInfoId=tconps.ProductSalesInfoId)phsum
+	 from tblCommissionOnProductSales tconps
+	  Inner join tblCommisionOnProductSalesDetails cpsd
+            on tconps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId
+	   Inner join tblProductSalesInfo sales
+            on sales.ProductSalesInfoId=tconps.ProductSalesInfoId
+			Inner join tblStockiestInfo stock
+            on sales.StockiestId=stock.StockiestId
+where 1=1 {0}
+
+	 ) t  
 
 ", Utility.ParamChecker(param));
 

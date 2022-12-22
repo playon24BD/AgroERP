@@ -31,34 +31,42 @@
         border-radius: 6px;
     }
 </style>
-<div class="row" style="margin-top:-60px">
+<div class="row mb-5" style="margin-top:-60px">
     <div class="col-md-12">
-        <div class="card card-navy shadow">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-md-3">
 
-                        <a href="/AgroConfiguration/GetAgroSalesProductList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
-                            <i class="fas fa-arrow-alt-circle-left"></i>
-                        </a>
-                    </div>
-                    <div class="col-md-5">
-                        <h5 class="text-center text-bold">Challan & Invoice Posting</h5>
-                    </div>
 
-                    <div class="col-md-3">
+        <div class="row" style="margin-top:-2px">
+            <div class="col-md-12">
+                <div class="card" style="background-color:#001f3f">
+                    <div class="px-2 py-1">
+                        <div class="row">
+                            <div class="col-md-3">
 
-                        @*<input type="number" id="ddlpayablXeamount" name="ddlpayableamount" class="form-control form-control-sm" readonly />*@
-                    </div>
-                    <div class="col-md-1" style="margin-top:0px;">
+                                <a href="/AgroConfiguration/GetAgroSalesProductList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                                    <i class="fas fa-arrow-alt-circle-left"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-5">
+                                <h5 class="text-center text-white text-bold">Challan & Invoice Posting</h5>
+                            </div>
 
-                        <div class="clearfix">
-                            <button type="submit" class="btn btn-sm btn-success float-right" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
+                            <div class="col-md-3">
+
+                                @*<input type="number" id="ddlpayablXeamount" name="ddlpayableamount" class="form-control form-control-sm" readonly />*@
+                            </div>
+                            <div class="col-md-1" style="margin-top:0px;">
+
+                                <div class="clearfix">
+                                    <button type="submit" class="btn btn-sm btn-success float-right" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card-body mb-5">
+        </div>
+
+     
 
                 <div class="card shadow" style="background-color: white; margin-top: -15px ">
                     <div class="px-3 py-2">
@@ -79,9 +87,9 @@
                                 <span class="error hide req-DepotName font-weight-bold">Depot Name is required!</span>
                             </div>
                             @*<div class="col-md-2">
-                        <label for="ddlDepotName" class="col-form-label pt-0">Depot</label>
-                        <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
-                    </div>*@
+                            <label for="ddlDepotName" class="col-form-label pt-0">Depot</label>
+                            <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
+                        </div>*@
 
                             <div class="col-md-2">
 
@@ -255,7 +263,7 @@
                 </div>
 
                 @*Package*@
-                <div class="card card-default" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
+                <div class="card card-default " style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
                     <div class="card-header">
                         <h3 class="card-title text-white">Package Sale</h3>
 
@@ -310,7 +318,7 @@
 
 
 
-                <div class="card card-default" id="card1" style="background-color: #2E8B57; margin-top: 10px; margin-bottom: -5px;">
+                <div class="card card-default mb-5" id="card1" style="background-color: #2E8B57; margin-top: 10px; margin-bottom: -5px;">
                     <div class="card-header">
                         <h3 class="card-title text-white">Product Sales Details</h3>
 
@@ -320,7 +328,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body px-0 py-0" >
+                    <div class="card-body px-0 py-0">
                         <div class="card-body table-responsive p-0" style="height: 200px;">
                             <table class="table table-head-fixed text-nowrap tadd" id="tblList">
                                 <thead>
@@ -367,96 +375,94 @@
                 </div>
 
 
-                   
-                    @*E*@
+
+                @*E*@
 
 
-                    <div class="card card-default" id="card2" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
-                        <div class="card-header">
-                            <h3 class="card-title text-white">Package Sales Details</h3>
+                <div class="card card-default mb-5" id="card2" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
+                    <div class="card-header">
+                        <h3 class="card-title text-white">Package Sales Details</h3>
 
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool bg-black" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" id="rrrr" class="btn btn-tool bg-red" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                                <button type="button" id="rrrr" class="btn btn-tool bg-red" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
+                        <div class="card-tools">
+                            <button type="button" id="rrrr" class="btn btn-tool bg-red">
+                                Remove
+                                @*<i class="fas fa-times">Remove</i>*@
+                            </button>
+                            <button type="button" class="btn btn-tool bg-black" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool bg-red" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
 
 
-                            </div>
+
                         </div>
-                        <div class="card-body px-0 py-0">
-                            <div class="card-body table-responsive p-0" style="height: 200px;">
-                                <table class="table table-head-fixed text-nowrap tadd" id="tblListpackage">
-                                    <thead>
-                                        <tr class="text-center" style="color:black">
-                                            <th style="width:10%">Product Name</th>
-                                            <th style="width:10%">Measurement Desc</th>
-                                            <th style="width:5%">Quanity</th>
-                                            <th style="width:10%">Amount(Tk.)</th>
-                                            <th style="width:1%" class="hide ProductId"></th>
-                                            <th style="width:1%" class="hide MeasurementId"></th>
-                                            <th style="width:1%" class="hide FGRID"></th>
-                                            <th style="width:1%" class="hide Packageid"></th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-gradient-gray"></tbody>
-                                </table>
-                            </div>
-
-                            @*Total*@
-                            <table class="table table-head-fixed text-nowrap tablesubtotalpackage">
+                    </div>
+                    <div class="card-body px-0 py-0">
+                        <div class="card-body table-responsive p-0" style="height: 200px;">
+                            <table class="table table-head-fixed text-nowrap tadd" id="tblListpackage">
                                 <thead>
-                                    <tr class="text-center">
+                                    <tr class="text-center" style="color:black">
+                                        <th style="width:10%">Product Name</th>
+                                        <th style="width:10%">Measurement Desc</th>
+                                        <th style="width:5%">Quanity</th>
+                                        <th style="width:10%">Amount(Tk.)</th>
+                                        <th style="width:1%" class="hide ProductId"></th>
+                                        <th style="width:1%" class="hide MeasurementId"></th>
+                                        <th style="width:1%" class="hide FGRID"></th>
+                                        <th style="width:1%" class="hide Packageid"></th>
 
-                                        <th>Total</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th class="totalsubpackage">0</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-gradient-gray"></tbody>
                             </table>
-                            @*Total*@
                         </div>
 
+                        @*Total*@
+                        <table class="table table-head-fixed text-nowrap tablesubtotalpackage">
+                            <thead>
+                                <tr class="text-center">
+
+                                    <th>Total</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="totalsubpackage">0</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-gradient-gray"></tbody>
+                        </table>
+                        @*Total*@
                     </div>
-
-
-
-
-
 
                 </div>
 
 
 
-            </div>
-    </div>
-</div>
 
 
 
 
-        <!-- SELECT2 EXAMPLE -->
+        </div>
+ </div>
+
+
+
+
+                <!-- SELECT2 EXAMPLE -->
 
 
 
 
 
 
-        @section scripts{
+                @section scripts{
 
-            <script type="text/javascript">
+                    <script type="text/javascript">
 
         var ddlClientName = $("#ddlClientName");
         var ddlDepotName = $("#ddlDepotName");
@@ -727,7 +733,7 @@
                 var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
                 var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
                 var td13 = "<td class='hide '>" + ddlQtyUnitname.val() + "</td>";
-                var td14 = "<td class='hide '>" + ddlQtyUnit.val() + "</td>"; 
+                var td14 = "<td class='hide '>" + ddlQtyUnit.val() + "</td>";
 
 
                 var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + "</tr>";
@@ -1190,7 +1196,7 @@
                     if (bootbox.confirm("Are you sure you want to delete?", function (result) {
                         if (result === true) {
                             debugger;
-   
+
                             $("#tblListpackage tbody").empty();
 
                             var tt = parseFloat($(".totalsubpackage").text())
@@ -1208,6 +1214,6 @@
 
 
                 })
-            </script>
+                    </script>
 
-        }
+                }
