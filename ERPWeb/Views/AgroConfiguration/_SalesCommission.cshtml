@@ -36,8 +36,8 @@
                 <td class="text-center ">
                     <span class="@badge">@item.PaymentMode</span>
                 </td>
-                <td class="text-center">@item.TotalAmount</td>
-                <td class="text-center">@item.TotalCommission</td>
+                <td class="text-center">@item.TotalAmount.ToString("0.00")</td>
+                <td class="text-center">@item.TotalCommission.ToString("0.00")</td>
                 <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
                 @*<td class="text-center hide">@item.CommissionOnProductOnSalesId</td>*@
 

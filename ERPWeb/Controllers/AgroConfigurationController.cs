@@ -5529,14 +5529,14 @@ namespace ERPWeb.Controllers
             var status = "ADJUST";
             var sram = _salesReturn.GetAgroSalesreturnByStokiestId(id, status).Where(d => d.StockiestId == id).ToList();
             var totalreturn = sram.Sum(rr => rr.ReturnTotalPrice);
-            var totalbill = totalbilll - totalreturn;
+            var totalbill = (totalbilll - totalreturn).ToString("0.00");
             return Json(totalbill, JsonRequestBehavior.AllowGet);
 
         }
         public ActionResult GetStokistTotalPaid(long id)
         {
             var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(p => p.StockiestId == id).ToList();
-            var totalpaid = stokiestid.Sum(pa => pa.PaidAmount);
+            var totalpaid = stokiestid.Sum(pa => pa.PaidAmount).ToString("0.00");
             return Json(totalpaid, JsonRequestBehavior.AllowGet);
 
         }
@@ -5551,7 +5551,7 @@ namespace ERPWeb.Controllers
             var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(d => d.StockiestId == id).ToList();
             var totaldues = stokiestid.Sum(du => du.DueAmount);
 
-            var totaldue = totaldues;
+            var totaldue = totaldues.ToString("0.00");
 
 
             return Json(totaldue, JsonRequestBehavior.AllowGet);
@@ -5563,7 +5563,7 @@ namespace ERPWeb.Controllers
             var status = "ADJUST";
             var stokiestid = _salesReturn.GetAgroSalesreturnByStokiestId(id, status).Where(d => d.StockiestId == id).ToList();
 
-            var totalreturn = stokiestid.Sum(rr => rr.ReturnTotalPrice);
+            var totalreturn = stokiestid.Sum(rr => rr.ReturnTotalPrice).ToString("0.00");
             return Json(totalreturn, JsonRequestBehavior.AllowGet);
 
         }

@@ -40,12 +40,12 @@
                     <span class="@badge">@item.InvoiceNo</span>
                 </td>
                 <td class="text-center">@item.InvoiceDate.Value.ToString("yyyy-MMM-dd")</td>
-                <td class="text-center">@item.TotalAmount</td>
-                <td class="text-center TotalAmount" data-val="@item.PaidAmount">
-                    <span class="@badges">@item.PaidAmount</span>
+                <td class="text-center">@item.TotalAmount.ToString("0.00")</td>
+                <td class="text-center TotalAmount" data-val="@item.PaidAmount.ToString("0.00")">
+                    <span class="@badges">@item.PaidAmount.ToString("0.00")</span>
                 </td>
-                <td class="text-center">@item.DueAmount</td>
-                <td class="text-center">@item.CommisionAmount</td>
+                <td class="text-center">@item.DueAmount.ToString("0.00")</td>
+                <td class="text-center">@item.CommisionAmount.ToString("0.00")</td>
 
                 <td class="hide">
                     @{
@@ -88,10 +88,10 @@
     <tr>
         <td colspan="2"></td>
         <td class="text-bold" style="text-align:center" colspan="1">Total(TK): </td>
-        <td colspan="1" style="text-align:center"><b>@total</b></td>
-        <td colspan="1" style="text-align:center"><b>@totalpaid</b></td>
-        <td colspan="1" style="text-align:center"><b>@totaldue</b></td>
-        <td colspan="1" style="text-align:center"><b>@totalcom</b></td>
+        <td colspan="1" style="text-align:center"><b>@total.ToString("0.00")</b></td>
+        <td colspan="1" style="text-align:center"><b>@totalpaid.ToString("0.00")</b></td>
+        <td colspan="1" style="text-align:center"><b>@totaldue.ToString("0.00")</b></td>
+        <td colspan="1" style="text-align:center"><b>@totalcom.ToString("0.00")</b></td>
 
     </tr>
 </table>

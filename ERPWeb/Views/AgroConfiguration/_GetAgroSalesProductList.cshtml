@@ -35,9 +35,9 @@
             <td class="text-center">@item.InvoiceNo</td>
             <td class="text-center">@item.InvoiceDate.Value.ToString("yyyy-MMM-dd")</td>
             <td class="text-center">@item.StockiestName</td>
-            <td class="text-center">@item.TotalAmount</td>
-            <td class="text-center">@item.PaidAmount</td>
-            <td class="text-center">@item.DueAmount</td>
+            <td class="text-center">@item.TotalAmount.ToString("N2")</td>
+            <td class="text-center">@item.PaidAmount.ToString("N2")</td>
+            <td class="text-center">@item.DueAmount.ToString("N2")</td>
             <td class="text-center">@User.UserName</td>
             @*<td class="hide">@item.UnitId</td>*@
             @*<td>@item.EntryDate.Value.ToString("dd-MMM-yyyy hh:mm tt")</td>*@
