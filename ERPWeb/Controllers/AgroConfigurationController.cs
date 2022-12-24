@@ -3156,7 +3156,7 @@ namespace ERPWeb.Controllers
             var proprice = _productPriceConfiguration.GetPriceByproandfgrId(pid, rid).ProductPrice;
 
 
-            return Json(proprice, JsonRequestBehavior.AllowGet);
+            return Json(proprice.ToString("0.00"), JsonRequestBehavior.AllowGet);
 
         }
 

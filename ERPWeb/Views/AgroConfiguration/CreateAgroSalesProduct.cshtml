@@ -15,8 +15,12 @@
 
 
     table.tadd tr th {
-        background-color: darkcyan !important;
+        background-color: #2E8B57 !important;
         color: black !important;
+    }
+    table.tadds tr th {
+        background-color: #2F4F4F !important;
+        color: white !important;
     }
 
 
@@ -51,8 +55,6 @@
                             </div>
 
                             <div class="col-md-3">
-
-                                @*<input type="number" id="ddlpayablXeamount" name="ddlpayableamount" class="form-control form-control-sm" readonly />*@
                             </div>
                             <div class="col-md-1" style="margin-top:0px;">
 
@@ -65,56 +67,39 @@
                 </div>
             </div>
         </div>
-
-     
-
-                <div class="card shadow" style="background-color: white; margin-top: -15px ">
-                    <div class="px-3 py-2">
+        <div class="row" style="background-color: white; margin-top: -15px ">
+            <div class="col-md-6">
+                @*<div class="card shadow" style="background-color: white; margin-top: -15px ">*@
+                    <div class="px-0 py-2">
 
                         <div class="row small ">
-                            <div class="col-md-2">
-                                <label for="ddlClient" class="col-form-label pt-0">
-                                    Stockiest Name
-                                </label>
-                                @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "--Stockiest Name--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
+                            <div class="col-md-3">
+                                @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "Stockiest", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
                                 <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
                             </div>
-                            <div class="col-md-2">
-                                <label for="ddlClient" class="col-form-label pt-0">
-                                    Depot
-                                </label>
+                            <div class="col-md-3">
                                 @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--DepotName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                 <span class="error hide req-DepotName font-weight-bold">Depot Name is required!</span>
                             </div>
-                            @*<div class="col-md-2">
-                            <label for="ddlDepotName" class="col-form-label pt-0">Depot</label>
-                            <input type="text" id="ddlDepotName" class="form-control form-control-sm" />
-                        </div>*@
-
-                            <div class="col-md-2">
 
 
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="col-form-label pt-0" for="ChallanDate">Challan Date</label>
                                     <div class="input-group-sm date" id="simple">
-
                                         <input type="text" class="form-control" id="ChallanDate" name="date" value="">
                                         <span class="input-group-addon">
                                             <i class="glyphicon glyphicon-calendar"></i>
                                         </span>
                                     </div>
                                 </div>
-
                             </div>
 
 
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
 
                                 <div class="form-group">
-                                    <label class="col-form-label pt-0" for="InvoiceDate">Invoice Date</label>
                                     <div class="input-group-sm date" id="datePicker">
-
                                         <input type="text" class="form-control" id="InvoiceDate" name="date" value="">
                                         <span class="input-group-addon">
                                             <i class="glyphicon glyphicon-calendar"></i>
@@ -123,329 +108,295 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
-                                <label for="ddlPaymentMode" class="col-form-label pt-0">Payment</label>
-                                <select class="form-control form-control-sm" id="ddlPaymentMode">
-                                    <option value="Credit">Credit</option>
-                                    @*<option value="Cash">Cash</option>*@
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label pt-0" for="model">Vehicle Type</label>
-                                <input type="text" id="txtVehicleType" class="form-control form-control-sm  ">
-                            </div>
+
 
                         </div>
-                        <div class="row small">
-                            <div class="col-md-2">
-                                <label class="col-form-label pt-0" for="model">Vehicle No.</label>
-                                <input type="text" id="txtVehicleNumber" class="form-control form-control-sm">
+                        <div class="row small" style="margin-top: -12px ">
+                            <div class="col-md-3">
+                                <select class="form-control form-control-sm" id="ddlPaymentMode">
+                                    <option value="Credit">Credit</option>
+                                </select>
                             </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label pt-0" for="model">Driver Name</label>
-                                <input type="text" id="txtDriverName" class="form-control form-control-sm">
+                            <div class="col-md-3">
+                                <input type="text" placeholder="V.Type" id="txtVehicleType" class="form-control form-control-sm  ">
                             </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label pt-0" for="model">Delivery Place</label>
-                                <input type="text" id="txtDeliveryPlace" class="form-control form-control-sm">
+                            <div class="col-md-3">
+                                <input type="text" placeholder="V.Num" id="txtVehicleNumber" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label pt-0" for="model">Do/ADO/DA</label>
-                                <input type="text" id="txtDo_ADO_DA" class="form-control form-control-sm ">
+                            <div class="col-md-3">
+                                <input type="text" placeholder="D.Name" id="txtDriverName" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label pt-0" for="model">DOADO_Name</label>
-                                <input type="text" id="txtDoADO_Name" class="form-control form-control-sm">
+                        </div>
+                        <div class="row small" style="margin-top: 4px ">
+
+                            <div class="col-md-3">
+                                <input type="text" placeholder="Place" id="txtDeliveryPlace" class="form-control form-control-sm">
                             </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label pt-0" for="model">Payable Amount</label>
+                            <div class="col-md-3">
+                                <input type="text" placeholder="ADO_DA" id="txtDo_ADO_DA" class="form-control form-control-sm ">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" placeholder="DO_ADO" id="txtDoADO_Name" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-md-3">
                                 <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold" readonly />
                             </div>
 
                         </div>
+                        <div class="row small" style="margin-top: 15px ">
+                            <div class="col-md-12">
+                                <div class="card shadow" style="background-color: #2E8B57; margin-top: -10px; margin-bottom: -5px; ">
+                                    <div class="px-2 py-1">
 
-
-                    </div>
-
-                </div>
-
-
-                <div class="card shadow" style="background-color: #2E8B57; margin-top: -10px; margin-bottom: -5px; ">
-                    <div class="px-2 py-1">
-
-                        <div class="row small">
-                            <div class="col-md-2">
-                                <label for="ddlProductName" class="col-form-label text-white">
-                                    Product Name<span style="color:red">*</span>
-                                </label>
-                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
-                            </div>
-                            <div class="hide">
-                                <input type="text" id="ddlQtyUnit" class="form-control form-control-sm" readonly />
-                            </div>
-                            <div class="hide">
-                                <input type="text" id="ddlQtyUnitname" class="form-control form-control-sm" readonly />
-                            </div>
-                            <div class="col-md-3">
-                                <label for="ddlMeasurementName" class="col-form-label text-white">
-                                    Measurement Desc<span style="color:red">*</span>
-                                </label>
-                                @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
-                            </div>
-                            <div class="hide">
-                                <label for="ddlRawMaterial" class="col-form-label text-white">Measurement Size</label>
-                                <input type="text" id="ddlMeasurementSize" class="form-control form-control-sm" readonly />
-
-                            </div>
-                            <div class="col-md-2">
-                                <label for="ddlQuanity" class="col-form-label text-white">Quantity<span style="color:red">*</span></label>
-                                <input type="text" id="txtQuanity" class="form-control form-control-sm" />
-                                <label for="ddlQuantity" class="control-label font-weight-bold text-white">
-                                    Finish Good Qty:
-                                    <span class="text-white" id="FinishGoodStockQty"></span>
-                                </label>
-                                <span class="error hide req-Quanity">Quantity is required</span>
-                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal Product Qty</span>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="ddlPrice" class="col-form-label text-white">Rate/PC</label>
-                                <input type="text" id="txtPrice" class="form-control form-control-sm" readonly />
-                                <span class="error hide req-txtPrice">Price not Configure</span>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="ddlPrice" class="col-form-label text-white">Discount %</label>
-                                <input type="text" id="txtDiscount" class="form-control form-control-sm" />
-
-                            </div>
-
-                            <div class="hide">
-                                <label>SubTotal</label>
-                                <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
-                            </div>
-                            <div class="hide">
-                                <label>Total Discount</label>
-                                <input type="number" id="ddlttdis" name="ddlttdis" class="form-control form-control-sm" readonly />
-                            </div>
-
-                            <div class="hide">
-                                <label>Payable Total</label>
-                                <input type="number" id="ddlpt" name="ddlpt" class="form-control form-control-sm" readonly />
-                            </div>
-
-                            <div class="hide">
-                                <label>TotalQty</label>
-                                <input type="number" id="txtTotalQty" name="TotalQty" class="form-control form-control-sm" readonly />
-                            </div>
-                            <div class="hide">
-                                <label>TotalAmount</label>
-                                <input type="number" id="txtTotalAmount" name="TotalAmount" class="form-control form-control-sm" readonly />
-                            </div>
-                            <div class="hide">
-                                <label>PerQty</label>
-                                <input type="number" id="txtPerQty" name="PerQty" class="form-control form-control-sm" readonly />
-                            </div>
-
-                            <div class="col-md-1 pr-xl-4  pr-lg-3 pr-md-2">
-                                <label for="" class="col-form-label" style="visibility:hidden">Add To List</label>
-                                <div>
-                                    <button type="submit" class="btn btn-sm btn-warning float-right float-md-start text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </div>
-
-                        </div>
+                                        <div class="row small">
+                                            <div class="col-md-6">
+                                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
+                                            </div>
+                                            <div class="hide">
+                                                <input type="text" id="ddlQtyUnit" class="form-control form-control-sm" readonly />
+                                            </div>
+                                            <div class="hide">
+                                                <input type="text" id="ddlQtyUnitname" class="form-control form-control-sm" readonly />
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
+                                            </div>
+                                            <div class="hide">
+                                                <input type="text" id="ddlMeasurementSize" class="form-control form-control-sm" readonly />
+                                            </div>
 
 
 
-                    </div>
 
-                </div>
+                                            <div class="hide">
+                                                <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
+                                            </div>
+                                            <div class="hide">
+                                                <input type="number" id="ddlttdis" name="ddlttdis" class="form-control form-control-sm" readonly />
+                                            </div>
 
-                @*Package*@
-                <div class="card card-default " style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
-                    <div class="card-header">
-                        <h3 class="card-title text-white">Package Sale</h3>
+                                            <div class="hide">
+                                                <input type="number" id="ddlpt" name="ddlpt" class="form-control form-control-sm" readonly />
+                                            </div>
 
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool bg-black" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool bg-red" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
+                                            <div class="hide">
+                                                <input type="number" id="txtTotalQty" name="TotalQty" class="form-control form-control-sm" readonly />
+                                            </div>
+                                            <div class="hide">
+                                                <input type="number" id="txtTotalAmount" name="TotalAmount" class="form-control form-control-sm" readonly />
+                                            </div>
+                                            <div class="hide">
+                                                <input type="number" id="txtPerQty" name="PerQty" class="form-control form-control-sm" readonly />
+                                            </div>
 
-                    <div class="card-body px-0 py-0" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: 0px; ">
+                                        </div>
+                                        <div class="row" style="margin-top: 5px;">
+                                            <div class="col-md-4">
+                                                <input type="text" placeholder="Qty" id="txtQuanity" class="form-control form-control-sm" />
+                                                <label for="ddlQuantity" class="control-label font-weight-bold text-white">
+                                                    StockQty:
+                                                    <span class="text-white" id="FinishGoodStockQty"></span>
+                                                </label>
+                                                <span class="error hide req-Quanity">Quantity is required</span>
+                                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal Product Qty</span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="text" placeholder="Unit Price" id="txtPrice" class="form-control form-control-sm" readonly />
+                                                <span class="error hide req-txtPrice">Price not Configure</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="text" placeholder="Discount%" id="txtDiscount" class="form-control form-control-sm" />
+                                            </div>
+                                            <div class="col-md-1 ">
+                                                <div>
+                                                    <button type="submit" class="btn btn-sm btn-warning float-right float-md-start text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
 
 
-                        <div class="px-0 py-1">
 
-                            <div class="row small justify-content-center">
-                                <div class="col-md-3">
-                                    <label for="ddlPackageName" class="col-form-label text-white pt-0">
-                                        Package Name<span style="color:red">*</span>
-                                    </label>
-                                    @Html.DropDownList("ddlPackageName", (IEnumerable<SelectListItem>)ViewBag.ddlPackageName, "PackageName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                    <span class="error hide req-ProductName font-weight-bold">Package Name is required!</span>
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="ddlPQuanity" class="col-form-label pt-0 text-white">P.Qty<span style="color:red">*</span></label>
-                                    <input type="text" id="ddlPQuanity" class="form-control form-control-sm" />
-                                    <span class="error hide req-ddlPQuanity">Quantity is required</span>
-                                </div>
 
-                                <div class="col-md-1 pr-xl-4  pr-lg-3 pr-md-2">
-                                    <label for="" class="col-form-label pt-0" style="visibility:hidden">Add To List</label>
-                                    <div>
-                                        <button type="submit" class="btn btn-sm btn-success float-left float-md-start text-bold" id="btnAddPackage" title="Save"><i class="fas fa-plus"></i></button>
                                     </div>
+
                                 </div>
 
                             </div>
+                        </div>
+                        <div class="row small" style="margin-top: 0px ">
+                            <div class="col-md-12">
+                                <div class="card shadow" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
 
+                                        <div class="px-0 py-1">
+
+                                            <div class="row small justify-content-center">
+                                                <div class="col-md-3">
+                                                    @Html.DropDownList("ddlPackageName", (IEnumerable<SelectListItem>)ViewBag.ddlPackageName, "PackageName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                    <span class="error hide req-ProductName font-weight-bold">Package Name is required!</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input type="text" id="ddlPQuanity"placeholder="QTY" class="form-control form-control-sm" />
+                                                    <span class="error hide req-ddlPQuanity">Quantity is required</span>
+                                                </div>
+
+                                                <div class="col-md-1 ">
+                                                    <div>
+                                                        <button type="submit" class="btn btn-sm btn-success float-left float-md-start text-bold" id="btnAddPackage" title="Save"><i class="fas fa-plus"></i></button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                @*</div>*@
+            </div>
+            <div class="col-md-6">
+                <div class="row mt-2">
+                    <div class="col-md-12">
+
+                        <div class="card" id="card1">
+
+                            <div class="px-2 py-0">
+                                <div class="row" style="background-color: #2E8B57;">
+                                    <div class="col-md-2">
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h5 class="text-center text-white text-bold">Product Sales</h5>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card-body px-0 py-0">
+                                <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg tadd" id="tblList" style="background-color: white; margin-bottom: -3px ">
+                                    <thead>
+                                        <tr class="text-center" style="color:black">
+
+                                            <th style="width:5%">#SL</th>
+                                            <th style="width:10%">Name</th>
+                                            <th style="width:10%">Mass</th>
+                                            <th style="width:5%">QTY</th>
+                                            <th class="hide" style="width:5%">Total Pc</th>
+                                            <th style="width:5%">Rate</th>
+                                            <th class="hide" style="width:5%">Discount%</th>
+                                            <th style="width:5%">Discount</th>
+                                            <th style="width:10%">Total</th>
+                                            <th style="width:10%">Action</th>
+                                            <th style="width:1%" class="hide ProductId"></th>
+                                            <th style="width:1%" class="hide MeasurementId"></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg table-responsive-sm table-responsive-md tablesubtotal">
+                                    <thead>
+                                        <tr class="text-center">
+
+                                            <th style="width:35%">Total</th>
+                                            <th style="width:7%" class="totalqty">0</th>
+                                            <th style="width:10%" class="totaldis">0</th>
+                                            <th style="width:10%" class="totalsub">0</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+                            </div>
 
 
                         </div>
 
+          
+
+                       
+
+                        
+
+                        @*PackageTable*@
+
+                        <div class="card" id="card2">
+                            <div class="px-2 py-0">
+                                <div class="row" style="background-color: #2F4F4F;">
+                                    <div class="col-md-2">
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h5 class="text-center text-white text-bold">Package Sales Details</h5>
+                                    </div>
+                                    <div class="col-md-2" style="margin-top:0px;">
+                                        <div class="clearfix">
+                                            <button type="button" id="rrrr" class="btn btn-sm btn-danger float-right">
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="card-body px-0 py-0">
+                                <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg tadds" id="tblListpackage" style="background-color: white; margin-bottom: 0px ">
+                                    <thead>
+                                        <tr class="text-center" style="color:black">
+                                            <th style="width:10%">Product </th>
+                                            <th style="width:10%">Measurement</th>
+                                            <th style="width:5%">Quanity</th>
+                                            <th style="width:10%">Amount</th>
+                                            <th style="width:1%" class="hide ProductId"></th>
+                                            <th style="width:1%" class="hide MeasurementId"></th>
+                                            <th style="width:1%" class="hide FGRID"></th>
+                                            <th style="width:1%" class="hide Packageid"></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg table-responsive-sm table-responsive-md tablesubtotalpackage">
+                                    <thead>
+                                        <tr class="text-center">
+
+                                            <th style="width:25%">Total</th>
+                                            <th style="width:25%"></th>
+                                            <th style="width:25%"></th>
+                                            <th style="width:25%" class="totalsubpackage">0</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+
+
 
                     </div>
-
                 </div>
+            </div>
+        </div>
 
 
 
-
-
-                <div class="card card-default mb-5" id="card1" style="background-color: #2E8B57; margin-top: 10px; margin-bottom: -5px;">
-                    <div class="card-header">
-                        <h3 class="card-title text-white">Product Sales Details</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool bg-black" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body px-0 py-0">
-                        <div class="card-body table-responsive p-0" style="height: 200px;">
-                            <table class="table table-head-fixed text-nowrap tadd" id="tblList">
-                                <thead>
-                                    <tr class="text-center" style="color:black">
-
-                                        <th style="width:5%">#SL</th>
-                                        <th style="width:10%">Name</th>
-                                        <th style="width:10%">Measurement Desc</th>
-                                        <th style="width:5%">Quanity</th>
-                                        <th class="hide" style="width:5%">Total Pc</th>
-                                        <th style="width:5%">Rate/PC</th>
-                                        <th style="width:5%">Discount%</th>
-                                        <th style="width:5%">Discount(Tk.)</th>
-                                        <th style="width:10%">Amount(Tk.)</th>
-                                        <th style="width:10%">Action</th>
-                                        <th style="width:1%" class="hide ProductId"></th>
-                                        <th style="width:1%" class="hide MeasurementId"></th>
-
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-gradient-gray"></tbody>
-                            </table>
-                        </div>
-
-                        @*Total*@
-                        <table class="table table-head-fixed text-nowrap tablesubtotal">
-                            <thead>
-                                <tr class="text-center">
-
-                                    <th>Total</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th class="totalqty">0</th>
-                                    <th class="totaldis">0</th>
-                                    <th class="totalsub">0</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-gradient-gray"></tbody>
-                        </table>
-                        @*Total*@
-                    </div>
-                </div>
-
-
-
-                @*E*@
-
-
-                <div class="card card-default mb-5" id="card2" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
-                    <div class="card-header">
-                        <h3 class="card-title text-white">Package Sales Details</h3>
-
-                        <div class="card-tools">
-                            <button type="button" id="rrrr" class="btn btn-tool bg-red">
-                                Remove
-                                @*<i class="fas fa-times">Remove</i>*@
-                            </button>
-                            <button type="button" class="btn btn-tool bg-black" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool bg-red" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-
-
-
-                        </div>
-                    </div>
-                    <div class="card-body px-0 py-0">
-                        <div class="card-body table-responsive p-0" style="height: 200px;">
-                            <table class="table table-head-fixed text-nowrap tadd" id="tblListpackage">
-                                <thead>
-                                    <tr class="text-center" style="color:black">
-                                        <th style="width:10%">Product Name</th>
-                                        <th style="width:10%">Measurement Desc</th>
-                                        <th style="width:5%">Quanity</th>
-                                        <th style="width:10%">Amount(Tk.)</th>
-                                        <th style="width:1%" class="hide ProductId"></th>
-                                        <th style="width:1%" class="hide MeasurementId"></th>
-                                        <th style="width:1%" class="hide FGRID"></th>
-                                        <th style="width:1%" class="hide Packageid"></th>
-
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-gradient-gray"></tbody>
-                            </table>
-                        </div>
-
-                        @*Total*@
-                        <table class="table table-head-fixed text-nowrap tablesubtotalpackage">
-                            <thead>
-                                <tr class="text-center">
-
-                                    <th>Total</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th class="totalsubpackage">0</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-gradient-gray"></tbody>
-                        </table>
-                        @*Total*@
-                    </div>
-
-                </div>
-
-
-
-
-
-
+    
 
         </div>
  </div>
@@ -572,14 +523,6 @@
 
             $('#card1').hide();
             $('#card2').hide();
-
-
-            //$('#tblList').hide();
-            //$('.tablesubtotal').hide();
-
-            //package
-            //$('#tblListpackage').hide();
-            //$('.tablesubtotalpackage').hide();
 
         })
 
@@ -719,9 +662,9 @@
 
 
                    var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
-                   var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
-                   var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
-                   var td7 = "<td class='text-center'>" + txtDiscount.val() + "</td>";
+                var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
+                var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
+                   var td7 = "<td class='text-center hide'>" + txtDiscount.val() + "</td>";
 
                    var td8 = "<td class='text-center DiscountIDCell'>" + ddlttdis.val() + "</td>";
 
@@ -742,23 +685,23 @@
 
                     //totalprice
                 to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
-                    $('.totalsub').text(to);
+                $('.totalsub').text(to.toFixed(2));
                     console.log(to);
                     //totalprice
                     //tqty
                 to1 = parseFloat($('.totalqty').text()) + parseFloat(txtQuanity.val());
-                    $('.totalqty').text(to1);
+                $('.totalqty').text(to1.toFixed(2));
                     console.log(to1);
                     //tqty
                     //tdis
                 to2 = parseFloat($('.totaldis').text()) + parseFloat(ddlttdis.val());
-                 $('.totaldis').text(to2);
+                $('.totaldis').text(to2.toFixed(2));
                     console.log(to2);
                     //tqty
 
 
                 var totalsu = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
-                ddlpayableamount.val(totalsu);
+                ddlpayableamount.val(totalsu.toFixed(2));
 
                     $("#tblList tbody").append(tr);
 
@@ -815,8 +758,8 @@
                             console.log((value.Amount * ddlPQuanity.val()));
 
 
-                            to = parseFloat($('.totalsubpackage').text()) + (value.Amount * ddlPQuanity.val()) ;
-                            $('.totalsubpackage').text(to);
+                            to = parseFloat($('.totalsubpackage').text()) + (value.Amount * ddlPQuanity.val());
+                            $('.totalsubpackage').text(to.toFixed(2));
                             console.log(to);
 
 
@@ -825,7 +768,7 @@
                         })
                         $('#card2').show();
                         var totalsut = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
-                        ddlpayableamount.val(totalsut);
+                        ddlpayableamount.val(totalsut.toFixed(2));
 
 
                     }
@@ -1050,20 +993,24 @@
                     removeTableRow("#tblList tbody", index);
                     fnFixTheTbodyRowSerialInDecsOrder("#tblList", index);
 
+                    debugger;
+                    console.log(parseFloat($(".totalsubpackage").text()));
 
+                    var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal);
+                    $('.totalsub').text(totals.toFixed(2));
 
-                    var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal) + parseFloat($('.totalsubpackage').text());
-                    $('.totalsub').text(totals);
+     
 
                     var totalsq = parseFloat($(".totalqty").text()) - parseFloat(row);
                     $('.totalqty').text(totalsq);
 
                     var totalsd = parseFloat($(".totaldis").text()) - parseFloat(row1);
-                    $('.totaldis').text(totalsd);
+                    $('.totaldis').text(totalsd.toFixed(2));
 
-
-                   // var totalsu = $('.totalsub').text();//initilize class total
-                    ddlpayableamount.val(totals);
+                    var mtotals = parseFloat($(".totalsub").text()) + parseFloat($(".totalsubpackage").text())
+                   // ddlpayableamount.val(mtotal);
+                    // var totalsu = $('.totalsub').text();//initilize class total
+                    ddlpayableamount.val(mtotals.toFixed(2));
 
                 };
             }));
@@ -1202,11 +1149,11 @@
                             var tt = parseFloat($(".totalsubpackage").text())
 
                             var mtotal = parseFloat(ddlpayableamount.val()) - parseFloat($(".totalsubpackage").text())
-                            ddlpayableamount.val(mtotal);
+                            ddlpayableamount.val(mtotal.toFixed(2));
 
                             var rtotal = 0;
-                            $('.totalsubpackage').text(rtotal);
-
+                            $('.totalsubpackage').text(rtotal.toFixed(2));
+                            $('#card2').hide();
 
 
                         };
