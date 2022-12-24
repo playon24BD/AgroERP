@@ -150,7 +150,7 @@
                                     <div class="px-2 py-1">
 
                                         <div class="row small">
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                                 <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
                                             </div>
@@ -160,7 +160,7 @@
                                             <div class="hide">
                                                 <input type="text" id="ddlQtyUnitname" class="form-control form-control-sm" readonly />
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                                 <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
                                             </div>
@@ -192,8 +192,30 @@
                                                 <input type="number" id="txtPerQty" name="PerQty" class="form-control form-control-sm" readonly />
                                             </div>
 
+                                            <div class="col-md-2">
+                                                <input type="text" placeholder="Qty" id="txtQuanity" class="form-control form-control-sm" />
+                                                <label for="ddlQuantity" class="control-label font-weight-bold text-white">
+                                                    StockQty:
+                                                    <span class="text-white" id="FinishGoodStockQty"></span>
+                                                </label>
+                                                <span class="error hide req-Quanity">Quantity is required</span>
+                                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal Product Qty</span>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="text" placeholder="Unit Price" id="txtPrice" class="form-control form-control-sm" readonly />
+                                                <span class="error hide req-txtPrice">Price not Configure</span>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <input type="text" placeholder="Discount%" id="txtDiscount" class="form-control form-control-sm" />
+                                            </div>
+                                            <div class="col-md-1 ">
+                                                <div>
+                                                    <button type="submit" class="btn btn-sm btn-warning float-right float-md-start text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+
                                         </div>
-                                        <div class="row" style="margin-top: 5px;">
+                                        @*<div class="row" style="margin-top: 5px;">
                                             <div class="col-md-4">
                                                 <input type="text" placeholder="Qty" id="txtQuanity" class="form-control form-control-sm" />
                                                 <label for="ddlQuantity" class="control-label font-weight-bold text-white">
@@ -215,7 +237,7 @@
                                                     <button type="submit" class="btn btn-sm btn-warning float-right float-md-start text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>*@
 
 
 
