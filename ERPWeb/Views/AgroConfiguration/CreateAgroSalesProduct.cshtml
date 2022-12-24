@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="background-color: white; margin-top: -15px ">
+        <div class="row" style="background-color: white; margin-top: -23px ">
             <div class="col-md-6">
                 @*<div class="card shadow" style="background-color: white; margin-top: -15px ">*@
                     <div class="px-0 py-2">
@@ -265,7 +265,7 @@
                 <div class="row mt-2">
                     <div class="col-md-12">
 
-                        <div class="card" id="card1">
+                        <div class="card" id="card11">
 
                             <div class="px-2 py-0">
                                 <div class="row" style="background-color: #2E8B57;">
@@ -666,9 +666,9 @@
                 var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
                    var td7 = "<td class='text-center hide'>" + txtDiscount.val() + "</td>";
 
-                   var td8 = "<td class='text-center DiscountIDCell'>" + ddlttdis.val() + "</td>";
+                var td8 = "<td class='text-center DiscountIDCell'>" + Number(ddlttdis.val()).toFixed(2) + "</td>";
 
-                  var td9 = "<td class='text-center TotalIDCell'>" + ddlpt.val()  + "</td>";
+                var td9 = "<td class='text-center TotalIDCell'>" + Number(ddlpt.val()).toFixed(2) + "</td>";
 
                 var td10 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
@@ -743,7 +743,7 @@
                             var td1 = "<td class='text-center'>" + value.FinishGoodProductName + "</td>";
                             var td2 = "<td class='text-center'>" + value.MeasurementName + "</td>";
                             var td3 = "<td class='text-center'>" + (value.Quanity * ddlPQuanity.val()) + "</td>";
-                            var td4 = "<td class='text-center'>" + (value.Amount * ddlPQuanity.val()) + "</td>";
+                            var td4 = "<td class='text-center'>" + Number(value.Amount * ddlPQuanity.val()).toFixed(2) + "</td>";
                             var td5 = "<td class='text-center hide'>" + value.FinishGoodProductId + "</td>";
                             var td6 = "<td class='text-center hide'>" + value.MeasurementId + "</td>";
                             var td7 = "<td class='text-center hide'>" + value.FGRId + "</td>";
