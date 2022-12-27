@@ -5,7 +5,7 @@
     string badge1 = string.Empty;
 }
 <div class="row">
-    <div class="col-md-12" style="overflow-y:scroll">
+    <div class="col-md-12 px-0">
         <table class="table table-bordered table-sm table-striped table-responsive-lg tblAppUserData" id="tblAppUserData">
             <thead class="btn-dark">
                 <tr class="text-center">
@@ -147,11 +147,11 @@
                         <td class="text-center">
                             @if (ViewBag.OPFor == "System")
                             {
-                                <a href="@Url.Action("CreateAppUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
+                                <a href="@Url.Action("CreateAppUser","ControlPanel",new {id=user.UserId })" class="das-btn"><i class="fa fa-pen"></i> Edit</a>
                             }
                             @if (ViewBag.OPFor == "Client")
                             {
-                                <a href="@Url.Action("CreateClientUser","ControlPanel",new {id=user.UserId })" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i> Edit</a>
+                                <a href="@Url.Action("CreateClientUser","ControlPanel",new {id=user.UserId })" class="das-btn"><i class="fa fa-pen"></i> Edit</a>
                             }
                         </td>
                     </tr>

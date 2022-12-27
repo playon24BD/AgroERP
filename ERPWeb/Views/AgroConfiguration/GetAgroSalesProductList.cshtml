@@ -13,12 +13,12 @@
         <div class="row" style="margin-top:-12px">
             <div class="col-md-12">
                 <div class="card" style="background-color:#001f3f">
-                    <div class="px-2 py-1">
-                        <div class="row">
+                    <div class="px-2 py-1 pb-0">
+                        <div class="row align-items-center">
                             <div class="col-md-2">
-                                <h5 class=" text-bold text-white">
+                                <h7 class=" text-bold text-white">
                                     Invoice & Challan
-                                </h5>
+                                </h7>
                             </div>
                             <div class="col-md-2">
                                 <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
@@ -32,23 +32,23 @@
                             <div class="col-md-2">
                                 <div class="input-group input-group-sm ">
                                     <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" placeholder="From Date" />
-                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                    @*<div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
                                         <span class="input-group-text">&#10008;</span>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="input-group input-group-sm ">
                                     <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" placeholder="To Date" />
-                                    <div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
+                                    @*<div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
                                         <span class="input-group-text">&#10008;</span>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                             
                             <div class="col-md-2">
 
-                                <a href="/AgroConfiguration/CreateAgroSalesProduct" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Invoice</a>
+                                <a href="/AgroConfiguration/CreateAgroSalesProduct" class="das2-btn float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Invoice</a>
 
                             </div>
                         </div>
@@ -62,14 +62,13 @@
                     
                 </div>
             </div>*@
-            <div class="col-md-12" style="margin-top:-10px">
-                <div class="card">
-                    <div class="card-body"style="margin-top:-10px">
-                        <div class="col-md-12" id="dataContainer">
+            <div class="col-md-12" style="margin-top:-12px">
+       
+                        <div class="col-md-12 px-0" id="dataContainer">
 
                         </div>
-                    </div>
-                </div>
+                   
+               
             </div>
         </div>
 

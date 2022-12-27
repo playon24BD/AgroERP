@@ -1,0 +1,141 @@
+.my-table{
+
+
+
+    width:100%;
+}
+.table-sm td, .table-sm th {
+    padding: 1px;
+}
+
+.text-sm{
+
+    font-size:12px !important;
+}
+
+
+
+/*savebutton*/
+.emnsave-btn {
+    color: white;
+    background-color: #4CAF50;
+    box-shadow: none;
+    padding: 0px 2px;
+    float: right;
+    font-size:15px !important;
+}
+
+/*yellobtn foraction*/
+.das-btn {
+    color: #1f2d3d;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    box-shadow: none;
+    padding:2px 4px;
+}
+
+.dasedit-btn {
+    color: #1f2d3d;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    box-shadow: none;
+    padding: 2px 2px;
+}
+
+/*secondery*/
+.emndetails-btn {
+    color: #1f2d3d;
+    background-color: #696969;
+    border-color: #ffc107;
+    box-shadow: none;
+    padding: 2px 4px;
+}
+
+/*green*/
+.emninvoice-btn {
+    color: #1f2d3d;
+    background-color: #2E8B57;
+    border-color: #ffc107;
+    box-shadow: none;
+    padding: 2px 4px;
+}
+/*Blue*/
+.emnchalan-btn {
+    color: #1f2d3d;
+    background-color: #1E90FF;
+    border-color: #ffc107;
+    box-shadow: none;
+    padding: 2px 4px;
+}
+
+/*yellobtn for create*/
+.das2-btn {
+    color: #1f2d3d;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    box-shadow: none;
+    padding: 2px 4px;
+    font-size: .675rem;
+  
+}
+/*white for create*/
+.emnDrop-btn {
+    color: black;
+    background-color: white;
+    border: 2px solid #000000;
+    box-shadow: none;
+    padding: 2px 4px;
+    font-size: .675rem;
+}
+.emn-btn {
+    color: white;
+    background-color: red;
+    
+    box-shadow: none;
+    padding: 2px 4px;
+}
+
+.emn2-btn {
+    color: white;
+    background-color: red;
+    box-shadow: none;
+    padding: 0px 4px;
+}
+
+
+.form-control-sm {
+    height: 24px !important;
+  
+}
+
+select.form-control-sm ~ .select2-container--default .select2-selection--single {
+    height: 25px !important;
+}
+
+    select.form-control-sm ~ .select2-container--default .select2-selection--single .select2-selection__rendered {
+        margin-top: -0.6rem;
+    }
+
+select.form-control-sm ~ .select2-container--default {
+    font-size: .675rem; 
+}
+
+.select2-container--default .select2-results__option {
+    padding: 1px 1px;
+  
+}
+.select2-results__option{
+
+    font-size:12px;
+}
+
+.form-control-sm {
+
+    font-size: .675rem;
+
+}
+
+/*@media (min-width: 768px) body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+    transition: margin-left 0.3s ease-in-out;
+    margin-left: 150px;
+}*/

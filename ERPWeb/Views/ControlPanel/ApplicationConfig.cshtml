@@ -6,172 +6,141 @@
 
 
 <div class="row text-sm">
-    <div class="col-md-12" style="margin-top:-15px">
-        <div class="card card-primary card-outline card-tabs">
-            @Html.AntiForgeryToken()
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-one-module-tab" data-toggle="pill" href="#custom-tabs-one-module" role="tab" aria-controls="custom-tabs-one-module" aria-selected="true">List Of Module</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-two-mainmenu-tab" data-toggle="pill" href="#custom-tabs-two-mainmenu" role="tab" aria-controls="custom-tabs-two-mainmenu" aria-selected="true">List Of Main Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-submenu-tab" data-toggle="pill" href="#custom-tabs-three-submenu" role="tab" aria-controls="custom-tabs-three-submenu" aria-selected="false">List Of Submenu</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="tab-content" id="custom-tabs-two-tabContent">
-                    <div class="tab-pane fade show active" id="custom-tabs-one-module" role="tabpanel" aria-labelledby="custom-tabs-one-module-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card card-gray-dark">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="text-center text-bold">
-                                                    List Of Module
-                                                </h5>
-                                            </div>
-                                            <div class="col-md-3">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="col-md-12" style="margin-top:-25px">
+
+
+        <div class="card  shadow card  card-outline card-tabs" >
+
+
+            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
+
+                <li class="nav-item">
+                    <a class="nav-link active text-white" id="custom-tabs-one-module-tab" data-toggle="pill" href="#custom-tabs-one-module" role="tab" aria-controls="custom-tabs-one-module" aria-selected="true">List Of Module</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-mainmenu-tab" data-toggle="pill" href="#custom-tabs-two-mainmenu" role="tab" aria-controls="custom-tabs-two-mainmenu" aria-selected="true">List Of Main Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-three-submenu-tab" data-toggle="pill" href="#custom-tabs-three-submenu" role="tab" aria-controls="custom-tabs-three-submenu" aria-selected="false">List Of Submenu</a>
+                </li>
+            </ul>
+
+
+        </div>
+
+        @Html.AntiForgeryToken()
+
+
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+                <div class="tab-pane fade show active" id="custom-tabs-one-module" role="tabpanel" aria-labelledby="custom-tabs-one-module-tab">
+
+                    <div class="px-2 py-1" style="background-color:#001f3f;margin-top:-15px">
+                        <div class="row text-sm align-items-center">
+                            <div class="col-md-4 ">
+                                <h6 class="text-left  text-white mb-0">
+                                    List Of Module
+                                </h6>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <input type="text" name="search" id="searchByModule" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('.tblModuleData tbody tr',this)" />
-                                            </div>
-                                            <div class="col-md-4"></div>
-                                            <div class="col-md-4">
-                                                <button class="btn btn-outline-primary btn-flat btn-sm float-right" id="btnAddNewModule"><i class="fa fa-plus"></i> Create Module</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-1">
+
                             </div>
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer1">
-                                            @*@{Html.RenderAction("ApplicationConfig", "ControlPanel", new { @flag = "Module" }); }*@
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-2">
+                       
                             </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-4">
+                                <button class="das2-btn float-right" id="btnAddNewModule"><i class="fa fa-plus"></i>Create Module</button>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="tab-pane fade show" id="custom-tabs-two-mainmenu" role="tabpanel" aria-labelledby="custom-tabs-two-mainmenu-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card card-gray-dark">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="text-center text-bold">
-                                                    List Of Main Menu
-                                                </h5>
-                                            </div>
-                                            <div class="col-md-3">
-                                            </div>
-                                        </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12 p-0" style="margin-top:0px">
+
+                                    <div class="col-md-12" id="dataContainer1">
+
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <input type="text" name="search" id="searchByMainmenu" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('.tblMainMenuData tbody tr',this)" />
-                                            </div>
-                                            <div class="col-md-4"></div>
-                                            <div class="col-md-4">
-                                                <button class="btn btn-outline-primary btn-sm btn-flat float-right" id="btnAddNewMainmenu">
-                                                    <i class="fa fa-plus"></i> Create MainMenu
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer2">
-                                            @*@{Html.RenderAction("ApplicationConfig", "ControlPanel", new { @flag = "Mainmenu" }); }*@
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade " id="custom-tabs-three-submenu" role="tabpanel" aria-labelledby="custom-tabs-three-submenu-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card card-gray-dark">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="text-center text-bold">
-                                                    List Of Submenu
-                                                </h5>
-                                            </div>
-                                            <div class="col-md-3">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <input type="text" name="search" id="searchBySubmenu" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('.tblSubMenuData tbody tr',this)" />
-                                            </div>
-                                            <div class="col-md-4"></div>
-                                            <div class="col-md-4">
-                                                <button class="btn btn-outline-primary btn-sm btn-flat float-right" id="btnAddNewSubmenu">
-                                                    <i class="fa fa-plus"></i> Create Submenu
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer3">
-                                            @*@{Html.RenderAction("ApplicationConfig", "ControlPanel", new { @flag = "Submenu" }); }*@
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane fade show" id="custom-tabs-two-mainmenu" role="tabpanel" aria-labelledby="custom-tabs-two-mainmenu-tab">
+                    <div class="px-2 py-1" style="background-color:#001f3f;margin-top:-15px">
+                        <div class="row text-sm align-items-center">
+                            <div class="col-md-4 ">
+                                <h6 class="text-left  text-white mb-0">
+                                    List Of Main Menu
+                                </h6>
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="search" id="searchByMainmenu" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('.tblMainMenuData tbody tr',this)" />
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-4">
+                                <button class="das2-btn float-right" id="btnAddNewMainmenu"><i class="fa fa-plus"></i>Create MainMenu</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 p-0" style="margin-top:0px">
+
+                                    <div class="col-md-12" id="dataContainer2">
+                                    </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="custom-tabs-three-submenu" role="tabpanel" aria-labelledby="custom-tabs-three-submenu-tab">
+
+                    <div class="px-2 py-1" style="background-color:#001f3f;margin-top:-15px">
+                        <div class="row text-sm align-items-center">
+                            <div class="col-md-4 ">
+                                <h6 class="text-left  text-white mb-0">
+                                    List Of Submenu
+                                </h6>
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="search" id="searchBySubmenu" class="form-control form-control-sm" placeholder="Search By Anything" onkeyup="tableFilter('.tblSubMenuData tbody tr',this)" />
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-4">
+                                <button class="das2-btn float-right" id="btnAddNewSubmenu"><i class="fa fa-plus"></i>Create Submenu</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 p-0" style="margin-top:0px">
+
+                                    <div class="col-md-12" id="dataContainer3">
+                                   
+                                    </div>
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
+ 
+
     </div>
 </div>
 

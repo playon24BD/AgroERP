@@ -5,137 +5,133 @@
 }
 <div class="row text-sm">
     <div class="col-md-12">
-        <div class="card card-primary card-outline card-tabs">
-            <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-one-branch-tab" data-toggle="pill" href="#custom-tabs-one-branch" role="tab" aria-controls="custom-tabs-one-branch" aria-selected="true">Branch Information</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-two-role-tab" data-toggle="pill" href="#custom-tabs-two-role" role="tab" aria-controls="custom-tabs-two-role" aria-selected="false">Role Information</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-user-tab" data-toggle="pill" href="#custom-tabs-three-user" role="tab" aria-controls="custom-tabs-three-user" aria-selected="true">User Information</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                @Html.AntiForgeryToken()
-                <div class="tab-content" id="custom-tabs-two-tabContent">
-                    <div class="tab-pane fade show active" id="custom-tabs-one-branch" role="tabpanel" aria-labelledby="custom-tabs-one-branch-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card card-dark">
-                                    <div class="card-header text-center">
-                                       <h5>Branch Information</h5>
-                                    </div>
-                                </div>
+
+
+        <div class="card  shadow card  card-outline card-tabs" style="margin-top:-25px">
+
+
+            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
+
+                <li class="nav-item">
+                    <a class="nav-link active text-white" id="custom-tabs-one-branch-tab" data-toggle="pill" href="#custom-tabs-one-branch" role="tab" aria-controls="custom-tabs-one-branch" aria-selected="true">Branch Information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-role-tab" data-toggle="pill" href="#custom-tabs-two-role" role="tab" aria-controls="custom-tabs-two-role" aria-selected="false">Role Information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-three-user-tab" data-toggle="pill" href="#custom-tabs-three-user" role="tab" aria-controls="custom-tabs-three-user" aria-selected="true">User Information</a>
+                </li>
+            </ul>
+
+
+        </div>
+
+
+
+  
+            @Html.AntiForgeryToken()
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+                <div class="tab-pane fade show active" id="custom-tabs-one-branch" role="tabpanel" aria-labelledby="custom-tabs-one-branch-tab">
+
+                    <div class="px-2 py-1" style="background-color:#001f3f;margin-top:-15px">
+                        <div class="row text-sm align-items-center">
+                            <div class="col-md-4 ">
+                                <h6 class="text-left  text-white mb-0" @*style="height:10px;text-align:center"*@>
+                                    User Information
+                                </h6>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <input type="text" name="search" id="searchByBranch" class="form-control form-control-sm" placeholder="Search By Anything..." onkeyup="tableFilter('.tblBranchData tbody tr',this)" />
-                                            </div>
-                                            <div class="col-md-4"></div>
-                                            <div class="col-md-4">
-                                                <button class="btn btn-outline-primary btn-sm btn-flat float-right" id="btnAddNewBranch"><i class="fa fa-plus"></i> Create Branch</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-1">
+
                             </div>
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer1">
-                                           @{Html.RenderAction("AppUserConfiguration", "ControlPanel",new {flag="Branch" });}
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-2">
+                                <input type="text" name="search" id="searchByBranch" class="form-control form-control-sm input-sm" placeholder="Search By Anything..." onkeyup="tableFilter('.tblBranchData tbody tr',this)" />
                             </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-4">
+                                <button class=" das2-btn float-right" id="btnAddNewBranch"><i class="fa fa-plus"></i>Create Branch</button>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="tab-pane fade show" id="custom-tabs-two-role" role="tabpanel" aria-labelledby="custom-tabs-two-role-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card card-dark">
-                                    <div class="card-header text-center">
-                                        <h5>Role Information</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <input type="text" name="search" id="searchByRole" class="form-control form-control-sm" placeholder="Search By Anything..." onkeyup="tableFilter('.tblRoles tbody tr',this)" />
-                                            </div>
-                                            <div class="col-md-4"></div>
-                                            <div class="col-md-4">
-                                                <a href="@Url.Action("CreateAppRole","ControlPanel")" class="btn btn-sm btn-outline-primary btn-flat float-right"><i class="fas fa-plus"></i> Create New Role</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer2">
-                                            @{Html.RenderAction("AppUserConfiguration", "ControlPanel", new { flag = "Role" });}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:0px">
+                              <div class="col-md-12" id="dataContainer1">
+                                   @{Html.RenderAction("AppUserConfiguration", "ControlPanel", new { flag = "Branch" });}
+                              </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade show " id="custom-tabs-three-user" role="tabpanel" aria-labelledby="custom-tabs-three-user-tab">
-                        <div class="row" style="margin-top:-15px">
-                            <div class="col-md-12">
-                                <div class="card card-dark">
-                                    <div class="card-header text-center">
-                                        <h5>User Information</h5>
-                                    </div>
-                                </div>
+                </div>
+                <div class="tab-pane fade show" id="custom-tabs-two-role" role="tabpanel" aria-labelledby="custom-tabs-two-role-tab">
+                    <div class="px-2 py-1" style="background-color:#001f3f;margin-top:-15px">
+                        <div class="row text-sm align-items-center">
+                            <div class="col-md-4 ">
+                                <h6 class="text-left  text-white mb-0" @*style="height:10px;text-align:center"*@>
+                                    Role Information
+                                </h6>
                             </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="search" id="searchByRole" class="form-control form-control-sm input-sm" placeholder="Search By Any" onkeyup="tableFilter('.tblBranchData tbody tr',this)" />
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-4">
+                                <a href="@Url.Action("CreateAppRole","ControlPanel")" class="das2-btn float-right"><i class="fas fa-plus"></i> Create New Role</a>
+                            </div>
+
                         </div>
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card card-navy">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <input type="text" name="search" id="searchByUser" class="form-control form-control-sm" placeholder="Search By Anything..." onkeyup="tableFilter('.tblAppUserData tbody tr',this)" />
-                                            </div>
-                                            <div class="col-md-4"></div>
-                                            <div class="col-md-4">
-                                                <a href="@Url.Action("CreateAppUser","ControlPanel")" class="btn btn-sm btn-outline-primary btn-flat float-right"><i class="fas fa-plus"></i> Create New User</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                               <div class="col-md-12" id="dataContainer2">
+                                        @{Html.RenderAction("AppUserConfiguration", "ControlPanel", new { flag = "Role" });}
+                               </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade show " id="custom-tabs-three-user" role="tabpanel" aria-labelledby="custom-tabs-three-user-tab">
+                    <div class="px-2 py-1" style="background-color:#001f3f;margin-top:-15px">
+                        <div class="row text-sm align-items-center">
+                            <div class="col-md-4 ">
+                                <h6 class="text-left  text-white mb-0" @*style="height:10px;text-align:center"*@>
+                                    User Information
+                                </h6>
                             </div>
-                            <div class="col-md-12" style="margin-top:-10px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="col-md-12" id="dataContainer1">
-                                            @{Html.RenderAction("AppUserConfiguration", "ControlPanel", new { flag = "User" });}
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-1">
+
                             </div>
+                            <div class="col-md-2">
+                                <input type="text" name="search" id="searchByUser" class="form-control form-control-sm input-sm" placeholder="Search By Any" onkeyup="tableFilter('.tblBranchData tbody tr',this)" />
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-4">
+                                <a href="@Url.Action("CreateAppUser","ControlPanel")" class="das2-btn float-right"><i class="fas fa-plus"></i> Create New User</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:0px">
+
+                                    <div class="col-md-12" id="dataContainer1">
+                                        @{Html.RenderAction("AppUserConfiguration", "ControlPanel", new { flag = "User" });}
+                                    </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+
     </div>
 </div>
 

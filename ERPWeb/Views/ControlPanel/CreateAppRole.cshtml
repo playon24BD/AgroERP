@@ -4,70 +4,72 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" style="margin-top:-15px">
+<div class="row" style="margin-top:-8px">
     <div class="col-md-12">
-        <div class="card card-navy">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-md-3">
-                        <a href="@Url.Action("AppUserConfiguration","ControlPanel")" class="btn btn-sm btn-outline-primary" title="Back To List">
-                            <i class="fas fa-arrow-circle-left"></i>
-                        </a>
-                    </div>
-                    <div class="col-md-6">
-                        <h4 class="text-center text-bold">@ViewBag.PageHead</h4>
-                    </div>
-                    <div class="col-md-3">
-                      
-                    </div>
+        <div class="px-2 py-1" style="background-color:#001f3f;margin-top:-15px">
+            <div class="row text-sm align-items-center">
+                <div class="col-md-3">
+                    <a href="@Url.Action("AppUserConfiguration","ControlPanel")" class="emnDrop-btn" title="Back To List">
+                        <i class="fas fa-arrow-circle-left"></i>
+                    </a>
                 </div>
+                <div class="col-md-6">
+                    <h6 class="text-center text-white text-bold">@ViewBag.PageHead</h6>
+                </div>
+
+                <div class="col-md-3">
+                    <button type="submit" class="emnsave-btn" id="btnSubmit">
+                        Save...<i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+
             </div>
         </div>
+
+
     </div>
 </div>
 
-<div class="row" style="margin-top:-10px">
+<div class="row" style="margin-top:15px">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="row">
+
+        <div class="px-2 py-1" style="background-color: #20B2AA; margin-top: -15px">
+            <div class="row text-sm align-items-center">
+
                     <input type="hidden" id="hdfRoleId" value="@ViewBag.Id" />
                     <div class="col-md-4">
                         @Html.AntiForgeryToken()
-                        <input type="text" name="role" value="@ViewBag.RoleName" id="txtRoleName" class="form-control" />
+                        <input type="text" name="role"placeholder="RoleName" value="@ViewBag.RoleName" id="txtRoleName" class="form-control form-control-sm" />
                         <span class="error hide required-roleName font-weight-bold">Input Role Name!</span>
                         <span class="error hide duplicate-roleName font-weight-bold">Already RoleName Exist!</span>
                         <span class="error hide invalid-roleName font-weight-bold">Invalid Role!</span>
                     </div>
                     <div class="col-md-4">
-                        @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control" })
+                        @Html.DropDownList("ddlOrganizationName", (IEnumerable<SelectListItem>)ViewBag.ddlOrganizationName, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                         <span class="error hide req-org font-weight-bold">Organization is required!</span>
                     </div>
                     <div class="col-md-4">
-                        <button type="submit" class="btn btn-sm btn-outline-primary btn-flat float-right" id="btnSubmit">
-                            Save...<i class="fas fa-paper-plane"></i>
-                        </button>
+
                     </div>
-                </div>
+
             </div>
         </div>
+
     </div>
-</div>
-<div class="row" style="margin-top:-10px">
-    <div class="col-md-12">
-        <div class="card card-navy">
-            <div class="card-body">
-                <div class="col-md-12" style="max-height:500px;overflow-y:scroll">
-                    <table class="table table-sm table-avatar table-responsive-lg" id="tblMenuData"></table>
-                </div>
+ </div>
+        <div class="row" style="margin-top:0px">
+            <div class="col-md-12">
+            
+                        <div class="col-md-12" style="max-height:500px;overflow-y:scroll">
+                            <table class="table table-sm table-avatar table-responsive-lg" id="tblMenuData"></table>
+                        </div>
+
             </div>
         </div>
-    </div>
-</div>
 
 
-@section scripts{
-    <script type="text/javascript">
+        @section scripts{
+            <script type="text/javascript">
         var hdfRoleId = $("#hdfRoleId");
         var txtRoleName = $("#txtRoleName");
         var ddlOrganizationName = $("#ddlOrganizationName");
@@ -329,5 +331,5 @@
         function redirectPage(page) {
             window.location.replace(page);
         }
-    </script>
-}
+            </script>
+        }

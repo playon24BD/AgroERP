@@ -46,21 +46,20 @@
                         <div class="row">
                             <div class="col-md-3">
 
-                                <a href="/AgroConfiguration/GetAgroSalesProductList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                                <a href="/AgroConfiguration/GetAgroSalesProductList" class="float-left emnDrop-btn" title="Go To List">
                                     <i class="fas fa-arrow-alt-circle-left"></i>
                                 </a>
                             </div>
-                            <div class="col-md-5">
-                                <h5 class="text-center text-white text-bold">Challan & Invoice Posting</h5>
+                            <div class="col-md-6 text-center">
+                                <h7 class="text-center text-white text-bold">Challan & Invoice Posting</h7>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                             </div>
                             <div class="col-md-1" style="margin-top:0px;">
 
-                                <div class="clearfix">
-                                    <button type="submit" class="btn btn-sm btn-success float-right" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
-                                </div>
+                                    <button type="submit" class="emnsave-btn" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
+           
                             </div>
                         </div>
                     </div>
@@ -87,7 +86,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <div class="input-group-sm date" id="simple">
-                                        <input type="text" class="form-control" id="ChallanDate" name="date" value="">
+                                        <input type="text" class="form-control form-control-sm" id="ChallanDate" name="date" value="">
                                         <span class="input-group-addon">
                                             <i class="glyphicon glyphicon-calendar"></i>
                                         </span>
@@ -101,7 +100,7 @@
 
                                 <div class="form-group">
                                     <div class="input-group-sm date" id="datePicker">
-                                        <input type="text" class="form-control" id="InvoiceDate" name="date" value="">
+                                        <input type="text" class="form-control form-control-sm"  id="InvoiceDate" name="date" value="">
                                         <span class="input-group-addon">
                                             <i class="glyphicon glyphicon-calendar"></i>
                                         </span>
@@ -146,10 +145,10 @@
                         </div>
                         <div class="row small" style="margin-top: 15px ">
                             <div class="col-md-12">
-                                <div class="card shadow" style="background-color: #2E8B57; margin-top: -10px; margin-bottom: -5px; ">
-                                    <div class="px-2 py-1">
+                           
+                                    <div class="px-2 py-1 pb-0" style="background-color: #2E8B57;">
 
-                                        <div class="row small">
+                                        <div class="row small justify-content-center">
                                             <div class="col-md-3">
                                                 @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                                 <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
@@ -160,7 +159,7 @@
                                             <div class="hide">
                                                 <input type="text" id="ddlQtyUnitname" class="form-control form-control-sm" readonly />
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 pl-0">
                                                 @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                                 <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
                                             </div>
@@ -192,7 +191,7 @@
                                                 <input type="number" id="txtPerQty" name="PerQty" class="form-control form-control-sm" readonly />
                                             </div>
 
-                                            <div class="col-md-2">
+                                            <div class="col-md-1 pl-0">
                                                 <input type="text" placeholder="Qty" id="txtQuanity" class="form-control form-control-sm" />
                                                 <label for="ddlQuantity" class="control-label font-weight-bold text-white">
                                                     StockQty:
@@ -201,16 +200,17 @@
                                                 <span class="error hide req-Quanity">Quantity is required</span>
                                                 <span class="error hide req-qtyChecking">Quantity Must be less than or equal Product Qty</span>
                                             </div>
-                                            <div class="col-md-2">
+
+                                            <div class="col-md-1 pl-0">
+                                                <input type="text" placeholder="Discount%" id="txtDiscount" class="form-control form-control-sm" />
+                                            </div>
+                                            <div class="col-md-2 pl-0">
                                                 <input type="text" placeholder="Unit Price" id="txtPrice" class="form-control form-control-sm" readonly />
                                                 <span class="error hide req-txtPrice">Price not Configure</span>
                                             </div>
-                                            <div class="col-md-1">
-                                                <input type="text" placeholder="Discount%" id="txtDiscount" class="form-control form-control-sm" />
-                                            </div>
-                                            <div class="col-md-1 ">
+                                            <div class="col-md-1 pl-0">
                                                 <div>
-                                                    <button type="submit" class="btn btn-sm btn-warning float-right float-md-start text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
+                                                    <button type="submit" class="float-left float-md-start text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
                                                 </div>
                                             </div>
 
@@ -244,29 +244,29 @@
 
                                     </div>
 
-                                </div>
+                        
 
                             </div>
                         </div>
-                        <div class="row small" style="margin-top: 0px ">
+                        <div class="row small" style="margin-top: -8px ">
                             <div class="col-md-12">
-                                <div class="card shadow" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
+                               
 
-                                        <div class="px-0 py-1">
+                                        <div class="px-0 py-1" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;" >
 
                                             <div class="row small justify-content-center">
                                                 <div class="col-md-3">
                                                     @Html.DropDownList("ddlPackageName", (IEnumerable<SelectListItem>)ViewBag.ddlPackageName, "PackageName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                                     <span class="error hide req-ProductName font-weight-bold">Package Name is required!</span>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-2 pl-0">
                                                     <input type="text" id="ddlPQuanity"placeholder="QTY" class="form-control form-control-sm" />
                                                     <span class="error hide req-ddlPQuanity">Quantity is required</span>
                                                 </div>
 
-                                                <div class="col-md-1 ">
+                                                <div class="col-md-1 pl-0">
                                                     <div>
-                                                        <button type="submit" class="btn btn-sm btn-success float-left float-md-start text-bold" id="btnAddPackage" title="Save"><i class="fas fa-plus"></i></button>
+                                                        <button type="submit" class="float-left float-md-start text-bold" id="btnAddPackage" title="Save"><i class="fas fa-plus"></i></button>
                                                     </div>
                                                 </div>
 
@@ -276,7 +276,7 @@
 
                                         </div>
 
-                                </div>
+                             
                             </div>
 
                         </div>
@@ -292,15 +292,11 @@
 
                             <div class="px-2 py-0">
                                 <div class="row" style="background-color: #2E8B57;">
-                                    <div class="col-md-2">
 
+                                    <div class="col-md-12">
+                                        <h7 class="text-center text-white text-bold">Product Sales</h7>
                                     </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-center text-white text-bold">Product Sales</h5>
-                                    </div>
-                                    <div class="col-md-2">
 
-                                    </div>
 
                                 </div>
                             </div>
@@ -355,18 +351,15 @@
                         <div class="card" id="card2">
                             <div class="px-2 py-0">
                                 <div class="row" style="background-color: #2F4F4F;">
+
+                                    <div class="col-md-10">
+                                        <h7 class="text-center text-white text-bold">Package Sales Details</h7>
+                                    </div>
                                     <div class="col-md-2">
 
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-center text-white text-bold">Package Sales Details</h5>
-                                    </div>
-                                    <div class="col-md-2" style="margin-top:0px;">
-                                        <div class="clearfix">
-                                            <button type="button" id="rrrr" class="btn btn-sm btn-danger float-right">
-                                                Remove
-                                            </button>
-                                        </div>
+                                        <button type="button" id="rrrr" class="emn2-btn  float-right"><i class="fas fa-trash"></i></button>
+                                       
+
                                     </div>
 
                                 </div>
@@ -693,7 +686,7 @@
 
                 var td9 = "<td class='text-center TotalIDCell'>" + Number(ddlpt.val()).toFixed(2) + "</td>";
 
-                var td10 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td10 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i></a></td>";
 
 
                 var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
@@ -775,7 +768,7 @@
                             var td10 = "<td class='text-center hide'>" + (value.Amount / value.Quanity) + "</td>";
 
 
-                            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
+                            var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
                             $("#tblListpackage tbody").append(tr)
                             debugger;
                             console.log((value.Amount * ddlPQuanity.val()));

@@ -23,67 +23,61 @@
         padding: 40px;
         border-radius: 6px;
     }
-    .btn1 {
-        background-color: #001F3F;
-        color: white;
-        border: 1px solid white;
-    }
-        .btn1:hover {
-            background-color: green;
-            color: white;
-            border: 1px solid;
-        }
+
 </style>
-<div class="row" style=" margin-top: -35px">
+<div class="row text-sm p-0" style=" margin-top: -40px">
     <div class="col-md-12">
-        <div class="card  shadow card card-outline card-tabs " style="margin-top:-30px">
 
 
-            <ul class="nav nav-tabs nav-pills bg-navy py-1 px-1"  id="custom-tabs-two-tab" role="tablist">
-                <li class="nav-item  btn1">
+        <div class="card  shadow card  card-outline card-tabs" style="margin-top:-25px">
+
+
+            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
+
+                <li class="nav-item">
                     <a class="nav-link active  text-white  btn" id="custom-tabs-two-pstockrawmaterialqty-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialqty" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialqty" aria-selected="false">RM Stock</a>
                 </li>
-                <li class="nav-item btn1">
+                <li class="nav-item">
                     <a class="nav-link text-white btn  mx-0" id="custom-tabs-two-pstockrawmaterialList-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialList" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialList" aria-selected="false">Purchase Details</a>
                 </li>
-                <li class="nav-item btn1">
+                <li class="nav-item">
                     <a class="nav-link text-white btn" id="custom-tabs-two-pstockrawmaterial-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterial" role="tab" aria-controls="custom-tabs-two-pstockrawmaterial" aria-selected="false">New Purchase</a>
                 </li>
-
             </ul>
 
 
         </div>
 
-        <div class="card-body shadow">
+
+
             <div class="tab-content" id="custom-tabs-two-tabContent">
 
                 <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterialList" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialList-tab">
 
-                    <div class="row" style=" margin-top: -35px">
+                    <div class="row" style=" margin-top: -15px">
                         <div class="col-md-12">
-                           
+
                             <div class="card" style="background-color:#001f3f">
                                 <div class="px-2 py-1">
                                     <div class="row float-left">
-                                        
+
                                         <div class="col-md-2">
-                                 
+
                                             <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
                                         </div>
 
                                         <div class="col-md-2">
-                            
+
                                             <input type="text" class="form-control form-control-sm" id="searchByPO" placeholder="search PO" />
                                         </div>
 
                                         <div class="col-md-2">
-                                 
+
                                             <input type="text" class="form-control form-control-sm" id="searchByChallan" placeholder="search Challan" />
                                         </div>
 
                                         <div class="col-md-3">
-  
+
                                             @Html.DropDownList("ddlSupplierName1", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                                         </div>
@@ -93,17 +87,15 @@
 
                         </div>
                     </div>
-                    <div class="row" style="margin-top:-1px">
+                    <div class="row" style="margin-top:-5px">
                         <div class="col-md-12" style="margin-top:-10px">
-                            <div class="card ">
-                                <div class="card-body"  style="margin-top:-10px">
+
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer">
 
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -112,187 +104,188 @@
 
                 <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterial" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterial-tab">
                     <div class="row mb-5">
-                        <div class="col-md-12" style="margin-top: -35px">
-                            <div class="card card-navy shadow">
-                                <div class="card-header" style="text-align: center;">
+                        <div class="col-md-12" style="margin-top: -14px">
 
-                                    <div class="row">
-
-                                        <div class="col-md-12">
-                                            <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
-
-                                            <h5 class="text-center text-bold">
-                                                Purchase And RawMaterial Stock
-                                            </h5>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-
-
-
-                                @*addbodey*@
-                                <div class="card-body " style="margin-bottom:-10px">
-                                    <div class="row small">
-
-
-
-                                        <div class="col-md-12">
-                                            <div class="container-fluid">
-                                              
-                                                <div class="row justify-content-center">
-
-                                                    <div class="col-md-3">
-                                                        <label for="ddlSupplierName" class="control-label">Supplier Name <span style="color:red">*</span></label>
-                                                        @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus="autofocus"})
-                                                        <span class="error hide req-SupplierName font-weight-bold">Supplier Name is required!</span>
-                                                    </div>
-
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label for="ddlInvoiceDate">Invoice Date</label>
-                                                            <div class="input-group-sm date" id="datePicker">
-
-                                                                <input type="text" class="form-control" id="ddlInvoiceDate" name="date" value="">
-                                                                <span class="input-group-addon">
-                                                                    <i class="glyphicon glyphicon-calendar"></i>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-3">
-                                                        <label for="ddlChallanNo" class="control-label">Challan No<span style="color:red">*</span></label>
-                                                        <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
-                                                        <span class="error hide req-ddlChallanNo font-weight-bold">Chalan No is required!</span>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label for="ddlInvoiceNo" class="control-label">Invoice No<span style="color:red">*</span></label>
-                                                        <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
-                                                        <span class="error hide req-ddlInvoiceNo font-weight-bold">Invoice No is required!</span>
-                                                    </div>
-
-                                                    @*<div class="col-md-2">
-                                                        <label for="ddlProductCode" class="control-label">Product Code</label>
-                                                        <input type="text" id="ddlProductCode" class="form-control form-control-sm" />
-                                                    </div>*@
+                            <div class="row " style="margin-top:-2px">
+                                <div class="col-md-12">
+                                    <div class="card mb-0" style="background-color:#001f3f">
+                                        <div class="px-2 py-1">
+                                            <div class="row">
+                                                <div class="col-md-3">
 
                                                 </div>
-                                            </div>
-                                        </div>
+                                                <div class="col-md-6 text-center">
+                                                    <h6 class="text-center text-white text-bold">Purchase And RawMaterial Stock</h6>
+                                                </div>
 
-                                    </div>
+                                                <div class="col-md-2">
+                                                </div>
+                                                <div class="col-md-1" style="margin-top:0px;">
 
-                                    <div class="row small">
-                                        <div class="col-md-12">
-                                            <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
-                                            
-                                                <div class="row justify-content-center">
-
-                                                    <div class="col-md-12">
-
-                                                        <div class="row">
-                                                            <div class="col-md-2">
-                                                                <label class="control-label" for="ddlRawMaterial">RawMaterial<span style="color:red">*</span></label>
-                                                                @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                                                <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <label for="ddlrmcode">RM Code</label>
-                                                                <input type="text" id="ddlrmcode" name="qty" class="form-control form-control-sm" />
-                                                                <span class="error hide req-ddlrmcode">Code Is Required</span>
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <label for="ddlUnitName">Unit</label>
-                                                                <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
-                                                            </div>
-                                                            <div class="hide">
-                                                                <label for="ddlUnitID">UnitID</label>
-                                                                <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
-                                                            </div>
-
-                                                            <div class="col-md-1">
-                                                                <label for="ddluprice">Unit Price<span style="color:red">*</span></label>
-                                                                <input type="number" id="ddluprice" name="uprice" class="form-control form-control-sm" />
-                                                                <span class="error hide req-uprice">Unit Price Is Required</span>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <label for="ddlqty"> Qty<span style="color:red">*</span></label>
-                                                                <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
-                                                                <span class="error hide req-qty">Qty Is Required</span>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <label>SubTotal</label>
-                                                                <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
-                                                            </div>
-
-                                                            <div class="col-md-1 hide">
-                                                                <div class="form-group">
-                                                                    <label for="ddlexpdate">Expire Date</label>
-                                                                    <div class="input-group-sm date" id="datePicker">
-
-                                                                        <input type="text" class="form-control" id="ddlexpdate" name="date" value="">
-                                                                        <span class="input-group-addon">
-                                                                            <i class="glyphicon glyphicon-calendar"></i>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div class="col-md-1" style="margin-left:-40px">
-                                                                <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
-                                                                <div class="clearfix">
-                                                                    <button type="submit" class="btn btn-sm float-right btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
+                                                    <button type="submit" class="emnsave-btn" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
 
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @*addbodey*@
-
-
                             </div>
+
+                            @*addbodey*@
+                            <div class="px-0 py-0" style="margin-bottom:0px">
+                                <div class="row small">
+
+
+
+                                    <div class="col-md-12">
+                                        <div class="container-fluid">
+
+                                            <div class="row justify-content-center">
+
+                                                <div class="col-md-3">
+                                                    <label for="ddlSupplierName" class="control-label mb-0">Supplier Name <span style="color:red">*</span></label>
+                                                    @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
+                                                    <span class="error hide req-SupplierName font-weight-bold">Supplier Name is required!</span>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="mb-0" for="ddlInvoiceDate">Invoice Date</label>
+                                                        <div class="input-group-sm date" id="datePicker">
+
+                                                            <input type="text" class="form-control form-control-sm" id="ddlInvoiceDate" name="date" value="">
+                                                            <span class="input-group-addon">
+                                                                <i class="glyphicon glyphicon-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label for="ddlChallanNo" class="control-label mb-0">Challan No<span style="color:red">*</span></label>
+                                                    <input type="text" id="ddlChallanNo" class="form-control form-control-sm" />
+                                                    <span class="error hide req-ddlChallanNo font-weight-bold">Chalan No is required!</span>
+
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="ddlInvoiceNo" class="control-label mb-0">Invoice No<span style="color:red">*</span></label>
+                                                    <input type="text" id="ddlInvoiceNo" class="form-control form-control-sm" />
+                                                    <span class="error hide req-ddlInvoiceNo font-weight-bold">Invoice No is required!</span>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row small">
+                                    <div class="col-md-12">
+                                        <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
+
+                                            <div class="row justify-content-center">
+
+                                                <div class="col-md-12">
+
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label class="control-label mb-0" for="ddlRawMaterial">RawMaterial<span style="color:red">*</span></label>
+                                                            @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Select RawMaterial--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                            <span class="error hide req-ddlRawMaterial">RawMaterial Is Required</span>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="mb-0" for="ddlrmcode">RM Code</label>
+                                                            <input type="text" id="ddlrmcode" name="qty" class="form-control form-control-sm" />
+                                                            <span class="error hide req-ddlrmcode">Code Is Required</span>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <label class="mb-0" for="ddlUnitName">Unit</label>
+                                                            <input type="text" id="ddlUnitName" name="ddlUnitName" class="form-control form-control-sm" readonly />
+                                                        </div>
+                                                        <div class="hide">
+                                                            <label for="ddlUnitID">UnitID</label>
+                                                            <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
+                                                        </div>
+
+                                                        <div class="col-md-1">
+                                                            <label class="mb-0" for="ddluprice">Unit Price<span style="color:red">*</span></label>
+                                                            <input type="number" id="ddluprice" name="uprice" class="form-control form-control-sm" />
+                                                            <span class="error hide req-uprice">Unit Price Is Required</span>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="mb-0" for="ddlqty"> Qty<span style="color:red">*</span></label>
+                                                            <input type="number" id="ddlqty" name="qty" class="form-control form-control-sm" />
+                                                            <span class="error hide req-qty">Qty Is Required</span>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="mb-0">SubTotal</label>
+                                                            <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
+                                                        </div>
+
+                                                        <div class="col-md-1 hide">
+                                                            <div class="form-group">
+                                                                <label for="ddlexpdate">Expire Date</label>
+                                                                <div class="input-group-sm date" id="datePicker">
+
+                                                                    <input type="text" class="form-control" id="ddlexpdate" name="date" value="">
+                                                                    <span class="input-group-addon">
+                                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 ">
+
+
+                                                            <button type="submit" class="float-left float-md-start text-bold" id="addTolist" title="Save"><i class="fas fa-plus"></i></button>
+
+                                                        </div>
+
+
+
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*addbodey*@
+
+
+
                         </div>
 
 
-                        <div class="card-body" style=" margin-top: -30px">
 
-                            <div class="card-body table-responsive p-0 shadow " style="height: 200px;">
-                                <table class="table table-head-fixed text-nowrap tadd" id="tblPstockrawmaterial">
-                                    <thead>
-                                        <tr class="text-center" style="color:black">
+                        <div class="card-body px-2 py-0">
+                            <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg tadd" id="tblPstockrawmaterial" style="background-color: white; margin-bottom: -3px ">
+                                <thead>
+                                    <tr class="text-center" style="color:black">
 
-                                            <th>#SL</th>
-                                            <th>Raw Material</th>
-                                            <th>RM Code</th>
-                                            <th>Unit</th>
-                                            <th>Unit Price</th>
-                                            <th>QTY</th>
-                                            <th>Subtotal</th>
-                                            <th>Action</th>
-                                            <th class="hide DepotlId"></th>
-                                            <th class="hide RMId"></th>
-                                            <th class="hide unitId"></th>
-                                            <th class="hide ddlexpdate"></th>
+                                        <th>#SL</th>
+                                        <th>Raw Material</th>
+                                        <th>RM Code</th>
+                                        <th>Unit</th>
+                                        <th>Unit Price</th>
+                                        <th>QTY</th>
+                                        <th>Subtotal</th>
+                                        <th>Action</th>
+                                        <th class="hide DepotlId"></th>
+                                        <th class="hide RMId"></th>
+                                        <th class="hide unitId"></th>
+                                        <th class="hide ddlexpdate"></th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-gradient-gray"></tbody>
-                                </table>
-                            </div>
-
-                            @*Total*@
-                            <table class="table table-head-fixed text-nowrap tablesubtotal">
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg table-responsive-sm table-responsive-md tablesubtotal">
                                 <thead>
                                     <tr class="text-center">
 
@@ -305,10 +298,11 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-gradient-gray"></tbody>
+
                             </table>
-                            @*Total*@
                         </div>
+
+
                     </div>
                 </div>
 
@@ -316,18 +310,17 @@
                 @*stock*@
                 <div class="tab-pane fade show active" id="custom-tabs-two-pstockrawmaterialqty" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialqty-tab">
 
-                    <div class="row" style="margin-top:-35px">
+                    <div class="row" style="margin-top:-15px">
                         <div class="col-md-12">
                             <div class="card" style="background-color:#001f3f">
                                 <div class="px-2 py-1">
                                     <div class="row text-sm">
-                                        @*<div class="col-md-2">
-            <h5>Search by:</h5>
-        </div>*@
-
-                                        <div class="col-5">
-
+                                        <div class="col-3">
+                                            <h6 class="text-left  text-white mb-0" @*style="height:10px;text-align:center"*@>
+                                                RawMaterial Stock
+                                            </h6>
                                         </div>
+
                                         <div class="col-md-2 float-right text-white">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnyy" placeholder="Search by any" />
 
@@ -336,16 +329,16 @@
 
                                         </div>
 
+
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="row"style="margin-top:-2px">
+                    <div class="row" style="margin-top:-5px">
                         <div class="col-md-12" style="margin-top:-10px">
-                            <div class="card ">
-                                <div class="card-body"style="margin-top:-10px">
+
                                     <div class="row">
 
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer3">
@@ -353,15 +346,14 @@
                                         </div>
                                     </div>
 
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
                 @*stock*@
 
             </div>
-        </div>
+
     </div>
 </div>
 
@@ -641,7 +633,7 @@
                 var td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
                 var td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
                 var td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
-                var td8 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + ddlttprice.val() + "' data-quentaty='" + ddlqty.val() +"'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td8 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlttprice.val() + "' data-quentaty='" + ddlqty.val() +"'><i class='far fa-trash-alt'></i> Delete</a></td>";
 
                 var td9 = "<td class='text-center hide'>" + ddlRawMaterial.val() + "</td>";
                 var td10 = "<td class='text-center hide'>" + ddlUnitID.val() + "</td>";
