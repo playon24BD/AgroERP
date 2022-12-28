@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" style="margin-top:-8px">
+<div class="row" style="margin-top:-10px">
 
     <div class="col-md-12">
 
@@ -14,15 +14,20 @@
                     <div class="px-2 py-1">
                         <div class="row">
                             <div class="col-md-3">
-                                <h5 class="text-left text-bold text-white">Payment</h5>
+                                <h7 class="text-left text-bold text-white">Payment</h7>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-3 text-center">
                                 @*<label for="ddlstokiestname">Stockiest Name </label>*@
                                 @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "Select Stokiest", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             </div>
+                            <div class="col-md-2">
 
-                            <div class="col-md-6">
-                                <button class="btn btn-success btn-sm float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="emnsave-btn" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
                                 @*btn btn-outline-primary btn-sm float-lg-right*@
                             </div>
 
@@ -35,29 +40,29 @@
 
         </div>
 
-        <div class="row">
+        <div class="row small">
             <div class="col-md-12" style="margin-top:-14px">
                 <div class="card" style="background-color: #E0FFFF;">
-                    <div class="px-4 py-2" style="margin-bottom:-3px">
+                    <div class="px-2 py-1" style="margin-bottom:-3px">
 
                         <div class="row">
 
                             <div class="col-md-2">
-                                <label for="txtMoneyRecipt" class="control-label">
+                                <label for="txtMoneyRecipt" class="control-label mb-0">
                                     Money Recipt
                                 </label>
                                 <input type="text" id="txtMoneyRecipt" class="form-control form-control-sm" value="@ViewBag.code" readonly />
                             </div>
                             <div class="col-md-2">
-                                <label for="ddlBankname">BnakName</label>
+                                <label class="mb-0" for="ddlBankname">BnakName</label>
                                 @Html.DropDownList("ddlBankname", (IEnumerable<SelectListItem>)ViewBag.ddlBankname, "Select Bank", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             </div>
                             <div class="col-md-2">
-                                <label for="ddlBranch">Branch</label>
+                                <label class="mb-0" for="ddlBranch">Branch</label>
                                 <input type="text" id="ddlBranch" name="ddlBranch" class="form-control form-control-sm" />
                             </div>
                             <div class="col-md-2">
-                                <label for="ddlPaymentMode" class="control-label">Payment Mode</label>
+                                <label for="ddlPaymentMode" class="control-label mb-0">Payment Mode</label>
                                 <select id="ddlPaymentMode" class="form-control form-control-sm select2" >
                                     <option value="">Select Mode</option>
                                     <option value="Cash">Cash</option>
@@ -90,15 +95,13 @@
 
                 <div class="row" style="margin-top:-3px">
                     <div class="col-md-12" style="margin-top:-10px">
-                        <div class="card">
-                            <div class="card-body" style="margin-top:-5px">
 
-                                <div class="col-md-12" id="dataContainer">
+
+                                <div class="col-md-12 p-0" id="dataContainer">
 
                                 </div>
 
-                            </div>
-                        </div>
+
 
                     </div>
                 </div>

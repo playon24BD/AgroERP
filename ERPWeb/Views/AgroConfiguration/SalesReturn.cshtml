@@ -7,55 +7,48 @@
 
     <div class="col-md-12">
 
-        @*<div class="card card-navy">*@
-
         <div class="row" style="margin-top:-15px">
             <div class="col-md-12">
-                <div class="card card-navy">
-                    <div class="card-header" style="text-align: center;">
+                <div class="card mb-0" style="background-color:#001f3f">
+                    <div class="px-2 py-1">
 
-                        <div class="row">
+                        <div class="row align-items-center">
                             <div class="col-md-3">
-
-                                <a href="/AgroConfiguration/SalesReturnList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                                <a href="/AgroConfiguration/SalesReturnList" class="float-left emnDrop-btn" title="Go To List">
                                     <i class="fas fa-arrow-alt-circle-left"></i>
                                 </a>
                             </div>
-                            <div class="col-md-6">
-                                <h5 class="text-center text-bold">
+                            <div class="col-md-6 text-center">
+                                <h7 class="text-bold text-white">
                                     Create Product Return
-                                </h5>
+                                </h7>
                             </div>
                             <div class="col-md-3">
-                                <button class="btn btn-success btn-sm float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
-                                @*btn btn-outline-primary btn-sm float-lg-right*@
+                                <button type="submit" class="emnsave-btn" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <!--<div class="card-body  mb-5"--> @*style="background-color:#e7f1f6"*@ <!--id="cardWithOutRequisition">-->
-        <div class="row">
-            <div class="col-md-12" style="margin-top:-15px">
+
+
+
+        <div class="row"  style="margin-top:1px">
+            <div class="col-md-12">
                 <div class="card" style="background-color:#001f3f">
                     <div class="px-2 py-1">
                         <div class="row">
-                            @*<div class="col-md-1">
-                                    <h5 class="text-start">
-                                        Invoice
-                                    </h5>
-                                </div>*@
+
                             <div class="col-md-3">
-                                @*<label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>*@
-                                @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "--Select Stokiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus="autofocus" })
+
+                                @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "--Select Stokiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
                             </div>
                             <div class="col-md-3">
-                                @*<label for="ddlInvoiceNo" class="col-form-label">Invoice No </label>*@
-                                @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" } )
+
+                                @Html.DropDownList("ddlInvoiceNo", (IEnumerable<SelectListItem>)ViewBag.ddlInvoiceNo, "--Select Invoice--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             </div>
                             <div class="hide">
                                 <label for="ddlStokiestID">StokiestID</label>
@@ -74,17 +67,13 @@
             </div>
 
 
-            <div class="col-md-12" style="margin-top:-10px">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="col-md-12" id="dataContainer">
+            <div class="col-md-12" style="margin-top:-15px">
+
+                        <div class="col-md-12 p-0" id="dataContainer">
 
                         </div>
 
 
-                    </div>
-
-                </div>
             </div>
 
         </div>

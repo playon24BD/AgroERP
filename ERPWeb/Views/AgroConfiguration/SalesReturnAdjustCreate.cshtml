@@ -7,45 +7,43 @@
 
     <div class="col-md-12">
 
-
         <div class="row" style="margin-top:-15px">
             <div class="col-md-12">
-                <div class="card card-navy">
+                <div class="card mb-0" style="background-color:#001f3f">
+                    <div class="px-2 py-1">
 
-                    <div class="card-header" style="text-align: center;">
-
-                        <div class="row">
+                        <div class="row align-items-center">
                             <div class="col-md-3">
-
-                                <a href="/AgroConfiguration/GetSalesReturnAdjustList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                                <a href="/AgroConfiguration/GetSalesReturnAdjustList" class="float-left emnDrop-btn" title="Go To List">
                                     <i class="fas fa-arrow-alt-circle-left"></i>
                                 </a>
                             </div>
-                            <div class="col-md-6">
-                                <h5 class="text-center text-bold">
+                            <div class="col-md-6 text-center">
+                                <h7 class="text-bold text-white">
                                     Sales Return Adjust
-                                </h5>
+                                </h7>
                             </div>
                             <div class="col-md-3">
-                                <button class="btn btn-success btn-sm btn float-right" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
+                                <button type="submit" class="emnsave-btn" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <div class="row">
-            <div class="col-md-12" style="margin-top:-15px">
+
+
+        <div class="row"  style="margin-top:1px">
+            <div class="col-md-12">
                 <div class="card card-gray-dark ">
 
-                    <div class="card-header text-sm ">
+                    <div class="card-header text-sm  px-1 py-1">
                         <div class="row justify-content-center">
                             <div class="col-md-2">
                                 <label for="ddlstokiestname">Stockiest Name <span style="color:red">*</span></label>
-                                @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "--Select Stokiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger",autofocus="autofocus" })
+                                @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "--Select Stokiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
                             </div>
                             <div class="col-md-2">
                                 <label for="ddltotalbill">Total Bill</label>
@@ -81,15 +79,13 @@
 
         </div>
 
-        <div class="row">
-            <div class="col-md-12" style="margin-top:-10px">
-                <div class="card">
-            <div class="card-body" style="margin-top:-10px">
-                <div class="col-md-12" id="dataContainer">
+        <div class="row" style="margin-top:-15px">
+            <div class="col-md-12" >
 
-                </div>
-                </div>
-            </div>
+                        <div class="col-md-12 p-0" id="dataContainer">
+
+                        </div>
+
             </div>
         </div>
 

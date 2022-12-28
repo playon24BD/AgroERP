@@ -5,175 +5,176 @@
 
 <div class="row text-sm" style="margin-top:-25px">
     <div class="col-md-12">
-        <div class="card card-navy shadow">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-md-3">
-                        <a href="/AgroConfiguration/GetPackageList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
-                            <i class="fas fa-arrow-alt-circle-left"></i>
-                        </a>
-                    </div>
-                    <div class="col-md-6">
-                        <h5 class="text-center text-bold">Create Package</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-right">
-                            <i class="fas fa-paper-plane"></i> Save
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12" style="border-right:2px solid #efefef">
 
-                        <div class="row justify-content-center">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-0" style="background-color:#001f3f">
+                    <div class="px-2 py-1">
 
-                            <div class="col-md-2">
-                                <label for="ddlpackagename" class="control-label">PackageName <span style="color:red">*</span><span class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
-                                <input type="text" placeholder="PACKAGE NAME" name="ddlpackagename" id="ddlpackagename" class="form-control form-control-sm" />
-                                <span class="error hide req-src-ddlpackagenameddlpackagename text-bold">ProductQty is required!</span>
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <a href="/AgroConfiguration/GetPackageList" class="float-left emnDrop-btn" title="Go To List">
+                                    <i class="fas fa-arrow-alt-circle-left"></i>
+                                </a>
                             </div>
-
-                            <div class="col-md-2">
-                                <label class="control-label font-weight-bold">Start Date<span style="color:red">*</span></label>
-                                <div class="input-group input-group-sm ">
-                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="START DATE" />
-                                    <span class="error hide req-dptFromDate">From is Required</span>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="control-label font-weight-bold">End Date<span style="color:red">*</span></label>
-                                <div class="input-group input-group-sm ">
-                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="END DATE"/>
-                                    <span class="error hide req-dptToDate">ToDate is Required</span>
-
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label pt-0" for="model">Total Amount</label>
-                                <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold" readonly />
-                            </div>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label for="ddlProductName" class="col-form-label text-black">
-                                    Product<span style="color:red">*</span>
-                                </label>
-                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "Product", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
-                            </div>
-                            <div class="hide">
-                                <input type="text" id="ddlfgrid" class="form-control form-control-sm" readonly />
+                            <div class="col-md-6 text-center ">
+                                <h6 class="text-center text-bold text-white mb-0">Create Package</h6>
                             </div>
                             <div class="col-md-3">
-                                <label for="ddlMeasurementName" class="col-form-label text-black">
-                                    Measurement<span style="color:red">*</span>
-                                </label>
-                                @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
+                                <button type="submit" id="btnSubmit" class="emnsave-btn">
+                                    <i class="fas fa-paper-plane"></i> Save
+                                </button>
                             </div>
-
-                            <div class="col-md-2">
-                                <label for="txtQuanity" class="col-form-label text-black">Quantity<span style="color:red">*</span></label>
-                                <input type="number" id="txtQuanity" class="form-control form-control-sm" placeholder="QTY" />
-                                <span class="error hide req-Quanity">Quantity is required</span>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="ddlPrice" class="col-form-label text-black">Rate/PC</label>
-                                <input type="text" id="txtPrice" class="form-control form-control-sm" placeholder="PRICE"/>
-                                <span class="error hide req-txtPrice">Price not Configure</span>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="ddlMode" class="col-form-label">Status</label>
-                                <select id="ddlMode" class="form-control form-control-sm select2">
-                                    <option value="">Select</option>
-                                    <option value="Paid">Paid</option>
-                                    <option value="Gift">Gift</option>
-                                </select>
-                                <span class="error hide req-ddlMode">Mode Is Required</span>
-                            </div>
-                            <div class="col-md-1">
-                                <label for="" class="col-form-label font-weight-bold" style="visibility:hidden">Add</label>
-                                <div class="clearfix">
-                                    <button type="submit" class="btn btn-sm float-right btn-outline-success" id="btnAddToList" title="Add"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </div>
-                            <div class="hide">
-                                <label>TotalAmount</label>
-                                <input type="number" id="txtTotalAmount" name="TotalAmount" class="form-control form-control-sm" readonly />
-                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
+        <div class="card-body px-2 py-1">
+            <div class="row">
+                <div class="col-md-12" style="border-right:2px solid #efefef">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-md-2 pr-0">
+                            <label for="ddlpackagename" class="control-label mb-0">PackageName <span style="color:red">*</span><span class="font-weight-bold mt-1" style="color:darkblue"> </span></label>
+                            <input type="text" placeholder="PACKAGE NAME" name="ddlpackagename" id="ddlpackagename" class="form-control form-control-sm pr-0" />
+                            <span class="error hide req-src-ddlpackagenameddlpackagename text-bold">ProductQty is required!</span>
+                        </div>
+
+                        <div class="col-md-2 pr-0">
+                            <label class="control-label font-weight-bold mb-0">Start Date<span style="color:red">*</span></label>
+                            <div class="input-group input-group-sm ">
+                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed pr-0" id="dptFromDate" placeholder="START DATE" />
+                                <span class="error hide req-dptFromDate">From is Required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 pr-0">
+                            <label class="control-label font-weight-bold mb-0">End Date<span style="color:red">*</span></label>
+                            <div class="input-group input-group-sm ">
+                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed pr-0" id="dptToDate" placeholder="END DATE" />
+                                <span class="error hide req-dptToDate">ToDate is Required</span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="col-form-label pt-0 mb-0 pb-0" for="model">Total Amount</label>
+                            <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold pr-0" readonly />
                         </div>
 
 
                     </div>
 
                 </div>
+
             </div>
-
-
-            <div class="row mt-2">
+            <div class="row">
                 <div class="col-md-12">
-                    @Html.AntiForgeryToken()
-                    <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg" id="tblList">
-                        <thead>
-                            <tr>
-                                <th colspan="11" class="text-center">
-                                    <span class="error hide no-items">Please load the table first.</span>
-                                    @*<button type="submit" id="btnSubmit" class="btn btn-sm btn-success float-right">
-                                            <i class="fas fa-paper-plane"></i> Save
-                                        </button>*@
-                                </th>
-                            </tr>
-                            <tr class="text-center btn-dark">
-                                <th style="width:8%">#SL</th>
-                                <th style="width:20%">Product</th>
-                                <th style="width:10%">Measurment</th>
-                                <th style="width:10%">Quantity</th>
-                                <th style="width:10%">Amount</th>
-                                <th style="width:10%">Status</th>
-                                <th style="width:12%">Action</th>
-                                <th class="hide RawMaterialId"></th>
-                                <th class="hide UnitId"></th>
 
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                    <div class="row justify-content-center">
+                        <div class="col-md-2 pr-0">
+                            <label for="ddlProductName" class="col-form-label text-black pb-0">
+                                Product<span style="color:red">*</span>
+                            </label>
+                            @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "Product", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
+                        </div>
+                        <div class="hide">
+                            <input type="text" id="ddlfgrid" class="form-control form-control-sm" readonly />
+                        </div>
+                        <div class="col-md-3 pr-0">
+                            <label for="ddlMeasurementName" class="col-form-label text-black pb-0">
+                                Measurement<span style="color:red">*</span>
+                            </label>
+                            @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
+                        </div>
+
+                        <div class="col-md-2 pr-0">
+                            <label for="txtQuanity" class="col-form-label text-black pb-0">Quantity<span style="color:red">*</span></label>
+                            <input type="number" id="txtQuanity" class="form-control form-control-sm" placeholder="QTY" />
+                            <span class="error hide req-Quanity">Quantity is required</span>
+                        </div>
+                        <div class="col-md-2 pr-0">
+                            <label for="ddlPrice" class="col-form-label text-black pb-0">Rate/PC</label>
+                            <input type="text" id="txtPrice" class="form-control form-control-sm" placeholder="PRICE" />
+                            <span class="error hide req-txtPrice">Price not Configure</span>
+                        </div>
+                        <div class="col-md-1 pr-0">
+                            <label for="ddlMode" class="col-form-label pb-0">Status</label>
+                            <select id="ddlMode" class="form-control form-control-sm select2">
+                                <option value="">Select</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Gift">Gift</option>
+                            </select>
+                            <span class="error hide req-ddlMode">Mode Is Required</span>
+                        </div>
+                        <div class="col-md-1">
+                            <label for="" class="col-form-label font-weight-bold pb-0" style="visibility:hidden">Add</label>
+                            <div class="clearfix">
+                                <button type="submit" class="float-left float-md-start text-bold" id="btnAddToList" title="Add"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="hide">
+                            <label>TotalAmount</label>
+                            <input type="number" id="txtTotalAmount" name="TotalAmount" class="form-control form-control-sm" readonly />
+                        </div>
+
+
+                    </div>
+
+
                 </div>
+
             </div>
-
-            @*Total*@
-            <table class="table table-head-fixed text-nowrap tablesubtotal">
-                <thead>
-                    <tr class="text-center">
-
-                        <th>Total</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th class="totalsub">0</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody class="bg-gradient-gray"></tbody>
-            </table>
-            @*Total*@
-
-
-
         </div>
+
+
+        <div class="row mt-2">
+            <div class="col-md-12">
+                @Html.AntiForgeryToken()
+                <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg" id="tblList">
+                    <thead>
+                        <tr class="text-center btn-dark">
+                            <th style="width:8%;background-color:black; color:white">#SL</th>
+                            <th style="width: 20%; background-color: black; color: white">Product</th>
+                            <th style="width: 10%; background-color: black; color: white">Measurment</th>
+                            <th style="width: 10%; background-color: black; color: white">Quantity</th>
+                            <th style="width: 10%; background-color: black; color: white">Amount</th>
+                            <th style="width: 10%; background-color: black; color: white">Status</th>
+                            <th style="width: 12%; background-color: black; color: white">Action</th>
+                            <th class="hide RawMaterialId"></th>
+                            <th class="hide UnitId"></th>
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        @*Total*@
+        <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg tablesubtotal" style="margin-top:-15px">
+            <thead>
+                <tr class="text-center">
+
+                    <th>Total</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th class="totalsub">0</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="bg-gradient-gray"></tbody>
+        </table>
+        @*Total*@
+
+
+
+
     </div>
 </div>
 
@@ -319,7 +320,7 @@
                 var td4 = "<td class='text-center'>" + txtQuanity.val() + "</td>";
                 var td5 = "<td class='text-center'>" + txtTotalAmount.val() + "</td>";
                 var td6 = "<td class='text-center'>" + ddlMode.val() + "</td>";
-                var td7 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del' data-subtotal='" + txtTotalAmount.val() + "'><i class='far fa-trash-alt'></i> Delete</a></td>";
+               var td7 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + txtTotalAmount.val() + "'><i class='far fa-trash-alt'></i></a></td>";
                 var td8 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
                 var td9 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
                 var td10 = "<td class='hide fgrid'>" + ddlfgrid.val() + "</td>";
