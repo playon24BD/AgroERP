@@ -2,8 +2,23 @@
     ViewBag.Title = "GetProductFinishGoodList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
 
-<div class="row"  style="margin-top:-5px">
+    table.tadd tr th {
+        background-color: darkcyan !important;
+        color: white !important;
+    }
+
+
+
+    input::placeholder {
+        font-weight: bold;
+    }
+
+
+</style>
+
+<div class="row text-sm p-0"  style="margin-top:-5px">
     <div class="col-md-12">
         <div class="card  shadow card card-outline card-tabs" style="margin-top:-20px">
         
@@ -24,17 +39,11 @@
 
         </div>
 
-        <div class="card-body shadow">
+
             <div class="tab-content" id="custom-tabs-two-tabContent">
                 <div class="tab-pane fade show active" id="custom-tabs-two-producFinishGoodList" role="tabpanel" aria-labelledby="custom-tabs-two-producFinishGoodList-tab">
-                    <div class="row" style="margin-top:-15px">
-                        <div class="col-md-12">
-                            <div class="card shadow card-gray-dark">
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style=" margin-top: -35px">
+                    <div class="row" style=" margin-top: -15px">
                         <div class="col-md-12">
                             <div class="card" style="background-color:#001f3f">
                                 <div class="px-2 py-1">
@@ -55,30 +64,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="margin-top:-3px">
+                    <div class="row" style="margin-top:-5px">
 
                         <div class="col-md-12" style="margin-top:-10px">
-                            <div class="card">
-                                <div class="card-body" style="margin-top:-10px">
+
                                     <div class="row">
-                                        <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
+                                        <div class="col-md-12 text-sm text-sm" id="dataContainer">
                                             @{Html.RenderAction("GetProductFinishGoodList", new { @flag = "Initial" });}
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane fade show" id="custom-tabs-two-finishGoodProductList" role="tabpanel" aria-labelledby="custom-tabs-two-finishGoodProductList-tab">
-                    <div class="row" style="margin-top:-15px">
-                        <div class="col-md-12">
-                            <div class="card shadow card-gray-dark">
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style=" margin-top: -35px">
+                    <div class="row" style=" margin-top: -15px">
                         <div class="col-md-12">
                             <div class="card" style="background-color:#001f3f">
                                 <div class="px-2 py-1">
@@ -99,142 +100,141 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="margin-top:-3px">
+                    <div class="row" style="margin-top:-5px">
 
                         <div class="col-md-12" style="margin-top:-10px">
-                            <div class="card">
-                                <div class="card-body" style="margin-top:-10px">
+
                                     <div class="row">
-                                        <div class="col-md-12 text-sm text-sm" id="dataContainer1" style="overflow-y:scroll">
+                                        <div class="col-md-12 text-sm text-sm" id="dataContainer1" >
                                            
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane fade show " id="custom-tabs-two-finishGoodProduction" role="tabpanel" aria-labelledby="custom-tabs-two-finishGoodProduction-tab">
-                    <div class="row" style=" margin-top: -35px">
+                    <div class="row" style=" margin-top: -13px">
+   
                         <div class="col-md-12">
-                            <div class="card card-navy">
-                                <div class="card-header" style="text-align: center;">
 
-                                    <div class="row">
+                            <div class="row align-items-center" style="margin-top:-2px">
+                                <div class="col-md-12">
+                                    <div class="card mb-0" style="background-color:#001f3f">
+                                        <div class="px-2 py-1">
+                                            <div class="row">
+                                                <div class="col-md-3">
 
-                                        <div class="col-md-12">
-                                            <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
-                                            <h5 class="text-center text-bold">
+                                                </div>
+                                                <div class="col-md-6 text-center">
+                                                    <h6 class="text-center text-white text-bold">Finish Good Production</h6>
+                                                </div>
 
-                                                Finish Good Production
-                                            </h5>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <input type="hidden" id="hdMeasurementId" />
-                                        <input type="hidden" id="hdTargetValue" />
-                                        <input type="hidden" id="hdQuantity" />
-                                        @*<div class="col-md-3">
-                                    <label class="control-label font-weight-bold" for="ddlOrganiation">Organization Name</label>
-                                    <select class=" form-control form-control-sm" id="ddlOrganiation" name="ddlOrganiation">
-                                        <option value="">Select One</option>
-                                        <option value="9">Agro Farm</option>
-                                    </select>
-                                    <span class="error hide req-ddlOrganiation">Organization is required</span>
-                                </div>*@
-                                        <div class="col-md-3">
-                                            <label class="control-label" for="ddlProduct">Product<span style="color:red">*</span></label>
-                                            @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
-
-                                            <span class="error hide req-ddlProduct">Product Name is Required</span>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="control-label" for="ddlMeasurementName">Measurment<span style="color:red">*</span></label>
-                                            @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Select Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                            <span class="error hide req-ddlMeasurementName">MeasurementName Is Required</span>
-                                        </div>
-                                        <div class="col-md-2 hide">
-                                            <input type="text" value="none" id="ddlReceipBatchCode" name="ddlReceipBatchCode" class="form-control form-control-sm" readonly />
-                                            @*<label class="control-label" for="ddlReceipBatchCode">Recipe Code<span style="color:red">*</span></label>
-                                    @Html.DropDownList("ddlReceipBatchCode", (IEnumerable<SelectListItem>)ViewBag.ddlReceipBatchCode, new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                    <span class="error hide req-ddlReceipBatchCode">Batch Code Is Required</span>*@
-                                        </div>
-                                        <div class="col-md-2 hide">
-                                            <label for="qty"> Qty</label>
-                                            <input type="text" id="qty" name="qty" class="form-control form-control-sm" readonly />
-                                            <span class="error hide req-qty">Qty Is Required</span>
-
-                                        </div>
-                                        @*<div class="col-md-2 ">
-                                            <label for="targetQty" class="control-label"> Target Qty</label>
-                                            <input type="number" id="targetQty" class="form-control form-control-sm" readonly />
-                                            <span class="error hide req-targetQty">Target Qty Is Required</span>
-                                        </div>*@
-                                        <div class="col-md-2">
-                                            <label for="FinishQty" class="control-label">Finish Qty<span style="color:red">*</span></label>
-                                            <input type="number" id="FinishQty" class="form-control form-control-sm" />
-                                            <span class="error hide req-FinishQty">Oty Over</span>
-                                        </div>
-
-                                        <div class="col-md-1 hide">
-                                            <label>TotalProductQty</label>
-                                            <input type="number" id="txtTotalProductQty" name="TotalProductQty" class="form-control form-control-sm" readonly />
-                                        </div>
-                                        <div class="col-md-1 hide">
-                                            <label>TotalQty</label>
-                                            <input type="number" id="txtTotalQty" name="TotalQty" class="form-control form-control-sm" readonly />
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="" class="control-label font-weight-bold" style="visibility:hidden"> Add To List</label>
-                                            <div class="clearfix">
-                                                <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                                                <div class="col-md-2">
+                                                </div>
+                                                <div class="col-md-1" style="margin-top:0px;">
+                                                    <button class="emnsave-btn" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12" style="margin-top:-13px">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-md-12">
-                                        <div class="row" style="margin-top:-10px">
-                                            <div class="col-md-12" style="overflow-y:scroll">
-                                                <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblFinishGoodProduction">
-                                                    <thead>
-                                                        @*<tr>
-                                                    <th colspan="6">
-                                                        <button class="btn btn-outline-success btn-sm float-lg-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i> </button>
-                                                    </th>
-                                                </tr>*@
-                                                        <tr class="btn-dark text-center">
 
-                                                            <th>Raw Material</th>
-                                                            <th>Per Qty</th>
-                                                            <th>Total Production Qty</th>
-                                                            <th>Required Qty</th>
 
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody></tbody>
-                                                </table>
+                            <div class="card-body p-0">
+                                <div class="row" style="margin-top:0px">
+                                    <div class="col-md-6 pr-0">
+                                        <div class="px-1 py-1" style="margin-top: 2px; background-color: #008B8B">
+                                            <div class="row">
+                                                <input type="hidden" id="hdMeasurementId" />
+                                                <input type="hidden" id="hdTargetValue" />
+                                                <input type="hidden" id="hdQuantity" />
 
+                                                <div class="col-md-4 pr-0">
+                                                    <label class="control-label mb-0 text-white" for="ddlProduct">Product<span style="color:red">*</span></label>
+                                                    @Html.DropDownList("ddlProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
+
+                                                    <span class="error hide req-ddlProduct">Product Name is Required</span>
+                                                </div>
+                                                <div class="col-md-4 pr-0">
+                                                    <label class="control-label mb-0 text-white" for="ddlMeasurementName">Measurment<span style="color:red">*</span></label>
+                                                    @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Select Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                    <span class="error hide req-ddlMeasurementName">MeasurementName Is Required</span>
+                                                </div>
+                                                <div class="col-md-2 hide">
+                                                    <input type="text" value="none" id="ddlReceipBatchCode" name="ddlReceipBatchCode" class="form-control form-control-sm" readonly />
+                                                </div>
+                                                <div class="col-md-2 hide">
+                                                    <label for="qty"> Qty</label>
+                                                    <input type="text" id="qty" name="qty" class="form-control form-control-sm" readonly />
+                                                    <span class="error hide req-qty">Qty Is Required</span>
+
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label for="FinishQty" class="control-label mb-0 text-white">Finish Qty<span style="color:red">*</span></label>
+                                                    <input type="number" id="FinishQty" class="form-control form-control-sm" />
+                                                    <span class="error hide req-FinishQty">Oty Over</span>
+                                                </div>
+
+                                                <div class="col-md-1 hide">
+                                                    <label>TotalProductQty</label>
+                                                    <input type="number" id="txtTotalProductQty" name="TotalProductQty" class="form-control form-control-sm" readonly />
+                                                </div>
+                                                <div class="col-md-1 hide">
+                                                    <label>TotalQty</label>
+                                                    <input type="number" id="txtTotalQty" name="TotalQty" class="form-control form-control-sm" readonly />
+                                                </div>
+
+                                                <div class="col-md-1 pl-0">
+
+                                                    <label class="control-label mb-0" style="visibility:hidden">Add</label>
+                                                    <button type="submit" class="float-right text-bold" id="addTolist" title="Save"><i class="fas fa-plus"></i></button>
+
+                                                </div>
                                             </div>
+
                                         </div>
+                                     </div>
+                                        <div class="col-md-6 pl-0 ">
+
+                                            <div class="col-md-12 pr-0">
+                                                <div class="row " style="margin-top:0px">
+                                                    <div class="col-md-12">
+                                                        <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg tadd" id="tblFinishGoodProduction">
+                                                            <thead>
+
+                                                                <tr class="btn-dark text-center">
+
+                                                                    <th>Raw Material</th>
+                                                                    <th>Per Qty</th>
+                                                                    <th>Total Production Qty</th>
+                                                                    <th>Required Qty</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
                                     </div>
-                                </div>
                             </div>
+
                         </div>
+
 
                     </div>
                 </div>
             </div>
 
-        </div>
+ 
     </div>
 </div>
 <div class="modal fade" id="ModalProductionFinishGoodDetails" role="dialog" tabindex="-1" aria-hidden="true">

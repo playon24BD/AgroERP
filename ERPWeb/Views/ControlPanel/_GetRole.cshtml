@@ -32,11 +32,11 @@
                         <td class="text-center">
                             @if (ViewBag.OPFor == "System")
                             {
-                                <a href="@Url.Action("CreateAppRole","ControlPanel", new { id=role.RoleId})" class="das-btn btn-flat"><i class="fas fa-pen"></i> Edit</a>
+                                <a href="@Url.Action("CreateAppRole","ControlPanel", new { id=role.RoleId})" class="das-btn btn-flat"><i class="fas fa-pen"></i></a>
                             }
                             @if (ViewBag.OPFor == "Client")
                             {
-                                <a href="@Url.Action("CreateUserRole","ControlPanel", new { id=role.RoleId})" class="das-btn btn-flat"><i class="fas fa-pen"></i> Edit</a>
+                                <a href="@Url.Action("CreateUserRole","ControlPanel", new { id=role.RoleId})" class="das-btn btn-flat"><i class="fas fa-pen"></i></a>
                             }
                         </td>
                     </tr>

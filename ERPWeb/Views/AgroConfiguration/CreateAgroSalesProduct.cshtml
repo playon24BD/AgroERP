@@ -27,6 +27,10 @@
     body {
         margin-top: 40px;
     }
+    input::placeholder {
+        font-weight: bold;
+      
+    }
 
     .container {
         margin-bottom: 60px;
@@ -39,7 +43,7 @@
     <div class="col-md-12">
 
 
-        <div class="row" style="margin-top:-2px">
+        <div class="row" style="margin-top:-4px">
             <div class="col-md-12">
                 <div class="card" style="background-color:#001f3f">
                     <div class="px-2 py-1">
@@ -67,83 +71,85 @@
             </div>
         </div>
         <div class="row" style="background-color: white; margin-top: -23px ">
-            <div class="col-md-6">
+            <div class="col-md-6 pr-0">
                 @*<div class="card shadow" style="background-color: white; margin-top: -15px ">*@
 
                     <div class="px-0 py-2">
+                        <div class="px-1 py-1" style="background-color: #001f3f;">
+                            <div class="row small">
+                                <div class="col-md-3">
+                                    @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "Stockiest", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
+                                    <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--DepotName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                    <span class="error hide req-DepotName font-weight-bold">Depot Name is required!</span>
+                                </div>
 
-                        <div class="row small ">
-                            <div class="col-md-3">
-                                @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "Stockiest", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
-                                <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
-                            </div>
-                            <div class="col-md-3">
-                                @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--DepotName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                <span class="error hide req-DepotName font-weight-bold">Depot Name is required!</span>
-                            </div>
 
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="input-group-sm date" id="simple">
-                                        <input type="text" class="form-control form-control-sm" id="ChallanDate" name="date" value="">
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </span>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="input-group-sm date" id="simple">
+                                            <input type="text" class="form-control form-control-sm" id="ChallanDate" name="date" value="">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
 
 
-                            <div class="col-md-3">
+                                <div class="col-md-3">
 
-                                <div class="form-group">
-                                    <div class="input-group-sm date" id="datePicker">
-                                        <input type="text" class="form-control form-control-sm"  id="InvoiceDate" name="date" value="">
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </span>
+                                    <div class="form-group">
+                                        <div class="input-group-sm date" id="datePicker">
+                                            <input type="text" class="form-control form-control-sm" id="InvoiceDate" name="date" value="">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
+
+
+
                             </div>
+                            <div class="row small" style="margin-top: -12px ">
+                                <div class="col-md-3">
+                                    <select class="form-control form-control-sm" id="ddlPaymentMode">
+                                        <option value="Credit">Credit</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" placeholder="V.Type" id="txtVehicleType" class="form-control form-control-sm  ">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" placeholder="V.Num" id="txtVehicleNumber" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" placeholder="D.Name" id="txtDriverName" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="row small" style="margin-top: 4px ">
 
+                                <div class="col-md-3">
+                                    <input type="text" placeholder="Place" id="txtDeliveryPlace" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" placeholder="ADO_DA" id="txtDo_ADO_DA" class="form-control form-control-sm ">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" placeholder="DO_ADO" id="txtDoADO_Name" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold" readonly />
+                                </div>
 
-
+                            </div>
                         </div>
-                        <div class="row small" style="margin-top: -12px ">
-                            <div class="col-md-3">
-                                <select class="form-control form-control-sm" id="ddlPaymentMode">
-                                    <option value="Credit">Credit</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" placeholder="V.Type" id="txtVehicleType" class="form-control form-control-sm  ">
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" placeholder="V.Num" id="txtVehicleNumber" class="form-control form-control-sm">
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" placeholder="D.Name" id="txtDriverName" class="form-control form-control-sm">
-                            </div>
-                        </div>
-                        <div class="row small" style="margin-top: 4px ">
 
-                            <div class="col-md-3">
-                                <input type="text" placeholder="Place" id="txtDeliveryPlace" class="form-control form-control-sm">
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" placeholder="ADO_DA" id="txtDo_ADO_DA" class="form-control form-control-sm ">
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" placeholder="DO_ADO" id="txtDoADO_Name" class="form-control form-control-sm">
-                            </div>
-                            <div class="col-md-3">
-                                <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold" readonly />
-                            </div>
-
-                        </div>
-                        <div class="row small" style="margin-top: 15px ">
+                        <div class="row small" style="margin-top: 5px ">
                             <div class="col-md-12">
                            
                                     <div class="px-2 py-1 pb-0" style="background-color: #2E8B57;">
@@ -285,7 +291,7 @@
                 @*</div>*@
             </div>
             <div class="col-md-6">
-                <div class="row mt-2">
+                <div class="row small mt-2">
                     <div class="col-md-12">
 
                         <div class="card" id="card11">
@@ -369,14 +375,14 @@
                                 <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg tadds" id="tblListpackage" style="background-color: white; margin-bottom: 0px ">
                                     <thead>
                                         <tr class="text-center" style="color:black">
-                                            <th style="width:10%">Product </th>
-                                            <th style="width:10%">Measurement</th>
-                                            <th style="width:5%">Quanity</th>
-                                            <th style="width:10%">Amount</th>
-                                            <th style="width:1%" class="hide ProductId"></th>
-                                            <th style="width:1%" class="hide MeasurementId"></th>
-                                            <th style="width:1%" class="hide FGRID"></th>
-                                            <th style="width:1%" class="hide Packageid"></th>
+                                            <th >Product </th>
+                                            <th>Measurement</th>
+                                            <th>Quanity</th>
+                                            <th>Amount</th>
+                                            <th class="hide ProductId"></th>
+                                            <th class="hide MeasurementId"></th>
+                                            <th  class="hide FGRID"></th>
+                                            <th class="hide Packageid"></th>
 
                                         </tr>
                                     </thead>
@@ -386,10 +392,10 @@
                                     <thead>
                                         <tr class="text-center">
 
-                                            <th style="width:25%">Total</th>
-                                            <th style="width:25%"></th>
-                                            <th style="width:25%"></th>
-                                            <th style="width:25%" class="totalsubpackage">0</th>
+                                            <th >Total</th>
+                                            <th ></th>
+                                            <th ></th>
+                                            <th  class="totalsubpackage">0</th>
                                         </tr>
                                     </thead>
                                 </table>

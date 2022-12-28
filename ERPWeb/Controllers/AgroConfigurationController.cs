@@ -1316,83 +1316,15 @@ namespace ERPWeb.Controllers
                     return PartialView("_GetProductFinishGoodDetails", finishGoodProductionDetailViewModels);
                 }
 
-                //else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
-                //{
-
-                //    var dto = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosList(productId?? 0,finishGoodProductionBatch);
-
-
-
-
-                //    List<FinishGoodProductionInfoViewModel> viewModels = new List<FinishGoodProductionInfoViewModel>();
-                //    AutoMapper.Mapper.Map(dto, viewModels);
-                //    return PartialView("_GetProductFinishGoodList", viewModels);
-                //}
 
                 else
                 {
-                    //var finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId);
-
-                    //IEnumerable<FinishGoodProductionInfoDTO> finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f => new FinishGoodProductionInfoDTO
-                    //{
-                    //    FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
-                    //    FinishGoodProductionBatch = f.FinishGoodProductionBatch,
-                    //    TargetQuantity = f.TargetQuantity,
-
-                    //    Quanity =  f.Quanity,
-                    //    //flag= _agroUnitInfo.UnitIdwiseUnitNameList(f.Quanity).UnitName,
-                    //    Status = f.Status,
-                    //    ReceipeBatchCode = f.ReceipeBatchCode,
-                    //    UnitQty=_finishGoodRecipeInfoBusiness.GetUnitId(f.ReceipeBatchCode, f.Quanity).UnitId,
-                    //    //flag = _agroUnitInfo.UnitIdwiseUnitNameList(UnitQty).UnitName,
-                    //    FinishGoodProductId = f.FinishGoodProductId,
-                    //    FGRId=f.FGRId,
-
-                    //    Quanity = f.Quanity,
-                    //    Status = f.Status,
-                    //    ReceipeBatchCode = f.ReceipeBatchCode,
-                    //    FinishGoodProductId = f.FinishGoodProductId,
-                    //    FGRId = f.FGRId,
-
-                    //    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
-
-
-                    //}).ToList();
-
-                    //List<FinishGoodProductionInfoViewModel> viewModel = new List<FinishGoodProductionInfoViewModel>();
-                    //AutoMapper.Mapper.Map(finishGoodProduction, viewModel);
-                    //return PartialView("_GetProductFinishGoodList", viewModel);
-
-                    //var dto = _mRawMaterialIssueStockDetails.GetIssueInOutInfos(name ?? null);
-
-                    //List<MRawMaterialIssueStockDetailsViewModel> viewModels = new List<MRawMaterialIssueStockDetailsViewModel>();
-                    //AutoMapper.Mapper.Map(dto, viewModels);
-                    //return PartialView("_GetRawMaterialIssueView", viewModels);
 
                     var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos(ReceipeBatchCode, productId).ToList();
                     List<FinishGoodProductionInfoViewModel> finishGoodProductionInfos = new List<FinishGoodProductionInfoViewModel>();
                     AutoMapper.Mapper.Map(dto, finishGoodProductionInfos);
                     return PartialView("_GetStockProductFinishGoodList", finishGoodProductionInfos);
 
-
-
-
-                    //    IEnumerable<FinishGoodProductionInfoDTO> finishGoodProduction = _finishGoodProductionInfoBusiness.GetFinishGoodProductionInfo(User.OrgId).Select(f => new FinishGoodProductionInfoDTO
-                    //    {
-                    //        FinishGoodProductionInfoId = f.FinishGoodProductInfoId,
-                    //        FinishGoodProductionBatch = f.FinishGoodProductionBatch,
-                    //        TargetQuantity = f.TargetQuantity,
-                    //        Quanity = f.Quanity,
-                    //        Status = f.Status,
-                    //        ReceipeBatchCode = f.ReceipeBatchCode,
-                    //        FinishGoodProductId = f.FinishGoodProductId,
-                    //        FGRId = f.FGRId,
-                    //        FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(f.FinishGoodProductId, User.OrgId).FinishGoodProductName,
-
-
-
-
-                    //}
 
                 }
             }

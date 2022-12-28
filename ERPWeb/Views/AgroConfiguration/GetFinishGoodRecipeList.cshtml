@@ -17,11 +17,11 @@
             <div class="col-md-12">
                 <div class="card" style="background-color:#001f3f">
                     <div class="px-2 py-1">
-                        <div class="row">
+                        <div class="row align-items-center">
                             <div class="col-md-3">
-                                <h5 class="text-center text-bold float-left text-white">
+                                <h7 class="text-center text-bold float-left text-white">
                                     Finish Goods & Recipe List
-                                </h5>
+                                </h7>
                             </div>
                             <div class="col-md-2">
 
@@ -36,7 +36,7 @@
                             <div class="col-md-3">
                                 @*@if (privilege != null && privilege.Add)
             {*@
-                                <a href="/AgroConfiguration/CreateFinishGoodRecipe" class="btn btn-outline-warning btn-sm float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Recipe</a>
+                                <a href="/AgroConfiguration/CreateFinishGoodRecipe" class="das2-btn float-lg-right float-sm-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Recipe</a>
                                 @*//}*@
                             </div>
                         </div>
@@ -45,40 +45,17 @@
             </div>
         </div>
 
-        @*<div class="row" style="margin-top:-15px">
-            <div class="col-md-12">
-                <div class="card card-gray-dark">
-                    <div class="card-header">
-                        <div class="row ">
-                            <div class="col-md-2">
-                                <h5 class="text-left">Search By</h5>
-                            </div>
-                            <div class="col-md-3">
 
-                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
+        <div class="row "style="margin-top:-15px">
+            <div class="col-md-12 px-0">
 
-        <div class="row"style="margin-top:-1px">
-            <div class="col-md-12" style="margin-top:-10px">
-                <div class="card ">
-                    <div class="card-body"style="margin-top:-10px">
                         <div class="col-md-12" id="dataContainer">
-                            @*@{Html.RenderAction("GetFinishGoodRecipeList", "AgroConfiguration", new { @flag = "View" });}*@
+                            
                         </div>
-                    </div>
-                </div>
-        </div>
 
-
-
-
-    </div>
+             </div>
+       </div>
 </div>
 
 <div class="modal fade" id="FinishGoodRecipeDetails" role="dialog" tabindex="-1" aria-hidden="true">

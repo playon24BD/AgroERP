@@ -147,11 +147,11 @@
                         <td class="text-center">
                             @if (ViewBag.OPFor == "System")
                             {
-                                <a href="@Url.Action("CreateAppUser","ControlPanel",new {id=user.UserId })" class="das-btn"><i class="fa fa-pen"></i> Edit</a>
+                                <a href="@Url.Action("CreateAppUser","ControlPanel",new {id=user.UserId })" class="das-btn"><i class="fa fa-pen"></i></a>
                             }
                             @if (ViewBag.OPFor == "Client")
                             {
-                                <a href="@Url.Action("CreateClientUser","ControlPanel",new {id=user.UserId })" class="das-btn"><i class="fa fa-pen"></i> Edit</a>
+                                <a href="@Url.Action("CreateClientUser","ControlPanel",new {id=user.UserId })" class="das-btn"><i class="fa fa-pen"></i></a>
                             }
                         </td>
                     </tr>
