@@ -1,0 +1,403 @@
+﻿
+@{
+    ViewBag.Title = "CreateMeasurement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="row" style="margin-top:-25px;">
+
+    <div class="col-md-12">
+
+        <div class="card card-navy">
+            <div class="card-header" style="text-align: center;">
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/AgroConfiguration/GetMeasurementList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+
+
+                        <h4 class="text-center text-bold">
+                            Create Measurement
+                        </h4>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body text-sm">
+            <div class="row " style="margin-top:-18px;">
+
+                <div class="col-md-2">
+                    <label class="control-label font-weight-bold " for="txtmeasurementName">Measurement Name<span style="color:red">*</span></label>
+                    <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" autofocus />
+                    <span class="error hide req-txtmeasurementName">Measurement Name is required</span>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label font-weight-bold " for="masterBox">Master Box</label>
+                    <input type="number" name="masterBox" id="txtmasterBox" class="form-control form-control-sm" />
+                    <span class="error hide req-txtmasterBox">Master Box is required</span>
+                </div>
+                <div class="col-md-2">
+                    <label for="innerBox" class="control-label font-weight-bold">Innner Box</label>
+                    <input type="number" id="txtinnerBox" name="innerBox" class="form-control form-control-sm" />
+                    <span class="error hide req-txtinnerBox">Inner Box is required</span>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label" for="model">Pack Size</label>
+                    <input type="number" id="txtpackSize" name="packSize" class="form-control form-control-sm">
+                    <span class="error hide req-txtpackSize">Pack Size is required</span>
+                </div>
+
+
+                <div class="col-md-2">
+                    <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
+                    @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                    <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
+                </div>
+
+
+                <div class="col-md-1">
+                    <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12" style="margin-top:-13px">
+    <div class="card">
+        <div class="card-body" style="margin-top:-10px">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12" style="overflow-y:scroll">
+                        <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblMeasurement">
+                            <thead>
+
+                                <tr class="btn-dark text-center">
+                                    <th class="text-center">Sl</th>
+                                    <th class="text-center">MeasureMent Name</th>
+                                    <th class="text-center">MeasureMent Item</th>
+                                    <th class="text-center">Unit</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script type="text/javascript">
+        var ddlOrganiation = $("#ddlOrganiation");
+        var txtmeasurementName = $("#txtmeasurementName");
+        var txtmasterBox = $("#txtmasterBox");
+        var txtinnerBox = $("#txtinnerBox")
+        var txtpackSize = $("#txtpackSize");
+        var txtunit = $("#txtunit");
+
+        //for edit
+        var measureMentName = $("#measureMentName");
+        var masterCartoonBox = $("#masterCartoonBox");
+        var innerBox = $("#innerBox");
+        var packSize = $("#packSize");
+        var unit = $("#unit");
+        var hiddenMeasureMentId = $("#hiddenMeasureMentId");
+        var ddlStatus = $("#ddlStatus");
+        var ddlUnit = $("#ddlUnit");
+        var unitName = $("#unitName");
+        var unitId = $("#unitId");
+        var ddlUnits = $("#ddlUnits");
+        var searchByAny = $("#searchByAny");
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            $("#btnSubmit").hide();
+            $(function () {
+                $('#txtmeasurementName').focus();
+            });
+            
+
+        })
+
+        
+
+
+
+        
+
+
+        $("#addTolist").click(function (e) {
+            e.preventDefault();
+            if (validate() == true) {
+                debugger;
+                var index = $("#tblMeasurement  tbody tr").length;
+                var sl = "<td class='text-center'>" + (index + 1) + "</td>";
+                var org = "<td class='hide'>" + ddlOrganiation.val(); + "</td>";
+                var measurementName = "<td class='text-center'>" + txtmeasurementName.val(); + "</td>";
+                var masterBox = "<td class='hide text-center'>" + txtmasterBox.val(); + "</td>";
+                var innerBox = "<td class='hide text-center'>" + txtinnerBox.val(); + "</td>";
+                var packSize = "<td class='hide text-center'>" + txtpackSize.val(); + "</td>";
+                var unitName = "<td class='text-center'>" + dropDownSelectedText("ddlUnit") +  "</td>";
+                //var unitName = "<td>"+ dropDownSelectedText("ddlUnit") + "</td>";
+                var unitId = "<td class='hide UnitId'>" + ddlUnit.val() + "</td>";
+                if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
+                    item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
+                }
+                else if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() == "") {
+                    item = txtmasterBox.val().concat("X", txtinnerBox.val())
+                }
+                else if (txtmasterBox.val() != "" && txtinnerBox.val() == "" && txtpackSize.val() != "") {
+                    item = txtmasterBox.val().concat("X", txtpackSize.val())
+                }
+                else if (txtmasterBox.val() == "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
+                    item = txtinnerBox.val().concat("X", txtpackSize.val())
+                }
+                else if (txtmasterBox.val() != "" && txtinnerBox.val() == "" && txtpackSize.val() == "") {
+                    item = txtmasterBox.val()
+                }
+                else if (txtmasterBox.val() == "" && txtinnerBox.val() == "" && txtpackSize.val() != "") {
+                    item = txtpackSize.val()
+                }
+                else if (txtmasterBox.val() == "" && txtinnerBox.val() != "" && txtpackSize.val() == "") {
+                    item = txtinnerBox.val()
+                }
+
+                var measurementItem = "<td class='text-center' >" + item + "</td>";
+                var action = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
+
+                var tr = "<tr>" + sl + measurementName + measurementItem + unitName + unitId + org + masterBox + innerBox + packSize + action  +"</tr>";
+                $("#btnSubmit").show();
+                $("#tblMeasurement tbody").append(tr);
+
+                clearCtrl();
+
+
+            }
+
+        });
+
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            removeTableRow("#tblMeasurement tbody", index);
+            fnFixTheTbodyRowSerial("#tblMeasurement", index);
+        })
+
+
+
+
+        $("#btnSubmit").click(function (e) {
+            debugger;
+            e.preventDefault();
+            var tblTRLeangth = $("#tblMeasurement tbody tr").length;
+            if (tblTRLeangth > 0) {
+                bootbox.confirm("Are You Sure To Save These?", function (result) {
+                    if (result == true) {
+                        var measureMentData = [];
+                        debugger;
+                        $.each($("#tblMeasurement tbody tr"), function (index, item) {
+                            var td = $(this).children('td');
+                            measureMentData.push({
+                                //OrganizationId: td.eq(4).html(),
+                                //MeasurementName: td.eq(1).html(),
+                                //MasterCarton: td.eq(5).html(),
+                                //InnerBox: td.eq(6).html(),
+                                //PackSize: td.eq(7).html(),
+                                //UnitId: td.eq(9).html()
+                                measurementName: td.eq(1).html(),
+                                measurementItem: td.eq(2).html(),
+                                unitName: td.eq(3).html(),
+                                unitId: td.eq(4).html(),
+
+                                //OrganizationId5: td.eq(5).html(),
+                                masterCarton: td.eq(6).html(),
+                                InnerBox: td.eq(7).html(),
+                                packSize: td.eq(8).html()
+                                //OrganizationId9: td.eq(9).html(),
+                                //OrganizationId10: td.eq(10).html()
+
+
+                            })
+
+
+                        })
+
+                        console.log(measureMentData);
+                        measureMentData = JSON.stringify({ models: measureMentData });
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveMeasurement', measureMentData, getToken())).then(function (res, status) {
+                            if (status == "success") {
+                                 setTimeout(function () {
+                                    $('.toastrDefaultSuccess').trigger('click');
+                                     redirectPage("GetMeasurementList");
+                                }, 500);
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                        })
+
+
+                    }
+
+
+                })
+            }
+
+        });
+
+        
+
+        $(document).ready(function () {
+            //$("#btnSubmit").hide();
+            $("#addTolist").hide();
+            //$("#btnUpdate").hide();
+            $(function () {
+                $('#txtmeasurementName').focus();
+            });
+
+        })
+
+        txtmeasurementName.keyup(function () {
+
+            var value = $(this).val();
+            if (value.length > 1) {
+                $("#addTolist").show();
+
+            }
+            else {
+                $("#addTolist").hide();
+            }
+
+
+        })
+
+        //txtmasterBox.keyup(function () {
+        //    var value = $(this).val();
+        //    if (value.length > 2) {
+        //        $("#addTolist").show();
+
+        //    }
+        //    else {
+        //        $("#addTolist").hide();
+        //    }
+
+
+        //})
+
+
+
+       
+        
+
+        function validate() {
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (ddlOrganiation.val() === "") {
+                $(".req-ddlOrganiation").removeClass('hide');
+                isValid = false;
+            }
+            if (txtmeasurementName.val() === "") {
+                $(".req-txtmeasurementName").removeClass('hide');
+                isValid = false;
+            }
+
+            //if (txtmasterBox.val() === "" ) {
+            //    $(".req-txtmasterBox").removeClass('hide');
+            //    isValid = false;
+            //}
+            //if (txtinnerBox.val() === "") {
+            //    $(".req-txtinnerBox").removeClass('hide');
+            //    isValid = false;
+            //}
+            if (txtunit.val() === "") {
+                $(".req-txtunit").removeClass('hide');
+                isValid = false;
+            }
+            //if (TryParseInt(txtpackSize.val(), 0) <= 0) {
+            //    $(".req-txtpackSize").removeClass('hide');
+            //    isValid = false;
+            //}
+
+            return isValid;
+        }
+        function validateUpdate() {
+            var isValid = true;
+            $(".error").addClass('hide');
+
+
+            if (measureMentName.val() === "") {
+                $(".required-measureMentName").removeClass('hide');
+                isValid = false;
+            }
+
+            if (masterCartoonBox.val() === "") {
+                $(".required-masterCartoonBox").removeClass('hide');
+                isValid = false;
+            }
+            if (innerBox.val() === "") {
+                $(".required-innerBox").removeClass('hide');
+                isValid = false;
+            }
+            if (unit.val() === "") {
+                $(".required-unit").removeClass('hide');
+                isValid = false;
+            }
+            if (packSize.val() === "") {
+                $(".required-packSize").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function clearCtrl() {
+            txtmeasurementName.val("");
+            txtmasterBox.val("");
+            txtinnerBox.val("");
+            txtpackSize.val("");
+            txtunit.val("");
+
+        }
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+
+    </script>
+
+
+
+
+}
+

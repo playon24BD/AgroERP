@@ -22,10 +22,10 @@
                             <div class="col-md-2">
 
                             </div>
-                            <div class="col-md-3">
+                            @*<div class="col-md-3">
                                 @Html.DropDownList("ddlRawMaterial", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterial, "--Search by Material--", new { @class = "form-control ctrl-changed select2 setect2-danger" })
 
-                            </div>
+                            </div>*@
                             <div class="col-md-2">
 
                             </div>
@@ -44,11 +44,11 @@
     </div>
     <div class="col-md-12" style="margin-top:-15px">
         <div class="card py-2">
-            @*<div class="card-body">*@
-            <div class="col-md-12" id="dataContainer">
-                @{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }
+           
+            <div class="col-md-12" id="">
+                @*@{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }*@
             </div>
-            @*</div>*@
+           
         </div>
     </div>
 </div>
@@ -70,7 +70,7 @@
                     <div class="col-md-12 hide">
                         <label class="control-label font-weight-bold">Organization</label>
 
-                        @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganization, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        @*@Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganization, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })*@
 
                         <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
 
@@ -87,12 +87,12 @@
                     </div>
                    
                     <input type="hidden" id="hdunitId" />
-                    <div class="col-md-12">
+                    @*<div class="col-md-12">
                         <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
                         @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                         <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
-                    </div>
+                    </div>*@
 
                     <div class="col-md-12">
                         <label for="ddlStatus" class="control-label">Status</label>

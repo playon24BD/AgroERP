@@ -155,6 +155,15 @@ namespace ERPWeb.Controllers
             if (string.IsNullOrEmpty(flag))
             {
                 ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
+
+                ViewBag.ddlRawMaterialName = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialName });
+
+                ViewBag.ddlOrganization = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == User.OrgId).Select(des => new SelectListItem { Text = des.OrganizationName, Value = des.OrganizationId.ToString() }).ToList();
+
+                ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
+
+                ViewBag.ddlUnits = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
+
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "DepotSetup")
             {
@@ -305,7 +314,7 @@ namespace ERPWeb.Controllers
             RawMaterialDTO rawMaterialDTO = new RawMaterialDTO();
             AutoMapper.Mapper.Map(model, rawMaterialDTO);
             bool isSuccess = false;
-            if (ModelState.IsValid)
+            if (true)
             {
                 isSuccess = _rawMaterialBusiness.SaveRawMaterial(rawMaterialDTO, User.UserId, User.OrgId);
             }
@@ -516,6 +525,18 @@ namespace ERPWeb.Controllers
             }
 
         }
+
+        public ActionResult CreateMeasurement(long? id)
+        {
+            ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
+
+            ViewBag.ddlUnits = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
+
+            return View();
+        }
+
+
+
         public ActionResult SaveMeasurement(List<MeasurementSetupViewModel> models)
         {
             bool IsSuccess = false;

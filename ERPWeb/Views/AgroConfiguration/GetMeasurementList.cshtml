@@ -3,156 +3,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" style="margin-top:5px">
+<div class="row">
     <div class="col-md-12">
 
+                    <div class="row" style="margin-top:-20px">
+                        <div class="col-md-12 " style="height:60px;text-align:center">
+                            <div class="card" style="background-color:#001f3f">
 
-        <div class="card  shadow card  card-outline card-tabs" style="margin-top:-30px">
-
-
-            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
-
-                <li class="nav-item">
-                    <a class="nav-link active text-white" id="custom-tabs-two-measurementList-tab" data-toggle="pill" href="#custom-tabs-two-measurementList" role="tab" aria-controls="custom-tabs-two-measurementList" aria-selected="false">Measurement list</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" id="custom-tabs-two-measurementSetup-tab" data-toggle="pill" href="#custom-tabs-two-measurementSetup" role="tab" aria-controls="custom-tabs-two-measurementSetup" aria-selected="true">Measurement Setup</a>
-                </li>
-            </ul>
-
-
-        </div>
-
-        <div class="card-body shadow">
-            <div class="tab-content" id="custom-tabs-two-tabContent">
- 
-                <div class="tab-pane fade show " id="custom-tabs-two-measurementSetup" role="tabpanel" aria-labelledby="custom-tabs-two-measurementSetup-tab">
-                    <div class="row" style="margin-top:-35px">
-                        <div class="col-md-12">
-                            <div class="card card-navy">
-                                <div class="card-header" style="text-align: center;">
-
+                                <div class="px-2 py-1">
                                     <div class="row">
-           
-                                        <div class="col-md-12">
-                                            <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
-                                            <h5 class="text-center text-bold"style="height:10px;text-align:center">
-
-                                                Measurment Setup
+                                        <div class="col-md-3">
+                                            <h5 class="text-bold float-left text-white">
+                                                Measurement Setup
                                             </h5>
                                         </div>
-
-
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <input type="hidden" id="hdMeasurementId" />
-
                                         <div class="col-md-2">
-                                            <label class="control-label font-weight-bold " for="txtmeasurementName">Measurement Name<span style="color:red">*</span></label>
-                                            <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" autofocus />
-                                            <span class="error hide req-txtmeasurementName">Measurement Name is required</span>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="control-label font-weight-bold " for="masterBox">Master Box</label>
-                                            <input type="number" name="masterBox" id="txtmasterBox" class="form-control form-control-sm"/>
-                                            <span class="error hide req-txtmasterBox">Master Box is required</span>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="innerBox" class="control-label font-weight-bold">Innner Box</label>
-                                            <input type="number" id="txtinnerBox" name="innerBox" class="form-control form-control-sm" />
-                                            <span class="error hide req-txtinnerBox">Inner Box is required</span>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="control-label" for="model">Pack Size</label>
-                                            <input type="number" id="txtpackSize" name="packSize" class="form-control form-control-sm">
-                                            <span class="error hide req-txtpackSize">Pack Size is required</span>
-                                        </div>
-
-
-                                        <div class="col-md-2">
-                                            <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
-                                            @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
-                                            <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
-                                        </div>
-
-
-                                        <div class="col-md-1">
-                                            <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
-                                            <div class="clearfix">
-                                                <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12" style="margin-top:-13px">
-                            <div class="card" >
-                                <div class="card-body" style="margin-top:-10px">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12" style="overflow-y:scroll">
-                                                <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblMeasurement">
-                                                    <thead>
- 
-                                                        <tr class="btn-dark text-center">
-                                                            <th class="text-center">Sl</th>
-                                                            <th class="text-center">MeasureMent Name</th>
-                                                            <th class="text-center">MeasureMent Item</th>
-                                                            <th class="text-center">Unit</th>
-                                                            <th class="text-center">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody></tbody>
-                                                </table>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-                <div class="tab-pane fade show active" id="custom-tabs-two-measurementList" role="tabpanel" aria-labelledby="custom-tabs-two-measurementList-tab">
-
-                    <div class="row" style="margin-top:-35px">
-                        <div class="col-md-12">
-                            <div class="card shadow"style="background-color:#001f3f">
-                                <div class="px-2 py-1">
-                                    <div class="row text-sm">
-                                        @*<div class="col-md-2">
-            <h5>Search by</h5>
-        </div>*@
-                                        <div class="col-5">
 
                                         </div>
-                                        <div class="col-md-2 float-left">
+                                        <div class="col-md-2 text-center">
                                             <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by any" />
 
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-md-2">
 
                                         </div>
 
+                                       
+
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/CreateMeasurement" class="btn btn-outline-warning btn-sm float-lg-right"><i class="fa fa-plus"></i> Create Measurement</a>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
-
-
                         </div>
-
                     </div>
                     <div class="row">
 
-                        <div class="col-md-12" style="margin-top:-12px">
-                            <div class="card">
+                        <div class="col-md-12">
+                            <div class="card" style="margin-top:-15px">
                                 <div class="card-body" style="margin-top:-10px">
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer3" style="overflow-y:scroll">
@@ -321,130 +211,130 @@
         }
 
 
-        $("#addTolist").click(function (e) {
-            e.preventDefault();
-            if (validate() == true) {
-                debugger;
-                var index = $("#tblMeasurement  tbody tr").length;
-                var sl = "<td class='text-center'>" + (index + 1) + "</td>";
-                var org = "<td class='hide'>" + ddlOrganiation.val(); + "</td>";
-                var measurementName = "<td class='text-center'>" + txtmeasurementName.val(); + "</td>";
-                var masterBox = "<td class='hide text-center'>" + txtmasterBox.val(); + "</td>";
-                var innerBox = "<td class='hide text-center'>" + txtinnerBox.val(); + "</td>";
-                var packSize = "<td class='hide text-center'>" + txtpackSize.val(); + "</td>";
-                var unitName = "<td class='text-center'>" + dropDownSelectedText("ddlUnit") +  "</td>";
-                //var unitName = "<td>"+ dropDownSelectedText("ddlUnit") + "</td>";
-                var unitId = "<td class='hide UnitId'>" + ddlUnit.val() + "</td>";
-                if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
-                    item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
-                }
-                else if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() == "") {
-                    item = txtmasterBox.val().concat("X", txtinnerBox.val())
-                }
-                else if (txtmasterBox.val() != "" && txtinnerBox.val() == "" && txtpackSize.val() != "") {
-                    item = txtmasterBox.val().concat("X", txtpackSize.val())
-                }
-                else if (txtmasterBox.val() == "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
-                    item = txtinnerBox.val().concat("X", txtpackSize.val())
-                }
-                else if (txtmasterBox.val() != "" && txtinnerBox.val() == "" && txtpackSize.val() == "") {
-                    item = txtmasterBox.val()
-                }
-                else if (txtmasterBox.val() == "" && txtinnerBox.val() == "" && txtpackSize.val() != "") {
-                    item = txtpackSize.val()
-                }
-                else if (txtmasterBox.val() == "" && txtinnerBox.val() != "" && txtpackSize.val() == "") {
-                    item = txtinnerBox.val()
-                }
+        //$("#addTolist").click(function (e) {
+        //    e.preventDefault();
+        //    if (validate() == true) {
+        //        debugger;
+        //        var index = $("#tblMeasurement  tbody tr").length;
+        //        var sl = "<td class='text-center'>" + (index + 1) + "</td>";
+        //        var org = "<td class='hide'>" + ddlOrganiation.val(); + "</td>";
+        //        var measurementName = "<td class='text-center'>" + txtmeasurementName.val(); + "</td>";
+        //        var masterBox = "<td class='hide text-center'>" + txtmasterBox.val(); + "</td>";
+        //        var innerBox = "<td class='hide text-center'>" + txtinnerBox.val(); + "</td>";
+        //        var packSize = "<td class='hide text-center'>" + txtpackSize.val(); + "</td>";
+        //        var unitName = "<td class='text-center'>" + dropDownSelectedText("ddlUnit") +  "</td>";
+        //        //var unitName = "<td>"+ dropDownSelectedText("ddlUnit") + "</td>";
+        //        var unitId = "<td class='hide UnitId'>" + ddlUnit.val() + "</td>";
+        //        if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
+        //            item = txtmasterBox.val().concat("X", txtinnerBox.val(), "X", txtpackSize.val())
+        //        }
+        //        else if (txtmasterBox.val() != "" && txtinnerBox.val() != "" && txtpackSize.val() == "") {
+        //            item = txtmasterBox.val().concat("X", txtinnerBox.val())
+        //        }
+        //        else if (txtmasterBox.val() != "" && txtinnerBox.val() == "" && txtpackSize.val() != "") {
+        //            item = txtmasterBox.val().concat("X", txtpackSize.val())
+        //        }
+        //        else if (txtmasterBox.val() == "" && txtinnerBox.val() != "" && txtpackSize.val() != "") {
+        //            item = txtinnerBox.val().concat("X", txtpackSize.val())
+        //        }
+        //        else if (txtmasterBox.val() != "" && txtinnerBox.val() == "" && txtpackSize.val() == "") {
+        //            item = txtmasterBox.val()
+        //        }
+        //        else if (txtmasterBox.val() == "" && txtinnerBox.val() == "" && txtpackSize.val() != "") {
+        //            item = txtpackSize.val()
+        //        }
+        //        else if (txtmasterBox.val() == "" && txtinnerBox.val() != "" && txtpackSize.val() == "") {
+        //            item = txtinnerBox.val()
+        //        }
 
-                var measurementItem = "<td class='text-center' >" + item + "</td>";
-                var action = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
+        //        var measurementItem = "<td class='text-center' >" + item + "</td>";
+        //        var action = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt' ></i>Delete</a></td>";
 
-                var tr = "<tr>" + sl + measurementName + measurementItem + unitName + unitId + org + masterBox + innerBox + packSize + action  +"</tr>";
-                $("#btnSubmit").show();
-                $("#tblMeasurement tbody").append(tr);
+        //        var tr = "<tr>" + sl + measurementName + measurementItem + unitName + unitId + org + masterBox + innerBox + packSize + action  +"</tr>";
+        //        $("#btnSubmit").show();
+        //        $("#tblMeasurement tbody").append(tr);
                
-                clearCtrl();
+        //        clearCtrl();
 
 
-            }
+        //    }
 
-        });
+        //});
 
-        $(document).on("click", "a.data-onfly-del", function (e) {
-            e.preventDefault();
-            var index = $(this).parent().parents('tbody tr').index();
-            removeTableRow("#tblMeasurement tbody", index);
-            fnFixTheTbodyRowSerial("#tblMeasurement", index);
-        })
-
-
+        //$(document).on("click", "a.data-onfly-del", function (e) {
+        //    e.preventDefault();
+        //    var index = $(this).parent().parents('tbody tr').index();
+        //    removeTableRow("#tblMeasurement tbody", index);
+        //    fnFixTheTbodyRowSerial("#tblMeasurement", index);
+        //})
 
 
-        $("#btnSubmit").click(function (e) {
-            debugger;
-            e.preventDefault();
-            var tblTRLeangth = $("#tblMeasurement tbody tr").length;
-            if (tblTRLeangth > 0) {
-                bootbox.confirm("Are You Sure To Save These?", function (result) {
-                    if (result == true) {
-                        var measureMentData = [];
-                        debugger;
-                        $.each($("#tblMeasurement tbody tr"), function (index, item) {
-                            var td = $(this).children('td');
-                            measureMentData.push({
-                                //OrganizationId: td.eq(4).html(),
-                                //MeasurementName: td.eq(1).html(),
-                                //MasterCarton: td.eq(5).html(),
-                                //InnerBox: td.eq(6).html(),
-                                //PackSize: td.eq(7).html(),
-                                //UnitId: td.eq(9).html()
-                                measurementName: td.eq(1).html(),
-                                measurementItem: td.eq(2).html(),
-                                unitName: td.eq(3).html(),
-                                unitId: td.eq(4).html(),
-
-                                //OrganizationId5: td.eq(5).html(),
-                                masterCarton: td.eq(6).html(),
-                                InnerBox: td.eq(7).html(),
-                                packSize: td.eq(8).html()
-                                //OrganizationId9: td.eq(9).html(),
-                                //OrganizationId10: td.eq(10).html()
 
 
-                            })
+        //$("#btnSubmit").click(function (e) {
+        //    debugger;
+        //    e.preventDefault();
+        //    var tblTRLeangth = $("#tblMeasurement tbody tr").length;
+        //    if (tblTRLeangth > 0) {
+        //        bootbox.confirm("Are You Sure To Save These?", function (result) {
+        //            if (result == true) {
+        //                var measureMentData = [];
+        //                debugger;
+        //                $.each($("#tblMeasurement tbody tr"), function (index, item) {
+        //                    var td = $(this).children('td');
+        //                    measureMentData.push({
+        //                        //OrganizationId: td.eq(4).html(),
+        //                        //MeasurementName: td.eq(1).html(),
+        //                        //MasterCarton: td.eq(5).html(),
+        //                        //InnerBox: td.eq(6).html(),
+        //                        //PackSize: td.eq(7).html(),
+        //                        //UnitId: td.eq(9).html()
+        //                        measurementName: td.eq(1).html(),
+        //                        measurementItem: td.eq(2).html(),
+        //                        unitName: td.eq(3).html(),
+        //                        unitId: td.eq(4).html(),
+
+        //                        //OrganizationId5: td.eq(5).html(),
+        //                        masterCarton: td.eq(6).html(),
+        //                        InnerBox: td.eq(7).html(),
+        //                        packSize: td.eq(8).html()
+        //                        //OrganizationId9: td.eq(9).html(),
+        //                        //OrganizationId10: td.eq(10).html()
 
 
-                        })
-
-                        console.log(measureMentData);
-                        measureMentData = JSON.stringify({ models: measureMentData });
-                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveMeasurement', measureMentData, getToken())).then(function (res, status) {
-                            if (status == "success") {
-                                 setTimeout(function () {
-                                    $('.toastrDefaultSuccess').trigger('click');
-                                     redirectPage("GetMeasurementList");
-                                }, 500);
-                            }
-                            else {
-                                $('.toastrDefaultError').trigger('click');
-                            }
-                        }).fail(function (error) {
-                            alert(execuStatus.fail);
-                        })
+        //                    })
 
 
-                    }
+        //                })
+
+        //                console.log(measureMentData);
+        //                measureMentData = JSON.stringify({ models: measureMentData });
+        //                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveMeasurement', measureMentData, getToken())).then(function (res, status) {
+        //                    if (status == "success") {
+        //                         setTimeout(function () {
+        //                            $('.toastrDefaultSuccess').trigger('click');
+        //                             redirectPage("GetMeasurementList");
+        //                        }, 500);
+        //                    }
+        //                    else {
+        //                        $('.toastrDefaultError').trigger('click');
+        //                    }
+        //                }).fail(function (error) {
+        //                    alert(execuStatus.fail);
+        //                })
 
 
-                })
-            }
+        //            }
 
-        });
+
+        //        })
+        //    }
+
+        //});
 
         $("#btnUpdate").click(function (e) {
             e.preventDefault();
-            if (validateUpdate() == true) {
+            if (true) {
                 debugger;
                 var data = {
                     measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(), UnitId: TryParseInt(ddlUnits.val(), 0), Status: ddlStatus.val()
@@ -566,38 +456,81 @@
             });
         }
 
-        function validate() {
-            var isValid = true;
-            $(".error").addClass('hide');
+        //function validate() {
+        //    var isValid = true;
+        //    $(".error").addClass('hide');
 
-            if (ddlOrganiation.val() === "") {
-                $(".req-ddlOrganiation").removeClass('hide');
-                isValid = false;
-            }
-            if (txtmeasurementName.val() === "") {
-                $(".req-txtmeasurementName").removeClass('hide');
-                isValid = false;
-            }
+        //    if (ddlOrganiation.val() === "") {
+        //        $(".req-ddlOrganiation").removeClass('hide');
+        //        isValid = false;
+        //    }
+        //    if (txtmeasurementName.val() === "") {
+        //        $(".req-txtmeasurementName").removeClass('hide');
+        //        isValid = false;
+        //    }
 
-            //if (txtmasterBox.val() === "" ) {
-            //    $(".req-txtmasterBox").removeClass('hide');
-            //    isValid = false;
-            //}
-            //if (txtinnerBox.val() === "") {
-            //    $(".req-txtinnerBox").removeClass('hide');
-            //    isValid = false;
-            //}
-            if (txtunit.val() === "") {
-                $(".req-txtunit").removeClass('hide');
-                isValid = false;
-            }
-            //if (TryParseInt(txtpackSize.val(), 0) <= 0) {
-            //    $(".req-txtpackSize").removeClass('hide');
-            //    isValid = false;
-            //}
+        //    //if (txtmasterBox.val() === "" ) {
+        //    //    $(".req-txtmasterBox").removeClass('hide');
+        //    //    isValid = false;
+        //    //}
+        //    //if (txtinnerBox.val() === "") {
+        //    //    $(".req-txtinnerBox").removeClass('hide');
+        //    //    isValid = false;
+        //    //}
+        //    if (txtunit.val() === "") {
+        //        $(".req-txtunit").removeClass('hide');
+        //        isValid = false;
+        //    }
+        //    //if (TryParseInt(txtpackSize.val(), 0) <= 0) {
+        //    //    $(".req-txtpackSize").removeClass('hide');
+        //    //    isValid = false;
+        //    //}
 
-            return isValid;
+        //    return isValid;
+        //}
+        //function validateUpdate() {
+        //    var isValid = true;
+        //    $(".error").addClass('hide');
+
+
+        //    if (measureMentName.val() === "") {
+        //        $(".required-measureMentName").removeClass('hide');
+        //        isValid = false;
+        //    }
+
+        //    if (masterCartoonBox.val() === "") {
+        //        $(".required-masterCartoonBox").removeClass('hide');
+        //        isValid = false;
+        //    }
+        //    if (innerBox.val() === "") {
+        //        $(".required-innerBox").removeClass('hide');
+        //        isValid = false;
+        //    }
+        //    if (unit.val() === "") {
+        //        $(".required-unit").removeClass('hide');
+        //        isValid = false;
+        //    }
+        //    if (packSize.val() === "") {
+        //        $(".required-packSize").removeClass('hide');
+        //        isValid = false;
+        //    }
+
+        //    return isValid;
+        //}
+
+        function clearCtrl() {
+            txtmeasurementName.val("");
+            txtmasterBox.val("");
+            txtinnerBox.val("");
+            txtpackSize.val("");
+            txtunit.val("");
+
         }
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
         function validateUpdate() {
             var isValid = true;
             $(".error").addClass('hide');
@@ -627,20 +560,6 @@
 
             return isValid;
         }
-
-        function clearCtrl() {
-            txtmeasurementName.val("");
-            txtmasterBox.val("");
-            txtinnerBox.val("");
-            txtpackSize.val("");
-            txtunit.val("");
-
-        }
-
-        function redirectPage(page) {
-            window.location.replace(page);
-        }
-
 
     </script>
 
