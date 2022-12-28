@@ -142,15 +142,15 @@
             $(function () {
                 $('#txtmeasurementName').focus();
             });
-            
+
 
         })
 
-        
 
 
 
-        
+
+
 
 
         $("#addTolist").click(function (e) {
@@ -253,16 +253,24 @@
                         measureMentData = JSON.stringify({ models: measureMentData });
                         $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveMeasurement', measureMentData, getToken())).then(function (res, status) {
                             if (status == "success") {
+                                debugger;
+                                $('.toastrDefaultSuccess').trigger('click');
                                  setTimeout(function () {
-                                    $('.toastrDefaultSuccess').trigger('click');
-                                     redirectPage("GetMeasurementList");
-                                }, 500);
+                                     redirectPage('@Url.Action("DepotList",new {tab= "Measurement" })');
+
+                                 }, 1000);
+
+                                @*setTimeout(function () {
+                        redirectPage('@Url.Action("GetStockiestList",new {tab="Zone" })');
+                    }, 1000);*@
                             }
                             else {
                                 $('.toastrDefaultError').trigger('click');
                             }
+                            enable("#btnSubmit");
                         }).fail(function (error) {
                             alert(execuStatus.fail);
+                            enable("#btnSubmit");
                         })
 
 
@@ -272,9 +280,13 @@
                 })
             }
 
+            function redirectPage(page) {
+                window.location.replace(page);
+            }
+
         });
 
-        
+
 
         $(document).ready(function () {
             //$("#btnSubmit").hide();
@@ -315,8 +327,8 @@
 
 
 
-       
-        
+
+
 
         function validate() {
             var isValid = true;

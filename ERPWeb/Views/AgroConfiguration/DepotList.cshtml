@@ -2,11 +2,13 @@
 @{
     ViewBag.Title = "DepotList";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string tab = ViewBag.tab;
 }
 
 
 <div class="row">
     <div class="col-md-12">
+        <input id="tab" type="text" hidden value="@tab" />
         <div class="card  shadow card  card-outline card-tabs" style="margin-top:-30px">
             <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
                 <li class="nav-item">
@@ -50,7 +52,7 @@
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3 text-center">
+                                        <div class="col-md-3 text-center" style="margin-top:4px">
                                             <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by Depot" />
 
                                         </div>
@@ -98,7 +100,7 @@
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3 float-left">
+                                        <div class="col-md-3 float-left" style="margin-top:4px">
                                             <input type="text" class="form-control form-control-sm" id="searchByAny1" placeholder="Search by any" />
 
                                         </div>
@@ -163,13 +165,18 @@
                     </div>
 
                     <div class="col-md-12" style="margin-top:-15px">
-                        <div class="card py-2">
-                            @*<div class="card-body">*@
+
+                        @*<div class="card py-2" style="margin-top:-10px">
+                                <div class="col-md-12" id="dataContainerRM">
+
+                                </div>
+                            </div>*@
+                        <div class="card-body">
                             <div class="col-md-12" id="dataContainerRM">
-                                @{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }
+                                @*@{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }*@
                             </div>
-                            @*</div>*@
                         </div>
+
                     </div>
 
                 </div>
@@ -189,7 +196,7 @@
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3 float-left">
+                                        <div class="col-md-3 float-left" style="margin-top:4px">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnySupplier" placeholder="Search by any" />
 
                                         </div>
@@ -233,7 +240,7 @@
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3 text-center">
+                                        <div class="col-md-3 text-center" style="margin-top:4px">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnyProduct" placeholder="Search by any" />
 
                                         </div>
@@ -279,7 +286,7 @@
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3 text-center">
+                                        <div class="col-md-3 text-center" style="margin-top:4px">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnyMeasurement" placeholder="Search by any" />
 
                                         </div>
@@ -300,7 +307,7 @@
                     <div class="col-md-12" style="margin-top:-15px">
                         <div class="card">
                             <div class="card-body" style="margin-top:-10px">
-                                <div class="col-md-12" id="dataContainer3">
+                                <div class="col-md-12" id="dataContainer4">
 
                                 </div>
                             </div>
@@ -648,7 +655,7 @@
 
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
-                            <select class="form-control form-control-sm" id="ddlStatus">
+                            <select class="form-control form-control-sm" id="ddlStatusMeasurement">
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
@@ -673,7 +680,7 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fas fa-paper-plane"></i> Cancel </button>
-                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="btnUpdate"><i class="fas fa-paper-plane"></i> <span id="btnMeasureMentSaveText">Save</span> </button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="btnUpdateMeasurement"><i class="fas fa-paper-plane"></i> <span id="btnMeasureMentSaveText">Save</span> </button>
 
             </div>
         </div>
@@ -711,9 +718,11 @@
 
             LoadDepotDataTable()
             LoadAgroUnitList()
+            loadRawMaterials()
             LoadRawmaterialSupplierDataTable();
             LoadProductDataTable()
-            LoadMeasurement()
+            LoadMeasurements()
+
 
         })
 
@@ -1039,36 +1048,18 @@
 
             e.preventDefault();
 
-            ClearCtrl();
+            ClearCtrlRM();
             OpenModal();
 
 
         })
 
         ddlRawMaterialRM.change(function () {
-            loadRawMaterial();
+            loadRawMaterials();
 
         })
 
-        function loadRawMaterial() {
-            data = { flag: 'Search', rawmaterialName: ddlRawMaterialRM.val() };
-            $.when(getReqWithData("html", 'Get', '/AgroConfiguration/GetRawMaterial', data)).then(function (res, status) {
-                if (status == "success") {
-                    $("#dataContainerRM").fadeOut("500", function () {
-                        $("#dataContainerRM").empty();
-                        $("#dataContainerRM").append(res).fadeIn("500");
-                    })
 
-
-
-                }
-
-            }).fail(function (error) {
-                Console.log(error);
-
-            });
-
-        }
 
         $("#btnSaveRM").click(function (e) {
             var ee = ddlUnitRM.val();
@@ -1090,9 +1081,10 @@
 
 
                     if (res == true) {
+                        debugger;
                         $("#rawmetarialModal").modal("toggle");
                         toastrSuccessAlert(execuStatus.successSave);
-
+                        loadRawMaterials();
                     }
                     else {
                         toastrErrorAlert(execuStatus.fail);
@@ -1106,13 +1098,35 @@
 
         })
 
+        function loadRawMaterials() {
+            debugger;
+            data = { flag: 'Raw', rawmaterialName: ddlRawMaterialRM.val() };
+            $.when(getReqWithData("html", 'Get', '/AgroConfiguration/GetRawMaterial', data)).then(function (res, status) {
+                if (status == "success") {
+                    debugger;
+                    $("#dataContainerRM").fadeOut("500", function () {
+                        $("#dataContainerRM").empty();
+                        $("#dataContainerRM").append(res).fadeIn("500");
+                    })
+
+
+
+                }
+
+            }).fail(function (error) {
+                Console.log(error);
+
+            });
+
+        }
+
         $(document).on("click", "a.data-edit-item-rawMaterialId", function (e) {
             debugger;
             e.preventDefault()
 
 
 
-            ClearCtrl();
+            ClearCtrlRM();
             var row = $(this).parent().parents('tr');
             var td1 = row.find('td:eq(0)').html();
             var td2 = row.find('td:eq(2)').html();
@@ -1170,7 +1184,7 @@
             return Isvalid
 
         }
-        function ClearCtrl() {
+        function ClearCtrlRM() {
             rawMaterialName.val("");
             ddlUnitRM.val("");
             ddlStatusRM.val("");
@@ -1226,7 +1240,7 @@
             debugger;
             //console.log("btnsubmit click");
             $(".error").addClass("hide");
-            if (formValidation() == true) {
+            if (formValidationSupplier() == true) {
                 debugger;
                 var data = JSON.stringify({ RawMaterialSupplierId: TryParseInt(hdRawmaterialSupplierId.val(), 0), RawMaterialSupplierName: ddlSupplierName.val(), MobileNumber: ddlMobileNumber.val(), Address: ddlAddress.val(), TradeLicense: ddlTradeLicense.val(), TIN: ddlTIN.val(), BIN: ddlBIN.val(), Status: ddlStatusSupplier.val() });
                 console.log(data);
@@ -1256,7 +1270,7 @@
             //alert();
             //debugger;
             e.preventDefault()
-            ClearCtrl();
+            ClearCtrlSupplier();
             var row = $(this).parent().parents('tr');
             var td1 = row.find('td:eq(1)').html();
             var td2 = row.find('td:eq(2)').html();
@@ -1307,12 +1321,12 @@
         }
         $("#addButtonSupplier").click(function (e) {
             e.preventDefault();
-            ClearCtrl();
+            ClearCtrlSupplier();
             OpenModalSupplier();
             //enable("#ddlOrganizationName");
         })
 
-        function formValidation() {
+        function formValidationSupplier() {
             Isvalid = true;
             $('.error').addClass("hide");
             //if ($.trim(ddlOrganizationName.val()) == 0) {
@@ -1331,7 +1345,7 @@
             return Isvalid
 
         }
-        function ClearCtrl() {
+        function ClearCtrlSupplier() {
             ddlSupplierName.val("");
             //ddlOrganizationName.val('');
             hdRawmaterialSupplierId.val('0');
@@ -1407,7 +1421,7 @@
 
         $(document).on("click", "a.data-edit-item-Product", function (e) {
             e.preventDefault()
-            ClearCtrl();
+            ClearCtrlProduct();
             var row = $(this).parent().parents('tr');
             var td1 = row.find('td:eq(1)').html();
             var td2 = row.find('td:eq(2)').html();
@@ -1452,7 +1466,7 @@
         }
         $("#addButtonProduct").click(function (e) {
             e.preventDefault();
-            ClearCtrl();
+            ClearCtrlProduct();
             OpenModalProduct();
 
         })
@@ -1472,9 +1486,10 @@
             return Isvalid
 
         }
-        function ClearCtrl() {
+        function ClearCtrlProduct() {
             ddlProductName.val("");
             //ddlOrganizationName.val('');
+            ddlStatusProduct.val();
             hdproductId.val('0');
 
         }
@@ -1499,7 +1514,7 @@
         var packSize = $("#packSize");
         var unit = $("#unit");
         var hiddenMeasureMentId = $("#hiddenMeasureMentId");
-        var ddlStatus = $("#ddlStatus");
+        var ddlStatusMeasurement = $("#ddlStatusMeasurement");
         var ddlUnit = $("#ddlUnit");
         var unitName = $("#unitName");
         var unitId = $("#unitId");
@@ -1508,20 +1523,20 @@
 
 
         searchByAnyMeasurement.keyup(function () {
-            LoadMeasurement()
+            LoadMeasurements()
         })
-       
 
 
-        function LoadMeasurement() {
+
+        function LoadMeasurements() {
             debugger;
             var data = { flag: "list", id: 0, status: $.trim(searchByAnyMeasurement.val()) };
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetMeasurementList', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {
-                    $("#dataContainer3").fadeOut('500', function () {
-                        $("#dataContainer3").empty();
-                        $("#dataContainer3").append(res).fadeIn('500');
+                    $("#dataContainer4").fadeOut('500', function () {
+                        $("#dataContainer4").empty();
+                        $("#dataContainer4").append(res).fadeIn('500');
                     });
                 }
             }).fail(function (error) {
@@ -1531,26 +1546,29 @@
         }
 
 
-        
 
-        $("#btnUpdate").click(function (e) {
+
+        $("#btnUpdateMeasurement").click(function (e) {
             e.preventDefault();
             if (true) {
                 debugger;
                 var data = {
-                    measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(), UnitId: TryParseInt(ddlUnits.val(), 0), Status: ddlStatus.val()
+                    measurementId: hiddenMeasureMentId.val(), measurementName: measureMentName.val(), masterCarton: masterCartoonBox.val(), innerBox: innerBox.val(), packSize: packSize.val(), UnitId: TryParseInt(ddlUnits.val(), 0), Status: ddlStatusMeasurement.val()
             }
           //  var models = JSON.stringify(data);
 
             $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/UpdateMeasurement', JSON.stringify(data), getToken())).then(function (res, status) {
                 if (res == true) {
-
+                    debugger;
                     $("#modalMeasurementSetup").modal("hide")
+                    toastrSuccessAlert(execuStatus.successSave);
 
-                 setTimeout(function () {
+                    LoadMeasurements()
+
+                 @*setTimeout(function () {
                         $('.toastrDefaultSuccess').trigger('click');
                         redirectPage('@Url.Action("GetMeasurementList")');
-                    }, 1000);
+                    }, 1000);*@
                             }
                 else {
                     $('.toastrDefaultError').trigger('click');
@@ -1619,7 +1637,7 @@
             var td7 = row.find("td:eq(7)").html();
             var td8 = row.find("td:eq(8)").html();
             var td9 = row.find("td:eq(9)").html();
-            
+
             //UnitId.val();
             hiddenMeasureMentId.val(td1);
             measureMentName.val(td2);
@@ -1629,8 +1647,8 @@
             ddlUnits.val(td8);
             ddlUnits.trigger("change");
            // unitId.val(td8);
-            ddlStatus.val(td9);
-            ddlStatus.trigger("change");
+            ddlStatusMeasurement.val(td9);
+            ddlStatusMeasurement.trigger("change");
 
 
             //hiddenMeasureMentId.val(td1);
@@ -1644,8 +1662,8 @@
             ////measureMentName.val(td4);
             ////measureMentName.val(td5);
             ////measureMentName.val(td6);
-            
-            
+
+
 
         })
         function OpenModalMeasurement() {
@@ -1657,7 +1675,7 @@
             });
         }
 
-        
+
         function clearCtrl() {
             txtmeasurementName.val("");
             txtmasterBox.val("");

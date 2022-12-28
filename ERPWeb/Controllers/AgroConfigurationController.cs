@@ -149,7 +149,7 @@ namespace ERPWeb.Controllers
         #region AgroConfiguration
 
         #region Depot Setup
-        public ActionResult DepotList(string flag, string name)
+        public ActionResult DepotList(string flag, string name, string tab = "")
         {
 
             if (string.IsNullOrEmpty(flag))
@@ -163,6 +163,8 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlUnit = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
 
                 ViewBag.ddlUnits = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
+
+                ViewBag.tab = tab;
 
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "DepotSetup")
@@ -540,7 +542,13 @@ namespace ERPWeb.Controllers
         public ActionResult SaveMeasurement(List<MeasurementSetupViewModel> models)
         {
             bool IsSuccess = false;
+            //if (models == null)
+            //{
+            //}
+            //if (models.Count > 0)
+            //{
 
+            //}
 
             List<MeasurementSetupDTO> measurementSetupDTOs = new List<MeasurementSetupDTO>();
             AutoMapper.Mapper.Map(models, measurementSetupDTOs);
@@ -548,7 +556,7 @@ namespace ERPWeb.Controllers
 
 
 
-
+            ViewBag.ActiveTab = "active";
 
             return Json(IsSuccess);
         }
@@ -557,6 +565,7 @@ namespace ERPWeb.Controllers
         public ActionResult UpdateMeasurement(MeasurementSetupViewModel models)
         {
             bool IsSuccess = false;
+
             if (ModelState.IsValid)
             {
                 MeasurementSetupDTO measurementSetupDTO = new MeasurementSetupDTO();
@@ -567,7 +576,7 @@ namespace ERPWeb.Controllers
 
 
             }
-
+            ViewBag.ActiveTab = "active";
 
             return Json(IsSuccess);
         }
@@ -2736,7 +2745,7 @@ namespace ERPWeb.Controllers
 
                     var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
 
-                   // var detailspackage = _agroProductSalesDetailsBusiness.GetSalesDetailsByPackageProduct(id.Value);
+                    // var detailspackage = _agroProductSalesDetailsBusiness.GetSalesDetailsByPackageProduct(id.Value);
 
 
 
@@ -3192,7 +3201,7 @@ namespace ERPWeb.Controllers
             try
             {
                 var packagedetails = _packageDetails.GetPackageDetailsBY(PackageId);
-                foreach(var product in packagedetails)
+                foreach (var product in packagedetails)
                 {
                     var Productstockin = _finishGoodProductionInfoBusiness.GetProductStockINbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
                     var SumProductStockin = Productstockin.Sum(c => c.TargetQuantity);
@@ -3201,15 +3210,15 @@ namespace ERPWeb.Controllers
                     var SumProductSales = ProductSales.Sum(s => s.Quanity);
 
                     var ProductSalesDrop = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRidDRP(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
-                    var SumProductSalesDrop = ProductSalesDrop.Sum(d => d.Quanity); 
-                    
+                    var SumProductSalesDrop = ProductSalesDrop.Sum(d => d.Quanity);
+
                     var ProductSalesReturn = _salesReturn.GetProductReturnbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
                     var SumProductSalesReturn = ProductSalesReturn.Sum(r => r.ReturnQuanity);
 
 
                     issueQunatity = SumProductStockin - SumProductSales + SumProductSalesDrop + SumProductSalesReturn;
 
-                    requirdQuantity = product.Quanity * Qty ;
+                    requirdQuantity = product.Quanity * Qty;
 
                     if (requirdQuantity > issueQunatity)
                     {
@@ -3250,7 +3259,7 @@ namespace ERPWeb.Controllers
                 }
                 else
                 {
-                    
+
                     return Json("False", JsonRequestBehavior.AllowGet);
                 }
 
@@ -6411,7 +6420,7 @@ namespace ERPWeb.Controllers
 
         public ActionResult SavePackageCreate(PackageInfoViewModel info, List<PackageDetailsViewModel> details)
         {
-           
+
             bool isSucccess = false;
 
             PackageInfoDTO packageInfoDTO = new PackageInfoDTO();
@@ -6423,7 +6432,7 @@ namespace ERPWeb.Controllers
             return Json(isSucccess);
         }
 
-        public ActionResult GetPackageList(string flag,long? id,string packageCode,long? packageId,string fromDate,string toDate)
+        public ActionResult GetPackageList(string flag, long? id, string packageCode, long? packageId, string fromDate, string toDate)
         {
             try
             {
@@ -6431,7 +6440,7 @@ namespace ERPWeb.Controllers
                 if (string.IsNullOrEmpty(flag))
                 {
                     ViewBag.ddlPackageName = _packageInfo.GetAllPackageName(User.OrgId).Select(d => new SelectListItem { Text = d.PackageName, Value = d.PackageId.ToString() }).ToList();
-                    
+
 
                     return View();
                 }
@@ -6440,7 +6449,7 @@ namespace ERPWeb.Controllers
                 {
 
 
-                    var dto = _packageInfo.GetPackageListView(packageCode,packageId??0,fromDate,toDate);
+                    var dto = _packageInfo.GetPackageListView(packageCode, packageId ?? 0, fromDate, toDate);
                     List<PackageInfoViewModel> viewModels = new List<PackageInfoViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModels);
 
@@ -6448,12 +6457,12 @@ namespace ERPWeb.Controllers
 
                 }
 
-                else if(!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
                 {
-                    var dto = _packageDetails.GetPackageDetailsView(id.Value,User.OrgId);
+                    var dto = _packageDetails.GetPackageDetailsView(id.Value, User.OrgId);
                     List<PackageDetailsViewModel> packageDetails = new List<PackageDetailsViewModel>();
                     AutoMapper.Mapper.Map(dto, packageDetails);
-                    return PartialView("_GetPackageDetailsView",packageDetails);
+                    return PartialView("_GetPackageDetailsView", packageDetails);
                 }
 
 
