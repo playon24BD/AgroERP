@@ -1,0 +1,540 @@
+﻿@{
+    ViewBag.Title = "Accessoriespurchase";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    table.tablesubtotal tr th {
+        background-color: black !important;
+        color: white !important;
+    }
+
+    table.tadd tr th {
+        background-color: darkcyan !important;
+        color: white !important;
+    }
+
+    body {
+        margin-top: 40px;
+    }
+
+    input::placeholder {
+        font-weight: bold;
+    }
+
+    .container {
+        margin-bottom: 60px;
+        border: 1px solid rgba( 0,0,0, .4 );
+        padding: 40px;
+        border-radius: 6px;
+    }
+</style>
+
+<div class="row text-sm p-0" style=" margin-top: -65px">
+    <div class="col-md-12 p-0">
+
+        <div class="row mb-5">
+            <div class="col-md-12">
+
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="card mb-0" style="background-color:#001f3f">
+                            <div class="px-2 py-1">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3">
+
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <h6 class="text-white text-bold mb-0">Purchase And Accessories Stock</h6>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                    </div>
+                                    <div class="col-md-1" style="margin-top:0px;">
+
+                                        <button type="submit" class="emnsave-btn" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*addbodey*@
+                <div class="row pt-0">
+                    <div class="col-md-6  pr-0">
+                        <div class="px-1 py-1" style="margin-bottom: 0px; background-color: #008B8B">
+                            <div class="row small">
+                                <div class="col-md-12">
+                                    <div class="container-fluid">
+
+                                        <div class="row justify-content-center">
+
+                                            <div class="col-md-4 pl-0">
+                                                @Html.DropDownList("ddlSupplierName", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "Supplier", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
+                                                <span class="error hide req-SupplierName font-weight-bold">Supplier Name is required!</span>
+                                            </div>
+
+                                            <div class="col-md-4 pl-0">
+                                                <div class="form-group">
+                                                    <div class="input-group-sm date" id="datePicker">
+                                                        <input type="text" placeholder="InvoiceDate" class="form-control form-control-sm" id="ddlInvoiceDate" name="date" value="">
+                                                        <span class="input-group-addon">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 pl-0 pr-0">
+                                                <input type="text" placeholder="Invoice No" id="ddlInvoiceNo" class="form-control form-control-sm" />
+                                                <span class="error hide req-ddlInvoiceNo font-weight-bold">Invoice No is required!</span>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row small">
+                                <div class="col-md-12">
+                                    <div class="container-fluid" @*style="background-color:#e7f1f6;"*@>
+
+                                        <div class="row justify-content-center">
+
+                                            <div class="col-md-12">
+
+                                                <div class="row">
+                                                    <div class="col-md-3 pl-0 pr-0">
+                                                        @Html.DropDownList("ddlAccessories", (IEnumerable<SelectListItem>)ViewBag.ddlAccessories, "Accessories", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                                        <span class="error hide req-ddlAccessories">Accessories Is Required</span>
+                                                    </div>
+                                                    <div class="col-md-2 pr-0">
+                                                        <input type="number" placeholder="Qty" id="ddlqty" name="qty" class="form-control form-control-sm" />
+                                                        <span class="error hide req-qty">Qty Is Required</span>
+                                                    </div>
+                                                    <div class="col-md-3 pr-0">
+                                                        <input type="number" placeholder="Rate/PC" id="ddluprice" name="uprice" class="form-control form-control-sm" />
+                                                        <span class="error hide req-uprice">Unit Price Is Required</span>
+                                                    </div>
+
+                                                    <div class="col-md-3 pr-0">
+                                                        <input type="number" id="ddlttprice" placeholder="Subtotal" name="ddlttprice" class="form-control form-control-sm" readonly />
+                                                    </div>
+                                                    <div class="col-md-1 ">
+                                                        <button type="submit" class="float-left float-md-start text-bold" id="addTolist" title="Save"><i class="fas fa-plus"></i></button>
+                                                    </div>
+
+
+
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-0 pr-0">
+                        <div class="card-body px-2 py-0">
+                            <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg table-responsive-sm table-responsive-md tadd" id="tblPAccessories" style="background-color: white; margin-bottom: -3px ">
+                                <thead>
+                                    <tr class="text-center" style="color:black">
+
+                                        <th>#SL</th>
+                                        <th>Accessories</th>
+                                        <th>QTY</th>
+                                        <th>Rate/PC</th>
+
+                                        <th>Subtotal</th>
+                                        <th>Action</th>
+                                        <th class="hide AccessoriesId"></th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg table-responsive-sm table-responsive-md tablesubtotal">
+                                <thead>
+                                    <tr class="text-center">
+
+                                        <th>Total</th>
+                                        <th class="totalqty hide">0</th>
+                                        <th class="totalsub">0</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                @*addbodey*@
+
+
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+</div>
+@section scripts{
+
+
+    <script type="text/javascript">
+        var to = 0;//total
+        var to1 = 0;//qty
+
+
+
+        var ddlSupplierName = $("#ddlSupplierName");
+        var ddlInvoiceDate = $("#ddlInvoiceDate");
+        var ddlInvoiceNo = $("#ddlInvoiceNo");
+        var ddlChallanNo = $("#ddlChallanNo");
+        var ddlInvoiceDate = $("#ddlInvoiceDate");
+        var ddlProductCode = $("#ddlProductCode");
+
+        var ddluprice = $("#ddluprice");
+        var ddlttprice = $("#ddlttprice");
+        var ddlqty = $("#ddlqty");
+        var ddlAccessories = $("#ddlAccessories");
+
+        var ddlAccessoriesList = [];
+
+
+
+        //date
+        var date = new Date();
+        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+        var optSimple = {
+            format: 'mm-dd-yyyy',
+            container: '#datePicker',
+            orientation: 'bottom left',
+            todayHighlight: true,
+            autoclose: true
+        };
+
+        var optComponent = {
+            format: 'mm-dd-yyyy',
+            container: '#datePicker',
+            orientation: 'bottom left',
+            todayHighlight: true,
+            autoclose: true
+        };
+
+        // SIMPLE
+        $('#simple').datepicker(optSimple);
+
+        // COMPONENT
+        $('#datePicker').datepicker(optComponent);
+
+        // ===================================
+
+        $('#datepicker1, #datepicker2, #simple, #datePicker').datepicker('setDate', today);
+        //dateend
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            //$("#btnSubmit").hide();
+           // $("#saveButton").hide();
+
+
+            $(function () {
+                $('#ddlSupplierName').focus();
+            });
+
+            LoadDataTable();
+            LoadDataTableStock();
+
+        })
+
+        function LoadDataInitializer() {
+
+            LoadDataTable();
+        }
+
+
+
+
+        $("#addTolist").click(function (e) {
+            //alert();
+            //debugger;
+            e.preventDefault();
+
+
+            if (validateAddToList()) {
+
+                if (ddlAccessoriesList.includes(ddlAccessories.val())) {
+                    toastrErrorAlert("Accessories Already Exist");
+            }
+            else {
+                var sl = $("#tblPAccessories tbody tr").length;
+                var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
+                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlAccessories") + "</td>";
+                var td3 = "<td class='text-center'>" + ddlqty.val() + "</td>";
+                var td4 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                var td5 = "<td class='text-center'>" + ddlttprice.val() + "</td>";
+                var td6 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlttprice.val() + "' data-quentaty='" + ddlqty.val() +"'><i class='far fa-trash-alt'></i></a></td>";
+
+                var td7 = "<td class='text-center hide'>" + ddlAccessories.val() + "</td>";
+
+
+                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 +"</tr>";
+
+
+                //totalprice
+                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                $('.totalsub').text(to);
+                console.log(to);
+                //totalprice
+                //tqty
+                to1 = parseFloat($('.totalqty').text()) + parseFloat(ddlqty.val());
+                $('.totalqty').text(to1);
+                console.log(to1);
+                //tqty
+
+
+
+                    $("#tblPAccessories tbody").append(tr);
+                  ddlAccessoriesList.push(ddlAccessories.val());
+
+
+                }
+                clearCtrlStk();
+        }
+
+        })
+
+
+        //save
+        $("#saveButton").click(function (e) {
+            //alert();
+            //debugger
+            e.preventDefault();
+
+            if (validatesave()) {
+
+            if (true === true) {
+
+                bootbox.confirm("Are you sure you want to Save this", function (result) {
+                    if (result) {
+                        //alert("ok");
+                       // debugger;
+                        var totalsub = $('.totalsub').text();//initilize class total
+
+                        var info = { RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0), InvoiceNo: ddlInvoiceNo.val(), InvoiceDate: ddlInvoiceDate.val(), TotalAmount: totalsub };
+                        var details = [];
+                        details.length = 0;
+
+                        $.each($("#tblPAccessories tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+                                AccessoriesPurchaseDetailsId: 0,
+                                AccessoriesId: tds.eq(6).html(),
+                                UnitPrice: tds.eq(3).html(),
+                                Quantity: tds.eq(2).html(),
+                                SubTotal: tds.eq(4).html(),
+                            });
+                        })
+
+
+                        console.log(info);
+                        console.log(details);
+
+                        var data = JSON.stringify({ info: info, details: details });
+                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAccessoriespurchase', data, getToken())).then(function (res, status) {
+                            if (res === true) {
+                                //debugger;
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    @*redirectPage('@Url.Action("GetPRawmaterialStockList")');*@
+                                }, 1000);
+                                //resetUI();
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+                    }
+                    //clearCtrlSv();
+                })
+            }
+            }
+
+        })
+
+
+
+
+
+
+
+
+        //calculate
+        ddlqty.keyup(function () {
+            if (ddlqty.val()>=0) {
+                calculateTotal();
+            }
+
+
+        });
+
+        ddluprice.keyup(function () {
+            if (ddluprice.val()>=0) {
+                calculateTotal();
+
+            }
+
+        });
+
+        function calculateTotal() {
+
+            var sub = ddluprice.val() * ddlqty.val();
+            ddlttprice.val(sub);
+
+        }
+        //calculateend
+
+        //remove
+        $(document).on("click", "a.data-onfly-del", function (e) {
+            //debugger;
+            e.preventDefault();
+            var index = $(this).parent().parents('tbody tr').index();
+            var tds = $(this).parent().parents('tbody tr').children('td');
+
+            //tt
+            var subtotal = $(this).data("subtotal");
+            var row = $(this).data("quentaty");
+            console.log(row);
+            //tt
+
+            var rId = tds.eq(6).html();
+            console.log("rId :" + rId);
+            const mid = ddlAccessoriesList.indexOf(rId);
+
+            ddlAccessoriesList.splice(mid, 1);
+
+            if (bootbox.confirm("Are you sure you want to delete?", function (result) {
+                if (result === true) {
+                    removeTableRow("#tblPAccessories tbody", index);
+                    fnFixTheTbodyRowSerial("#tblPAccessories tbody", index);
+
+
+                    var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal);
+                    $('.totalsub').text(totals);
+
+                    var totalsq = parseFloat($(".totalqty").text()) - parseFloat(row);
+                    $('.totalqty').text(totalsq);
+                };
+            }));
+
+        })
+
+
+
+        //clear
+        function clearCtrlStk() {
+            //debugger;
+            ddlAccessories.val("");
+            ddlAccessories.trigger("change");
+            ddlqty.val("");
+            ddlttprice.val("");
+            ddluprice.val("");
+
+        }
+
+        //master
+        function clearCtrlSv() {
+            //debugger;
+            ddlSupplierName.val("");
+            ddlSupplierName.trigger("change");
+            ddlInvoiceDate.val("");
+            ddlInvoiceNo.val("");
+        }
+
+
+        //validationadd
+        function validateAddToList() {
+            //debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlAccessories.val()) == 0) {
+                $(".req-ddlAccessories").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(ddlqty.val(), 0) <= 0) {
+                $(".req-qty").removeClass('hide');
+                isValid = false;
+            }
+            if (TryParseInt(ddluprice.val(), 0) <= 0) {
+                $(".req-uprice").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        //validationsave
+        function validatesave() {
+            //debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if ($.trim(ddlSupplierName.val()) == 0) {
+                $(".req-SupplierName").removeClass('hide');
+                isValid = false;
+            }
+            if (ddlInvoiceDate.val() === "") {
+                $(".req-ddlInvoiceDate").removeClass('hide');
+                isValid = false;
+            }
+
+            if (ddlInvoiceNo.val() === "") {
+                $(".req-ddlInvoiceNo").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+
+
+    </script>
+}

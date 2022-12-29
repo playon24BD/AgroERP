@@ -22,6 +22,11 @@ namespace ERPBLL.Agriculture
             this._accessoriesInfoRepository = new AccessoriesInfoRepository(this._agricultureUnitOfWork);
         }
 
+        public IEnumerable<AccessoriesInfo> GetAllAccessories()
+        {
+            return _accessoriesInfoRepository.GetAll().ToList();
+        }
+
         public bool SaveAccessoriesInfo(AccessoriesInfoDTO accessoriesInfoDTO, long userId)
         {
             bool IsSuccess = false;

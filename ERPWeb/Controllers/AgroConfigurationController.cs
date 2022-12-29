@@ -89,7 +89,7 @@ namespace ERPWeb.Controllers
 
 
 
-        public AgroConfigurationController(IAccessoriesInfo accessoriesInfo,IAccessoriesPurchaseInfo accessoriesPurchaseInfo,IAccessoriesPurchaseDetails accessoriesPurchaseDetails, IAccessoriesTrackInfo accessoriesTrackInfo ,IPackageInfo packageInfo, IPackageDetails packageDetails, IStockiestWiseYearlyTarget stockiestWiseYearlyTarget, IPaymentMoneyRecipt paymentMoneyRecipt, ITerritoryUserBusiness territoryUserBusiness, IProductionPerproductCost productionPerproductCost, IProductPriceConfiguration productPriceConfiguration, IProductPricingHistory productPricingHistory, ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness, IRMStockDashboardGrap rMStockDashboardGrap)
+        public AgroConfigurationController(IAccessoriesInfo accessoriesInfo, IAccessoriesPurchaseInfo accessoriesPurchaseInfo, IAccessoriesPurchaseDetails accessoriesPurchaseDetails, IAccessoriesTrackInfo accessoriesTrackInfo, IPackageInfo packageInfo, IPackageDetails packageDetails, IStockiestWiseYearlyTarget stockiestWiseYearlyTarget, IPaymentMoneyRecipt paymentMoneyRecipt, ITerritoryUserBusiness territoryUserBusiness, IProductionPerproductCost productionPerproductCost, IProductPriceConfiguration productPriceConfiguration, IProductPricingHistory productPricingHistory, ISalesReturn salesReturn, IReturnRawMaterialBusiness returnRawMaterialBusiness, ISalesPaymentRegister salesPaymentRegister, IRawMaterialTrack rawMaterialTrack, IMRawMaterialIssueStockInfo mRawMaterialIssueStockInfo, IMRawMaterialIssueStockDetails mRawMaterialIssueStockDetails, IPRawMaterialStockInfo pRawMaterialStockInfo, IPRawMaterialStockIDetails pRawMaterialStockIDetails, IAgroUnitInfo agroUnitInfo, IUserInfo userInfo, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IZoneDetail zoneDetail, IZone zone, IOrganizationBusiness organizationBusiness, IDepotSetup depotSetup, IRawMaterialBusiness rawMaterialBusiness, IFinishGoodProductBusiness finishGoodProductBusiness, IBankSetup bankSetup, IFinishGoodProductSupplierBusiness finishGoodProductSupplierBusiness, IMeasuremenBusiness measuremenBusiness, IRawMaterialSupplier rawMaterialSupplierBusiness, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, IRawMaterialStockInfo rawMaterialStockInfo, IRawMaterialStockDetail rawMaterialStockDetail, IRawMaterialIssueStockInfoBusiness rawMaterialIssueStockInfoBusiness, IRawMaterialIssueStockDetailsBusiness rawMaterialIssueStockDetailsBusiness, IFinishGoodProductionDetailsBusiness finishGoodProductionDetailsBusiness, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAgroProductSalesInfoBusiness agroProductSalesInfoBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness, IAppUserBusiness appUserBusiness, IRawMaterialRequisitionInfoBusiness rawMaterialRequisitionInfoBusiness, IRawMaterialRequisitionDetailsBusiness rawMaterialRequisitionDetailsBusiness, ICommissionOnProductBusiness commissionOnProductBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness, IRMStockDashboardGrap rMStockDashboardGrap)
 
         {
             this._accessoriesInfo = accessoriesInfo;
@@ -711,10 +711,10 @@ namespace ERPWeb.Controllers
             bool isSuccess = false;
             AccessoriesInfoDTO accessoriesInfoDTO = new AccessoriesInfoDTO();
             AutoMapper.Mapper.Map(model, accessoriesInfoDTO);
-    
+
             isSuccess = _accessoriesInfo.SaveAccessoriesInfo(accessoriesInfoDTO, User.UserId);
-             
-         
+
+
             return Json(isSuccess);
         }
         #endregion
@@ -1284,7 +1284,7 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetProductFinishGoodList(string flag, string ReceipeBatchCode, long? productId, string finishGoodProductionBatch, long? id,long? measurementId)
+        public ActionResult GetProductFinishGoodList(string flag, string ReceipeBatchCode, long? productId, string finishGoodProductionBatch, long? id, long? measurementId)
         {
 
             try
@@ -1348,10 +1348,10 @@ namespace ERPWeb.Controllers
 
 
                 //else
-                else if (!string.IsNullOrEmpty(flag) && flag =="List")
+                else if (!string.IsNullOrEmpty(flag) && flag == "List")
                 {
 
-                    var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos(productId??0, measurementId??0).ToList();
+                    var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos(productId ?? 0, measurementId ?? 0).ToList();
                     List<FinishGoodProductionInfoViewModel> finishGoodProductionInfos = new List<FinishGoodProductionInfoViewModel>();
                     AutoMapper.Mapper.Map(dto, finishGoodProductionInfos);
 
@@ -1361,7 +1361,7 @@ namespace ERPWeb.Controllers
                 }
                 return View();
             }
-            
+
             catch (Exception e)
             {
                 return View();
@@ -6443,6 +6443,30 @@ namespace ERPWeb.Controllers
 
         #endregion
 
+        #region Accessories
+        public ActionResult Accessoriespurchase ()
+        {
+            ViewBag.ddlSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialSupplierName, Value = a.RawMaterialSupplierId.ToString() });
 
+            ViewBag.ddlAccessories = _accessoriesInfo.GetAllAccessories().Select(a => new SelectListItem { Text = a.AccessoriesName, Value = a.AccessoriesId.ToString() });
+            return View();
+
+        }
+
+        public ActionResult SaveAccessoriespurchase(AccessoriesPurchaseInfoViewModel info, List<AccessoriesPurchaseDetailsViewModel> details)
+        {
+            bool IsSuccess = false;
+
+            AccessoriesPurchaseInfoDTO infoDTO = new AccessoriesPurchaseInfoDTO();
+            List<AccessoriesPurchaseDetailsDTO> detailDTOs = new List<AccessoriesPurchaseDetailsDTO>();
+            AutoMapper.Mapper.Map(info, infoDTO);
+            AutoMapper.Mapper.Map(details, detailDTOs);
+            IsSuccess = _accessoriesPurchaseInfo.SaveAccessoriesPurchaseStock(infoDTO, detailDTOs, User.UserId);
+
+
+
+            return Json(IsSuccess);
+        }
+        #endregion
     }
 }
