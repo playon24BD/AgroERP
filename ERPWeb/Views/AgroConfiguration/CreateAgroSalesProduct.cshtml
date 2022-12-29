@@ -58,7 +58,8 @@
                                 <h7 class="text-center text-white text-bold">Challan & Invoice Posting</h7>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-2 float-right">
+                                <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold" readonly />
                             </div>
                             <div class="col-md-1" style="margin-top:0px;">
 
@@ -81,13 +82,13 @@
                                     @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "Stockiest", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
                                     <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 pl-0">
                                     @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--DepotName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                     <span class="error hide req-DepotName font-weight-bold">Depot Name is required!</span>
                                 </div>
 
 
-                                <div class="col-md-3">
+                                <div class="col-md-3 pl-0">
                                     <div class="form-group">
                                         <div class="input-group-sm date" id="simple">
                                             <input type="text" class="form-control form-control-sm" id="ChallanDate" name="date" value="">
@@ -100,7 +101,7 @@
 
 
 
-                                <div class="col-md-3">
+                                <div class="col-md-3 pl-0">
 
                                     <div class="form-group">
                                         <div class="input-group-sm date" id="datePicker">
@@ -121,14 +122,14 @@
                                         <option value="Credit">Credit</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="text" placeholder="V.Type" id="txtVehicleType" class="form-control form-control-sm  ">
+                                <div class="col-md-3 pl-0">
+                                    <input type="text" placeholder="Vehicle Type" id="txtVehicleType" class="form-control form-control-sm  ">
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="text" placeholder="V.Num" id="txtVehicleNumber" class="form-control form-control-sm">
+                                <div class="col-md-3 pl-0">
+                                    <input type="text" placeholder="Vehicle Num" id="txtVehicleNumber" class="form-control form-control-sm">
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="text" placeholder="D.Name" id="txtDriverName" class="form-control form-control-sm">
+                                <div class="col-md-3 pl-0">
+                                    <input type="text" placeholder="Driver Name" id="txtDriverName" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="row small" style="margin-top: 4px ">
@@ -136,13 +137,13 @@
                                 <div class="col-md-3">
                                     <input type="text" placeholder="Place" id="txtDeliveryPlace" class="form-control form-control-sm">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 pl-0">
                                     <input type="text" placeholder="ADO_DA" id="txtDo_ADO_DA" class="form-control form-control-sm ">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 pl-0">
                                     <input type="text" placeholder="DO_ADO" id="txtDoADO_Name" class="form-control form-control-sm">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 hide">
                                     <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold" readonly />
                                 </div>
 
@@ -221,29 +222,7 @@
                                             </div>
 
                                         </div>
-                                        @*<div class="row" style="margin-top: 5px;">
-                                            <div class="col-md-4">
-                                                <input type="text" placeholder="Qty" id="txtQuanity" class="form-control form-control-sm" />
-                                                <label for="ddlQuantity" class="control-label font-weight-bold text-white">
-                                                    StockQty:
-                                                    <span class="text-white" id="FinishGoodStockQty"></span>
-                                                </label>
-                                                <span class="error hide req-Quanity">Quantity is required</span>
-                                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal Product Qty</span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input type="text" placeholder="Unit Price" id="txtPrice" class="form-control form-control-sm" readonly />
-                                                <span class="error hide req-txtPrice">Price not Configure</span>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input type="text" placeholder="Discount%" id="txtDiscount" class="form-control form-control-sm" />
-                                            </div>
-                                            <div class="col-md-1 ">
-                                                <div>
-                                                    <button type="submit" class="btn btn-sm btn-warning float-right float-md-start text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>*@
+
 
 
 
@@ -313,7 +292,7 @@
 
                                             <th style="width:5%">#SL</th>
                                             <th style="width:10%">Name</th>
-                                            <th style="width:10%">Mass</th>
+                                            <th style="width:10%">Measurment</th>
                                             <th style="width:5%">QTY</th>
                                             <th class="hide" style="width:5%">Total Pc</th>
                                             <th style="width:5%">Rate</th>

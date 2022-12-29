@@ -3,7 +3,7 @@
     ViewBag.Title = "ProductCommision";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row p-0" style="margin-top: 5px">
+<div class="row small p-0" style="margin-top: 5px">
     <div class="col-md-12 p-0">
 
 
@@ -73,95 +73,106 @@
                 </div>
                 <div class="tab-pane fade show " id="custom-tabs-two-commissiononproduct" role="tabpanel" aria-labelledby="custom-tabs-two-commissiononproduct-tab">
 
+
                     <div class="row" style="margin-top:-16px">
                         <div class="col-md-12">
-                            <div class="card card-navy">
-                                <div class="card-header" style="text-align: center;">
+                            <div class="card " style="background-color:#001f3f">
+                                <div class="px-2 py-1">
+                                    <div class="row text-sm">
 
-                                    <div class="row">
-                                        <div class="col-md-3">
+
+                                        <div class="col-4">
 
                                         </div>
-                                        <div class="col-md-6">
-                                            <h5 class="text-center text-bold">
+                                        <div class="col-md-4 text-center">
 
+                                            <h6 class="text-center text-bold text-white mb-0">
                                                 Commission On Product
-                                            </h5>
+                                            </h6>
                                         </div>
-                                        <div class="col-md-3">
-                                            <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
+
+                                        <div class="col-4">
+                                            <button class="emnsave-btn" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <input type="text" id="hdrawMaterialRequisitionInfoId" class="hide" />
+                            </div>
 
-                                        <div class="col-md-2 hide">
-                                            <label class="control-label font-weight-bold">Year</label>
-                                            <div class="input-group input-group-sm ">
-                                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dateCalenderYear" />
-                                                <span class="error hide req-dateCalenderYear">Year Is Required</span>
+                        </div>
+                    </div>
 
-                                            </div>
+                    <div class="row" style="margin-top:-16px">
+                        <div class="col-md-12">
+
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <input type="text" id="hdrawMaterialRequisitionInfoId" class="hide" />
+
+                                    <div class="col-md-2 hide">
+                                        <label class="control-label font-weight-bold">Year</label>
+                                        <div class="input-group input-group-sm ">
+                                            <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dateCalenderYear" />
+                                            <span class="error hide req-dateCalenderYear">Year Is Required</span>
+
                                         </div>
-                                        <div class="col-md-3">
-                                            <label class="control-label" for="ddlProductName">Product Name<span style="color:red">*</span></label>
-                                            @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product --", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
-                                            <span class="error hide req-ddlProductName">Product Is Required</span>
-                                            <span class="error hide duplicate-product">Product Is Already configured In This Year</span>
-                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="ddlProductName">Product Name<span style="color:red">*</span></label>
+                                        @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product --", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
+                                        <span class="error hide req-ddlProductName">Product Is Required</span>
+                                        <span class="error hide duplicate-product">Product Is Already configured In This Year</span>
+                                    </div>
 
 
 
-                                        <div class="col-md-1">
-                                            <label for="credit">Credit(%)</label>
-                                            <input type="number" value="0" id="numCredit" name="credit" class="form-control form-control-sm" />
-                                            <span class="error hide req-numCredit">Credit is Required</span>
-                                        </div>
+                                    <div class="col-md-1">
+                                        <label for="credit">Credit(%)</label>
+                                        <input type="number" value="0" id="numCredit" name="credit" class="form-control form-control-sm" />
+                                        <span class="error hide req-numCredit">Credit is Required</span>
+                                    </div>
 
-                                        <div class="col-md-1 hide">
-                                            <label for="cash">Cash(%)</label>
-                                            <input type="number" value="0" id="numCash" name="cash" class="form-control form-control-sm" />
-                                            <span class="error hide req-numCash">Credit is Required</span>
+                                    <div class="col-md-1 hide">
+                                        <label for="cash">Cash(%)</label>
+                                        <input type="number" value="0" id="numCash" name="cash" class="form-control form-control-sm" />
+                                        <span class="error hide req-numCash">Credit is Required</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="control-label font-weight-bold">From Date<span style="color:red">*</span></label>
+                                        <div class="input-group input-group-sm ">
+                                            <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
+                                            <span class="error hide req-dptFromDate">From is Required</span>
                                         </div>
-                                        <div class="col-md-2">
-                                            <label class="control-label font-weight-bold">From Date<span style="color:red">*</span></label>
-                                            <div class="input-group input-group-sm ">
-                                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" />
-                                                <span class="error hide req-dptFromDate">From is Required</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="control-label font-weight-bold">To Date<span style="color:red">*</span></label>
-                                            <div class="input-group input-group-sm ">
-                                                <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" />
-                                                <span class="error hide req-dptToDate">ToDate is Required</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="control-label font-weight-bold">To Date<span style="color:red">*</span></label>
+                                        <div class="input-group input-group-sm ">
+                                            <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" />
+                                            <span class="error hide req-dptToDate">ToDate is Required</span>
 
-                                            </div>
                                         </div>
-                                        <div class="col-md-2">
-                                            <label for="txtRemarks">Remarks</label>
-                                            <input type="text" id="txtRemarks" name="txtRemarks" class="form-control form-control-sm" />
-                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="txtRemarks">Remarks</label>
+                                        <input type="text" id="txtRemarks" name="txtRemarks" class="form-control form-control-sm" />
+                                    </div>
 
-                                        <div class="col-md-1">
-                                            <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
-                                            <div class="clearfix">
-                                                <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
-                                            </div>
+                                    <div class="col-md-1">
+                                        <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                                        <div class="clearfix">
+                                            <button type="submit" class="float-left float-md-start text-bold" id="addTolist"><i class="fas fa-plus"></i></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
 
                     </div>
 
                     <div class="row" style="margin-top:-10px">
-                        <div class="col-md-12" style="overflow-y:scroll">
+                        <div class="col-md-12">
                             <table class="table table-bordered table-sm text-sm table-striped table-responsive-lg" id="tblCommissionOnProduct">
                                 <thead>
 
@@ -368,7 +379,7 @@
                 minViewMode: "years",
                 autoclose: true
             });
-            $("#btnSubmit").hide();
+
 
             loadCommissionOnProduct();
         })
@@ -439,7 +450,7 @@
                     var td7 = "<td class='text-center'>" + dptFromDate.val() + "</td>";
                     var td8 = "<td class='text-center'>" + dptToDate.val() + "</td>";
                     var td9 = "<td class='text-center' >" + txtRemarks.val() + "</td>";
-                    var td10 = "<td class='text-center'><a href='#' class='btn btn-sm btn-danger data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                    var td10 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
                     var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 +td9+td10+ "</tr>";
 
                     $("#tblCommissionOnProduct tbody").append(tr);

@@ -92,7 +92,6 @@ namespace ERPBLL.Agriculture
 
                 }
 
-                //model.accessoriesPurchaseDetails = modelDetails;
 
                 _accessoriesPurchaseDetailsRepository.InsertAll(modelDetails);
                 IsSuccess = _accessoriesPurchaseDetailsRepository.Save();
