@@ -1,19 +1,18 @@
-﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.TerritorySetupViewModel>
+﻿
+@model IEnumerable<ERPBO.Agriculture.ViewModels.AccessoriesInfoViewModel>
 
 @{
-    ViewBag.Title = "List of Territory";
+    ViewBag.Title = "List of Accessories";
     var SL = 0;
 }
 <div class="row">
     <div class="col-md-12 p-0">
-        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblTerritoryData">
+        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblAccessoriesList">
             <thead class="btn-dark">
                 <tr class="text-center">
                     <th style="vertical-align:middle">#SL</th>
                     <th style="vertical-align:middle" class="hide"></th>
-                    <th style="vertical-align:middle" class="hide"></th>
-                    <th style="vertical-align:middle">TerritoryName</th>
-                    <th style="vertical-align:middle">Area Name</th>
+                    <th style="vertical-align:middle">Accessories Name</th>
                     <th style="vertical-align:middle">Status</th>
                     <th style="vertical-align:middle">Action</th>
                 </tr>
@@ -25,14 +24,14 @@
                     <tr>
 
                         <td class="text-center text-bold">@SL</td>
-                        <td class="hide">@item.TerritoryId</td>
-                        <td class="hide">@item.AreaId</td>
-                        @*<td class="hide">@item.OrganizationId</td>*@
-                        <td class="text-center">@item.TerritoryName</td>
-                        <td class="text-center">@item.AreaName</td>
+                        <td class="hide">@item.AccessoriesId</td>
+                        <td class="text-center">@item.AccessoriesName</td>
                         <td class="text-center">@item.Status</td>
                         <td class="text-center">
-                            <a href="#" class="dasedit-btn data-edit-item-Territory" style="line-height:1" data-edit-item-Territory="@item.TerritoryId"><i class="fa fa-pen"></i></a>
+                            @*@if (privilege.Edit)
+                                {*@
+                            <a href="#" class="dasedit-btn data-edit-item-Accessories" style="line-height:1" data-edit-item-Accessories="@item.AccessoriesId"><i class="fa fa-pen"></i></a>
+                            @*}*@
                         </td>
                     </tr>
                 }

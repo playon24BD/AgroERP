@@ -6,7 +6,7 @@
 }
 
 <div class="row">
-    <div class="col-md-12" style="overflow-y:scroll">
+    <div class="col-md-12 p-0">
         <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblDepotData">
             <thead class="btn-dark">
                 <tr class="text-center">
@@ -40,7 +40,7 @@
                     <td class="text-center">
                         @*@if (privilege.Edit)
             {*@
-                        <a href="#" class="btn btn-warning btn-sm data-edit-item-Area" style="line-height:1" data-edit-item-Depot="@item.AreaId"><i class="fa fa-pen"></i> Edit</a>
+                        <a href="#" class="dasedit-btn data-edit-item-Area" style="line-height:1" data-edit-item-Depot="@item.AreaId"><i class="fa fa-pen"></i></a>
                         @*}*@
                     </td>
                 </tr>

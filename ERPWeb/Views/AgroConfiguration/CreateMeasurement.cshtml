@@ -6,76 +6,78 @@
 }
 
 <div class="row" style="margin-top:-25px;">
-
     <div class="col-md-12 p-0">
-        
-            <div class="card card-navy">
-                <div class="card-header" style="text-align: center;">
 
-                    <div class="row">
-                        <div class="col-md-3">
-                            <a href="/AgroConfiguration/GetMeasurementList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
-                                <i class="fas fa-arrow-alt-circle-left"></i>
-                            </a>
-                        </div>
-                        <div class="col-md-6">
+        <div class="row" style="margin-top:0px">
+            <div class="col-md-12">
+                <div class="card" style="background-color:#001f3f">
+                    <div class="card-header" style="text-align: center;">
+                        <div class="px-2 py-1">
+                            <div class="row align-items-center">
+                                <div class="col-md-3">
+                                    <a href="/AgroConfiguration/GetMeasurementList" class="float-left btn btn-sm btn-outline-primary" title="Go To List">
+                                        <i class="fas fa-arrow-alt-circle-left"></i>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    <h6 class="text-center text-bold text-white">
+                                        Create Measurement
+                                    </h6>
+                                </div>
+                                <div class="col-md-3"style="margin-top:0px;">
+                                    <button class=" emnsave-btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
 
-
-                            <h4 class="text-center text-bold">
-                                Create Measurement
-                            </h4>
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-success btn-sm btn float-right" id="btnSubmit">SAVE <i class="fas fa-paper-plane"></i></button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-body text-sm">
-                <div class="row " style="margin-top:-18px;">
-
-                    <div class="col-md-2">
-                        <label class="control-label font-weight-bold " for="txtmeasurementName">Measurement Name<span style="color:red">*</span></label>
-                        <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" autofocus />
-                        <span class="error hide req-txtmeasurementName">Measurement Name is required</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="control-label font-weight-bold " for="masterBox">Master Box</label>
-                        <input type="number" name="masterBox" id="txtmasterBox" class="form-control form-control-sm" />
-                        <span class="error hide req-txtmasterBox">Master Box is required</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="innerBox" class="control-label font-weight-bold">Innner Box</label>
-                        <input type="number" id="txtinnerBox" name="innerBox" class="form-control form-control-sm" />
-                        <span class="error hide req-txtinnerBox">Inner Box is required</span>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="control-label" for="model">Pack Size</label>
-                        <input type="number" id="txtpackSize" name="packSize" class="form-control form-control-sm">
-                        <span class="error hide req-txtpackSize">Pack Size is required</span>
-                    </div>
-
-
-                    <div class="col-md-2">
-                        <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
-                        @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-
-                        <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
-                    </div>
-
-
-                    <div class="col-md-1">
-                        <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
-                        <div class="clearfix">
-                            <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="card-body text-sm">
+            <div class="row " style="margin-top:-18px;">
+
+                <div class="col-md-2">
+                    <label class="control-label font-weight-bold " for="txtmeasurementName">Measurement Name<span style="color:red">*</span></label>
+                    <input type="text" name="measurementName" id="txtmeasurementName" class="form-control form-control-sm" autofocus />
+                    <span class="error hide req-txtmeasurementName">Measurement Name is required</span>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label font-weight-bold " for="masterBox">Master Box</label>
+                    <input type="number" name="masterBox" id="txtmasterBox" class="form-control form-control-sm" />
+                    <span class="error hide req-txtmasterBox">Master Box is required</span>
+                </div>
+                <div class="col-md-2">
+                    <label for="innerBox" class="control-label font-weight-bold">Innner Box</label>
+                    <input type="number" id="txtinnerBox" name="innerBox" class="form-control form-control-sm" />
+                    <span class="error hide req-txtinnerBox">Inner Box is required</span>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label" for="model">Pack Size</label>
+                    <input type="number" id="txtpackSize" name="packSize" class="form-control form-control-sm">
+                    <span class="error hide req-txtpackSize">Pack Size is required</span>
+                </div>
+
+
+                <div class="col-md-2">
+                    <label for="ddlUnit" class="control-label font-weight-bold">Unit Name</label>
+                    @Html.DropDownList("ddlUnit", (IEnumerable<SelectListItem>)ViewBag.ddlUnit, "--Select Unit--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                    <span class="error hide required-UnitName font-weight-bold">Unit Name is Required</span>
+                </div>
+
+
+                <div class="col-md-1">
+                    <label for="" class="control-label font-weight-bold" style="visibility:hidden">Add</label>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-sm btn-outline-success" id="addTolist"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 <div class="col-md-12" style="margin-top:-13px">
     <div class="card">
         <div class="card-body" style="margin-top:-10px">

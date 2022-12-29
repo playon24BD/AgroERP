@@ -5,7 +5,7 @@
     var SL = 0;
 }
 <div class="row">
-    <div class="col-md-12" style="overflow-y:scroll">
+    <div class="col-md-12 p-0">
         <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblDepotData">
             <thead class="btn-dark">
                 <tr class="text-center">
@@ -33,7 +33,7 @@
                     <td class="text-center">@item.DivisionName</td>
                     <td class="text-center">@item.Status</td>
                     <td class="text-center">
-                        <a href="#" class="btn btn-warning btn-sm data-edit-item-Region" style="line-height:1" data-edit-item-Region="@item.RegionId"><i class="fa fa-pen"></i> Edit</a>
+                        <a href="#" class="dasedit-btn data-edit-item-Region" style="line-height:1" data-edit-item-Region="@item.RegionId"><i class="fa fa-pen"></i></a>
                     </td>
                 </tr>
                 }

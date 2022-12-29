@@ -706,6 +706,26 @@ namespace ERPWeb.Controllers
 
 
         #region Accessories
+
+        public ActionResult GetAccessoriesList(string flag,string accessoriesName)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto =_accessoriesInfo.GetAccessoriesList(accessoriesName);
+
+
+                List<AccessoriesInfoViewModel> viewModels = new List<AccessoriesInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetAccessoriesList", viewModels);
+            }
+
+            return View();
+        }
         public ActionResult SaveAccessories(AccessoriesInfoViewModel model)
         {
             bool isSuccess = false;

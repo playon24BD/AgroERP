@@ -330,10 +330,11 @@
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3">
-                                            @Html.DropDownList("ddlRawMaterialRM", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Search by Material--", new { @class = "select2-selection__rendered" })
+                                        <div class="col-md-3 text-center">
+                                            <input type="text" class="form-control form-control-sm" id="searchByAnyAccessories" placeholder="Search by any" />
 
                                         </div>
+
                                         <div class="col-md-2">
 
                                         </div>
@@ -810,6 +811,7 @@
             LoadRawmaterialSupplierDataTable();
             LoadProductDataTable()
             LoadMeasurements()
+            LoadAccessoriesDataTable()
 
 
         })
@@ -1284,6 +1286,23 @@
         var ddlAccessoriesName = $("#ddlAccessoriesName");
         var ddlStatusA = $("#ddlStatusA");
         var hdAccessoriesId = $("#hdAccessoriesId");
+        var searchByAnyAccessories = $("#searchByAnyAccessories");
+
+
+        searchByAnyAccessories.keyup(function () {
+            LoadAccessoriesDataTable()
+        })
+
+        function LoadAccessoriesDataTable() {
+            var data = { flag: 'View', accessoriesName: $.trim(searchByAnyAccessories.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetAccessoriesList', data)).then(function (res, status) {
+                console.log(res);
+                if (status === "success") {
+                    $("#dataContainerAC").empty();
+                    $("#dataContainerAC").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
 
         function OpenModalA() {
 
@@ -1296,17 +1315,52 @@
             });
 
         }
+
         $("#btnAddAC").click(function (e) {
 
             e.preventDefault();
+            clearCtrlAccessories();
             $(function () {
                 $('#ddlAccessoriesName').focus();
             });
-           // ClearCtrlRM();
+          
             OpenModalA();
 
 
         })
+
+        $(document).on("click", "a.data-edit-item-Accessories", function (e) {
+
+            debugger;
+            e.preventDefault()
+
+            var row = $(this).parent().parents('tr')
+
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td3 = row.find('td:eq(3)').html();
+
+            hdAccessoriesId.val(td1);
+            ddlAccessoriesName.val(td2);
+            ddlStatusA.val(td3);
+            ddlStatusA.trigger('change');
+
+            OpenModalA();
+            
+            $("#spanModalHead").text('Update Accessories');
+            $("#spanSaveText1").text('Update');
+        })
+
+
+        function clearCtrlAccessories() {
+            ddlAccessoriesName.val("");
+            ddlStatusA.val("");
+            
+            hdAccessoriesId.val('0');
+            
+
+        }
+
 
         $("#btnSaveA").click(function (e) {
             e.preventDefault();
@@ -1319,7 +1373,7 @@
                         debugger;
                         $("#AccessoriesModal").modal("toggle");
                         toastrSuccessAlert(execuStatus.successSave);
-                        //loadRawMaterials();
+                        LoadAccessoriesDataTable();
                     }
                     else {
                         toastrErrorAlert(execuStatus.fail);
