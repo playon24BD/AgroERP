@@ -230,11 +230,11 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
 
 
 
-        public IEnumerable<FinishGoodProductionInfoDTO> FinishgoodproductInOutreturnStockInfos(string ReceipeBatchCode, long? productId)
+        public IEnumerable<FinishGoodProductionInfoDTO> FinishgoodproductInOutreturnStockInfos(long? productId, long? measurementId)
         {
             try
             {
-                return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductStock(ReceipeBatchCode, productId)).ToList();
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForFinishGoodProductStock(productId,measurementId)).ToList();
             }
             catch (Exception)
             {
@@ -243,7 +243,7 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
         }
 
 
-        private string QueryForFinishGoodProductStock(string ReceipeBatchCode, long? productId)
+        private string QueryForFinishGoodProductStock(long? productId, long? measurementId)
         {
             try
             {
@@ -251,16 +251,17 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
                 string param = string.Empty;
 
 
-                if (ReceipeBatchCode != null && ReceipeBatchCode != "")
-                {
-                    param += string.Format(@" and fgp.ReceipeBatchCode like '%{0}%'", ReceipeBatchCode);
-                }
                 if (productId > 0 && productId != 0)
                 {
                     param += string.Format(@" and fgp.FinishGoodProductId ={0}", productId);
                 }
+
+                if (measurementId > 0 && measurementId != 0)
+                {
+                    param += string.Format(@" and m.measurementId ={0}", measurementId);
+                }
                 query = string.Format(@"
-select Distinct m.MeasurementName,fgp.FinishGoodProductId , fgp.FGRId , p.FinishGoodProductName,fr.ReceipeBatchCode,fr.FGRQty,un.UnitName,
+select Distinct m.measurementId, m.MeasurementName,fgp.FinishGoodProductId , fgp.FGRId , p.FinishGoodProductName,fr.ReceipeBatchCode,fr.FGRQty,un.UnitName,
 
 ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
 where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0) ,
@@ -714,24 +715,33 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             return _rawMaterialTrackInfoRepository.GetOneByOrg(df => df.type == FinishGoodProductionBatch && df.RawMaterialId == RawMaterialId);
 
         }
-        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionListView()
+        public IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionListView(long? productId, string finishGoodProductionBatch)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryFinishGoodStockReportList());
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryFinishGoodStockReportList(productId, finishGoodProductionBatch));
         }
 
-        private string QueryFinishGoodStockReportList()
+        private string QueryFinishGoodStockReportList(long? productId, string finishGoodProductionBatch)
         {
             string query = string.Empty;
             string param = string.Empty;
            
+            if(productId !=null && productId > 0)
+            {
+                param += string.Format(@"and info.FinishGoodProductId={0}", productId );
+            }
 
-            
+            if (!string.IsNullOrEmpty(finishGoodProductionBatch))
+            {
+                param += string.Format(@"and infoes.FinishGoodProductionBatch like '%{0}%'", finishGoodProductionBatch);
+            }
+
 
             query = string.Format(@"
 
 
-select infoes.FinishGoodProductInfoId,infoes.FinishGoodProductionBatch,info.FinishGoodProductName,infoes.TargetQuantity,infoes.EntryDate from FinishGoodProductionInfoes infoes
+select info.FinishGoodProductId,infoes.FinishGoodProductInfoId,infoes.FinishGoodProductionBatch,info.FinishGoodProductName,m.MeasurementName,infoes.TargetQuantity,infoes.EntryDate from FinishGoodProductionInfoes infoes
 inner join tblFinishGoodProductInfo info on infoes.FinishGoodProductId=info.FinishGoodProductId
+inner join tblMeasurement m on m.MeasurementId=infoes.MeasurementId
 
 
 where 1=1 {0}", Utility.ParamChecker(param));

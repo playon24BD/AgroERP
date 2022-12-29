@@ -1256,7 +1256,7 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetProductFinishGoodList(string flag, string ReceipeBatchCode, long? productId, string finishGoodProductionBatch, long? id)
+        public ActionResult GetProductFinishGoodList(string flag, string ReceipeBatchCode, long? productId, string finishGoodProductionBatch, long? id,long? measurementId)
         {
 
             try
@@ -1266,6 +1266,8 @@ namespace ERPWeb.Controllers
                     ViewBag.ddlOrganizationName = _organizationBusiness.GetAllOrganizations().Where(o => o.OrganizationId == 9).Select(org => new SelectListItem { Text = org.OrganizationName, Value = org.OrganizationId.ToString() }).ToList();
 
                     ViewBag.ddlReceipBatchCode = _finishGoodRecipeInfoBusiness.GetAllFinishGoodReceif(User.OrgId).Where(fg => fg.ReceipeBatchCode != null).Select(f => new SelectListItem { Text = f.ReceipeBatchCode, Value = f.ReceipeBatchCode }).ToList();
+
+                    ViewBag.ddlMeasurement = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(f => new SelectListItem { Text = f.MeasurementName, Value = f.MeasurementId.ToString() }).ToList();
 
                     //ViewBag.ddlProduct = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
                     // ViewBag.ddlProduct = _finishGoodProductBusiness.GetProductNameByOrgId(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
@@ -1278,7 +1280,7 @@ namespace ERPWeb.Controllers
                 }
                 else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
                 {
-                    var dto = _finishGoodProductionInfoBusiness.GetFinishGoodProductionListView();
+                    var dto = _finishGoodProductionInfoBusiness.GetFinishGoodProductionListView(productId ?? 0, finishGoodProductionBatch);
 
 
                     List<FinishGoodProductionInfoViewModel> viewModels = new List<FinishGoodProductionInfoViewModel>();
@@ -1317,17 +1319,21 @@ namespace ERPWeb.Controllers
                 }
 
 
-                else
+                //else
+                else if (!string.IsNullOrEmpty(flag) && flag =="List")
                 {
 
-                    var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos(ReceipeBatchCode, productId).ToList();
+                    var dto = _finishGoodProductionInfoBusiness.FinishgoodproductInOutreturnStockInfos(productId??0, measurementId??0).ToList();
                     List<FinishGoodProductionInfoViewModel> finishGoodProductionInfos = new List<FinishGoodProductionInfoViewModel>();
                     AutoMapper.Mapper.Map(dto, finishGoodProductionInfos);
+
                     return PartialView("_GetStockProductFinishGoodList", finishGoodProductionInfos);
 
 
                 }
+                return View();
             }
+            
             catch (Exception e)
             {
                 return View();

@@ -49,12 +49,15 @@
                                 <div class="px-2 py-1">
                                     <div class="row">
 
-                                        <div class="col-md-2">
+                                        @*<div class="col-md-2">
                                             <input type="text" class="form-control form-control-sm" id="ddlReceipBatchCode1" placeholder="Search ReceipCode" />
-                                        </div>
+                                        </div>*@
 
                                         <div class="col-md-2">
-                                            @Html.DropDownList("ddlProduct1", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            @Html.DropDownList("dProduct", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        </div>
+                                        <div class="col-md-2">
+                                            @Html.DropDownList("ddlMeasurement", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurement, "-Select Measurement-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                         </div>
 
                                     </div>
@@ -70,7 +73,7 @@
 
                                     <div class="row">
                                         <div class="col-md-12 text-sm text-sm" id="dataContainer">
-                                            @{Html.RenderAction("GetProductFinishGoodList", new { @flag = "Initial" });}
+                                            @*@{Html.RenderAction("GetProductFinishGoodList", new { @flag = "Initial" });}*@
                                         </div>
                                     </div>
 
@@ -90,7 +93,7 @@
                                         </div>
 
                                         <div class="col-md-2">
-                                            @Html.DropDownList("dProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                            @Html.DropDownList("ddlProductList", (IEnumerable<SelectListItem>)ViewBag.ddlProduct, "-Select Product-", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                                         </div>
 
                                     </div>
@@ -272,7 +275,7 @@
         var FinishQty = $("#FinishQty");
         var ddlReceipBatchCode = $("#ddlReceipBatchCode");
         var hdTargetValue = $("#hdTargetValue");
-        var searchBatchCode = $("#searchBatchCode");
+        var SearchBatchCode = $("#SearchBatchCode");
         var ddlProduct1 = $("#ddlProduct1");
         var ddlReceipBatchCode1 = $("#ddlReceipBatchCode1");
         var hdQuantity = $("#hdQuantity");
@@ -281,6 +284,9 @@
         var txtTotalProductQty = $("#txtTotalProductQty");
         var txtTotalQty = $("#txtTotalQty");
         var FinishGoodListDetails = $("#FinishGoodListDetails");
+        var ddlProductList = $("#ddlProductList");
+        var dProduct = $("#dProduct");
+        var ddlMeasurement = $("#ddlMeasurement");
        
 
 
@@ -301,13 +307,32 @@
                 $('#ddlProduct').focus();
             });
             LoadFinishGoodProductList()
-            
+            LoadFinishGoodList()
+            //LoadFinishGoodList()
+        })
+
+
+        ddlProductList.change(function () {
+            LoadFinishGoodProductList()
+        })
+
+        //ddlReceipBatchCode1.keyup(function () {
+        //    LoadFinishGoodProductList()
+        //})
+
+        //ddlProduct1.change(function () {
+        //    LoadFinishGoodProductList()
+        //})
+
+
+        SearchBatchCode.keyup(function () {
+            LoadFinishGoodProductList()
         })
 
         function LoadFinishGoodProductList() {
             debugger;
 
-            var data = { flag: "View" };
+            var data = { flag: "View", productId: ddlProductList.val(), finishGoodProductionBatch: $.trim(SearchBatchCode.val()) };
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
                 console.log(status);
@@ -409,18 +434,26 @@
         //calculate
 
 
-        ddlReceipBatchCode1.keyup(function () {
+        
+
+        //ddlProduct1.change(function () {
+        //    LoadFinishGoodList()
+        //})
+
+        dProduct.change(function () {
+
             LoadFinishGoodList()
         })
 
-        ddlProduct1.change(function () {
+        ddlMeasurement.change(function () {
+
             LoadFinishGoodList()
         })
 
         function LoadFinishGoodList() {
             debugger;
 
-            var data = { flag: "View", productId: TryParseInt(ddlProduct1.val(), 0), ReceipeBatchCode: ddlReceipBatchCode1.val()};
+            var data = { flag: "List", productId: dProduct.val(), measurementId: ddlMeasurement.val() };
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetProductFinishGoodList', data)).then(function (res, status) {
                 console.log(status);

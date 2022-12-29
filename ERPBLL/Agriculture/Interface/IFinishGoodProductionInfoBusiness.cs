@@ -33,7 +33,7 @@ namespace ERPBLL.Agriculture.Interface
         bool SaveFinishGoodInfo(FinishGoodProductionInfoDTO finishGoodProductionInfoDTO, List<FinishGoodProductionDetailsDTO> details, long userId, long orgId);
 
 
-        IEnumerable<FinishGoodProductionInfoDTO> FinishgoodproductInOutreturnStockInfos(string ReceipeBatchCode,long? productId);
+        IEnumerable<FinishGoodProductionInfoDTO> FinishgoodproductInOutreturnStockInfos(long? productId,long? measurementId);
 
 
         FinishGoodProductionInfo Getcheckqty(long FinishGoodProductInfoId, string ProductUnitQty);
@@ -56,7 +56,7 @@ namespace ERPBLL.Agriculture.Interface
         RawMaterialTrack getrmtrackidbyrmidprobatch(string FinishGoodProductionBatch, long RawMaterialId);
 
 
-        IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionListView();
+        IEnumerable<FinishGoodProductionInfoDTO> GetFinishGoodProductionListView(long? productId, string finishGoodProductionBatch);
 
 
 
