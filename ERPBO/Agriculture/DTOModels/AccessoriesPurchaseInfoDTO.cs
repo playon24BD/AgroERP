@@ -22,5 +22,6 @@ namespace ERPBO.Agriculture.DTOModels
         public long? UpdateUserId { get; set; }
 
         public string Flag { get; set; }
+        public string RawMaterialSupplierName { get; set; }
     }
 }

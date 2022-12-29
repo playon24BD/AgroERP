@@ -47,6 +47,14 @@
                 <li class="nav-item">
                     <a class="nav-link text-white " id="custom-tabs-two-pstockrawmaterial-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterial" role="tab" aria-controls="custom-tabs-two-pstockrawmaterial" aria-selected="false">New Purchase</a>
                 </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link text-white " id="custom-tabs-two-accessoriesDetails-tab" data-toggle="pill" href="#custom-tabs-two-accessoriesDetails" role="tab" aria-controls="custom-tabs-two-accessoriesDetails" aria-selected="false">Accessories Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " id="custom-tabs-two-accessoriesStock-tab" data-toggle="pill" href="#custom-tabs-two-accessoriesStock" role="tab" aria-controls="custom-tabs-two-accessoriesStock" aria-selected="false">Accessories Stock</a>
+                </li>
             </ul>
 
 
@@ -352,6 +360,56 @@
                 </div>
                 @*stock*@
 
+                <div class="tab-pane fade show " id="custom-tabs-two-accessoriesDetails" role="tabpanel" aria-labelledby="custom-tabs-two-accessoriesDetails-tab">
+
+                    <div class="row" style="margin-top:-15px">
+                        <div class="col-md-12">
+                            <div class="card" style="background-color:#001f3f">
+                                <div class="px-2 py-1">
+                                    <div class="row text-sm">
+                                        <div class="col-3">
+                                            <h6 class="text-left  text-white mb-0">
+                                                Accessories Details
+                                            </h6>
+                                        </div>
+                                        <div class="col-md-2">
+
+                                        </div>
+                                        <div class="col-md-2 float-right text-white">
+                                            <input type="text" class="form-control form-control-sm" id="searchByAccessories" placeholder="Search by any" autofocus />
+
+                                        </div>
+                                        
+                                        <div class="col-md-2">
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <a href="/AgroConfiguration/Accessoriespurchase" class="das2-btn float-lg-right"><i class="fa fa-plus"></i> Create Accessories</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:-5px">
+                        <div class="col-md-12" style="margin-top:-10px">
+
+                            <div class="row">
+                                <div class="col-md-12 text-sm text-sm" id="dataContainerAccessories">
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
             </div>
 
     </div>
@@ -410,6 +468,7 @@
         var ddlSupplierName1 = $("#ddlSupplierName1");
         var searchByChallan = $("#searchByChallan");
         var searchByPO = $("#searchByPO");
+        
 
         //date
         var date = new Date();
@@ -481,6 +540,7 @@
 
             LoadDataTable();
             LoadDataTableStock();
+            LoadAccessories();
 
         })
 
@@ -879,6 +939,32 @@
         function redirectPage(page) {
             window.location.replace(page);
         }
+
+
+        //#region accessories
+
+        var dataContainerAccessories = $("#dataContainerAccessories");
+
+        function LoadAccessories() {
+            debugger;
+
+            var data = { flag: "View" };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAccessoriesStockList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainerAccessories").fadeOut('500', function () {
+                        $("#dataContainerAccessories").empty();
+                        $("#dataContainerAccessories").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+            //pageNo = 1;
+        }
+
+        //#endregion
 
 
     </script>

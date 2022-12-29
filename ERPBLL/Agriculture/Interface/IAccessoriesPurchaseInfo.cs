@@ -9,6 +9,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAccessoriesPurchaseInfo
     {
+        IEnumerable<AccessoriesPurchaseInfoDTO> GetAccessoriesStockList();
         bool SaveAccessoriesPurchaseStock(AccessoriesPurchaseInfoDTO info, List<AccessoriesPurchaseDetailsDTO> details, long userId);
     }
 }

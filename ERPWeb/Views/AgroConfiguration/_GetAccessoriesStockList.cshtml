@@ -1,0 +1,60 @@
+﻿
+
+@model IEnumerable<ERPBO.Agriculture.ViewModels.AccessoriesPurchaseInfoViewModel>
+
+@{
+    ViewBag.Title = "List of Accessories Stock";
+    var SL = 0;
+}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm table-striped table-responsive-lg table-responsive-md table-responsive-sm text-sm" id="tblAccessoriesStockList">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">#SL</th>
+                    <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle">Invoice No</th>
+                    <th style="vertical-align:middle">Invoice Date</th>
+                    <th style="vertical-align:middle">Total Amount</th>
+                    <th style="vertical-align:middle">Supplier Name</th>
+                    
+                    <th style="vertical-align:middle">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    SL = SL + 1;
+                    <tr>
+
+                        <td class="text-center text-bold">@SL</td>
+                        <td class="hide">@item.AccessoriesPurchaseInfoId</td>
+                        <td class="text-center">@item.InvoiceNo</td>
+                        <td class="text-center">@item.InvoiceDate.ToString("dd-MMM-yyyy")</td>
+                        <td class="text-center">@item.TotalAmount</td>
+                        <td class="text-center">@item.RawMaterialSupplierName</td>
+                        <td class="text-center">
+
+                            <a href="#" class="emndetails-btn data-detail-item-Product" title="View Detail" style="line-height:1" data-detail-item-Product="@item.AccessoriesPurchaseInfoId">
+                                <i class="fa fa-eye"></i>
+                            </a>
+
+
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="5">
+                            No Rows Found in the table
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+

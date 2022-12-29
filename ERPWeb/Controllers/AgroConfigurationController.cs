@@ -6487,6 +6487,29 @@ namespace ERPWeb.Controllers
 
             return Json(IsSuccess);
         }
+
+
+        public ActionResult GetAccessoriesStockList(string flag)
+        {
+            if (string.IsNullOrEmpty(flag))
+            {
+
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto =_accessoriesPurchaseInfo.GetAccessoriesStockList();
+
+
+                List<AccessoriesPurchaseInfoViewModel> viewModels = new List<AccessoriesPurchaseInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetAccessoriesStockList", viewModels);
+            }
+
+            return View();
+        }
+
         #endregion
+
     }
 }

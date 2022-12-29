@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
@@ -27,6 +28,35 @@ namespace ERPBLL.Agriculture
             this._accessoriesTrackInfoRepository = new AccessoriesTrackInfoRepository(this._agricultureUnitOfWork);
             this._accessoriesPurchaseDetailsRepository = new AccessoriesPurchaseDetailsRepository(this._agricultureUnitOfWork);
         }
+
+        public IEnumerable<AccessoriesPurchaseInfoDTO> GetAccessoriesStockList()
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<AccessoriesPurchaseInfoDTO>(QueryForAccessoriesStockList());
+        }
+
+        private string QueryForAccessoriesStockList()
+        {
+            try
+            {
+                string query = string.Empty;
+                string param = string.Empty;
+
+                query = string.Format(@"
+
+select a.AccessoriesPurchaseInfoId, a.InvoiceNo,a.InvoiceDate,a.TotalAmount,info.RawMaterialSupplierName from tblAccessoriesPurchaseInfo a
+inner join tblRawMaterialSupplierInfo info on a.RawMaterialSupplierId=info.RawMaterialSupplierId 
+where 1=1 {0}
+
+", Utility.ParamChecker(param));
+
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
 
 
         public bool SaveAccessoriesPurchaseStock(AccessoriesPurchaseInfoDTO info, List<AccessoriesPurchaseDetailsDTO> details, long userId)
