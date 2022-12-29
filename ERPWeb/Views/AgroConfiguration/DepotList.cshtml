@@ -7,10 +7,10 @@
 }
 
 
-<div class="row">
-    <div class="col-md-12">
+<div class="row text-sm p-0">
+    <div class="col-md-12 p-0">
         <input id="tab" type="text" hidden value="@tab" />
-        <div class="card  shadow card  card-outline card-tabs" style="margin-top:-30px">
+        <div class="card  shadow card  card-outline card-tabs" style="margin-top:-25px">
             <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active text-white" id="custom-tabs-two-DepotList-tab" data-toggle="pill" href="#custom-tabs-two-DepotList" role="tab" aria-controls="custom-tabs-two-DepotList" aria-selected="false">Depot</a>
@@ -33,27 +33,27 @@
             </ul>
         </div>
 
-        <div class="card-body shadow">
+        <div class="card-body shadow p-0">
             <div class="tab-content" id="custom-tabs-two-tabContent">
                 @*Depot List *@
                 <div class="tab-pane fade show active" id="custom-tabs-two-DepotList" role="tabpanel" aria-labelledby="custom-tabs-two-DepotList-tab">
 
 
-                    <div class="row" style="margin-top:-35px">
-                        <div class="col-md-12 " style="height:60px;text-align:center">
+                    <div class="row" style="margin-top:-16px">
+                        <div class="col-md-12">
                             <div class="card" style="background-color:#001f3f">
 
                                 <div class="px-2 py-1">
-                                    <div class="row">
+                                    <div class="row text-sm align-items-center">
                                         <div class="col-md-2">
-                                            <h5 class="text-bold float-left text-white">
+                                            <h6 class="text-bold float-left text-white mb-0">
                                                 Depot Setup
-                                            </h5>
+                                            </h6>
                                         </div>
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3 text-center" style="margin-top:4px">
+                                        <div class="col-md-3 align-items-center">
                                             <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="Search by Depot" />
 
                                         </div>
@@ -62,7 +62,7 @@
                                         </div>
 
                                         <div class="col-md-3">
-                                            <button class="btn btn-outline-warning  btn-sm float-right" id="addButtonD"><i class="fa fa-plus"></i> Create New Depot</button>
+                                            <button class="das2-btn  btn-sm float-right" id="addButtonD"><i class="fa fa-plus"></i> Create New Depot</button>
                                         </div>
                                     </div>
                                 </div>
@@ -71,14 +71,14 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12" style="margin-top:-15px">
-                        <div class="card">
-                            <div class="card-body" style="margin-top:-10px">
-                                <div class="col-md-12" id="dataContainer">
+                    <div class="col-md-12 p-0" style="margin-top:-15px">
+                       
+                            <div class="card-body p-0" style="margin-top:-10px">
+                                <div class="col-md-12 p-0" id="dataContainer">
 
                                 </div>
                             </div>
-                        </div>
+                       
                     </div>
 
 
@@ -87,21 +87,21 @@
                 @*Unit List *@
                 <div class="tab-pane fade show" id="custom-tabs-two-UnitList" role="tabpanel" aria-labelledby="custom-tabs-two-UnitList-tab">
 
-                    <div class="row" style="margin-top:-35px">
+                    <div class="row" style="margin-top:-16px">
                         <div class="col-md-12" style="height:60px;text-align:center">
                             <div class="card" style="background-color:#001f3f">
                                 @*<div class="card-header">*@
                                 <div class="px-2 py-1">
-                                    <div class="row">
+                                    <div class="row text-sm align-items-center">
                                         <div class="col-md-2">
-                                            <h5 class=" text-bold float-left text-white">
+                                            <h6 class=" text-bold float-left text-white mb-0">
                                                 Unit Setup
-                                            </h5>
+                                            </h6>
                                         </div>
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3 float-left" style="margin-top:4px">
+                                        <div class="col-md-3 float-left align-items-center">
                                             <input type="text" class="form-control form-control-sm" id="searchByAny1" placeholder="Search by any" />
 
                                         </div>
@@ -110,7 +110,7 @@
                                         </div>
 
                                         <div class="col-md-3">
-                                            <button class="btn btn-outline-warning btn-sm float-right" id="addButton1"><i class="fa fa-plus"></i> Create New Unit</button>
+                                            <button class="das2-btn btn-sm float-right" id="addButton1"><i class="fa fa-plus"></i> Create New Unit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -119,14 +119,14 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12" style="margin-top:-13px">
-                        <div class="card">
-                            <div class="card-body" style="margin-top:-10px">
-                                <div class="col-md-12" id="dataContainerUnit">
+                    <div class="col-md-12 p-0" style="margin-top:-28px">
+                       
+                            <div class="card-body p-0" style="margin-top:-10px">
+                                <div class="col-md-12 p-0" id="dataContainerUnit">
 
                                 </div>
                             </div>
-                        </div>
+                        
                     </div>
 
                 </div>
@@ -134,21 +134,21 @@
                 @*Raw Material*@
                 <div class="tab-pane fade show" id="custom-tabs-two-RawMaterialList" role="tabpanel" aria-labelledby="custom-tabs-two-RawMaterialList-tab">
 
-                    <div class="row" style="margin-top:-35px">
+                    <div class="row" style="margin-top:-16px">
                         <div class="col-md-12" style="height:60px;text-align:center">
                             <div class="card" style="background-color:#001f3f">
                                 <div class="px-2 py-1">
-                                    <div class="row text-sm">
+                                    <div class="row text-sm align-items-center">
                                         <div class="col-md-2">
-                                            <h5 class=" text-bold float-left text-white">
+                                            <h6 class=" text-bold float-left text-white">
                                                 R.M Setup
-                                            </h5>
+                                            </h6>
                                         </div>
                                         <div class="col-md-2">
 
                                         </div>
                                         <div class="col-md-3">
-                                            @Html.DropDownList("ddlRawMaterialRM", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Search by Material--", new { @class = "form-control ctrl-changed select2 setect2-danger" })
+                                            @Html.DropDownList("ddlRawMaterialRM", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Search by Material--", new { @class = "select2-selection__rendered" })
 
                                         </div>
                                         <div class="col-md-2">
@@ -156,7 +156,7 @@
                                         </div>
 
                                         <div class="col-md-3">
-                                            <button class="btn btn-outline-warning btn-sm float-right" id="btnAddRM"><i class="fa fa-plus"></i>Add New Metarial</button>
+                                            <button class="das2-btn float-right" id="btnAddRM"><i class="fa fa-plus"></i>Add New Metarial</button>
 
                                         </div>
                                     </div>
@@ -165,18 +165,13 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12" style="margin-top:-25px">
+                    <div class="col-md-12 p-0" style="margin-top:-25px">
 
-                        @*<div class="card py-2" style="margin-top:-10px">
-                                <div class="col-md-12" id="dataContainerRM">
-
-                                </div>
-                            </div>*@
-                        <div class="card-body">
-                            <div class="col-md-12" id="dataContainerRM">
+                    
+                            <div class="col-md-12 p-0" id="dataContainerRM">
                                 @*@{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }*@
                             </div>
-                        </div>
+                      
 
                     </div>
 
@@ -184,20 +179,20 @@
 
                 @*Supplier*@
                 <div class="tab-pane fade show" id="custom-tabs-two-SupplierList" role="tabpanel" aria-labelledby="custom-tabs-two-SupplierList-tab">
-                    <div class="row" style="margin-top:-35px">
+                    <div class="row" style="margin-top:-16px">
                         <div class="col-md-12" style="height:60px;text-align:center">
                             <div class="card" style="background-color:#001f3f">
                                 <div class="px-2 py-1">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <h5 class=" text-bold float-left text-white">
+                                    <div class="row  align-items-center">
+                                        <div class="col-md-3 text-center">
+                                            <h6 class=" text-bold float-left text-white">
                                                 Raw Material Supplier
-                                            </h5>
+                                            </h6>
                                         </div>
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3 float-left" style="margin-top:4px">
+                                        <div class="col-md-3 float-left">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnySupplier" placeholder="Search by any" />
 
                                         </div>
@@ -206,21 +201,21 @@
 
                                         </div>
                                         <div class="col-md-3">
-                                            <button class="btn btn-outline-warning btn-sm float-right" id="addButtonSupplier"><i class="fa fa-plus"></i> Create RM Supplier</button>
+                                            <button class="das2-btn float-right" id="addButtonSupplier"><i class="fa fa-plus"></i> Create RM Supplier</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12" style="margin-top:-15px">
-                        <div class="card">
-                            <div class="card-body" style="margin-top:-10px">
-                                <div class="col-md-12" id="dataContainerSupplier">
+                    <div class="col-md-12 p-0 " style="margin-top:-25px">
+                       
+                            
+                                <div class="col-md-12 p-0" id="dataContainerSupplier">
 
                                 </div>
-                            </div>
-                        </div>
+                            
+                        
                     </div>
 
                 </div>
@@ -228,20 +223,20 @@
                 @*Product*@
                 <div class="tab-pane fade show" id="custom-tabs-two-ProductList" role="tabpanel" aria-labelledby="custom-tabs-two-ProductList-tab">
 
-                    <div class="row" style="margin-top:-35px">
+                    <div class="row" style="margin-top:-16px">
                         <div class="col-md-12" style="height:60px;text-align:center">
                             <div class="card" style="background-color:#001f3f">
                                 <div class="px-2 py-1">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <h5 class=" text-bold float-left text-white">
+                                    <div class="row align-items-md-center align-items-sm-center align-items-lg-center">
+                                        <div class="col-md-3 text-center">
+                                            <h6 class=" text-bold float-left text-white">
                                                 Finish Good Product
-                                            </h5>
+                                            </h6>
                                         </div>
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3 text-center" style="margin-top:4px">
+                                        <div class="col-md-3 text-center">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnyProduct" placeholder="Search by any" />
 
                                         </div>
@@ -251,7 +246,7 @@
 
                                         </div>
                                         <div class="col-md-3">
-                                            <button class="btn btn-outline-warning btn-sm float-right" id="addButtonProduct"><i class="fa fa-plus"></i> Create New Product</button>
+                                            <button class="das2-btn float-right" id="addButtonProduct"><i class="fa fa-plus"></i> Create New Product</button>
                                         </div>
                                     </div>
                                 </div>
@@ -259,14 +254,14 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12" style="margin-top:-15px">
-                        <div class="card">
-                            <div class="card-body" style="margin-top:-10px">
-                                <div class="col-md-12" id="dataContainerProduct">
+                    <div class="col-md-12 p-0" style="margin-top:-25px">
+                       
+                            
+                                <div class="col-md-12 p-0" id="dataContainerProduct">
 
                                 </div>
-                            </div>
-                        </div>
+                          
+                       
                     </div>
 
                 </div>
@@ -274,20 +269,20 @@
                 @*Measurement*@
                 <div class="tab-pane fade show" id="custom-tabs-two-MeasurementList" role="tabpanel" aria-labelledby="custom-tabs-two-MeasurementList-tab">
 
-                    <div class="row" style="margin-top:-35px">
+                    <div class="row" style="margin-top:-16px">
                         <div class="col-md-12" style="height:60px;text-align:center">
                             <div class="card" style="background-color:#001f3f">
                                 <div class="px-2 py-1">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <h5 class=" text-bold float-left text-white">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3 text-center">
+                                            <h6 class=" text-bold float-left text-white">
                                                 Measurement List
-                                            </h5>
+                                            </h6>
                                         </div>
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3 text-center" style="margin-top:4px">
+                                        <div class="col-md-3 text-center">
                                             <input type="text" class="form-control form-control-sm" id="searchByAnyMeasurement" placeholder="Search by any" />
 
                                         </div>
@@ -297,7 +292,7 @@
 
                                         </div>
                                         <div class="col-md-3">
-                                            <a href="/AgroConfiguration/CreateMeasurement" class="btn btn-outline-warning btn-sm float-lg-right"><i class="fa fa-plus"></i> Create Measurement</a>
+                                            <a href="/AgroConfiguration/CreateMeasurement" class="das2-btn float-lg-right"><i class="fa fa-plus"></i> Create Measurement</a>
                                         </div>
                                     </div>
                                 </div>
@@ -305,14 +300,14 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12" style="margin-top:-15px">
-                        <div class="card">
-                            <div class="card-body" style="margin-top:-10px">
-                                <div class="col-md-12" id="dataContainer4">
+                    <div class="col-md-12 p-0" style="margin-top:-25px">
+                       
+                            
+                                <div class="col-md-12 p-0" id="dataContainer4">
 
                                 </div>
-                            </div>
-                        </div>
+                           
+                        
                     </div>
 
                 </div>
