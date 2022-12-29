@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "DepotList";
+    var privilege = (ERPBO.Common.UserPrivilege)ViewBag.UserPrivilege;
     Layout = "~/Views/Shared/_Layout.cshtml";
     string tab = ViewBag.tab;
 }
@@ -1055,7 +1056,7 @@
         })
 
         ddlRawMaterialRM.change(function () {
-            loadRawMaterials();
+            loadRawMaterials("Search");
 
         })
 
@@ -1098,9 +1099,16 @@
 
         })
 
-        function loadRawMaterials() {
+        function loadRawMaterials(flag) {
             debugger;
-            data = { flag: 'Raw', rawmaterialName: ddlRawMaterialRM.val() };
+            if (flag == "Search") {
+                data = { flag: 'Search', rawmaterialName: ddlRawMaterialRM.val() };
+            }
+            else {
+                data = { flag: 'Raw', rawmaterialName: ddlRawMaterialRM.val() };
+            }
+            
+            
             $.when(getReqWithData("html", 'Get', '/AgroConfiguration/GetRawMaterial', data)).then(function (res, status) {
                 if (status == "success") {
                     debugger;
@@ -1521,6 +1529,27 @@
         var ddlUnits = $("#ddlUnits");
         var searchByAnyMeasurement = $("#searchByAnyMeasurement");
 
+
+
+        $(document).ready(function () {
+
+            if ($("#tab").val() == 'Measurement') {
+                $("#custom-tabs-two-MeasurementList").addClass('active');
+                $("#custom-tabs-two-MeasurementList-tab").addClass('active');
+
+                $("#custom-tabs-two-DepotList-tab").removeClass('active');
+                $("#custom-tabs-two-DepotList").removeClass('active');
+
+            }
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            LoadZoneDataTable()
+        })
 
         searchByAnyMeasurement.keyup(function () {
             LoadMeasurements()
