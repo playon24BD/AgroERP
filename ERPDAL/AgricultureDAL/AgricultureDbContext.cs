@@ -17,6 +17,12 @@ namespace ERPDAL.AgricultureDAL
         {
 
         }
+
+        public DbSet<AccessoriesInfo> tblAccessoriesInfo { get; set; }
+        public DbSet<AccessoriesPurchaseInfo> tblAccessoriesPurchaseInfo { get; set; }
+        public DbSet<AccessoriesPurchaseDetails> tblAccessoriesPurchaseDetails { get; set; }
+        public DbSet<AccessoriesTrackInfo> tblAccessoriesTrackInfo { get; set; }
+
         public DbSet<PackageInfo> tblPackageInfo { get; set; }//e
         public DbSet<PackageDetails> tblPackageDetails { get; set; }//e
         public DbSet<StockiestWiseYearlyTarget> tblStockiestWiseYearlyTarget { get; set; }

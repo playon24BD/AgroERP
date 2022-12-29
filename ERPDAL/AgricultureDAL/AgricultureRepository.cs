@@ -10,6 +10,24 @@ using System.Threading.Tasks;
 
 namespace ERPDAL.AgricultureDAL
 {
+    public class AccessoriesInfoRepository : AgricultureBaseRepository<AccessoriesInfo>
+    {
+        public AccessoriesInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class AccessoriesPurchaseInfoRepository : AgricultureBaseRepository<AccessoriesPurchaseInfo>
+    {
+        public AccessoriesPurchaseInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class AccessoriesPurchaseDetailsRepository : AgricultureBaseRepository<AccessoriesPurchaseDetails>
+    {
+        public AccessoriesPurchaseDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+    public class AccessoriesTrackInfoRepository : AgricultureBaseRepository<AccessoriesTrackInfo>
+    {
+        public AccessoriesTrackInfoRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }
+    }
+
+
     public class PackageDetailsRepository : AgricultureBaseRepository<PackageDetails>
     {
         public PackageDetailsRepository(IAgricultureUnitOfWork agricultureUnitOfWork) : base(agricultureUnitOfWork) { }

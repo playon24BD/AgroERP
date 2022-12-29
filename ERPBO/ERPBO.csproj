@@ -75,6 +75,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agriculture\DomainModels\AccessoriesInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\AccessoriesPurchaseDetails.cs" />
+    <Compile Include="Agriculture\DomainModels\AccessoriesPurchaseInfo.cs" />
+    <Compile Include="Agriculture\DomainModels\AccessoriesTrackInfo.cs" />
     <Compile Include="Agriculture\DomainModels\AgroProductSalesDetails.cs" />
     <Compile Include="Agriculture\DomainModels\AgroProductSalesInfo.cs" />
     <Compile Include="Agriculture\DomainModels\AgroUnitInfo.cs" />
@@ -122,6 +126,10 @@
     <Compile Include="Agriculture\DomainModels\ZoneDetail.cs" />
     <Compile Include="Agriculture\DomainModels\ZoneSetup.cs" />
     <Compile Include="Agriculture\DomainModels\ZoneUser.cs" />
+    <Compile Include="Agriculture\DTOModels\AccessoriesInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\AccessoriesPurchaseDetailsDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\AccessoriesPurchaseInfoDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\AccessoriesTrackInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\AgroProductSalesDetailsDTO.cs" />
     <Compile Include="Agriculture\DTOModels\AgroProductSalesInfoDTO.cs" />
     <Compile Include="Agriculture\DTOModels\AgroUnitInfoDTO.cs" />
@@ -187,6 +195,10 @@
     <Compile Include="Agriculture\ReportModels\ReturnRawMaterialDataReportApproved.cs" />
     <Compile Include="Agriculture\ReportModels\SalesCommissionData.cs" />
     <Compile Include="Agriculture\ReportModels\SalesReturnReportData.cs" />
+    <Compile Include="Agriculture\ViewModels\AccessoriesInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\AccessoriesPurchaseDetailsViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\AccessoriesPurchaseInfoViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\AccessoriesTrackInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AgroProductSalesDetailsViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AgroProductSalesInfoViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\AgroUnitInfoViewModel.cs" />

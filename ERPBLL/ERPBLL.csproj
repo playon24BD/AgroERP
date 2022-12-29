@@ -100,6 +100,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agriculture\AccessoriesInfoBusiness.cs" />
+    <Compile Include="Agriculture\AccessoriesPurchaseDetailsBusiness.cs" />
+    <Compile Include="Agriculture\AccessoriesPurchaseInfoBusiness.cs" />
+    <Compile Include="Agriculture\AccessoriesTrackInfoBusiness.cs" />
     <Compile Include="Agriculture\AgroProductSalesDetailsBusiness.cs" />
     <Compile Include="Agriculture\AgroProductSalesInfoBusiness.cs" />
     <Compile Include="Agriculture\AgroUnitInfoBusiness.cs" />
@@ -119,6 +123,10 @@
     <Compile Include="Agriculture\FinishGoodProductSupplierBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodRecipeDetailsBusiness.cs" />
     <Compile Include="Agriculture\FinishGoodRecipeInfoBusiness.cs" />
+    <Compile Include="Agriculture\Interface\IAccessoriesInfo.cs" />
+    <Compile Include="Agriculture\Interface\IAccessoriesPurchaseDetails.cs" />
+    <Compile Include="Agriculture\Interface\IAccessoriesPurchaseInfo.cs" />
+    <Compile Include="Agriculture\Interface\IAccessoriesTrackInfo.cs" />
     <Compile Include="Agriculture\Interface\IAgroProductSalesDetailsBusiness.cs" />
     <Compile Include="Agriculture\Interface\IAgroProductSalesInfoBusiness.cs" />
     <Compile Include="Agriculture\Interface\IAgroUnitInfo.cs" />
