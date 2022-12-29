@@ -30,6 +30,9 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" id="custom-tabs-two-MeasurementList-tab" data-toggle="pill" href="#custom-tabs-two-MeasurementList" role="tab" aria-controls="custom-tabs-two-MeasurementList" aria-selected="false">Measurement</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="custom-tabs-two-Accessories-tab" data-toggle="pill" href="#custom-tabs-two-Accessories" role="tab" aria-controls="custom-tabs-two-Accessories" aria-selected="false">Accessories</a>
+                </li>
             </ul>
         </div>
 
@@ -72,13 +75,13 @@
                     </div>
 
                     <div class="col-md-12 p-0" style="margin-top:-15px">
-                       
-                            <div class="card-body p-0" style="margin-top:-10px">
-                                <div class="col-md-12 p-0" id="dataContainer">
 
-                                </div>
+                        <div class="card-body p-0" style="margin-top:-10px">
+                            <div class="col-md-12 p-0" id="dataContainer">
+
                             </div>
-                       
+                        </div>
+
                     </div>
 
 
@@ -120,13 +123,13 @@
                     </div>
 
                     <div class="col-md-12 p-0" style="margin-top:-28px">
-                       
-                            <div class="card-body p-0" style="margin-top:-10px">
-                                <div class="col-md-12 p-0" id="dataContainerUnit">
 
-                                </div>
+                        <div class="card-body p-0" style="margin-top:-10px">
+                            <div class="col-md-12 p-0" id="dataContainerUnit">
+
                             </div>
-                        
+                        </div>
+
                     </div>
 
                 </div>
@@ -167,11 +170,11 @@
 
                     <div class="col-md-12 p-0" style="margin-top:-25px">
 
-                    
-                            <div class="col-md-12 p-0" id="dataContainerRM">
-                                @*@{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }*@
-                            </div>
-                      
+
+                        <div class="col-md-12 p-0" id="dataContainerRM">
+                            @*@{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }*@
+                        </div>
+
 
                     </div>
 
@@ -209,13 +212,13 @@
                         </div>
                     </div>
                     <div class="col-md-12 p-0 " style="margin-top:-25px">
-                       
-                            
-                                <div class="col-md-12 p-0" id="dataContainerSupplier">
 
-                                </div>
-                            
-                        
+
+                        <div class="col-md-12 p-0" id="dataContainerSupplier">
+
+                        </div>
+
+
                     </div>
 
                 </div>
@@ -255,13 +258,13 @@
                     </div>
 
                     <div class="col-md-12 p-0" style="margin-top:-25px">
-                       
-                            
-                                <div class="col-md-12 p-0" id="dataContainerProduct">
 
-                                </div>
-                          
-                       
+
+                        <div class="col-md-12 p-0" id="dataContainerProduct">
+
+                        </div>
+
+
                     </div>
 
                 </div>
@@ -301,18 +304,61 @@
                     </div>
 
                     <div class="col-md-12 p-0" style="margin-top:-25px">
-                       
-                            
-                                <div class="col-md-12 p-0" id="dataContainer4">
 
-                                </div>
-                           
-                        
+
+                        <div class="col-md-12 p-0" id="dataContainer4">
+
+                        </div>
+
+
                     </div>
 
                 </div>
+                @*Accessories*@
+                <div class="tab-pane fade show" id="custom-tabs-two-Accessories" role="tabpanel" aria-labelledby="custom-tabs-two-Accessories-tab">
+
+                    <div class="row" style="margin-top:-16px">
+                        <div class="col-md-12" style="height:60px;text-align:center">
+                            <div class="card" style="background-color:#001f3f">
+                                <div class="px-2 py-1">
+                                    <div class="row text-sm align-items-center">
+                                        <div class="col-md-2 text-center">
+                                            <h6 class=" text-bold float-left text-white">
+                                                Accessories Setup
+                                            </h6>
+                                        </div>
+                                        <div class="col-md-2">
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.DropDownList("ddlRawMaterialRM", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Search by Material--", new { @class = "select2-selection__rendered" })
+
+                                        </div>
+                                        <div class="col-md-2">
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <button class="das2-btn float-right" id="btnAddAC"><i class="fa fa-plus"></i>Add New Accessories</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 p-0" style="margin-top:-25px">
 
 
+                        <div class="col-md-12 p-0" id="dataContainerAC">
+                            @*@{Html.RenderAction("GetRawMaterial", new { @flag = "Raw" }); }*@
+                        </div>
+
+
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -684,12 +730,61 @@
 
 </div>
 
+@*Accessories*@
+<div class="modal" id="AccessoriesModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title"><span id="spanModalHead"></span></h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAccessories">
+
+                    <input type="hidden" id="hdAccessoriesId" />
+                    <div class="col-md-12">
+                        <label class="control-label font-weight-bold">Accessories Name<span style="color:red">*</span></label>
+                        <input type="text" id="ddlAccessoriesName" class="form-control form-control-sm" />
+                        <span class="error hide required-raqAccessoriesName">Accessories Name is Required</span>
+
+                    </div>
+                    <div class="col-md-12">
+                        <label for="ddlStatusA" class="control-label">Status</label>
+                        <select class="form-control form-control-sm" id="ddlStatusA">
+                            <option value="">--Select Status--</option>
+                            <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
+                        </select>
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer bg-gradient-gray-dark">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been Successfully Saved
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been faild to Save
+                    </div>
+                </div>
+                <button id="btnCancel" type="button" class="btn btn-sm btn-outline-danger float-right"><i class="fas fa-paper-plane " data-dismiss="modal" data-target="#">Cancel</i> </button>
+                <button type="submit" id="btnSaveA" class="btn btn-sm btn-outline-success float-right"><i class="fas fa-paper-plane"></i> <span id="spanSaveText1">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts{
 
     <script type="text/javascript">
 
         //DepotList
+
+
+
         var hddepotId = $("#hddepotId");
         var searchByAny = $("#searchByAny");
 
@@ -708,9 +803,6 @@
                 $('#ddlDepotName').focus();
             });
 
-            //$(function () {
-            //    $('#rawMaterialName').focus();
-            //});
 
             LoadDepotDataTable()
             LoadAgroUnitList()
@@ -731,10 +823,6 @@
         searchByAny.keyup(function () {
             LoadDepotDataTable()
         })
-        //function LoadDataInitializer() {
-        //searchByAny.keyup(function () {
-        //    LoadDepotDataTable();
-        //})
 
         function LoadDepotDataTable() {
             var data = { flag: 'DepotSetup', name: $.trim(searchByAny.val()) }
@@ -1065,17 +1153,7 @@
             var data = { RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val(), Status: ddlStatusRM.val(), UnitId: TryParseInt(ddlUnitRM.val(), 0) }
             if (formValidationsRM() == true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
-                    //console.log('respons' + JSON.parse( res));
                     console.log(status);
-                    //if (res == true) {
-                    //    message("#msg1", "#rawmetarialModal");
-                    //    loadRawMaterial();
-                    //}
-                    //else {
-                    //    message("#msg2");
-                    //}
-
-
                     if (res == true) {
                         debugger;
                         $("#rawmetarialModal").modal("toggle");
@@ -1102,8 +1180,8 @@
             else {
                 data = { flag: 'Raw', rawmaterialName: ddlRawMaterialRM.val() };
             }
-            
-            
+
+
             $.when(getReqWithData("html", 'Get', '/AgroConfiguration/GetRawMaterial', data)).then(function (res, status) {
                 if (status == "success") {
                     debugger;
@@ -1200,6 +1278,60 @@
 
         }
 
+
+        //#endregion
+        //#region Accessories
+        var ddlAccessoriesName = $("#ddlAccessoriesName");
+        var ddlStatusA = $("#ddlStatusA");
+        var hdAccessoriesId = $("#hdAccessoriesId");
+
+        function OpenModalA() {
+
+            $("#spanModalHead").text("Add New Accessories");
+            $("#spanSaveText1").text('Save');
+            $("#AccessoriesModal").modal("show");
+            $(".error").addClass("hide");
+            $(function () {
+                $('#rawMaterialName').focus();
+            });
+
+        }
+        $("#btnAddAC").click(function (e) {
+
+            e.preventDefault();
+            $(function () {
+                $('#ddlAccessoriesName').focus();
+            });
+           // ClearCtrlRM();
+            OpenModalA();
+
+
+        })
+
+        $("#btnSaveA").click(function (e) {
+            e.preventDefault();
+            debugger;
+            var data = { AccessoriesName: ddlAccessoriesName.val(), AccessoriesId: hdAccessoriesId.val(), Status: ddlStatusA.val()}
+/*            if (formValidationsRM() == true) {*/
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveAccessories", JSON.stringify(data), getToken())).then(function (res, status) {
+                    console.log(status);
+                    if (res == true) {
+                        debugger;
+                        $("#AccessoriesModal").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        //loadRawMaterials();
+                    }
+                    else {
+                        toastrErrorAlert(execuStatus.fail);
+                    }
+
+                })
+
+          /*  }*/
+
+
+
+        })
 
         //#endregion
 
@@ -1632,18 +1764,7 @@
 
         })
 
-        //txtmasterBox.keyup(function () {
-        //    var value = $(this).val();
-        //    if (value.length > 2) {
-        //        $("#addTolist").show();
 
-        //    }
-        //    else {
-        //        $("#addTolist").hide();
-        //    }
-
-
-        //})
 
 
 

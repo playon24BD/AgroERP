@@ -703,6 +703,24 @@ namespace ERPWeb.Controllers
 
         #endregion
 
+
+
+        #region Accessories
+        public ActionResult SaveAccessories(AccessoriesInfoViewModel model)
+        {
+            bool isSuccess = false;
+            AccessoriesInfoDTO accessoriesInfoDTO = new AccessoriesInfoDTO();
+            AutoMapper.Mapper.Map(model, accessoriesInfoDTO);
+    
+            isSuccess = _accessoriesInfo.SaveAccessoriesInfo(accessoriesInfoDTO, User.UserId);
+             
+         
+            return Json(isSuccess);
+        }
+        #endregion
+
+
+
         #endregion
 
         #region Depot/Warehouse
