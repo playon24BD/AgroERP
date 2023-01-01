@@ -2826,6 +2826,43 @@ namespace ERPWeb.Controllers
 
         }
 
+        public ActionResult CheckFinishGoodProdctCoomission(long FinishGoodProductId)
+        {
+            try
+            {
+                bool checkflag = false;
+                var CheckCommisionProduction = _commissionOnProductBusiness.GetCommisionOByProductId(FinishGoodProductId, User.OrgId);
+
+                if (CheckCommisionProduction==null)
+                {
+                    checkflag = false;
+                    return Json(checkflag, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    checkflag = true;
+                    return Json(checkflag, JsonRequestBehavior.AllowGet);
+                }
+
+                //if (CheckCommisionProduction>0)
+                //{
+                //    
+                //}
+                //else
+                //{
+                //    
+                //}
+                //return Json(0, JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
         public ActionResult GetQtyKG(long FinishGoodProductId, long MeasurementId)
         {
             try

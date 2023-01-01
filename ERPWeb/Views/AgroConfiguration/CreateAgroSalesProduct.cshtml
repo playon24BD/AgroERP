@@ -8,6 +8,7 @@
         background-color: #2E8B57 !important;
         color: black !important;
     }
+
     table.tablesubtotalpackage tr th {
         background-color: #2F4F4F !important;
         color: white !important;
@@ -18,6 +19,7 @@
         background-color: #2E8B57 !important;
         color: black !important;
     }
+
     table.tadds tr th {
         background-color: #2F4F4F !important;
         color: white !important;
@@ -27,9 +29,9 @@
     body {
         margin-top: 40px;
     }
+
     input::placeholder {
         font-weight: bold;
-      
     }
 
     .container {
@@ -63,8 +65,8 @@
                             </div>
                             <div class="col-md-1" style="margin-top:0px;">
 
-                                    <button type="submit" class="emnsave-btn" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
-           
+                                <button type="submit" class="emnsave-btn" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
+
                             </div>
                         </div>
                     </div>
@@ -75,197 +77,197 @@
             <div class="col-md-6 pr-0">
                 @*<div class="card shadow" style="background-color: white; margin-top: -15px ">*@
 
-                    <div class="px-0 py-2">
-                        <div class="px-1 py-1" style="background-color: #001f3f;">
-                            <div class="row small">
-                                <div class="col-md-3">
-                                    @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "Stockiest", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
-                                    <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
-                                </div>
-                                <div class="col-md-3 pl-0">
-                                    @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--DepotName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                    <span class="error hide req-DepotName font-weight-bold">Depot Name is required!</span>
-                                </div>
+                <div class="px-0 py-2">
+                    <div class="px-1 py-1" style="background-color: #001f3f;">
+                        <div class="row small">
+                            <div class="col-md-3">
+                                @Html.DropDownList("ddlClientName", (IEnumerable<SelectListItem>)ViewBag.ddlClientName, "Stockiest", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
+                                <span class="error hide req-ClientName font-weight-bold">Client Name is required!</span>
+                            </div>
+                            <div class="col-md-3 pl-0">
+                                @Html.DropDownList("ddlDepotName", (IEnumerable<SelectListItem>)ViewBag.ddlDepotName, "--DepotName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                <span class="error hide req-DepotName font-weight-bold">Depot Name is required!</span>
+                            </div>
 
 
-                                <div class="col-md-3 pl-0">
-                                    <div class="form-group">
-                                        <div class="input-group-sm date" id="simple">
-                                            <input type="text" class="form-control form-control-sm" id="ChallanDate" name="date" value="">
-                                            <span class="input-group-addon">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                            </span>
-                                        </div>
+                            <div class="col-md-3 pl-0">
+                                <div class="form-group">
+                                    <div class="input-group-sm date" id="simple">
+                                        <input type="text" class="form-control form-control-sm" id="ChallanDate" name="date" value="">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
                                     </div>
                                 </div>
+                            </div>
 
 
 
-                                <div class="col-md-3 pl-0">
+                            <div class="col-md-3 pl-0">
 
-                                    <div class="form-group">
-                                        <div class="input-group-sm date" id="datePicker">
-                                            <input type="text" class="form-control form-control-sm" id="InvoiceDate" name="date" value="">
-                                            <span class="input-group-addon">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                            </span>
-                                        </div>
+                                <div class="form-group">
+                                    <div class="input-group-sm date" id="datePicker">
+                                        <input type="text" class="form-control form-control-sm" id="InvoiceDate" name="date" value="">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
                                     </div>
                                 </div>
-
-
-
                             </div>
-                            <div class="row small" style="margin-top: -12px ">
-                                <div class="col-md-3">
-                                    <select class="form-control form-control-sm" id="ddlPaymentMode">
-                                        <option value="Credit">Credit</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 pl-0">
-                                    <input type="text" placeholder="Vehicle Type" id="txtVehicleType" class="form-control form-control-sm  ">
-                                </div>
-                                <div class="col-md-3 pl-0">
-                                    <input type="text" placeholder="Vehicle Num" id="txtVehicleNumber" class="form-control form-control-sm">
-                                </div>
-                                <div class="col-md-3 pl-0">
-                                    <input type="text" placeholder="Driver Name" id="txtDriverName" class="form-control form-control-sm">
-                                </div>
+
+
+
+                        </div>
+                        <div class="row small" style="margin-top: -12px ">
+                            <div class="col-md-3">
+                                <select class="form-control form-control-sm" id="ddlPaymentMode">
+                                    <option value="Credit">Credit</option>
+                                </select>
                             </div>
-                            <div class="row small" style="margin-top: 4px ">
-
-                                <div class="col-md-3">
-                                    <input type="text" placeholder="Place" id="txtDeliveryPlace" class="form-control form-control-sm">
-                                </div>
-                                <div class="col-md-3 pl-0">
-                                    <input type="text" placeholder="ADO_DA" id="txtDo_ADO_DA" class="form-control form-control-sm ">
-                                </div>
-                                <div class="col-md-3 pl-0">
-                                    <input type="text" placeholder="DO_ADO" id="txtDoADO_Name" class="form-control form-control-sm">
-                                </div>
-                                <div class="col-md-3 hide">
-                                    <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold" readonly />
-                                </div>
-
+                            <div class="col-md-3 pl-0">
+                                <input type="text" placeholder="Vehicle Type" id="txtVehicleType" class="form-control form-control-sm  ">
+                            </div>
+                            <div class="col-md-3 pl-0">
+                                <input type="text" placeholder="Vehicle Num" id="txtVehicleNumber" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-md-3 pl-0">
+                                <input type="text" placeholder="Driver Name" id="txtDriverName" class="form-control form-control-sm">
                             </div>
                         </div>
+                        <div class="row small" style="margin-top: 4px ">
 
-                        <div class="row small" style="margin-top: 5px ">
-                            <div class="col-md-12">
-                           
-                                    <div class="px-2 py-1 pb-0" style="background-color: #2E8B57;">
-
-                                        <div class="row small justify-content-center">
-                                            <div class="col-md-3">
-                                                @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                                <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
-                                            </div>
-                                            <div class="hide">
-                                                <input type="text" id="ddlQtyUnit" class="form-control form-control-sm" readonly />
-                                            </div>
-                                            <div class="hide">
-                                                <input type="text" id="ddlQtyUnitname" class="form-control form-control-sm" readonly />
-                                            </div>
-                                            <div class="col-md-3 pl-0">
-                                                @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                                <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
-                                            </div>
-                                            <div class="hide">
-                                                <input type="text" id="ddlMeasurementSize" class="form-control form-control-sm" readonly />
-                                            </div>
-
-
-
-
-                                            <div class="hide">
-                                                <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
-                                            </div>
-                                            <div class="hide">
-                                                <input type="number" id="ddlttdis" name="ddlttdis" class="form-control form-control-sm" readonly />
-                                            </div>
-
-                                            <div class="hide">
-                                                <input type="number" id="ddlpt" name="ddlpt" class="form-control form-control-sm" readonly />
-                                            </div>
-
-                                            <div class="hide">
-                                                <input type="number" id="txtTotalQty" name="TotalQty" class="form-control form-control-sm" readonly />
-                                            </div>
-                                            <div class="hide">
-                                                <input type="number" id="txtTotalAmount" name="TotalAmount" class="form-control form-control-sm" readonly />
-                                            </div>
-                                            <div class="hide">
-                                                <input type="number" id="txtPerQty" name="PerQty" class="form-control form-control-sm" readonly />
-                                            </div>
-
-                                            <div class="col-md-1 pl-0">
-                                                <input type="text" placeholder="Qty" id="txtQuanity" class="form-control form-control-sm" />
-                                                <label for="ddlQuantity" class="control-label font-weight-bold text-white">
-                                                    StockQty:
-                                                    <span class="text-white" id="FinishGoodStockQty"></span>
-                                                </label>
-                                                <span class="error hide req-Quanity">Quantity is required</span>
-                                                <span class="error hide req-qtyChecking">Quantity Must be less than or equal Product Qty</span>
-                                            </div>
-
-                                            <div class="col-md-1 pl-0">
-                                                <input type="text" placeholder="Discount%" id="txtDiscount" class="form-control form-control-sm" />
-                                            </div>
-                                            <div class="col-md-2 pl-0">
-                                                <input type="text" placeholder="Unit Price" id="txtPrice" class="form-control form-control-sm" readonly />
-                                                <span class="error hide req-txtPrice">Price not Configure</span>
-                                            </div>
-                                            <div class="col-md-1 pl-0">
-                                                <div>
-                                                    <button type="submit" class="float-left float-md-start text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-
-
-
-                                    </div>
-
-                        
-
+                            <div class="col-md-3">
+                                <input type="text" placeholder="Place" id="txtDeliveryPlace" class="form-control form-control-sm">
                             </div>
-                        </div>
-                        <div class="row small" style="margin-top: -8px ">
-                            <div class="col-md-12">
-                               
-
-                                        <div class="px-0 py-1" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;" >
-
-                                            <div class="row small justify-content-center">
-                                                <div class="col-md-3">
-                                                    @Html.DropDownList("ddlPackageName", (IEnumerable<SelectListItem>)ViewBag.ddlPackageName, "PackageName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
-                                                    <span class="error hide req-ProductName font-weight-bold">Package Name is required!</span>
-                                                </div>
-                                                <div class="col-md-2 pl-0">
-                                                    <input type="text" id="ddlPQuanity"placeholder="QTY" class="form-control form-control-sm" />
-                                                    <span class="error hide req-ddlPQuanity">Quantity is required</span>
-                                                </div>
-
-                                                <div class="col-md-1 pl-0">
-                                                    <div>
-                                                        <button type="submit" class="float-left float-md-start text-bold" id="btnAddPackage" title="Save"><i class="fas fa-plus"></i></button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-
-
-                                        </div>
-
-                             
+                            <div class="col-md-3 pl-0">
+                                <input type="text" placeholder="ADO_DA" id="txtDo_ADO_DA" class="form-control form-control-sm ">
+                            </div>
+                            <div class="col-md-3 pl-0">
+                                <input type="text" placeholder="DO_ADO" id="txtDoADO_Name" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-md-3 hide">
+                                <input type="number" id="ddlpayableamount" name="ddlpayableamount" class="form-control form-control-sm bg-dark text-white text-bold" readonly />
                             </div>
 
                         </div>
                     </div>
+
+                    <div class="row small" style="margin-top: 5px ">
+                        <div class="col-md-12">
+
+                            <div class="px-2 py-1 pb-0" style="background-color: #2E8B57;">
+
+                                <div class="row small justify-content-center">
+                                    <div class="col-md-3">
+                                        @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
+                                    </div>
+                                    <div class="hide">
+                                        <input type="text" id="ddlQtyUnit" class="form-control form-control-sm" readonly />
+                                    </div>
+                                    <div class="hide">
+                                        <input type="text" id="ddlQtyUnitname" class="form-control form-control-sm" readonly />
+                                    </div>
+                                    <div class="col-md-3 pl-0">
+                                        @Html.DropDownList("ddlMeasurementName", (IEnumerable<SelectListItem>)ViewBag.ddlMeasurementName, "Measurement", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        <span class="error hide req-MeasurementName font-weight-bold">Measurement Name is required!</span>
+                                    </div>
+                                    <div class="hide">
+                                        <input type="text" id="ddlMeasurementSize" class="form-control form-control-sm" readonly />
+                                    </div>
+
+
+
+
+                                    <div class="hide">
+                                        <input type="number" id="ddlttprice" name="ddlttprice" class="form-control form-control-sm" readonly />
+                                    </div>
+                                    <div class="hide">
+                                        <input type="number" id="ddlttdis" name="ddlttdis" class="form-control form-control-sm" readonly />
+                                    </div>
+
+                                    <div class="hide">
+                                        <input type="number" id="ddlpt" name="ddlpt" class="form-control form-control-sm" readonly />
+                                    </div>
+
+                                    <div class="hide">
+                                        <input type="number" id="txtTotalQty" name="TotalQty" class="form-control form-control-sm" readonly />
+                                    </div>
+                                    <div class="hide">
+                                        <input type="number" id="txtTotalAmount" name="TotalAmount" class="form-control form-control-sm" readonly />
+                                    </div>
+                                    <div class="hide">
+                                        <input type="number" id="txtPerQty" name="PerQty" class="form-control form-control-sm" readonly />
+                                    </div>
+
+                                    <div class="col-md-1 pl-0">
+                                        <input type="text" placeholder="Qty" id="txtQuanity" class="form-control form-control-sm" />
+                                        <label for="ddlQuantity" class="control-label font-weight-bold text-white">
+                                            StockQty:
+                                            <span class="text-white" id="FinishGoodStockQty"></span>
+                                        </label>
+                                        <span class="error hide req-Quanity">Quantity is required</span>
+                                        <span class="error hide req-qtyChecking">Quantity Must be less than or equal Product Qty</span>
+                                    </div>
+
+                                    <div class="col-md-1 pl-0">
+                                        <input type="text" placeholder="Discount%" id="txtDiscount" class="form-control form-control-sm" />
+                                    </div>
+                                    <div class="col-md-2 pl-0">
+                                        <input type="text" placeholder="Unit Price" id="txtPrice" class="form-control form-control-sm" readonly />
+                                        <span class="error hide req-txtPrice">Price not Configure</span>
+                                    </div>
+                                    <div class="col-md-1 pl-0">
+                                        <div>
+                                            <button type="submit" class="float-left float-md-start text-bold" id="btnAddToList" title="Save"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="row small" style="margin-top: -8px ">
+                        <div class="col-md-12">
+
+
+                            <div class="px-0 py-1" style="background-color: #2F4F4F; margin-top: 10px; margin-bottom: -5px;">
+
+                                <div class="row small justify-content-center">
+                                    <div class="col-md-3">
+                                        @Html.DropDownList("ddlPackageName", (IEnumerable<SelectListItem>)ViewBag.ddlPackageName, "PackageName", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        <span class="error hide req-ProductName font-weight-bold">Package Name is required!</span>
+                                    </div>
+                                    <div class="col-md-2 pl-0">
+                                        <input type="text" id="ddlPQuanity" placeholder="QTY" class="form-control form-control-sm" />
+                                        <span class="error hide req-ddlPQuanity">Quantity is required</span>
+                                    </div>
+
+                                    <div class="col-md-1 pl-0">
+                                        <div>
+                                            <button type="submit" class="float-left float-md-start text-bold" id="btnAddPackage" title="Save"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
 
                 @*</div>*@
             </div>
@@ -325,11 +327,11 @@
 
                         </div>
 
-          
 
-                       
 
-                        
+
+
+
 
                         @*PackageTable*@
 
@@ -343,7 +345,7 @@
                                     <div class="col-md-2">
 
                                         <button type="button" id="rrrr" class="emn2-btn  float-right"><i class="fas fa-trash"></i></button>
-                                       
+
 
                                     </div>
 
@@ -354,13 +356,13 @@
                                 <table class="table table-head-fixed text-nowrap table-bordered table-sm table-striped table-responsive-lg tadds" id="tblListpackage" style="background-color: white; margin-bottom: 0px ">
                                     <thead>
                                         <tr class="text-center" style="color:black">
-                                            <th >Product </th>
+                                            <th>Product </th>
                                             <th>Measurement</th>
                                             <th>Quanity</th>
                                             <th>Amount</th>
                                             <th class="hide ProductId"></th>
                                             <th class="hide MeasurementId"></th>
-                                            <th  class="hide FGRID"></th>
+                                            <th class="hide FGRID"></th>
                                             <th class="hide Packageid"></th>
 
                                         </tr>
@@ -371,10 +373,10 @@
                                     <thead>
                                         <tr class="text-center">
 
-                                            <th >Total</th>
-                                            <th ></th>
-                                            <th ></th>
-                                            <th  class="totalsubpackage">0</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th class="totalsubpackage">0</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -397,24 +399,24 @@
 
 
 
-    
-
-        </div>
- </div>
 
 
-
-
-                <!-- SELECT2 EXAMPLE -->
+    </div>
+</div>
 
 
 
 
+<!-- SELECT2 EXAMPLE -->
 
 
-                @section scripts{
 
-                    <script type="text/javascript">
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
 
         var ddlClientName = $("#ddlClientName");
         var ddlDepotName = $("#ddlDepotName");
@@ -650,68 +652,73 @@
 
         $("#btnAddToList").click(function (e) {
             e.preventDefault();
-            //debugger;
+            debugger;
 
             if (validates() == true) {
+                CheckCommission();
+                    debugger;
+                    //var sl = $("#tblList tbody tr").length;
+
+                    //var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
+                    //var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
+                    //var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "</td>";
 
 
-                    var sl = $("#tblList tbody tr").length;
+                    //var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
+                    //var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
+                    //var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
+                    //var td7 = "<td class='text-center hide'>" + txtDiscount.val() + "</td>";
 
-                    var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
-                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
-                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "</td>";
+                    //var td8 = "<td class='text-center DiscountIDCell'>" + Number(ddlttdis.val()).toFixed(2) + "</td>";
 
+                    //var td9 = "<td class='text-center TotalIDCell'>" + Number(ddlpt.val()).toFixed(2) + "</td>";
 
-                   var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
-                var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
-                var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
-                   var td7 = "<td class='text-center hide'>" + txtDiscount.val() + "</td>";
-
-                var td8 = "<td class='text-center DiscountIDCell'>" + Number(ddlttdis.val()).toFixed(2) + "</td>";
-
-                var td9 = "<td class='text-center TotalIDCell'>" + Number(ddlpt.val()).toFixed(2) + "</td>";
-
-                var td10 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i></a></td>";
+                    //var td10 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i></a></td>";
 
 
-                var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
-                var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
-                var td13 = "<td class='hide '>" + ddlQtyUnitname.val() + "</td>";
-                var td14 = "<td class='hide '>" + ddlQtyUnit.val() + "</td>";
+                    //var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
+                    //var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
+                    //var td13 = "<td class='hide '>" + ddlQtyUnitname.val() + "</td>";
+                    //var td14 = "<td class='hide '>" + ddlQtyUnit.val() + "</td>";
 
 
-                var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + "</tr>";
+                    //var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + "</tr>";
 
 
 
-                    //totalprice
-                to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
-                $('.totalsub').text(to.toFixed(2));
-                    console.log(to);
-                    //totalprice
-                    //tqty
-                to1 = parseFloat($('.totalqty').text()) + parseFloat(txtQuanity.val());
-                $('.totalqty').text(to1.toFixed(2));
-                    console.log(to1);
-                    //tqty
-                    //tdis
-                to2 = parseFloat($('.totaldis').text()) + parseFloat(ddlttdis.val());
-                $('.totaldis').text(to2.toFixed(2));
-                    console.log(to2);
-                    //tqty
+                    ////totalprice
+                    //to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
+                    //$('.totalsub').text(to.toFixed(2));
+                    //console.log(to);
+                    ////totalprice
+                    ////tqty
+                    //to1 = parseFloat($('.totalqty').text()) + parseFloat(txtQuanity.val());
+                    //$('.totalqty').text(to1.toFixed(2));
+                    //console.log(to1);
+                    ////tqty
+                    ////tdis
+                    //to2 = parseFloat($('.totaldis').text()) + parseFloat(ddlttdis.val());
+                    //$('.totaldis').text(to2.toFixed(2));
+                    //console.log(to2);
+                    ////tqty
 
 
-                var totalsu = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
-                ddlpayableamount.val(totalsu.toFixed(2));
+                    //var totalsu = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
+                    //ddlpayableamount.val(totalsu.toFixed(2));
 
-                    $("#tblList tbody").append(tr);
+                    //$("#tblList tbody").append(tr);
 
 
-                $('#card1').show();
+                    //$('#card1').show();
 
+                //}
+                //else{
+                //    alert("No Commission");
+                //}
+
+                ClearData();
             }
 
-            ClearData();
         })
 
 
@@ -939,14 +946,91 @@
                 $(".req-qtyChecking").removeClass('hide');
                 isValid = false;
             }
-
-
-
-
             return isValid;
         }
 
 
+        function CheckCommission() {
+             debugger;
+            var isValid = false;
+            var data = { FinishGoodProductId: TryParseInt(ddlProductName.val(), 0) };
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/CheckFinishGoodProdctCoomission", data)).then(function (res, status) {
+                debugger;
+                console.log(res);
+                consoleLog(res.replace(/['"]+/g, ''));
+                var ress = res.replace(/['"]+/g, '');
+               
+                console.log(ress);
+                
+                if (ress === "true") {
+                    debugger;
+                    isValid = true;
+                    var sl = $("#tblList tbody tr").length;
+
+                    var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
+                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "</td>";
+
+
+                    var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
+                    var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
+                    var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
+                    var td7 = "<td class='text-center hide'>" + txtDiscount.val() + "</td>";
+
+                    var td8 = "<td class='text-center DiscountIDCell'>" + Number(ddlttdis.val()).toFixed(2) + "</td>";
+
+                    var td9 = "<td class='text-center TotalIDCell'>" + Number(ddlpt.val()).toFixed(2) + "</td>";
+
+                    var td10 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i></a></td>";
+
+
+                    var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
+                    var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
+                    var td13 = "<td class='hide '>" + ddlQtyUnitname.val() + "</td>";
+                    var td14 = "<td class='hide '>" + ddlQtyUnit.val() + "</td>";
+
+
+                    var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + "</tr>";
+
+
+
+                    //totalprice
+                    to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
+                    $('.totalsub').text(to.toFixed(2));
+                    console.log(to);
+                    //totalprice
+                    //tqty
+                    to1 = parseFloat($('.totalqty').text()) + parseFloat(txtQuanity.val());
+                    $('.totalqty').text(to1.toFixed(2));
+                    console.log(to1);
+                    //tqty
+                    //tdis
+                    to2 = parseFloat($('.totaldis').text()) + parseFloat(ddlttdis.val());
+                    $('.totaldis').text(to2.toFixed(2));
+                    console.log(to2);
+                    //tqty
+
+
+                    var totalsu = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
+                    ddlpayableamount.val(totalsu.toFixed(2));
+
+                    $("#tblList tbody").append(tr);
+
+
+                    $('#card1').show();
+                }
+                else {
+                    debugger;
+                    isValid = false;
+                    toastrErrorAlert("Product Commision Not Setup");
+                }
+               
+
+
+            });
+            //return isValid;
+        }
 
         function QuantityCheck() {
             debugger;
@@ -1000,7 +1084,7 @@
                     var totals = parseFloat($(".totalsub").text()) - parseFloat(subtotal);
                     $('.totalsub').text(totals.toFixed(2));
 
-     
+
 
                     var totalsq = parseFloat($(".totalqty").text()) - parseFloat(row);
                     $('.totalqty').text(totalsq);
@@ -1162,6 +1246,6 @@
 
 
                 })
-                    </script>
+    </script>
 
-                }
+}
