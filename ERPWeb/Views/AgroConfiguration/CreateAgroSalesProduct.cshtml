@@ -1173,25 +1173,33 @@
                         //return;
                         $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAgroProductSalesInfo', data , getToken())).then(function (res, status)
                         {
-                            debugger;
+                            console.log("===============");
+                            console.log(res);
+                           // debugger;
                             if (res.isSucccess === true)
                             {
-                                $('.toastrDefaultSuccess').trigger('click');
+                              //  debugger;
+                               // $('.toastrDefaultSuccess').trigger('click');
                                 var InvoiceNo = res.File;
-                                window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + InvoiceNo, '_blank');
-                                setTimeout(function () {
-                                    redirectPage('@Url.Action("GetAgroSalesProductList")');
-                                }, 500);
+                                toastrSuccessAlert("Sale Success");
+                                console.log("=======success========");
 
                             }
-                            if (res === false)
+                            if (res.isSucccess === false)
                             {
+                              //  debugger;
                                 toastrErrorAlert("Insufficient Product");
                                 //alert("Insufficient Product");
+                                console.log("========false=======");
                             }
                             else
                             {
-                                $('.toastrDefaultError').trigger('click');
+                                console.log("======sucess relpoad=========");
+                                 window.open('/AgroConfiguration/AgroProductSalesReport?InvoiceNo=' + InvoiceNo, '_blank');
+                                 setTimeout(function () {
+                                    redirectPage('@Url.Action("GetAgroSalesProductList")');
+                                }, 500);
+                               // $('.toastrDefaultError').trigger('click');
                             }
 
 

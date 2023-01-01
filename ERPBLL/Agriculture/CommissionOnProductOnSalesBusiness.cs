@@ -18,6 +18,7 @@ namespace ERPBLL.Agriculture
         private readonly CommissionOnProductOnSalesBusinessRepository _commissionOnProductOnSalesRepository;
         private readonly ICommisionOnProductSalesDetailsBusiness _commisionOnProductSalesDetailsBusiness;
         private readonly IAgroProductSalesDetailsBusiness _agroProductSalesDetailsBusiness;
+        private readonly ICommissionOnProductBusiness _commissionOnProductBusiness;
 
         public CommissionOnProductOnSalesBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, ICommisionOnProductSalesDetailsBusiness commisionOnProductSalesDetailsBusiness,IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness)
         {
@@ -113,8 +114,10 @@ namespace ERPBLL.Agriculture
         public bool SaveCommissionOnProductOnSales(AgroProductSalesInfo agroProductSalesInfo, long userId, long orgId)
         {
             bool isSuccess = false;
+            var checkCommission = 0;
             CommissionOnProductOnSalesDTO commissionOnProductOnSalesDTO = new CommissionOnProductOnSalesDTO();
             CommissionOnProductOnSales commissionOnProductOnSales = new CommissionOnProductOnSales();
+            //checkCommission = Convert.ToInt32(_commissionOnProductBusiness.GetCommisionOByProductId(, orgId).FinishGoodProductId);
             if (commissionOnProductOnSalesDTO.CommissionOnProductOnSalesId == 0)
             {
 
