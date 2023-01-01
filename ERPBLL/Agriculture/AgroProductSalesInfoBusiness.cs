@@ -375,7 +375,7 @@ namespace ERPBLL.Agriculture
                         {
                             //Commission on Sales 
                             executionState.text = InvoiceNo;
-                            isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
+                            //isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
 
 
                         }
@@ -493,7 +493,7 @@ namespace ERPBLL.Agriculture
                         {
                             //Commission on Sales 
                             executionState.text = InvoiceNo;
-                            isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
+                            //isSuccess = _commissionOnProductOnSalesBusiness.SaveCommissionOnProductOnSales(agroSalesProductionInfo, userId, orgId);
 
                         }
 

@@ -655,61 +655,61 @@
             debugger;
 
             if (validates() == true) {
-                CheckCommission();
+                //CheckCommission();
                     debugger;
-                    //var sl = $("#tblList tbody tr").length;
+                    var sl = $("#tblList tbody tr").length;
 
-                    //var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
-                    //var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
-                    //var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "</td>";
-
-
-                    //var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
-                    //var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
-                    //var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
-                    //var td7 = "<td class='text-center hide'>" + txtDiscount.val() + "</td>";
-
-                    //var td8 = "<td class='text-center DiscountIDCell'>" + Number(ddlttdis.val()).toFixed(2) + "</td>";
-
-                    //var td9 = "<td class='text-center TotalIDCell'>" + Number(ddlpt.val()).toFixed(2) + "</td>";
-
-                    //var td10 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i></a></td>";
+                    var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
+                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
+                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "</td>";
 
 
-                    //var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
-                    //var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
-                    //var td13 = "<td class='hide '>" + ddlQtyUnitname.val() + "</td>";
-                    //var td14 = "<td class='hide '>" + ddlQtyUnit.val() + "</td>";
+                    var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
+                    var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
+                    var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
+                    var td7 = "<td class='text-center hide'>" + txtDiscount.val() + "</td>";
+
+                    var td8 = "<td class='text-center DiscountIDCell'>" + Number(ddlttdis.val()).toFixed(2) + "</td>";
+
+                    var td9 = "<td class='text-center TotalIDCell'>" + Number(ddlpt.val()).toFixed(2) + "</td>";
+
+                    var td10 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i></a></td>";
 
 
-                    //var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + "</tr>";
+                    var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
+                    var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
+                    var td13 = "<td class='hide '>" + ddlQtyUnitname.val() + "</td>";
+                    var td14 = "<td class='hide '>" + ddlQtyUnit.val() + "</td>";
+
+
+                    var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + "</tr>";
 
 
 
-                    ////totalprice
-                    //to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
-                    //$('.totalsub').text(to.toFixed(2));
-                    //console.log(to);
-                    ////totalprice
-                    ////tqty
-                    //to1 = parseFloat($('.totalqty').text()) + parseFloat(txtQuanity.val());
-                    //$('.totalqty').text(to1.toFixed(2));
-                    //console.log(to1);
-                    ////tqty
-                    ////tdis
-                    //to2 = parseFloat($('.totaldis').text()) + parseFloat(ddlttdis.val());
-                    //$('.totaldis').text(to2.toFixed(2));
-                    //console.log(to2);
-                    ////tqty
+                    //totalprice
+                    to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
+                    $('.totalsub').text(to.toFixed(2));
+                    console.log(to);
+                    //totalprice
+                    //tqty
+                    to1 = parseFloat($('.totalqty').text()) + parseFloat(txtQuanity.val());
+                    $('.totalqty').text(to1.toFixed(2));
+                    console.log(to1);
+                    //tqty
+                    //tdis
+                    to2 = parseFloat($('.totaldis').text()) + parseFloat(ddlttdis.val());
+                    $('.totaldis').text(to2.toFixed(2));
+                    console.log(to2);
+                    //tqty
 
 
-                    //var totalsu = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
-                    //ddlpayableamount.val(totalsu.toFixed(2));
+                    var totalsu = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
+                    ddlpayableamount.val(totalsu.toFixed(2));
 
-                    //$("#tblList tbody").append(tr);
+                    $("#tblList tbody").append(tr);
 
 
-                    //$('#card1').show();
+                    $('#card1').show();
 
                 //}
                 //else{
@@ -966,67 +966,65 @@
                 if (ress === "true") {
                     debugger;
                     isValid = true;
-                    var sl = $("#tblList tbody tr").length;
+                    //var sl = $("#tblList tbody tr").length;
 
-                    var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
-                    var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
-                    var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "</td>";
-
-
-                    var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
-                    var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
-                    var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
-                    var td7 = "<td class='text-center hide'>" + txtDiscount.val() + "</td>";
-
-                    var td8 = "<td class='text-center DiscountIDCell'>" + Number(ddlttdis.val()).toFixed(2) + "</td>";
-
-                    var td9 = "<td class='text-center TotalIDCell'>" + Number(ddlpt.val()).toFixed(2) + "</td>";
-
-                    var td10 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i></a></td>";
+                    //var td1 = "<td class='text-center text-bold'>" + (sl + 1) + "</td>"
+                    //var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
+                    //var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlMeasurementName") + "</td>";
 
 
-                    var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
-                    var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
-                    var td13 = "<td class='hide '>" + ddlQtyUnitname.val() + "</td>";
-                    var td14 = "<td class='hide '>" + ddlQtyUnit.val() + "</td>";
+                    //var td4 = "<td class='text-center QuanityIDCell'>" + txtQuanity.val() + "</td>";
+                    //var td5 = "<td class='text-center QuanityIDCell hide'>" + txtTotalQty.val() + "</td>";
+                    //var td6 = "<td class='text-center' >" + txtPrice.val() + "</td>";
+                    //var td7 = "<td class='text-center hide'>" + txtDiscount.val() + "</td>";
+
+                    //var td8 = "<td class='text-center DiscountIDCell'>" + Number(ddlttdis.val()).toFixed(2) + "</td>";
+
+                    //var td9 = "<td class='text-center TotalIDCell'>" + Number(ddlpt.val()).toFixed(2) + "</td>";
+
+                    //var td10 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlpt.val() + "' data-quentaty='" + txtQuanity.val() + "'  data-discount='" + ddlttdis.val() + "'><i class='far fa-trash-alt'></i></a></td>";
 
 
-                    var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + "</tr>";
+                    //var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
+                    //var td12 = "<td class='hide MeasurementId'>" + ddlMeasurementName.val() + "</td>";
+                    //var td13 = "<td class='hide '>" + ddlQtyUnitname.val() + "</td>";
+                    //var td14 = "<td class='hide '>" + ddlQtyUnit.val() + "</td>";
+
+
+                    //var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + td12 + td13 + td14 + "</tr>";
 
 
 
-                    //totalprice
-                    to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
-                    $('.totalsub').text(to.toFixed(2));
-                    console.log(to);
-                    //totalprice
-                    //tqty
-                    to1 = parseFloat($('.totalqty').text()) + parseFloat(txtQuanity.val());
-                    $('.totalqty').text(to1.toFixed(2));
-                    console.log(to1);
-                    //tqty
-                    //tdis
-                    to2 = parseFloat($('.totaldis').text()) + parseFloat(ddlttdis.val());
-                    $('.totaldis').text(to2.toFixed(2));
-                    console.log(to2);
-                    //tqty
+                    ////totalprice
+                    //to = parseFloat($('.totalsub').text()) + parseFloat(ddlpt.val());
+                    //$('.totalsub').text(to.toFixed(2));
+                    //console.log(to);
+                    ////totalprice
+                    ////tqty
+                    //to1 = parseFloat($('.totalqty').text()) + parseFloat(txtQuanity.val());
+                    //$('.totalqty').text(to1.toFixed(2));
+                    //console.log(to1);
+                    ////tqty
+                    ////tdis
+                    //to2 = parseFloat($('.totaldis').text()) + parseFloat(ddlttdis.val());
+                    //$('.totaldis').text(to2.toFixed(2));
+                    //console.log(to2);
+                    ////tqty
 
 
-                    var totalsu = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
-                    ddlpayableamount.val(totalsu.toFixed(2));
+                    //var totalsu = parseFloat($('.totalsub').text()) + parseFloat($('.totalsubpackage').text());//initilize class total
+                    //ddlpayableamount.val(totalsu.toFixed(2));
 
-                    $("#tblList tbody").append(tr);
+                    //$("#tblList tbody").append(tr);
 
 
-                    $('#card1').show();
+                    //$('#card1').show();
                 }
                 else {
                     debugger;
                     isValid = false;
                     toastrErrorAlert("Product Commision Not Setup");
                 }
-               
-
 
             });
             //return isValid;

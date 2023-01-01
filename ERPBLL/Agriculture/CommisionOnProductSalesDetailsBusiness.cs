@@ -55,11 +55,13 @@ namespace ERPBLL.Agriculture
         public bool SaveCommisionOnProductSalesDetails(List<AgroProductSalesDetails> onProductSalesDetailsDTO, long id, string flag, long userId, long orgId)
         {
             bool isSuccess = false;
+            var checkCommission = 0;
             List<CommisionOnProductSalesDetails> productSalesDetails = new List<CommisionOnProductSalesDetails>();
             if (onProductSalesDetailsDTO.Count() > 0)
             {
                 foreach (var item in onProductSalesDetailsDTO)
                 {
+                    //checkCommission = Convert.ToInt32( _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).FinishGoodProductId);
                     if (item.PackageId == 0)
                     {
                         CommisionOnProductSalesDetails commisionOnProductSalesDetails = new CommisionOnProductSalesDetails()
@@ -69,9 +71,12 @@ namespace ERPBLL.Agriculture
                             CommissionOnProductOnSalesId = id,
                             PaymentMode = flag,
                             ProductSalesDetailsId = item.ProductSalesDetailsId,
+                            //CheckCommission = _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).FinishGoodProductId,
 
+                            Credit = (flag == "Credit") ? 0 : 0,
 
-                            Credit = (flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : 0,
+                            //Credit = (flag == "Credit") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Credit : 0,
+
 
                             //Cash = (flag == "Cash") ? _commissionOnProductBusiness.GetCommisionOByProductId(item.FinishGoodProductInfoId, orgId).Cash : 0,
                             Cash = (flag == "Cash") ? 0 : 0,
