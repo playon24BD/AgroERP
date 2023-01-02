@@ -758,6 +758,7 @@
                             var td8 = "<td class='text-center hide'>" + value.PackageId + "</td>";
                             var td9 = "<td class='text-center hide'>" + value.QtyKG + "</td>";
                             var td10 = "<td class='text-center hide'>" + (value.Amount / value.Quanity) + "</td>";
+                            var td10 = "<td class='text-center hide'>" + value.AccessoriesId + "</td>";
 
 
                             var tr = "<tr class='text-sm'>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
@@ -1134,7 +1135,7 @@
                                DiscountTk: tds.eq(7).html(),
                                QtyKG: tds.eq(12).html(),
                                FGRId: tds.eq(13).html(),
-
+                             
 
 
 
@@ -1158,6 +1159,8 @@
                                 FGRId: tds.eq(6).html(),
                                 PackageId: tds.eq(7).html(),
                                 QtyKG: tds.eq(8).html(),
+                                AccessoriesId: tds.eq(9).html(),
+                                
                             });
 
                         })

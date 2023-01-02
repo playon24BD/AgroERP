@@ -14,7 +14,9 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<PackageDetails> GetPackageDetailsBY(long PackageId);
 
+        IEnumerable<PackageDetailsDTO> GetPackageDetailsbySales(long PackageId);
 
-   
+
+
     }
 }

@@ -88,5 +88,10 @@ where 1=1 {0} order by AccessoriesId desc",
         {
             return _accessoriesInfoRepository.GetOneByOrg(a => a.AccessoriesId == accessoriesId);
         }
+
+        public IEnumerable<AccessoriesInfo> GetAccessoriesInfoall()
+        {
+            return _accessoriesInfoRepository.GetAll().ToList();
+        }
     }
 }

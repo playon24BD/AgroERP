@@ -141,5 +141,15 @@ where 1=1 {0} order by a.AccessoriesPurchaseInfoId desc
 
             return IsSuccess;
         }
+
+        public IEnumerable<AccessoriesTrackInfo> GetAccessoriesstockINbyID(long AccessoriesId)
+        {
+            return _accessoriesTrackInfoRepository.GetAll(g=> g.AccessoriesId== AccessoriesId && g.IssueStatus == "StockIn").ToList();
+        }
+
+        public IEnumerable<AccessoriesTrackInfo> GetAccessoriesstockOUTbyID(long AccessoriesId)
+        {
+            return _accessoriesTrackInfoRepository.GetAll(g => g.AccessoriesId == AccessoriesId && g.IssueStatus == "StockOut").ToList();
+        }
     }
 }

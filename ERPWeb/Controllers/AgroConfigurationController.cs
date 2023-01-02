@@ -3226,54 +3226,81 @@ namespace ERPWeb.Controllers
                 var packagedetails = _packageDetails.GetPackageDetailsBY(PackageId);
                 foreach (var product in packagedetails)
                 {
-                    var Productstockin = _finishGoodProductionInfoBusiness.GetProductStockINbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
-                    var SumProductStockin = Productstockin.Sum(c => c.TargetQuantity);
-
-                    var ProductSales = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
-                    var SumProductSales = ProductSales.Sum(s => s.Quanity);
-
-                    var ProductSalesDrop = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRidDRP(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
-                    var SumProductSalesDrop = ProductSalesDrop.Sum(d => d.Quanity);
-
-                    var ProductSalesReturn = _salesReturn.GetProductReturnbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
-                    var SumProductSalesReturn = ProductSalesReturn.Sum(r => r.ReturnQuanity);
-
-
-                    issueQunatity = SumProductStockin - SumProductSales + SumProductSalesDrop + SumProductSalesReturn;
-
-                    requirdQuantity = product.Quanity * Qty;
-
-                    if (requirdQuantity > issueQunatity)
+                    if (product.AccessoriesId == 0)
                     {
+                        var Productstockin = _finishGoodProductionInfoBusiness.GetProductStockINbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
+                        var SumProductStockin = Productstockin.Sum(c => c.TargetQuantity);
 
-                        Checked = false;
-                        break;
+                        var ProductSales = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
+                        var SumProductSales = ProductSales.Sum(s => s.Quanity);
+
+                        var ProductSalesDrop = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRidDRP(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
+                        var SumProductSalesDrop = ProductSalesDrop.Sum(d => d.Quanity);
+
+                        var ProductSalesReturn = _salesReturn.GetProductReturnbyPMRid(product.MeasurementId, product.FinishGoodProductId, product.FGRId).ToList();
+                        var SumProductSalesReturn = ProductSalesReturn.Sum(r => r.ReturnQuanity);
+
+
+                        issueQunatity = SumProductStockin - SumProductSales + SumProductSalesDrop + SumProductSalesReturn;
+
+                        requirdQuantity = product.Quanity * Qty;
+
+                        if (requirdQuantity > issueQunatity)
+                        {
+
+                            Checked = false;
+                            break;
+                        }
+                        else
+                        {
+                            Checked = true;
+
+                        }
+
                     }
                     else
                     {
-                        Checked = true;
+                        var accin = _accessoriesPurchaseInfo.GetAccessoriesstockINbyID(product.AccessoriesId).ToList();
+                        var SUMAccIN = accin.Sum(v => v.Quantity);
 
+                        var accout = _accessoriesPurchaseInfo.GetAccessoriesstockOUTbyID(product.AccessoriesId).ToList();
+                        var SUMAccOUT = accout.Sum(z => z.Quantity);
+
+                        issueQunatity = SUMAccIN - SUMAccOUT;
+                        requirdQuantity = product.Quanity * Qty;
+                        if (requirdQuantity > issueQunatity)
+                        {
+
+                            Checked = false;
+                            break;
+                        }
+                        else
+                        {
+                            Checked = true;
+
+                        }
                     }
+
+
                 }
 
                 if (Checked)
                 {
+                    var AllProduct = _packageDetails.GetPackageDetailsbySales(PackageId);
+                    //var AllProduct = _packageDetails.GetPackageDetailsBY(PackageId).Select(p => new PackageDetailsDTO()
+                    //{
 
-                    var AllProduct = _packageDetails.GetPackageDetailsBY(PackageId).Select(p => new PackageDetailsDTO()
-                    {
-                        FinishGoodProductId = p.FinishGoodProductId,
-                        FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(p.FinishGoodProductId, User.OrgId).FinishGoodProductName,
-                        MeasurementName = _measuremenBusiness.GetMeasurementById(p.MeasurementId, User.OrgId).MeasurementName,
-                        MeasurementId = p.MeasurementId,
-                        FGRId = p.FGRId,
-                        Quanity = p.Quanity,
-                        Amount = p.Amount,
-                        PackageId = p.PackageId,
-                        QtyKG = _finishGoodRecipeInfoBusiness.GetQTKGBYmeasurment(p.FinishGoodProductId, p.MeasurementId).FirstOrDefault().QtyKG
+                    //    FinishGoodProductId = p.FinishGoodProductId,
+                    //    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(p.FinishGoodProductId, User.OrgId).FinishGoodProductName,
+                    //    MeasurementName = _measuremenBusiness.GetMeasurementById(p.MeasurementId, User.OrgId).MeasurementName,
+                    //    MeasurementId = p.MeasurementId,
+                    //    FGRId = p.FGRId,
+                    //    Quanity = p.Quanity,
+                    //    Amount = p.Amount,
+                    //    PackageId = p.PackageId,
+                    //    QtyKG = _finishGoodRecipeInfoBusiness.GetQTKGBYmeasurment(p.FinishGoodProductId, p.MeasurementId).FirstOrDefault().QtyKG
 
-
-
-                    }).ToList();
+                    //}).ToList();
 
                     List<PackageDetailsViewModel> packageDetailsViewModels = new List<PackageDetailsViewModel>();
                     AutoMapper.Mapper.Map(AllProduct, packageDetailsViewModels);
@@ -6436,7 +6463,7 @@ namespace ERPWeb.Controllers
         {
             try
             {
-
+                ViewBag.ddlAccessories = _accessoriesInfo.GetAllAccessories().Select(s => new SelectListItem { Text = s.AccessoriesName, Value = s.AccessoriesId.ToString() }).ToList();
                 ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosall(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
                 ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.FGRId.ToString() }).ToList();
                 ViewBag.ddlMeasurementName = _measuremenBusiness.GetMeasurementSetups(User.OrgId).Select(d => new SelectListItem { Text = d.PackageName, Value = d.MeasurementId.ToString() }).ToList();

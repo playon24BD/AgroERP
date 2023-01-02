@@ -46,6 +46,8 @@ namespace ERPBO.Agriculture.DTOModels
 
         public long PackageId { get; set; }
         public string PackageName { get; set; }
+        public long AccessoriesId { get; set; }
+        public string AccessoriesName { get; set; }
 
         //public string MeasurementName { get; set; }
         //public string FinishGoodProductName { get; set; }

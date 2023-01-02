@@ -50,6 +50,8 @@ namespace ERPBO.Agriculture.ViewModels
         public long PackageId { get; set; }
 
         public string PackageName { get; set; }
+        public long AccessoriesId { get; set; }
+        public string AccessoriesName { get; set; }
 
 
     }

@@ -23,6 +23,7 @@ namespace ERPBLL.Agriculture
         private readonly AgroProductSalesInfoRepository _agroProductSalesInfoRepository;
         private readonly AgroProductSalesDetailsRepository _agroProductSalesDetailsRepository;
         private readonly SalesPaymentRegisterRepository _salesPaymentRegisterRepository;
+        private readonly AccessoriesTrackInfoRepository _accessoriesTrackInfoRepository;
 
         //private readonly AppUserRepository appUserRepository; // repo
         private readonly IAgroProductSalesDetailsBusiness _agroProductSalesDetailsBusiness;
@@ -42,12 +43,14 @@ namespace ERPBLL.Agriculture
         private readonly IStockiestUserBusiness _stockiestUserBusiness;
         private readonly IFinishGoodProductionInfoBusiness _finishGoodProductionInfoBusiness;
         private readonly ISalesReturn _salesReturn;
+        private readonly IAccessoriesPurchaseInfo _accessoriesPurchaseInfo;
 
-        public AgroProductSalesInfoBusiness(IAgricultureUnitOfWork agricultureUnitOfWork,ISalesReturn salesReturn, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness,IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, IStockiestUserBusiness stockiestUserBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness)
+        public AgroProductSalesInfoBusiness(IAccessoriesPurchaseInfo accessoriesPurchaseInfo,IAgricultureUnitOfWork agricultureUnitOfWork,ISalesReturn salesReturn, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness,IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, IStockiestUserBusiness stockiestUserBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
             this._agroProductSalesDetailsRepository = new AgroProductSalesDetailsRepository(this._agricultureUnitOfWork);
+            this._accessoriesTrackInfoRepository = new AccessoriesTrackInfoRepository(this._agricultureUnitOfWork);
 
             this._appUserBusiness = appUserBusiness;
             this._stockiestInfo = stockiestInfo;
@@ -67,6 +70,7 @@ namespace ERPBLL.Agriculture
             this._agroProductSalesDetailsBusiness = agroProductSalesDetailsBusiness;
             this._finishGoodProductionInfoBusiness= finishGoodProductionInfoBusiness;
             this._salesReturn = salesReturn;
+            this._accessoriesPurchaseInfo = accessoriesPurchaseInfo;
         }
 
 
@@ -204,51 +208,96 @@ namespace ERPBLL.Agriculture
             var InvoiceNo = "INV-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
 
-            var pro = details.GroupBy(r => new { r.FinishGoodProductInfoId, r.MeasurementId,r.FGRId }).Select( g => new AgroProductSalesDetailsDTO
+            var proa = details.GroupBy(q => new {q.AccessoriesId }).Select(y => new AgroProductSalesDetailsDTO
+            {
+                
+              
+                AccessoriesId = y.Key.AccessoriesId,
+                Quanity = y.Sum(f => f.Quanity),
+
+            });
+
+            foreach (var producta in proa)
+            {
+
+                if (producta.AccessoriesId > 0)
+                {
+                    var accin = _accessoriesPurchaseInfo.GetAccessoriesstockINbyID(producta.AccessoriesId).ToList();
+                    var SUMAccIN = accin.Sum(v => v.Quantity);
+
+                    var accout = _accessoriesPurchaseInfo.GetAccessoriesstockOUTbyID(producta.AccessoriesId).ToList();
+                    var SUMAccOUT = accout.Sum(z => z.Quantity);
+
+                    issueQunatity = SUMAccIN - SUMAccOUT;
+                    requirdQuantity = producta.Quanity * producta.Quanity;
+                    if (requirdQuantity > issueQunatity)
+                    {
+
+                        Checked = false;
+                        break;
+                    }
+                    else
+                    {
+                        Checked = true;
+
+                    }
+                }
+
+            }
+
+
+
+            var pro = details.GroupBy(r => new { r.FinishGoodProductInfoId, r.MeasurementId,r.FGRId,r.AccessoriesId }).Select( g => new AgroProductSalesDetailsDTO
             {
                 FinishGoodProductInfoId = g.Key.FinishGoodProductInfoId,
                 MeasurementId = g.Key.MeasurementId,
                 FGRId = g.Key.FGRId,
                 Quanity = g.Sum(r => r.Quanity),
                
+           
+               
             
             });
 
 
 
+
             foreach (var product in pro)
             {
-
-                var Productstockin = _finishGoodProductionInfoBusiness.GetProductStockINbyPMRid(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
-                var SumProductStockin = Productstockin.Sum(c => c.TargetQuantity);
-
-                var ProductSales = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRid(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
-                var SumProductSales = ProductSales.Sum(s => s.Quanity);
-
-                var ProductSalesDrop = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRidDRP(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
-                var SumProductSalesDrop = ProductSalesDrop.Sum(d => d.Quanity);
-
-                var ProductSalesReturn = _salesReturn.GetProductReturnbyPMRid(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
-                var SumProductSalesReturn = ProductSalesReturn.Sum(r => r.ReturnQuanity);
-
-
-                issueQunatity = SumProductStockin - SumProductSales + SumProductSalesDrop + SumProductSalesReturn;
-
-                requirdQuantity = product.Quanity;
-
-
-                if (requirdQuantity > issueQunatity)
+                if(product.FinishGoodProductInfoId != 0 && product.MeasurementId != 0)
                 {
+                    var Productstockin = _finishGoodProductionInfoBusiness.GetProductStockINbyPMRid(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
+                    var SumProductStockin = Productstockin.Sum(c => c.TargetQuantity);
 
-                    Checked = false;
-                    break;
-                }
-                else
-                {
-                    Checked = true;
-                   
+                    var ProductSales = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRid(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
+                    var SumProductSales = ProductSales.Sum(s => s.Quanity);
 
+                    var ProductSalesDrop = _agroProductSalesDetailsBusiness.GetProductSalesbyPMRidDRP(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
+                    var SumProductSalesDrop = ProductSalesDrop.Sum(d => d.Quanity);
+
+                    var ProductSalesReturn = _salesReturn.GetProductReturnbyPMRid(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
+                    var SumProductSalesReturn = ProductSalesReturn.Sum(r => r.ReturnQuanity);
+
+
+                    issueQunatity = SumProductStockin - SumProductSales + SumProductSalesDrop + SumProductSalesReturn;
+
+                    requirdQuantity = product.Quanity;
+
+
+                    if (requirdQuantity > issueQunatity)
+                    {
+
+                        Checked = false;
+                        break;
+                    }
+                    else
+                    {
+                        Checked = true;
+
+
+                    }
                 }
+
 
             }
 
@@ -433,54 +482,72 @@ namespace ERPBLL.Agriculture
                         {
                             foreach (var item in details)
                             {
-                                double ProductMesurement = 0;
-                                double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
-                                double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
-                                double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
-
-                                var UnitQtys = item.QtyKG.Split('(', ')');
-                                int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
-                                string ProductUnit = UnitQtys[1];
-                                if (MasterCartonMasurement != 0)
+                                if(item.AccessoriesId == 0)
                                 {
-                                    ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
+                                    double ProductMesurement = 0;
+                                    double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
+                                    double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).InnerBox;
+                                    double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).PackSize;
+
+                                    var UnitQtys = item.QtyKG.Split('(', ')');
+                                    int ProductUnitQty = Convert.ToInt32(UnitQtys[0]);
+                                    string ProductUnit = UnitQtys[1];
+                                    if (MasterCartonMasurement != 0)
+                                    {
+                                        ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
+                                    }
+                                    else
+                                    {
+                                        ProductMesurement = InnerBoxMasurement;
+                                    }
+                                    //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+
+
+
+                                    var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
+
+                                    var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
+                                    var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
+
+                                    AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
+                                    {
+                                        //Details
+                                        Discount = item.Discount,
+                                        DiscountTk = item.DiscountTk,
+                                        EntryDate = DateTime.Now,
+                                        EntryUserId = userId,
+                                        MeasurementId = item.MeasurementId,
+                                        MeasurementSize = item.MeasurementSize,
+                                        OrganizationId = orgId,
+                                        Price = item.Price,
+                                        ProductSalesInfoId = item.ProductSalesInfoId,
+                                        Quanity = item.Quanity,
+                                        FinishGoodProductInfoId = item.FinishGoodProductInfoId,
+                                        ProductSalesDetailsId = item.ProductSalesDetailsId,
+                                        ReceipeBatchCode = receipeBatch,
+                                        FGRId = FGRId,
+                                        QtyKG = item.QtyKG,
+                                        BoxQuanity = ProductMesurement,
+                                        PackageId = item.PackageId,
+
+                                    };
+                                    agroDetails.Add(agroSalesDetails);
+
                                 }
-                                else
-                                {
-                                    ProductMesurement = InnerBoxMasurement;
-                                }
-                                //var TotalProductSaleQty = ProductMesurement * ProductUnitQty;
+                                //if(item.AccessoriesId > 0)
+                                //{
+                                //    AccessoriesTrackInfo accessoriesTrackInfo = new AccessoriesTrackInfo()
+                                //    {
+                                //        AccessoriesId = item.AccessoriesId,
+                                //        Quantity = item.Quanity,
+                                //        IssueStatus = "StockOut",
+                                //        EntryDate = DateTime.Now,
+                                //        ProductSalesInfoId = agroSalesProductionInfo.ProductSalesInfoId
 
+                                //    };
 
-
-                                var UnitId = _agroUnitInfo.GetUnitId(ProductUnit).UnitId;
-
-                                var FGRId = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).FGRId;
-                                var receipeBatch = _finishGoodRecipeInfoBusiness.GetReceipId(item.FinishGoodProductInfoId, ProductUnitQty, UnitId).ReceipeBatchCode;
-
-                                AgroProductSalesDetails agroSalesDetails = new AgroProductSalesDetails()
-                                {
-                                    //Details
-                                    Discount = item.Discount,
-                                    DiscountTk = item.DiscountTk,
-                                    EntryDate = DateTime.Now,
-                                    EntryUserId = userId,
-                                    MeasurementId = item.MeasurementId,
-                                    MeasurementSize = item.MeasurementSize,
-                                    OrganizationId = orgId,
-                                    Price = item.Price,
-                                    ProductSalesInfoId = item.ProductSalesInfoId,
-                                    Quanity = item.Quanity,
-                                    FinishGoodProductInfoId = item.FinishGoodProductInfoId,
-                                    ProductSalesDetailsId = item.ProductSalesDetailsId,
-                                    ReceipeBatchCode = receipeBatch,
-                                    FGRId = FGRId,
-                                    QtyKG = item.QtyKG,
-                                    BoxQuanity = ProductMesurement,
-                                    PackageId = item.PackageId,
-
-                                };
-                                agroDetails.Add(agroSalesDetails);
+                                //}
+                                
                             }
 
                             agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
@@ -488,6 +555,32 @@ namespace ERPBLL.Agriculture
                             isSuccess = _agroProductSalesInfoRepository.Save();
 
                         }
+
+
+                        List<AccessoriesTrackInfo> accessories = new List<AccessoriesTrackInfo>();
+                        foreach (var item in details)
+                        {
+                            if (item.AccessoriesId > 0)
+                            {
+
+                                AccessoriesTrackInfo accessoriesTrackInfo = new AccessoriesTrackInfo()
+                                {
+                                    AccessoriesId = item.AccessoriesId,
+                                    Quantity = item.Quanity,
+                                    IssueStatus = "StockOut",
+                                    EntryDate = DateTime.Now,
+                                    ProductSalesInfoId = agroSalesProductionInfo.ProductSalesInfoId
+
+                                };
+                                _accessoriesTrackInfoRepository.Insert(accessoriesTrackInfo);
+                     
+                                
+
+                            }
+
+                        }
+                        isSuccess = _accessoriesTrackInfoRepository.Save();
+
 
                         if (isSuccess)
                         {

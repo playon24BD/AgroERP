@@ -64,6 +64,7 @@ namespace ERPBLL.Agriculture
                         Status = item.Status,
                         EntryDate = DateTime.Now,
                         EntryUserId = userId,
+                        AccessoriesId = item.AccessoriesId,
                         PackageId = packageInfo.PackageId,
                     };
                     _packageDetailsRepository.Insert(packageDetails);

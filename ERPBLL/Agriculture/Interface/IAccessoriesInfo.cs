@@ -14,5 +14,10 @@ namespace ERPBLL.Agriculture.Interface
         AccessoriesInfo GetAccessoriesNamebyId(long accessoriesId);
         bool SaveAccessoriesInfo(AccessoriesInfoDTO accessoriesInfoDTO, long userId);
         IEnumerable<AccessoriesInfo> GetAllAccessories();
+
+
+        IEnumerable<AccessoriesInfo> GetAccessoriesInfoall();
+
+       
     }
 }
