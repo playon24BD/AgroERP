@@ -235,6 +235,8 @@
                                                                     <option value="Pcs">Pcs</option>
                                                                     <option value="Liter">Liter</option>
                                                                     <option value="Gallon">Gallon</option>
+                                                                    <option value="ml">ml</option>
+                                                                   
                                                                 </select>
 
                                                                 <span class="error hide req-ddlPriceUnit">Unit Price Is Required</span>
@@ -816,7 +818,7 @@
                 if (ddlPriceUnit.val() != 0) {
                     if (ddlUnitName.val() == "kg") {
 
-                        if (ddlPriceUnit.val() == "Pcs") {
+                        if (ddlPriceUnit.val() == "Pcs" || ddlPriceUnit.val() == "Liter" || ddlPriceUnit.val() == "Gallon" ) {
                             alert("Conversion Faild, Please Try Again");
                             isValid = false;
 
@@ -825,18 +827,22 @@
 
                             if (ddlPriceUnit.val() == "Ton") {
 
-                                var tqty = Number(ddlqty.val()) * 1000;
-                                //alert(tqty);
-                                var stotal = ddlttprice.val() * tqty;
-                                //alert(stotal);
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
-                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
-                                //alert(stotal);
+                                    var tqty = Number(ddlqty.val()) * 1000;
+                                    //alert(tqty);
+                                    var stotal = ddlttprice.val() * tqty;
+                                    //alert(stotal);
+                                    td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
-                                $('.totalsub').text(to);
+                                    td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                    td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+                                    //alert(stotal);
+
+                                    to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                    $('.totalsub').text(to);
+
+
+
                             }
                             else if (ddlPriceUnit.val() == "Kilogram") {
                                 td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
@@ -888,7 +894,7 @@
 
                     }
                     else if (ddlUnitName.val() == "ml") {
-                        if (ddlPriceUnit.val() == "Pcs") {
+                        if (ddlPriceUnit.val() == "Pcs" || ddlPriceUnit.val() == "Gram" || ddlPriceUnit.val() == "Kilogram" || ddlPriceUnit.val() == "Ton") {
                             alert("Conversion Faild, Please Try Again");
                             isValid = false;
                         }
@@ -901,32 +907,36 @@
                                 var tqty = Number(ddlqty.val()) * 1000;
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";//per price
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
                                 td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
-                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+                                //alert(stotal);
 
-
-                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * tqty);
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
                                 $('.totalsub').text(to);
+
 
 
                             }
                             else if (ddlPriceUnit.val() == "Gallon") {
 
-                                var tqty = Number(ddlqty.val()) * 3785;
+                               // var tqtyKilogram = Number(ddlqty.val()) * 1000;
+                              //  var tqty = Number(tqtyKilogram) * 1000;
+                               var tqty = Number(ddlqty.val()) * 3785.41;//us
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";//per price
-
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
                                 td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
-                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+                                //alert(stotal);
 
-
-                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * tqty);
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
                                 $('.totalsub').text(to);
 
                             }
+
+
                             else {
 
                             }
@@ -934,6 +944,229 @@
 
                         }
 
+                    }
+                    else if (ddlUnitName.val() == "Ton") {
+                        if (ddlPriceUnit.val() == "Pcs" || ddlPriceUnit.val() == "Liter" || ddlPriceUnit.val() == "Gallon") {
+                            alert("Conversion Faild, Please Try Again");
+                            isValid = false;
+
+                        }
+                        else {
+
+
+                            if (ddlPriceUnit.val() == "Ton") {
+
+                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                                $('.totalsub').text(to);
+
+
+
+                            }
+                            else if (ddlPriceUnit.val() == "Kilogram") {
+
+                                var tqty = Number(ddlqty.val()) * 0.001;//kilogram
+                                //alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                $('.totalsub').text(to);
+
+                            }
+                            else if (ddlPriceUnit.val() == "Gram") {
+
+                                var tqtyKgram = Number(ddlqty.val()) * 0.001;//kilogram
+                                var tqty = Number(tqtyKgram) * 0.001;
+                                //alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                $('.totalsub').text(to);
+
+                            }
+
+
+                        }
+                    }
+                    else if (ddlUnitName.val() == "gm") {
+
+                        if (ddlPriceUnit.val() == "Pcs" || ddlPriceUnit.val() == "Liter" || ddlPriceUnit.val() == "Gallon") {
+                            alert("Conversion Faild, Please Try Again");
+                            isValid = false;
+
+                        }
+                        else {
+
+                            if (ddlPriceUnit.val() == "Ton") {
+
+                                var tqtyKilogram = Number(ddlqty.val()) * 1000;
+                                var tqty = Number(tqtyKilogram) * 1000;
+                                //alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                //alert(stotal);
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+                                //alert(stotal);
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                $('.totalsub').text(to);
+
+
+
+                            }
+                            else if (ddlPriceUnit.val() == "Kilogram") {
+
+                                var tqty = Number(ddlqty.val()) * 1000;
+                                //alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                //alert(stotal);
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+                                //alert(stotal);
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                $('.totalsub').text(to);
+
+
+                            }
+                            else if (ddlPriceUnit.val() == "Gram") {
+
+
+                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                                $('.totalsub').text(to);
+
+                            }
+
+                        }
+
+                    }
+                    else if (ddlUnitName.val() == "lt") {
+                        if (ddlPriceUnit.val() == "Pcs" || ddlPriceUnit.val() == "Gram" || ddlPriceUnit.val() == "Kilogram" || ddlPriceUnit.val() == "Ton") {
+                            alert("Conversion Faild, Please Try Again");
+                            isValid = false;
+                        }
+                        else {
+                            if (ddlPriceUnit.val() == "ml") {
+
+
+                                var tqty = Number(ddlqty.val()) * 0.001;
+                                //alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+                                //alert(stotal);
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                $('.totalsub').text(to);
+
+                            }
+                            else if (ddlPriceUnit.val() == "Liter") {
+
+
+                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                                $('.totalsub').text(to);
+
+                            }
+
+                            else if (ddlPriceUnit.val() == "Gallon") {
+
+
+                                var tqty = Number(ddlqty.val()) * 3.78541;
+                                //alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+                                //alert(stotal);
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                $('.totalsub').text(to);
+
+                            }
+
+
+                        }
+                    }
+                    else if (ddlUnitName.val() == "Gallon") {
+
+                        if (ddlPriceUnit.val() == "Pcs" || ddlPriceUnit.val() == "Gram" || ddlPriceUnit.val() == "Kilogram" || ddlPriceUnit.val() == "Ton") {
+                            alert("Conversion Faild, Please Try Again");
+                            isValid = false;
+                        }
+                        else {
+                            if (ddlPriceUnit.val() == "ml") {
+
+
+                                var tqty = Number(ddlqty.val()) * 0.000264172; //us
+                                //alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+                                //alert(stotal);
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                $('.totalsub').text(to);
+
+                            }
+                            else if (ddlPriceUnit.val() == "Liter") {
+
+                                var tqty = Number(ddlqty.val()) * 0.264172;
+                                //alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+                                //alert(stotal);
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                $('.totalsub').text(to);
+
+
+                            }
+
+                            else if (ddlPriceUnit.val() == "Gallon") {
+
+
+
+
+
+                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                                $('.totalsub').text(to);
+
+                            }
+
+                        }
                     }
                     else {
 
@@ -989,11 +1222,11 @@
 
                     clearCtrlStk();
                 }
-                
+
 
 
             }
-              
+
         }
 
         })

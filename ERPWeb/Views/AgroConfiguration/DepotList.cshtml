@@ -19,7 +19,7 @@
                     <a class="nav-link text-white" id="custom-tabs-two-UnitList-tab" data-toggle="pill" href="#custom-tabs-two-UnitList" role="tab" aria-controls="custom-tabs-two-UnitList" aria-selected="false">Unit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" id="custom-tabs-two-RawMaterialList-tab" data-toggle="pill" href="#custom-tabs-two-RawMaterialList" role="tab" aria-controls="custom-tabs-two-RawMaterialList" aria-selected="false">RawMaterial</a>
+                    <a class="nav-link text-white" id="custom-tabs-two-RawMaterialList-tab" data-toggle="pill" href="#custom-tabs-two-RawMaterialList" role="tab" aria-controls="custom-tabs-two-RawMaterialList" aria-selected="false">Raw Material</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" id="custom-tabs-two-SupplierList-tab" data-toggle="pill" href="#custom-tabs-two-SupplierList" role="tab" aria-controls="custom-tabs-two-SupplierList" aria-selected="false">Supplier</a>
@@ -438,8 +438,8 @@
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm select2" id="ddlStatusUnit">
-                                <option value="">--Select Status--</option>
-                                <option value="Active">Active</option>
+                                @*<option value="">--Select Status--</option>*@
+                                <option selected="selected" value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
                         </div>
@@ -499,9 +499,9 @@
 
                     <div class="col-md-12">
                         <label for="ddlStatus" class="control-label">Status</label>
-                        <select class="form-control form-control-sm" id="ddlStatusRM">
-                            <option value="">--Select Status--</option>
-                            <option value="Active">Active</option>
+                        <select class="form-control form-control-sm select2" id="ddlStatusRM">
+                            @*<option value="">--Select Status--</option>*@
+                            <option selected="selected" value="Active">Active</option>
                             <option value="InActive">InActive</option>
                         </select>
                     </div>
@@ -571,7 +571,7 @@
                     <div class="form-group col-md-2">
                         <label for="ddlStatus" class="control-label">Status</label>
                         <select class="form-control form-control-sm" id="ddlStatusSupplier">
-                            <option value="Active">Active</option>
+                            <option selected="selected" value="Active">Active</option>
                             <option value="InActive">InActive</option>
                         </select>
                     </div>
@@ -618,7 +618,7 @@
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm select2" id="ddlStatusProduct">
-                                <option value="Active">Active</option>
+                                <option selected="selected" value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
                         </div>
@@ -699,7 +699,7 @@
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm" id="ddlStatusMeasurement">
-                                <option value="Active">Active</option>
+                                <option selected="selected" value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
                             <span class="error hide required-ddlStatus font-weight-bold">Status Is Required</span>
@@ -751,9 +751,9 @@
                     </div>
                     <div class="col-md-12">
                         <label for="ddlStatusA" class="control-label">Status</label>
-                        <select class="form-control form-control-sm" id="ddlStatusA">
-                            <option value="">--Select Status--</option>
-                            <option value="Active">Active</option>
+                        <select class="form-control form-control-sm select2" id="ddlStatusA">
+                            @*<option value="">--Select Status--</option>*@
+                            <option selected="selected" value="Active">Active</option>
                             <option value="InActive">InActive</option>
                         </select>
                     </div>
