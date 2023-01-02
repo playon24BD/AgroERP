@@ -534,19 +534,7 @@ namespace ERPBLL.Agriculture
                                     agroDetails.Add(agroSalesDetails);
 
                                 }
-                                //if(item.AccessoriesId > 0)
-                                //{
-                                //    AccessoriesTrackInfo accessoriesTrackInfo = new AccessoriesTrackInfo()
-                                //    {
-                                //        AccessoriesId = item.AccessoriesId,
-                                //        Quantity = item.Quanity,
-                                //        IssueStatus = "StockOut",
-                                //        EntryDate = DateTime.Now,
-                                //        ProductSalesInfoId = agroSalesProductionInfo.ProductSalesInfoId
 
-                                //    };
-
-                                //}
                                 
                             }
 
