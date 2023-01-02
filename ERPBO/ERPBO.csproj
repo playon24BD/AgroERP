@@ -113,6 +113,7 @@
     <Compile Include="Agriculture\DomainModels\RegionSetup.cs" />
     <Compile Include="Agriculture\DomainModels\RegionUser.cs" />
     <Compile Include="Agriculture\DomainModels\ReturnRawMaterial.cs" />
+    <Compile Include="Agriculture\DomainModels\RMCategories.cs" />
     <Compile Include="Agriculture\DomainModels\SalesPaymentRegister.cs" />
     <Compile Include="Agriculture\DomainModels\SalesReturn.cs" />
     <Compile Include="Agriculture\DomainModels\StockiestInfo.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Agriculture\DTOModels\RegionSetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\RegionUserDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ReturnRawMaterialDTO.cs" />
+    <Compile Include="Agriculture\DTOModels\RMCategoriesDTO.cs" />
     <Compile Include="Agriculture\DTOModels\SalesPaymentRegisterDTO.cs" />
     <Compile Include="Agriculture\DTOModels\SalesReturnDTO.cs" />
     <Compile Include="Agriculture\DTOModels\StockiestInfoDTO.cs" />
@@ -240,6 +242,7 @@
     <Compile Include="Agriculture\ViewModels\RegionSetupViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\RegionUserViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\ReturnRawMaterialViewModel.cs" />
+    <Compile Include="Agriculture\ViewModels\RMCategoriesViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\SalesPaymentRegisterViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\SalesReturnViewModel.cs" />
     <Compile Include="Agriculture\ViewModels\StockiestInfoViewModel.cs" />

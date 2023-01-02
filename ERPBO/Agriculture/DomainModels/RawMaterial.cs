@@ -23,6 +23,7 @@ namespace ERPBO.Agriculture.DomainModels
         public long DepotId { get; set; }
         public string Status { get; set; }
         public long UnitId { get; set; }
+        public long RMCategorieId { get; set; }
         //public DateTime? ExpireDate { get; set; }
     }
 }

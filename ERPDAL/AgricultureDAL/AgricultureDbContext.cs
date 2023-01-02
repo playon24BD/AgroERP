@@ -18,6 +18,7 @@ namespace ERPDAL.AgricultureDAL
 
         }
 
+        public DbSet<RMCategories> tblRMCategories { get; set; }
         public DbSet<AccessoriesInfo> tblAccessoriesInfo { get; set; }
         public DbSet<AccessoriesPurchaseInfo> tblAccessoriesPurchaseInfo { get; set; }
         public DbSet<AccessoriesPurchaseDetails> tblAccessoriesPurchaseDetails { get; set; }

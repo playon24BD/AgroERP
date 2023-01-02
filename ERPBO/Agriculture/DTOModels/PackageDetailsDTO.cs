@@ -35,7 +35,8 @@ namespace ERPBO.Agriculture.DTOModels
         public string batchCode { get; set; }
         public string batchCodes { get; set; }
 
-
+        public long AccessoriesId { get; set; }
+        public double AccessoriesQuanity { get; set; }
 
     }
 }

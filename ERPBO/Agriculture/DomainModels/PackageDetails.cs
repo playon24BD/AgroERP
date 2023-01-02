@@ -32,6 +32,8 @@ namespace ERPBO.Agriculture.DomainModels
 
 
 
+        public long AccessoriesId { get; set; }
+        public double AccessoriesQuanity { get; set; }
 
 
 

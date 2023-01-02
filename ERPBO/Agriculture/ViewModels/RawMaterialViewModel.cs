@@ -27,5 +27,8 @@ namespace ERPBO.Agriculture.ViewModels
         public string UserName { get; set; }
         public long UnitId { get; set; }
         public string UnitName { get; set; }
+
+        public long RMCategorieId { get; set; }
+        public string RMCategorieName { get; set; }
     }
 }

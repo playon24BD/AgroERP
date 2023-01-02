@@ -709,14 +709,14 @@
                             if (ddlPriceUnit.val() == "Ton") {
 
                                 var tqty = Number(ddlqty.val()) * 1000;
-                                alert(tqty);
+                                //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                alert(stotal);
+                                //alert(stotal);
                                 td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
                                 td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
-                                alert(stotal);
+                                //alert(stotal);
 
                                 to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
                                 $('.totalsub').text(to);
@@ -734,7 +734,7 @@
 
 
                                 var tqty = Number(ddlqty.val()) * 0.001;
-                                alert(tqty);
+                                //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
                                 td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
@@ -778,11 +778,11 @@
                         else {
 
                             if (ddlPriceUnit.val() == "Liter") {
-                                alert("here me");
+                                //alert("here me");
 
 
                                 var tqty = Number(ddlqty.val()) * 1000;
-                                alert(tqty);
+                                //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
                                 td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";//per price
 
@@ -798,7 +798,7 @@
                             else if (ddlPriceUnit.val() == "Gallon") {
 
                                 var tqty = Number(ddlqty.val()) * 3785;
-                                alert(tqty);
+                                //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
                                 td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";//per price
 
