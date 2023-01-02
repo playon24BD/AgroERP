@@ -29,23 +29,29 @@ namespace ERPBLL.Agriculture
             this._accessoriesPurchaseDetailsRepository = new AccessoriesPurchaseDetailsRepository(this._agricultureUnitOfWork);
         }
 
-        public IEnumerable<AccessoriesPurchaseInfoDTO> GetAccessoriesStockList()
+        public IEnumerable<AccessoriesPurchaseInfoDTO> GetAccessoriesStockList(string invoiceNo)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<AccessoriesPurchaseInfoDTO>(QueryForAccessoriesStockList());
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<AccessoriesPurchaseInfoDTO>(QueryForAccessoriesStockList(invoiceNo));
         }
 
-        private string QueryForAccessoriesStockList()
+        private string QueryForAccessoriesStockList(string invoiceNo)
         {
             try
             {
                 string query = string.Empty;
                 string param = string.Empty;
 
+                if (!string.IsNullOrEmpty(invoiceNo))
+                {
+                    param += string.Format(@"and a.InvoiceNo like '%{0}%'", invoiceNo);
+                }
+
+                
                 query = string.Format(@"
 
 select a.AccessoriesPurchaseInfoId, a.InvoiceNo,a.InvoiceDate,a.TotalAmount,info.RawMaterialSupplierName from tblAccessoriesPurchaseInfo a
 inner join tblRawMaterialSupplierInfo info on a.RawMaterialSupplierId=info.RawMaterialSupplierId 
-where 1=1 {0}
+where 1=1 {0} order by a.AccessoriesPurchaseInfoId desc
 
 ", Utility.ParamChecker(param));
 

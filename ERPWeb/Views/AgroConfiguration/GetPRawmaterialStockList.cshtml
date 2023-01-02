@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "GetPRawmaterialStockList";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string tab = ViewBag.tab;
 }
 <style>
     table.tablesubtotal tr th {
@@ -30,7 +31,7 @@
 </style>
 <div class="row text-sm p-0" style=" margin-top: -40px">
     <div class="col-md-12 p-0">
-
+        <input id="tab" type="text" hidden value="@tab" />
 
         <div class="card  shadow card  card-outline card-tabs" style="margin-top:-25px">
 
@@ -41,19 +42,23 @@
                     <a class="nav-link active  text-white  " id="custom-tabs-two-pstockrawmaterialqty-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialqty" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialqty" aria-selected="false">RM Stock</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link  text-white  " id="custom-tabs-two-packageRMStock-tab" data-toggle="pill" href="#custom-tabs-two-packageRMStock" role="tab" aria-controls="custom-tabs-two-packageRMStock" aria-selected="false"> Pkg RM Stock</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white   " id="custom-tabs-two-pstockrawmaterialList-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialList" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialList" aria-selected="false">Purchase Details</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white " id="custom-tabs-two-pstockrawmaterial-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterial" role="tab" aria-controls="custom-tabs-two-pstockrawmaterial" aria-selected="false">New Purchase</a>
                 </li>
 
-
-                <li class="nav-item">
-                    <a class="nav-link text-white " id="custom-tabs-two-accessoriesDetails-tab" data-toggle="pill" href="#custom-tabs-two-accessoriesDetails" role="tab" aria-controls="custom-tabs-two-accessoriesDetails" aria-selected="false">Accessories Details</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white " id="custom-tabs-two-accessoriesStock-tab" data-toggle="pill" href="#custom-tabs-two-accessoriesStock" role="tab" aria-controls="custom-tabs-two-accessoriesStock" aria-selected="false">Accessories Stock</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white " id="custom-tabs-two-newAccessories-tab" data-toggle="pill" href="#custom-tabs-two-newAccessories" role="tab" aria-controls="custom-tabs-two-newAccessories" aria-selected="false">NewAccessories</a>
+                </li>
+
             </ul>
 
 
@@ -101,6 +106,7 @@
                 <div class="row" style="margin-top:-5px">
                     <div class="col-md-12" style="margin-top:-10px">
 
+
                         <div class="row">
                             <div class="col-md-12 text-sm text-sm" id="dataContainer">
 
@@ -110,7 +116,12 @@
                     </div>
                 </div>
             </div>
+
+
+
             @*Modify*@
+
+
             <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterial" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterial-tab">
                 <div class="row mb-5">
                     <div class="col-md-12" style="margin-top: -14px">
@@ -339,11 +350,15 @@
                                         </h6>
                                     </div>
 
+                                    <div class="col-md-2">
+
+                                    </div>
+
                                     <div class="col-md-2 float-right text-white">
                                         <input type="text" class="form-control form-control-sm" id="searchByAnyy" placeholder="Search by any" autofocus />
 
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-2">
 
                                     </div>
 
@@ -370,7 +385,58 @@
             </div>
             @*stock*@
 
-            <div class="tab-pane fade show " id="custom-tabs-two-accessoriesDetails" role="tabpanel" aria-labelledby="custom-tabs-two-accessoriesDetails-tab">
+            @*Package RM Stock*@
+            <div class="tab-pane fade show" id="custom-tabs-two-packageRMStock" role="tabpanel" aria-labelledby="custom-tabs-two-packageRMStock-tab">
+
+                <div class="row" style="margin-top:-15px">
+                    <div class="col-md-12">
+                        <div class="card" style="background-color:#001f3f">
+                            <div class="px-2 py-1">
+                                <div class="row text-sm">
+                                    <div class="col-3">
+                                        <h6 class="text-left  text-white mb-0" @*style="height:10px;text-align:center"*@>
+                                            Package RM Stock
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-md-2">
+
+                                    </div>
+
+                                    <div class="col-md-2 float-right text-white">
+                                        <input type="text" class="form-control form-control-sm" id="searchBy" placeholder="Search by any" autofocus />
+
+                                    </div>
+                                    <div class="col-2">
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row" style="margin-top:-5px">
+                    <div class="col-md-12" style="margin-top:-10px">
+
+                        <div class="row">
+
+                            <div class="col-md-12 text-sm text-sm" id="dataContainerPkgRMStock">
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            @*<div class="tab-pane fade show " id="custom-tabs-two-accessoriesDetails" role="tabpanel" aria-labelledby="custom-tabs-two-accessoriesDetails-tab">*@
+
+            <div class="tab-pane fade show " id="custom-tabs-two-newAccessories" role="tabpanel" aria-labelledby="custom-tabs-two-newAccessories-tab">
 
                 <div class="row" style="margin-top:-15px">
                     <div class="col-md-12">
@@ -379,7 +445,8 @@
                                 <div class="row text-sm">
                                     <div class="col-3">
                                         <h6 class="text-left  text-white mb-0">
-                                            Accessories Details
+                                            Accessories List
+
                                         </h6>
                                     </div>
                                     <div class="col-md-2">
@@ -415,6 +482,54 @@
                         </div>
 
                     </div>
+
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade show " id="custom-tabs-two-accessoriesStock" role="tabpanel" aria-labelledby="custom-tabs-two-accessoriesStock-tab">
+
+                <div class="row" style="margin-top:-15px">
+                    <div class="col-md-12">
+                        <div class="card" style="background-color:#001f3f">
+                            <div class="px-2 py-1">
+                                <div class="row text-sm">
+                                    <div class="col-3">
+                                        <h6 class="text-left  text-white mb-0">
+                                            Accessories Stock
+                                        </h6>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                    </div>
+                                    <div class="col-md-2 float-right text-white">
+                                        <input type="text" class="form-control form-control-sm" id="searchBystock" placeholder="Search by any" autofocus />
+
+                                    </div>
+
+                                    <div class="col-md-2">
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:-5px">
+                    <div class="col-md-12" style="margin-top:-10px">
+
+                        <div class="row">
+                            <div class="col-md-12 text-sm text-sm" id="dataContainerStock">
+
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
@@ -430,7 +545,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-gray-dark">
-                <h4 id="modalHeading" class="modal-title">Raw Material Stock & Purchase Details</h4>
+                <h4 id="modalHeading" class="modal-title">Purchase Details</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body" id="dataContainer2">
@@ -550,7 +665,9 @@
 
             LoadDataTable();
             LoadDataTableStock();
+            LoadPackageRMStock();
             LoadAccessories();
+            LoadAccessoriesStock();
 
         })
 
@@ -1099,14 +1216,43 @@
         }
 
 
-        //#region accessories
+        //#region New Accessories
 
         var dataContainerAccessories = $("#dataContainerAccessories");
+        var searchByAccessories = $("#searchByAccessories");
+
+        $(document).ready(function () {
+
+            if ($("#tab").val() == 'NewAccessories') {
+                $("#custom-tabs-two-newAccessories").addClass('active');
+                $("#custom-tabs-two-newAccessories-tab").addClass('active');
+
+                $("#custom-tabs-two-pstockrawmaterialqty-tab").removeClass('active');
+                $("#custom-tabs-two-pstockrawmaterialqty").removeClass('active');
+
+            }
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            
+        })
+
+
+
+
+        searchByAccessories.keyup(function () {
+            LoadAccessories()
+        })
+
 
         function LoadAccessories() {
             debugger;
 
-            var data = { flag: "View" };
+            var data = { flag: "View", invoiceNo: $.trim(searchByAccessories.val())};
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAccessoriesStockList', data)).then(function (res, status) {
                 console.log(status);
@@ -1122,8 +1268,81 @@
             //pageNo = 1;
         }
 
+
+        $(document).on('click', 'a.data-detail-item-Purchase', function (e) {
+            e.preventDefault();
+            debugger;
+            $("#dataContainer2").empty();
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+            if (true) {
+                var data = { flag: "Detail", id: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAccessoriesStockList', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res);
+                        $("#PurchaseDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+
+
+
         //#endregion
 
+
+        //#region Accessories Stock
+
+        var searchBystock = $("#searchBystock");
+
+
+        function LoadAccessoriesStock() {
+            debugger;
+
+            var data = { flag: "Direct" };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAccessoriesStockList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainerStock").fadeOut('500', function () {
+                        $("#dataContainerStock").empty();
+                        $("#dataContainerStock").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+           
+        }
+
+        //#endregion
+
+
+        //#region Package RM Stock
+
+        function LoadPackageRMStock() {
+            debugger;
+
+            var data = { flag: "Stock"};
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPRawmaterialStockList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainerPkgRMStock").fadeOut('500', function () {
+                        $("#dataContainerPkgRMStock").empty();
+                        $("#dataContainerPkgRMStock").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+           
+        }
+
+        //#endregion
 
     </script>
 }

@@ -1740,7 +1740,7 @@
 
         function LoadMeasurements() {
             debugger;
-            var data = { flag: "list", id: 0, status: $.trim(searchByAnyMeasurement.val()) };
+            var data = { flag: "list", id: 0, measurementName: $.trim(searchByAnyMeasurement.val()) };
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetMeasurementList', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {

@@ -3564,6 +3564,9 @@
     <Content Include="Views\AgroConfiguration\Accessoriespurchase.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAccessoriesList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAccessoriesStockList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetAccessoriesDetailsList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetAccessoriesPurchaseStock.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetPackageRMStockList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
