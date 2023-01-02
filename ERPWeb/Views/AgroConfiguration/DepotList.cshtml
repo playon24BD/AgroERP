@@ -470,12 +470,12 @@
             <div class="modal-body">
                 <form id="formRawMetarial">
                     <input type="hidden" id="hdmaterialId" />
-                    <div class="col-md-12 hide">
-                        <label class="control-label font-weight-bold">Organization</label>
+                    <div class="col-md-12 ">
+                        <label class="control-label font-weight-bold">Category</label>
 
-                        @Html.DropDownList("ddlOrganization", (IEnumerable<SelectListItem>)ViewBag.ddlOrganization, "--Select Organization--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                        @Html.DropDownList("ddlcategorurm", (IEnumerable<SelectListItem>)ViewBag.ddlcategorurm, "--Select Category--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
-                        <span class="error hide required-ddlOrganization font-weight-bold">Organization Name is Required</span>
+                        <span class="error hide required-ddlcategorurm font-weight-bold">Organization Name is Required</span>
 
                     </div>
 
@@ -485,8 +485,6 @@
                         <label class="control-label font-weight-bold">Raw Material Name<span style="color:red">*</span></label>
                         <input type="text" id="rawMaterialName" class="form-control form-control-sm" />
                         <span class="error hide required-raqMaterialName">Material Name is Required</span>
-
-
                     </div>
 
                     <input type="hidden" id="hdunitId" />
@@ -1117,6 +1115,7 @@
 
         var ddlStatusRM = $("#ddlStatusRM");
         var ddlUnitRM = $("#ddlUnitRM");
+        var ddlcategorurm = $("#ddlcategorurm");
 
 
         function OpenModal() {
@@ -1152,7 +1151,7 @@
             console.log(ee);
             e.preventDefault();
             debugger;
-            var data = { RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val(), Status: ddlStatusRM.val(), UnitId: TryParseInt(ddlUnitRM.val(), 0) }
+            var data = { RawMaterialName: rawMaterialName.val(), rawMaterialId: hdmaterialId.val(), Status: ddlStatusRM.val(), UnitId: TryParseInt(ddlUnitRM.val(), 0), RMCategorieId: TryParseInt(ddlcategorurm.val(), 0) }
             if (formValidationsRM() == true) {
                 $.when(postReqWithToken(dataType.applicationJson, dataType.json, "POST", "/AgroConfiguration/SaveRawMaterial", JSON.stringify(data), getToken())).then(function (res, status) {
                     console.log(status);

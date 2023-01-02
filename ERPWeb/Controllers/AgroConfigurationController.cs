@@ -175,6 +175,7 @@ namespace ERPWeb.Controllers
                 ViewBag.ddlUnits = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() }).ToList();
 
                 ViewBag.tab = tab;
+                ViewBag.ddlcategorurm = _rawMaterialBusiness.GetRMCategories().Select(c => new SelectListItem { Text = c.RMCategorieName, Value = c.RMCategorieId.ToString() }).ToList();
 
             }
             else if (!string.IsNullOrEmpty(flag) && flag == "DepotSetup")

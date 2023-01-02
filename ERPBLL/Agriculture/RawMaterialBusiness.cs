@@ -14,11 +14,14 @@ namespace ERPBLL.Agriculture
     public class RawMaterialBusiness : IRawMaterialBusiness
     {
         private readonly RawMaterialRepository _rawMaterialRepository;
+        private readonly RMCategoriesRepository _rMCategoriesRepository;
+
         private readonly IAgricultureUnitOfWork _db;
         public RawMaterialBusiness( IAgricultureUnitOfWork agricultureUnitOfWork)
         {
             this._db = agricultureUnitOfWork;
             this._rawMaterialRepository = new RawMaterialRepository(this._db);
+            this._rMCategoriesRepository = new RMCategoriesRepository(this._db);
         }
 
         public RawMaterial GetRawMaterialById(long rawMaterialId, long orgId)
@@ -96,6 +99,7 @@ namespace ERPBLL.Agriculture
                     UnitId=rawMaterial.UnitId,
                     EntryDate = DateTime.Now,
                     EntryUserId = userId,
+                    RMCategorieId=rawMaterial.RMCategorieId,
                 };
 
                 _rawMaterialRepository.Insert(material);
@@ -105,10 +109,9 @@ namespace ERPBLL.Agriculture
                 RawMaterial material = new RawMaterial();
                 material = GetRawMaterialById(rawMaterial.RawMaterialId,orgId);
                 material.RawMaterialName = rawMaterial.RawMaterialName;
-                //material.DepotId = rawMaterial.DepotId;
-                //material.ExpireDate = rawMaterial.ExpireDate;
                 material.Status = rawMaterial.Status;
                 material.UnitId = rawMaterial.UnitId;
+                material.RMCategorieId= rawMaterial.RMCategorieId;
                 material.UpdateDate = rawMaterial.UpdateDate;
                 material.UpdateUserId = rawMaterial.UpdateUserId;
                 _rawMaterialRepository.Update(material);
@@ -131,6 +134,12 @@ Status='Approved' order by ReturnRawMaterialId desc", Utility.ParamChecker(param
 
             return query;
 
+        }
+
+        public IEnumerable<RMCategories> GetRMCategories()
+        {
+            return _rMCategoriesRepository.GetAll().ToList();
+           
         }
     }
 }
