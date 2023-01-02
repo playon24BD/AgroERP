@@ -20,5 +20,10 @@ namespace ERPBO.Agriculture.DTOModels
 
         public long AccessoriesPurchaseInfoId { get; set; }
         public long ProductSalesInfoId { get; set; }
+        public double StockIn { get; set; }
+        public double StockOut { get; set; }
+        public double TotalStock { get; set; }
+        public string AccessoriesName { get; set; }
+
     }
 }

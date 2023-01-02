@@ -43,7 +43,7 @@ namespace ERPBLL.Agriculture
 SELECT A.AreaId,A.AreaName,A.Status,A.RegionId,R.RegionName
 From [Agriculture].[dbo].[tblAreaSetup] A
 Inner JOIN [Agriculture].[dbo].[tblRegionInfos] R on A.RegionId=R.RegionId
-            where 1=1  {0} ",
+            where 1=1  {0} order by A.AreaId desc",
             Utility.ParamChecker(param));
             return query;
         }

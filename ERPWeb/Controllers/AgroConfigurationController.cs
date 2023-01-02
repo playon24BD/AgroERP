@@ -192,7 +192,7 @@ namespace ERPWeb.Controllers
                     EntryDate = o.EntryDate,
                     UpdateUserId = o.UpdateUserId,
                     UpdateDate = o.UpdateDate
-                }).ToList();
+                }).Reverse().ToList();
 
                 List<DepotSetupViewModel> viewModel = new List<DepotSetupViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModel);
@@ -304,7 +304,7 @@ namespace ERPWeb.Controllers
                         //UserName = UserForEachRecord(a.EntryUserId).UserName
 
 
-                    }).ToList();
+                    }).Reverse().ToList();
 
                     List<RawMaterialViewModel> viewModels1 = new List<RawMaterialViewModel>();
                     AutoMapper.Mapper.Map(dto1, viewModels1);
@@ -365,7 +365,7 @@ namespace ERPWeb.Controllers
                         EntryDate = o.EntryDate,
                         UpdateUserId = o.UpdateUserId,
                         UpdateDate = o.UpdateDate
-                    }).ToList();
+                    }).Reverse().ToList();
 
                     List<RawMaterialSupplierViewModel> viewModel = new List<RawMaterialSupplierViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModel);
@@ -420,7 +420,7 @@ namespace ERPWeb.Controllers
                         EntryDate = o.EntryDate,
                         UpdateUserId = o.UpdateUser,
                         UpdateDate = o.UpdateDate
-                    }).ToList();
+                    }).Reverse().ToList();
 
                     List<FinishGoodProductViewModel> viewModel = new List<FinishGoodProductViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModel);
@@ -503,7 +503,7 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Measurement Setup
-        public ActionResult GetMeasurementList(string flag, string name, long? unitId, string status)
+        public ActionResult GetMeasurementList(string flag, string name, long? unitId, string status, string measurementName)
         {
             try
             {
@@ -521,7 +521,7 @@ namespace ERPWeb.Controllers
                 {
                     //var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
 
-                    IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementListSearch(unitId ?? 0, status, User.OrgId);
+                    IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementListSearch(unitId ?? 0, status,measurementName, User.OrgId);
 
                     List<MeasurementSetupViewModel> viewModels = new List<MeasurementSetupViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModels);
@@ -670,7 +670,7 @@ namespace ERPWeb.Controllers
                         EntryDate = o.EntryDate,
                         UpdateUserId = o.UpdateUserId,
                         UpdateDate = o.UpdateDate
-                    }).ToList();
+                    }).Reverse().ToList();
 
                     List<AgroUnitInfoViewModel> viewModels = new List<AgroUnitInfoViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModels);
@@ -2119,7 +2119,7 @@ namespace ERPWeb.Controllers
                     UpdateDate = o.UpdateDate,
 
 
-                }).ToList();
+                }).Reverse().ToList();
 
                 List<ZoneSetupViewModel> viewModels = new List<ZoneSetupViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
@@ -3540,7 +3540,7 @@ namespace ERPWeb.Controllers
 
         #region Purchase & RawmaterialStock
 
-        public ActionResult GetPRawmaterialStockList(string flag, string name, long? rsupid, long? id, string ChallanNo, string PONumber, long? supplierId)
+        public ActionResult GetPRawmaterialStockList(string flag, string name, long? rsupid, long? id, string ChallanNo, string PONumber, long? supplierId, string tab = "")
         {
 
             try
@@ -3552,6 +3552,10 @@ namespace ERPWeb.Controllers
                     //ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
                     //ViewBag.ddlUnitName = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() });
                     ViewBag.ddlSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialSupplierName, Value = a.RawMaterialSupplierId.ToString() });
+
+
+                    ViewBag.tab = tab;
+
                     return View();
 
                 }
@@ -3574,6 +3578,17 @@ namespace ERPWeb.Controllers
                     return PartialView("_GetRawMaterialMainView", viewModels);
 
                 }
+
+                else if (!string.IsNullOrEmpty(flag) && flag =="Stock")
+                {
+                    var dto = _rawMaterialTrack.GetPackageRMStock();
+
+                    List<RawMaterialTrackViewModel> viewModels = new List<RawMaterialTrackViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetPackageRMStockList", viewModels);
+
+                }
+
 
                 else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
                 {
@@ -5700,7 +5715,7 @@ namespace ERPWeb.Controllers
                         EntryUserId = a.EntryUserId
 
 
-                    }).ToList();
+                    }).Reverse().ToList();
                     List<CommisionOnProductViewModel> commisionOnProductViewModel = new List<CommisionOnProductViewModel>();
                     AutoMapper.Mapper.Map(dto, commisionOnProductViewModel);
                     return PartialView("_ProductCommision", commisionOnProductViewModel);
@@ -6520,13 +6535,13 @@ namespace ERPWeb.Controllers
             AutoMapper.Mapper.Map(details, detailDTOs);
             IsSuccess = _accessoriesPurchaseInfo.SaveAccessoriesPurchaseStock(infoDTO, detailDTOs, User.UserId);
 
-
+            ViewBag.ActiveTab = "active";
 
             return Json(IsSuccess);
         }
 
 
-        public ActionResult GetAccessoriesStockList(string flag)
+        public ActionResult GetAccessoriesStockList(string flag,long? id,string invoiceNo)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -6535,13 +6550,36 @@ namespace ERPWeb.Controllers
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                var dto =_accessoriesPurchaseInfo.GetAccessoriesStockList();
+                var dto =_accessoriesPurchaseInfo.GetAccessoriesStockList(invoiceNo);
 
 
                 List<AccessoriesPurchaseInfoViewModel> viewModels = new List<AccessoriesPurchaseInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_GetAccessoriesStockList", viewModels);
             }
+
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+            {
+                
+                var dto = _accessoriesPurchaseDetails.GetAccessoriesDetailsList(id??0);
+                
+
+                List<AccessoriesPurchaseDetailsViewModel> viewModels = new List<AccessoriesPurchaseDetailsViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetAccessoriesDetailsList", viewModels);
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag =="Direct")
+            {
+                var dto = _accessoriesTrackInfo.GetAccessoriesPurchaseStock();
+
+
+                List<AccessoriesTrackInfoViewModel> viewModels = new List<AccessoriesTrackInfoViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetAccessoriesPurchaseStock", viewModels);
+            }
+
 
             return View();
         }

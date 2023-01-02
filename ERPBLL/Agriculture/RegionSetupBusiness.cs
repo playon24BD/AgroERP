@@ -93,7 +93,7 @@ namespace ERPBLL.Agriculture
            select r.RegionName,d.DivisionName,r.Status,r.RegionId,r.DivisionId,r.OrganizationId from tblRegionInfos r
 inner join tblDivisionInfo d
 on r.DivisionId=d.DivisionId
-            where 1=1  {0}",
+            where 1=1  {0} order by r.RegionId desc",
             Utility.ParamChecker(param));
             return query;
         }

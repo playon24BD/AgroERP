@@ -21,5 +21,6 @@ namespace ERPBO.Agriculture.DTOModels
         public DateTime? UpdateDate { get; set; }
         public long? UpdateUserId { get; set; }
         public long AccessoriesPurchaseInfoId { get; set; }
+        public string AccessoriesName { get; set; }
     }
 }

@@ -55,7 +55,7 @@ namespace ERPBLL.Agriculture
            select t.OrganizationId,t.TerritoryName,a.AreaName,t.Status,t.TerritoryId,t.AreaId,t.OrganizationId from tblTerritoryInfos t
 inner join tblAreaSetup a
 on t.AreaId = a.AreaId
-            where 1=1  {0}",
+            where 1=1  {0} order by t.TerritoryId desc",
             Utility.ParamChecker(param));
             return query;
         }

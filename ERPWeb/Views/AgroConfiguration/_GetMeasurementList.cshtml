@@ -15,30 +15,39 @@
             </tr>
         </thead>
         <tbody>
-            
+
             @foreach (var item in Model)
             {
-                
+
                 sl++;
-            <tr>
-               
-                <td class="text-center">@sl</td>
-                <td class="hide">@item.MeasurementId</td>
-                <td class="text-center">@item.MeasurementName</td>
-                <td class="text-center">@item.PackageName </td>
-                <td class="hide">@item.MasterCarton</td>
-                <td class="hide">@item.InnerBox</td>
-                <td class="hide">@item.PackSize</td>
-                <td class="text-center hide">@item.UnitName</td>
-                <td class="hide">@item.UnitId</td>
-                <td class="text-center">@item.Status</td>
-                <td class="hide">@item.UnitKG</td>
-                <td class="text-center">
-                    <a href="#" class="dasedit-btn data-edit-item-measurement" style="line-height:1" data-edit-item-measurement="@item.MeasurementId"><i class="fa fa-pen"></i></a>
-                </td>
+                <tr>
 
-            </tr>
+                    <td class="text-center">@sl</td>
+                    <td class="hide">@item.MeasurementId</td>
+                    <td class="text-center">@item.MeasurementName</td>
+                    <td class="text-center">@item.PackageName </td>
+                    <td class="hide">@item.MasterCarton</td>
+                    <td class="hide">@item.InnerBox</td>
+                    <td class="hide">@item.PackSize</td>
+                    <td class="text-center hide">@item.UnitName</td>
+                    <td class="hide">@item.UnitId</td>
+                    <td class="text-center">@item.Status</td>
+                    <td class="hide">@item.UnitKG</td>
+                    <td class="text-center">
+                        <a href="#" class="dasedit-btn data-edit-item-measurement" style="line-height:1" data-edit-item-measurement="@item.MeasurementId"><i class="fa fa-pen"></i></a>
+                    </td>
 
+                </tr>
+
+            }
+
+            @if (Model.Count() == 0)
+            {
+                <tr class="text-center empty-row">
+                    <td colspan="12">
+                        No data found in the table
+                    </td>
+                </tr>
             }
 
 

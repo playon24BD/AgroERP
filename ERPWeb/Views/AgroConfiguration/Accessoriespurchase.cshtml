@@ -341,58 +341,64 @@
 
             if (validatesave()) {
 
-            if (true === true) {
+                if (true === true) {
 
-                bootbox.confirm("Are you sure you want to Save this", function (result) {
-                    if (result) {
-                        //alert("ok");
-                       // debugger;
-                        var totalsub = $('.totalsub').text();//initilize class total
+                    bootbox.confirm("Are you sure you want to Save this", function (result) {
+                        if (result) {
+                            //alert("ok");
+                            // debugger;
+                            var totalsub = $('.totalsub').text();//initilize class total
 
-                        var info = { RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0), InvoiceNo: ddlInvoiceNo.val(), InvoiceDate: ddlInvoiceDate.val(), TotalAmount: totalsub };
-                        var details = [];
-                        details.length = 0;
+                            var info = { RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0), InvoiceNo: ddlInvoiceNo.val(), InvoiceDate: ddlInvoiceDate.val(), TotalAmount: totalsub };
+                            var details = [];
+                            details.length = 0;
 
-                        $.each($("#tblPAccessories tbody tr"), function (index, item) {
-                            var tds = $(this).children('td');
-                            details.push({
-                                AccessoriesPurchaseDetailsId: 0,
-                                AccessoriesId: tds.eq(6).html(),
-                                UnitPrice: tds.eq(3).html(),
-                                Quantity: tds.eq(2).html(),
-                                SubTotal: tds.eq(4).html(),
-                            });
-                        })
+                            $.each($("#tblPAccessories tbody tr"), function (index, item) {
+                                var tds = $(this).children('td');
+                                details.push({
+                                    AccessoriesPurchaseDetailsId: 0,
+                                    AccessoriesId: tds.eq(6).html(),
+                                    UnitPrice: tds.eq(3).html(),
+                                    Quantity: tds.eq(2).html(),
+                                    SubTotal: tds.eq(4).html(),
+                                });
+                            })
 
 
-                        console.log(info);
-                        console.log(details);
+                            console.log(info);
+                            console.log(details);
 
-                        var data = JSON.stringify({ info: info, details: details });
-                        $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAccessoriespurchase', data, getToken())).then(function (res, status) {
-                            if (res === true) {
-                                //debugger;
-                                $('.toastrDefaultSuccess').trigger('click');
-                                setTimeout(function () {
-                                    @*redirectPage('@Url.Action("GetPRawmaterialStockList")');*@
-                                }, 1000);
-                                //resetUI();
-                            }
-                            else {
-                                $('.toastrDefaultError').trigger('click');
-                            }
-                            enable("#btnSubmit");
-                        }).fail(function (error) {
-                            alert(execuStatus.fail);
-                            enable("#btnSubmit");
-                        })
-                    }
-                    //clearCtrlSv();
-                })
+                            var data = JSON.stringify({ info: info, details: details });
+                            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveAccessoriespurchase', data, getToken())).then(function (res, status) {
+                                if (res === true) {
+                                    debugger;
+                                    $('.toastrDefaultSuccess').trigger('click');
+                                    setTimeout(function () {
+                                        redirectPage('@Url.Action("GetPRawmaterialStockList",new {tab= "NewAccessories" })');
+
+                                       
+                                    }, 1000);
+                                    //resetUI();
+                                }
+                                else {
+                                    $('.toastrDefaultError').trigger('click');
+                                }
+                                enable("#btnSubmit");
+                            }).fail(function (error) {
+                                alert(execuStatus.fail);
+                                enable("#btnSubmit");
+                            })
+                        }
+                        //clearCtrlSv();
+                    })
+                }
             }
-            }
 
-        })
+                function redirectPage(page) {
+                    window.location.replace(page);
+                }
+
+            })
 
 
 

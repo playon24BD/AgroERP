@@ -64,11 +64,11 @@ Where 1=1 ", Utility.ParamChecker(param));
         }
 
 
-        public IEnumerable<MeasurementSetupDTO> GetMeasurementListSearch(long? unitId, string status, long orgId)
+        public IEnumerable<MeasurementSetupDTO> GetMeasurementListSearch(long? unitId, string status,string  measurementName, long orgId)
         {
             try
             {
-                return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForAgroMasurment(unitId,status,orgId)).ToList();
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForAgroMasurment(unitId,status,measurementName,orgId)).ToList();
                 //return _measurmentRepository.GetAll(a => a.OrganizationId == orgId);
                 //return this._agricultureUnitOfWork.Db.Database.SqlQuery<MeasurementSetupDTO>(QueryForCheckUnit(orgId)).ToList();
             }
@@ -79,7 +79,7 @@ Where 1=1 ", Utility.ParamChecker(param));
             
         }
 
-        private string QueryForAgroMasurment(long? unitId, string status, long orgId)
+        private string QueryForAgroMasurment(long? unitId, string status,string measurementName, long orgId)
         {
             try
             {
@@ -92,12 +92,19 @@ Where 1=1 ", Utility.ParamChecker(param));
                     param += string.Format(@" and UnitId={0}", unitId);
                 }
 
+                if (!string.IsNullOrEmpty(measurementName))
+                {
+                    param += string.Format(@"and MeasurementName like '%{0}%'", measurementName);
+                }
+
                 if (!string.IsNullOrEmpty(status))
                 {
                     param += string.Format(@"and Status like '%{0}%'", status);
                 }
+
+
                 query = string.Format(@"SELECT * FROM PackageDetails	
-Where 1=1 {0}", Utility.ParamChecker(param));
+Where 1=1 {0} order by measurementId desc", Utility.ParamChecker(param));
 
                 return query;
             }

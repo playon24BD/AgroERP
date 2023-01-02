@@ -80,7 +80,7 @@ namespace ERPBLL.Agriculture
 from tblStockiestInfo s
 inner join tblTerritoryInfos t on s.TerritoryId=t.TerritoryId
 inner join tblAreaSetup a on s.AreaId=a.AreaId
-            where 1=1  {0}",
+            where 1=1 {0} order by s.StockiestId desc",
                 Utility.ParamChecker(param));
                 return query;
             }
