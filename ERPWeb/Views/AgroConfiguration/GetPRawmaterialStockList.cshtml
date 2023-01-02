@@ -16,9 +16,9 @@
     body {
         margin-top: 40px;
     }
+
     input::placeholder {
         font-weight: bold;
-        
     }
 
     .container {
@@ -27,7 +27,6 @@
         padding: 40px;
         border-radius: 6px;
     }
-
 </style>
 <div class="row text-sm p-0" style=" margin-top: -40px">
     <div class="col-md-12 p-0">
@@ -62,88 +61,86 @@
 
 
 
-            <div class="tab-content" id="custom-tabs-two-tabContent">
+        <div class="tab-content" id="custom-tabs-two-tabContent">
 
-                <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterialList" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialList-tab">
+            <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterialList" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialList-tab">
 
-                    <div class="row" style=" margin-top: -15px">
-                        <div class="col-md-12">
+                <div class="row" style=" margin-top: -15px">
+                    <div class="col-md-12">
 
-                            <div class="card" style="background-color:#001f3f">
-                                <div class="px-2 py-1">
-                                    <div class="row float-left">
+                        <div class="card" style="background-color:#001f3f">
+                            <div class="px-2 py-1">
+                                <div class="row float-left">
 
-                                        <div class="col-md-2">
+                                    <div class="col-md-2">
 
-                                            <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" autofocus/>
-                                        </div>
+                                        <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" autofocus />
+                                    </div>
 
-                                        <div class="col-md-2">
+                                    <div class="col-md-2">
 
-                                            <input type="text" class="form-control form-control-sm" id="searchByPO" placeholder="search PO" />
-                                        </div>
+                                        <input type="text" class="form-control form-control-sm" id="searchByPO" placeholder="search PO" />
+                                    </div>
 
-                                        <div class="col-md-2">
+                                    <div class="col-md-2">
 
-                                            <input type="text" class="form-control form-control-sm" id="searchByChallan" placeholder="search Challan" />
-                                        </div>
+                                        <input type="text" class="form-control form-control-sm" id="searchByChallan" placeholder="search Challan" />
+                                    </div>
 
-                                        <div class="col-md-3">
+                                    <div class="col-md-3">
 
-                                            @Html.DropDownList("ddlSupplierName1", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                                        @Html.DropDownList("ddlSupplierName1", (IEnumerable<SelectListItem>)ViewBag.ddlSupplierName, "--Select Supplier--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                    </div>
-                    <div class="row" style="margin-top:-5px">
-                        <div class="col-md-12" style="margin-top:-10px">
 
-                                    <div class="row">
-                                        <div class="col-md-12 text-sm text-sm" id="dataContainer">
-
-                                        </div>
-                                    </div>
-
-                        </div>
                     </div>
                 </div>
+                <div class="row" style="margin-top:-5px">
+                    <div class="col-md-12" style="margin-top:-10px">
 
+                        <div class="row">
+                            <div class="col-md-12 text-sm text-sm" id="dataContainer">
 
+                            </div>
+                        </div>
 
-                <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterial" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterial-tab">
-                    <div class="row mb-5">
-                        <div class="col-md-12" style="margin-top: -14px">
+                    </div>
+                </div>
+            </div>
+            @*Modify*@
+            <div class="tab-pane fade show " id="custom-tabs-two-pstockrawmaterial" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterial-tab">
+                <div class="row mb-5">
+                    <div class="col-md-12" style="margin-top: -14px">
 
-                            <div class="row " style="margin-top:-2px">
-                                <div class="col-md-12">
-                                    <div class="card mb-0" style="background-color:#001f3f">
-                                        <div class="px-2 py-1">
-                                            <div class="row align-items-center">
-                                                <div class="col-md-3">
+                        <div class="row " style="margin-top:-2px">
+                            <div class="col-md-12">
+                                <div class="card mb-0" style="background-color:#001f3f">
+                                    <div class="px-2 py-1">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-3">
 
-                                                </div>
-                                                <div class="col-md-6 text-center">
-                                                    <h6 class="text-center text-white text-bold">Purchase And RawMaterial Stock</h6>
-                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-center">
+                                                <h6 class="text-center text-white text-bold">Purchase And RawMaterial Stock</h6>
+                                            </div>
 
-                                                <div class="col-md-2">
-                                                </div>
-                                                <div class="col-md-1" style="margin-top:0px;">
+                                            <div class="col-md-2">
+                                            </div>
+                                            <div class="col-md-1" style="margin-top:0px;">
 
-                                                    <button type="submit" class="emnsave-btn" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
+                                                <button type="submit" class="emnsave-btn" id="saveButton" title="Save"><i class="fas fa-paper-plane"></i>Save</button>
 
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            @*addbodey*@
+                        @*addbodey*@
                         <div class="row pt-0">
                             <div class="col-md-6  pr-0">
                                 <div class="px-1 py-1" style="margin-bottom: 0px; background-color: #008B8B">
@@ -206,7 +203,7 @@
                                                                 <input type="text" placeholder="RM Code" id="ddlrmcode" name="qty" class="form-control form-control-sm" />
                                                                 <span class="error hide req-ddlrmcode">Code Is Required</span>
                                                             </div>
-                                                            <div class="col-md-1 pl-0 pr-0">
+                                                            <div class="col-md-1 pl-0 pr-0 ">
 
                                                                 <input type="text" id="ddlUnitName" placeholder="Unit" name="ddlUnitName" class="form-control form-control-sm" readonly />
                                                             </div>
@@ -219,10 +216,23 @@
                                                                 <span class="error hide req-uprice">Unit Price Is Required</span>
                                                             </div>
                                                             <div class="col-md-2 pr-0">
+                                                                <select id="ddlPriceUnit" class="form-control form-control-sm ">
+                                                                    <option value="0" selected>Select P Unit</option>
+                                                                    <option value="Ton">Ton [t]</option>
+                                                                    <option value="Kilogram">Kilogram [kg]</option>
+                                                                    <option value="Gram">Gram [g]</option>
+                                                                    <option value="Pcs">Pcs</option>
+                                                                    <option value="Liter">Liter</option>
+                                                                    <option value="Gallon">Gallon</option>
+                                                                </select>
+
+                                                                <span class="error hide req-ddlPriceUnit">Unit Price Is Required</span>
+                                                            </div>
+                                                            <div class="col-md-2 pr-0">
                                                                 <input type="number" placeholder="Qty" id="ddlqty" name="qty" class="form-control form-control-sm" />
                                                                 <span class="error hide req-qty">Qty Is Required</span>
                                                             </div>
-                                                            <div class="col-md-2 pr-0">
+                                                            <div class="col-md-2 pr-0 hide">
                                                                 <input type="number" id="ddlttprice" placeholder="Subtotal" name="ddlttprice" class="form-control form-control-sm" readonly />
                                                             </div>
 
@@ -289,7 +299,7 @@
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
-                                                <th class="totalqty">0</th>
+                                                <th class="totalqty hide">0</th>
                                                 <th class="totalsub">0</th>
                                                 <th></th>
                                             </tr>
@@ -300,117 +310,117 @@
                             </div>
                         </div>
 
-                            @*addbodey*@
+                        @*addbodey*@
 
 
 
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+
+
+            @*stock*@
+            <div class="tab-pane fade show active" id="custom-tabs-two-pstockrawmaterialqty" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialqty-tab">
+
+                <div class="row" style="margin-top:-15px">
+                    <div class="col-md-12">
+                        <div class="card" style="background-color:#001f3f">
+                            <div class="px-2 py-1">
+                                <div class="row text-sm">
+                                    <div class="col-3">
+                                        <h6 class="text-left  text-white mb-0" @*style="height:10px;text-align:center"*@>
+                                            RawMaterial Stock
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-md-2 float-right text-white">
+                                        <input type="text" class="form-control form-control-sm" id="searchByAnyy" placeholder="Search by any" autofocus />
+
+                                    </div>
+                                    <div class="col-3">
+
+                                    </div>
+
+
+                                </div>
+                            </div>
                         </div>
 
+                    </div>
+                </div>
+                <div class="row" style="margin-top:-5px">
+                    <div class="col-md-12" style="margin-top:-10px">
 
+                        <div class="row">
 
+                            <div class="col-md-12 text-sm text-sm" id="dataContainer3">
 
+                            </div>
+                        </div>
 
 
                     </div>
                 </div>
+            </div>
+            @*stock*@
 
+            <div class="tab-pane fade show " id="custom-tabs-two-accessoriesDetails" role="tabpanel" aria-labelledby="custom-tabs-two-accessoriesDetails-tab">
 
-                @*stock*@
-                <div class="tab-pane fade show active" id="custom-tabs-two-pstockrawmaterialqty" role="tabpanel" aria-labelledby="custom-tabs-two-pstockrawmaterialqty-tab">
-
-                    <div class="row" style="margin-top:-15px">
-                        <div class="col-md-12">
-                            <div class="card" style="background-color:#001f3f">
-                                <div class="px-2 py-1">
-                                    <div class="row text-sm">
-                                        <div class="col-3">
-                                            <h6 class="text-left  text-white mb-0" @*style="height:10px;text-align:center"*@>
-                                                RawMaterial Stock
-                                            </h6>
-                                        </div>
-
-                                        <div class="col-md-2 float-right text-white">
-                                            <input type="text" class="form-control form-control-sm" id="searchByAnyy" placeholder="Search by any" autofocus/>
-
-                                        </div>
-                                        <div class="col-3">
-
-                                        </div>
-
+                <div class="row" style="margin-top:-15px">
+                    <div class="col-md-12">
+                        <div class="card" style="background-color:#001f3f">
+                            <div class="px-2 py-1">
+                                <div class="row text-sm">
+                                    <div class="col-3">
+                                        <h6 class="text-left  text-white mb-0">
+                                            Accessories Details
+                                        </h6>
+                                    </div>
+                                    <div class="col-md-2">
 
                                     </div>
+                                    <div class="col-md-2 float-right text-white">
+                                        <input type="text" class="form-control form-control-sm" id="searchByAccessories" placeholder="Search by any" autofocus />
+
+                                    </div>
+
+                                    <div class="col-md-2">
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <a href="/AgroConfiguration/Accessoriespurchase" class="das2-btn float-lg-right"><i class="fa fa-plus"></i> Create Accessories</a>
+                                    </div>
+
                                 </div>
                             </div>
-
                         </div>
-                    </div>
-                    <div class="row" style="margin-top:-5px">
-                        <div class="col-md-12" style="margin-top:-10px">
 
-                                    <div class="row">
-
-                                        <div class="col-md-12 text-sm text-sm" id="dataContainer3">
-
-                                        </div>
-                                    </div>
-
-
-                        </div>
                     </div>
                 </div>
-                @*stock*@
 
-                <div class="tab-pane fade show " id="custom-tabs-two-accessoriesDetails" role="tabpanel" aria-labelledby="custom-tabs-two-accessoriesDetails-tab">
+                <div class="row" style="margin-top:-5px">
+                    <div class="col-md-12" style="margin-top:-10px">
 
-                    <div class="row" style="margin-top:-15px">
-                        <div class="col-md-12">
-                            <div class="card" style="background-color:#001f3f">
-                                <div class="px-2 py-1">
-                                    <div class="row text-sm">
-                                        <div class="col-3">
-                                            <h6 class="text-left  text-white mb-0">
-                                                Accessories Details
-                                            </h6>
-                                        </div>
-                                        <div class="col-md-2">
+                        <div class="row">
+                            <div class="col-md-12 text-sm text-sm" id="dataContainerAccessories">
 
-                                        </div>
-                                        <div class="col-md-2 float-right text-white">
-                                            <input type="text" class="form-control form-control-sm" id="searchByAccessories" placeholder="Search by any" autofocus />
-
-                                        </div>
-                                        
-                                        <div class="col-md-2">
-
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <a href="/AgroConfiguration/Accessoriespurchase" class="das2-btn float-lg-right"><i class="fa fa-plus"></i> Create Accessories</a>
-                                        </div>
-
-                                    </div>
-                                </div>
                             </div>
-
                         </div>
+
                     </div>
-
-                    <div class="row" style="margin-top:-5px">
-                        <div class="col-md-12" style="margin-top:-10px">
-
-                            <div class="row">
-                                <div class="col-md-12 text-sm text-sm" id="dataContainerAccessories">
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
-
 
             </div>
+
+
+        </div>
 
     </div>
 </div>
@@ -468,7 +478,7 @@
         var ddlSupplierName1 = $("#ddlSupplierName1");
         var searchByChallan = $("#searchByChallan");
         var searchByPO = $("#searchByPO");
-        
+
 
         //date
         var date = new Date();
@@ -671,13 +681,11 @@
 
 
 
-
+        var ddlPriceUnit = $("#ddlPriceUnit");
 
         $("#addTolist").click(function (e) {
-            //alert();
-            //debugger;
             e.preventDefault();
-
+            var isValid = true;
 
             if (validateAddToList()) {
 
@@ -685,14 +693,157 @@
                 toastrErrorAlert("Material Already Exist");
             }
             else {
+                var td6 = 0;
+                var td7 = 0;
+                var td5 = 0;
+                if (ddlPriceUnit.val() != 0) {
+                    if (ddlUnitName.val() == "kg") {
+
+                        if (ddlPriceUnit.val() == "Pcs") {
+                            alert("Conversion Faild, Please Try Again");
+                            isValid = false;
+
+                        }
+                        else {
+
+                            if (ddlPriceUnit.val() == "Ton") {
+
+                                var tqty = Number(ddlqty.val()) * 1000;
+                                alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                alert(stotal);
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+                                alert(stotal);
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                $('.totalsub').text(to);
+                            }
+                            else if (ddlPriceUnit.val() == "Kilogram") {
+                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                                $('.totalsub').text(to);
+
+
+                            }
+                            else if (ddlPriceUnit.val() == "Gram") {
+
+
+                                var tqty = Number(ddlqty.val()) * 0.001;
+                                alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
+
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * ddlqty.val());
+                                $('.totalsub').text(to);
+
+                            }
+
+                        }
+
+
+                    }
+                    else if (ddlUnitName.val() == "Pcs") {
+                        if (ddlUnitName.val() == "Pcs" && ddlPriceUnit.val() != "Pcs") {
+
+                            alert("Conversion Faild, Please Try Again");
+                            isValid = false;
+
+                        }
+                        else {
+                            td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                            td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                            td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
+                            to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                            $('.totalsub').text(to);
+
+
+                        }
+
+
+                    }
+                    else if (ddlUnitName.val() == "ml") {
+                        if (ddlPriceUnit.val() == "Pcs") {
+                            alert("Conversion Faild, Please Try Again");
+                            isValid = false;
+                        }
+                        else {
+
+                            if (ddlPriceUnit.val() == "Liter") {
+                                alert("here me");
+
+
+                                var tqty = Number(ddlqty.val()) * 1000;
+                                alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * tqty + "</td>";
+
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * tqty);
+                                $('.totalsub').text(to);
+
+
+                            }
+                            else if (ddlPriceUnit.val() == "Gallon") {
+
+                                var tqty = Number(ddlqty.val()) * 3785;
+                                alert(tqty);
+                                var stotal = ddlttprice.val() * tqty;
+                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";//per price
+
+                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * tqty + "</td>";
+
+
+                                to = parseFloat($('.totalsub').text()) + parseFloat(ddluprice.val() * tqty);
+                                $('.totalsub').text(to);
+
+                            }
+                            else {
+
+                            }
+
+
+                        }
+
+                    }
+                    else {
+
+
+                    }
+
+
+
+
+                }
+                else {
+                    td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                    td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                    td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
+                     to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                     $('.totalsub').text(to);
+                }
+
                 var sl = $("#tblPstockrawmaterial tbody tr").length;
                 var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
                 var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterial") + "</td>";
                 var td3 = "<td class='text-center'>" + ddlrmcode.val() + "</td>";
                 var td4 = "<td class='text-center'>" + ddlUnitName.val() + "</td>";
-                var td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
-                var td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
-                var td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
+              //  var td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+
+
+              //  var td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
                 var td8 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlttprice.val() + "' data-quentaty='" + ddlqty.val() +"'><i class='far fa-trash-alt'></i></a></td>";
 
                 var td9 = "<td class='text-center hide'>" + ddlRawMaterial.val() + "</td>";
@@ -704,8 +855,8 @@
 
 
                 //totalprice
-                to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
-                $('.totalsub').text(to);
+                //to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
+                //$('.totalsub').text(to);
                 console.log(to);
                 //totalprice
                 //tqty
@@ -714,18 +865,25 @@
                 console.log(to1);
                 //tqty
 
+                if (isValid) {
+                    $("#tblPstockrawmaterial tbody").append(tr);
+                    ddlRawMaterialList.push(ddlRawMaterial.val());
+                    $("#saveButton").show();
 
-
-                $("#tblPstockrawmaterial tbody").append(tr);
-                ddlRawMaterialList.push(ddlRawMaterial.val());
-                $("#saveButton").show();
-
+                    clearCtrlStk();
                 }
-                clearCtrlStk();
+                
+
+
+            }
+              
         }
 
         })
 
+        function conversion() {
+
+        }
 
         //save
         $("#saveButton").click(function (e) {
