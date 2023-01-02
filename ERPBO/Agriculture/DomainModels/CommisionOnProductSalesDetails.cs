@@ -33,5 +33,6 @@ namespace ERPBO.Agriculture.DomainModels
         public DateTime? UpdateDate { get; set; }
         public long UpdateUserId { get; set; }
         public long OrganizationId { get; set; }
+       // public double CheckCommission { get; set; }
     }
 }
