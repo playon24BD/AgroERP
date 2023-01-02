@@ -37,6 +37,7 @@ namespace ERPBO.Agriculture.DTOModels
 
         public long AccessoriesId { get; set; }
         public double AccessoriesQuanity { get; set; }
+        public string AccessoriesName { get; set; }
 
     }
 }

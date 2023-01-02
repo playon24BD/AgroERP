@@ -3551,7 +3551,7 @@ namespace ERPWeb.Controllers
                     ViewBag.ddlRawMaterial = _rawMaterialBusiness.GetRawMaterials(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialName, Value = a.RawMaterialId.ToString() });
                     //ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
                     //ViewBag.ddlUnitName = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() });
-                    ViewBag.ddlSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialSupplierName, Value = a.RawMaterialSupplierId.ToString() });
+                    ViewBag.ddlSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialSupplierName, Value = a.RawMaterialSupplierId.ToString() }).ToList();
 
 
                     ViewBag.tab = tab;

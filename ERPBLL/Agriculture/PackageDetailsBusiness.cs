@@ -47,14 +47,14 @@ namespace ERPBLL.Agriculture
             query = string.Format(@"
 
 select 
-d.PackageId,i.FinishGoodProductName,m.MeasurementName,
+d.AccessoriesId,d.PackageId,i.FinishGoodProductName,m.MeasurementName,a.AccessoriesName,
 Rate=(d.Amount/d.Quanity),
 d.Quanity,d.Status,d.Amount,d.EntryDate
 from tblPackageDetails d
-inner join tblFinishGoodProductInfo i on d.FinishGoodProductId=i.FinishGoodProductId
-inner join tblMeasurement m on d.MeasurementId=m.MeasurementId
+left join tblFinishGoodProductInfo i on d.FinishGoodProductId=i.FinishGoodProductId
+left join tblMeasurement m on d.MeasurementId=m.MeasurementId
+left join tblAccessoriesInfo a on a.AccessoriesId=d.AccessoriesId
 
- 
 where 1=1 {0}", Utility.ParamChecker(param));
 
             return query;

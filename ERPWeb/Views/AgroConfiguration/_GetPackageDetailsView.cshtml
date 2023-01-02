@@ -26,30 +26,77 @@
                 @foreach (var item in Model)
                 {
                     SL = SL + 1;
-                    <tr>
-                        <td class="text-center text-bold">@SL</td>
-                        <td class="text-center">@item.FinishGoodProductName</td>
-                        <td class="text-center">@item.MeasurementName</td>
-                        <td class="text-center">@item.Quanity</td>
-                        <td class="text-center">@item.Rate</td>
-                        <td class="text-center">@item.Status</td>
-                        <td class="text-center">@item.Amount</td>
-                        <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
-                        
-                    </tr>
+                    if (item.AccessoriesId == 0)
+                    {
+
+                        <tr>
+                            <td class="text-center text-bold">@SL</td>
+                            <td class="text-center">@item.FinishGoodProductName</td>
+                            <td class="text-center">@item.MeasurementName</td>
+                            <td class="text-center">@item.Quanity</td>
+                            <td class="text-center">@item.Rate</td>
+                            <td class="text-center">@item.Status</td>
+                            <td class="text-center">@item.Amount</td>
+                            <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
+
+                        </tr>
+                    }
                 }
 
-                @if (Model.Count() == 0)
+                @*@if (Model.Count() == 0)
                 {
                     <tr class="text-center empty-row">
                         <td colspan="12">
                             No Rows Found in the table
                         </td>
                     </tr>
-                }
+                }*@
 
             </tbody>
         </table>
+
+        <table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" style="margin-bottom: 0px; margin-top:5px">
+           
+
+                <tr style="width: 100%; background-color: lightseagreen ">
+                    <td class="text-center text-white text-bold" style="width:100%">Accessories</td>
+                </tr>
+           
+        </table>
+
+        <table class="table table-bordered table-striped table-sm table-responsive-lg text-sm " id="tblPackage">
+            <thead class="thead-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">SL</th>
+                    <th style="vertical-align:middle">Accessories Name</th>
+                    <th style="vertical-align:middle">Quantity</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    if (item.AccessoriesId != 0)
+                    {
+
+                        <tr>
+                            <td class="text-center text-bold">@SL</td>
+
+                            <td class="text-center">@item.AccessoriesName</td>
+                            <td class="text-center">@item.Quanity</td>
+
+                        </tr>
+
+                    }
+
+                }
+            </tbody>
+        </table>
+
+
+
+
     </div>
 
 

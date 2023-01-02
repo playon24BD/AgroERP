@@ -35,6 +35,7 @@ namespace ERPBO.Agriculture.ViewModels
 
         public long AccessoriesId { get; set; }
         public double AccessoriesQuanity { get; set; }
+        public string AccessoriesName { get; set; }
 
     }
 }
