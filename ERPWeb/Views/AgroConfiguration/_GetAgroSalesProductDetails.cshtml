@@ -4,6 +4,7 @@
     ViewBag.Title = "_GetAgroSalesProductionDetails";
     int sl = 0;
     var info = (ERPBO.Agriculture.ViewModels.AgroProductSalesInfoViewModel)ViewBag.Info;
+ 
 }
 
 
@@ -205,28 +206,27 @@
 </table>
 
 
-<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm " id="tblReturnItemss">
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm " id="tblAccessoriesList">
     <thead class="thead-dark">
         <tr class="text-center">
             <th>#SL</th>
             <th>Accessories Name</th>
             <th>Quantity</th>
+            @*<th class="hide">AccessoriesId</th>*@
             
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var access in ViewBag.detailsAccessories)
         {
             sl = sl + 1;
-            if (item.ProductSalesInfoId != 0)
+            if (access.ProductSalesInfoId != 0)
             {
 
                     <tr >
                         <td class="text-center">@sl</td>
-                        <td class="text-center">@item.AccessoriesName</td>
-                        <td class="text-center">@item.Quanity</td>
-                        
-
+                        <td class="text-center">@access.AccessoriesName</td>
+                        <td class="text-center">@access.Quanity</td>
                     </tr>
 
                

@@ -653,6 +653,7 @@
 
 
         $(document).ready(function () {
+
             if ($("#tab").val() == 'pstockrawmaterialList') {
                 $("#custom-tabs-two-pstockrawmaterialList").addClass('active');
                 $("#custom-tabs-two-pstockrawmaterialList-tab").addClass('active');
@@ -683,6 +684,29 @@
             LoadAccessoriesStock();
 
         })
+
+        $(document).ready(function () {
+
+            if ($("#tab").val() == 'Purchase Details') {
+                $("#custom-tabs-two-pstockrawmaterialList").addClass('active');
+                $("#custom-tabs-two-pstockrawmaterialList-tab").addClass('active');
+
+                $("#custom-tabs-two-pstockrawmaterialqty-tab").removeClass('active');
+                $("#custom-tabs-two-pstockrawmaterialqty").removeClass('active');
+
+            }
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+
+        })
+
+
+
 
         function LoadDataInitializer() {
 
@@ -1342,8 +1366,10 @@
                                 //debugger;
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
-                                    //redirectPage('@Url.Action("GetPRawmaterialStockList")');
-                                    redirectPage('@Url.Action("GetPRawmaterialStockList",new {tab= "pstockrawmaterialList" })');
+
+                                    @*redirectPage('@Url.Action("GetPRawmaterialStockList")');*@
+                                    
+                                    redirectPage('@Url.Action("GetPRawmaterialStockList", new { tab = "Purchase Details" })');
                                 }, 1000);
                                 //resetUI();
                             }

@@ -25,5 +25,6 @@ namespace ERPBO.Agriculture.ViewModels
         public double StockOut { get; set; }
         public double TotalStock { get; set; }
         public string AccessoriesName { get; set; }
+        public double Quanity { get; set; }
     }
 }

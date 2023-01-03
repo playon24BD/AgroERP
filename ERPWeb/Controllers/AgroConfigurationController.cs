@@ -2743,12 +2743,16 @@ namespace ERPWeb.Controllers
 
                     var details = _agroProductSalesDetailsBusiness.GetSalesDetailsByInfoId(id.Value);
 
-                    // var detailspackage = _agroProductSalesDetailsBusiness.GetSalesDetailsByPackageProduct(id.Value);
 
-                    var detailsAccessories = _agroProductSalesDetailsBusiness.GetSalesDetailsAccessories(id.Value);
+
+                    ViewBag.detailsAccessories = _agroProductSalesDetailsBusiness.GetSalesDetailsAccessories(id.Value);
+
+
 
                     List<AgroProductSalesDetailsViewModel> detailsvm = new List<AgroProductSalesDetailsViewModel>();
+                   
                     AutoMapper.Mapper.Map(details, detailsvm);
+                   
                     return PartialView("_GetAgroSalesProductDetails", detailsvm);
 
                 }
@@ -3692,7 +3696,7 @@ namespace ERPWeb.Controllers
             AutoMapper.Mapper.Map(details, detailDTOs);
             IsSuccess = _pRawMaterialStockInfo.SaveRawMaterialPurchaseStock(infoDTO, detailDTOs, User.UserId, User.OrgId);
 
-
+            ViewBag.ActiveTab = "active";
 
             return Json(IsSuccess);
         }

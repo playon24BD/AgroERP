@@ -434,7 +434,7 @@ where 1=1 {0} and d.PackageId != 0 and d.Status is null", Utility.ParamChecker(p
                 query = string.Format(@"	
         
                 
-select distinct ai.AccessoriesName,ai.accessoriesId,si.ProductSalesInfoId,ti.Quantity from tblAccessoriesTrackInfo ti
+select distinct ai.AccessoriesName,ai.accessoriesId,si.ProductSalesInfoId,ti.Quantity as Quanity from tblAccessoriesTrackInfo ti
 left join tblProductSalesInfo si on si.ProductSalesInfoId=ti.ProductSalesInfoId
 left join tblAccessoriesInfo ai on ti.AccessoriesId=ai.AccessoriesId
 
