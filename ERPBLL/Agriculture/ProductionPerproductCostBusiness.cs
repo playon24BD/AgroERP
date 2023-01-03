@@ -56,7 +56,7 @@ select fp.FinishGoodProductName,fr.FGRQty,un.UnitName,pc.PerProductRMtotalCost,p
 inner join tblFinishGoodProductInfo fp on pc.FinishGoodProductId=fp.FinishGoodProductId
 inner join tblFinishGoodRecipeInfo fr on pc.FGRId=fr.FGRId
 inner join tblAgroUnitInfo un on fr.UnitId=un.UnitId
-            where 1=1  {0} ",
+            where 1=1  {0} order by pc.ProductionPerproductCostId desc",
             Utility.ParamChecker(param));
                 return query;
             }

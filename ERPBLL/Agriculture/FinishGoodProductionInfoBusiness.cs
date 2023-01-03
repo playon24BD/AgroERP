@@ -287,7 +287,7 @@ inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodP
 inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId
 inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
 inner join tblMeasurement m on m.MeasurementId=fgp.MeasurementId
-      where 1=1  {0}",
+      where 1=1  {0} order by m.MeasurementId desc",
                 Utility.ParamChecker(param));
                 return query;
             }
@@ -702,7 +702,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                     param += string.Format(@" and Cast(fgp.EntryDate as date)='{0}'", tDate);
                 }
 
-                query = string.Format(@"select Distinct todate='" + fromDate + "', fromDate='" + toDate + "', fgp.FinishGoodProductId ,fgp.FGRId ,CONCAT(p.FinishGoodProductName,' ', fr.FGRQty,' ( ',un.UnitName,')') as FinishGoodProductName ,convert(date, fgp.EntryDate) as EntryDate,fgp.FinishGoodProductionBatch,fr.ReceipeBatchCode,CONCAT( fr.FGRQty,' ( ',un.UnitName,')') AS ProductDetails,ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0) ,SalesTotal =isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0) ,ReturnTotal = isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) ,CurrentPices=isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) from FinishGoodProductionInfoes fgp inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId where 1=1 {0}", Utility.ParamChecker(param));
+                query = string.Format(@"select Distinct todate='" + fromDate + "', fromDate='" + toDate + "', fgp.FinishGoodProductId ,fgp.FGRId ,CONCAT(p.FinishGoodProductName,' ', fr.FGRQty,' ( ',un.UnitName,')') as FinishGoodProductName ,convert(date, fgp.EntryDate) as EntryDate,fgp.FinishGoodProductionBatch,fr.ReceipeBatchCode,CONCAT( fr.FGRQty,' ( ',un.UnitName,')') AS ProductDetails,ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0) ,SalesTotal =isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0) ,ReturnTotal = isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) ,CurrentPices=isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0) from FinishGoodProductionInfoes fgp inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId where 1=1 {0} order by fgp.FGRId desc", Utility.ParamChecker(param));
                 return query;
             }
             catch (Exception)
@@ -746,7 +746,7 @@ inner join tblFinishGoodProductInfo info on infoes.FinishGoodProductId=info.Fini
 inner join tblMeasurement m on m.MeasurementId=infoes.MeasurementId
 
 
-where 1=1 {0}", Utility.ParamChecker(param));
+where 1=1 {0} order by infoes.FinishGoodProductInfoId desc", Utility.ParamChecker(param));
             return query;
 
         }

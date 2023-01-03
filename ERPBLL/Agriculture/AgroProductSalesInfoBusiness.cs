@@ -1048,7 +1048,7 @@ inner join tblFinishGoodProductInfo fpi on sr.FinishGoodProductInfoId = fpi.Fini
 inner join tblStockiestInfo st on sr.StockiestId = st.StockiestId
 
 
-Where 1=1 {0}", Utility.ParamChecker(param));
+Where 1=1 {0} order by sr.ProductSalesInfoId desc", Utility.ParamChecker(param));
 
                 return query;
 

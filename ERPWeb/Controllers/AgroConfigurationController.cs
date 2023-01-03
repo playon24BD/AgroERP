@@ -5801,7 +5801,7 @@ namespace ERPWeb.Controllers
             {
                 if (string.IsNullOrEmpty(flag))
                 {
-                    ViewBag.ddlInvoiceNo = _agroProductSalesInfoBusiness.GetAgroProductionSalesInfo(User.OrgId).Select(inv => new SelectListItem { Text = inv.InvoiceNo, Value = inv.InvoiceNo.ToString() });
+                    ViewBag.ddlInvoiceNo = _agroProductSalesInfoBusiness.GetAgroProductionSalesInfo(User.OrgId).Select(inv => new SelectListItem { Text = inv.InvoiceNo, Value = inv.InvoiceNo.ToString() }).ToList();
                     ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
                     return View();
@@ -5824,7 +5824,7 @@ namespace ERPWeb.Controllers
                         EntryDate = c.EntryDate
 
 
-                    }).ToList();
+                    }).Reverse().ToList();
                     List<CommisionOnProductSalesDetailsViewModel> productOnSalesViewModels = new List<CommisionOnProductSalesDetailsViewModel>();
                     AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
 
@@ -5850,7 +5850,7 @@ namespace ERPWeb.Controllers
 
 
 
-                    }).ToList();
+                    }).Reverse().ToList();
                     List<CommissionOnProductOnSalesViewModel> productOnSalesViewModels = new List<CommissionOnProductOnSalesViewModel>();
                     AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
 

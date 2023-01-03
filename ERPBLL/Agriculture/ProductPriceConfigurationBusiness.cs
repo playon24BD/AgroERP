@@ -51,7 +51,7 @@ namespace ERPBLL.Agriculture
                 }
                 query = string.Format(@"select p.UpdateDate,p.UpdateUser,fn.FinishGoodProductName,fn.FinishGoodProductId,p.FGRId,p.ProductPriceConfigurationId,p.ProductPrice,p.Flag,p.EntryDate,p.EntryUser from tblProductPriceConfiguration p
 inner join tblFinishGoodProductInfo fn on p.FinishGoodProductId=fn.FinishGoodProductId
-Where 1=1 {0}", Utility.ParamChecker(param));
+Where 1=1 {0} order by p.ProductPriceConfigurationId desc", Utility.ParamChecker(param));
 
                 return query;
             }

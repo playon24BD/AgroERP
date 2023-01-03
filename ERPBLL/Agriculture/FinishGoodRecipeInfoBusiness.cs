@@ -113,7 +113,7 @@ namespace ERPBLL.Agriculture
                  FROM [Agriculture].dbo.tblFinishGoodRecipeInfo fgr
                  INNER JOIN [Agriculture].dbo.tblFinishGoodProductInfo fg on fgr.FinishGoodProductId=fg.FinishGoodProductId 
 inner join tblAgroUnitInfo unit on unit.UnitId=fgr.UnitId	
-Where 1=1 {0}", Utility.ParamChecker(param));
+Where 1=1  {0} order by fgr.FGRId desc", Utility.ParamChecker(param));
 
                 return query;
             }

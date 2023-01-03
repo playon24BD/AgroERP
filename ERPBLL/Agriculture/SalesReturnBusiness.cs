@@ -278,7 +278,7 @@ inner join [Agriculture].[dbo]. tblFinishGoodProductInfo f on sr.FinishGoodProdu
 inner join [Agriculture].[dbo]. tblStockiestInfo s on sr.StockiestId=s.StockiestId
 
 
-Where 1=1 {0}", Utility.ParamChecker(param));
+Where 1=1 {0} order by sr.SalesReturnId desc", Utility.ParamChecker(param));
 
                 return query;
             }

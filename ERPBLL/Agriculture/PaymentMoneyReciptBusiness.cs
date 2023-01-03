@@ -236,7 +236,7 @@ SELECT PMR.PaymentMoneyReciptId,PMR.MoneyReciptNo,PMR.StockiestId,f.StockiestNam
  INNER JOIN  tblStockiestInfo f
  on PMR.StockiestId=f.StockiestId
  
-where 1=1 {0}
+where 1=1 {0} order by PMR.PaymentMoneyReciptId desc
 
 ", Utility.ParamChecker(param));
 
