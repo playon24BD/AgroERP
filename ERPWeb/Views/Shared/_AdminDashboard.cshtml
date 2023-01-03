@@ -1,7 +1,12 @@
 ﻿@model IEnumerable<ERPBO.ControlPanel.ViewModels.UserMainMenuViewModel>
 
 <!DOCTYPE html>
+<style>
 
+    .ggg {
+        display: none !important;
+    }
+</style>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -83,10 +88,10 @@
                             <b style="color: #000000;">@User.BranchName Branch</b>
                         </span>  &nbsp;
                         @*<span class="my-btn">
-            <span class="my-btn-border"></span>
-            <i class="fas fa-bell btn-bell"></i>
-            <span class="icon-button__badge">2</span>
-        </span>*@
+                                <span class="my-btn-border"></span>
+                                <i class="fas fa-bell btn-bell"></i>
+                                <span class="icon-button__badge">2</span>
+                            </span>*@
                         |
                     </a>
                 </li>
@@ -147,44 +152,44 @@
                 <div class="sidebar">
                     <!-- Sidebar user panel (optional) -->
                     <!--<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">-->
+                    <div class="image">-->
                     @*<img src="~/wwwroot/assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">*@
                     <!--<img class="profile-user-img img-fluid img-circle"
-                 src="~/Content/dist/img/userIcon.png"
-                 alt="User profile picture">
-        </div>
-        <div class="info">
-            <a href="#" class="d-block">@User.UserName</a>
-        </div>
-    </div>-->
+                                 src="~/Content/dist/img/userIcon.png"
+                                 alt="User profile picture">
+                        </div>
+                        <div class="info">
+                            <a href="#" class="d-block">@User.UserName</a>
+                        </div>
+                    </div>-->
                     <!-- SidebarSearch Form -->
                     @*<div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>*@
+                            <div class="input-group" data-widget="sidebar-search">
+                                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-sidebar">
+                                        <i class="fas fa-search fa-fw"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>*@
                     <div class="form-inline">
 
                         <div class="input-group">
                             @*<button type="button" class="form-control form-control-sidebar btn btn-light">DashBoard</button>*@
                             <a href="/User/Index" style="background-image: linear-gradient(0deg, rgba(240,255,255,1) 0%, rgba(45,228,253,1) 100%); " class="form-control form-control-sidebar btn text-bold btn-light" id="btnAddNew">Dashboard</a>
                         </div>
-                           
+
 
                     </div>
 
-                        <!-- Sidebar Menu -->
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            { Html.RenderAction("GetUserMenus", "Common"); }
-                        }
-                        <!-- /.sidebar-menu -->
-                    </div>
+                    <!-- Sidebar Menu -->
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        { Html.RenderAction("GetUserMenus", "Common"); }
+                    }
+                    <!-- /.sidebar-menu -->
+                </div>
                 <!-- /.sidebar -->
             </aside>
 
@@ -194,7 +199,7 @@
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750" id="reloadm">
-                <div class="nav navbar navbar-expand  border-bottom p-0 bg-white">
+                <div class="nav navbar navbar-expand  border-bottom p-0 bg-white ggg">
                     <div class="nav-item dropdown">
                         <a class="nav-link bg-danger dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Close</a>
                         <div class="dropdown-menu mt-0" style="color: #000000;">
@@ -202,13 +207,13 @@
                             <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all-other">Close All Other</a>
                         </div>
                     </div>
-                    <a class="nav-link bg-light" style="background-image: linear-gradient(0deg, rgba(240,255,255,1) 0%, rgba(45,228,253,1) 100%); " href="#" data-widget="iframe-scrollleft" ><i class="fas fa-angle-double-left" style="color: #000000;" ></i></a>
+                    <a class="nav-link bg-light" style="background-image: linear-gradient(0deg, rgba(240,255,255,1) 0%, rgba(45,228,253,1) 100%); " href="#" data-widget="iframe-scrollleft"><i class="fas fa-angle-double-left" style="color: #000000;"></i></a>
                     @*<a class="nav-link bg-light" href="#" onclick="history.back();"><i class="fas fa-angle-left"></i></a>*@
-                    <ul class="navbar-nav overflow-hidden"  role="tablist"></ul>
+                    <ul class="navbar-nav overflow-hidden" role="tablist"></ul>
 
                     @*<a class="nav-link bg-light" href="#" onclick="myfunction2()"><i class="fas fa-redo-alt"></i></a>*@
-                    <a class="nav-link bg-light" style="background-image: linear-gradient(0deg, rgba(240,255,255,1) 0%, rgba(45,228,253,1) 100%); "  href="#" data-widget="iframe-scrollright"><i class="fas fa-angle-double-right" style="color: #000000;"></i></a>
-                    <a class="nav-link bg-light" style="background-image: linear-gradient(0deg, rgba(240,255,255,1) 0%, rgba(45,228,253,1) 100%); "  href="#" data-widget="iframe-fullscreen"><i class="fas fa-expand" style="color: #000000;"></i></a>
+                    <a class="nav-link bg-light" style="background-image: linear-gradient(0deg, rgba(240,255,255,1) 0%, rgba(45,228,253,1) 100%); " href="#" data-widget="iframe-scrollright"><i class="fas fa-angle-double-right" style="color: #000000;"></i></a>
+                    <a class="nav-link bg-light" style="background-image: linear-gradient(0deg, rgba(240,255,255,1) 0%, rgba(45,228,253,1) 100%); " href="#" data-widget="iframe-fullscreen"><i class="fas fa-expand" style="color: #000000;"></i></a>
 
                 </div>
                 <div class="tab-content">
@@ -231,12 +236,12 @@
 
 
         <!--<footer class="main-footer fixed-bottom text-sm">-->
-            <!-- To the right -->
-            <!--<div class="float-right d-none d-sm-inline ">
-                Developed &amp; Maintained By <a href="http://playon24.com.bd/" target="_blank">PlayOn24</a>
-            </div>-->
-            <!-- Default to the left -->
-            <!--<strong>Copyright &copy; 2020 -</strong> All rights reserved.
+        <!-- To the right -->
+        <!--<div class="float-right d-none d-sm-inline ">
+            Developed &amp; Maintained By <a href="http://playon24.com.bd/" target="_blank">PlayOn24</a>
+        </div>-->
+        <!-- Default to the left -->
+        <!--<strong>Copyright &copy; 2020 -</strong> All rights reserved.
         </footer>-->
 
         @if (User.Identity.IsAuthenticated)
@@ -612,11 +617,11 @@
         });
 
 
-                                        //$(document).on('click', 'li', function () {
-                                        //    alert();
-                                        //    debugger;
-                                        //    $(this).addClass('active')
-                                        //})
+                                            //$(document).on('click', 'li', function () {
+                                            //    alert();
+                                            //    debugger;
+                                            //    $(this).addClass('active')
+                                            //})
     </script>
 
     @*@RenderSection("Scripts", required: false)*@

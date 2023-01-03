@@ -68,7 +68,7 @@
                                     <option value="Cash">Cash</option>
                                     <option value="Cheque">Cheque</option>
                                 </select>
-                                <span class="error hide req-ddlPaymentMode">ddlPaymentMode Is Required</span>
+                                <span class="error hide req-ddlPaymentMode">Please Select Payment Mode</span>
                             </div>
                             <div class="col-md-2" id="divAccountNumber">
                                 <label for="ddlAccountNumber" class="control-label">Account Number</label>
@@ -185,9 +185,11 @@
          $("#saveButton").click(function (e) {
             //alert();
             debugger;
-            e.preventDefault();
+             e.preventDefault();
 
-            var details = [];
+             if (validates() == true)
+             {
+                             var details = [];
             details.length = 0;
              $.each($("#tblAgroSalesProductList tbody tr"), function (index, item) {
                 var tds = $(this).children('td');
@@ -207,25 +209,17 @@
              var data = JSON.stringify({ info: info, details: details });
 
              $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveProSalesPayment', data, getToken())).then(function (res, status) {
-                 @*debugger;
-                if (res === true) {
-
-                    $('.toastrDefaultSuccess').trigger('click');
-                    setTimeout(function () {
-                        redirectPage('@Url.Action("SalesPaymentCreate")');
-                    }, 1000);
-                }*@
 
                             debugger;
                             if (res.isSucccess === true) {
                                 $('.toastrDefaultSuccess').trigger('click');
                                 var moneyRecipt = res.File;
                                 window.open('/AgroConfiguration/MoneyReciptReport?moneyRecipt=' + moneyRecipt, '_blank');
-                               
+
                                 setTimeout(function () {
                                     redirectPage('@Url.Action("SalesPaymentCreate")');
                                 }, 500);
-                              
+
                             }
 
                 else {
@@ -241,9 +235,26 @@
                 window.location.replace(page);
             }
 
+             }
+
+
+
+
         });
 
 
+        function validates() {
+            debugger;
+            var isValid = true;
+            $(".error").addClass('hide');
+
+            if (ddlPaymentMode.val() === "") {
+                $(".req-ddlPaymentMode").removeClass('hide');
+                isValid = false;
+            }
+
+            return isValid;
+        }
 
 
     </script>

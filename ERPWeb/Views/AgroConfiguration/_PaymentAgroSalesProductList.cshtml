@@ -47,6 +47,7 @@
                 <td class="text-center">@item.DueAmount</td>
                 <td class="text-center" style="width:15%">
                     <input type="number" class="text-center paidamount form-control form-control-sm " value="0" />
+                    <span class="error hide">Paid Amount mustbe lessthen or equal Due Aamount </span>
                 </td>
                 <td class="text-center" style="width:15%">
                     <input type="number" class="text-center commision form-control form-control-sm " value="0" />
@@ -93,3 +94,31 @@
         <td colspan="1"></td>
     </tr>
 </table>
+
+
+<script type="text/javascript">
+
+
+    var paidamount = $(".paidamount");
+
+
+
+
+    paidamount.on('change', function () {
+            //alert();
+            var dueamount = $(this).parent().parent().find("td:eq(6)").text();
+            var thisamoynt = $(this).val();
+            if (Number(thisamoynt) <= Number(dueamount))
+            {
+
+                $(this).parent().children("span").addClass("hide");
+            }
+            else {
+
+                $(this).parent().children("span").removeClass("hide");
+            }
+
+
+        });
+
+</script>
