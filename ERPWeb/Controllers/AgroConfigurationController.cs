@@ -3641,9 +3641,10 @@ namespace ERPWeb.Controllers
                         details = _pRawMaterialStockIDetails.GetRawMatwrialPurchaseDetailsByInfoId(id.Value).Select(i => new PRawMaterialStockIDetailsViewModel
                         {
                             RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
-                            UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
-                            Quantity = i.Quantity,
-                            UnitPrice = i.UnitPrice,
+                            //UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
+                            UnitName =i.CUnitName,
+                            Quantity = i.CQty,
+                            UnitPrice = i.CPrice,
                             SubTotal = i.SubTotal,
                             StockDate = i.StockDate
 

@@ -214,7 +214,7 @@
                                                                 <input type="text" placeholder="RM Code" id="ddlrmcode" name="qty" class="form-control form-control-sm" />
                                                                 <span class="error hide req-ddlrmcode">Code Is Required</span>
                                                             </div>
-                                                            <div class="col-md-1 pl-0 pr-0 ">
+                                                            <div class="col-md-1 pl-0 pr-0 hide">
 
                                                                 <input type="text" id="ddlUnitName" placeholder="Unit" name="ddlUnitName" class="form-control form-control-sm" readonly />
                                                             </div>
@@ -222,10 +222,7 @@
                                                                 <input type="text" id="ddlUnitID" name="ddlUnitID" class="form-control form-control-sm" readonly />
                                                             </div>
 
-                                                            <div class="col-md-2 pr-0">
-                                                                <input type="number" placeholder="U.Price" id="ddluprice" name="uprice" class="form-control form-control-sm" />
-                                                                <span class="error hide req-uprice">Unit Price Is Required</span>
-                                                            </div>
+
                                                             <div class="col-md-2 pr-0">
                                                                 <select id="ddlPriceUnit" class="form-control form-control-sm ">
                                                                     <option value="0" selected>Select P Unit</option>
@@ -236,7 +233,7 @@
                                                                     <option value="Liter">Liter</option>
                                                                     <option value="Gallon">Gallon</option>
                                                                     <option value="ml">ml</option>
-                                                                   
+
                                                                 </select>
 
                                                                 <span class="error hide req-ddlPriceUnit">Unit Price Is Required</span>
@@ -245,6 +242,11 @@
                                                                 <input type="number" placeholder="Qty" id="ddlqty" name="qty" class="form-control form-control-sm" />
                                                                 <span class="error hide req-qty">Qty Is Required</span>
                                                             </div>
+                                                            <div class="col-md-2 pr-0">
+                                                                <input type="number" placeholder="U.Price" id="ddluprice" name="uprice" class="form-control form-control-sm" />
+                                                                <span class="error hide req-uprice">Unit Price Is Required</span>
+                                                            </div>
+
                                                             <div class="col-md-2 pr-0 hide">
                                                                 <input type="number" id="ddlttprice" placeholder="Subtotal" name="ddlttprice" class="form-control form-control-sm" readonly />
                                                             </div>
@@ -815,6 +817,9 @@
                 var td6 = 0;
                 var td7 = 0;
                 var td5 = 0;
+                var td100 = 0;
+                var td101 = 0;
+                //var td102 = 0;
                 if (ddlPriceUnit.val() != 0) {
                     if (ddlUnitName.val() == "kg") {
 
@@ -832,9 +837,12 @@
                                     //alert(tqty);
                                     var stotal = ddlttprice.val() * tqty;
                                     //alert(stotal);
-                                    td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                    td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                    td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
+
                                     td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
                                     //alert(stotal);
 
@@ -845,8 +853,10 @@
 
                             }
                             else if (ddlPriceUnit.val() == "Kilogram") {
-                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
-                                td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                                td5 = "<td class='text-center hide Con_Price'>" + ddluprice.val() + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + ddlqty.val() + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
                                 to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
                                 $('.totalsub').text(to);
@@ -859,9 +869,12 @@
                                 var tqty = Number(ddlqty.val()) * 0.001;
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
+
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
 
 
@@ -882,8 +895,10 @@
 
                         }
                         else {
-                            td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
-                            td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                            td5 = "<td class='text-center hide Con_Price'>" + ddluprice.val() + "</td>";
+                            td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + ddlqty.val() + "</td>";
+                            td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                            td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                             td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
                             to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
                             $('.totalsub').text(to);
@@ -907,9 +922,11 @@
                                 var tqty = Number(ddlqty.val()) * 1000;
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
                                 //alert(stotal);
 
@@ -926,8 +943,10 @@
                                var tqty = Number(ddlqty.val()) * 3785.41;//us
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
                                 //alert(stotal);
 
@@ -956,8 +975,10 @@
 
                             if (ddlPriceUnit.val() == "Ton") {
 
-                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
-                                td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                                td5 = "<td class='text-center hide Con_Price'>" + ddluprice.val() + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + ddlqty.val() + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
                                 to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
                                 $('.totalsub').text(to);
@@ -970,9 +991,11 @@
                                 var tqty = Number(ddlqty.val()) * 0.001;//kilogram
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
 
 
@@ -986,9 +1009,11 @@
                                 var tqty = Number(tqtyKgram) * 0.001;
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
 
 
@@ -1016,9 +1041,11 @@
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
                                 //alert(stotal);
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
                                 //alert(stotal);
 
@@ -1034,9 +1061,11 @@
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
                                 //alert(stotal);
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
                                 //alert(stotal);
 
@@ -1048,8 +1077,10 @@
                             else if (ddlPriceUnit.val() == "Gram") {
 
 
-                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
-                                td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                                td5 = "<td class='text-center hide Con_Price'>" + ddluprice.val() + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + ddlqty.val() + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
                                 to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
                                 $('.totalsub').text(to);
@@ -1071,9 +1102,11 @@
                                 var tqty = Number(ddlqty.val()) * 0.001;
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
                                 //alert(stotal);
 
@@ -1084,8 +1117,10 @@
                             else if (ddlPriceUnit.val() == "Liter") {
 
 
-                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
-                                td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                                td5 = "<td class='text-center hide Con_Price'>" + ddluprice.val() + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + ddlqty.val() + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
                                 to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
                                 $('.totalsub').text(to);
@@ -1098,9 +1133,11 @@
                                 var tqty = Number(ddlqty.val()) * 3.78541;
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
                                 //alert(stotal);
 
@@ -1125,9 +1162,11 @@
                                 var tqty = Number(ddlqty.val()) * 0.000264172; //us
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
                                 //alert(stotal);
 
@@ -1140,9 +1179,11 @@
                                 var tqty = Number(ddlqty.val()) * 0.264172;
                                 //alert(tqty);
                                 var stotal = ddlttprice.val() * tqty;
-                                td5 = "<td class='text-center'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
+                                td5 = "<td class='text-center hide Con_Price'>" + (ddluprice.val() * ddlqty.val()) / tqty + "</td>";//per price
 
-                                td6 = "<td class='text-center QuanityIDCell'>" + tqty + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + tqty + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddluprice.val() * ddlqty.val() + "</td>";
                                 //alert(stotal);
 
@@ -1158,8 +1199,10 @@
 
 
 
-                                td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
-                                td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                                td5 = "<td class='text-center hide Con_Price'>" + ddluprice.val() + "</td>";
+                                td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + ddlqty.val() + "</td>";
+                                td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                                td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                                 td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
                                 to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
                                 $('.totalsub').text(to);
@@ -1178,30 +1221,36 @@
 
                 }
                 else {
-                    td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
-                    td6 = "<td class='text-center QuanityIDCell'>" + ddlqty.val() + "</td>";
+                    td5 = "<td class='text-center hide Con_Price'>" + ddluprice.val() + "</td>";
+                    td6 = "<td class='text-center QuanityIDCell hide Con_Qty'>" + ddlqty.val() + "</td>";
+                    td100 = "<td class='text-center MPrice'>" + ddluprice.val() + "</td>";
+                    td101 = "<td class='text-center Mqty'>" + ddlqty.val() + "</td>";
                     td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
                      to = parseFloat($('.totalsub').text()) + parseFloat(ddlttprice.val());
                      $('.totalsub').text(to);
                 }
+                debugger
 
                 var sl = $("#tblPstockrawmaterial tbody tr").length;
-                var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
-                var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlRawMaterial") + "</td>";
-                var td3 = "<td class='text-center'>" + ddlrmcode.val() + "</td>";
-                var td4 = "<td class='text-center'>" + ddlUnitName.val() + "</td>";
-              //  var td5 = "<td class='text-center'>" + ddluprice.val() + "</td>";
+                var td1 = "<td class='text-center sl'><b>" + (sl + 1) + "</b></td>"
+                var td2 = "<td class='text-center RMN'>" + dropDownSelectedText("ddlRawMaterial") + "</td>";
+                var td3 = "<td class='text-center MrpCode'>" + ddlrmcode.val() + "</td>";
+                var td4 = "<td class='text-center Con_Unit'>" + ddlPriceUnit.val() + "</td>";
+                var td1003 = "<td class='text-center hide MUnit'>" + ddlUnitName.val() + "</td>";
+                //var td4 = "<td class='text-center'>" + ddlUnitName.val() + "</td>";
+              //  var td5 = "<td class='text-center'>" + ddlPriceUnit.val() + "</td>";
 
 
               //  var td7 = "<td class='text-center TotalIDCell'>" + ddlttprice.val() + "</td>";
                 var td8 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del' data-subtotal='" + ddlttprice.val() + "' data-quentaty='" + ddlqty.val() +"'><i class='far fa-trash-alt'></i></a></td>";
 
-                var td9 = "<td class='text-center hide'>" + ddlRawMaterial.val() + "</td>";
-                var td10 = "<td class='text-center hide'>" + ddlUnitID.val() + "</td>";
+                var td9 = "<td class='text-center hide RmID'>" + ddlRawMaterial.val() + "</td>";
+                var td10 = "<td class='text-center hide MUnitId'>" + ddlUnitID.val() + "</td>";
 
-                var td11 = "<td class='text-center hide'>" + ddlexpdate.val() + "</td>";
+                var td11 = "<td class='text-center hide MDate'>" + ddlexpdate.val() + "</td>";
 
-                var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + "</tr>";
+                //var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + "</tr>";
+                var tr = "<tr>" + td1 + td2 + td3 + td4 + td100 + td101 + td7 + td8 + td9 + td10 + td11 +td5+td6+td1003+ "</tr>";
 
 
                 //totalprice
@@ -1238,7 +1287,7 @@
         //save
         $("#saveButton").click(function (e) {
             //alert();
-            //debugger
+           debugger
             e.preventDefault();
 
             if (validatesave()) {
@@ -1248,7 +1297,7 @@
                 bootbox.confirm("Are you sure you want to Save this", function (result) {
                     if (result) {
                         //alert("ok");
-                       // debugger;
+                       debugger;
                         var totalsub = $('.totalsub').text();//initilize class total
 
                         var info = { RawMaterialSupplierId: TryParseInt(ddlSupplierName.val(), 0), ChalanNo: ddlChallanNo.val(), InvoiceNo: ddlInvoiceNo.val(), InvoiceDate: ddlInvoiceDate.val(), ProductCode: ddlProductCode.val(), TotalAmount: totalsub };
@@ -1261,12 +1310,15 @@
                                 PRawMaterialStockDetailId: 0,
                                 RawMaterialId: tds.eq(8).html(),
                                 UnitID: tds.eq(9).html(),
-                                UnitPrice: tds.eq(4).html(),
-                                Quantity: tds.eq(5).html(),
+                                UnitPrice: tds.eq(11).html(),
+                                Quantity: tds.eq(12).html(),
                                 SubTotal: tds.eq(6).html(),
 
                                 ExpireDate: tds.eq(10).html(),
                                 RmMRPCode: tds.eq(2).html(),
+                                CQty: tds.eq(5).html(),
+                                CPrice: tds.eq(4).html(),
+                                CUnitName: tds.eq(3).html(),
 
                             });
                         })
@@ -1471,7 +1523,7 @@
                 theme: 'bootstrap4'
             });
 
-            
+
         })
 
 
@@ -1548,7 +1600,7 @@
             }).fail(function (error) {
                 console.log(error);
             });
-           
+
         }
 
         //#endregion
@@ -1572,7 +1624,7 @@
             }).fail(function (error) {
                 console.log(error);
             });
-           
+
         }
 
         //#endregion
