@@ -227,6 +227,10 @@
     <Compile Include="AgricultureContextMigrations\202301020539309_RMCategories.Designer.cs">
       <DependentUpon>202301020539309_RMCategories.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202301030444521_Agriculture_PRawMaterialNew.cs" />
+    <Compile Include="AgricultureContextMigrations\202301030444521_Agriculture_PRawMaterialNew.Designer.cs">
+      <DependentUpon>202301030444521_Agriculture_PRawMaterialNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -380,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202301020539309_RMCategories.resx">
       <DependentUpon>202301020539309_RMCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202301030444521_Agriculture_PRawMaterialNew.resx">
+      <DependentUpon>202301030444521_Agriculture_PRawMaterialNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

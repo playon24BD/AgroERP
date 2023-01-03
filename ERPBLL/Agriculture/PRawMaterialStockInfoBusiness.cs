@@ -130,6 +130,9 @@ on i.RawMaterialSupplierId=s.RawMaterialSupplierId
                         EntryUserId = userId,
                         ExpireDate = item.ExpireDate,
                         RmMRPCode= item.RmMRPCode,
+                        CUnitName=item.CUnitName,
+                        CQty=item.CQty,
+                        CPrice=item.CPrice
                         
 
                     };

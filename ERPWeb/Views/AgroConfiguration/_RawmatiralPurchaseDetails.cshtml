@@ -28,8 +28,8 @@
         <tr class="text-center">
             <th>#SL</th>
             <th>RawMaterial Name</th>
-            <th>Qty</th>
             <th>Unit</th>
+            <th>Qty</th>
             <th>Unit Price</th>
             <th>SubTotal</th>
             <th>StockDate</th>
@@ -39,16 +39,17 @@
         @foreach (var item in Model)
         {
             sl = sl + 1;
-            <tr>
-                <td class="text-center">@sl</td>
-                <td class="text-center">@item.RawMaterialName</td>
-                <td class="text-center text-bold">@item.Quantity</td>
-                <td class="text-center">@item.UnitName</td>
-                <td class="text-center">@item.UnitPrice</td>
-                <td class="text-center">@item.SubTotal</td>
-                <td class="text-center">@item.StockDate.Value.ToString("dd.MMM.yyyy")</td>
+        <tr>
+            <td class="text-center">@sl</td>
+            <td class="text-center">@item.RawMaterialName</td>
+            <td class="text-center">@item.UnitName</td>
+            <td class="text-center text-bold">@item.Quantity</td>
 
-            </tr>
+            <td class="text-center">@item.UnitPrice</td>
+            <td class="text-center">@item.SubTotal</td>
+            <td class="text-center">@item.StockDate.Value.ToString("dd.MMM.yyyy")</td>
+
+        </tr>
         }
     </tbody>
 </table>
