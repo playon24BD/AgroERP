@@ -136,10 +136,42 @@ Status='Approved' order by ReturnRawMaterialId desc", Utility.ParamChecker(param
 
         }
 
+
         public IEnumerable<RMCategories> GetRMCategories()
         {
             return _rMCategoriesRepository.GetAll().ToList();
            
         }
+
+        public IEnumerable<RawMaterialDTO> GetRawMaterialList(string rawMaterialName)
+        {
+            return this._db.Db.Database.SqlQuery<RawMaterialDTO>(QueryForRawMaterialList(rawMaterialName)).ToList();
+        }
+
+        private string QueryForRawMaterialList(string rawMaterialName)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (!string.IsNullOrEmpty(rawMaterialName))
+            {
+                param += string.Format(@"and rmi.RawMaterialName like '%{0}%'", rawMaterialName);
+            }
+
+            query = string.Format(@"
+  
+
+select c.RMCategorieId,u.UnitId, rmi.RawMaterialId,rmi.RawMaterialName,u.UnitName,rmi.Status,c.RMCategorieName from tblRawMaterialInfo rmi
+inner join tblAgroUnitInfo u on u.UnitId=rmi.UnitId
+left join tblRMCategories c on c.RMCategorieId=rmi.RMCategorieId
+
+where 1=1 {0} order by rmi.RawMaterialId desc
+", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+
+
     }
 }

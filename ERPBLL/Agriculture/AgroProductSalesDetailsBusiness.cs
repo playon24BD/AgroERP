@@ -403,6 +403,53 @@ where 1=1 {0} and d.PackageId != 0 and d.Status is null", Utility.ParamChecker(p
                 return null;
             }
         }
+
+        public IEnumerable<AgroProductSalesDetailsDTO> GetSalesDetailsAccessories(long infoId)
+        {
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesDetailsDTO>(QueryForGetAgroSalesAccessories(infoId)).ToList();
+               
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private string QueryForGetAgroSalesAccessories(long infoId)
+        {
+            try
+            {
+
+                string query = string.Empty;
+                string param = string.Empty;
+
+                if (infoId != 0 && infoId > 0)
+                {
+                    param += string.Format(@" and ti.ProductSalesInfoId={0}", infoId);
+                }
+
+
+                query = string.Format(@"	
+        
+                
+select distinct ai.AccessoriesName,ai.accessoriesId,si.ProductSalesInfoId,ti.Quantity from tblAccessoriesTrackInfo ti
+left join tblProductSalesInfo si on si.ProductSalesInfoId=ti.ProductSalesInfoId
+left join tblAccessoriesInfo ai on ti.AccessoriesId=ai.AccessoriesId
+
+
+where 1=1 {0}", Utility.ParamChecker(param));
+
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
     }
 }
 

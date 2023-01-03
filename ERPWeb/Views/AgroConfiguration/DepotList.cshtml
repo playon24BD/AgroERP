@@ -150,8 +150,13 @@
                                         <div class="col-md-2">
 
                                         </div>
-                                        <div class="col-md-3">
-                                            @Html.DropDownList("ddlRawMaterialRM", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Search by Material--", new { @class = "select2-selection__rendered" })
+                                        @*<div class="col-md-3">
+            @Html.DropDownList("ddlRawMaterialRM", (IEnumerable<SelectListItem>)ViewBag.ddlRawMaterialName, "--Search by Material--", new { @class = "select2-selection__rendered" })
+
+        </div>*@
+
+                                        <div class="col-md-3 align-items-center">
+                                            <input type="text" class="form-control form-control-sm" id="searchByRM" placeholder="Search by RM" />
 
                                         </div>
                                         <div class="col-md-2">
@@ -1115,7 +1120,10 @@
 
         var ddlStatusRM = $("#ddlStatusRM");
         var ddlUnitRM = $("#ddlUnitRM");
+
         var ddlcategorurm = $("#ddlcategorurm");
+
+        var searchByRM = $("#searchByRM");
 
 
         function OpenModal() {
@@ -1173,39 +1181,55 @@
 
         })
 
-        function loadRawMaterials(flag) {
-            debugger;
-            if (flag == "Search") {
-                data = { flag: 'Search', rawmaterialName: ddlRawMaterialRM.val() };
-            }
-            else {
-                data = { flag: 'Raw', rawmaterialName: ddlRawMaterialRM.val() };
-            }
+        searchByRM.keyup(function () {
+            loadRawMaterials()
+        })
 
-
-            $.when(getReqWithData("html", 'Get', '/AgroConfiguration/GetRawMaterial', data)).then(function (res, status) {
-                if (status == "success") {
-                    debugger;
-                    $("#dataContainerRM").fadeOut("500", function () {
-                        $("#dataContainerRM").empty();
-                        $("#dataContainerRM").append(res).fadeIn("500");
-                    })
-
-
-
+        function loadRawMaterials() {
+            var data = { flag: 'View', rawMaterialName: $.trim(searchByRM.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetRawMaterial', data)).then(function (res, status) {
+                console.log(res);
+                if (status === "success") {
+                    $("#dataContainerRM").empty();
+                    $("#dataContainerRM").append(res);
                 }
-
-            }).fail(function (error) {
-                Console.log(error);
-
-            });
-
+            }).fail(function (err) { console.log(err) })
         }
+
+
+
+        //function loadRawMaterials(flag) {
+        //    debugger;
+        //    if (flag == "Search") {
+        //        data = { flag: 'Search', rawmaterialName: ddlRawMaterialRM.val() };
+        //    }
+        //    else {
+        //        data = { flag: 'Raw', rawmaterialName: ddlRawMaterialRM.val() };
+        //    }
+
+
+        //    $.when(getReqWithData("html", 'Get', '/AgroConfiguration/GetRawMaterial', data)).then(function (res, status) {
+        //        if (status == "success") {
+        //            debugger;
+        //            $("#dataContainerRM").fadeOut("500", function () {
+        //                $("#dataContainerRM").empty();
+        //                $("#dataContainerRM").append(res).fadeIn("500");
+        //            })
+
+
+
+        //        }
+
+        //    }).fail(function (error) {
+        //        Console.log(error);
+
+        //    });
+
+        //}
 
         $(document).on("click", "a.data-edit-item-rawMaterialId", function (e) {
             debugger;
             e.preventDefault()
-
 
 
             ClearCtrlRM();
@@ -1215,15 +1239,17 @@
             var td3 = row.find('td:eq(3)').html();
             var td4 = row.find('td:eq(4)').html();
             var td5 = row.find('td:eq(5)').html();
-            //var td6 = row.find('td:eq(6)').html();
-            var td8 = row.find('td:eq(6)').html();
+            var td6 = row.find('td:eq(6)').html();
+            //var td8 = row.find('td:eq(6)').html();
             var td9 = row.find('td:eq(7)').html();
 
             rawMaterialName.val(td3);
-            ddlUnitRM.val(td9);
+            ddlUnitRM.val(td5);
             ddlUnitRM.trigger("change");
-            ddlStatusRM.val(td5);
+            ddlStatusRM.val(td6);
             ddlStatusRM.trigger("change");
+            ddlcategorurm.val(td4);
+            ddlcategorurm.trigger("change");
 
             //expairDate.val(td6);
             //ddlOrganization.val(td8);

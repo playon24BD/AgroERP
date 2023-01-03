@@ -194,4 +194,48 @@
     </tbody>
 </table>
 
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm" style="margin-bottom: 0px; margin-top:5px">
+    
+    
+
+        <tr style="width: 100%; background-color: lightseagreen ">
+            <td class="text-center text-white text-bold" style="width:100%">Accessories</td>
+        </tr>
+   
+</table>
+
+
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm " id="tblReturnItemss">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th>#SL</th>
+            <th>Accessories Name</th>
+            <th>Quantity</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            sl = sl + 1;
+            if (item.ProductSalesInfoId != 0)
+            {
+
+                    <tr >
+                        <td class="text-center">@sl</td>
+                        <td class="text-center">@item.AccessoriesName</td>
+                        <td class="text-center">@item.Quanity</td>
+                        
+
+                    </tr>
+
+               
+                
+
+            }
+
+        }
+    </tbody>
+</table>
+
 

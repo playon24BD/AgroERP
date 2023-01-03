@@ -8,15 +8,15 @@
             <tr class="text-center">
                 <th class="hide">id</th>
                 <th>SL</th>
-                <th class="hide">depotid</th>
-                @*<th>Organization name</th>*@
-                @*<th>Depot Name</th>*@
                 <th>Raw Material</th>
+                <th>Category Name</th>
                 <th>Unit</th>
                 <th>Status</th>
-                @*<th>Expire Date</th>*@
-                <th class="hide">organizationId</th>
                 <th>Action</th>
+                <th class="hide">UnitId</th>
+                <th class="hide">CateId</th>
+
+
             </tr>
         </thead>
         <tbody>
@@ -30,15 +30,14 @@
 
                 <td class="hide">@raw.RawMaterialId</td>
                 <td class="text-center text-bold">@sl</td>
-                @*<td class="hide">@raw.DepotId</td>*@
-                <td class="text-center hide">@raw.OrganizationName</td>
-                @*<td>@raw.DepotName</td>*@
+
                 <td class="text-center">@raw.RawMaterialName</td>
+                <td class="text-center">@raw.RMCategorieName</td>
                 <td class="text-center">@raw.UnitName</td>
                 <td class="text-center">@raw.Status</td>
-                @*<td>@raw.ExpireDate.Value.ToShortDateString()</td>*@
-                <td class="text-center hide">@raw.OrganizationId</td>
+
                 <td class="text-center hide">@raw.UnitId</td>
+                <td class="text-center hide">@raw.RMCategorieId</td>
                 <td class="text-center">
                     <a href="#" class="dasedit-btn btn-sm data-edit-item-rawMaterialId" style="line-height:1" data-edit-item-rawMaterialId="@raw.RawMaterialId"><i class="fa fa-pen"></i></a>
                     
@@ -51,8 +50,9 @@
             }
             else
             {
-                <tr>
-                    <td colspan="6">No Data Found </td>
+                <tr class="text-center text-bold">
+
+                    <td colspan="12">No Data Found </td>
 
                 </tr>
 

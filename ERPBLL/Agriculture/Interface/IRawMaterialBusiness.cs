@@ -10,6 +10,8 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IRawMaterialBusiness
     {
+
+        IEnumerable<RawMaterialDTO> GetRawMaterialList(string rawMaterialName);
         bool SaveRawMaterial(RawMaterialDTO rawMaterial,long userId,long orgId);
 
         RawMaterial GetRawMaterialById(long rawMaterialId,long orgId);
