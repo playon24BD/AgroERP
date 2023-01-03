@@ -653,6 +653,15 @@
 
 
         $(document).ready(function () {
+            if ($("#tab").val() == 'pstockrawmaterialList') {
+                $("#custom-tabs-two-pstockrawmaterialList").addClass('active');
+                $("#custom-tabs-two-pstockrawmaterialList-tab").addClass('active');
+
+                $("#custom-tabs-two-pstockrawmaterialqty-tab").removeClass('active');
+                $("#custom-tabs-two-pstockrawmaterialqty").removeClass('active');
+
+            }
+
             $('.select2').select2();
 
             //Initialize Select2 Elements
@@ -1333,7 +1342,8 @@
                                 //debugger;
                                 $('.toastrDefaultSuccess').trigger('click');
                                 setTimeout(function () {
-                                    redirectPage('@Url.Action("GetPRawmaterialStockList")');
+                                    //redirectPage('@Url.Action("GetPRawmaterialStockList")');
+                                    redirectPage('@Url.Action("GetPRawmaterialStockList",new {tab= "pstockrawmaterialList" })');
                                 }, 1000);
                                 //resetUI();
                             }
