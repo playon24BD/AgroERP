@@ -67,39 +67,45 @@ namespace ERPBLL.Agriculture
                 }
                 if (invoice != null && invoice != "")
                 {
-                    param += string.Format(@" and cps.InvoiceNo ='{0}'", invoice);
+                    param += string.Format(@" and si.InvoiceNo ='{0}'", invoice);
                 }
 
                 if (!string.IsNullOrEmpty(fdate) && fdate.Trim() != "" && !string.IsNullOrEmpty(tdate) && tdate.Trim() != "")
                 {
                     string fDate = Convert.ToDateTime(fdate).ToString("yyyy-MM-dd");
                     string tDate = Convert.ToDateTime(tdate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(cps.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+                    param += string.Format(@" and Cast(si.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
                 }
                 else if (!string.IsNullOrEmpty(fdate) && fdate.Trim() != "")
                 {
                     string fDate = Convert.ToDateTime(fdate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(cps.EntryDate as date)='{0}'", fDate);
+                    param += string.Format(@" and Cast(si.EntryDate as date)='{0}'", fDate);
                 }
                 else if (!string.IsNullOrEmpty(tdate) && tdate.Trim() != "")
                 {
                     string tDate = Convert.ToDateTime(tdate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(cps.EntryDate as date)='{0}'", tDate);
+                    param += string.Format(@" and Cast(si.EntryDate as date)='{0}'", tDate);
                 }
 
 
-                query = string.Format(@"		select distinct *,(t.copsdSum+t.phsum)totalCommission from (select tconps.ProductSalesInfoId,tconps.CommissionOnProductOnSalesId,si.TotalAmount,si.InvoiceNo,cpsd.PaymentMode,Cast (tconps.EntryDate as date) As EntryDate,f.StockiestName,
-	  (select sum(TotalCommission) from tblCommisionOnProductSalesDetails copsd where copsd.CommissionOnProductOnSalesId=tconps.CommissionOnProductOnSalesId )copsdSum,
-	  ( select sum(isnull(CommisionAmount,0)) from tblProductSalesPaymentHistory psph where psph.ProductSalesInfoId=tconps.ProductSalesInfoId)phsum
-	 from tblCommissionOnProductSales tconps
-	  Inner join tblCommisionOnProductSalesDetails cpsd
-            on tconps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId
-	   Inner join tblProductSalesInfo si
+                query = string.Format(@"select distinct *,(t.copsdSum+t.phsum)totalCommission from (select si.ProductSalesInfoId,ISNULL(tconps.CommissionOnProductOnSalesId,0) as CommissionOnProductOnSalesId,si.TotalAmount,si.InvoiceNo,cpsd.PaymentMode,CASE WHEN Cast (tconps.EntryDate as date) is null THEN Cast (psphs.PaymentDate as date) ELSE Cast (tconps.EntryDate as date) END  as EntryDate,f.StockiestName,
+
+	  (select  ISNULL(sum(TotalCommission),0) from tblCommisionOnProductSalesDetails copsd where copsd.CommissionOnProductOnSalesId=tconps.CommissionOnProductOnSalesId )copsdSum,
+	  ( select ISNULL(sum(CommisionAmount),0) from tblProductSalesPaymentHistory psph where psph.ProductSalesInfoId=si.ProductSalesInfoId)phsum
+
+	   from tblProductSalesInfo si
+	   LEFT join tblCommissionOnProductSales tconps
             on si.ProductSalesInfoId=tconps.ProductSalesInfoId
+	  
+	  LEFT join tblCommisionOnProductSalesDetails cpsd
+            on tconps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId
+	  
 			Inner join tblStockiestInfo f
             on si.StockiestId=f.StockiestId
-
-	 ) t  where 1=1 {0} ",
+INNER JOIN tblProductSalesPaymentHistory psphs
+			on si.ProductSalesInfoId= psphs.ProductSalesInfoId
+where 1=1 {0}
+	 ) t  where 1=1  ",
                         Utility.ParamChecker(param));
 
                 return query;

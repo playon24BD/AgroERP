@@ -25,28 +25,34 @@
             {
                 foreach (var item in Model)
                 {
-                    badge = item.PaymentMode == "Credit" ? "badge bg-warning" : (item.PaymentMode == "Cash" ? "badge bg-success" : "" );
+
+                    badge = item.PaymentMode == "Credit" ? "badge bg-warning" : (item.PaymentMode == "Cash" ? "badge bg-success" : "");
 
                     sl++;
-            <tr>
-                <td class="text-center">@sl</td>
+                    //if (item.TotalCommission > 0)
+                    //{
 
-                <td class="text-center">@item.InvoiceNo</td>
-                <td class="text-center">@item.StockiestName</td>
-                <td class="text-center ">
-                    <span class="@badge">@item.PaymentMode</span>
-                </td>
-                <td class="text-center">@item.TotalAmount.ToString("0.00")</td>
-                <td class="text-center">@item.TotalCommission.ToString("0.00")</td>
-                <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
-                @*<td class="text-center hide">@item.CommissionOnProductOnSalesId</td>*@
+                        <tr>
+                            <td class="text-center">@sl</td>
 
-                <td class="text-center">
-                    <a href="#" class="emndetails-btn data-item-detail" title="view" data-item-detail="@item.CommissionOnProductOnSalesId" style="line-height:1">
-                        <i class="fas fa-eye"></i>
-                    </a>
-                </td>
-            </tr>
+                            <td class="text-center">@item.InvoiceNo</td>
+                            <td class="text-center">@item.StockiestName</td>
+                            <td class="text-center ">
+                                <span class="@badge">@item.PaymentMode</span>
+                            </td>
+                            <td class="text-center">@item.TotalAmount.ToString("0.00")</td>
+                            <td class="text-center">@item.TotalCommission.ToString("0.00")</td>
+                            <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
+                            @*<td class="text-center hide">@item.CommissionOnProductOnSalesId</td>*@
+
+                            <td class="text-center">
+                                <a href="#" class="emndetails-btn data-item-detail" title="view" data-item-detail="@item.CommissionOnProductOnSalesId" style="line-height:1">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    //}
+
                 }
 
             }

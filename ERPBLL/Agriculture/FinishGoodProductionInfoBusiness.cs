@@ -93,7 +93,7 @@ inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodP
 inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId
 inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
 inner join tblMeasurement m on m.MeasurementId=fgp.MeasurementId
-      where 1=1", Utility.ParamChecker(param));
+      where 1=1 {0}", Utility.ParamChecker(param));
 
             return query;
         }

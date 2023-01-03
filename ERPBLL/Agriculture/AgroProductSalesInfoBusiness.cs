@@ -1194,7 +1194,7 @@ Where 1=1 {0} order by sr.ProductSalesInfoId desc", Utility.ParamChecker(param))
 
             query = string.Format(@"select s.ProductSalesInfoId,s.InvoiceNo,s.StockiestId from tblProductSalesInfo s
 			inner join tblStockiestInfo st on s.StockiestId=st.StockiestId	
-            Where 1=1 {0} and s.Status is null", Utility.ParamChecker(param));
+            Where 1=1 {0} and s.PaidAmount= 0 and s.Status is null", Utility.ParamChecker(param));
 
             return query;
         }
@@ -1492,18 +1492,21 @@ Amount = ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr
 TotalAmount=(sales.TotalAmount)-ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0),
 
 
-	  (select sum(TotalCommission) from tblCommisionOnProductSalesDetails copsd where copsd.CommissionOnProductOnSalesId=tconps.CommissionOnProductOnSalesId )copsdSum,
-	  ( select sum(isnull(CommisionAmount,0)) from tblProductSalesPaymentHistory psph where psph.ProductSalesInfoId=tconps.ProductSalesInfoId)phsum
-	 from tblCommissionOnProductSales tconps
-	  Inner join tblCommisionOnProductSalesDetails cpsd
-            on tconps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId
-	   Inner join tblProductSalesInfo sales
+	  (select  ISNULL(sum(TotalCommission),0) from tblCommisionOnProductSalesDetails copsd where copsd.CommissionOnProductOnSalesId=tconps.CommissionOnProductOnSalesId )copsdSum,
+	  ( select ISNULL(sum(CommisionAmount),0) from tblProductSalesPaymentHistory psph where psph.ProductSalesInfoId=sales.ProductSalesInfoId)phsum
+
+	  from tblProductSalesInfo sales
+	   LEFT join tblCommissionOnProductSales tconps
             on sales.ProductSalesInfoId=tconps.ProductSalesInfoId
+	  
+	  LEFT join tblCommisionOnProductSalesDetails cpsd
+            on tconps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId
+	  
 			Inner join tblStockiestInfo stock
             on sales.StockiestId=stock.StockiestId
 where 1=1 {0}
 
-	 ) t  
+	 ) t  order by t.ProductSalesInfoId DESC
 
 ", Utility.ParamChecker(param));
 
