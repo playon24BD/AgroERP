@@ -11,8 +11,8 @@
             <tr class="text-center">
                 <td style="vertical-align:middle">#Sl</td>
                 <td style="vertical-align:middle">Product Name</td>
-                <td style="vertical-align:middle">Unit</td>
-                <td style="vertical-align:middle">Payment Method</td>
+                @*<td style="vertical-align:middle">Unit</td>*@
+                @*<td style="vertical-align:middle">Payment Method</td>*@
                 <td style="vertical-align:middle">Total Commission</td>
                 <td style="vertical-align:middle">Entry Date</td>
 
@@ -32,10 +32,10 @@
 
 
                 <td class="text-center">@item.FinishGoodProductName</td>
-                <td class="text-center">@item.Flag</td>
-                <td class="text-center ">
+                @*<td class="text-center">@item.Flag</td>*@
+                @*<td class="text-center ">
                     <span class="@badge">@item.PaymentMode</span>
-                </td>
+                </td>*@
                 <td class="text-center">@item.TotalCommission</td>
                 <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
 

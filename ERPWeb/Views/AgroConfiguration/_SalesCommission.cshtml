@@ -12,7 +12,7 @@
                 <td style="vertical-align:middle">#Sl</td>
                 <td style="vertical-align:middle">Invoice No</td>
                 <td style="vertical-align:middle">Stockiest Name</td>
-                <td style="vertical-align:middle">Payment Method</td>
+                @*<td style="vertical-align:middle">Payment Method</td>*@
                 <td style="vertical-align:middle">Total Amount</td>
                 <td style="vertical-align:middle">Total Commission</td>
                 <td style="vertical-align:middle">Entry Date</td>
@@ -37,9 +37,9 @@
 
                             <td class="text-center">@item.InvoiceNo</td>
                             <td class="text-center">@item.StockiestName</td>
-                            <td class="text-center ">
+                            @*<td class="text-center ">
                                 <span class="@badge">@item.PaymentMode</span>
-                            </td>
+                            </td>*@
                             <td class="text-center">@item.TotalAmount.ToString("0.00")</td>
                             <td class="text-center">@item.TotalCommission.ToString("0.00")</td>
                             <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
