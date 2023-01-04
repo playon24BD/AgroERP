@@ -44,7 +44,7 @@ FROM
 tblRawMaterialTrackInfo t 
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
-      where 1=1    {0}",
+      where 1=1  {0}",
             Utility.ParamChecker(param));
             return query;
         }
@@ -69,7 +69,7 @@ FROM
 tblRawMaterialTrackInfo t 
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
-      where 1=1    {0}",
+      where 1=1  and  RM.RMCategorieId=2     {0}",
             Utility.ParamChecker(param));
             return query;
         }

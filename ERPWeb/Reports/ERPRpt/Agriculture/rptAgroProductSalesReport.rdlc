@@ -78,7 +78,7 @@
                                 <TextRun>
                                   <Value>SL</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -114,7 +114,7 @@
                                 <TextRun>
                                   <Value>Product Name</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -150,7 +150,7 @@
                                 <TextRun>
                                   <Value>Measurement Size</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -186,7 +186,7 @@
                                 <TextRun>
                                   <Value>Quanity</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -222,7 +222,7 @@
                                 <TextRun>
                                   <Value>Price</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -258,7 +258,7 @@
                                 <TextRun>
                                   <Value>Discount%</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -294,7 +294,7 @@
                                 <TextRun>
                                   <Value>Product Total</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2072,66 +2072,6 @@
               </Border>
             </Style>
           </Image>
-          <Textbox Name="TotalAmountText">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=First(Fields!TotalAmountText.Value, "dsAgroSalesReport")</Value>
-                    <Style />
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>TotalAmountText</rd:DefaultName>
-            <Top>7.05431in</Top>
-            <Left>1.17763in</Left>
-            <Height>0.25in</Height>
-            <Width>6.369in</Width>
-            <ZIndex>42</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox6">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>In Word (TK.)</Value>
-                    <Style />
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox6</rd:DefaultName>
-            <Top>7.06472in</Top>
-            <Left>0.25in</Left>
-            <Height>0.25in</Height>
-            <Width>1in</Width>
-            <ZIndex>43</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
           <Textbox Name="InvoiceDate">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
@@ -2156,7 +2096,7 @@
             <Left>6.33208in</Left>
             <Height>0.26736in</Height>
             <Width>1.03125in</Width>
-            <ZIndex>44</ZIndex>
+            <ZIndex>42</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2191,7 +2131,7 @@
             <Left>6.33208in</Left>
             <Height>0.23264in</Height>
             <Width>1.03125in</Width>
-            <ZIndex>45</ZIndex>
+            <ZIndex>43</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2230,7 +2170,7 @@
                                 <TextRun>
                                   <Value>SL</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2266,7 +2206,7 @@
                                 <TextRun>
                                   <Value>Accessories Name</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2302,7 +2242,7 @@
                                 <TextRun>
                                   <Value>Quanity</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2460,7 +2400,7 @@
             <Left>0.2679in</Left>
             <Height>0.5in</Height>
             <Width>7.27872in</Width>
-            <ZIndex>46</ZIndex>
+            <ZIndex>44</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2476,7 +2416,8 @@
                   <TextRun>
                     <Value>Accessories</Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DarkGreen</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -2490,7 +2431,7 @@
             <Left>0.2679in</Left>
             <Height>0.25in</Height>
             <Width>7.21675in</Width>
-            <ZIndex>47</ZIndex>
+            <ZIndex>45</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2541,7 +2482,7 @@
                                 <TextRun>
                                   <Value>SL</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2577,7 +2518,7 @@
                                 <TextRun>
                                   <Value>Product Name</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2613,7 +2554,7 @@
                                 <TextRun>
                                   <Value>Measurement Size</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2649,7 +2590,7 @@
                                 <TextRun>
                                   <Value>Quanity</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2685,7 +2626,7 @@
                                 <TextRun>
                                   <Value>Discount%</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2721,7 +2662,7 @@
                                 <TextRun>
                                   <Value>Price</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2757,7 +2698,7 @@
                                 <TextRun>
                                   <Value>Product Total</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3141,7 +3082,7 @@
             <Left>0.2679in</Left>
             <Height>0.75in</Height>
             <Width>7.27873in</Width>
-            <ZIndex>48</ZIndex>
+            <ZIndex>46</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -3157,7 +3098,8 @@
                   <TextRun>
                     <Value>Packaging</Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DarkGreen</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -3171,7 +3113,7 @@
             <Left>0.28821in</Left>
             <Height>0.25in</Height>
             <Width>7.25842in</Width>
-            <ZIndex>49</ZIndex>
+            <ZIndex>47</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>

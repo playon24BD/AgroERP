@@ -3015,11 +3015,14 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
         }
 
-        public ActionResult AgroProductSalesReport(long ProductSalesInfoId)
+        public ActionResult AgroProductSalesReport(string InvoiceNo)
         {
             string file = string.Empty;
-            var SalesId = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).ProductSalesInfoId;
+          
+            var SalesId = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoByIdNew(InvoiceNo).ProductSalesInfoId;
             var data = _agroProductSalesInfoBusiness.GetProductSalesData(SalesId);
+            var data1 = _agroProductSalesInfoBusiness.GetProductSalesData1(SalesId);
+            var data2 = _agroProductSalesInfoBusiness.GetProductSalesData2(SalesId);
 
             LocalReport localReport = new LocalReport();
 
@@ -3032,6 +3035,12 @@ namespace ERPWeb.Controllers
 
             ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
             localReport.DataSources.Add(dataSource1);
+
+            ReportDataSource dataSource2 = new ReportDataSource("dsAgroSalesReport1", data1);
+            localReport.DataSources.Add(dataSource2);
+
+            ReportDataSource dataSource3 = new ReportDataSource("dsAgroSalesReport2", data2);
+            localReport.DataSources.Add(dataSource3);
 
             string reportType = "PDF";
             string mimeType;
@@ -3059,11 +3068,6 @@ namespace ERPWeb.Controllers
                 out streams,
                 out warnings
                 );
-            //    var base64 = Convert.ToBase64String(renderedBytes);
-            ////var fs = String.Format("data:application/pdf;base64,{0}", base64);
-            //var fs = String.Format("{0}", base64);
-            //file = fs;
-
             return File(renderedBytes, mimeType);
         }
 

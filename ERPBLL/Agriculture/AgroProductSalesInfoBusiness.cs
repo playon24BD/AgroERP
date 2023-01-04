@@ -631,7 +631,7 @@ namespace ERPBLL.Agriculture
             query = string.Format(@"
 
 select 
-ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=i.ZoneId),
+ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfos] Z where Z.ZoneId=i.ZoneId),
 
             DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=i.DivisionId),
 
@@ -687,6 +687,10 @@ where 1=1 and d.PackageId=0 and d.Status is null
         public AgroProductSalesInfo GetInvoiceProductionInfoById(long ProductSalesInfoId)
         {
             return _agroProductSalesInfoRepository.GetOneByOrg(f => f.ProductSalesInfoId == ProductSalesInfoId);
+        }
+        public AgroProductSalesInfo GetInvoiceProductionInfoByIdNew(string InvoiceNo)
+        {
+            return _agroProductSalesInfoRepository.GetOneByOrg(f => f.InvoiceNo == InvoiceNo);
         }
 
         public AgroProductSalesInfo GetChallanProductionInfoById(long ProductSalesInfoId)

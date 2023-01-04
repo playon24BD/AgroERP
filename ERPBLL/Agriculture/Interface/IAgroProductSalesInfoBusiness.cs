@@ -49,6 +49,7 @@ namespace ERPBLL.Agriculture.Interface
 
 
         AgroProductSalesInfo GetInvoiceProductionInfoById(long ProductSalesInfoId);
+        AgroProductSalesInfo GetInvoiceProductionInfoByIdNew(string invoiceNo);
 
         AgroProductSalesInfo GetChallanProductionInfoById(long ProductSalesInfoId);
 
