@@ -6,42 +6,53 @@
 
 
 
-<div class="row" style="margin-top:-10px">
-    <div class="col-md-12">
+<div class="row p-0" style="margin-top:-10px">
+    <div class="col-md-12 p-0">
 
         <div class="row" style="margin-top:-15px">
             <div class="col-md-12">
-                <div class="card card-navy">
-                    <div class="card-header">
-                        <div class="row">
+                <div class="card" style="background-color:#001f3f">
+                    <div class="px-2 py-1">
+                        @*<div class="card-header">*@
+                        <div class="row text-sm align-items-center">
+
+                            <div class="col-md-2">
+                                <h5 class="text-center float-left text-bold text-white">
+                                    Bank Setup
+                                </h5>
+                            </div>
+                            <div class="col-md-2">
+
+                            </div>
+
                             <div class="col-md-3 float-left">
                                 <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By Any" />
 
                             </div>
-                            <div class="col-md-6">
-                                <h5 class="text-center text-bold">
-                                    Bank Setup
-                                </h5>
+                            <div class="col-md-2">
+
                             </div>
+
                             <div class="col-md-3">
-                                <button class="btn btn-outline-warning btn-flat btn-sm float-right" id="clickButton"><i class="fa fa-plus"></i>Create New Bank</button>
+                                <button class="das2-btn float-right" id="clickButton"><i class="fa fa-plus"></i>Create New Bank</button>
                             </div>
                         </div>
+                        @*</div>*@
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
-    <div class="col-md-12" style="margin-top:-10px">
-        <div class="card">
-            <div class="card-body">
-                <div class="col-md-12" id="dataContainer1">
+    <div class="col-md-12" style="margin-top:-16px">
+        
+            
+                <div class="col-md-12 p-0" id="dataContainer1">
 
                 </div>
-            </div>
+            
 
-        </div>
+       
     </div>
 </div>
 
@@ -78,7 +89,7 @@
                             <span class="error hide required-MobileNumber font-weight-bold">Input Mobile Number!</span>
 
                         </div>
-                       
+
                     </div>
                     <div class="row">
                         <div class="form-group col-md-8">
@@ -118,151 +129,151 @@
 
 
 @section scripts{
-    
-<script type="text/javascript">
 
-    //BankSetup
-    var hiddenBankId = $("#hiddenBankId");
-    var ddlBankName = $("#ddlBankName");
-    var ddlStatus = $("#ddlStatus");
-    var ddlEmailAddress = $("#ddlEmailAddress");
-    var ddlMobileNumber = $("#ddlMobileNumber");
-    var ddlAccountNumber = $("#ddlAccountNumber");
-    var ddlOrganizationName = $("#ddlOrganizationName");
-    var SearchAny = $("#SearchAny");
+    <script type="text/javascript">
 
-
-    $(document).ready(function () {
-        LoadBankDataTable()
-    });
-
-    function OpenModals() {
-        $("#spanModalHeading").text('Create New Bank');
-        $("#bankModal").modal('show');
-        $("#spanSaveTextBank").text('Save');
-        $(".error").addClass("hide");
-
-    }
+        //BankSetup
+        var hiddenBankId = $("#hiddenBankId");
+        var ddlBankName = $("#ddlBankName");
+        var ddlStatus = $("#ddlStatus");
+        var ddlEmailAddress = $("#ddlEmailAddress");
+        var ddlMobileNumber = $("#ddlMobileNumber");
+        var ddlAccountNumber = $("#ddlAccountNumber");
+        var ddlOrganizationName = $("#ddlOrganizationName");
+        var SearchAny = $("#SearchAny");
 
 
-    $("#clickButton").click(function (e) {
+        $(document).ready(function () {
+            LoadBankDataTable()
+        });
 
-        e.preventDefault();
+        function OpenModals() {
+            $("#spanModalHeading").text('Create New Bank');
+            $("#bankModal").modal('show');
+            $("#spanSaveTextBank").text('Save');
+            $(".error").addClass("hide");
 
-        clearCtrlBank()
-        OpenModals()
-    });
+        }
 
 
-    SearchAny.keyup(function () {
-        LoadBankDataTable()
-    })
+        $("#clickButton").click(function (e) {
 
-    function LoadBankDataTable() {
-        var data = { flag: 'BankSetup', name: $.trim(SearchAny.val()) }
-        $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetBankList', data)).then(function (res, status) {
-            console.log(res);
-            if (status === "success") {
-                $("#dataContainer1").empty();
-                $("#dataContainer1").append(res);
-            }
-        }).fail(function (err) { console.log(err) })
-    }
+            e.preventDefault();
 
-    $(document).on("click", "a.data-edit-item-Bank", function (e) {
-        e.preventDefault();
+            clearCtrlBank()
+            OpenModals()
+        });
 
-        clearCtrlBank();
 
-        var row = $(this).parent().parents('tr');
-        var td1 = row.find('td:eq(1)').html();
-        var td2 = row.find('td:eq(2)').html();
-        var td4 = row.find('td:eq(4)').html();
-        var td5 = row.find('td:eq(5)').html();
-        var td6 = row.find('td:eq(6)').html();
-        var td7 = row.find('td:eq(7)').html();
-        var td9 = row.find('td:eq(9)').html();
+        SearchAny.keyup(function () {
+            LoadBankDataTable()
+        })
 
-        hiddenBankId.val(td1);
-        //ddlOrganizationName.val(td2);
-        ddlBankName.val(td4);
-        ddlAccountNumber.val(td5);
-        ddlEmailAddress.val(td6);
-        ddlMobileNumber.val(td7);
-        ddlStatus.val(td9);
-
-        OpenModals();
-        $("#spanModalHeading").text('Update Bank');
-        $("#spanSaveTextBank").text('Update');
-    });
-
-    $("#bankSaveButton").click(function (e) {
-
-        e.preventDefault();
-        $(".error").addClass("hide");
-
-        if (ValidationForm() == true) {
-            var data = JSON.stringify({ BankId: TryParseInt(hiddenBankId.val(), 0),BankName: ddlBankName.val(), Status: ddlStatus.val(), AccountNumber: ddlAccountNumber.val(), MobileNumber: ddlMobileNumber.val(), Email: ddlEmailAddress.val() });
-            console.log(data);
-            $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveBankInfo', data, getToken())).then(function (res, status) {
-                console.log(status);
+        function LoadBankDataTable() {
+            var data = { flag: 'BankSetup', name: $.trim(SearchAny.val()) }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/GetBankList', data)).then(function (res, status) {
                 console.log(res);
-                if (res == true) {
-                    $("#bankModal").modal("toggle");
-                    toastrSuccessAlert(execuStatus.successSave);
-                    LoadBankDataTable();
+                if (status === "success") {
+                    $("#dataContainer1").empty();
+                    $("#dataContainer1").append(res);
                 }
-                else {
-                    toastrErrorAlert(execuStatus.fail);
-                }
-                enable("#bankSaveButton");
-            }).fail(function (err) {
-                console.log(err);
-                enable("#bankSaveButton");
-            });
+            }).fail(function (err) { console.log(err) })
+        }
+
+        $(document).on("click", "a.data-edit-item-Bank", function (e) {
+            e.preventDefault();
+
+            clearCtrlBank();
+
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();
+            var td2 = row.find('td:eq(2)').html();
+            var td4 = row.find('td:eq(4)').html();
+            var td5 = row.find('td:eq(5)').html();
+            var td6 = row.find('td:eq(6)').html();
+            var td7 = row.find('td:eq(7)').html();
+            var td9 = row.find('td:eq(9)').html();
+
+            hiddenBankId.val(td1);
+            //ddlOrganizationName.val(td2);
+            ddlBankName.val(td4);
+            ddlAccountNumber.val(td5);
+            ddlEmailAddress.val(td6);
+            ddlMobileNumber.val(td7);
+            ddlStatus.val(td9);
+
+            OpenModals();
+            $("#spanModalHeading").text('Update Bank');
+            $("#spanSaveTextBank").text('Update');
+        });
+
+        $("#bankSaveButton").click(function (e) {
+
+            e.preventDefault();
+            $(".error").addClass("hide");
+
+            if (ValidationForm() == true) {
+                var data = JSON.stringify({ BankId: TryParseInt(hiddenBankId.val(), 0), BankName: ddlBankName.val(), Status: ddlStatus.val(), AccountNumber: ddlAccountNumber.val(), MobileNumber: ddlMobileNumber.val(), Email: ddlEmailAddress.val() });
+                console.log(data);
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveBankInfo', data, getToken())).then(function (res, status) {
+                    console.log(status);
+                    console.log(res);
+                    if (res == true) {
+                        $("#bankModal").modal("toggle");
+                        toastrSuccessAlert(execuStatus.successSave);
+                        LoadBankDataTable();
+                    }
+                    else {
+                        toastrErrorAlert(execuStatus.fail);
+                    }
+                    enable("#bankSaveButton");
+                }).fail(function (err) {
+                    console.log(err);
+                    enable("#bankSaveButton");
+                });
+
+            }
+
+        });
+
+        function ValidationForm() {
+            Isvalid = true;
+            $('.error').addClass("hide");
+            //if ($.trim(ddlOrganizationName.val()) == 0) {
+            //    $('.required-OrganizationName').removeClass("hide");
+            //    Isvalid = false;
+            //}
+            if ($.trim(ddlBankName.val()) == 0) {
+                $('.required-BankName').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlEmailAddress.val()) == '') {
+                $('.required-EmailAddress').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlMobileNumber.val()) == 0) {
+                $('.required-MobileNumber').removeClass("hide");
+                Isvalid = false;
+            }
+            if ($.trim(ddlAccountNumber.val()) == 0) {
+                $('.required-AccountNumber').removeClass("hide");
+                Isvalid = false;
+            }
+
+            return Isvalid
 
         }
 
-    });
+        function clearCtrlBank() {
+            ddlBankName.val("");
+            ddlAccountNumber.val("");
+            ddlMobileNumber.val("");
+            ddlEmailAddress.val("");
+            //ddlOrganizationName.val("");
+            hiddenBankId.val('0');
 
-    function ValidationForm() {
-        Isvalid = true;
-        $('.error').addClass("hide");
-        //if ($.trim(ddlOrganizationName.val()) == 0) {
-        //    $('.required-OrganizationName').removeClass("hide");
-        //    Isvalid = false;
-        //}
-        if ($.trim(ddlBankName.val()) == 0) {
-            $('.required-BankName').removeClass("hide");
-            Isvalid = false;
         }
-        if ($.trim(ddlEmailAddress.val()) == '') {
-            $('.required-EmailAddress').removeClass("hide");
-            Isvalid = false;
-        }
-        if ($.trim(ddlMobileNumber.val()) == 0) {
-            $('.required-MobileNumber').removeClass("hide");
-            Isvalid = false;
-        }
-        if ($.trim(ddlAccountNumber.val()) == 0) {
-            $('.required-AccountNumber').removeClass("hide");
-            Isvalid = false;
-        }
-
-        return Isvalid
-
-    }
-
-    function clearCtrlBank() {
-        ddlBankName.val("");
-        ddlAccountNumber.val("");
-        ddlMobileNumber.val("");
-        ddlEmailAddress.val("");
-        //ddlOrganizationName.val("");
-        hiddenBankId.val('0');
-
-    }
 
     </script>
-    
-    }
+
+}

@@ -5,8 +5,8 @@
                 ViewBag.Title = "SalesCommissionReportList";
                 Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row" style="margin-top:-10px">
-    <div class="col-md-12">
+<div class="row p-0" style="margin-top:-10px">
+    <div class="col-md-12 p-0">
 
         <div class="row" style="margin-top:-12px">
             <div class="col-md-12">
@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-md-1">
                                 <div class="input-group input-group-sm">
-                                    <select class="form-control form-control-sm float-right select2" id="rptType" name="rptType">
+                                    <select class="form-control form-control-sm float-right" id="rptType" name="rptType">
                                         <option value="PDF">PDF</option>
                                         <option value="EXCEL">EXCEL</option>
                                     </select>
@@ -75,16 +75,14 @@
                 </div>
             </div>*@
         <div class="row" style="margin-top:-3px">
-            <div class="col-md-12" style="margin-top:-10px">
-                <div class="card ">
-                    <div class="card-body" style="margin-top:-10px">
+            <div class="col-md-12" style="margin-top:-13px">
+                
                         <div class="row">
-                            <div class="col-md-12 text-sm text-sm" id="dataContainer" style="overflow-y:scroll">
+                            <div class="col-md-12 p-0 text-sm text-sm" id="dataContainer">
 
                             </div>
                         </div>
-                    </div>
-                </div>
+                   
             </div>
         </div>
 

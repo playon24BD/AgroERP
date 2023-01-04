@@ -633,7 +633,7 @@ namespace ERPWeb.Controllers
                     MobileNumber = o.MobileNumber,
                     Email = o.Email
 
-                }).ToList();
+                }).Reverse().ToList();
                 List<BankSetupViewModel> viewModel = new List<BankSetupViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModel);
                 return PartialView("_GetBankPartialView", viewModel);
@@ -3021,11 +3021,11 @@ namespace ERPWeb.Controllers
             return Json(IsSuccess);
         }
 
-        public ActionResult AgroProductSalesReport(string InvoiceNo)
+        public ActionResult AgroProductSalesReport(long ProductSalesInfoId)
         {
             string file = string.Empty;
-            // var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
-            var data = _agroProductSalesInfoBusiness.GetProductSalesData(InvoiceNo);
+            var SalesId = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).ProductSalesInfoId;
+            var data = _agroProductSalesInfoBusiness.GetProductSalesData(SalesId);
 
             LocalReport localReport = new LocalReport();
 
@@ -3075,9 +3075,11 @@ namespace ERPWeb.Controllers
 
         public ActionResult AgroProductSalesReports(long ProductSalesInfoId)
         {
-            var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
-            var data = _agroProductSalesInfoBusiness.GetProductSalesData(InvoiceNo);
-
+            var SalesInfoId = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).ProductSalesInfoId;
+            var data = _agroProductSalesInfoBusiness.GetProductSalesData(SalesInfoId);
+           var data1 = _agroProductSalesInfoBusiness.GetProductSalesData1(SalesInfoId);
+           var data2 = _agroProductSalesInfoBusiness.GetProductSalesData2(SalesInfoId);
+            
             LocalReport localReport = new LocalReport();
 
 
@@ -3089,6 +3091,12 @@ namespace ERPWeb.Controllers
 
             ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
             localReport.DataSources.Add(dataSource1);
+
+            ReportDataSource dataSource2 = new ReportDataSource("dsAgroSalesReport1", data1);
+            localReport.DataSources.Add(dataSource2);
+
+            ReportDataSource dataSource3 = new ReportDataSource("dsAgroSalesReport2", data2);
+            localReport.DataSources.Add(dataSource3);
 
             string reportType = "PDF";
             string mimeType;
@@ -3128,8 +3136,8 @@ namespace ERPWeb.Controllers
 
                 isUpdateSucccess = _agroProductSalesInfoBusiness.UpdateInvoiceDrop(ProductSalesInfoId, User.UserId);
             }
-            var InvoiceNo = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).InvoiceNo;
-            var data = _agroProductSalesInfoBusiness.GetProductSalesData(InvoiceNo);
+            var SalesInfoId = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).ProductSalesInfoId;
+            var data = _agroProductSalesInfoBusiness.GetProductSalesData(SalesInfoId);
 
             LocalReport localReport = new LocalReport();
 

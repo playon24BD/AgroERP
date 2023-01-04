@@ -315,6 +315,28 @@
     <Content Include="Reports\DataSets\dsMoneyReciptReport.xsc">
       <DependentUpon>dsMoneyReciptReport.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsAgroSalesReport1.xsc">
+      <DependentUpon>dsAgroSalesReport1.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsAgroSalesReport1.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAgroSalesReport1.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsAgroSalesReport1.xss">
+      <DependentUpon>dsAgroSalesReport1.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSets\dsAgroSalesReport2.xsc">
+      <DependentUpon>dsAgroSalesReport2.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsAgroSalesReport2.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAgroSalesReport2.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsAgroSalesReport2.xss">
+      <DependentUpon>dsAgroSalesReport2.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsMoneyReciptReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3255,6 +3277,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAgroSalesReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSets\dsAgroSalesReport1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAgroSalesReport1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSets\dsAgroSalesReport2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAgroSalesReport2.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reports\DataSets\dsFinishGoodProductionReportSave.Designer.cs">
       <AutoGen>True</AutoGen>

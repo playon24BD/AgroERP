@@ -604,86 +604,77 @@ namespace ERPBLL.Agriculture
             return isSuccess;
         }
 
-        public IEnumerable<ProductSalesDataReport> GetProductSalesData(string InvoiceNo)
+        public IEnumerable<ProductSalesDataReport> GetProductSalesData(long? SalesInfoId)
         {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport>(QueryProductSalesReport(InvoiceNo));
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport>(QueryProductSalesReport(SalesInfoId));
         }
 
-        private string QueryProductSalesReport(string InvoiceNo)
+        private string QueryProductSalesReport(long? SalesInfoId)
         {
             string param = string.Empty;
             string query = string.Empty;
 
-
-            if (!string.IsNullOrEmpty(InvoiceNo))
+            if (SalesInfoId != 0 && SalesInfoId > 0)
             {
-                param += string.Format(@"and sales.InvoiceNo ='{0}'", InvoiceNo);
+                param += string.Format(@" and i.ProductSalesInfoId={0}", SalesInfoId);
             }
+
+            //if (!string.IsNullOrEmpty(InvoiceNo))
+            //{
+            //    param += string.Format(@"and sales.InvoiceNo ='{0}'", InvoiceNo);
+            //}
             //if (!string.IsNullOrEmpty(status))
             //{
             //    param += string.Format(@"and Taskstatus ='{0}'", status);
             //}
 
-            query = string.Format(@"select DISTINCT 
-            AU.FullName,
+            query = string.Format(@"
+
+select 
+ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=i.ZoneId),
+
+            DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=i.DivisionId),
+
+            RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=i.RegionId),
+
+            AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=i.AreaId),
+			 i.ChallanNo,
+			 AU.FullName,
             ST.StockiestName,
             TE.TerritoryName,
             AU.Address,
             AU.MobileNo,
-            sales.InvoiceNo,
-            CONVERT(date,sales.InvoiceDate) as InvoiceDate,
-            sales.ChallanNo,
-            CONVERT(date,sales.ChallanDate) as ChallanDate,
-            sales.Depot,
-            sales.VehicleType,
-            sales.VehicleNumber,
-            sales.DriverName,
-            sales.DeliveryPlace,
-            sales.Do_ADO_DA,
-            sales.DoADO_Name,
-            sales.PaymentMode,
+            i.InvoiceNo,
+            CONVERT(date,i.InvoiceDate) as InvoiceDate,
+            CONVERT(date,i.ChallanDate) as ChallanDate,
 
-            ZoneName=(select Z.ZoneName from [Agriculture].[dbo].[tblZoneInfo] Z where Z.ZoneId=sales.ZoneId),
+i.InvoiceNo,i.ChallanNo,pa.PackageName,d.PackageId,f.FinishGoodProductName,i.ProductSalesInfoId,i.InvoiceNo,d.ProductSalesDetailsId,d.FinishGoodProductInfoId,d.Quanity,d.BoxQuanity,d.Price,d.Price,d.Discount,d.DiscountTk,d.MeasurementSize,d.ReceipeBatchCode,d.QtyKG,(d.Quanity*d.Price-DiscountTk)as ProductTotal,
+ RT=ISNULL((SELECT 
+ CASE When count(*) > 0 then 1
+ else 0
+ END AS myValue
+ from tblSalesReturn sr where sr.FinishGoodProductInfoId=d.FinishGoodProductInfoId and sr.ProductSalesInfoId=d.ProductSalesInfoId and sr.FGRId=d.FGRId and  sr.Status='ADJUST'),0)
 
-            DivisionName=(select DIV.DivisionName from [Agriculture].[dbo].[tblDivisionInfo] DIV where DIV.DivisionId=sales.DivisionId),
-
-            RegionName=(select R.RegionName from [Agriculture].[dbo].[tblRegionInfos] R where R.RegionId=sales.RegionId),
-
-            AreaName=(select A.AreaName from [Agriculture].[dbo].[tblAreaSetup] A where A.AreaId=sales.AreaId),
-
-            salesD.ProductSalesInfoId,
-            salesD.FinishGoodProductInfoId,
-            FGPN.FinishGoodProductName,
-
-            salesD.Quanity,
-            salesD.Price,
-            salesD.MeasurementSize,
-            salesD.Discount,
-            salesD.DiscountTk,
-            sales.PaidAmount,
-            sales.DueAmount,
-            (salesD.Price*salesD.Quanity) AS Total,
-            sales.TotalAmount,
-            dbo.fnIntegerToWords(TotalAmount)+' '+'Taka Only ..........' AS TotalAmountText
-
-
-
-
-            from [Agriculture].[dbo].[tblProductSalesInfo] sales
-            INNER JOIN [Agriculture].[dbo].[tblProductSalesDetails] salesD
-            on sales.ProductSalesInfoId=salesD.ProductSalesInfoId
-
-            INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
-            on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId
+from tblProductSalesInfo i
+inner join tblProductSalesDetails d on i.ProductSalesInfoId=d.ProductSalesInfoId
+inner join tblFinishGoodProductInfo f on d.FinishGoodProductInfoId=f.FinishGoodProductId
+left join tblPackageInfo pa on pa.PackageId = d.PackageId
+INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
+            on d.FinishGoodProductInfoId=FGPN.FinishGoodProductId
 
             LEFT JOIN [ControlPanelAgro].[dbo].[tblApplicationUsers] AU
-            on AU.UserId=sales.UserId
+            on AU.UserId=i.UserId
             LEFT JOIN [Agriculture].[dbo].[tblStockiestInfo] ST
-            on ST.StockiestId=sales.StockiestId
+            on ST.StockiestId=i.StockiestId
             LEFT JOIN [Agriculture].[dbo].[tblTerritoryInfos] TE
             on TE.TerritoryId=ST.TerritoryId
 
-                        Where 1=1 {0}", Utility.ParamChecker(param));
+
+
+where 1=1 and d.PackageId=0 and d.Status is null
+
+
+ {0}", Utility.ParamChecker(param));
             return query;
         }
 
@@ -1567,7 +1558,66 @@ and sales.Status is null  order by sales.ProductSalesInfoId desc
             }
         }
 
+        public IEnumerable<ProductSalesDataReport1> GetProductSalesData1(long? SalesInfoId)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport1>(QueryProductSalesReport1(SalesInfoId));
+        }
 
+        private string QueryProductSalesReport1(long? SalesInfoId)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+            if (SalesInfoId != 0 && SalesInfoId > 0)
+            {
+                param += string.Format(@" and i.ProductSalesInfoId={0}", SalesInfoId);
+            }
+
+            query = string.Format(@"
+            
+select pa.PackageName,d.PackageId,f.FinishGoodProductName,i.ProductSalesInfoId,i.InvoiceNo,d.ProductSalesDetailsId,d.FinishGoodProductInfoId,d.Quanity,d.BoxQuanity,d.Price,d.Price,d.Discount,d.DiscountTk,d.MeasurementSize,d.ReceipeBatchCode,d.QtyKG,(d.Quanity*d.Price-DiscountTk)as ProductTotal,
+ RT=ISNULL((SELECT 
+ CASE When count(*) > 0 then 1
+ else 0
+ END AS myValue
+ from tblSalesReturn sr where sr.FinishGoodProductInfoId=d.FinishGoodProductInfoId and sr.ProductSalesInfoId=d.ProductSalesInfoId and sr.FGRId=d.FGRId and  sr.Status='ADJUST'),0)
+
+from tblProductSalesInfo i
+inner join tblProductSalesDetails d on i.ProductSalesInfoId=d.ProductSalesInfoId
+inner join tblFinishGoodProductInfo f on d.FinishGoodProductInfoId=f.FinishGoodProductId
+left join tblPackageInfo pa on pa.PackageId = d.PackageId
+where 1=1 and d.PackageId !=0 and d.Status is null
+
+{0}", Utility.ParamChecker(param));
+            return query;
+        }
+
+
+        public IEnumerable<ProductSalesDataReport2> GetProductSalesData2(long? SalesInfoId)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport2>(QueryProductSalesReport2(SalesInfoId));
+        }
+
+        private string QueryProductSalesReport2(long? SalesInfoId)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+            if (SalesInfoId != 0 && SalesInfoId > 0)
+            {
+                param += string.Format(@" and ti.ProductSalesInfoId={0}", SalesInfoId);
+            }
+            
+
+            query = string.Format(@"
+
+            select distinct ai.AccessoriesName,ai.accessoriesId,si.ProductSalesInfoId,ti.Quantity as Quanity from tblAccessoriesTrackInfo ti
+left join tblProductSalesInfo si on si.ProductSalesInfoId=ti.ProductSalesInfoId
+left join tblAccessoriesInfo ai on ti.AccessoriesId=ai.AccessoriesId
+
+                        Where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+        }
 
         //ExecutionStateWithText IAgroProductSalesInfoBusiness.  (AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId)
         //{
