@@ -13,6 +13,7 @@ namespace ERPBO.Agriculture.ReportModels
         public string FinishGoodProductName { get; set; }
         public string FinishGoodProductionBatch { get; set; }
         public string ReceipeBatchCode { get; set; }
+        public string PackageMesurementName { get; set; }
         public string ProductDetails { get; set; }
         public string UnitName { get; set; }
         public double ProductionTotal { get; set; }

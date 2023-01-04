@@ -16,7 +16,7 @@ namespace ERPBO.Agriculture.ReportModels
         public string StockiestName { get; set; }
         public string InvoiceNo { get; set; }
         public string PaymentMode { get; set; }
-        public double TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public DateTime PaymentDate { get; set; }
         public double PaymentAmount { get; set; }
         public string AccountNumber { get; set; }

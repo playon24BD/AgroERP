@@ -305,6 +305,8 @@ namespace ERPWeb.Reports.DataSets {
             
             private global::System.Data.DataColumn columnTargetQuantity;
             
+            private global::System.Data.DataColumn columnPackageMesurementName;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public FinishGoodProductionReportSaveDataTable() {
@@ -444,6 +446,14 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn PackageMesurementNameColumn {
+                get {
+                    return this.columnPackageMesurementName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -479,7 +489,7 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public FinishGoodProductionReportSaveRow AddFinishGoodProductionReportSaveRow(string FinishGoodProductName, string FinishGoodProductionBatch, string ReceipeBatchCode, string ProductDetails, string ProductionTotal, string SalesTotal, string ReturnTotal, string CurrentPices, string EntryDate, string CurrentStock, string FGRQty, string UnitName, string TargetQuantity) {
+            public FinishGoodProductionReportSaveRow AddFinishGoodProductionReportSaveRow(string FinishGoodProductName, string FinishGoodProductionBatch, string ReceipeBatchCode, string ProductDetails, string ProductionTotal, string SalesTotal, string ReturnTotal, string CurrentPices, string EntryDate, string CurrentStock, string FGRQty, string UnitName, string TargetQuantity, string PackageMesurementName) {
                 FinishGoodProductionReportSaveRow rowFinishGoodProductionReportSaveRow = ((FinishGoodProductionReportSaveRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FinishGoodProductName,
@@ -494,7 +504,8 @@ namespace ERPWeb.Reports.DataSets {
                         CurrentStock,
                         FGRQty,
                         UnitName,
-                        TargetQuantity};
+                        TargetQuantity,
+                        PackageMesurementName};
                 rowFinishGoodProductionReportSaveRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowFinishGoodProductionReportSaveRow);
                 return rowFinishGoodProductionReportSaveRow;
@@ -530,6 +541,7 @@ namespace ERPWeb.Reports.DataSets {
                 this.columnFGRQty = base.Columns["FGRQty"];
                 this.columnUnitName = base.Columns["UnitName"];
                 this.columnTargetQuantity = base.Columns["TargetQuantity"];
+                this.columnPackageMesurementName = base.Columns["PackageMesurementName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -561,6 +573,8 @@ namespace ERPWeb.Reports.DataSets {
                 base.Columns.Add(this.columnUnitName);
                 this.columnTargetQuantity = new global::System.Data.DataColumn("TargetQuantity", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTargetQuantity);
+                this.columnPackageMesurementName = new global::System.Data.DataColumn("PackageMesurementName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPackageMesurementName);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -924,6 +938,23 @@ namespace ERPWeb.Reports.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string PackageMesurementName {
+                get {
+                    try {
+                        return ((string)(this[this.tableFinishGoodProductionReportSave.PackageMesurementNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PackageMesurementName\' in table \'FinishGoodProductionReport" +
+                                "Save\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFinishGoodProductionReportSave.PackageMesurementNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsFinishGoodProductNameNull() {
                 return this.IsNull(this.tableFinishGoodProductionReportSave.FinishGoodProductNameColumn);
             }
@@ -1076,6 +1107,18 @@ namespace ERPWeb.Reports.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetTargetQuantityNull() {
                 this[this.tableFinishGoodProductionReportSave.TargetQuantityColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsPackageMesurementNameNull() {
+                return this.IsNull(this.tableFinishGoodProductionReportSave.PackageMesurementNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetPackageMesurementNameNull() {
+                this[this.tableFinishGoodProductionReportSave.PackageMesurementNameColumn] = global::System.Convert.DBNull;
             }
         }
         

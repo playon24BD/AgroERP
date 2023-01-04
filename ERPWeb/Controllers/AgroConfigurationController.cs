@@ -4795,7 +4795,11 @@ namespace ERPWeb.Controllers
                 if (string.IsNullOrEmpty(flag))
                 {
 
-                    ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+                    //ViewBag.ddlProductName = _commissionOnProductBusiness.GetCommisionOnProducts(User.OrgId).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+                    ViewBag.ddlProductName = _finishGoodProductBusiness.GetAllProductInfo(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+                    //ViewBag.ddlStokiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
                     return View();
                 }
@@ -5835,7 +5839,7 @@ namespace ERPWeb.Controllers
                 {
                     var commision = _commissionOnProductOnSalesBusiness.GetAllCommissionOnProductOnSales(invoiceNo, stockiestId, fdate, tdate, User.OrgId).Select(c => new CommissionOnProductOnSalesDTO
                     {
-
+                        //ProductSalesInfoId=c.ProductSalesInfoId,
                         CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
 
                         //FinishGoodProductId = c.FinishGoodProductId,

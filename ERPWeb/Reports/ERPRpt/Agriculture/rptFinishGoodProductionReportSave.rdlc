@@ -107,16 +107,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.95833in</Width>
+              <Width>2.08333in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.82424in</Width>
+              <Width>2.20586in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.65625in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.71494in</Width>
+              <Width>0.70833in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -132,7 +129,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Batch Code</Value>
+                              <Value>Product Batch Code</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -168,7 +165,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Receipe Batch Code</Value>
+                              <Value>Package Details</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -231,42 +228,6 @@
                     </Textbox>
                   </CellContents>
                 </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox11">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Unit Name</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox11</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>Gainsboro</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
               </TablixCells>
             </TablixRow>
             <TablixRow>
@@ -308,14 +269,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ReceipeBatchCode">
+                    <Textbox Name="PackageMesurementName">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ReceipeBatchCode.Value</Value>
+                              <Value>=Fields!PackageMesurementName.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -326,7 +287,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>ReceipeBatchCode</rd:DefaultName>
+                      <rd:DefaultName>PackageMesurementName</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -375,40 +336,6 @@
                     </Textbox>
                   </CellContents>
                 </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitName">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!UnitName.Value</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>UnitName</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
               </TablixCells>
             </TablixRow>
           </TablixRows>
@@ -418,14 +345,13 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
-            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>1.73958in</Size>
+                <Size>1.89583in</Size>
                 <CellContents>
                   <Textbox Name="Textbox18">
                     <CanGrow>true</CanGrow>
@@ -478,7 +404,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.73958in</Size>
+                <Size>1.89583in</Size>
                 <CellContents>
                   <Textbox Name="FinishGoodProductName1">
                     <CanGrow>true</CanGrow>
@@ -526,7 +452,7 @@
         <DataSetName>dsFinishGoodProductionReportSave</DataSetName>
         <Top>1.17583in</Top>
         <Height>0.67708in</Height>
-        <Width>6.89334in</Width>
+        <Width>6.89335in</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -662,10 +588,14 @@
           <DataField>TargetQuantity</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="PackageMesurementName">
+          <DataField>PackageMesurementName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>dsFinishGoodProductionReportSave</rd:DataSetName>
-        <rd:SchemaPath>E:\PROJECT\GITHUB\AgroERPNew\AgroERP\ERPWeb\Reports\DataSets\dsFinishGoodProductionReportSave.xsd</rd:SchemaPath>
+        <rd:SchemaPath>E:\PROJECT\GITHUB\AgroEmonUpdateLast\AgroERP\ERPWeb\Reports\DataSets\dsFinishGoodProductionReportSave.xsd</rd:SchemaPath>
         <rd:TableName>FinishGoodProductionReportSave</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />

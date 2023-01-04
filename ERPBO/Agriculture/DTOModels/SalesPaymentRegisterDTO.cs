@@ -28,7 +28,7 @@ namespace ERPBO.Agriculture.DTOModels
         public string TerritoryName { get; set; }
         public string StockiestName { get; set; }
         public string InvoiceNo { get; set; }
-        public double TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public long PaymentMoneyReciptId { get; set; }
 
         public double CommisionPercent { get; set; }

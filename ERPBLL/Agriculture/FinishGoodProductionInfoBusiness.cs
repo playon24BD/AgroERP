@@ -567,11 +567,13 @@ Inner Join tblAgroUnitInfo U on r.UnitId=U.UnitId
 
             query = string.Format(@"
      
-     select Distinct fgp.FinishGoodProductId , fgp.FGRId ,fgp.FinishGoodProductionBatch, p.FinishGoodProductName,fr.ReceipeBatchCode,fgp.TargetQuantity,fr.FGRQty,un.UnitName
+      select Distinct fgp.FinishGoodProductId , fgp.FGRId ,fgp.FinishGoodProductionBatch, p.FinishGoodProductName,concat( case 
+when MasterCarton=0 then '' else concat(m.MasterCarton,'',' x ')  end,m.InnerBox,' x ', m.PackSize,' ',un.UnitName) PackageMesurementName ,fr.ReceipeBatchCode,fgp.TargetQuantity,fr.FGRQty,un.UnitName
 
 
 
 from FinishGoodProductionInfoes fgp
+INNER JOIN tblMeasurement m on fgp.MeasurementId=m.MeasurementId
 inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodProductId
 inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId
 inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
