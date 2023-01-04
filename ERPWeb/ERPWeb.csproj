@@ -318,6 +318,28 @@
     <Content Include="Reports\DataSets\dsAgroSalesReport1.xsc">
       <DependentUpon>dsAgroSalesReport1.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsAgroSalesChallanReport1.xsc">
+      <DependentUpon>dsAgroSalesChallanReport1.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsAgroSalesChallanReport1.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAgroSalesChallanReport1.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsAgroSalesChallanReport1.xss">
+      <DependentUpon>dsAgroSalesChallanReport1.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSets\dsAgroSalesChallanReport2.xsc">
+      <DependentUpon>dsAgroSalesChallanReport2.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsAgroSalesChallanReport2.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAgroSalesChallanReport2.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsAgroSalesChallanReport2.xss">
+      <DependentUpon>dsAgroSalesChallanReport2.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsAgroSalesReport1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3272,6 +3294,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAgroSalesChallanReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSets\dsAgroSalesChallanReport1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAgroSalesChallanReport1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSets\dsAgroSalesChallanReport2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAgroSalesChallanReport2.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reports\DataSets\dsAgroSalesReport.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -33,7 +33,9 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<ProductSalesDataReport1> GetProductSalesData1(long? SalesInfoId);
         IEnumerable<ProductSalesDataReport2> GetProductSalesData2(long? SalesInfoId);
         
-        IEnumerable<ProductSalesDataChallanReport> GetProductSalesChallanData(string ChallanNo);
+        IEnumerable<ProductSalesDataChallanReport> GetProductSalesChallanData(long? SalesId);
+        IEnumerable<ProductSalesDataChallanReport1> GetProductSalesChallanData1(long? SalesId);
+        IEnumerable<ProductSalesDataChallanReport2> GetProductSalesChallanData2(long? SalesId);
         IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long? stockiestId, string invoiceNo, string fromDate, string toDate);
         IEnumerable<AgroProductSalesInfo> GetUserName(long orgId);
         AgroProductSalesInfo GetAgroProductionInfoById(long id, long orgId);

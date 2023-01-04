@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="dsAgroSalesChallanReport" targetNamespace="http://tempuri.org/dsAgroSalesChallanReport.xsd" xmlns:mstns="http://tempuri.org/dsAgroSalesChallanReport.xsd" xmlns="http://tempuri.org/dsAgroSalesChallanReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:schema id="dsAgroSalesChallanReport1" targetNamespace="http://tempuri.org/dsAgroSalesChallanReport1.xsd" xmlns:mstns="http://tempuri.org/dsAgroSalesChallanReport1.xsd" xmlns="http://tempuri.org/dsAgroSalesChallanReport1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
@@ -9,10 +9,10 @@
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="dsAgroSalesChallanReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsAgroSalesChallanReport" msprop:Generator_UserDSName="dsAgroSalesChallanReport">
+  <xs:element name="dsAgroSalesChallanReport1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsAgroSalesChallanReport1" msprop:Generator_UserDSName="dsAgroSalesChallanReport1">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="dsAgroSalesChallanReport" msprop:Generator_TableClassName="dsAgroSalesChallanReportDataTable" msprop:Generator_TableVarName="tabledsAgroSalesChallanReport" msprop:Generator_RowChangedName="dsAgroSalesChallanReportRowChanged" msprop:Generator_TablePropName="_dsAgroSalesChallanReport" msprop:Generator_RowDeletingName="dsAgroSalesChallanReportRowDeleting" msprop:Generator_RowChangingName="dsAgroSalesChallanReportRowChanging" msprop:Generator_RowEvHandlerName="dsAgroSalesChallanReportRowChangeEventHandler" msprop:Generator_RowDeletedName="dsAgroSalesChallanReportRowDeleted" msprop:Generator_RowClassName="dsAgroSalesChallanReportRow" msprop:Generator_UserTableName="dsAgroSalesChallanReport" msprop:Generator_RowEvArgName="dsAgroSalesChallanReportRowChangeEvent">
+        <xs:element name="dsAgroSalesChallanReport1" msprop:Generator_TableClassName="dsAgroSalesChallanReport1DataTable" msprop:Generator_TableVarName="tabledsAgroSalesChallanReport1" msprop:Generator_RowChangedName="dsAgroSalesChallanReport1RowChanged" msprop:Generator_TablePropName="_dsAgroSalesChallanReport1" msprop:Generator_RowDeletingName="dsAgroSalesChallanReport1RowDeleting" msprop:Generator_RowChangingName="dsAgroSalesChallanReport1RowChanging" msprop:Generator_RowEvHandlerName="dsAgroSalesChallanReport1RowChangeEventHandler" msprop:Generator_RowDeletedName="dsAgroSalesChallanReport1RowDeleted" msprop:Generator_RowClassName="dsAgroSalesChallanReport1Row" msprop:Generator_UserTableName="dsAgroSalesChallanReport1" msprop:Generator_RowEvArgName="dsAgroSalesChallanReport1RowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="FinishGoodProductName" msprop:Generator_ColumnVarNameInTable="columnFinishGoodProductName" msprop:Generator_ColumnPropNameInRow="FinishGoodProductName" msprop:Generator_ColumnPropNameInTable="FinishGoodProductNameColumn" msprop:Generator_UserColumnName="FinishGoodProductName" type="xs:string" minOccurs="0" />

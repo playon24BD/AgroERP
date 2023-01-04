@@ -3182,9 +3182,11 @@ namespace ERPWeb.Controllers
 
         public ActionResult AgroProductSalesChallanReport(long ProductSalesInfoId)
         {
-            var ChallanNo = _agroProductSalesInfoBusiness.GetChallanProductionInfoById(ProductSalesInfoId).ChallanNo;
-            var data = _agroProductSalesInfoBusiness.GetProductSalesChallanData(ChallanNo);
-
+            var SalesId = _agroProductSalesInfoBusiness.GetChallanProductionInfoById(ProductSalesInfoId).ProductSalesInfoId;
+            var data = _agroProductSalesInfoBusiness.GetProductSalesChallanData(SalesId);
+            var data1 = _agroProductSalesInfoBusiness.GetProductSalesChallanData1(SalesId);
+            var data2 = _agroProductSalesInfoBusiness.GetProductSalesChallanData2(SalesId);
+            
             LocalReport localReport = new LocalReport();
 
 
@@ -3196,6 +3198,12 @@ namespace ERPWeb.Controllers
 
             ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesChallanReport", data);
             localReport.DataSources.Add(dataSource1);
+
+            ReportDataSource dataSource2 = new ReportDataSource("dsAgroSalesChallanReport1", data1);
+            localReport.DataSources.Add(dataSource2);
+
+            ReportDataSource dataSource3 = new ReportDataSource("dsAgroSalesChallanReport2", data2);
+            localReport.DataSources.Add(dataSource3);
 
             string reportType = "PDF";
             string mimeType;
