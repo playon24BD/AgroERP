@@ -16,7 +16,7 @@
                     <th style="vertical-align:middle">Measurement Name</th>
                     <th style="vertical-align:middle">Quantity</th>
                     <th style="vertical-align:middle">Rate/Price</th>
-                    <th style="vertical-align:middle">Status</th>
+                    <th class="hide" style="vertical-align:middle">Status</th>
                     <th style="vertical-align:middle">Amount</th>
                     <th style="vertical-align:middle">Entry Date</th>
                 </tr>
@@ -34,9 +34,9 @@
                             <td class="text-center">@item.FinishGoodProductName</td>
                             <td class="text-center">@item.MeasurementName</td>
                             <td class="text-center">@item.Quanity</td>
-                            <td class="text-center">@item.Rate</td>
-                            <td class="text-center">@item.Status</td>
-                            <td class="text-center">@item.Amount</td>
+                            <td class="text-center">@item.Rate.ToString("0.00")</td>
+                            <td class=" hide text-center">@item.Status</td>
+                            <td class="text-center">@item.Amount.ToString("0.00")</td>
                             <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
 
                         </tr>

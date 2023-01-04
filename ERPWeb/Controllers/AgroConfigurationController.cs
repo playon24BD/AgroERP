@@ -6100,7 +6100,7 @@ namespace ERPWeb.Controllers
 
             //var stokiestid = _agroProductSalesInfoBusiness.GetAgroSalesinfoByStokiestId(id).Where(x => x.StockiestId == id).ToList();
             //var totalbill = stokiestid.Sum(y => y.TotalAmount);
-            return Json(totalbill, JsonRequestBehavior.AllowGet);
+            return Json(totalbill.ToString("0.00"), JsonRequestBehavior.AllowGet);
 
 
         }
@@ -6251,7 +6251,7 @@ namespace ERPWeb.Controllers
             itemStock = (checkFinishGoodStockValue.FirstOrDefault().GrandTotal);
 
 
-            return Json(itemStock, JsonRequestBehavior.AllowGet);
+            return Json(itemStock.ToString("0.00"), JsonRequestBehavior.AllowGet);
 
 
         }

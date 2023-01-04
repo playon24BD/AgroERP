@@ -33,7 +33,7 @@
                         @*<td class="hide">@item.OrganizationId</td>*@
                         <td class="text-center">@item.FinishGoodProductName</td>
                         <td class="text-center">@item.Flag</td>
-                        <td class="text-center">@item.ProductPrice</td>
+                        <td class="text-center">@item.ProductPrice.ToString("0.00")</td>
                         <td class="text-center">
                             <a href="#" class="das-btn btn-sm data-edit-item-price" style="line-height:1" data-edit-item-price="@item.FinishGoodProductId"><i class="fa fa-pen"></i></a>
                             <a href="#" class="emndetails-btn data-item-detail" title="View Detail" data-item-detail="@item.FinishGoodProductId" style="line-height:1">
