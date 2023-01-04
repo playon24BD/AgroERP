@@ -15,7 +15,7 @@
                     <th style="vertical-align:middle">Unit Name</th>
                     <th style="vertical-align:middle">Total IN</th>
                     <th style="vertical-align:middle">Total OUT</th>
-                    <th style="vertical-align:middle">Return In</th>
+                    <th class="hide" style="vertical-align:middle">Return In</th>
                     <th style="vertical-align:middle">Total Remain</th>
                     @*<th style="vertical-align:middle">Action</th>*@
                 </tr>
@@ -24,6 +24,128 @@
                 @foreach (var item in Model)
                 {
                     SL = SL + 1;
+                    string gram ;
+                    string kg ;
+                    string ton ;
+                    string stockIn;
+                    string stockOut;
+                    string currentStock;
+                    string lt;
+                    string ml;
+                    string gallon;
+
+                    if (item.UnitName == "gm")
+                    {
+                        gram = item.StockIN.ToString("N2") + "(gm)";
+                        kg = ((item.StockIN / 1000)).ToString("N2") + "(kg)";
+                        ton = (((item.StockIN / 1000)/1000)).ToString("N2") + "(ton)";
+                        stockIn = gram + " /" + kg + " /" + ton;
+
+                        gram = item.StockOut.ToString("N2") + "(gm)";
+                        kg = ((item.StockOut / 1000)).ToString("N2") + "(kg)";
+                        ton = (((item.StockOut / 1000) / 1000)).ToString("N2") + "(ton)";
+                        stockOut = gram + " /" + kg + " /" + ton;
+
+                        gram = item.CurrentStock.ToString("N2") + "(gm)";
+                        kg = ((item.CurrentStock / 1000)).ToString("N2") + "(kg)";
+                        ton = (((item.CurrentStock / 1000) / 1000)).ToString("N2") + "(ton)";
+                        currentStock = gram + " /" + kg + " /" + ton;
+                    }
+                    else if (item.UnitName == "kg")
+                    {
+                        gram = (item.StockIN*1000).ToString("N2") + "(gm)";
+                        kg = ((item.StockIN)).ToString("N2") + "(kg)";
+                        ton = (((item.StockIN * 1) / 1000)).ToString("N2") + "(ton)";
+                        stockIn = gram + " /" + kg + " /" + ton;
+
+                        gram = (item.StockOut * 1000).ToString("N2") + "(gm)";
+                        kg = ((item.StockOut)).ToString("N2") + "(kg)";
+                        ton = (((item.StockOut * 1) / 1000)).ToString("N2") + "(ton)";
+                        stockOut = gram + " /" + kg + " /" + ton;
+
+                        gram = (item.CurrentStock * 1000).ToString("N2") + "(gm)";
+                        kg = ((item.CurrentStock)).ToString("N2") + "(kg)";
+                        ton = (((item.CurrentStock * 1) / 1000)).ToString("N2") + "(ton)";
+                        currentStock = gram + " /" + kg + " /" + ton;
+
+                    }
+                    else if (item.UnitName == "ton")
+                    {
+                        gram = (item.StockIN / 2000).ToString("N2")+ "(gm)";
+                        kg = ((item.StockIN/1000)).ToString("N2") + "(kg)";
+                        ton = (((item.StockIN))).ToString("N2") + "(ton)";
+                        stockIn = gram + " /" + kg + " /" + ton;
+
+                        gram = (item.StockOut / 2000).ToString("N2") + "(gm)";
+                        kg = ((item.StockOut / 1000)).ToString("N2") + "(kg)";
+                        ton = (((item.StockOut))).ToString("N2") + "(ton)";
+                        stockOut = gram + " /" + kg + " /" + ton;
+
+                        gram = (item.CurrentStock / 2000).ToString("N2") + "(gm)";
+                        kg = ((item.CurrentStock / 1000)).ToString("N2") + "(kg)";
+                        ton = (((item.CurrentStock))).ToString("N2") + "(ton)";
+                        currentStock = gram + " /" + kg + " /" + ton;
+                    }
+                    else if (item.UnitName == "lt")
+                    {
+                        gallon = (item.StockIN * 0.264172).ToString("N2") + "(Gallon)";
+                        ml = ((item.StockIN * 1000)).ToString("N2") + "(ml)";
+                        lt = (((item.StockIN))).ToString("N2") + "(lt)";
+                        stockIn = gallon + " /" + ml + " /" + lt;
+
+                        gallon = (item.StockOut * 0.264172).ToString("N2") + "(Gallon)";
+                        ml = ((item.StockOut * 1000)).ToString("N2") + "(ml)";
+                        lt = (((item.StockOut))).ToString("N2") + "(lt)";
+                        stockOut = gallon + " /" + ml + " /" + lt;
+
+                        gallon = (item.CurrentStock * 0.264172).ToString("N2") + "(Gallon)";
+                        ml = ((item.CurrentStock * 1000)).ToString("N2") + "(ml)";
+                        lt = (((item.CurrentStock))).ToString("N2") + "(lt)";
+                        currentStock = gallon + " /" + ml + " /" + lt;
+                    }
+                    else if (item.UnitName == "ml")
+                    {
+                        gallon = (item.StockIN * 0.000264172).ToString("N2") + "(Gallon)";
+                        lt = ((item.StockIN / 1000)).ToString("N2") + "(lt)";
+                        ml = (((item.StockIN))).ToString("N2") + "(ml)";
+                        stockIn = gallon + " /" + ml + " /" + lt;
+
+                        gallon = (item.StockOut * 0.000264172).ToString("N2") + "(Gallon)";
+                        lt = ((item.StockOut / 1000)).ToString("N2") + "(lt)";
+                        ml = (((item.StockOut))).ToString("N2") + "(ml)";
+                        stockOut = gallon + " /" + ml + " /" + lt;
+
+                        gallon = (item.CurrentStock * 0.000264172).ToString("N2") + "(Gallon)";
+                        lt = ((item.CurrentStock / 1000)).ToString("N2") + "(lt)";
+                        ml = (((item.CurrentStock))).ToString("N2") + "(ml)";
+                        currentStock = gallon + " /" + ml + " /" + lt;
+                    }
+                    else if (item.UnitName == "Gallon")
+                    {
+                        ml = (item.StockIN * 3785.412).ToString("N2") + "(ml)";
+                        lt = ((item.StockIN * 3.78541)).ToString("N2") + "(lt)";
+                        gallon = (((item.StockIN))).ToString("N2") + "(gallon)";
+                        stockIn = gallon + " /" + ml + " /" + lt;
+
+                        ml = (item.StockOut * 3785.412).ToString("N2") + "(ml)";
+                        lt = ((item.StockOut * 3.78541)).ToString("N2") + "(lt)";
+                        gallon = (((item.StockOut))).ToString("N2") + "(gallon)";
+                        stockOut = gallon + " /" + ml + " /" + lt;
+
+                        ml = (item.CurrentStock * 3785.412).ToString("N2") + "(ml)";
+                        lt = ((item.CurrentStock * 3.78541)).ToString("N2") + "(lt)";
+                        gallon = (((item.CurrentStock))).ToString("N2") + "(gallon)";
+                        currentStock = gallon + " /" + ml + " /" + lt;
+                    }
+
+                    else
+                    {
+                        stockIn = "no conversion";
+                        stockOut = "no conversion";
+                        currentStock = "no conversion";
+                    }
+
+
                     <tr>
 
                         <td class="text-center text-bold">@SL</td>
@@ -31,13 +153,17 @@
                         @*<td class="hide">@item.OrganizationId</td>*@
                         <td class="text-center">@item.RawMaterialName</td>
                         <td class="text-center">@item.UnitName</td>
-                        <td class="text-center">@item.StockIN</td>
-                        <td class="text-center">@item.StockOut</td>
-                        <td class="text-center">@item.StockINReturn</td>
-                        <td class="text-center">@item.CurrentStock</td>
-                        @*<td class="text-center">
-                                <a href="#" class="btn btn-warning btn-sm data-edit-item-Region" style="line-height:1" data-edit-item-Region="@item.RegionId"><i class="fa fa-pen"></i> Edit</a>
-                            </td>*@
+                        <td class="text-center text-bold">
+                        @stockIn
+                        </td>
+                        <td class="text-center text-bold">
+                            @stockOut
+                        </td>
+                        <td class="text-center hide">@item.StockINReturn</td>
+                        <td class="text-center text-bold">
+                        @currentStock
+                        </td>
+
                     </tr>
                 }
 
