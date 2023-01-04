@@ -258,7 +258,8 @@
                         console.log(measureMentData);
                         measureMentData = JSON.stringify({ models: measureMentData });
                         $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveMeasurement', measureMentData, getToken())).then(function (res, status) {
-                            if (status == "success") {
+                            debugger;
+                            if (res == true) {
                                 debugger;
                                 $('.toastrDefaultSuccess').trigger('click');
                                  setTimeout(function () {

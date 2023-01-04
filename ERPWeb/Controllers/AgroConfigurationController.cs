@@ -564,13 +564,7 @@ namespace ERPWeb.Controllers
         public ActionResult SaveMeasurement(List<MeasurementSetupViewModel> models)
         {
             bool IsSuccess = false;
-            //if (models == null)
-            //{
-            //}
-            //if (models.Count > 0)
-            //{
 
-            //}
 
             List<MeasurementSetupDTO> measurementSetupDTOs = new List<MeasurementSetupDTO>();
             AutoMapper.Mapper.Map(models, measurementSetupDTOs);

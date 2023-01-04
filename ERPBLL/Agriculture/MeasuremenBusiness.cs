@@ -207,22 +207,33 @@ Where 1=1 {0} order by measurementId desc", Utility.ParamChecker(param));
                     {
                         UnitKG = Convert.ToInt32(MasterCarton * InnerBox * PackSize / 1000);
                     }
-                    MeasurementSetup measurement = new MeasurementSetup
+
+
+                    var MM = GetAllMeasurement(item.MasterCarton, item.InnerBox, item.PackSize, item.UnitId).ToList();
+
+                    if(MM.Count == 0)
                     {
-                        MeasurementName = item.MeasurementName,
-                        OrganizationId = orgId,
-                        MasterCarton = item.MasterCarton,
-                        InnerBox = item.InnerBox,
-                        PackSize = item.PackSize,
-                        UnitId = item.UnitId,
-                        Status = "Active",
-                        EntryUserId = userId,
-                        EntryDate = DateTime.Now,
-                        UnitKG = UnitKG
+                        MeasurementSetup measurement = new MeasurementSetup
+                        {
+                            MeasurementName = item.MeasurementName,
+                            OrganizationId = orgId,
+                            MasterCarton = item.MasterCarton,
+                            InnerBox = item.InnerBox,
+                            PackSize = item.PackSize,
+                            UnitId = item.UnitId,
+                            Status = "Active",
+                            EntryUserId = userId,
+                            EntryDate = DateTime.Now,
+                            UnitKG = UnitKG
 
 
-                    };
-                    measurements.Add(measurement);
+                        };
+                        measurements.Add(measurement);
+
+                    }
+
+
+
 
 
 
@@ -306,6 +317,14 @@ Where 1=1 {0} order by measurementId desc", Utility.ParamChecker(param));
 
 
             return IsSuccess;
+        }
+
+
+
+        public IEnumerable<MeasurementSetup> GetAllMeasurement(int MasterCarton, int InnerBox, double PackSize, long UnitId)
+        {
+            return (IEnumerable<MeasurementSetup>)_measurmentRepository.GetAll(m => m.MasterCarton == MasterCarton && m.InnerBox == InnerBox && m.PackSize == PackSize && m.UnitId == UnitId).ToList();
+            //return _measurmentRepository.GetOneByOrg(m => m.MasterCarton == MasterCarton && m.InnerBox == InnerBox && m.PackSize == PackSize && m.UnitId == UnitId);
         }
     }
 }
