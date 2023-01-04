@@ -673,7 +673,7 @@
             <Top>4.25916in</Top>
             <Left>0.2679in</Left>
             <Height>0.88542in</Height>
-            <Width>7.27873in</Width>
+            <Width>7.27871in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -2087,7 +2087,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>TotalAmountText</rd:DefaultName>
-            <Top>6.93972in</Top>
+            <Top>7.05431in</Top>
             <Left>1.17763in</Left>
             <Height>0.25in</Height>
             <Width>6.369in</Width>
@@ -2117,8 +2117,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox6</rd:DefaultName>
-            <Top>6.93972in</Top>
-            <Left>0.23396in</Left>
+            <Top>7.06472in</Top>
+            <Left>0.25in</Left>
             <Height>0.25in</Height>
             <Width>1in</Width>
             <ZIndex>43</ZIndex>
@@ -2456,7 +2456,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsAgroSalesReport2</DataSetName>
-            <Top>6.41542in</Top>
+            <Top>6.54042in</Top>
             <Left>0.2679in</Left>
             <Height>0.5in</Height>
             <Width>7.27872in</Width>
@@ -2486,7 +2486,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox20</rd:DefaultName>
-            <Top>6.16542in</Top>
+            <Top>6.29042in</Top>
             <Left>0.2679in</Left>
             <Height>0.25in</Height>
             <Width>7.21675in</Width>
@@ -2505,22 +2505,25 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.44379in</Width>
+                  <Width>0.51426in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.1012in</Width>
+                  <Width>1.17167in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.1012in</Width>
+                  <Width>1.17167in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.1012in</Width>
+                  <Width>1.07047in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.44379in</Width>
+                  <Width>1.17167in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.08754in</Width>
+                  <Width>1.06265in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.11634in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -2637,6 +2640,42 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox9">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Quanity</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox9</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>Silver</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Textbox58">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -2644,7 +2683,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Discount</Value>
+                                  <Value>Discount%</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -2852,6 +2891,40 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Quanity2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Quanity.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Quanity2</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Discount2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -2954,10 +3027,91 @@
                     </TablixCell>
                   </TablixCells>
                 </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox49">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Total:</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox49</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>6</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox57">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!ProductTotal.Value)</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox57</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -2973,14 +3127,20 @@
                 </TablixMember>
                 <TablixMember>
                   <Group Name="Details2" />
+                  <TablixMembers>
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixMember>
+                <TablixMember>
+                  <KeepWithGroup>Before</KeepWithGroup>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsAgroSalesReport1</DataSetName>
             <Top>5.50917in</Top>
             <Left>0.2679in</Left>
-            <Height>0.5in</Height>
-            <Width>7.27872in</Width>
+            <Height>0.75in</Height>
+            <Width>7.27873in</Width>
             <ZIndex>48</ZIndex>
             <Style>
               <Border>
@@ -3025,7 +3185,7 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Height>10.55778in</Height>
-        <Width>7.74875in</Width>
+        <Width>7.54663in</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -3041,7 +3201,7 @@
       </Border>
     </Style>
   </Body>
-  <Width>7.74875in</Width>
+  <Width>8.54662in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>
