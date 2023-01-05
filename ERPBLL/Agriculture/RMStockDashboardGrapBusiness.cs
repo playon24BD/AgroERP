@@ -162,5 +162,27 @@ inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
             }
             return data;
         }
+
+        public IEnumerable<DashBoardAccessoriesInfoDTO> GetDashBoardAccessoriesStock(long orgId)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<DashBoardAccessoriesInfoDTO>(QueryForGetAccessoriesStocks(orgId)).ToList();
+        }
+
+        private string QueryForGetAccessoriesStocks(long orgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            query = string.Format(@"
+
+SELECT AccessoriesName,
+CurrentStock=isnull(isnull((SELECT sum(ati.Quantity) FROM  tblAccessoriesTrackInfo ati
+where ati.IssueStatus ='StockIn'and ati.AccessoriesId=a.AccessoriesId),0)-isnull((SELECT sum(ati.Quantity) FROM  tblAccessoriesTrackInfo ati
+where ati.IssueStatus ='StockOut'and ati.AccessoriesId=a.AccessoriesId),0),0)
+
+FROM tblAccessoriesInfo a ",
+            Utility.ParamChecker(param));
+            return query;
+        }
     }
 }

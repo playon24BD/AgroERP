@@ -2416,6 +2416,7 @@
                   <TextRun>
                     <Value>Accessories</Value>
                     <Style>
+                      <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>DarkGreen</Color>
                     </Style>
@@ -3096,8 +3097,9 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Packaging</Value>
+                    <Value>Package</Value>
                     <Style>
+                      <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>DarkGreen</Color>
                     </Style>
@@ -3143,7 +3145,7 @@
       </Border>
     </Style>
   </Body>
-  <Width>8.54662in</Width>
+  <Width>7.55704in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>

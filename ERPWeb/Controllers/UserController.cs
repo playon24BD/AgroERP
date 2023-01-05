@@ -50,6 +50,26 @@ namespace ERPWeb.Controllers
             TempData["platform_family"] = string.Join(",", platformfamily);
             TempData["CurrentStock"] = string.Join(",", CurrentStock);
 
+            #region GiftStockGrap
+
+            var GiftList = _rMStockDashboardGrap.GetDashBoardAccessoriesStock(User.OrgId);
+
+            List<string> Accessories = new List<string>();
+            List<string> AccessoriesCurrentStock = new List<string>();
+            foreach (var item in GiftList)
+            {
+
+
+                Accessories.Add(item.AccessoriesName.ToString());
+                AccessoriesCurrentStock.Add(item.CurrentStock.ToString());
+            }
+           
+
+            TempData["Accessories"] = string.Join(",", Accessories);
+            TempData["AccessoriesCurrentStock"] = string.Join(",", AccessoriesCurrentStock);
+
+            #endregion
+
             //productStockgraph
             var FGProductNameList = _rMStockDashboardGrap.GetMainStockFGProductName(User.OrgId);
             List<string> product = new List<string>();

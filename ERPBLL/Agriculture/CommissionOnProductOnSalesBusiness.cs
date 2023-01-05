@@ -117,6 +117,62 @@ where 1=1 {0}
             }
         }
 
+        public IEnumerable<CommissionOnProductOnSalesDTO> GetAllCommissionOnProductOnSalesDetails(long? ProductSalesInfoId)
+        {
+            try
+            {
+
+                return _agricultureUnitOfWork.Db.Database.SqlQuery<CommissionOnProductOnSalesDTO>(string.Format(QueryForSalesCommissionDetails(ProductSalesInfoId)));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public string QueryForSalesCommissionDetails(long? ProductSalesInfoId)
+        {
+            try
+            {
+                string query = string.Empty;
+                string param = string.Empty;
+
+                if (ProductSalesInfoId > 0)
+                {
+                    param += string.Format(@"and si.ProductSalesInfoId={0}", ProductSalesInfoId);
+                }
+                
+
+
+                query = string.Format(@"select distinct *,(t.copsdSum+t.phsum)totalCommission from (select si.ProductSalesInfoId,ISNULL(tconps.CommissionOnProductOnSalesId,0) as CommissionOnProductOnSalesId,si.TotalAmount,si.InvoiceNo,cpsd.PaymentMode,CASE WHEN Cast (tconps.EntryDate as date) is null THEN Cast (psphs.PaymentDate as date) ELSE Cast (tconps.EntryDate as date) END  as EntryDate,f.StockiestName,
+
+	  (select  ISNULL(sum(TotalCommission),0) from tblCommisionOnProductSalesDetails copsd where copsd.CommissionOnProductOnSalesId=tconps.CommissionOnProductOnSalesId )copsdSum,
+	  ( select ISNULL(sum(CommisionAmount),0) from tblProductSalesPaymentHistory psph where psph.ProductSalesInfoId=si.ProductSalesInfoId)phsum
+
+	   from tblProductSalesInfo si
+	   LEFT join tblCommissionOnProductSales tconps
+            on si.ProductSalesInfoId=tconps.ProductSalesInfoId
+	  
+	  LEFT join tblCommisionOnProductSalesDetails cpsd
+            on tconps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId
+	  
+			Inner join tblStockiestInfo f
+            on si.StockiestId=f.StockiestId
+INNER JOIN tblProductSalesPaymentHistory psphs
+			on si.ProductSalesInfoId= psphs.ProductSalesInfoId
+where 1=1 {0}
+	 ) t  where 1=1  ",
+                        Utility.ParamChecker(param));
+
+                return query;
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public bool SaveCommissionOnProductOnSales(AgroProductSalesInfo agroProductSalesInfo, long userId, long orgId)
         {
             bool isSuccess = false;
@@ -232,7 +288,7 @@ where 1=1 {0}
                 }
 
 
-                query = string.Format(@"Select DISTINCT toDate='" + fromDate + "', fromDate='" + toDate + "',cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,SUM(cpsd.TotalCommission) As TotalCommission,cpsd.PaymentMode,Cast (cps.EntryDate as date) As EntryDate,StockiestName from tblCommissionOnProductSales cps Inner join tblCommisionOnProductSalesDetails cpsd on cps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId Inner join tblFinishGoodProductInfo p on cpsd.FinishGoodProductId=p.FinishGoodProductId Inner join tblProductSalesInfo si on si.ProductSalesInfoId=cps.ProductSalesInfoId Inner join tblStockiestInfo f on si.StockiestId=f.StockiestId  where 1=1 {0} Group by cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,cpsd.PaymentMode,Cast (cps.EntryDate as date),StockiestName",
+                query = string.Format(@"Select DISTINCT toDate='" + fromDate + "', fromDate='" + toDate + "',cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,SUM(cast(cpsd.TotalCommission as decimal(10,2))) As TotalCommission,cpsd.PaymentMode,Cast (cps.EntryDate as date) As EntryDate,StockiestName from tblCommissionOnProductSales cps Inner join tblCommisionOnProductSalesDetails cpsd on cps.CommissionOnProductOnSalesId=cpsd.CommissionOnProductOnSalesId Inner join tblFinishGoodProductInfo p on cpsd.FinishGoodProductId=p.FinishGoodProductId Inner join tblProductSalesInfo si on si.ProductSalesInfoId=cps.ProductSalesInfoId Inner join tblStockiestInfo f on si.StockiestId=f.StockiestId  where 1=1 {0} Group by cps.ProductSalesInfoId,cps.CommissionOnProductOnSalesId,cps.InvoiceNo,cpsd.PaymentMode,Cast (cps.EntryDate as date),StockiestName",
                         Utility.ParamChecker(param));
 
                 return query;

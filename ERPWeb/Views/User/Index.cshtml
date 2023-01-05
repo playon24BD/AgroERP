@@ -23,38 +23,42 @@
         </div>
     </div>
 
-
-
     <div class="row">
 
         <div class="col-md-6">
             <div class="card">
-                <canvas id="line-chart" width="800" height="450"></canvas>
+                <canvas id="AccessoriesChart" height="150" width="200"></canvas>
             </div>
 
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <canvas id="line-chart" width="200" height="150"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="row">
+
         <div class="col-md-6">
             <div class="card">
                 <canvas id="line-chartpayment" width="800" height="450"></canvas>
             </div>
 
         </div>
-    </div>
-
-    <div class="row">
-
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card">
                 @*<canvas id="line-chart" width="800" height="450"></canvas>*@
-                <canvas id="MonthlysalesTergetline-chart" width="800" height="350"></canvas>
+                <canvas id="MonthlysalesTergetline-chart" width="800" height="450"></canvas>
             </div>
 
         </div>
-        <div class="col-md-6">
-            
-
-        </div>
     </div>
+
+   
 
 
 </div>
@@ -70,6 +74,7 @@
         //initialLoad();
         //setInterval('refreshPage()', 300000);
         debugger;
+        AccessoriesGrap();
         RMStockGrap();
         ProductStockGrap();
         GetLast30DaysSalesChart();
@@ -245,7 +250,86 @@
     }
 
 
+    function AccessoriesGrap() {
+        debugger;
+        //var labels = '<%=TempData["platform_family"] %>';
+        var labels = '@TempData["Accessories"]';
+        var datas = '@TempData["AccessoriesCurrentStock"]';
+        var labelsArray = new Array();
+        var dataArray = new Array();
+        for (var i = 0; i < labels.split(',').length; i++) {
+            labelsArray.push(labels.split(',')[i]);
+            dataArray.push(datas.split(',')[i]);
+        }
+        var ctx1 = document.getElementById("AccessoriesChart").getContext('2d');
+        var lineChart = new Chart(ctx1, {
+            type: 'bar',
 
+            data: {
+                labels: labelsArray,
+                labelFontColor: "red",
+                color:'#3EB9DC',
+                datasets: [{
+                    label: 'Gift Stock',
+
+                    backgroundColor: '#3EB9DC',
+                    //backgroundColor: [
+                    //    "#f990a7",
+                    //    "#aad2ed",
+                    //    "#9966FF",
+                    //    "#99e5e5",
+                    //    "#f7bd83",
+                    //    "#A52A2A",
+                    //    "#DC143C",
+                    //    "#FFA500 "
+                    //],
+                    data: dataArray
+                }]
+            },
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 14
+                    }
+                },
+                tooltips: { mode: 'index', intersect: false },
+                responsive: true,
+                scales: {
+
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            beginAtZero: true,
+                            //stacked: true,
+                            //autoSkip: false
+                        },
+                         gridLines: {
+                            //display: false,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+
+                    }],
+
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 10,
+                            //stepSize: 2000,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            //display: true,
+                            //color: '#efefef',
+                            //drawBorder: false,
+                        }
+                    }]
+                },
+
+            }});
+    };
 
     function RMStockGrap() {
         debugger;

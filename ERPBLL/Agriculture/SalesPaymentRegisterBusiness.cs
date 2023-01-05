@@ -148,7 +148,7 @@ namespace ERPBLL.Agriculture
                     param += string.Format(@" and Cast(ph.PaymentDate as date)='{0}'", tDate);
                 }
 
-                query = string.Format(@"SELECT  todate='" + fromDate + "', fromDate='" + toDate + "', z.ZoneName,d.DivisionName,r.RegionName,a.AreaName,  t.TerritoryName,s.StockiestName, info.InvoiceNo,cast(info.TotalAmount as decimal(10,2)) as TotalAmount,ph.PaymentAmount,ph.PaymentDate,ph.PaymentMode,Case When ph.AccounrNumber IS Null Then 'N/A' Else ph.AccounrNumber End As AccountNumber from tblProductSalesPaymentHistory ph Inner Join tblProductSalesInfo info on ph.ProductSalesInfoId=info.ProductSalesInfoId inner join tblZoneInfos z on info.ZoneId=z.ZoneId inner join tblDivisionInfo d on info.DivisionId=d.DivisionId inner join tblRegionInfos r on info.RegionId=r.RegionId inner join tblAreaSetup a on info.AreaId=a.AreaId inner join tblTerritoryInfos t on info.TerritoryId=t.TerritoryId inner join tblStockiestInfo s on info.StockiestId=s.StockiestId Where ph.PaymentAmount>0  and ph.PaymentMode IS NOT NULL {0}", Utility.ParamChecker(param));
+                query = string.Format(@"SELECT  todate='" + fromDate + "', fromDate='" + toDate + "', z.ZoneName,d.DivisionName,r.RegionName,a.AreaName,  t.TerritoryName,s.StockiestName, info.InvoiceNo,cast(info.TotalAmount as decimal(10,2)) as TotalAmount,ph.PaymentAmount,ph.PaymentDate,ph.PaymentMode,Case When ph.AccounrNumber IS Null Then 'N/A' Else ph.AccounrNumber End As AccountNumber from tblProductSalesPaymentHistory ph Inner Join tblProductSalesInfo info on ph.ProductSalesInfoId=info.ProductSalesInfoId inner join tblZoneInfos z on info.ZoneId=z.ZoneId inner join tblDivisionInfo d on info.DivisionId=d.DivisionId inner join tblRegionInfos r on info.RegionId=r.RegionId inner join tblAreaSetup a on info.AreaId=a.AreaId inner join tblTerritoryInfos t on info.TerritoryId=t.TerritoryId inner join tblStockiestInfo s on info.StockiestId=s.StockiestId Where ph.PaymentAmount>0   {0}", Utility.ParamChecker(param));
                 return query;
             }
             catch (Exception)
@@ -219,7 +219,7 @@ namespace ERPBLL.Agriculture
                     param += string.Format(@" and Cast(ph.PaymentDate as date)='{0}'", tDate);
                 }
 
-                query = string.Format(@"SELECT  todate='" + fromDate + "', fromDate='" + toDate + "', ph.PaymentRegisterID,z.ZoneName,d.DivisionName,r.RegionName,a.AreaName,  t.TerritoryName,s.StockiestName, info.InvoiceNo,cast(info.TotalAmount as decimal(10,2)) as TotalAmount,ph.PaymentAmount,ph.PaymentDate,ph.PaymentMode,Case When ph.AccounrNumber IS Null Then 'N/A' Else ph.AccounrNumber End As AccountNumber from tblProductSalesPaymentHistory ph Inner Join tblProductSalesInfo info on ph.ProductSalesInfoId=info.ProductSalesInfoId inner join tblZoneInfos z on info.ZoneId=z.ZoneId inner join tblDivisionInfo d on info.DivisionId=d.DivisionId inner join tblRegionInfos r on info.RegionId=r.RegionId inner join tblAreaSetup a on info.AreaId=a.AreaId inner join tblTerritoryInfos t on info.TerritoryId=t.TerritoryId inner join tblStockiestInfo s on info.StockiestId=s.StockiestId Where ph.PaymentAmount>0  and ph.PaymentMode IS NOT NULL {0}", Utility.ParamChecker(param));
+                query = string.Format(@"SELECT  todate='" + fromDate + "', fromDate='" + toDate + "', ph.PaymentRegisterID,z.ZoneName,d.DivisionName,r.RegionName,a.AreaName,  t.TerritoryName,s.StockiestName, info.InvoiceNo,cast(info.TotalAmount as decimal(10,2)) as TotalAmount,ph.PaymentAmount,ph.PaymentDate,ph.PaymentMode,Case When ph.AccounrNumber IS Null Then 'N/A' Else ph.AccounrNumber End As AccountNumber from tblProductSalesPaymentHistory ph Inner Join tblProductSalesInfo info on ph.ProductSalesInfoId=info.ProductSalesInfoId inner join tblZoneInfos z on info.ZoneId=z.ZoneId inner join tblDivisionInfo d on info.DivisionId=d.DivisionId inner join tblRegionInfos r on info.RegionId=r.RegionId inner join tblAreaSetup a on info.AreaId=a.AreaId inner join tblTerritoryInfos t on info.TerritoryId=t.TerritoryId inner join tblStockiestInfo s on info.StockiestId=s.StockiestId Where ph.PaymentAmount>0  {0}", Utility.ParamChecker(param));
                 return query;
             }
             catch (Exception)
@@ -228,5 +228,17 @@ namespace ERPBLL.Agriculture
             }
         }
 
+        public IEnumerable<SalesPaymentRegister> GetPaymentDetailsByInvoiceIdnew(long? infoId)
+        {
+            try
+            {
+                return _salesPaymentRegisterRepository.GetAll(i => i.ProductSalesInfoId == infoId).ToList();
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

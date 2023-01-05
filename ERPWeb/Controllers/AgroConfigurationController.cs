@@ -5914,32 +5914,53 @@ namespace ERPWeb.Controllers
                 else if (flag == "view")
                 {
 
-                    var commision = _commisionOnProductSalesDetailsBusiness.GetCommisionOnProductSalesDetails(0).Where(a => a.CommissionOnProductOnSalesId == id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
-                    {//75
+                    //var commision = _commisionOnProductSalesDetailsBusiness.GetCommisionOnProductSalesDetails(0).Where(a => a.CommissionOnProductOnSalesId == id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
+                    //{//75
 
-                        QtyKG = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyId(c.ProductSalesDetailsId).QtyKG,
+                    //    QtyKG = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyId(c.ProductSalesDetailsId).QtyKG,
 
+                    //    CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
+                    //    FinishGoodProductId = c.FinishGoodProductId,
+                    //    FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(c.FinishGoodProductId, User.OrgId).FinishGoodProductName,
+                    //    //PaymentMode = c.PaymentMode,
+                    //    TotalCommission = (c.Cash == 0 ? c.Credit * c.price : c.Cash * c.price) / 100,
+                    //    InvoiceNo = _commissionOnProductOnSalesBusiness.GetCommissionOnProductById(c.CommissionOnProductOnSalesId, User.OrgId).InvoiceNo,
+                    //    EntryDate = c.EntryDate
+
+
+                    //}).Reverse().ToList();
+                    //List<CommisionOnProductSalesDetailsViewModel> productOnSalesViewModels = new List<CommisionOnProductSalesDetailsViewModel>();
+                    //AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
+
+                    var commisions = _commissionOnProductOnSalesBusiness.GetAllCommissionOnProductOnSalesDetails(id).Select(c => new CommissionOnProductOnSalesDTO
+                    {
+                        ProductSalesInfoId=c.ProductSalesInfoId,
                         CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
-                        FinishGoodProductId = c.FinishGoodProductId,
-                        FinishGoodProductName = _finishGoodProductBusiness.GetFinishGoodProductById(c.FinishGoodProductId, User.OrgId).FinishGoodProductName,
+
+                        //FinishGoodProductId = c.FinishGoodProductId,
+                        //FinishGoodProductName = c.FinishGoodProductName,
+                        //Flag=_stockiestInfo.GetStockiestInfoById(_agroProductSalesInfoBusiness.GetAgroProductionInfoById(c.ProductSalesInfoId,User.OrgId).StockiestId,User.OrgId).StockiestName,
                         //PaymentMode = c.PaymentMode,
-                        TotalCommission = (c.Cash == 0 ? c.Credit * c.price : c.Cash * c.price) / 100,
-                        InvoiceNo = _commissionOnProductOnSalesBusiness.GetCommissionOnProductById(c.CommissionOnProductOnSalesId, User.OrgId).InvoiceNo,
-                        EntryDate = c.EntryDate
+                        TotalAmount = c.TotalAmount,
+                        TotalCommission = c.TotalCommission,
+                        InvoiceNo = c.InvoiceNo,
+                        EntryDate = c.EntryDate,
+                        StockiestName = c.StockiestName,
 
 
-                    }).Reverse().ToList();
-                    List<CommisionOnProductSalesDetailsViewModel> productOnSalesViewModels = new List<CommisionOnProductSalesDetailsViewModel>();
-                    AutoMapper.Mapper.Map(commision, productOnSalesViewModels);
+
+                    }).ToList();
+                    List<CommissionOnProductOnSalesViewModel> productOnSalesViewModelss = new List<CommissionOnProductOnSalesViewModel>();
+                    AutoMapper.Mapper.Map(commisions, productOnSalesViewModelss);
 
 
-                    return PartialView("_SalesCommissionDetails", productOnSalesViewModels);
+                    return PartialView("_SalesCommissionDetails", productOnSalesViewModelss);
                 }
                 else
                 {
                     var commision = _commissionOnProductOnSalesBusiness.GetAllCommissionOnProductOnSales(invoiceNo, stockiestId, fdate, tdate, User.OrgId).Select(c => new CommissionOnProductOnSalesDTO
                     {
-                        //ProductSalesInfoId=c.ProductSalesInfoId,
+                        ProductSalesInfoId=c.ProductSalesInfoId,
                         CommissionOnProductOnSalesId = c.CommissionOnProductOnSalesId,
 
                         //FinishGoodProductId = c.FinishGoodProductId,
@@ -5986,6 +6007,7 @@ namespace ERPWeb.Controllers
                 {
 
                     var commision = _commisionOnProductSalesDetailsBusiness.GetCommisionOnProductSalesDetails(0).Where(a => a.CommissionOnProductOnSalesId == id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
+                    //var commision = _agroProductSalesInfoBusiness.GetCommisionOnProductSalesDetails(0).Where(a => a.CommissionOnProductOnSalesId == id.Value).Select(c => new CommisionOnProductSalesDetailsDTO
                     {//75
 
                         QtyKG = _agroProductSalesDetailsBusiness.AgroProductSalesDetailsbyId(c.ProductSalesDetailsId).QtyKG,

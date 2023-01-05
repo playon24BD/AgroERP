@@ -10,6 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IRMStockDashboardGrap
     {
+        IEnumerable<DashBoardAccessoriesInfoDTO> GetDashBoardAccessoriesStock(long orgId);
         IEnumerable<RawMaterialTrackDTO> GetMainStockRMName(long orgId);
         IEnumerable<RawMaterialTrackDTO> GetMainStockRMCurrentStock(long orgId);
 

@@ -1094,7 +1094,7 @@
             <KeepTogether>true</KeepTogether>
             <Top>9.08208in</Top>
             <Left>0.25061in</Left>
-            <Height>1.78125in</Height>
+            <Height>1.8507in</Height>
             <Width>3.73394in</Width>
             <ZIndex>31</ZIndex>
             <Style>
@@ -2404,7 +2404,7 @@
             <Top>6.98833in</Top>
             <Left>0.25in</Left>
             <Height>0.75in</Height>
-            <Width>7.09175in</Width>
+            <Width>7.09176in</Width>
             <ZIndex>41</ZIndex>
             <Style>
               <Border>
@@ -2823,7 +2823,7 @@
             <Top>5.83208in</Top>
             <Left>0.28455in</Left>
             <Height>0.75in</Height>
-            <Width>7.09175in</Width>
+            <Width>7.09176in</Width>
             <ZIndex>42</ZIndex>
             <Style>
               <Border>
@@ -2838,9 +2838,11 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Packaging</Value>
+                    <Value>Package</Value>
                     <Style>
-                      <FontSize>9pt</FontSize>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DarkGreen</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -2874,7 +2876,9 @@
                   <TextRun>
                     <Value>Accessories</Value>
                     <Style>
-                      <FontSize>9pt</FontSize>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DarkGreen</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -2901,7 +2905,7 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Height>11.04736in</Height>
+        <Height>10.93278in</Height>
         <Width>7.48758in</Width>
         <Style>
           <Border>
@@ -2910,10 +2914,10 @@
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>11.04736in</Height>
+    <Height>10.93278in</Height>
     <Style />
   </Body>
-  <Width>8.39712in</Width>
+  <Width>7.5117in</Width>
   <Page>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>

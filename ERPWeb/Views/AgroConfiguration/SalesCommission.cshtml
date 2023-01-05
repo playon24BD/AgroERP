@@ -190,12 +190,15 @@
             debugger;
             e.preventDefault();
             $("#dataContainer2").empty();
+            debugger;
             var id = $(this).attr("data-item-detail");
+
             if (TryParseInt(id, 0) > 0) {
                 var data = { flag: "view", id: id };
                 $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesCommission', data)).then(function (res, status) {
                     console.log(status);
                     if (status === "success") {
+                        debugger;
                         $("#dataContainer2").empty();
                         $("#dataContainer2").append(res);
                         $("#CommissionDetails").modal('show');
