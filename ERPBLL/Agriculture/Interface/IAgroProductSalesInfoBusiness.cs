@@ -13,7 +13,8 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAgroProductSalesInfoBusiness
     {
-
+        IEnumerable<AgroProductSalesInfoDTO> GetDailySalesReportList(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate);
+        IEnumerable<DailySalesDataReport> GetDailySalesReport(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate);
         AgroProductSalesInfo GetSalesById(long ProductSalesInfoId, long orgId);
         
         bool UpdateProductSalesEdit(AgroProductSalesInfoDTO infoDTO, List<AgroProductSalesDetailsDTO> detailsDTO, long userId, long orgId);

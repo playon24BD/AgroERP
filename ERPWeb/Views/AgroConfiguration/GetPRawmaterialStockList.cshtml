@@ -408,7 +408,7 @@
                                     </div>
 
                                     <div class="col-md-2 float-right text-white">
-                                        <input type="text" class="form-control form-control-sm" id="searchBy" placeholder="Search by any" autofocus />
+                                        <input type="text" class="form-control form-control-sm" id="searchByPStock" placeholder="Search by any" autofocus />
 
                                     </div>
                                     <div class="col-2">
@@ -597,6 +597,7 @@
         var ddlSupplierName1 = $("#ddlSupplierName1");
         var searchByChallan = $("#searchByChallan");
         var searchByPO = $("#searchByPO");
+        var searchByPStock = $("#searchByPStock");
 
 
         //date
@@ -1643,11 +1644,14 @@
 
 
         //#region Package RM Stock
+        searchByPStock.keyup(function () {
+            LoadPackageRMStock()
+        })
 
         function LoadPackageRMStock() {
             debugger;
 
-            var data = { flag: "Stock"};
+            var data = { flag: "Stock", name: $.trim(searchByPStock.val())};
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPRawmaterialStockList', data)).then(function (res, status) {
                 console.log(status);

@@ -181,6 +181,7 @@
     <Compile Include="Agriculture\DTOModels\ZoneDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneSetupDTO.cs" />
     <Compile Include="Agriculture\DTOModels\ZoneUserDTO.cs" />
+    <Compile Include="Agriculture\ReportModels\DailySalesDataReport.cs" />
     <Compile Include="Agriculture\ReportModels\DateWiseCollectionReport.cs" />
     <Compile Include="Agriculture\ReportModels\FinishGoodProductionAcceptDataReport.cs" />
     <Compile Include="Agriculture\ReportModels\FinishGoodProductionDataReport.cs" />

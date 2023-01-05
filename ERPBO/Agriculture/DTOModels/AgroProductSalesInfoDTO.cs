@@ -71,6 +71,9 @@ namespace ERPBO.Agriculture.DTOModels
         public double CommisionPercent { get; set; }
         public double CommisionAmount { get; set; }
         public string flag { get; set; }
+        public decimal InvoiceTk { get; set; }
+        public decimal PaymentAmount { get; set; }
+        public decimal DAmount { get; set; }
 
 
 

@@ -533,7 +533,7 @@ namespace ERPWeb.Controllers
                 {
                     //var measureMent = _measuremenBusiness.GetMeasurementSetups(User.OrgId);
 
-                    IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementListSearch(unitId ?? 0, status,measurementName, User.OrgId);
+                    IEnumerable<MeasurementSetupDTO> dto = _measuremenBusiness.GetMeasurementListSearch(unitId ?? 0, status, measurementName, User.OrgId);
 
                     List<MeasurementSetupViewModel> viewModels = new List<MeasurementSetupViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModels);
@@ -713,7 +713,7 @@ namespace ERPWeb.Controllers
 
         #region Accessories
 
-        public ActionResult GetAccessoriesList(string flag,string accessoriesName)
+        public ActionResult GetAccessoriesList(string flag, string accessoriesName)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -722,7 +722,7 @@ namespace ERPWeb.Controllers
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                var dto =_accessoriesInfo.GetAccessoriesList(accessoriesName);
+                var dto = _accessoriesInfo.GetAccessoriesList(accessoriesName);
 
 
                 List<AccessoriesInfoViewModel> viewModels = new List<AccessoriesInfoViewModel>();
@@ -2744,9 +2744,9 @@ namespace ERPWeb.Controllers
 
 
                     List<AgroProductSalesDetailsViewModel> detailsvm = new List<AgroProductSalesDetailsViewModel>();
-                   
+
                     AutoMapper.Mapper.Map(details, detailsvm);
-                   
+
                     return PartialView("_GetAgroSalesProductDetails", detailsvm);
 
                 }
@@ -2843,7 +2843,7 @@ namespace ERPWeb.Controllers
                 bool checkflag = false;
                 var CheckCommisionProduction = _commissionOnProductBusiness.GetCommisionOByProductId(FinishGoodProductId, User.OrgId);
 
-                if (CheckCommisionProduction==null)
+                if (CheckCommisionProduction == null)
                 {
                     checkflag = false;
                     return Json(checkflag, JsonRequestBehavior.AllowGet);
@@ -3018,7 +3018,7 @@ namespace ERPWeb.Controllers
         public ActionResult AgroProductSalesReport(string InvoiceNo)
         {
             string file = string.Empty;
-          
+
             var SalesId = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoByIdNew(InvoiceNo).ProductSalesInfoId;
             var data = _agroProductSalesInfoBusiness.GetProductSalesData(SalesId);
             var data1 = _agroProductSalesInfoBusiness.GetProductSalesData1(SalesId);
@@ -3075,9 +3075,9 @@ namespace ERPWeb.Controllers
         {
             var SalesInfoId = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).ProductSalesInfoId;
             var data = _agroProductSalesInfoBusiness.GetProductSalesData(SalesInfoId);
-           var data1 = _agroProductSalesInfoBusiness.GetProductSalesData1(SalesInfoId);
-           var data2 = _agroProductSalesInfoBusiness.GetProductSalesData2(SalesInfoId);
-            
+            var data1 = _agroProductSalesInfoBusiness.GetProductSalesData1(SalesInfoId);
+            var data2 = _agroProductSalesInfoBusiness.GetProductSalesData2(SalesInfoId);
+
             LocalReport localReport = new LocalReport();
 
 
@@ -3186,7 +3186,7 @@ namespace ERPWeb.Controllers
             var data = _agroProductSalesInfoBusiness.GetProductSalesChallanData(SalesId);
             var data1 = _agroProductSalesInfoBusiness.GetProductSalesChallanData1(SalesId);
             var data2 = _agroProductSalesInfoBusiness.GetProductSalesChallanData2(SalesId);
-            
+
             LocalReport localReport = new LocalReport();
 
 
@@ -3628,7 +3628,7 @@ namespace ERPWeb.Controllers
 
                 else if (!string.IsNullOrEmpty(flag) && flag == Flag.Direct)
                 {
-                    var dto = _rawMaterialTrack.GetMainStockInOutInfos(name ?? null);
+                    var dto = _rawMaterialTrack.GetMainStockInOutInfos(name);
 
                     List<RawMaterialTrackViewModel> viewModels = new List<RawMaterialTrackViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModels);
@@ -3636,9 +3636,9 @@ namespace ERPWeb.Controllers
 
                 }
 
-                else if (!string.IsNullOrEmpty(flag) && flag =="Stock")
+                else if (!string.IsNullOrEmpty(flag) && flag == "Stock")
                 {
-                    var dto = _rawMaterialTrack.GetPackageRMStock();
+                    var dto = _rawMaterialTrack.GetPackageRMStock(name);
 
                     List<RawMaterialTrackViewModel> viewModels = new List<RawMaterialTrackViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModels);
@@ -3671,7 +3671,7 @@ namespace ERPWeb.Controllers
                         {
                             RawMaterialName = RawMaterialNames.FirstOrDefault(x => x.RawMaterialId == i.RawMaterialId).RawMaterialName,
                             //UnitName = Unitsname.FirstOrDefault(x => x.UnitId == i.UnitID).UnitName,
-                            UnitName =i.CUnitName,
+                            UnitName = i.CUnitName,
                             Quantity = i.CQty,
                             UnitPrice = i.CPrice,
                             SubTotal = i.SubTotal,
@@ -5318,6 +5318,92 @@ namespace ERPWeb.Controllers
         }
 
 
+        public ActionResult DailySalesReportList(string flag, string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(flag))
+                {
+
+
+                    ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(des => new SelectListItem { Text = des.StockiestName, Value = des.StockiestId.ToString() }).ToList();
+
+                    ViewBag.ddlTerritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(teri => new SelectListItem { Text = teri.TerritoryName, Value = teri.TerritoryId.ToString() }).ToList();
+                    return View();
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    var dto = _agroProductSalesInfoBusiness.GetDailySalesReportList(invoiceNo, territoryId ?? 0, stockiestId ?? 0, fromDate, toDate).ToList();
+                    List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetDailySalesReportList", viewModels);
+                }
+      
+                    return View();
+
+     
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+
+
+        public ActionResult GetDailySalesReport(string rptType, string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+        {
+            try
+            {
+                var data = _agroProductSalesInfoBusiness.GetDailySalesReport(invoiceNo, territoryId, stockiestId,fromDate, toDate);
+
+                LocalReport localReport = new LocalReport();
+
+                string reportPath = Server.MapPath("~/Reports/ERPRpt/Agriculture/rptDailySalesReport.rdlc");
+                if (System.IO.File.Exists(reportPath))
+                {
+                    localReport.ReportPath = reportPath;
+                }
+
+                ReportDataSource dataSource1 = new ReportDataSource("dsDailySalesReport", data);
+                localReport.DataSources.Add(dataSource1);
+
+                string reportType = rptType;
+                string mimeType;
+                string encoding;
+                string fileNameExtension;
+                Warning[] warnings;
+                string[] streams;
+                string deviceInfo =
+                        "<DeviceInfo>" +
+                        "<OutputFormat>PDF</OutputFormat>" +
+                        "<PageWidth>8.27in</PageWidth>" +
+                        "<PageHeight>11.69in</PageHeight>" +
+                        "<MarginTop>0.25in</MarginTop>" +
+                        "<MarginLeft>0.25in</MarginLeft>" +
+                        "<MarginRight>0.25in</MarginRight>" +
+                        "<MarginBottom>0.25in</MarginBottom>" +
+                        "</DeviceInfo>";
+
+                var renderedBytes = localReport.Render(
+                    reportType,
+                    deviceInfo,
+                    out mimeType,
+                    out encoding,
+                    out fileNameExtension,
+                    out streams,
+                    out warnings
+                    );
+                return File(renderedBytes, mimeType);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
         #endregion
 
         #region  SalesReturn
@@ -6578,7 +6664,7 @@ namespace ERPWeb.Controllers
         #endregion
 
         #region Accessories
-        public ActionResult Accessoriespurchase ()
+        public ActionResult Accessoriespurchase()
         {
             ViewBag.ddlSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialSupplierName, Value = a.RawMaterialSupplierId.ToString() });
 
@@ -6603,7 +6689,7 @@ namespace ERPWeb.Controllers
         }
 
 
-        public ActionResult GetAccessoriesStockList(string flag,long? id,string invoiceNo)
+        public ActionResult GetAccessoriesStockList(string flag, long? id, string invoiceNo)
         {
             if (string.IsNullOrEmpty(flag))
             {
@@ -6612,7 +6698,7 @@ namespace ERPWeb.Controllers
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
-                var dto =_accessoriesPurchaseInfo.GetAccessoriesStockList(invoiceNo);
+                var dto = _accessoriesPurchaseInfo.GetAccessoriesStockList(invoiceNo);
 
 
                 List<AccessoriesPurchaseInfoViewModel> viewModels = new List<AccessoriesPurchaseInfoViewModel>();
@@ -6623,16 +6709,16 @@ namespace ERPWeb.Controllers
 
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
             {
-                
-                var dto = _accessoriesPurchaseDetails.GetAccessoriesDetailsList(id??0);
-                
+
+                var dto = _accessoriesPurchaseDetails.GetAccessoriesDetailsList(id ?? 0);
+
 
                 List<AccessoriesPurchaseDetailsViewModel> viewModels = new List<AccessoriesPurchaseDetailsViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_GetAccessoriesDetailsList", viewModels);
             }
 
-            else if (!string.IsNullOrEmpty(flag) && flag =="Direct")
+            else if (!string.IsNullOrEmpty(flag) && flag == "Direct")
             {
                 var dto = _accessoriesTrackInfo.GetAccessoriesPurchaseStock();
 

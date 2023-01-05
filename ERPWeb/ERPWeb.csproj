@@ -359,6 +359,17 @@
     <Content Include="Reports\DataSets\dsAgroSalesReport2.xss">
       <DependentUpon>dsAgroSalesReport2.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSets\dsDailySalesReport.xsc">
+      <DependentUpon>dsDailySalesReport.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSets\dsDailySalesReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsDailySalesReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSets\dsDailySalesReport.xss">
+      <DependentUpon>dsDailySalesReport.xsd</DependentUpon>
+    </Content>
     <None Include="Reports\DataSets\dsMoneyReciptReport.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -3320,6 +3331,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAgroSalesReport2.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSets\dsDailySalesReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsDailySalesReport.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSets\dsFinishGoodProductionReportSave.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3631,6 +3647,8 @@
     <Content Include="Views\AgroConfiguration\_GetAccessoriesDetailsList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetAccessoriesPurchaseStock.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetPackageRMStockList.cshtml" />
+    <Content Include="Views\AgroConfiguration\DailySalesReportList.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetDailySalesReportList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3671,6 +3689,7 @@
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesDropReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroProductSalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptAgroSalesChallanReport.rdlc" />
+    <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptDailySalesReport.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptDateWiseCollection.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductionReportAccept.rdlc" />
     <EmbeddedResource Include="Reports\ERPRpt\Agriculture\rptFinishGoodProductionReportSave.rdlc" />

@@ -1710,6 +1710,117 @@ left join tblAccessoriesInfo ai on ti.AccessoriesId=ai.AccessoriesId
             return query;
         }
 
+        public IEnumerable<AgroProductSalesInfoDTO> GetDailySalesReportList(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForDailySalesReportList(invoiceNo,territoryId,stockiestId,fromDate,toDate));
+        }
+
+        private string QueryForDailySalesReportList(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+            if (territoryId != null && territoryId > 0)
+            {
+                param += string.Format(@" and TI.TerritoryId ={0}", territoryId);
+            }
+
+             if (stockiestId != null && stockiestId > 0)
+            {
+                param += string.Format(@" and STI.StockiestId ={0}", stockiestId);
+            }
+
+             if (invoiceNo != null && invoiceNo != "")
+            {
+                param += string.Format(@" and SI.InvoiceNo like '%{0}%'", invoiceNo);
+            }
+
+
+
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(SI.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", fDate);
+            }
+             else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", tDate);
+            }
+
+
+
+            query = string.Format(@"
+
+    SELECT  todate=' ', fromDate=' ',SI.ProductSalesInfoId, A.AreaName,ZoneUserName =( SELECT distinct Concat(AU.FullName,'( ',AU.Desigation,' )') AS FullName FROM   [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), ZoneUserMobile=( SELECT distinct AU.MobileNo FROM  [Agriculture].[dbo].tblProductSalesInfo SI  INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), TI.TerritoryName, Concat(AUT.FullName ,'( ',AUT.Desigation,' )') AS TerritoryUserName,AUT.MobileNo, STI.StockiestName, SI.InvoiceNo, CONVERT(date,SI.InvoiceDate) AS InvoiceDate,cast(SI.TotalAmount as decimal(10,2)) AS InvoiceTk,  (cast(SI.TotalAmount as decimal(10,2))-cast(PsPH.PaymentAmount as decimal(10,2))) AS DAmount, DiscountTk=ISNULL((SELECT Sum(PSD.DiscountTk) FROM tblProductSalesDetails PSD Where        SI.ProductSalesInfoId=PSD.ProductSalesInfoId),0), CONVERT(date,PsPH.PaymentDate) AS PaymentDate,  PsPH.Remarks,  cast(PsPH.PaymentAmount as decimal(10,2)) AS PaymentAmount  FROM [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblAreaSetup A on SI.AreaId=A.AreaId INNER JOIN [Agriculture].[dbo].tblTerritoryInfos TI on SI.TerritoryId=TI.TerritoryId INNER JOIN [Agriculture].[dbo].tblStockiestInfo STI on SI.StockiestId=STI.StockiestId  INNER JOIN [Agriculture].[dbo].tblProductSalesPaymentHistory PsPH on SI.ProductSalesInfoId=PsPH.ProductSalesInfoId INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId INNER JOIN[ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId = AUT.UserId  
+
+                        Where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+        }
+
+        public IEnumerable<DailySalesDataReport> GetDailySalesReport(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<DailySalesDataReport>(QueryForDailySalesReport(invoiceNo, territoryId, stockiestId, fromDate, toDate));
+        }
+        
+        private string QueryForDailySalesReport(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+        {
+            string param = string.Empty;
+            string query = string.Empty;
+
+            if (territoryId != null && territoryId > 0)
+            {
+                param += string.Format(@" and TI.TerritoryId ={0}", territoryId);
+            }
+
+            if (stockiestId != null && stockiestId > 0)
+            {
+                param += string.Format(@" and STI.StockiestId ={0}", stockiestId);
+            }
+
+            if (invoiceNo != null && invoiceNo != "")
+            {
+                param += string.Format(@" and SI.InvoiceNo like '%{0}%'", invoiceNo);
+            }
+
+
+
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(SI.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", tDate);
+            }
+
+
+
+            query = string.Format(@"
+
+    SELECT  todate=' ', fromDate=' ',SI.ProductSalesInfoId, A.AreaName,ZoneUserName =( SELECT distinct Concat(AU.FullName,'( ',AU.Desigation,' )') AS FullName FROM   [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), ZoneUserMobile=( SELECT distinct AU.MobileNo FROM  [Agriculture].[dbo].tblProductSalesInfo SI  INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), TI.TerritoryName, Concat(AUT.FullName ,'( ',AUT.Desigation,' )') AS TerritoryUserName,AUT.MobileNo, STI.StockiestName, SI.InvoiceNo, CONVERT(date,SI.InvoiceDate) AS InvoiceDate,cast(SI.TotalAmount as decimal(10,2)) AS InvoiceTk,  (cast(SI.TotalAmount as decimal(10,2))-cast(PsPH.PaymentAmount as decimal(10,2))) AS DAmount, DiscountTk=ISNULL((SELECT Sum(PSD.DiscountTk) FROM tblProductSalesDetails PSD Where        SI.ProductSalesInfoId=PSD.ProductSalesInfoId),0), CONVERT(date,PsPH.PaymentDate) AS PaymentDate,  PsPH.Remarks,  cast(PsPH.PaymentAmount as decimal(10,2)) AS PaymentAmount  FROM [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblAreaSetup A on SI.AreaId=A.AreaId INNER JOIN [Agriculture].[dbo].tblTerritoryInfos TI on SI.TerritoryId=TI.TerritoryId INNER JOIN [Agriculture].[dbo].tblStockiestInfo STI on SI.StockiestId=STI.StockiestId  INNER JOIN [Agriculture].[dbo].tblProductSalesPaymentHistory PsPH on SI.ProductSalesInfoId=PsPH.ProductSalesInfoId INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId INNER JOIN[ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId = AUT.UserId  
+
+                        Where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+        }
+
+
 
 
         //ExecutionStateWithText IAgroProductSalesInfoBusiness.  (AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId)

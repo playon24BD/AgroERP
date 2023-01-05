@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "DailySalesReportList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text-sm p-0" style="margin-top:-15px">
+    <div class="col-md-12 p-0">
+
+        <div class="row" style="margin-top:-5px">
+            <div class="col-md-12">
+
+                <div class="card" style="background-color:#001f3f">
+                    <div class="px-2 py-1" style="text-align: center;">
+
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
+                                <h5 class="text-center text-bold text-white">
+                                    Daily Sales Report
+                                </h5>
+                            </div>
+
+                            <div class="col-md-2">
+                                <input type="text" class="form-control form-control-sm" id="SearchDailySales" placeholder="search By invoice" />
+                            </div>
+                            <div class="col-md-2">
+
+                                @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--StockiestName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+                            <div class="col-md-2">
+
+                                @Html.DropDownList("ddlTerritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTerritoryName, "--TerritoryName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+
+                            <div class="col-md-1">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="FromDate" />
+                                    <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                        <span class="input-group-text p-0">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="ToDate" />
+                                    <div class="input-group-prepend cursor-pointer remove-date dptToDate" style="cursor:pointer">
+                                        <span class="input-group-text p-0">&#10008;</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1">
+                                <div class="input-group input-group-sm">
+                                    <select class="form-control form-control-sm float-right" id="rptType" name="rptType">
+                                        <option value="PDF">PDF</option>
+                                        <option value="EXCEL">EXCEL</option>
+                                    </select>
+                                    <span class="input-group-append">
+                                        <button type="button" id="btnDownload" title="Download" class="btn btn-block btn-info btn-flat p-0 pr-1"><i class="fas fa-download"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:-13px">
+
+            <div class="col-md-12 p-0" id="dataContainerDailySales">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+        var rptType = $("#rptType");
+        var ddlStockiestName = $("#ddlStockiestName");
+        var ddlTerritoryName = $("#ddlTerritoryName");
+        var SearchDailySales = $("#SearchDailySales");
+
+
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+
+            }).on('change', function () {
+                $('.datepicker').hide();
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+
+            }).on('change', function () {
+                $('.datepicker').hide();
+            });
+            LoadDailySalesReportList();
+        })
+
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                    LoadDailySalesReportList();
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                    LoadDailySalesReportList();
+                }
+            }
+        })
+
+        SearchDailySales.keyup(function () {
+            LoadDailySalesReportList();
+        })
+
+        dptFromDate.change(function () {
+            LoadDailySalesReportList();
+        })
+
+        dptToDate.change(function () {
+            LoadDailySalesReportList();
+        })
+
+        ddlStockiestName.change(function () {
+
+            LoadDailySalesReportList();
+        })
+        ddlTerritoryName.change(function () {
+
+            LoadDailySalesReportList();
+        })
+
+
+        function LoadDailySalesReportList() {
+            debugger;
+
+            var data = { flag: "View", invoiceNo: $.trim(SearchDailySales.val()), stockiestId: TryParseInt(ddlStockiestName.val(), 0), territoryId: TryParseInt(ddlTerritoryName.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/DailySalesReportList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainerDailySales").fadeOut('500', function () {
+                        $("#dataContainerDailySales").empty();
+                        $("#dataContainerDailySales").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
+        $("#btnDownload").click(function ()  {
+            window.open("/AgroConfiguration/GetDailySalesReport?&fromDate=" + dptFromDate.val() + "&toDate=" + dptToDate.val() + "&rptType=" + rptType.val() + "&territoryId=" + TryParseInt(ddlTerritoryName.val(), 0) + "&invoiceNo=" + $.trim(SearchDailySales.val()) + "&stockiestId=" + TryParseInt(ddlStockiestName.val(), 0));
+            })
+        
+
+
+
+    </script>
+}
+

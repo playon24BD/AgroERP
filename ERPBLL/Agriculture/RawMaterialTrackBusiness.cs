@@ -41,11 +41,11 @@ namespace ERPBLL.Agriculture
             }
         }
 
-        public IEnumerable<RawMaterialTrackDTO> GetPackageRMStock()
+        public IEnumerable<RawMaterialTrackDTO> GetPackageRMStock(string name)
         {
             try
             {
-                return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialTrackDTO>(QueryForPackageRMStock()).ToList();
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialTrackDTO>(QueryForPackageRMStock(name)).ToList();
             }
             catch (Exception)
             {
@@ -54,15 +54,18 @@ namespace ERPBLL.Agriculture
         }
 
 
-        private string QueryForPackageRMStock()
+        private string QueryForPackageRMStock(string name)
         {
             try
             {
                 string query = string.Empty;
                 string param = string.Empty;
 
+                if (name != null && name != "")
+                {
+                    param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
+                }
 
-                
                 query = string.Format(@"
 SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,
 StockIN= isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
@@ -84,7 +87,7 @@ FROM
 tblRawMaterialTrackInfo t 
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
-      where RM.RMCategorieId=1 and 1=1 order by t.RawMaterialId desc   {0}",
+      where RM.RMCategorieId=1 and 1=1    {0} order by t.RawMaterialId desc",
                 Utility.ParamChecker(param));
                 return query;
             }
@@ -144,7 +147,7 @@ FROM
 tblRawMaterialTrackInfo t 
 INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
 inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
-      where RM.RMCategorieId=2 and 1=1  order by t.RawMaterialId desc  {0}",
+      where RM.RMCategorieId=2 and 1=1  {0} order by t.RawMaterialId desc",
                 Utility.ParamChecker(param));
                 return query;
             }
