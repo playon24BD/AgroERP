@@ -40,7 +40,11 @@ namespace ERPBLL.Agriculture
                     Year=item.Year,
                     TargetQty=item.TargetQty,
                     TerritoryId=item.TerritoryId,
-                    Day=item.Day
+                    Day=item.Day,
+                    FromDate=item.FromDate,
+                    ToDate=item.ToDate,
+                    ProductId=item.ProductId
+                    
                 };
                 _stockiestWiseYearlyTargetRepository.Insert(yearlyTarget);
             }

@@ -204,7 +204,7 @@ from tblProductSalesInfo i
 inner join tblProductSalesDetails d on i.ProductSalesInfoId=d.ProductSalesInfoId
 inner join tblFinishGoodProductInfo f on d.FinishGoodProductInfoId=f.FinishGoodProductId
 left join tblPackageInfo pa on pa.PackageId = d.PackageId
-where 1=1 {0}  and d.Status is null", Utility.ParamChecker(param));
+where 1=1 {0}", Utility.ParamChecker(param));
 
                 return query;
             }

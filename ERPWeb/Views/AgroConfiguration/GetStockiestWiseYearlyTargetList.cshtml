@@ -51,13 +51,40 @@
                     @*<input type="text" id="ddlStockiestName" name="ddlStockiestName" class="form-control form-control-sm" readonly />*@
                     <span class="error hide req-ddlStockiestName">Stockiest Name is required</span>
                 </div>
+                <div class="col-md-2">
+                    <label for="ddlProductName">Product Name</label>
+                    @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                    <span class="error hide req-ddlProductName">Product Name is required</span>
+                </div>
+
 
                 <div class="col-md-2">
+                    <label>From Date</label>
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="FromDate" />
+                        <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                            <span class="input-group-text p-0">&#10008;</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label>To Date</label>
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="ToDate" />
+                        <div class="input-group-prepend cursor-pointer remove-date dptToDate" style="cursor:pointer">
+                            <span class="input-group-text p-0">&#10008;</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-2 hide">
                     <label for="ddlYear">Year</label>
                     <input type="text" class="form-control form-control-sm datepicker" name="datepicker" id="ddlYear" />
                     <span class="error hide req-ddlYear">Year is required</span>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 hide">
                     <label for="ddlMonth">Month Name</label>
                     <select id="ddlMonth" class="form-control form-control-sm ctrl-changed select2 select2-danger">
                         <option selected>--Select Month--</option>
@@ -77,7 +104,7 @@
                     <span class="error hide req-ddlMonth">Month Name is required</span>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <label for="txtTargetQty">Target Qty</label>
                     <input type="number" class="form-control form-control-sm" id="txtTargetQty" />
                     <span class="error hide req-txtTargetQty">TargetQty is required</span>
@@ -104,13 +131,17 @@
                             <th style="width:5%">#SL</th>
                             <th style="width:15%">Territory Name</th>
                             <th style="width:15%">Stockiest Name</th>
-                            <th style="width:10%">Year</th>
-                            <th style="width:10%">Month Name</th>
+                            <th style="width:15%">Product Name</th>
+                            <th style="width:15%">From Date</th>
+                            <th style="width:15%">To Date</th>
+                            @*<th style="width:10%">Year</th>
+                            <th style="width:10%">Month Name</th>*@
                             <th style="width:10%">Target Qty</th>
                             <th style="width:10%">Action</th>
                             <th class="hide">TerritoryId</th>
                             <th class="hide">StockiestId</th>
-                            <th class="hide">Month</th>
+                            <th class="hide">ProductId</th>
+                            @*<th class="hide">Month</th>*@
                          
 
                         </tr>
@@ -131,27 +162,69 @@
 <script type="text/javascript">
 
     var ddlStockiestName = $("#ddlStockiestName");
+    var ddlTeritoryName = $("#ddlTeritoryName");
     var ddlMonth = $("#ddlMonth");
     var txtTargetQty = $("#txtTargetQty");
     var datepicker = $(".datepicker");
     var ddlYear = $("#ddlYear");
-    var ddlTeritoryName = $("#ddlTeritoryName");
+    var ddlProductName = $("#ddlProductName");
+    var dptFromDate = $("#dptFromDate");
+    var dptToDate = $("#dptToDate");
 
-    $(".datepicker").datepicker({
-        format: "yyyy",
-        viewMode: "years",
-        minViewMode: "years",
-        autoclose: true
-    });
+    //$(".datepicker").datepicker({
+    //    format: "yyyy",
+    //    viewMode: "years",
+    //    minViewMode: "years",
+    //    autoclose: true
+    //});
 
     $(document).ready(function () {
+
+        
         $('.select2').select2();
 
+        
         $('.select2bs4').select2({
             theme: 'bootstrap4'
         });
+        dptFromDate.prop('readonly', true);
+        dptToDate.prop('readonly', true);
+        dptFromDate.css("background-color", "#fff");
+        dptToDate.css("background-color", "#fff");
+        $('#dptFromDate').datepicker({
+            format: "dd MM yyyy",
+            orientation: "bottom auto",
+            todayHighlight: true,
+
+        }).on('change', function () {
+            $('.datepicker').hide();
+        });
+        $('#dptToDate').datepicker({
+            format: "dd MM yyyy",
+            orientation: "bottom auto",
+            todayHighlight: true,
+
+        }).on('change', function () {
+            $('.datepicker').hide();
+        });
+
+        LoadStockiestName();
     })
 
+    $(document).on('click', 'div.remove-date', function () {
+        if ($(this).hasClass("dptToDate")) {
+            if (dptToDate.val() !== '') {
+                dptToDate.val('');
+              
+            }
+        }
+        if ($(this).hasClass("dptFromDate")) {
+            if (dptFromDate.val() !== '') {
+                dptFromDate.val('');
+               
+            }
+        }
+    })
 
 
     $("#addButton").click(function (e) {
@@ -165,16 +238,21 @@
                 var td1 = "<td class='text-center'><b>" + (sl + 1) + "</b></td>"
                 var td2 = "<td class='text-center'>" + dropDownSelectedText("ddlTeritoryName") + "</td>";
                 var td3 = "<td class='text-center'>" + dropDownSelectedText("ddlStockiestName") + "</td>";
+                var td4 = "<td class='text-center'>" + dropDownSelectedText("ddlProductName") + "</td>";
+                var td5 = "<td class='text-center'>" + dptFromDate.val() + "</td>";
+                var td6 = "<td class='text-center'>" + dptToDate.val() + "</td>";
                 //var td4 = "<td class='text-center'>" + dropDownSelectedText("ddlYear") + "</td>";
-                var td4 = "<td class='text-center'>" + ddlYear.val() + "</td>";
-                var td5 = "<td class='text-center'>" + dropDownSelectedText("ddlMonth") + "</td>";
-                var td6 = "<td class='text-center text-bold'>" + txtTargetQty.val() + "</td>";
-                var td7 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
-                var td8 = "<td class='hide TerritoryId'>" + ddlTeritoryName.val() + "</td>";
-                var td9 = "<td class='hide StockiestId'>" + ddlStockiestName.val() + "</td>";
-                var td10 = "<td class='hide Month'>" + ddlMonth.val() + "</td>";
+                //var td4 = "<td class='text-center'>" + ddlYear.val() + "</td>";
+                //var td5 = "<td class='text-center'>" + dropDownSelectedText("ddlMonth") + "</td>";
+                var td7 = "<td class='text-center text-bold'>" + txtTargetQty.val() + "</td>";
+                var td8 = "<td class='text-center'><a href='#' class='emn-btn data-onfly-del'><i class='far fa-trash-alt'></i> Delete</a></td>";
+                var td9 = "<td class='hide TerritoryId'>" + ddlTeritoryName.val() + "</td>";
+                var td10 = "<td class='hide StockiestId'>" + ddlStockiestName.val() + "</td>";
+                var td11 = "<td class='hide ProductId'>" + ddlProductName.val() + "</td>";
+            //var td10 = "<td class='hide Month'>" + ddlMonth.val() + "</td>";
+
                 
-            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + "</tr>";
+            var tr = "<tr>" + td1 + td2 + td3 + td4 + td5 + td6 + td7 + td8 + td9 + td10 + td11 + "</tr>";
 
 
                 $("#tblSingleItems tbody").append(tr);
@@ -209,14 +287,14 @@
             $(".req-ddlTeritoryName").removeClass('hide');
             isValid = false;
         }
-        if (ddlYear.val() === "") {
-            $(".req-ddlYear").removeClass('hide');
-            isValid = false;
-        }
-        if (ddlMonth.val() === "") {
-            $(".req-ddlMonth").removeClass('hide');
-            isValid = false;
-        }
+        //if (ddlYear.val() === "") {
+        //    $(".req-ddlYear").removeClass('hide');
+        //    isValid = false;
+        //}
+        //if (ddlMonth.val() === "") {
+        //    $(".req-ddlMonth").removeClass('hide');
+        //    isValid = false;
+        //}
         
         if (TryParseInt(txtTargetQty.val(), 0) <= 0) {
             $(".req-txtTargetQty").removeClass('hide');
@@ -239,11 +317,14 @@
                 details.push({
 
                     
-                    TerritoryId: tds.eq(7).html(),
-                    StockiestId: tds.eq(8).html(),
-                    Month: tds.eq(9).html(),
-                    TargetQty: tds.eq(5).html(),
-                    Year: tds.eq(3).html(),
+                    TerritoryId: tds.eq(8).html(),
+                    StockiestId: tds.eq(9).html(),
+                    ProductId: tds.eq(10).html(),
+                    FromDate: tds.eq(4).html(),
+                    ToDate: tds.eq(5).html(),
+                    //Month: tds.eq(9).html(),
+                    TargetQty: tds.eq(6).html(),
+                    //Year: tds.eq(3).html(),
 
 
                 });

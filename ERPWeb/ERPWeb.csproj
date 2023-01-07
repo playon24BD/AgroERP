@@ -3649,6 +3649,7 @@
     <Content Include="Views\AgroConfiguration\_GetPackageRMStockList.cshtml" />
     <Content Include="Views\AgroConfiguration\DailySalesReportList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetDailySalesReportList.cshtml" />
+    <Content Include="Views\AgroConfiguration\YearlyTargetList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

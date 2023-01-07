@@ -3135,7 +3135,10 @@ namespace ERPWeb.Controllers
                 isUpdateSucccess = _agroProductSalesInfoBusiness.UpdateInvoiceDrop(ProductSalesInfoId, User.UserId);
             }
             var SalesInfoId = _agroProductSalesInfoBusiness.GetInvoiceProductionInfoById(ProductSalesInfoId).ProductSalesInfoId;
-            var data = _agroProductSalesInfoBusiness.GetProductSalesData(SalesInfoId);
+
+            var data = _agroProductSalesInfoBusiness.ProductSalesInvoiceDrop(SalesInfoId);
+            var data1 = _agroProductSalesInfoBusiness.ProductSalesInvoiceDrop1(SalesInfoId);
+            var data2 = _agroProductSalesInfoBusiness.ProductSalesInvoiceDrop2(SalesInfoId);
 
             LocalReport localReport = new LocalReport();
 
@@ -3148,6 +3151,12 @@ namespace ERPWeb.Controllers
 
             ReportDataSource dataSource1 = new ReportDataSource("dsAgroSalesReport", data);
             localReport.DataSources.Add(dataSource1);
+
+            ReportDataSource dataSource2 = new ReportDataSource("dsAgroSalesReport1", data1);
+            localReport.DataSources.Add(dataSource2);
+
+            ReportDataSource dataSource3 = new ReportDataSource("dsAgroSalesReport2", data2);
+            localReport.DataSources.Add(dataSource3);
 
             string reportType = "PDF";
             string mimeType;
@@ -6580,6 +6589,13 @@ namespace ERPWeb.Controllers
 
 
         #region StokiestWiseTarget
+
+        public ActionResult YearlyTargetList()
+        {
+            return View();
+        }
+
+
         public ActionResult GetStockiestWiseYearlyTargetList(string flag)
         {
             if (string.IsNullOrEmpty(flag))
@@ -6588,6 +6604,7 @@ namespace ERPWeb.Controllers
 
                 ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
 
+                ViewBag.ddlProductName =_finishGoodProductionInfoBusiness.GetAllProduct (User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
 
                 return View();
             }

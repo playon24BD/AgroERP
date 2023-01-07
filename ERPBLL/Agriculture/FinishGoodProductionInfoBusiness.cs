@@ -757,6 +757,25 @@ where 1=1 {0} order by infoes.FinishGoodProductInfoId desc", Utility.ParamChecke
         {
             return _finishGoodProductionInfoRepository.GetAll(g => g.MeasurementId == MeasurementId && g.FinishGoodProductId == FinishGoodProductId && g.FGRId == FGRId).ToList();
         }
+
+        public IEnumerable<FinishGoodProductDTO> GetAllProduct(long OrgId)
+        {
+            return _agricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductDTO>(QueryforFinishGoodStockReportList(OrgId));
+        }
+
+        private string QueryforFinishGoodStockReportList(long OrgId)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            query = string.Format(@"
+
+select * from tblFinishGoodProductInfo
+
+where 1=1 {0}", Utility.ParamChecker(param));
+            return query;
+
+        }
     }
 }
 
