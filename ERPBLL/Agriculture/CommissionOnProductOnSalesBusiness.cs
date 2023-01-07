@@ -145,6 +145,10 @@ where 1=1 {0}
 
 
                 query = string.Format(@"select distinct *,(t.copsdSum+t.phsum)totalCommission from (select si.ProductSalesInfoId,ISNULL(tconps.CommissionOnProductOnSalesId,0) as CommissionOnProductOnSalesId,si.TotalAmount,si.InvoiceNo,cpsd.PaymentMode,CASE WHEN Cast (tconps.EntryDate as date) is null THEN Cast (psphs.PaymentDate as date) ELSE Cast (tconps.EntryDate as date) END  as EntryDate,f.StockiestName,
+FinishGoodProductName=(
+SELECT Distinct FGP.FinishGoodProductName from tblProductSalesInfo si
+INNER JOIN tblProductSalesDetails PSD on si.ProductSalesInfoId=PSD.ProductSalesInfoId
+INNER JOIN tblFinishGoodProductInfo FGP on PSD.FinishGoodProductInfoId=FGP.FinishGoodProductId where 1=1 {0}),
 
 	  (select  ISNULL(sum(TotalCommission),0) from tblCommisionOnProductSalesDetails copsd where copsd.CommissionOnProductOnSalesId=tconps.CommissionOnProductOnSalesId )copsdSum,
 	  ( select ISNULL(sum(CommisionAmount),0) from tblProductSalesPaymentHistory psph where psph.ProductSalesInfoId=si.ProductSalesInfoId)phsum
