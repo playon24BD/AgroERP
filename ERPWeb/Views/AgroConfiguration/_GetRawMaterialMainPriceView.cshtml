@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ERPBO.Agriculture.ViewModels.RawMaterialTrackViewModel>
+
+@{
+    ViewBag.Title = "List of RawMaterial Stock";
+    var SL = 0;
+    double total = 0;
+    string badge = string.Empty;
+    string badges = string.Empty;
+}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblDepotDataPrice">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">#SL</th>
+                    <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle">RawMaterial Name</th>
+                    <th style="vertical-align:middle">Current Stock</th>
+
+                    <th style="vertical-align:middle">Average Price</th>
+                    <th style="vertical-align:middle">Stock Total Price Value</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    SL = SL + 1;
+                    badge = "badge bg-success";
+                    badges = "badge bg-info";
+
+                    <tr>
+
+                        <td class="text-center text-bold">@SL</td>
+                        <td class="hide">@item.RawMaterialId</td>
+
+                        <td class="text-center">@item.RawMaterialName</td>
+                        <td class="text-center text-bold">@item.CurrentStock.ToString("0.00") (@item.UnitName)</td>
+
+                        <td class="text-center text-bold">
+                            @item.RMPrice.ToString("0.00")
+                        </td>
+                        <td class="text-center text-bold">
+                            @item.CurrentStockPrice.ToString("0.00")
+                        </td>
+                        <td class="hide">
+                            @{
+                                double subtotal = item.CurrentStockPrice;
+                                total += subtotal;
+                            }
+                            @subtotal;
+                        </td>
+
+                    </tr>
+                }
+
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="5">
+                            No Rows Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tr>
+                <td colspan="3"></td>
+                <td class="text-bold" style="text-align:center" colspan="1">Total(TK): </td>
+
+   
+                <td colspan="1" style="text-align:center" data-val="@total.ToString("0.00")">
+                    <span class="@badge">@total.ToString("0.00")</span>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+
+</div>

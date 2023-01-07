@@ -28,6 +28,9 @@ namespace ERPBO.Agriculture.ViewModels
         public double StockIN { get; set; }
         public double StockINReturn { get; set; }
 
+        public double RMPrice { get; set; }
+        public double CurrentStockPrice { get; set; }
+
         public long RawMaterialIssueStockId { get; set; }
 
     }

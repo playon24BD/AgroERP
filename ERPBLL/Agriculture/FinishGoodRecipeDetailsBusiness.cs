@@ -129,9 +129,9 @@ namespace ERPBLL.Agriculture
 
             query = string.Format(@"	
 select ri.FGRId,rd.FGRDetailsId,rm.RawMaterialName,rd.FGRRawMaterQty,un.UnitName, 
-RMPrice= ISNULL((SELECT AVG(SR.UnitPrice) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0),
+RMPrice=  ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0),
 
-RMPriceTotal= ISNULL((SELECT AVG(SR.UnitPrice) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0)*rd.FGRRawMaterQty
+RMPriceTotal= ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0)*rd.FGRRawMaterQty
 
 from tblFinishGoodRecipeInfo ri
 inner join tblFinishGoodRecipeDetails rd on ri.FGRId= rd.FGRId

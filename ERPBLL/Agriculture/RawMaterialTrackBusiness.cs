@@ -156,5 +156,68 @@ inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
                 return null;
             }
         }
+
+        public IEnumerable<RawMaterialTrackDTO> GetMainStockInOutInfosPrice(string name, long? RMCategorieId)
+        {
+            try
+            {
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<RawMaterialTrackDTO>(QueryForRawMaterialMainINOUTQTYPrice(name, RMCategorieId)).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private string QueryForRawMaterialMainINOUTQTYPrice(string name, long? RMCategorieId)
+        {
+            try
+            {
+                string query = string.Empty;
+                string param = string.Empty;
+
+                if (RMCategorieId != null && RMCategorieId > 0)
+                {
+                    param += string.Format(@" and RM.RMCategorieId= {0}", RMCategorieId);
+                }
+                if (name != null && name != "")
+                {
+                    param += string.Format(@" and RM.RawMaterialName like '%{0}%'", name);
+                }
+                query = string.Format(@"
+SELECT Distinct RM.RawMaterialName,t.RawMaterialId,un.UnitName,RM.RMCategorieId,
+
+StockIN= isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
+where t.IssueStatus ='StockIn' and t.RawMaterialId=RM.RawMaterialId),0),
+
+StockOut=isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
+where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0),
+
+RMPrice= ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=t.RawMaterialId),0),
+
+CurrentStock= isnull( isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
+where t.IssueStatus ='StockIn'and t.RawMaterialId=RM.RawMaterialId),0)- isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
+where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0)+ isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where rr.ReturnType ='Good' and rr.Status='Approved' and rr.RawMaterialId=RM.RawMaterialId),0),0),
+
+CurrentStockPrice= isnull( isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
+where t.IssueStatus ='StockIn'and t.RawMaterialId=RM.RawMaterialId),0)- isnull((SELECT sum(t.Quantity) FROM  tblRawMaterialTrackInfo t
+where  t.IssueStatus ='StockOut'and t.RawMaterialId=RM.RawMaterialId),0)+ isnull((SELECT sum(rr.Quantity) FROM  tblReturnRawMaterial rr
+where rr.ReturnType ='Good' and rr.Status='Approved' and rr.RawMaterialId=RM.RawMaterialId),0),0) * ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=t.RawMaterialId),0)
+
+FROM  
+tblRawMaterialTrackInfo t 
+INNER JOIN tblRawMaterialInfo RM on t.RawMaterialId=RM.RawMaterialId
+inner join tblAgroUnitInfo un on RM.UnitId = un.UnitId
+      where  1=1  {0}  order by t.RawMaterialId desc",
+                Utility.ParamChecker(param));
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
     }
 }

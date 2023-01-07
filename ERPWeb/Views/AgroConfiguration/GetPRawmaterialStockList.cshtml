@@ -41,8 +41,12 @@
                 <li class="nav-item">
                     <a class="nav-link active  text-white  " id="custom-tabs-two-pstockrawmaterialqty-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialqty" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialqty" aria-selected="false">RM Stock</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link  text-white  " id="custom-tabs-two-packageRMStock-tab" data-toggle="pill" href="#custom-tabs-two-packageRMStock" role="tab" aria-controls="custom-tabs-two-packageRMStock" aria-selected="false">Packaging Stock</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link   text-white  " id="custom-tabs-two-RMqtyprices-tab" data-toggle="pill" href="#custom-tabs-two-RMqtyprices" role="tab" aria-controls="custom-tabs-two-RMqtyprices" aria-selected="false">RM Stock Price Value</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white   " id="custom-tabs-two-pstockrawmaterialList-tab" data-toggle="pill" href="#custom-tabs-two-pstockrawmaterialList" role="tab" aria-controls="custom-tabs-two-pstockrawmaterialList" aria-selected="false">Purchase Details</a>
@@ -389,6 +393,56 @@
             </div>
             @*stock*@
 
+
+            <div class="tab-pane fade show " id="custom-tabs-two-RMqtyprices" role="tabpanel" aria-labelledby="custom-tabs-two-RMqtyprices-tab">
+
+                <div class="row" style="margin-top:-15px">
+                    <div class="col-md-12">
+                        <div class="card" style="background-color:#001f3f">
+                            <div class="px-2 py-1">
+                                <div class="row text-sm">
+                                    <div class="col-3">
+                                        <h6 class="text-left  text-white mb-0" @*style="height:10px;text-align:center"*@>
+                                            RawMaterial Stock Price
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-md-2">
+
+                                        @Html.DropDownList("ddlcategorurm", (IEnumerable<SelectListItem>)ViewBag.ddlcategorurm, "Categorie", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                    </div>
+
+                                    <div class="col-md-2 float-right text-white">
+                                        <input type="text" class="form-control form-control-sm" id="searchByAnyyp" placeholder="Search by any" autofocus />
+
+                                    </div>
+                                    <div class="col-1">
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row" style="margin-top:-5px">
+                    <div class="col-md-12" style="margin-top:-10px">
+
+                        <div class="row">
+
+                            <div class="col-md-12 text-sm text-sm" id="dataContainer7">
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
             @*Package RM Stock*@
             <div class="tab-pane fade show" id="custom-tabs-two-packageRMStock" role="tabpanel" aria-labelledby="custom-tabs-two-packageRMStock-tab">
 
@@ -598,6 +652,8 @@
         var searchByChallan = $("#searchByChallan");
         var searchByPO = $("#searchByPO");
         var searchByPStock = $("#searchByPStock");
+        var searchByAnyyp = $("#searchByAnyyp");
+        var ddlcategorurm = $("#ddlcategorurm");
 
 
         //date
@@ -658,6 +714,7 @@
             if ($("#tab").val() == 'pstockrawmaterialList') {
                 $("#custom-tabs-two-pstockrawmaterialList").addClass('active');
                 $("#custom-tabs-two-pstockrawmaterialList-tab").addClass('active');
+                //$("#custom-tabs-two-pstockrawmaterialqtyprice-tab").addClass('active');
 
                 $("#custom-tabs-two-pstockrawmaterialqty-tab").removeClass('active');
                 $("#custom-tabs-two-pstockrawmaterialqty").removeClass('active');
@@ -683,6 +740,7 @@
             LoadPackageRMStock();
             LoadAccessories();
             LoadAccessoriesStock();
+            LoadDataTableStockPriceRM();
 
         })
 
@@ -722,12 +780,17 @@
         searchByAnyy.keyup(function () {
             LoadDataTableStock()
         })
+        searchByAnyyp.keyup(function () {
+            LoadDataTableStockPriceRM()
+        })
 
 
         ddlSupplierName1.change(function () {
             LoadDataTable()
         })
-
+        ddlcategorurm.change(function () {
+            LoadDataTableStockPriceRM()
+        })
         searchByChallan.keyup(function () {
             LoadDataTable()
         })
@@ -777,6 +840,28 @@
             //pageNo = 1;
         }
          //loads
+
+        //price
+        function LoadDataTableStockPriceRM() {
+            debugger;
+
+            var data = { flag: "RMPrice", name: $.trim(searchByAnyyp.val()), RMCategorieId: TryParseInt(ddlcategorurm.val(), 0) };
+            
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetPRawmaterialStockList', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer7").fadeOut('500', function () {
+                        $("#dataContainer7").empty();
+                        $("#dataContainer7").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+            //pageNo = 1;
+        }
+        //price
 
 
         //details

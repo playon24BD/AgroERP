@@ -12,6 +12,7 @@ namespace ERPBLL.Agriculture.Interface
     {
         IEnumerable<RawMaterialTrack> GetAllRawMaterialTruck();
         IEnumerable<RawMaterialTrackDTO> GetMainStockInOutInfos(string name);
+        IEnumerable<RawMaterialTrackDTO> GetMainStockInOutInfosPrice(string name, long? RMCategorieId);
         IEnumerable<RawMaterialTrackDTO> GetPackageRMStock(string name);
 
         IEnumerable<RawMaterialTrack> RawMaterialStockInbyRawMaterialid(long rawMaterialId);

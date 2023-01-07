@@ -3606,7 +3606,7 @@ namespace ERPWeb.Controllers
 
         #region Purchase & RawmaterialStock
 
-        public ActionResult GetPRawmaterialStockList(string flag, string name, long? rsupid, long? id, string ChallanNo, string PONumber, long? supplierId, string tab = "")
+        public ActionResult GetPRawmaterialStockList(string flag, string name, long? rsupid, long? id, string ChallanNo, string PONumber, long? supplierId,long? RMCategorieId, string tab = "")
         {
 
             try
@@ -3618,6 +3618,7 @@ namespace ERPWeb.Controllers
                     //ViewBag.ddlDepotName = _depotSetup.GetAllDepotSetup(User.OrgId).Select(a => new SelectListItem { Text = a.DepotName, Value = a.DepotId.ToString() });
                     //ViewBag.ddlUnitName = _agroUnitInfo.GetAllAgroUnitInfo(User.OrgId).Select(a => new SelectListItem { Text = a.UnitName, Value = a.UnitId.ToString() });
                     ViewBag.ddlSupplierName = _rawMaterialSupplierBusiness.GetAllRawMaterialSupplierInfo(User.OrgId).Select(a => new SelectListItem { Text = a.RawMaterialSupplierName, Value = a.RawMaterialSupplierId.ToString() }).ToList();
+                    ViewBag.ddlcategorurm = _rawMaterialBusiness.GetRMCategories().Select(c => new SelectListItem { Text = c.RMCategorieName, Value = c.RMCategorieId.ToString() }).ToList();
 
 
                     ViewBag.tab = tab;
@@ -3642,6 +3643,15 @@ namespace ERPWeb.Controllers
                     List<RawMaterialTrackViewModel> viewModels = new List<RawMaterialTrackViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModels);
                     return PartialView("_GetRawMaterialMainView", viewModels);
+
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == "RMPrice")
+                {
+                    var dto = _rawMaterialTrack.GetMainStockInOutInfosPrice(name ?? null, RMCategorieId ?? 0);
+
+                    List<RawMaterialTrackViewModel> viewModels = new List<RawMaterialTrackViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetRawMaterialMainPriceView", viewModels);
 
                 }
 
