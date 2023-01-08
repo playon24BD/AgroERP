@@ -139,7 +139,7 @@ namespace ERPWeb.Controllers
             this._rawMaterialBusiness = rawMaterialBusiness;
             this._finishGoodProductBusiness = finishGoodProductBusiness;
             this._finishGoodProductSupplierBusiness = finishGoodProductSupplierBusiness;
-            this._measuremenBusiness = measuremenBusiness;
+            this._measuremenBusiness = measuremenBusiness; 
             this._rawMaterialSupplierBusiness = rawMaterialSupplierBusiness;
             this._finishGoodRecipeInfoBusiness = finishGoodRecipeInfoBusiness;
             this._finishGoodRecipeDetailsBusiness = finishGoodRecipeDetailsBusiness;

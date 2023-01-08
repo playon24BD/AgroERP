@@ -227,6 +227,10 @@
     <Compile Include="AgricultureContextMigrations\202301071424289_YearlyTarget.Designer.cs">
       <DependentUpon>202301071424289_YearlyTarget.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgricultureContextMigrations\202301080958005_ProductionCostfind.cs" />
+    <Compile Include="AgricultureContextMigrations\202301080958005_ProductionCostfind.Designer.cs">
+      <DependentUpon>202301080958005_ProductionCostfind.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
     <Compile Include="AgricultureDAL\AgricultureDbContext.cs" />
@@ -380,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202301071424289_YearlyTarget.resx">
       <DependentUpon>202301071424289_YearlyTarget.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202301080958005_ProductionCostfind.resx">
+      <DependentUpon>202301080958005_ProductionCostfind.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>
