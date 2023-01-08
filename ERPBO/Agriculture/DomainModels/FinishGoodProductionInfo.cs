@@ -29,7 +29,8 @@ namespace ERPBO.Agriculture.DomainModels
         public double MFGQuanity { get; set; }
         public long MeasurementId { get; set; }
 
-
+        public double ProductionRMPrice { get; set; }
+        public double ProductionOtherExpense { get; set; }
 
     }
 }
