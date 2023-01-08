@@ -1,19 +1,185 @@
 ﻿
-@*@{
+@{
     ViewBag.Title = "YearlyTargetList";
-}*@
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-@*<div class="row p-0" style="margin-top:5px">
+<div class="row p-0" style="margin-top:5px">
     <div class="col-md-12 p-0">
         <div class="card  shadow card  card-outline card-tabs" style="margin-top:-30px">
-            <ul class="nav nav-tabs nav-pills bg-navy" id="custom-tabs-two-tab" role="tablist">
-               
-                <li class="nav-item">
-                    <a class="nav-link active text-white " id="custom-tabs-two-YearlyTargetList-tab" data-toggle="pill" href="#custom-tabs-two-YearlyTargetList" role="tab" aria-controls="custom-tabs-two-YearlyTargetList" aria-selected="true">Yearly Target</a>
-                </li>
-            </ul>
+
+        </div>
+
+        <div class="tab-pane fade show" id="custom-tabs-two-MeasurementList" role="tabpanel" aria-labelledby="custom-tabs-two-MeasurementList-tab">
+
+            <div class="row" style="margin-top:-16px">
+                <div class="col-md-12" style="height:60px;text-align:center">
+                    <div class="card" style="background-color:#001f3f">
+                        <div class="px-2 py-1">
+                            <div class="row align-items-center">
+                                <div class="col-md-1 text-center">
+                                    <h6 class=" text-bold float-left text-white">
+                                        Yearly List
+                                    </h6>
+                                </div>
+
+                                <div class="col-md-2">
+                                    @Html.DropDownList("ddlTeritoryName", (IEnumerable<SelectListItem>)ViewBag.ddlTeritoryName, "--Select Territory--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--Select Product--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+
+                                </div>
+
+                                <div class="col-md-1">
+                                    
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="FromDate" />
+                                        <div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
+                                            <span class="input-group-text p-0">&#10008;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                  
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="ToDate" />
+                                        <div class="input-group-prepend cursor-pointer remove-date dptToDate" style="cursor:pointer">
+                                            <span class="input-group-text p-0">&#10008;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-1">
+
+                                </div>
+
+                                <div class="col-md-2 float-right">
+                                    <a href="/AgroConfiguration/GetStockiestWiseYearlyTargetList" class="das2-btn float-lg-right"><i class="fa fa-plus"></i> Create YearlyTarget</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 p-0" style="margin-top:-25px">
+
+
+                <div class="col-md-12 p-0" id="dataContainer">
+
+                </div>
+
+
+            </div>
+
         </div>
     </div>
 
-</div>*@
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var ddlProductName = $("#ddlProductName");
+        var ddlStockiestName = $("#ddlStockiestName");
+        var ddlTeritoryName = $("#ddlTeritoryName");
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+
+        $(document).ready(function () {
+            $('.select2').select2();
+
+          
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+
+            }).on('change', function () {
+                $('.datepicker').hide();
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+
+            }).on('change', function () {
+                $('.datepicker').hide();
+            });
+
+
+
+            LoadYearlyList();
+
+        })
+
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                    LoadYearlyList();
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                    LoadYearlyList();
+                }
+            }
+        })
+
+        dptFromDate.change(function () {
+            LoadYearlyList();
+        })
+        dptToDate.change(function () {
+            LoadYearlyList();
+        })
+        ddlStockiestName.change(function () {
+            LoadYearlyList();
+        })
+        ddlTeritoryName.change(function () {
+            LoadYearlyList();
+        })
+        ddlProductName.change(function () {
+            LoadYearlyList();
+        })
+
+
+        function LoadYearlyList() {
+            debugger;
+            var data = { flag: 'View', stockiestId: TryParseInt(ddlStockiestName.val(), 0), territoryId: TryParseInt(ddlTeritoryName.val(), 0), productId: TryParseInt(ddlProductName.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val() }
+            $.when(getReqWithData(dataType.html, type.get, '/AgroConfiguration/YearlyTargetList', data)).then(function (res, status) {
+                console.log(res);
+                if (status === "success") {
+                    $("#dataContainer").empty();
+                    $("#dataContainer").append(res);
+                }
+            }).fail(function (err) { console.log(err) })
+        }
+
+
+
+    </script>
+
+
+
+}
 

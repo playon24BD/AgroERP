@@ -105,7 +105,7 @@
                 </div>
 
                 <div class="col-md-1">
-                    <label for="txtTargetQty">Target Qty</label>
+                    <label for="txtTargetQty">T.Value</label>
                     <input type="number" class="form-control form-control-sm" id="txtTargetQty" />
                     <span class="error hide req-txtTargetQty">TargetQty is required</span>
                 </div>
@@ -287,6 +287,18 @@
             $(".req-ddlTeritoryName").removeClass('hide');
             isValid = false;
         }
+        if (ddlProductName.val() === "") {
+            $(".req-ddlProductName").removeClass('hide');
+            isValid = false;
+        }
+        //if (dptFromDate.val() === "") {
+        //    $(".req-ddlProductName").removeClass('hide');
+        //    isValid = false;
+        //}
+        //if (dptToDate.val() === "") {
+        //    $(".req-ddlProductName").removeClass('hide');
+        //    isValid = false;
+        //}
         //if (ddlYear.val() === "") {
         //    $(".req-ddlYear").removeClass('hide');
         //    isValid = false;
@@ -319,7 +331,7 @@
                     
                     TerritoryId: tds.eq(8).html(),
                     StockiestId: tds.eq(9).html(),
-                    ProductId: tds.eq(10).html(),
+                    FinishGoodProductId: tds.eq(10).html(),
                     FromDate: tds.eq(4).html(),
                     ToDate: tds.eq(5).html(),
                     //Month: tds.eq(9).html(),
@@ -336,9 +348,9 @@
                 if (res === true) {
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
-                    @*setTimeout(function () {
-                        redirectPage('@Url.Action("GetStockiestWiseYearlyTargetList")');
-                    }, 1000);*@
+                    setTimeout(function () {
+                        redirectPage('@Url.Action("YearlyTargetList")');
+                    }, 1000);
                 }
                 else {
                     $('.toastrDefaultError').trigger('click');
@@ -390,6 +402,12 @@
 
 
     }
+
+
+    function redirectPage(page) {
+        window.location.replace(page);
+    }
+
 
     </script>
     

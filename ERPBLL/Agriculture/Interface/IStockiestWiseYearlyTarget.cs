@@ -9,6 +9,8 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IStockiestWiseYearlyTarget
     {
+
+        IEnumerable<StockiestWiseYearlyTargetDTO> GetYearlyTargetList(long? territoryId, long? stockiestId, long? productId, string fromDate, string toDate);
         bool SaveStockiestWiseYearlyTargetList(List<StockiestWiseYearlyTargetDTO> detailsDTO, long userId, long orgId);
     }
 }

@@ -203,14 +203,6 @@
     <Compile Include="AgricultureContextMigrations\202212140710122_Productionprocess.Designer.cs">
       <DependentUpon>202212140710122_Productionprocess.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202212141206413_StockiestWiseYearlyTarget.cs" />
-    <Compile Include="AgricultureContextMigrations\202212141206413_StockiestWiseYearlyTarget.Designer.cs">
-      <DependentUpon>202212141206413_StockiestWiseYearlyTarget.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AgricultureContextMigrations\202212150939595_StockiestWiseTargetAddField.cs" />
-    <Compile Include="AgricultureContextMigrations\202212150939595_StockiestWiseTargetAddField.Designer.cs">
-      <DependentUpon>202212150939595_StockiestWiseTargetAddField.cs</DependentUpon>
-    </Compile>
     <Compile Include="AgricultureContextMigrations\202212171343119_Package.cs" />
     <Compile Include="AgricultureContextMigrations\202212171343119_Package.Designer.cs">
       <DependentUpon>202212171343119_Package.cs</DependentUpon>
@@ -231,9 +223,9 @@
     <Compile Include="AgricultureContextMigrations\202301030444521_Agriculture_PRawMaterialNew.Designer.cs">
       <DependentUpon>202301030444521_Agriculture_PRawMaterialNew.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202301071041456_Yearly_Target.cs" />
-    <Compile Include="AgricultureContextMigrations\202301071041456_Yearly_Target.Designer.cs">
-      <DependentUpon>202301071041456_Yearly_Target.cs</DependentUpon>
+    <Compile Include="AgricultureContextMigrations\202301071424289_YearlyTarget.cs" />
+    <Compile Include="AgricultureContextMigrations\202301071424289_YearlyTarget.Designer.cs">
+      <DependentUpon>202301071424289_YearlyTarget.cs</DependentUpon>
     </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
@@ -371,12 +363,6 @@
     <EmbeddedResource Include="AgricultureContextMigrations\202212140710122_Productionprocess.resx">
       <DependentUpon>202212140710122_Productionprocess.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202212141206413_StockiestWiseYearlyTarget.resx">
-      <DependentUpon>202212141206413_StockiestWiseYearlyTarget.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202212150939595_StockiestWiseTargetAddField.resx">
-      <DependentUpon>202212150939595_StockiestWiseTargetAddField.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202212171343119_Package.resx">
       <DependentUpon>202212171343119_Package.cs</DependentUpon>
     </EmbeddedResource>
@@ -392,8 +378,8 @@
     <EmbeddedResource Include="AgricultureContextMigrations\202301030444521_Agriculture_PRawMaterialNew.resx">
       <DependentUpon>202301030444521_Agriculture_PRawMaterialNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202301071041456_Yearly_Target.resx">
-      <DependentUpon>202301071041456_Yearly_Target.cs</DependentUpon>
+    <EmbeddedResource Include="AgricultureContextMigrations\202301071424289_YearlyTarget.resx">
+      <DependentUpon>202301071424289_YearlyTarget.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

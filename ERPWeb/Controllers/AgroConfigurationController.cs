@@ -6600,10 +6600,33 @@ namespace ERPWeb.Controllers
 
         #region StokiestWiseTarget
 
-        public ActionResult YearlyTargetList()
+        public ActionResult YearlyTargetList(string flag,long? territoryId,long? stockiestId,long? productId,string fromDate,string toDate)
         {
+            if (string.IsNullOrEmpty(flag))
+            {
+                ViewBag.ddlTeritoryName = _territorySetup.GetAllTerritorySetup(User.OrgId).Select(terri => new SelectListItem { Text = terri.TerritoryName, Value = terri.TerritoryId.ToString() }).ToList();
+
+                ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+
+                ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetAllProduct(User.OrgId).Select(d => new SelectListItem { Text = d.FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
+
+                return View();
+            }
+
+            else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+            {
+                var dto = _stockiestWiseYearlyTarget.GetYearlyTargetList(territoryId??0,stockiestId??0,productId??0,fromDate,toDate);
+
+
+                List<StockiestWiseYearlyTargetViewModel> viewModels = new List<StockiestWiseYearlyTargetViewModel>();
+                AutoMapper.Mapper.Map(dto, viewModels);
+                return PartialView("_GetYearlyTargetList", viewModels);
+            }
+
             return View();
         }
+
+
 
 
         public ActionResult GetStockiestWiseYearlyTargetList(string flag)

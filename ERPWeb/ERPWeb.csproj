@@ -3652,7 +3652,11 @@
 
     <Content Include="Views\AgroConfiguration\YearlyTargetList.cshtml" />
 
+
     <Content Include="Views\AgroConfiguration\_GetRawMaterialMainPriceView.cshtml" />
+
+
+    <Content Include="Views\AgroConfiguration\_GetYearlyTargetList.cshtml" />
 
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

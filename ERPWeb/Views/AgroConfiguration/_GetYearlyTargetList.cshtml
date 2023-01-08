@@ -1,0 +1,58 @@
+﻿
+
+@model IEnumerable<ERPBO.Agriculture.ViewModels.StockiestWiseYearlyTargetViewModel>
+
+@{
+    ViewBag.Title = "List of Yearly Target";
+    var SL = 0;
+}
+<div class="row">
+    <div class="col-md-12 p-0">
+        <table class="table table-bordered table-striped table-hover table-sm text-sm" id="tblYearlyTarget">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">#SL</th>
+                    <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle">Territory Name</th>
+                    <th style="vertical-align:middle">Stockiest Name</th>
+                    <th style="vertical-align:middle">Product Name</th>
+                    <th style="vertical-align:middle">From Date</th>
+                    <th style="vertical-align:middle">To Date</th>
+                    <th style="vertical-align:middle">Target Value</th>
+               
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    SL = SL + 1;
+                    <tr>
+
+                        <td class="text-center text-bold">@SL</td>
+                        <td class="hide">@item.StockiestWiseYearlyTargetId</td>
+                        <td class="text-center">@item.TerritoryName</td>
+                        <td class="text-center">@item.StockiestName</td>
+                        <td class="text-center">@item.FinishGoodProductName</td>
+                        <td class="text-center">@item.FromDate.Value.ToString("dd-MMM-yyyy")</td>
+                        <td class="text-center">@item.ToDate.Value.ToString("dd-MMM-yyyy")</td>
+                        <td class="text-center">@item.TargetValue</td>
+                       
+
+                    </tr>
+                }
+
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="12">
+                            No Rows Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+

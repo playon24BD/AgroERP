@@ -7,13 +7,13 @@ namespace ERPDAL.AgricultureContextMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class StockiestWiseTargetAddField : IMigrationMetadata
+    public sealed partial class YearlyTarget : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(StockiestWiseTargetAddField));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(YearlyTarget));
         
         string IMigrationMetadata.Id
         {
-            get { return "202212150939595_StockiestWiseTargetAddField"; }
+            get { return "202301071424289_YearlyTarget"; }
         }
         
         string IMigrationMetadata.Source

@@ -28,6 +28,6 @@ namespace ERPBO.Agriculture.DomainModels
         public long? EntryUserId { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
-        public long ProductId { get; set; }
+        public long FinishGoodProductId { get; set; }
     }
 }

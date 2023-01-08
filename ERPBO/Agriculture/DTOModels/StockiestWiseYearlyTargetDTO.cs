@@ -23,6 +23,10 @@ namespace ERPBO.Agriculture.DTOModels
         public long? EntryUserId { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
-        public long ProductId { get; set; }
+        public string StockiestName { get; set; }
+        public string TerritoryName { get; set; }
+        public long FinishGoodProductId { get; set; }
+        public string FinishGoodProductName { get; set; }
+        public decimal TargetValue { get; set; }
     }
 }

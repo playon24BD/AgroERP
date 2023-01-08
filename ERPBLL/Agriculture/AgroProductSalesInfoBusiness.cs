@@ -45,7 +45,7 @@ namespace ERPBLL.Agriculture
         private readonly ISalesReturn _salesReturn;
         private readonly IAccessoriesPurchaseInfo _accessoriesPurchaseInfo;
 
-        public AgroProductSalesInfoBusiness(IAccessoriesPurchaseInfo accessoriesPurchaseInfo,IAgricultureUnitOfWork agricultureUnitOfWork,ISalesReturn salesReturn, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness,IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, IStockiestUserBusiness stockiestUserBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness)
+        public AgroProductSalesInfoBusiness(IAccessoriesPurchaseInfo accessoriesPurchaseInfo, IAgricultureUnitOfWork agricultureUnitOfWork, ISalesReturn salesReturn, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness, IAppUserBusiness appUserBusiness, IStockiestInfo stockiestInfo, ITerritorySetup territorySetup, IAreaSetupBusiness areaSetupBusiness, IDivisionInfo divisionInfo, IRegionSetup regionSetup, IZoneSetup zoneSetup, IUserAssignBussiness userAssignBussiness, IUserInfo userInfo, IFinishGoodRecipeInfoBusiness finishGoodRecipeInfoBusiness, IAgroUnitInfo agroUnitInfo, IMeasuremenBusiness measuremenBusiness, ICommissionOnProductOnSalesBusiness commissionOnProductOnSalesBusiness, IStockiestUserBusiness stockiestUserBusiness, IAgroProductSalesDetailsBusiness agroProductSalesDetailsBusiness)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._agroProductSalesInfoRepository = new AgroProductSalesInfoRepository(this._agricultureUnitOfWork);
@@ -68,7 +68,7 @@ namespace ERPBLL.Agriculture
             this._commissionOnProductOnSalesBusiness = commissionOnProductOnSalesBusiness;
             this._stockiestUserBusiness = stockiestUserBusiness;
             this._agroProductSalesDetailsBusiness = agroProductSalesDetailsBusiness;
-            this._finishGoodProductionInfoBusiness= finishGoodProductionInfoBusiness;
+            this._finishGoodProductionInfoBusiness = finishGoodProductionInfoBusiness;
             this._salesReturn = salesReturn;
             this._accessoriesPurchaseInfo = accessoriesPurchaseInfo;
         }
@@ -193,7 +193,7 @@ namespace ERPBLL.Agriculture
         }
         // Working here
 
-        public bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details,long userId, long orgId)
+        public bool SaveAgroProductSalesInfo(AgroProductSalesInfoDTO agroSalesInfoDTO, List<AgroProductSalesDetailsDTO> details, long userId, long orgId)
         {
 
             bool isSuccess = false;
@@ -208,10 +208,10 @@ namespace ERPBLL.Agriculture
             var InvoiceNo = "INV-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
 
-            var proa = details.GroupBy(q => new {q.AccessoriesId }).Select(y => new AgroProductSalesDetailsDTO
+            var proa = details.GroupBy(q => new { q.AccessoriesId }).Select(y => new AgroProductSalesDetailsDTO
             {
-                
-              
+
+
                 AccessoriesId = y.Key.AccessoriesId,
                 Quanity = y.Sum(f => f.Quanity),
 
@@ -247,16 +247,16 @@ namespace ERPBLL.Agriculture
 
 
 
-            var pro = details.GroupBy(r => new { r.FinishGoodProductInfoId, r.MeasurementId,r.FGRId,r.AccessoriesId }).Select( g => new AgroProductSalesDetailsDTO
+            var pro = details.GroupBy(r => new { r.FinishGoodProductInfoId, r.MeasurementId, r.FGRId, r.AccessoriesId }).Select(g => new AgroProductSalesDetailsDTO
             {
                 FinishGoodProductInfoId = g.Key.FinishGoodProductInfoId,
                 MeasurementId = g.Key.MeasurementId,
                 FGRId = g.Key.FGRId,
                 Quanity = g.Sum(r => r.Quanity),
-               
-           
-               
-            
+
+
+
+
             });
 
 
@@ -264,7 +264,7 @@ namespace ERPBLL.Agriculture
 
             foreach (var product in pro)
             {
-                if(product.FinishGoodProductInfoId != 0 && product.MeasurementId != 0)
+                if (product.FinishGoodProductInfoId != 0 && product.MeasurementId != 0)
                 {
                     var Productstockin = _finishGoodProductionInfoBusiness.GetProductStockINbyPMRid(product.MeasurementId, product.FinishGoodProductInfoId, product.FGRId).ToList();
                     var SumProductStockin = Productstockin.Sum(c => c.TargetQuantity);
@@ -483,7 +483,7 @@ namespace ERPBLL.Agriculture
                         {
                             foreach (var item in details)
                             {
-                                if(item.AccessoriesId == 0)
+                                if (item.AccessoriesId == 0)
                                 {
                                     double ProductMesurement = 0;
                                     double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(item.MeasurementId, orgId).MasterCarton;
@@ -536,7 +536,7 @@ namespace ERPBLL.Agriculture
 
                                 }
 
-                                
+
                             }
 
                             agroSalesProductionInfo.AgroProductSalesDetails = agroDetails;
@@ -562,8 +562,8 @@ namespace ERPBLL.Agriculture
 
                                 };
                                 _accessoriesTrackInfoRepository.Insert(accessoriesTrackInfo);
-                     
-                                
+
+
 
                             }
 
@@ -1046,356 +1046,359 @@ Where 1=1 {0} order by sr.ProductSalesInfoId desc", Utility.ParamChecker(param))
 
         public IEnumerable<AgroProductSalesInfoDTO> GetInvoiceReportList(long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate)
         {
+
             try
             {
-
                 return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForInvoiceReportList(stockiestId, territoryId, invoiceNo, fromDate, toDate)).ToList();
             }
             catch (Exception ex)
             {
                 return null;
             }
-
         }
-        private string QueryForInvoiceReportList(long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate)
+            
+
+
+
+private string QueryForInvoiceReportList(long? stockiestId, long? territoryId, string invoiceNo, string fromDate, string toDate)
+{
+    try
+    {
+
+        string query = string.Empty;
+        string param = string.Empty;
+
+        //param += string.Format(@" and sales.OrganizationId={0}", orgId);
+        if (stockiestId != null && stockiestId > 0)
         {
-            try
-            {
-
-                string query = string.Empty;
-                string param = string.Empty;
-
-                //param += string.Format(@" and sales.OrganizationId={0}", orgId);
-                if (stockiestId != null && stockiestId > 0)
-                {
-                    param += string.Format(@" and STI.StockiestId={0}", stockiestId);
-                }
-                if (territoryId != null && territoryId > 0)
-                {
-                    param += string.Format(@" and TI.TerritoryId={0}", territoryId);
-                }
-
-                if (!string.IsNullOrEmpty(invoiceNo))
-                {
-                    param += string.Format(@"and SI.InvoiceNo like '%{0}%'", invoiceNo);
-                }
-
-                if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-                {
-                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(SI.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
-                }
-                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
-                {
-                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", fDate);
-                }
-                else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-                {
-                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", tDate);
-                }
-
-
-                query = string.Format(@"SELECT  todate='" + fromDate + "', fromDate='" + toDate + "',SI.ProductSalesInfoId, ZoneUserName =( SELECT distinct Concat(AU.FullName,'( ',AU.Desigation,' )') AS FullName FROM   [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), ZoneUserMobile=( SELECT distinct AU.MobileNo FROM  [Agriculture].[dbo].tblProductSalesInfo SI  INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), TI.TerritoryName, Concat(AUT.FullName ,'( ',AUT.Desigation,' )') AS TerritoryUserName,AUT.MobileNo, STI.StockiestName, SI.InvoiceNo, CONVERT(date,SI.InvoiceDate) AS InvoiceDate,  cast( SI.TotalAmount as decimal(10,2)) AS InvoiceTk, Collaction=ISNULL((SELECT Sum(Cast( PSPH.PaymentAmount as decimal (10,2))) FROM tblProductSalesPaymentHistory PSPH Where  SI.ProductSalesInfoId=PSPH.ProductSalesInfoId),0), cast( SI.DueAmount as decimal(10,2)) as DAmount, DiscountTks=ISNULL((SELECT Sum(cast(PSD.DiscountTk as decimal(10,2))) AS DiscountTk FROM tblProductSalesDetails PSD Where SI.ProductSalesInfoId=PSD.ProductSalesInfoId),0), CONVERT(date,PsPH.PaymentDate) AS PaymentDate,  PsPH.Remarks,  Cast(PsPH.PaymentAmount as decimal(10,2)) AS PaymentAmount FROM [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblAreaSetup A on SI.AreaId=A.AreaId INNER JOIN [Agriculture].[dbo].tblTerritoryInfos TI on SI.TerritoryId=TI.TerritoryId INNER JOIN [Agriculture].[dbo].tblStockiestInfo STI on SI.StockiestId=STI.StockiestId  INNER JOIN [Agriculture].[dbo].tblProductSalesPaymentHistory PsPH on SI.ProductSalesInfoId=PsPH.ProductSalesInfoId INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId INNER JOIN[ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId = AUT.UserId  where 1=1  {0}", Utility.ParamChecker(param));
-
-                return query;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
+            param += string.Format(@" and STI.StockiestId={0}", stockiestId);
+        }
+        if (territoryId != null && territoryId > 0)
+        {
+            param += string.Format(@" and TI.TerritoryId={0}", territoryId);
         }
 
-        public IEnumerable<AgroProductSalesInfoDTO> GetProductWiseReportList(long? productId, string fromDate, string toDate)
+        if (!string.IsNullOrEmpty(invoiceNo))
         {
-            try
-            {
-
-                return _agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryProductWiseSalesReportList(productId, fromDate, toDate));
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            param += string.Format(@"and SI.InvoiceNo like '%{0}%'", invoiceNo);
         }
 
-        private string QueryProductWiseSalesReportList(long? productId, string fromDate, string toDate)
+        if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
         {
-            try
-            {
-                string query = string.Empty;
-                string param = string.Empty;
-
-
-                if (productId != 0 && productId > 0)
-                {
-                    param += string.Format(@" and FGPN.FinishGoodProductId={0}", productId);
-                }
-
-                 if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-                {
-                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(sales.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
-                }
-
-                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
-                {
-                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", fDate);
-                }
-                else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-                {
-                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", tDate);
-                }
-
-                query = string.Format(@"SELECT DISTINCT  todate='" + fromDate + "', fromDate='" + toDate + "', FGPN.FinishGoodProductName,salesD.MeasurementSize AS PackSize, QtyCTN=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId),QtyKG=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId) * M.UnitKG,Total=(SELECT SUM(sd.Price) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId) *(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId)FROM [Agriculture].[dbo].[tblProductSalesDetails] salesD INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId INNER JOIN [Agriculture].[dbo].[tblMeasurement] M on salesD.MeasurementId=M.MeasurementId  Inner Join [Agriculture].[dbo].[tblProductSalesInfo] sales  on sales.ProductSalesInfoId=salesD.ProductSalesInfoId Where 1=1{0} Group by FGPN.FinishGoodProductName, M.MeasurementName,salesD.MeasurementId,salesD.FinishGoodProductInfoId,  salesD.Quanity,M.UnitKG,salesD.Price,salesD.EntryDate,sales.TotalAmount,salesD.ProductSalesInfoId,M.MasterCarton,M.InnerBox,M.PackSize,salesD.MeasurementSize", Utility.ParamChecker(param));
-                return query;
-
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+            string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+            param += string.Format(@" and Cast(SI.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+        }
+        else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+        {
+            string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+            param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", fDate);
+        }
+        else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+        {
+            string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+            param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", tDate);
         }
 
-        public IEnumerable<AgroProductSalesInfoDTO> GetAllINVBYSTOKIESTID(long StockiestId)
+
+        query = string.Format(@"SELECT  todate='" + fromDate + "', fromDate='" + toDate + "',SI.ProductSalesInfoId, ZoneUserName =( SELECT distinct Concat(AU.FullName,'( ',AU.Desigation,' )') AS FullName FROM   [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), ZoneUserMobile=( SELECT distinct AU.MobileNo FROM  [Agriculture].[dbo].tblProductSalesInfo SI  INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), TI.TerritoryName, Concat(AUT.FullName ,'( ',AUT.Desigation,' )') AS TerritoryUserName,AUT.MobileNo, STI.StockiestName, SI.InvoiceNo, CONVERT(date,SI.InvoiceDate) AS InvoiceDate,  cast( SI.TotalAmount as decimal(10,2)) AS InvoiceTk, Collaction=ISNULL((SELECT Sum(Cast( PSPH.PaymentAmount as decimal (10,2))) FROM tblProductSalesPaymentHistory PSPH Where  SI.ProductSalesInfoId=PSPH.ProductSalesInfoId),0), cast( SI.DueAmount as decimal(10,2)) as DAmount, DiscountTks=ISNULL((SELECT Sum(cast(PSD.DiscountTk as decimal(10,2))) AS DiscountTk FROM tblProductSalesDetails PSD Where SI.ProductSalesInfoId=PSD.ProductSalesInfoId),0), CONVERT(date,PsPH.PaymentDate) AS PaymentDate,  PsPH.Remarks,  Cast(PsPH.PaymentAmount as decimal(10,2)) AS PaymentAmount FROM [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblAreaSetup A on SI.AreaId=A.AreaId INNER JOIN [Agriculture].[dbo].tblTerritoryInfos TI on SI.TerritoryId=TI.TerritoryId INNER JOIN [Agriculture].[dbo].tblStockiestInfo STI on SI.StockiestId=STI.StockiestId  INNER JOIN [Agriculture].[dbo].tblProductSalesPaymentHistory PsPH on SI.ProductSalesInfoId=PsPH.ProductSalesInfoId INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId INNER JOIN[ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId = AUT.UserId  where 1=1  {0}", Utility.ParamChecker(param));
+
+        return query;
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+
+}
+
+public IEnumerable<AgroProductSalesInfoDTO> GetProductWiseReportList(long? productId, string fromDate, string toDate)
+{
+    try
+    {
+
+        return _agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryProductWiseSalesReportList(productId, fromDate, toDate));
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+}
+
+private string QueryProductWiseSalesReportList(long? productId, string fromDate, string toDate)
+{
+    try
+    {
+        string query = string.Empty;
+        string param = string.Empty;
+
+
+        if (productId != 0 && productId > 0)
         {
-            return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForGetAllINVBYSTOKIESTID(StockiestId)).ToList();
+            param += string.Format(@" and FGPN.FinishGoodProductId={0}", productId);
         }
-        private string QueryForGetAllINVBYSTOKIESTID(long StockiestId)
+
+        if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
         {
-            string query = string.Empty;
-            string param = string.Empty;
+            string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+            string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+            param += string.Format(@" and Cast(sales.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+        }
 
-            if (StockiestId > 0)
-            {
-                param += string.Format(@" and s.StockiestId={0}", StockiestId);
-            }
+        else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+        {
+            string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+            param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", fDate);
+        }
+        else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+        {
+            string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+            param += string.Format(@" and Cast(sales.EntryDate as date)='{0}'", tDate);
+        }
 
-            query = string.Format(@"select s.ProductSalesInfoId,s.InvoiceNo,s.StockiestId from tblProductSalesInfo s
+        query = string.Format(@"SELECT DISTINCT  todate='" + fromDate + "', fromDate='" + toDate + "', FGPN.FinishGoodProductName,salesD.MeasurementSize AS PackSize, QtyCTN=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId),QtyKG=(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId) * M.UnitKG,Total=(SELECT SUM(sd.Price) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId) *(SELECT SUM(sd.Quanity) FROM [Agriculture].[dbo].[tblProductSalesDetails] sd where sd.MeasurementId=salesD.MeasurementId and sd.FinishGoodProductInfoId=salesD.FinishGoodProductInfoId)FROM [Agriculture].[dbo].[tblProductSalesDetails] salesD INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN on salesD.FinishGoodProductInfoId=FGPN.FinishGoodProductId INNER JOIN [Agriculture].[dbo].[tblMeasurement] M on salesD.MeasurementId=M.MeasurementId  Inner Join [Agriculture].[dbo].[tblProductSalesInfo] sales  on sales.ProductSalesInfoId=salesD.ProductSalesInfoId Where 1=1{0} Group by FGPN.FinishGoodProductName, M.MeasurementName,salesD.MeasurementId,salesD.FinishGoodProductInfoId,  salesD.Quanity,M.UnitKG,salesD.Price,salesD.EntryDate,sales.TotalAmount,salesD.ProductSalesInfoId,M.MasterCarton,M.InnerBox,M.PackSize,salesD.MeasurementSize", Utility.ParamChecker(param));
+        return query;
+
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+}
+
+public IEnumerable<AgroProductSalesInfoDTO> GetAllINVBYSTOKIESTID(long StockiestId)
+{
+    return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForGetAllINVBYSTOKIESTID(StockiestId)).ToList();
+}
+private string QueryForGetAllINVBYSTOKIESTID(long StockiestId)
+{
+    string query = string.Empty;
+    string param = string.Empty;
+
+    if (StockiestId > 0)
+    {
+        param += string.Format(@" and s.StockiestId={0}", StockiestId);
+    }
+
+    query = string.Format(@"select s.ProductSalesInfoId,s.InvoiceNo,s.StockiestId from tblProductSalesInfo s
 			inner join tblStockiestInfo st on s.StockiestId=st.StockiestId	
             Where 1=1 {0} and s.PaidAmount= 0 and s.Status is null", Utility.ParamChecker(param));
 
-            return query;
+    return query;
+}
+
+public bool UpdateInvoiceDrop(long productSalesInfoId, long userId)
+{
+    bool isUpdateSucccess = false;
+
+    var SalesInfoDb = GetInvoiceProductionInfoById(productSalesInfoId);
+
+    if (SalesInfoDb != null)
+    {
+        SalesInfoDb.Status = "Drop";
+        SalesInfoDb.UpdateDate = DateTime.Now;
+        SalesInfoDb.UpdateUserId = userId;
+        _agroProductSalesInfoRepository.Update(SalesInfoDb);
+        isUpdateSucccess = _agroProductSalesInfoRepository.Save();
+    }
+    var SalesDetailsDb = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(productSalesInfoId, 9);
+    if (SalesDetailsDb != null)
+    {
+        foreach (var item in SalesDetailsDb)
+        {
+            item.Status = "Drop";
+            item.UpdateDate = DateTime.Now;
+            item.UpdateUserId = userId;
+            _agroProductSalesDetailsRepository.Update(item);
+            isUpdateSucccess = _agroProductSalesDetailsRepository.Save();
+
+        }
+    }
+
+
+    return isUpdateSucccess;
+}
+
+public IEnumerable<AgroProductSalesInfoDTO> GetSalesDropList(string invoiceNo)
+{
+    try
+    {
+
+        return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForSalesDropList(invoiceNo)).ToList();
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+}
+private string QueryForSalesDropList(string invoiceNo)
+{
+    try
+    {
+
+        string query = string.Empty;
+        string param = string.Empty;
+
+        if (!string.IsNullOrEmpty(invoiceNo))
+        {
+            param += string.Format(@"and info.InvoiceNo like '%{0}%'", invoiceNo);
         }
 
-        public bool UpdateInvoiceDrop(long productSalesInfoId, long userId)
-        {
-            bool isUpdateSucccess = false;
 
-            var SalesInfoDb = GetInvoiceProductionInfoById(productSalesInfoId);
-
-            if (SalesInfoDb != null)
-            {
-                SalesInfoDb.Status = "Drop";
-                SalesInfoDb.UpdateDate = DateTime.Now;
-                SalesInfoDb.UpdateUserId = userId;
-                _agroProductSalesInfoRepository.Update(SalesInfoDb);
-                isUpdateSucccess = _agroProductSalesInfoRepository.Save();
-            }
-            var SalesDetailsDb = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoId(productSalesInfoId, 9);
-            if (SalesDetailsDb != null)
-            {
-                foreach (var item in SalesDetailsDb)
-                {
-                    item.Status = "Drop";
-                    item.UpdateDate = DateTime.Now;
-                    item.UpdateUserId = userId;
-                    _agroProductSalesDetailsRepository.Update(item);
-                    isUpdateSucccess = _agroProductSalesDetailsRepository.Save();
-
-                }
-            }
-
-
-            return isUpdateSucccess;
-        }
-
-        public IEnumerable<AgroProductSalesInfoDTO> GetSalesDropList(string invoiceNo)
-        {
-            try
-            {
-
-                return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForSalesDropList(invoiceNo)).ToList();
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-        private string QueryForSalesDropList(string invoiceNo)
-        {
-            try
-            {
-
-                string query = string.Empty;
-                string param = string.Empty;
-
-                if (!string.IsNullOrEmpty(invoiceNo))
-                {
-                    param += string.Format(@"and info.InvoiceNo like '%{0}%'", invoiceNo);
-                }
-
-
-                query = string.Format(@"
+        query = string.Format(@"
 select  info.InvoiceNo,info.InvoiceDate,info.ProductSalesInfoId,st.StockiestName,info.TotalAmount,info.PaidAmount,info.DueAmount from tblProductSalesInfo info
 inner join tblStockiestInfo st on info.StockiestId=st.StockiestId
  where 1=1 {0} and info.Status='Drop' order by info.ProductSalesInfoId desc
 			
  ", Utility.ParamChecker(param));
 
-                return query;
-            }
-            catch (Exception)
+        return query;
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+}
+
+public bool UpdateProductSalesEdit(AgroProductSalesInfoDTO infoDTO, List<AgroProductSalesDetailsDTO> detailsDTO, long userId, long orgId)
+{
+
+    bool IsSuccess = false;
+    double Totalinvoicepayble = 0;
+    List<AgroProductSalesDetails> salesDetailss = new List<AgroProductSalesDetails>();
+
+    AgroProductSalesDetails productSalesDetailss = new AgroProductSalesDetails();
+
+    foreach (var tom in detailsDTO)
+    {
+        if (tom.ISActive != true)
+        {
+            var measurmentid = _agroProductSalesDetailsBusiness.GetSalesDetailsById(tom.ProductSalesDetailsId, orgId).MeasurementId;
+            double TotalproductQtyinfo = 0;
+
+            double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).MasterCarton;
+            double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).InnerBox;
+            double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).PackSize;
+
+
+            if (MasterCartonMasurement != 0)
             {
-                return null;
+                TotalproductQtyinfo = tom.Quanity;
             }
+            else
+            {
+                TotalproductQtyinfo = tom.Quanity;
+            }
+
+            productSalesDetailss = _agroProductSalesDetailsBusiness.GetSalesDetailsById(tom.ProductSalesDetailsId, orgId);
+
+            double totalbill = TotalproductQtyinfo * productSalesDetailss.Price;
+
+
+            double dicounttotal = 0;
+            if (tom.Discount != 0)
+            {
+                dicounttotal = totalbill * tom.Discount / 100;
+            }
+            else
+            {
+                dicounttotal = 0;
+            }
+
+            double payableamount = totalbill - dicounttotal;
+            Totalinvoicepayble += payableamount;
         }
 
-        public bool UpdateProductSalesEdit(AgroProductSalesInfoDTO infoDTO, List<AgroProductSalesDetailsDTO> detailsDTO, long userId, long orgId)
+    }
+
+
+    AgroProductSalesInfo salesInfo = new AgroProductSalesInfo();
+
+    salesInfo = GetSalesById(infoDTO.ProductSalesInfoId, orgId);
+    salesInfo.StockiestId = infoDTO.StockiestId;
+    salesInfo.DriverName = infoDTO.DriverName;
+    salesInfo.DeliveryPlace = infoDTO.DeliveryPlace;
+    salesInfo.VehicleType = infoDTO.VehicleType;
+    salesInfo.TotalAmount = Totalinvoicepayble;
+    salesInfo.PaidAmount = 0;
+    salesInfo.DueAmount = Totalinvoicepayble;
+
+    _agroProductSalesInfoRepository.Update(salesInfo);
+    IsSuccess = _agroProductSalesInfoRepository.Save();
+
+
+
+
+    //details
+    List<AgroProductSalesDetails> salesDetails = new List<AgroProductSalesDetails>();
+
+    AgroProductSalesDetails productSalesDetails = new AgroProductSalesDetails();
+
+    foreach (var item in detailsDTO)
+    {
+
+        if (item.ISActive == true)
+        {
+            productSalesDetails = _agroProductSalesDetailsBusiness.GetSalesDetailsById(item.ProductSalesDetailsId, orgId);
+            productSalesDetails.Status = "Drop";
+
+        }
+        else
         {
 
-            bool IsSuccess = false;
-            double Totalinvoicepayble = 0;
-            List<AgroProductSalesDetails> salesDetailss = new List<AgroProductSalesDetails>();
 
-            AgroProductSalesDetails productSalesDetailss = new AgroProductSalesDetails();
+            var measurmentid = _agroProductSalesDetailsBusiness.GetSalesDetailsById(item.ProductSalesDetailsId, orgId).MeasurementId;
+            double TotalproductQty = 0;
 
-            foreach (var tom in detailsDTO)
+            double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).MasterCarton;
+            double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).InnerBox;
+            double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).PackSize;
+
+
+            if (MasterCartonMasurement != 0)
             {
-                if(tom.ISActive != true)
-                {
-                    var measurmentid = _agroProductSalesDetailsBusiness.GetSalesDetailsById(tom.ProductSalesDetailsId, orgId).MeasurementId;
-                    double TotalproductQtyinfo = 0;
-
-                    double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).MasterCarton;
-                    double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).InnerBox;
-                    double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).PackSize;
-
-
-                    if (MasterCartonMasurement != 0)
-                    {
-                        TotalproductQtyinfo = tom.Quanity;
-                    }
-                    else
-                    {
-                        TotalproductQtyinfo = tom.Quanity;
-                    }
-
-                    productSalesDetailss = _agroProductSalesDetailsBusiness.GetSalesDetailsById(tom.ProductSalesDetailsId, orgId);
-
-                    double totalbill = TotalproductQtyinfo * productSalesDetailss.Price;
-
-
-                    double dicounttotal = 0;
-                    if(tom.Discount !=0)
-                    {
-                        dicounttotal = totalbill * tom.Discount / 100;
-                    }
-                    else
-                    {
-                        dicounttotal = 0;
-                    }
-
-                    double payableamount = totalbill - dicounttotal;
-                    Totalinvoicepayble += payableamount;
-                }
+                TotalproductQty = item.Quanity;
 
             }
-
-
-            AgroProductSalesInfo salesInfo = new AgroProductSalesInfo();
-
-            salesInfo = GetSalesById(infoDTO.ProductSalesInfoId, orgId);
-            salesInfo.StockiestId = infoDTO.StockiestId;
-            salesInfo.DriverName = infoDTO.DriverName;
-            salesInfo.DeliveryPlace = infoDTO.DeliveryPlace;
-            salesInfo.VehicleType = infoDTO.VehicleType;
-            salesInfo.TotalAmount = Totalinvoicepayble;
-            salesInfo.PaidAmount = 0;
-            salesInfo.DueAmount = Totalinvoicepayble;
-
-            _agroProductSalesInfoRepository.Update(salesInfo);
-            IsSuccess = _agroProductSalesInfoRepository.Save();
-
-
-
-
-            //details
-            List<AgroProductSalesDetails> salesDetails = new List<AgroProductSalesDetails>();
-
-            AgroProductSalesDetails productSalesDetails = new AgroProductSalesDetails();
-
-            foreach (var item in detailsDTO)
+            else
             {
-
-                if (item.ISActive == true)
-                {
-                    productSalesDetails = _agroProductSalesDetailsBusiness.GetSalesDetailsById(item.ProductSalesDetailsId, orgId);
-                    productSalesDetails.Status = "Drop";
-
-                }
-                else
-                {
-
-
-                    var measurmentid = _agroProductSalesDetailsBusiness.GetSalesDetailsById(item.ProductSalesDetailsId, orgId).MeasurementId;
-                    double TotalproductQty = 0;
-
-                    double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).MasterCarton;
-                    double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).InnerBox;
-                    double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(measurmentid, orgId).PackSize;
-
-
-                    if (MasterCartonMasurement != 0)
-                    {
-                        TotalproductQty = item.Quanity;
-
-                    }
-                    else
-                    {
-                        TotalproductQty = item.Quanity;
-                    }
-
-
-
-                    productSalesDetails = _agroProductSalesDetailsBusiness.GetSalesDetailsById(item.ProductSalesDetailsId, orgId);
-                    productSalesDetails.BoxQuanity = item.BoxQuanity;
-                    productSalesDetails.Quanity = TotalproductQty;
-                    double Distk = 0;
-                    if (item.Discount != 0)
-                    {
-
-                        Distk = (TotalproductQty * productSalesDetails.Price) * item.Discount / 100;
-
-                    }
-                    else
-                    {
-                        Distk = 0;
-                    }
-
-                    
-                    
-
-                    productSalesDetails.Discount = item.Discount;
-                    productSalesDetails.DiscountTk = Distk;
-
-                }
-                _agroProductSalesDetailsRepository.Update(productSalesDetails);
-
+                TotalproductQty = item.Quanity;
             }
 
 
 
-            _agroProductSalesDetailsRepository.UpdateAll(salesDetails);
-            IsSuccess = _agroProductSalesDetailsRepository.Save();
+            productSalesDetails = _agroProductSalesDetailsBusiness.GetSalesDetailsById(item.ProductSalesDetailsId, orgId);
+            productSalesDetails.BoxQuanity = item.BoxQuanity;
+            productSalesDetails.Quanity = TotalproductQty;
+            double Distk = 0;
+            if (item.Discount != 0)
+            {
 
-            return IsSuccess;
+                Distk = (TotalproductQty * productSalesDetails.Price) * item.Discount / 100;
+
+            }
+            else
+            {
+                Distk = 0;
+            }
+
+
+
+
+            productSalesDetails.Discount = item.Discount;
+            productSalesDetails.DiscountTk = Distk;
+
+        }
+        _agroProductSalesDetailsRepository.Update(productSalesDetails);
+
+    }
+
+
+
+    _agroProductSalesDetailsRepository.UpdateAll(salesDetails);
+    IsSuccess = _agroProductSalesDetailsRepository.Save();
+
+    return IsSuccess;
 
 
 
@@ -1406,69 +1409,69 @@ inner join tblStockiestInfo st on info.StockiestId=st.StockiestId
 
 
 
+}
+
+
+
+
+
+
+
+
+public AgroProductSalesInfo GetSalesById(long ProductSalesInfoId, long orgId)
+{
+    return _agroProductSalesInfoRepository.GetOneByOrg(a => a.ProductSalesInfoId == ProductSalesInfoId && a.OrganizationId == orgId);
+}
+
+public IEnumerable<AgroProductSalesInfoDTO> GetDealerLadserInfos(long id, string fromDate, string toDate)
+{
+    try
+    {
+
+        return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForDealerLadserInfos(id, fromDate, toDate)).ToList();
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+}
+private string QueryForDealerLadserInfos(long id, string fromDate, string toDate)
+{
+    try
+    {
+
+        string query = string.Empty;
+        string param = string.Empty;
+
+        //param += string.Format(@" and sales.OrganizationId={0}", orgId);
+        //if (stockiestId != null && stockiestId > 0)
+        //{
+        //    param += string.Format(@" and sales.StockiestId={0}", stockiestId);
+        //}
+        if (id != 0 && id > 0)
+        {
+            param += string.Format(@" and sales.StockiestId={0}", id);
+        }
+        if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+        {
+            string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+            string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+            param += string.Format(@" and Cast(sales.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+        }
+        else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+        {
+            string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+            param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", fDate);
+        }
+        else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+        {
+            string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+            param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", tDate);
         }
 
 
 
-
-
-
-
-
-        public AgroProductSalesInfo GetSalesById(long ProductSalesInfoId, long orgId)
-        {
-            return _agroProductSalesInfoRepository.GetOneByOrg(a => a.ProductSalesInfoId == ProductSalesInfoId && a.OrganizationId == orgId);
-        }
-
-        public IEnumerable<AgroProductSalesInfoDTO> GetDealerLadserInfos(long id, string fromDate, string toDate)
-        {
-            try
-            {
-
-                return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForDealerLadserInfos(id, fromDate, toDate)).ToList();
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-        private string QueryForDealerLadserInfos(long id,string fromDate, string toDate)
-        {
-            try
-            {
-
-                string query = string.Empty;
-                string param = string.Empty;
-
-                //param += string.Format(@" and sales.OrganizationId={0}", orgId);
-                //if (stockiestId != null && stockiestId > 0)
-                //{
-                //    param += string.Format(@" and sales.StockiestId={0}", stockiestId);
-                //}
-                if (id != 0 && id > 0)
-                {
-                    param += string.Format(@" and sales.StockiestId={0}", id);
-                }
-                if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-                {
-                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(sales.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
-                }
-                else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
-                {
-                    string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", fDate);
-                }
-                else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-                {
-                    string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                    param += string.Format(@" and Cast(sales.InvoiceDate as date)='{0}'", tDate);
-                }
-
-
-
-                query = string.Format(@"	
+        query = string.Format(@"	
 select distinct *,(t.copsdSum+t.phsum)CommisionAmount from (select sales.StockiestId,sales.ChallanNo,sales.DriverName,sales.DeliveryPlace,
 sales.VehicleType,sales.VehicleNumber,sales.DueAmount,
 sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName,
@@ -1495,42 +1498,42 @@ where 1=1 {0}
 
 ", Utility.ParamChecker(param));
 
-                return query;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+        return query;
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+}
+
+public IEnumerable<AgroProductSalesInfoDTO> GetPaymentLadserInfos(long StockiestId)
+{
+    try
+    {
+
+        return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForGetPaymentLadserInfos(StockiestId)).ToList();
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+}
+
+private string QueryForGetPaymentLadserInfos(long StockiestId)
+{
+    try
+    {
+
+        string query = string.Empty;
+        string param = string.Empty;
+
+
+        if (StockiestId != 0 && StockiestId > 0)
+        {
+            param += string.Format(@" and sales.StockiestId={0}", StockiestId);
         }
 
-        public IEnumerable<AgroProductSalesInfoDTO> GetPaymentLadserInfos(long StockiestId)
-        {
-            try
-            {
-
-                return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForGetPaymentLadserInfos(StockiestId)).ToList();
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        private string QueryForGetPaymentLadserInfos(long StockiestId)
-        {
-            try
-            {
-
-                string query = string.Empty;
-                string param = string.Empty;
-
-
-                if (StockiestId != 0 && StockiestId > 0)
-                {
-                    param += string.Format(@" and sales.StockiestId={0}", StockiestId);
-                }
-
-                query = string.Format(@"	
+        query = string.Format(@"	
 select sales.StockiestId,sales.ChallanNo,sales.DriverName,sales.DeliveryPlace,sales.VehicleType,sales.VehicleNumber,sales.TotalAmount,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName,
 
 
@@ -1544,30 +1547,30 @@ and sales.Status is null  order by sales.ProductSalesInfoId desc
 
 ", Utility.ParamChecker(param));
 
-                return query;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
+        return query;
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+}
 
-        public IEnumerable<ProductSalesDataReport1> GetProductSalesData1(long? SalesInfoId)
-        {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport1>(QueryProductSalesReport1(SalesInfoId));
-        }
+public IEnumerable<ProductSalesDataReport1> GetProductSalesData1(long? SalesInfoId)
+{
+    return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport1>(QueryProductSalesReport1(SalesInfoId));
+}
 
-        private string QueryProductSalesReport1(long? SalesInfoId)
-        {
-            string param = string.Empty;
-            string query = string.Empty;
+private string QueryProductSalesReport1(long? SalesInfoId)
+{
+    string param = string.Empty;
+    string query = string.Empty;
 
-            if (SalesInfoId != 0 && SalesInfoId > 0)
-            {
-                param += string.Format(@" and i.ProductSalesInfoId={0}", SalesInfoId);
-            }
+    if (SalesInfoId != 0 && SalesInfoId > 0)
+    {
+        param += string.Format(@" and i.ProductSalesInfoId={0}", SalesInfoId);
+    }
 
-            query = string.Format(@"
+    query = string.Format(@"
             
 select pa.PackageName,d.PackageId,f.FinishGoodProductName,i.ProductSalesInfoId,i.InvoiceNo,d.ProductSalesDetailsId,d.FinishGoodProductInfoId,d.Quanity,d.BoxQuanity,d.Price,d.Price,d.Discount,d.DiscountTk,d.MeasurementSize,d.ReceipeBatchCode,d.QtyKG,(d.Quanity*d.Price-DiscountTk)as ProductTotal,
  RT=ISNULL((SELECT 
@@ -1583,53 +1586,53 @@ left join tblPackageInfo pa on pa.PackageId = d.PackageId
 where 1=1 and d.PackageId !=0 and d.Status is null
 
 {0}", Utility.ParamChecker(param));
-            return query;
-        }
+    return query;
+}
 
 
-        public IEnumerable<ProductSalesDataReport2> GetProductSalesData2(long? SalesInfoId)
-        {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport2>(QueryProductSalesReport2(SalesInfoId));
-        }
+public IEnumerable<ProductSalesDataReport2> GetProductSalesData2(long? SalesInfoId)
+{
+    return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport2>(QueryProductSalesReport2(SalesInfoId));
+}
 
-        private string QueryProductSalesReport2(long? SalesInfoId)
-        {
-            string param = string.Empty;
-            string query = string.Empty;
+private string QueryProductSalesReport2(long? SalesInfoId)
+{
+    string param = string.Empty;
+    string query = string.Empty;
 
-            if (SalesInfoId != 0 && SalesInfoId > 0)
-            {
-                param += string.Format(@" and ti.ProductSalesInfoId={0}", SalesInfoId);
-            }
-            
+    if (SalesInfoId != 0 && SalesInfoId > 0)
+    {
+        param += string.Format(@" and ti.ProductSalesInfoId={0}", SalesInfoId);
+    }
 
-            query = string.Format(@"
+
+    query = string.Format(@"
 
             select distinct ai.AccessoriesName,ai.accessoriesId,si.ProductSalesInfoId,ti.Quantity as Quanity from tblAccessoriesTrackInfo ti
 left join tblProductSalesInfo si on si.ProductSalesInfoId=ti.ProductSalesInfoId
 left join tblAccessoriesInfo ai on ti.AccessoriesId=ai.AccessoriesId
 
                         Where 1=1 {0}", Utility.ParamChecker(param));
-            return query;
-        }
+    return query;
+}
 
-        public IEnumerable<ProductSalesDataChallanReport1> GetProductSalesChallanData1(long? SalesId)
-        {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataChallanReport1>(QueryProductSalesChallanReport1(SalesId));
-        }
+public IEnumerable<ProductSalesDataChallanReport1> GetProductSalesChallanData1(long? SalesId)
+{
+    return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataChallanReport1>(QueryProductSalesChallanReport1(SalesId));
+}
 
-        private string QueryProductSalesChallanReport1(long? SalesId)
-        {
-            string param = string.Empty;
-            string query = string.Empty;
+private string QueryProductSalesChallanReport1(long? SalesId)
+{
+    string param = string.Empty;
+    string query = string.Empty;
 
-            if (SalesId != 0 && SalesId > 0)
-            {
-                param += string.Format(@" and i.ProductSalesInfoId={0}", SalesId);
-            }
+    if (SalesId != 0 && SalesId > 0)
+    {
+        param += string.Format(@" and i.ProductSalesInfoId={0}", SalesId);
+    }
 
 
-            query = string.Format(@"
+    query = string.Format(@"
 
             
 select 
@@ -1681,163 +1684,163 @@ INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
 where 1=1 and d.PackageId !=0 and d.Status is null
 
                         {0}", Utility.ParamChecker(param));
-            return query;
-        }
+    return query;
+}
 
 
 
-        public IEnumerable<ProductSalesDataChallanReport2> GetProductSalesChallanData2(long? SalesId)
-        {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataChallanReport2>(QueryProductSalesChallanReport2(SalesId));
-        }
-        private string QueryProductSalesChallanReport2(long? SalesId)
-        {
-            string param = string.Empty;
-            string query = string.Empty;
+public IEnumerable<ProductSalesDataChallanReport2> GetProductSalesChallanData2(long? SalesId)
+{
+    return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataChallanReport2>(QueryProductSalesChallanReport2(SalesId));
+}
+private string QueryProductSalesChallanReport2(long? SalesId)
+{
+    string param = string.Empty;
+    string query = string.Empty;
 
-            if (SalesId != 0 && SalesId > 0)
-            {
-                param += string.Format(@" and ti.ProductSalesInfoId={0}", SalesId);
-            }
+    if (SalesId != 0 && SalesId > 0)
+    {
+        param += string.Format(@" and ti.ProductSalesInfoId={0}", SalesId);
+    }
 
 
-            query = string.Format(@"
+    query = string.Format(@"
 
             select distinct ai.AccessoriesName,ai.accessoriesId,si.ProductSalesInfoId,ti.Quantity as Quanity from tblAccessoriesTrackInfo ti
 left join tblProductSalesInfo si on si.ProductSalesInfoId=ti.ProductSalesInfoId
 left join tblAccessoriesInfo ai on ti.AccessoriesId=ai.AccessoriesId
 
                         Where 1=1 {0}", Utility.ParamChecker(param));
-            return query;
-        }
+    return query;
+}
 
-        public IEnumerable<AgroProductSalesInfoDTO> GetDailySalesReportList(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
-        {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForDailySalesReportList(invoiceNo,territoryId,stockiestId,fromDate,toDate));
-        }
+public IEnumerable<AgroProductSalesInfoDTO> GetDailySalesReportList(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+{
+    return _agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForDailySalesReportList(invoiceNo, territoryId, stockiestId, fromDate, toDate));
+}
 
-        private string QueryForDailySalesReportList(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
-        {
-            string param = string.Empty;
-            string query = string.Empty;
+private string QueryForDailySalesReportList(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+{
+    string param = string.Empty;
+    string query = string.Empty;
 
-            if (territoryId != null && territoryId > 0)
-            {
-                param += string.Format(@" and TI.TerritoryId ={0}", territoryId);
-            }
+    if (territoryId != null && territoryId > 0)
+    {
+        param += string.Format(@" and TI.TerritoryId ={0}", territoryId);
+    }
 
-             if (stockiestId != null && stockiestId > 0)
-            {
-                param += string.Format(@" and STI.StockiestId ={0}", stockiestId);
-            }
+    if (stockiestId != null && stockiestId > 0)
+    {
+        param += string.Format(@" and STI.StockiestId ={0}", stockiestId);
+    }
 
-             if (invoiceNo != null && invoiceNo != "")
-            {
-                param += string.Format(@" and SI.InvoiceNo like '%{0}%'", invoiceNo);
-            }
-
-
-
-            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(SI.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
-            }
-
-            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", fDate);
-            }
-             else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-            {
-                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", tDate);
-            }
+    if (invoiceNo != null && invoiceNo != "")
+    {
+        param += string.Format(@" and SI.InvoiceNo like '%{0}%'", invoiceNo);
+    }
 
 
 
-            query = string.Format(@"
+    else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+    {
+        string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+        string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+        param += string.Format(@" and Cast(SI.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+    }
 
-    SELECT  todate=' ', fromDate=' ',SI.ProductSalesInfoId, A.AreaName,ZoneUserName =( SELECT distinct Concat(AU.FullName,'( ',AU.Desigation,' )') AS FullName FROM   [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), ZoneUserMobile=( SELECT distinct AU.MobileNo FROM  [Agriculture].[dbo].tblProductSalesInfo SI  INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), TI.TerritoryName, Concat(AUT.FullName ,'( ',AUT.Desigation,' )') AS TerritoryUserName,AUT.MobileNo, STI.StockiestName, SI.InvoiceNo, CONVERT(date,SI.InvoiceDate) AS InvoiceDate,cast(SI.TotalAmount as decimal(10,2)) AS InvoiceTk,  (cast(SI.TotalAmount as decimal(10,2))-cast(PsPH.PaymentAmount as decimal(10,2))) AS DAmount, DiscountTk=ISNULL((SELECT Sum(PSD.DiscountTk) FROM tblProductSalesDetails PSD Where        SI.ProductSalesInfoId=PSD.ProductSalesInfoId),0), CONVERT(date,PsPH.PaymentDate) AS PaymentDate,  PsPH.Remarks,  cast(PsPH.PaymentAmount as decimal(10,2)) AS PaymentAmount  FROM [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblAreaSetup A on SI.AreaId=A.AreaId INNER JOIN [Agriculture].[dbo].tblTerritoryInfos TI on SI.TerritoryId=TI.TerritoryId INNER JOIN [Agriculture].[dbo].tblStockiestInfo STI on SI.StockiestId=STI.StockiestId  INNER JOIN [Agriculture].[dbo].tblProductSalesPaymentHistory PsPH on SI.ProductSalesInfoId=PsPH.ProductSalesInfoId INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId INNER JOIN[ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId = AUT.UserId  
-
-                        Where 1=1 {0}", Utility.ParamChecker(param));
-            return query;
-        }
-
-        public IEnumerable<DailySalesDataReport> GetDailySalesReport(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
-        {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<DailySalesDataReport>(QueryForDailySalesReport(invoiceNo, territoryId, stockiestId, fromDate, toDate));
-        }
-        
-        private string QueryForDailySalesReport(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
-        {
-            string param = string.Empty;
-            string query = string.Empty;
-
-            if (territoryId != null && territoryId > 0)
-            {
-                param += string.Format(@" and TI.TerritoryId ={0}", territoryId);
-            }
-
-            if (stockiestId != null && stockiestId > 0)
-            {
-                param += string.Format(@" and STI.StockiestId ={0}", stockiestId);
-            }
-
-            if (invoiceNo != null && invoiceNo != "")
-            {
-                param += string.Format(@" and SI.InvoiceNo like '%{0}%'", invoiceNo);
-            }
+    else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+    {
+        string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+        param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", fDate);
+    }
+    else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+    {
+        string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+        param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", tDate);
+    }
 
 
 
-            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(SI.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
-            }
-
-            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
-            {
-                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", fDate);
-            }
-            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
-            {
-                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
-                param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", tDate);
-            }
-
-
-
-            query = string.Format(@"
+    query = string.Format(@"
 
     SELECT  todate=' ', fromDate=' ',SI.ProductSalesInfoId, A.AreaName,ZoneUserName =( SELECT distinct Concat(AU.FullName,'( ',AU.Desigation,' )') AS FullName FROM   [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), ZoneUserMobile=( SELECT distinct AU.MobileNo FROM  [Agriculture].[dbo].tblProductSalesInfo SI  INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), TI.TerritoryName, Concat(AUT.FullName ,'( ',AUT.Desigation,' )') AS TerritoryUserName,AUT.MobileNo, STI.StockiestName, SI.InvoiceNo, CONVERT(date,SI.InvoiceDate) AS InvoiceDate,cast(SI.TotalAmount as decimal(10,2)) AS InvoiceTk,  (cast(SI.TotalAmount as decimal(10,2))-cast(PsPH.PaymentAmount as decimal(10,2))) AS DAmount, DiscountTk=ISNULL((SELECT Sum(PSD.DiscountTk) FROM tblProductSalesDetails PSD Where        SI.ProductSalesInfoId=PSD.ProductSalesInfoId),0), CONVERT(date,PsPH.PaymentDate) AS PaymentDate,  PsPH.Remarks,  cast(PsPH.PaymentAmount as decimal(10,2)) AS PaymentAmount  FROM [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblAreaSetup A on SI.AreaId=A.AreaId INNER JOIN [Agriculture].[dbo].tblTerritoryInfos TI on SI.TerritoryId=TI.TerritoryId INNER JOIN [Agriculture].[dbo].tblStockiestInfo STI on SI.StockiestId=STI.StockiestId  INNER JOIN [Agriculture].[dbo].tblProductSalesPaymentHistory PsPH on SI.ProductSalesInfoId=PsPH.ProductSalesInfoId INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId INNER JOIN[ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId = AUT.UserId  
 
                         Where 1=1 {0}", Utility.ParamChecker(param));
-            return query;
-        }
+    return query;
+}
 
-        public IEnumerable<ProductSalesDataReport> ProductSalesInvoiceDrop(long? SalesInfoId)
-        {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport>(QueryProductSalesInvoiceDrop(SalesInfoId));
-        }
+public IEnumerable<DailySalesDataReport> GetDailySalesReport(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+{
+    return _agricultureUnitOfWork.Db.Database.SqlQuery<DailySalesDataReport>(QueryForDailySalesReport(invoiceNo, territoryId, stockiestId, fromDate, toDate));
+}
 
-        private string QueryProductSalesInvoiceDrop(long? SalesInfoId)
-        {
-            string param = string.Empty;
-            string query = string.Empty;
+private string QueryForDailySalesReport(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+{
+    string param = string.Empty;
+    string query = string.Empty;
+
+    if (territoryId != null && territoryId > 0)
+    {
+        param += string.Format(@" and TI.TerritoryId ={0}", territoryId);
+    }
+
+    if (stockiestId != null && stockiestId > 0)
+    {
+        param += string.Format(@" and STI.StockiestId ={0}", stockiestId);
+    }
+
+    if (invoiceNo != null && invoiceNo != "")
+    {
+        param += string.Format(@" and SI.InvoiceNo like '%{0}%'", invoiceNo);
+    }
 
 
-            if (SalesInfoId != 0 && SalesInfoId > 0)
-            {
-                param += string.Format(@" and i.ProductSalesInfoId={0}", SalesInfoId);
-            }
 
-            query = string.Format(@"
+    else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+    {
+        string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+        string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+        param += string.Format(@" and Cast(SI.InvoiceDate as date) between '{0}' and '{1}'", fDate, tDate);
+    }
+
+    else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+    {
+        string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+        param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", fDate);
+    }
+    else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+    {
+        string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+        param += string.Format(@" and Cast(SI.InvoiceDate as date)='{0}'", tDate);
+    }
+
+
+
+    query = string.Format(@"
+
+    SELECT  todate=' ', fromDate=' ',SI.ProductSalesInfoId, A.AreaName,ZoneUserName =( SELECT distinct Concat(AU.FullName,'( ',AU.Desigation,' )') AS FullName FROM   [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), ZoneUserMobile=( SELECT distinct AU.MobileNo FROM  [Agriculture].[dbo].tblProductSalesInfo SI  INNER JOIN [Agriculture].[dbo].tblZoneUser ZU ON SI.ZoneId=ZU.ZoneId INNER JOIN [ControlPanelAgro].[dbo].tblApplicationUsers AU on ZU.UserId=AU.UserId), TI.TerritoryName, Concat(AUT.FullName ,'( ',AUT.Desigation,' )') AS TerritoryUserName,AUT.MobileNo, STI.StockiestName, SI.InvoiceNo, CONVERT(date,SI.InvoiceDate) AS InvoiceDate,cast(SI.TotalAmount as decimal(10,2)) AS InvoiceTk,  (cast(SI.TotalAmount as decimal(10,2))-cast(PsPH.PaymentAmount as decimal(10,2))) AS DAmount, DiscountTk=ISNULL((SELECT Sum(PSD.DiscountTk) FROM tblProductSalesDetails PSD Where        SI.ProductSalesInfoId=PSD.ProductSalesInfoId),0), CONVERT(date,PsPH.PaymentDate) AS PaymentDate,  PsPH.Remarks,  cast(PsPH.PaymentAmount as decimal(10,2)) AS PaymentAmount  FROM [Agriculture].[dbo].tblProductSalesInfo SI INNER JOIN [Agriculture].[dbo].tblAreaSetup A on SI.AreaId=A.AreaId INNER JOIN [Agriculture].[dbo].tblTerritoryInfos TI on SI.TerritoryId=TI.TerritoryId INNER JOIN [Agriculture].[dbo].tblStockiestInfo STI on SI.StockiestId=STI.StockiestId  INNER JOIN [Agriculture].[dbo].tblProductSalesPaymentHistory PsPH on SI.ProductSalesInfoId=PsPH.ProductSalesInfoId INNER JOIN [Agriculture].[dbo].tblTerritoryUser TU ON SI.TerritoryId=TU.TerritoryId INNER JOIN[ControlPanelAgro].[dbo].tblApplicationUsers AUT on TU.UserId = AUT.UserId  
+
+                        Where 1=1 {0}", Utility.ParamChecker(param));
+    return query;
+}
+
+public IEnumerable<ProductSalesDataReport> ProductSalesInvoiceDrop(long? SalesInfoId)
+{
+    return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport>(QueryProductSalesInvoiceDrop(SalesInfoId));
+}
+
+private string QueryProductSalesInvoiceDrop(long? SalesInfoId)
+{
+    string param = string.Empty;
+    string query = string.Empty;
+
+
+    if (SalesInfoId != 0 && SalesInfoId > 0)
+    {
+        param += string.Format(@" and i.ProductSalesInfoId={0}", SalesInfoId);
+    }
+
+    query = string.Format(@"
 
                 
 select 
@@ -1890,27 +1893,27 @@ INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
 where 1=1 and d.PackageId=0 
 
             {0}", Utility.ParamChecker(param));
-            return query;
-        }
+    return query;
+}
 
 
-        public IEnumerable<ProductSalesDataReport1> ProductSalesInvoiceDrop1(long? SalesInfoId)
-        {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport1>(QueryProductSalesInvoiceDrop1(SalesInfoId));
-        }
+public IEnumerable<ProductSalesDataReport1> ProductSalesInvoiceDrop1(long? SalesInfoId)
+{
+    return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport1>(QueryProductSalesInvoiceDrop1(SalesInfoId));
+}
 
-        private string QueryProductSalesInvoiceDrop1(long? SalesInfoId)
-        {
-            string param = string.Empty;
-            string query = string.Empty;
+private string QueryProductSalesInvoiceDrop1(long? SalesInfoId)
+{
+    string param = string.Empty;
+    string query = string.Empty;
 
 
-            if (SalesInfoId != 0 && SalesInfoId > 0)
-            {
-                param += string.Format(@" and i.ProductSalesInfoId={0}", SalesInfoId);
-            }
+    if (SalesInfoId != 0 && SalesInfoId > 0)
+    {
+        param += string.Format(@" and i.ProductSalesInfoId={0}", SalesInfoId);
+    }
 
-            query = string.Format(@"
+    query = string.Format(@"
 
                 
 select 
@@ -1963,34 +1966,34 @@ INNER JOIN [Agriculture].[dbo].[tblFinishGoodProductInfo] FGPN
 where 1=1 and d.PackageId !=0
 
             {0}", Utility.ParamChecker(param));
-            return query;
-        }
+    return query;
+}
 
 
-        public IEnumerable<ProductSalesDataReport2> ProductSalesInvoiceDrop2(long? SalesInfoId)
-        {
-            return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport2>(QueryProductSalesInvoiceDrop2(SalesInfoId));
-        }
-        private string QueryProductSalesInvoiceDrop2(long? SalesInfoId)
-        {
-            string param = string.Empty;
-            string query = string.Empty;
+public IEnumerable<ProductSalesDataReport2> ProductSalesInvoiceDrop2(long? SalesInfoId)
+{
+    return _agricultureUnitOfWork.Db.Database.SqlQuery<ProductSalesDataReport2>(QueryProductSalesInvoiceDrop2(SalesInfoId));
+}
+private string QueryProductSalesInvoiceDrop2(long? SalesInfoId)
+{
+    string param = string.Empty;
+    string query = string.Empty;
 
 
-            if (SalesInfoId != 0 && SalesInfoId > 0)
-            {
-                param += string.Format(@" and ti.ProductSalesInfoId={0}", SalesInfoId);
-            }
+    if (SalesInfoId != 0 && SalesInfoId > 0)
+    {
+        param += string.Format(@" and ti.ProductSalesInfoId={0}", SalesInfoId);
+    }
 
-            query = string.Format(@"
+    query = string.Format(@"
 
                 select distinct ai.AccessoriesName,ai.accessoriesId,si.ProductSalesInfoId,ti.Quantity as Quanity from tblAccessoriesTrackInfo ti
 left join tblProductSalesInfo si on si.ProductSalesInfoId=ti.ProductSalesInfoId
 left join tblAccessoriesInfo ai on ti.AccessoriesId=ai.AccessoriesId
 
 Where 1=1 {0}", Utility.ParamChecker(param));
-            return query;
-        }
+    return query;
+}
 
 
 
