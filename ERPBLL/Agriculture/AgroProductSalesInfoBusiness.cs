@@ -305,9 +305,10 @@ namespace ERPBLL.Agriculture
             {
                 if (agroSalesInfoDTO.ProductSalesInfoId == 0)
                 {
-                    var UserId = _stockiestUserBusiness.GetStockiestInfoById(agroSalesInfoDTO.UserId, orgId).UserId;
-                    var stockeiestId = _appUserBusiness.GetId(UserId, orgId).StockiestId;
-                    long stockId = agroSalesInfoDTO.UserId;
+                    //var UserId = _stockiestUserBusiness.GetStockiestInfoById(agroSalesInfoDTO.UserId, orgId).UserId;
+                    var UserId = userId;
+                    //var stockeiestId = _appUserBusiness.GetId(UserId, orgId).StockiestId;
+                    long stockId = agroSalesInfoDTO.StockiestId;
 
                     var territoryId = _stockiestInfo.GetStockiestInfoById(stockId, orgId).TerritoryId;
 

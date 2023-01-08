@@ -74,6 +74,7 @@ namespace ERPBO.Agriculture.ViewModels
         public decimal InvoiceTk { get; set; }
         public decimal PaymentAmount { get; set; }
         public decimal DAmount { get; set; }
+        public decimal DiscountTks { get; set; }
 
     }
 }
