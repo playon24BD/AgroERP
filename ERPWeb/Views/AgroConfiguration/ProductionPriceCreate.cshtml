@@ -51,7 +51,7 @@
                                         @Html.DropDownList("ddlProductName", (IEnumerable<SelectListItem>)ViewBag.ddlProductName, "--ProductName--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger", autofocus = "autofocus" })
                                         <span class="error hide req-ProductName font-weight-bold">Product Name is required!</span>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 hide">
                                         <label for="ddlQtyUnit" class="col-form-label text-white pr-0 pb-0 pt-0">
                                             Receipe Unit Qty<span style="color:red">*</span>
                                         </label>
@@ -126,30 +126,30 @@
         ddlProductName.change(function () {
 
 
-            LoadQtyUnit();
+           // LoadQtyUnit();
 
 
 
         })
-        function LoadQtyUnit() {
-            clearDropdown("ddlQtyUnit");
-            if (ddlProductName.val() != "") {
+        //function LoadQtyUnit() {
+        //    clearDropdown("ddlQtyUnit");
+        //    if (ddlProductName.val() != "") {
 
-                LoadDropDown('/AgroConfiguration/GetReceipyUnitQtyByProductionId', 'POST', ddlQtyUnit, JSON.stringify({ finishGoodProductId: ddlProductName.val() }));
-            }
+        //        LoadDropDown('/AgroConfiguration/GetReceipyUnitQtyByProductionId', 'POST', ddlQtyUnit, JSON.stringify({ finishGoodProductId: ddlProductName.val() }));
+        //    }
 
 
-        }
+        //}
 
 
 
 
         //change Invoice
-        $('#ddlQtyUnit').change(function () {
+        $('#ddlProductName').change(function () {
 
-            let FGRId = $("#ddlQtyUnit option:selected").val();
+            let FinishGoodProductId = $("#ddlProductName option:selected").val();
             debugger;
-            var data = { FGRId: TryParseInt(FGRId, 0) };
+            var data = { FinishGoodProductId: TryParseInt(FinishGoodProductId, 0) };
             console.log(data);
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/ProductionPriceCreateTable', data)).then(function (res, status) {
                 console.log(status);

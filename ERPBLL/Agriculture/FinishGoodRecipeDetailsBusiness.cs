@@ -111,69 +111,71 @@ namespace ERPBLL.Agriculture
             return _finishGoodRecipeDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.ReceipeBatchCode == receipeBatchCode).ToList();
         }
 
-        public IEnumerable<FinishGoodRecipeDetailsDTO> GetAgroReciprDetailsByInfoIdRMPrice(long FGRId)
+        public IEnumerable<FinishGoodRecipeDetailsDTO> GetAgroReciprDetailsByInfoIdRMPrice(long FinishGoodProductId)
         {
-            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetAgroReciprDetailsByInfoIdRMPrice(FGRId)).ToList();
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetAgroReciprDetailsByInfoIdRMPrice(FinishGoodProductId)).ToList();
         }
 
-        private string QueryForGetAgroReciprDetailsByInfoIdRMPrice(long FGRId)
+        private string QueryForGetAgroReciprDetailsByInfoIdRMPrice(long FinishGoodProductId)
         {
             string query = string.Empty;
             string param = string.Empty;
 
-            if (FGRId != 0 && FGRId > 0)
+            if (FinishGoodProductId != 0 && FinishGoodProductId > 0)
             {
-                param += string.Format(@" and ri.FGRId={0}", FGRId);
+                param += string.Format(@" and i.FinishGoodProductId={0}", FinishGoodProductId);
             }
 
 
             query = string.Format(@"	
-select ri.FGRId,rd.FGRDetailsId,rm.RawMaterialName,rd.FGRRawMaterQty,un.UnitName, 
-RMPrice=  ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0),
+select i.FGRId,r.RawMaterialId,r.RawMaterialName,d.RequiredQuantity,u.UnitName,i.FinishGoodProductId,
 
-RMPriceTotal= ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0)*rd.FGRRawMaterQty
+RMPrice=  ROUND(ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=d.RawMaterialId),0),2),
 
-from tblFinishGoodRecipeInfo ri
-inner join tblFinishGoodRecipeDetails rd on ri.FGRId= rd.FGRId
-inner join tblRawMaterialInfo rm on rm.RawMaterialId=rd.RawMaterialId
-inner join tblAgroUnitInfo un on rm.UnitId=un.UnitId
+RMPriceTotal= ROUND(ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=d.RawMaterialId),0) * d.RequiredQuantity,2)
 
-                Where 1=1 {0}", Utility.ParamChecker(param));
+from FinishGoodProductionInfoes i
+inner join  FinishGoodProductionDetails d on i.FinishGoodProductionBatch = d.FinishGoodProductionBatch
+inner join tblRawMaterialInfo r on r.RawMaterialId = d.RawMaterialId
+inner join tblAgroUnitInfo u on u.UnitId = r.UnitId
+
+where DATEDIFF(day, i.EntryDate, GETDATE()) = 0 {0}", Utility.ParamChecker(param));
 
             return query;
         }
 
-        public IEnumerable<FinishGoodRecipeDetailsDTO> GetFGProductAmount(long FGRID)
+        public IEnumerable<FinishGoodRecipeDetailsDTO> GetFGProductAmount(long FinishGoodProductId)
         {
-            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetFGProductAmount(FGRID)).ToList();
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetFGProductAmount(FinishGoodProductId)).ToList();
 
         }
 
-        private string QueryForGetFGProductAmount(long FGRID)
+        private string QueryForGetFGProductAmount(long FinishGoodProductId)
         {
             string query = string.Empty;
             string param = string.Empty;
 
 
-            if (FGRID > 0)
+            if (FinishGoodProductId > 0)
             {
-                param += string.Format(@" and ri.FGRId={0}", FGRID);
+                param += string.Format(@" and i.FinishGoodProductId={0}", FinishGoodProductId);
             }
 
             query = string.Format(@"
 
-select t.FGRId,ISNULL(sum(t.RMPriceTotal) ,0)as GrandTotal from ( select ri.FGRId,rd.FGRDetailsId,rm.RawMaterialName,rd.FGRRawMaterQty,un.UnitName, 
-RMPrice= ISNULL((SELECT AVG(SR.UnitPrice) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0),
+select t.FinishGoodProductId,ROUND(ISNULL(sum(t.RMPriceTotal) ,0),2)as GrandTotal from (select i.FGRId,r.RawMaterialId,r.RawMaterialName,d.RequiredQuantity,u.UnitName,i.FinishGoodProductId ,
 
-RMPriceTotal= ISNULL((SELECT AVG(SR.UnitPrice) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=rd.RawMaterialId),0)*rd.FGRRawMaterQty
+RMPrice=  ROUND(ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=d.RawMaterialId),0),2),
 
-from tblFinishGoodRecipeInfo ri
-inner join tblFinishGoodRecipeDetails rd on ri.FGRId= rd.FGRId
-inner join tblRawMaterialInfo rm on rm.RawMaterialId=rd.RawMaterialId
-inner join tblAgroUnitInfo un on rm.UnitId=un.UnitId
-Where 1=1 {0}
+RMPriceTotal= ROUND(ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=d.RawMaterialId),0) * d.RequiredQuantity,2)
+
+from FinishGoodProductionInfoes i
+inner join  FinishGoodProductionDetails d on i.FinishGoodProductionBatch = d.FinishGoodProductionBatch
+inner join tblRawMaterialInfo r on r.RawMaterialId = d.RawMaterialId
+inner join tblAgroUnitInfo u on u.UnitId = r.UnitId
+where 1=1 {0} and   DATEDIFF(day, i.EntryDate, GETDATE()) = 0
 ) t
-group by t.FGRId", Utility.ParamChecker(param));
+group by t.FinishGoodProductId", Utility.ParamChecker(param));
 
             return query;
         }

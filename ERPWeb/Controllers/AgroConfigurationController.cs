@@ -6392,12 +6392,12 @@ namespace ERPWeb.Controllers
             return View();
         }
 
-        public ActionResult ProductionPriceCreateTable(long? FGRId)
+        public ActionResult ProductionPriceCreateTable(long? FinishGoodProductId)
         {
 
 
             // var details = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoIdGet(id.Value, User.OrgId);
-            var details = _finishGoodRecipeDetailsBusiness.GetAgroReciprDetailsByInfoIdRMPrice(FGRId.Value);
+            var details = _finishGoodRecipeDetailsBusiness.GetAgroReciprDetailsByInfoIdRMPrice(FinishGoodProductId.Value);
 
             List<FinishGoodRecipeDetailsViewModel> detailsViewModel = new List<FinishGoodRecipeDetailsViewModel>();
             AutoMapper.Mapper.Map(details, detailsViewModel);
@@ -6406,11 +6406,11 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult GetRMAMount(long FGRID)
+        public ActionResult GetRMAMount(long FinishGoodProductId)
         {
 
 
-            var checkFinishGoodStockValue = _finishGoodRecipeDetailsBusiness.GetFGProductAmount(FGRID);
+            var checkFinishGoodStockValue = _finishGoodRecipeDetailsBusiness.GetFGProductAmount(FinishGoodProductId);
 
             double itemStock = 0;
 

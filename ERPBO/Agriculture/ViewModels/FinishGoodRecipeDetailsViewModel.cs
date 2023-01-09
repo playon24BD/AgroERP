@@ -24,5 +24,6 @@ namespace ERPBO.Agriculture.ViewModels
         public long FGRId { get; set; }
         public double RMPriceTotal { get; set; }
         public double GrandTotal { get; set; }
+        public double RequiredQuantity { get; set; }
     }
 }

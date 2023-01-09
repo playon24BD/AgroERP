@@ -19,8 +19,8 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<FinishGoodRecipeDetailsDTO> FinishGoodRecipeMinQty(string RawMaterialIdList, long orgId);
 
-        IEnumerable<FinishGoodRecipeDetailsDTO> GetAgroReciprDetailsByInfoIdRMPrice(long FGRId);
+        IEnumerable<FinishGoodRecipeDetailsDTO> GetAgroReciprDetailsByInfoIdRMPrice(long FinishGoodProductId);
 
-        IEnumerable<FinishGoodRecipeDetailsDTO> GetFGProductAmount(long FGRID);
+        IEnumerable<FinishGoodRecipeDetailsDTO> GetFGProductAmount(long FinishGoodProductId);
     }
 }
