@@ -3243,10 +3243,26 @@ namespace ERPWeb.Controllers
             return File(renderedBytes, mimeType);
         }
 
-        public ActionResult ProductPrice(long pid, long rid)
+        public ActionResult ProductPrice(long pid, long rid, long measureMentId)
         {
-            var proprice = _productPriceConfiguration.GetPriceByproandfgrId(pid, rid).ProductPrice;
+            var proprices = _productPriceConfiguration.GetPriceByproandfgrId(pid, rid).ProductPrice;
 
+            double ProductMesurement = 0;
+            double MasterCartonMasurement = _measuremenBusiness.GetMeasurementById(measureMentId, 9).MasterCarton;
+            double InnerBoxMasurement = _measuremenBusiness.GetMeasurementById(measureMentId, 9).InnerBox;
+            double PackSizeMasurement = _measuremenBusiness.GetMeasurementById(measureMentId, 9).PackSize;
+
+
+            if (MasterCartonMasurement != 0)
+            {
+                ProductMesurement = MasterCartonMasurement * InnerBoxMasurement;
+             }
+            else
+            {
+                ProductMesurement = InnerBoxMasurement;
+            }
+
+            var proprice = ProductMesurement * proprices;
 
             return Json(proprice.ToString("0.00"), JsonRequestBehavior.AllowGet);
 
@@ -6392,25 +6408,23 @@ namespace ERPWeb.Controllers
             return View();
         }
 
-        public ActionResult ProductionPriceCreateTable(long? FinishGoodProductId)
+        public ActionResult ProductionPriceCreateTable(long? FinishGoodProductId,string EntryDate)
         {
 
 
-            // var details = _agroProductSalesDetailsBusiness.GetAgroSalesDetailsByInfoIdGet(id.Value, User.OrgId);
-            var details = _finishGoodRecipeDetailsBusiness.GetAgroReciprDetailsByInfoIdRMPrice(FinishGoodProductId.Value);
+                var details = _finishGoodRecipeDetailsBusiness.GetAgroReciprDetailsByInfoIdRMPrice(FinishGoodProductId.Value, EntryDate);
 
-            List<FinishGoodRecipeDetailsViewModel> detailsViewModel = new List<FinishGoodRecipeDetailsViewModel>();
-            AutoMapper.Mapper.Map(details, detailsViewModel);
-            return PartialView("_GetPRProductionPrice", detailsViewModel);
-
+                List<FinishGoodRecipeDetailsViewModel> detailsViewModel = new List<FinishGoodRecipeDetailsViewModel>();
+                AutoMapper.Mapper.Map(details, detailsViewModel);
+                return PartialView("_GetPRProductionPrice", detailsViewModel);
 
         }
 
-        public ActionResult GetRMAMount(long FinishGoodProductId)
+        public ActionResult GetRMAMount(long FinishGoodProductId, string EntryDate)
         {
 
 
-            var checkFinishGoodStockValue = _finishGoodRecipeDetailsBusiness.GetFGProductAmount(FinishGoodProductId);
+            var checkFinishGoodStockValue = _finishGoodRecipeDetailsBusiness.GetFGProductAmount(FinishGoodProductId,EntryDate);
 
             double itemStock = 0;
 
@@ -6422,14 +6436,14 @@ namespace ERPWeb.Controllers
 
         }
 
-        public ActionResult SaveProductionPrice(ProductionPerproductCostViewModel info)
+        public ActionResult SaveProductionPrice(FinishGoodProductionInfoViewModel info)
         {
             bool IsSuccess = false;
 
-            ProductionPerproductCostDTO productionPerproductCostDTO = new ProductionPerproductCostDTO();
+            FinishGoodProductionInfoDTO finishGoodProductionInfoDTO = new FinishGoodProductionInfoDTO();
 
-            AutoMapper.Mapper.Map(info, productionPerproductCostDTO);
-            IsSuccess = _productionPerproductCost.SaveProductionPerproductCost(productionPerproductCostDTO, User.UserId);
+            AutoMapper.Mapper.Map(info, finishGoodProductionInfoDTO);
+            IsSuccess = _productionPerproductCost.SaveProductionPerproductCost(finishGoodProductionInfoDTO, User.UserId);
 
             return Json(IsSuccess);
         }

@@ -20,11 +20,20 @@ namespace ERPBLL.Agriculture
     {
         private readonly IAgricultureUnitOfWork _agricultureUnitOfWork;
         private readonly ProductionPerproductCostRepository _productionPerproductCostRepository;
+        private readonly FinishGoodProductionInfoRepository _finishGoodProductionInfoRepository;
 
-        public ProductionPerproductCostBusiness(IAgricultureUnitOfWork agricultureUnitOfWork)
+        private readonly IFinishGoodRecipeDetailsBusiness _finishGoodRecipeDetailsBusiness;
+        private readonly IFinishGoodProductionInfoBusiness _finishGoodProductionInfoBusiness;
+
+
+        public ProductionPerproductCostBusiness(IAgricultureUnitOfWork agricultureUnitOfWork, IFinishGoodProductionInfoBusiness finishGoodProductionInfoBusiness,IFinishGoodRecipeDetailsBusiness finishGoodRecipeDetailsBusiness, FinishGoodProductionInfoRepository finishGoodProductionInfoRepository)
         {
             this._agricultureUnitOfWork = agricultureUnitOfWork;
             this._productionPerproductCostRepository = new ProductionPerproductCostRepository(this._agricultureUnitOfWork);
+            this._finishGoodProductionInfoRepository= new FinishGoodProductionInfoRepository(this._agricultureUnitOfWork);
+            this._finishGoodRecipeDetailsBusiness = finishGoodRecipeDetailsBusiness;
+            this._finishGoodProductionInfoBusiness = finishGoodProductionInfoBusiness;
+      
         }
 
         public IEnumerable<ProductionPerproductCostDTO> GetAllProductionPerproductCost(string name)
@@ -73,22 +82,33 @@ inner join tblAgroUnitInfo un on fr.UnitId=un.UnitId
 
 
 
-        public bool SaveProductionPerproductCost(ProductionPerproductCostDTO productionPerproductCostDTO, long userId)
+        public bool SaveProductionPerproductCost(FinishGoodProductionInfoDTO productionPerproductCostDTO, long userId)
         {
-            bool IsSuccess = false;
-            ProductionPerproductCost productionPerproductCost = new ProductionPerproductCost
-            {
-                FinishGoodProductId = productionPerproductCostDTO.FinishGoodProductId,
-                FGRId = productionPerproductCostDTO.FGRId,
-                PerProductRMtotalCost = productionPerproductCostDTO.PerProductRMtotalCost,
-                PerProductOtherCost = productionPerproductCostDTO.PerProductOtherCost,
-                PerProductMainCost = productionPerproductCostDTO.PerProductRMtotalCost + productionPerproductCostDTO.PerProductOtherCost,
-                EntryDate = DateTime.Now,
-                EntryUser=userId
 
-            };
-            _productionPerproductCostRepository.Insert(productionPerproductCost);
-            IsSuccess = _productionPerproductCostRepository.Save();
+            var FGD = _finishGoodRecipeDetailsBusiness.GetAgroReciprDetailsByInfoIdRMPriceUsedSave(productionPerproductCostDTO.FinishGoodProductId, productionPerproductCostDTO.EntryDate.ToString()).ToList();
+
+            var tqty = FGD.Sum(c => c.TargetQuantity);
+
+            var cnt = FGD.Count();
+
+            var mqty = productionPerproductCostDTO.ProductionOtherExpense/tqty;
+
+            bool IsSuccess = false;
+
+
+
+            FinishGoodProductionInfo finishGoodProductionInfo = new FinishGoodProductionInfo();
+
+            foreach (var item in FGD)
+            {
+               
+                 finishGoodProductionInfo = _finishGoodProductionInfoBusiness.GetProductionInfpByperproductionId(item.FinishGoodProductInfoId);
+                finishGoodProductionInfo.ProductionOtherExpense = (mqty * finishGoodProductionInfo.TargetQuantity);
+                _finishGoodProductionInfoRepository.Update(finishGoodProductionInfo);
+               
+            }
+
+            IsSuccess = _finishGoodProductionInfoRepository.Save();
             return IsSuccess;
         }
     }

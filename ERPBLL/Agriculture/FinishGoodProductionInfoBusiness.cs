@@ -164,6 +164,19 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
         {
             bool isSuccess = false;
 
+            double total = 0;
+            
+            foreach(var boss in details)
+            {
+                var pp = _rawMaterialTrack.GetMainStockInOutInfosPriceByRMID(boss.RawMaterialId).FirstOrDefault().RMPrice;
+                var tt = pp * boss.RequiredQuantity;
+                total += tt;
+            }
+
+
+
+
+
             var finishGoodProductionBatch = "Pro-" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
             var receiID= _finishGoodRecipeInfoBusiness.GetReceipbachcodeid(finishGoodProductionInfoDTO.ReceipeBatchCode).FGRId;
 
@@ -183,7 +196,8 @@ Where 1=1 and FI.ReceipeBatchCode=RI.ReceipeBatchCode  and FI.OrganizationId=9 G
                     OrganizationId = orgId,
                     FGRId= receiID,
                     MeasurementId= finishGoodProductionInfoDTO.MeasurementId,
-                    MFGQuanity= finishGoodProductionInfoDTO.MFGQuanity
+                    MFGQuanity= finishGoodProductionInfoDTO.MFGQuanity,
+                    ProductionRMPrice = total,
 
 
                 };
@@ -268,6 +282,25 @@ select Distinct m.measurementId, m.MeasurementName,fgp.FinishGoodProductId , fgp
 ProductionTotal =isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
 where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0) ,
 
+RMPriceTotal = isnull((select sum(fgp.ProductionRMPrice) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved' and fgp.MeasurementId = m.MeasurementId),0) ,
+
+OtherExpensePriceTotal =isnull((select sum(fgp.ProductionOtherExpense) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved' and fgp.MeasurementId = m.MeasurementId),0) ,
+
+UnitPrice =  ISNULL(ISNULL(isnull((select sum(fgp.ProductionRMPrice) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved' and fgp.MeasurementId = m.MeasurementId),0) + isnull((select sum(fgp.ProductionOtherExpense) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved' and fgp.MeasurementId = m.MeasurementId),0),0) /ISNULL(isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0),0),0),
+
+StockPrice = ISNULL(isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0)-isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
+where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId and sd.Status is null),0)+isnull(( select SUM(sr.ReturnQuanity) from tblSalesReturn sr
+where sr.FinishGoodProductInfoId = fgp.FinishGoodProductId and sr.FGRId = fgp.FGRId and sr.Status='ADJUST'),0),0) *  ISNULL(ISNULL(isnull((select sum(fgp.ProductionRMPrice) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved' and fgp.MeasurementId = m.MeasurementId),0) + isnull((select sum(fgp.ProductionOtherExpense) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved' and fgp.MeasurementId = m.MeasurementId),0),0) /ISNULL(isnull((select sum(fgp.TargetQuantity) from FinishGoodProductionInfoes fgp
+where fgp.FinishGoodProductId = p.FinishGoodProductId and fgp.FGRId = fr.FGRId and fgp.Status='Approved'),0),0),0),
+
 SalesTotal =isnull(( select SUM(sd.Quanity) from tblProductSalesDetails sd
 where sd.FinishGoodProductInfoId = fgp.FinishGoodProductId and sd.FGRId = fgp.FGRId and sd.Status is null),0) ,
 
@@ -287,7 +320,7 @@ inner join tblFinishGoodProductInfo p on fgp.FinishGoodProductId = p.FinishGoodP
 inner join tblFinishGoodRecipeInfo fr on fgp.FGRId = fr.FGRId
 inner join tblAgroUnitInfo un on fr.UnitId = un.UnitId
 inner join tblMeasurement m on m.MeasurementId=fgp.MeasurementId
-      where 1=1  {0} order by m.MeasurementId desc",
+      where 1=1 {0}  order by m.MeasurementId desc",
                 Utility.ParamChecker(param));
                 return query;
             }
@@ -743,7 +776,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             query = string.Format(@"
 
 
-select info.FinishGoodProductId,infoes.FinishGoodProductInfoId,infoes.FinishGoodProductionBatch,info.FinishGoodProductName,m.MeasurementName,infoes.TargetQuantity,infoes.EntryDate from FinishGoodProductionInfoes infoes
+select infoes.ProductionRMPrice,ISNULL(infoes.ProductionOtherExpense,0) as ProductionOtherExpense, info.FinishGoodProductId,infoes.FinishGoodProductInfoId,infoes.FinishGoodProductionBatch,info.FinishGoodProductName,m.MeasurementName,infoes.TargetQuantity,infoes.EntryDate from FinishGoodProductionInfoes infoes
 inner join tblFinishGoodProductInfo info on infoes.FinishGoodProductId=info.FinishGoodProductId
 inner join tblMeasurement m on m.MeasurementId=infoes.MeasurementId
 
@@ -775,6 +808,11 @@ select * from tblFinishGoodProductInfo
 where 1=1 {0}", Utility.ParamChecker(param));
             return query;
 
+        }
+
+        public FinishGoodProductionInfo GetProductionInfpByperproductionId(long FinishGoodProductInfoId)
+        {
+           return _finishGoodProductionInfoRepository.GetOneByOrg(b=> b.FinishGoodProductInfoId == FinishGoodProductInfoId);
         }
     }
 }

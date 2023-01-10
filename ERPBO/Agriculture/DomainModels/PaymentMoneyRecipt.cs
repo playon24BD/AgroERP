@@ -32,6 +32,8 @@ namespace ERPBO.Agriculture.DomainModels
 
         public string flag { get; set; }
 
+        public string Status { get; set; }
+
 
     }
 }

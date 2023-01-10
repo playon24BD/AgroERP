@@ -10,7 +10,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IProductionPerproductCost
     {
-        bool SaveProductionPerproductCost(ProductionPerproductCostDTO productionPerproductCostDTO, long userId);
+        bool SaveProductionPerproductCost(FinishGoodProductionInfoDTO productionPerproductCostDTO, long userId);
 
         ProductionPerproductCost GetProductionPerproductCostById(long FGRId);
 

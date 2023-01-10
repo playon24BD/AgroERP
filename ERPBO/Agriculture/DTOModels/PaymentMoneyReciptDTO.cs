@@ -36,5 +36,7 @@ namespace ERPBO.Agriculture.DTOModels
         public double PaymentAmount { get; set; }
         public double CommisionPercent { get; set; }
         public double CommisionAmount { get; set; }
+
+        public string Status { get; set; }
     }
 }

@@ -63,5 +63,8 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<FinishGoodProductionInfo> GetProductStockINbyPMRid(long MeasurementId,long FinishGoodProductId, long FGRId);
 
+
+        FinishGoodProductionInfo GetProductionInfpByperproductionId(long FinishGoodProductInfoId);
+
     }
 }

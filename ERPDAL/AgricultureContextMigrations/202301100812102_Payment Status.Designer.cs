@@ -7,13 +7,13 @@ namespace ERPDAL.AgricultureContextMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class YearlyTarget : IMigrationMetadata
+    public sealed partial class PaymentStatus : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(YearlyTarget));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PaymentStatus));
         
         string IMigrationMetadata.Id
         {
-            get { return "202301071424289_YearlyTarget"; }
+            get { return "202301100812102_Payment Status"; }
         }
         
         string IMigrationMetadata.Source

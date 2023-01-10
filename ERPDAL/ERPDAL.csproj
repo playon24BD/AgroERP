@@ -223,13 +223,13 @@
     <Compile Include="AgricultureContextMigrations\202301030444521_Agriculture_PRawMaterialNew.Designer.cs">
       <DependentUpon>202301030444521_Agriculture_PRawMaterialNew.cs</DependentUpon>
     </Compile>
-    <Compile Include="AgricultureContextMigrations\202301071424289_YearlyTarget.cs" />
-    <Compile Include="AgricultureContextMigrations\202301071424289_YearlyTarget.Designer.cs">
-      <DependentUpon>202301071424289_YearlyTarget.cs</DependentUpon>
-    </Compile>
     <Compile Include="AgricultureContextMigrations\202301080958005_ProductionCostfind.cs" />
     <Compile Include="AgricultureContextMigrations\202301080958005_ProductionCostfind.Designer.cs">
       <DependentUpon>202301080958005_ProductionCostfind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgricultureContextMigrations\202301100812102_Payment Status.cs" />
+    <Compile Include="AgricultureContextMigrations\202301100812102_Payment Status.Designer.cs">
+      <DependentUpon>202301100812102_Payment Status.cs</DependentUpon>
     </Compile>
     <Compile Include="AgricultureContextMigrations\Configuration.cs" />
     <Compile Include="AgricultureDAL\AgricultureBaseRepository.cs" />
@@ -382,11 +382,11 @@
     <EmbeddedResource Include="AgricultureContextMigrations\202301030444521_Agriculture_PRawMaterialNew.resx">
       <DependentUpon>202301030444521_Agriculture_PRawMaterialNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AgricultureContextMigrations\202301071424289_YearlyTarget.resx">
-      <DependentUpon>202301071424289_YearlyTarget.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="AgricultureContextMigrations\202301080958005_ProductionCostfind.resx">
       <DependentUpon>202301080958005_ProductionCostfind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgricultureContextMigrations\202301100812102_Payment Status.resx">
+      <DependentUpon>202301100812102_Payment Status.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlPanelContextMigrations\202006151000333_ControlPanel_AllEntities_16-May-2020.resx">
       <DependentUpon>202006151000333_ControlPanel_AllEntities_16-May-2020.cs</DependentUpon>

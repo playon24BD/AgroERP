@@ -297,9 +297,10 @@
 
 
                 let proid = $("#ddlProductName option:selected").val();
+                let MeasurmentId = $("#ddlMeasurementName option:selected").val();
                 let fgrid = FGRId;
                // debugger;
-                var data = { pid: TryParseInt(proid, 0), rid: TryParseInt(fgrid, 0) };
+                var data = { pid: TryParseInt(proid, 0), rid: TryParseInt(fgrid, 0), measureMentId: TryParseInt(MeasurmentId, 0) };
                 $.when(getReqWithData('Html', "Get", "/AgroConfiguration/ProductPrice", data)).then(function (res, status) {
 
 

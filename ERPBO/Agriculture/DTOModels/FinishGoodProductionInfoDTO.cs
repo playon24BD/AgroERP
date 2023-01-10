@@ -45,5 +45,8 @@ namespace ERPBO.Agriculture.DTOModels
 
         public double ProductionRMPrice { get; set; }
         public double ProductionOtherExpense { get; set; }
+
+        public double UnitPrice { get; set; }
+        public double StockPrice { get; set; }
     }
 }

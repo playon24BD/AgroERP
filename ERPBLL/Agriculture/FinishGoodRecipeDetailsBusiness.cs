@@ -111,12 +111,21 @@ namespace ERPBLL.Agriculture
             return _finishGoodRecipeDetailsRepository.GetAll(i => i.OrganizationId == orgId && i.ReceipeBatchCode == receipeBatchCode).ToList();
         }
 
-        public IEnumerable<FinishGoodRecipeDetailsDTO> GetAgroReciprDetailsByInfoIdRMPrice(long FinishGoodProductId)
+        public IEnumerable<FinishGoodRecipeDetailsDTO> GetAgroReciprDetailsByInfoIdRMPrice(long FinishGoodProductId, string EntryDate)
         {
-            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetAgroReciprDetailsByInfoIdRMPrice(FinishGoodProductId)).ToList();
+            try
+            {
+                return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetAgroReciprDetailsByInfoIdRMPrice(FinishGoodProductId, EntryDate)).ToList();
+            }
+
+
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        private string QueryForGetAgroReciprDetailsByInfoIdRMPrice(long FinishGoodProductId)
+        private string QueryForGetAgroReciprDetailsByInfoIdRMPrice(long FinishGoodProductId, string EntryDate)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -125,10 +134,15 @@ namespace ERPBLL.Agriculture
             {
                 param += string.Format(@" and i.FinishGoodProductId={0}", FinishGoodProductId);
             }
+             if (!string.IsNullOrEmpty(EntryDate) && EntryDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(EntryDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(i.EntryDate as date)='{0}'", fDate);
+            }
 
 
             query = string.Format(@"	
-select i.FGRId,r.RawMaterialId,r.RawMaterialName,d.RequiredQuantity,u.UnitName,i.FinishGoodProductId,
+select t.RawMaterialId,t.RawMaterialName,ROUND(sum(t.RequiredQuantity),2) as RequiredQuantity ,t.UnitName,t.FinishGoodProductId,sum(t.RMPrice) as RMPrice,SUM(t.RMPriceTotal) RMPriceTotal  from (select i.FGRId,r.RawMaterialId,r.RawMaterialName,d.RequiredQuantity,u.UnitName,i.FinishGoodProductId,
 
 RMPrice=  ROUND(ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=d.RawMaterialId),0),2),
 
@@ -137,20 +151,28 @@ RMPriceTotal= ROUND(ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRa
 from FinishGoodProductionInfoes i
 inner join  FinishGoodProductionDetails d on i.FinishGoodProductionBatch = d.FinishGoodProductionBatch
 inner join tblRawMaterialInfo r on r.RawMaterialId = d.RawMaterialId
-inner join tblAgroUnitInfo u on u.UnitId = r.UnitId
-
-where DATEDIFF(day, i.EntryDate, GETDATE()) = 0 {0}", Utility.ParamChecker(param));
+inner join tblAgroUnitInfo u on u.UnitId = r.UnitId Where 1=1 {0} and i.ProductionOtherExpense = 0 )
+t
+group by t.RawMaterialId,t.RawMaterialName,t.UnitName,t.FinishGoodProductId", Utility.ParamChecker(param));
 
             return query;
         }
 
-        public IEnumerable<FinishGoodRecipeDetailsDTO> GetFGProductAmount(long FinishGoodProductId)
+        public IEnumerable<FinishGoodRecipeDetailsDTO> GetFGProductAmount(long FinishGoodProductId, string EntryDate)
         {
-            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetFGProductAmount(FinishGoodProductId)).ToList();
+            try
+            {
+                return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetFGProductAmount(FinishGoodProductId, EntryDate)).ToList();
+            }
+
+            catch (Exception)
+            {
+                return null;
+            }
 
         }
 
-        private string QueryForGetFGProductAmount(long FinishGoodProductId)
+        private string QueryForGetFGProductAmount(long FinishGoodProductId, string EntryDate)
         {
             string query = string.Empty;
             string param = string.Empty;
@@ -160,24 +182,49 @@ where DATEDIFF(day, i.EntryDate, GETDATE()) = 0 {0}", Utility.ParamChecker(param
             {
                 param += string.Format(@" and i.FinishGoodProductId={0}", FinishGoodProductId);
             }
+             if (!string.IsNullOrEmpty(EntryDate) && EntryDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(EntryDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(i.EntryDate as date)='{0}'", fDate);
+            }
 
             query = string.Format(@"
 
-select t.FinishGoodProductId,ROUND(ISNULL(sum(t.RMPriceTotal) ,0),2)as GrandTotal from (select i.FGRId,r.RawMaterialId,r.RawMaterialName,d.RequiredQuantity,u.UnitName,i.FinishGoodProductId ,
-
-RMPrice=  ROUND(ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=d.RawMaterialId),0),2),
-
-RMPriceTotal= ROUND(ISNULL((SELECT sum(SR.SubTotal)/sum(SR.Quantity) from tblPRawMaterialStockDetail SR where SR.RawMaterialId=d.RawMaterialId),0) * d.RequiredQuantity,2)
-
-from FinishGoodProductionInfoes i
-inner join  FinishGoodProductionDetails d on i.FinishGoodProductionBatch = d.FinishGoodProductionBatch
-inner join tblRawMaterialInfo r on r.RawMaterialId = d.RawMaterialId
-inner join tblAgroUnitInfo u on u.UnitId = r.UnitId
-where 1=1 {0} and   DATEDIFF(day, i.EntryDate, GETDATE()) = 0
-) t
+select t.FinishGoodProductId,ROUND(ISNULL( sum(t.ProductionRMPrice),0),2) as GrandTotal  from(select i.ProductionRMPrice,i.FinishGoodProductId from FinishGoodProductionInfoes i 
+where 1=1 {0} and i.ProductionOtherExpense = 0)
+t
 group by t.FinishGoodProductId", Utility.ParamChecker(param));
 
             return query;
         }
+
+        public IEnumerable<FinishGoodProductionInfoDTO> GetAgroReciprDetailsByInfoIdRMPriceUsedSave(long FinishGoodProductId, string EntryDate)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForGetAgroReciprDetailsByInfoIdRMPriceUsedSave(FinishGoodProductId, EntryDate)).ToList();
+        }
+        private string QueryForGetAgroReciprDetailsByInfoIdRMPriceUsedSave(long FinishGoodProductId, string EntryDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (FinishGoodProductId != 0 && FinishGoodProductId > 0)
+            {
+                param += string.Format(@" and t.FinishGoodProductId={0}", FinishGoodProductId);
+            }
+            if (!string.IsNullOrEmpty(EntryDate) && EntryDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(EntryDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(t.EntryDate as date)='{0}'", fDate);
+            }
+
+
+            query = string.Format(@"	
+select * from FinishGoodProductionInfoes t
+where 1=1 {0} and t.ProductionOtherExpense = 0", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+
     }
 }
