@@ -17,12 +17,14 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<PaymentMoneyRecipt> GetAllPaymentMoneyRecipt();
         bool SavePaymentMOneyReciept(PaymentMoneyReciptDTO infoDTO, List<SalesPaymentRegisterDTO> detailsDTO, long userId, long OrgId);
+        bool SavePaymentMOneyRecieptApprove(PaymentMoneyReciptDTO infoDTO, List<SalesPaymentRegisterDTO> detailsDTO, long userId);
 
 
         IEnumerable<MoneyReciptRepotData> GetMoneyReciptReport(string moneyReceipt);
         IEnumerable<PaymentMoneyReciptDTO> GetLastMoneyRecipt(long orgId);
         IEnumerable<PaymentMoneyReciptDTO> GetMoneyReceiptList(string moneyReceiptNo, long? stockiestId, string fromDate, string toDate);
-        IEnumerable<PaymentMoneyReciptDTO> GetMoneyReceiptById(long id, long orgId);
+        IEnumerable<PaymentMoneyReciptDTO> GetMoneyReceiptListApprove(string moneyReceiptNo, long? stockiestId, string fromDate, string toDate);
+        IEnumerable<SalesPaymentRegisterDTO> GetMoneyReceiptById(long id, long orgId); 
 
     }
 }

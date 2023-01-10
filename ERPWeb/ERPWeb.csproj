@@ -3649,15 +3649,13 @@
     <Content Include="Views\AgroConfiguration\_GetPackageRMStockList.cshtml" />
     <Content Include="Views\AgroConfiguration\DailySalesReportList.cshtml" />
     <Content Include="Views\AgroConfiguration\_GetDailySalesReportList.cshtml" />
-
     <Content Include="Views\AgroConfiguration\YearlyTargetList.cshtml" />
-
-
     <Content Include="Views\AgroConfiguration\_GetRawMaterialMainPriceView.cshtml" />
-
-
     <Content Include="Views\AgroConfiguration\_GetYearlyTargetList.cshtml" />
-
+    <Content Include="Views\AgroConfiguration\MoneyReceiptListApprove.cshtml" />
+    <Content Include="Views\AgroConfiguration\_X.cshtml" />
+    <Content Include="Views\AgroConfiguration\_Y.cshtml" />
+    <Content Include="Views\AgroConfiguration\_Z.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

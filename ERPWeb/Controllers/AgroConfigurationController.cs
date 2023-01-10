@@ -3480,7 +3480,7 @@ namespace ERPWeb.Controllers
                 {
                     var details = _paymentMoneyRecipt.GetMoneyReceiptById(id.Value, User.OrgId);
 
-                    List<MonyReceptDetails> moneyDetails = new List<MonyReceptDetails>();
+                    List<SalesPaymentRegisterViewModel> moneyDetails = new List<SalesPaymentRegisterViewModel>();
                     AutoMapper.Mapper.Map(details, moneyDetails);
 
                     return PartialView("_GetMoneyReceiptListDetails", moneyDetails);
@@ -3497,7 +3497,7 @@ namespace ERPWeb.Controllers
         }
 
 
-
+        //notused
         public ActionResult SaveSalesPayment(SalesPaymentRegisterViewModel info)
         {
 
@@ -3510,7 +3510,7 @@ namespace ERPWeb.Controllers
         }
 
 
-        public ActionResult SalesPaymentCreate(long? StockiestId, string flag)
+        public ActionResult SalesPaymentCreate(long? StockiestId, string flag, string invoiceNo)
         {
 
             if (string.IsNullOrEmpty(flag))
@@ -3539,7 +3539,7 @@ namespace ERPWeb.Controllers
             else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
             {
 
-                var dto = _agroProductSalesInfoBusiness.GetPaymentLadserInfos(StockiestId.Value);
+                var dto = _agroProductSalesInfoBusiness.GetPaymentLadserInfos(StockiestId ?? 0, invoiceNo ?? null);
                 List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
                 AutoMapper.Mapper.Map(dto, viewModels);
                 return PartialView("_PaymentAgroSalesProductList", viewModels);
@@ -3618,6 +3618,72 @@ namespace ERPWeb.Controllers
         }
 
 
+
+
+
+
+        public ActionResult MoneyReceiptListApprove(string flag, long? id, string moneyReceiptNo, long? stockiestId, string fromDate, string toDate)
+        {
+            try
+            {
+
+
+                if (string.IsNullOrEmpty(flag))
+                {
+
+                    ViewBag.ddlStockiestName = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(stock => new SelectListItem { Text = stock.StockiestName, Value = stock.StockiestId.ToString() }).ToList();
+
+                    return View();
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+
+
+                    var dto = _paymentMoneyRecipt.GetMoneyReceiptListApprove(moneyReceiptNo, stockiestId ?? 0, fromDate, toDate);
+                    List<PaymentMoneyReciptViewModel> viewModels = new List<PaymentMoneyReciptViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+
+                    return PartialView("_X", viewModels);
+
+                }
+
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.Detail)
+                {
+                    var details = _paymentMoneyRecipt.GetMoneyReceiptById(id.Value, User.OrgId);
+
+                    List<SalesPaymentRegisterViewModel> moneyDetails = new List<SalesPaymentRegisterViewModel>();
+                    AutoMapper.Mapper.Map(details, moneyDetails);
+
+                    return PartialView("_GetMoneyReceiptListDetails", moneyDetails);
+
+                }
+
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult SaveProSalesPaymentApprove(PaymentMoneyReciptViewModel info, List<SalesPaymentRegisterViewModel> details)
+        {
+            bool isSucccess = false;
+
+            PaymentMoneyReciptDTO infoDTO = new PaymentMoneyReciptDTO();
+            List<SalesPaymentRegisterDTO> detailsDTO = new List<SalesPaymentRegisterDTO>();
+            AutoMapper.Mapper.Map(info, infoDTO);
+            AutoMapper.Mapper.Map(details, detailsDTO);
+            isSucccess = _paymentMoneyRecipt.SavePaymentMOneyRecieptApprove(infoDTO, detailsDTO, User.UserId);
+
+
+
+
+
+            return Json(isSucccess);
+        }
         #endregion
 
         #region Purchase & RawmaterialStock
