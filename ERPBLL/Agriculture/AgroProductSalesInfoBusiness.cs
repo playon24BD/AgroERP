@@ -1542,11 +1542,17 @@ select sales.StockiestId,sales.ChallanNo,sales.DriverName,sales.DeliveryPlace,sa
 
 
 Amount = ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0),
-(sales.TotalAmount)-ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0)as TotalAmount
+(sales.TotalAmount)-ISNULL((select sum(sr.ReturnTotalPrice) from tblSalesReturn sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and sr.Status='ADJUST' ),0)as TotalAmount,
+
+RT=ISNULL((SELECT 
+ CASE When count(*) > 0 then 1
+ else 0
+ END AS myValue
+ from tblProductSalesPaymentHistory sr where sr.ProductSalesInfoId = sales.ProductSalesInfoId and  sr.Status='Pending'),0)
 
 
 from tblProductSalesInfo sales
-inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId  Where 1=1 and sales.DueAmount !< 1 {0}              
+inner join tblStockiestInfo stock on sales.StockiestId=stock.StockiestId  Where 1=1 {0} and sales.DueAmount !< 1             
 and sales.Status is null  order by sales.ProductSalesInfoId asc
 
 ", Utility.ParamChecker(param));
