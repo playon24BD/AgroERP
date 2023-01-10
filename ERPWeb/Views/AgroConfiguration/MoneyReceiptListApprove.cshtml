@@ -1,0 +1,346 @@
+﻿
+@{
+    ViewBag.Title = "Payment Approve";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:-12px">
+    <div class="col-md-12 p-0">
+
+        <div class="row" style="margin-top:-12px">
+            <div class="col-md-12">
+                <div class="card" style="background-color:#001f3f">
+                    <div class="px-2 py-1">
+                        <div class="row align-items-center">
+
+                            <div class="col-md-2">
+                                <h7 class="float-left text-bold text-white">Pending Payment</h7>
+                            </div>
+
+                            <div class="col-md-2">
+
+                                <input type="text" class="form-control form-control-sm" id="SearchAny" placeholder="search By any" />
+                            </div>
+                            <div class="col-md-2">
+
+                                @Html.DropDownList("ddlStockiestName", (IEnumerable<SelectListItem>)ViewBag.ddlStockiestName, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
+                            </div>
+
+                            <div class="col-md-2">
+
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptFromDate" placeholder="From Date" />
+
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+
+                                <div class="input-group input-group-sm ">
+                                    <input type="text" class="form-control form-control-sm date-datePicker ctrl-changed" id="dptToDate" placeholder="To Date" />
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-top:-3px">
+
+
+            <div class="col-md-12" style="margin-top:-13px">
+
+                <div class="col-md-12 p-0" id="dataContainer">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="ModalProductionFinishGoodDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+
+                <div class="col-md-4">
+                    <h5 class="text-left text-bold">
+                       Payment Details
+                    </h5>
+                </div>
+                <div class="hide">
+                    <label for="ddlmoneyreciptid" class="control-label">Moneyreciptid</label>
+                    <input type="text" id="ddlmoneyreciptid" class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <select class="form-control form-control-sm" id="ddlAction">
+                            <option value="Approved" selected>Approved</option>
+                            <option value="Rejected">Rejected</option>
+
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+            <div class="modal-footer btn-default">
+                <div class="col-md-6">
+                    <div id="msg1" class="alert alert-success hide float-left">
+                        Data has been saved Successful!
+                    </div>
+                    <div id="msg2" class="alert alert-danger hide float-left">
+                        Data has been failed to save!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm float-right" data-dismiss="modal" data-target="#"><i class="fa-solid fa-circle-xmark"></i></i>Cancel</button>
+                <button type="submit" class="btn btn-outline-success btn-sm float-right" id="Accept"><i class="fas fa-paper-plane"></i> <span id="spanSaveTextZone">Save</span> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*<div class="modal fade" id="MoneyReceiptListDetails" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-gray-dark">
+                <h4 id="modalHeading" class="modal-title">Money Receipt List Details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="dataContainer2">
+
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var SearchAny = $("#SearchAny");
+        var ddlStockiestName = $("#ddlStockiestName");
+        var dptFromDate = $("#dptFromDate");
+        var dptToDate = $("#dptToDate");
+        var ddlmoneyreciptid = $("#ddlmoneyreciptid");
+        var ddlAction = $("#ddlAction");
+
+
+        $(document).ready(function () {
+
+            $('.select2').select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+            dptFromDate.prop('readonly', true);
+            dptToDate.prop('readonly', true);
+            dptFromDate.css("background-color", "#fff");
+            dptToDate.css("background-color", "#fff");
+            $('#dptFromDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+            $('#dptToDate').datepicker({
+                format: "dd MM yyyy",
+                orientation: "bottom auto",
+                todayHighlight: true,
+                autoclose: true
+            });
+
+
+            LoadMoneyReceiptList()
+
+        })
+
+
+        $(document).on('click', 'div.remove-date', function () {
+            if ($(this).hasClass("dptToDate")) {
+                if (dptToDate.val() !== '') {
+                    dptToDate.val('');
+                    LoadMoneyReceiptList();
+                }
+            }
+            if ($(this).hasClass("dptFromDate")) {
+                if (dptFromDate.val() !== '') {
+                    dptFromDate.val('');
+                    LoadMoneyReceiptList();
+                }
+            }
+
+        })
+
+        SearchAny.keyup(function () {
+            LoadMoneyReceiptList()
+        })
+
+        ddlStockiestName.change(function () {
+
+            LoadMoneyReceiptList();
+
+        });
+        dptFromDate.change(function () {
+            LoadMoneyReceiptList();
+
+        });
+
+        dptToDate.change(function () {
+            LoadMoneyReceiptList();
+
+        });
+
+
+        function LoadMoneyReceiptList() {
+            debugger;
+
+            var data = { flag: "View", moneyReceiptNo: $.trim(SearchAny.val()), stockiestId: TryParseInt(ddlStockiestName.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/MoneyReceiptListApprove', data)).then(function (res, status) {
+                console.log(status);
+                if (status === "success") {
+                    $("#dataContainer").fadeOut('500', function () {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res).fadeIn('500');
+                    });
+                }
+            }).fail(function (error) {
+                console.log(error);
+            });
+
+        }
+
+        $(document).on('click', 'a.data-item-detail', function (e) {
+            e.preventDefault();
+            debugger;
+            //$("#dataContainer2").empty();
+
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+
+
+
+            var data = { flag: "Detail", id: id };
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/MoneyReceiptList', data)).then(function (res, status) {
+                debugger;
+                console.log(status);
+                if (status === "success") {
+                    debugger;
+                    $("#dataContainer2").empty();
+                    $("#dataContainer2").append(res);
+                    $("#MoneyReceiptListDetails").modal('show');
+
+                }
+            }).fail(function (error) {
+                console.log(error);
+            })
+
+        })
+
+
+
+        $(document).on('click', 'a.data-edit-item-Return', function (e) {
+            e.preventDefault();
+            debugger;
+            var row = $(this).parent().parents('tr');
+            var td1 = row.find('td:eq(1)').html();//moneyreciptid
+            var td2 = row.find('td:eq(2)').html();//stokieestname
+            var td3 = row.find('td:eq(3)').html();//memono
+            var td6 = row.find('td:eq(6)').html();//TotalAmount
+            var td7 = row.find('td:eq(7)').html();//Date
+            ddlmoneyreciptid.val(td1);
+
+            $("#dataContainer2").empty();
+            var id = $(this).parent().parents('tr').children('td').eq(1).html();
+            if (true) {
+                var data = { flag: "Detail", id: id };
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/MoneyReceiptListApprove', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer2").empty();
+                        $("#dataContainer2").append(res);
+                        $("#ModalProductionFinishGoodDetails").modal('show');
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+
+
+
+        //apprrove
+                $("#Accept").click(function (e) {
+            debugger
+            e.preventDefault();
+            if (true) {
+
+                debugger;
+                var info = { PaymentMoneyReciptId: ddlmoneyreciptid.val(), Status: ddlAction.val() };
+                        var details = [];
+                        details.length = 0;
+
+                $.each($("#tttt tbody tr"), function (index, item) {
+                            var tds = $(this).children('td');
+                            details.push({
+
+                                PaymentRegisterID: tds.eq(5).html(),
+                                ProductSalesInfoId: tds.eq(6).html(),
+                                PaymentAmount: tds.eq(2).html()
+
+
+                            });
+                        })
+
+
+                console.log(details);
+                var data = JSON.stringify({ details: details, info: info });
+
+                $.when(postReqWithToken(dataType.applicationJson, dataType.json, 'POST', '/AgroConfiguration/SaveProSalesPaymentApprove', data , getToken())).then(function (res, status)
+                {
+
+                            if (res === true) {
+                                $('.toastrDefaultSuccess').trigger('click');
+                                setTimeout(function () {
+                                    redirectPage('@Url.Action("MoneyReceiptListApprove")');
+                                }, 1000);
+
+                            }
+                            else {
+                                $('.toastrDefaultError').trigger('click');
+                            }
+                            enable("#btnSubmit");
+                        }).fail(function (error) {
+                            alert(execuStatus.fail);
+                            enable("#btnSubmit");
+                        })
+
+            }
+        })
+
+
+        function redirectPage(page) {
+            window.location.replace(page);
+        }
+    </script>
+}
+
+

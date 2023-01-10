@@ -16,16 +16,15 @@
                             <div class="col-md-3">
                                 <h7 class="text-left text-bold text-white">Payment</h7>
                             </div>
-                            <div class="col-md-1">
-
-                            </div>
+2
                             <div class="col-md-3 text-center">
                                 @*<label for="ddlstokiestname">Stockiest Name </label>*@
                                 @Html.DropDownList("ddlstokiestname", (IEnumerable<SelectListItem>)ViewBag.ddlstokiestname, "Select Stokiest", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
                             </div>
-                            <div class="col-md-2">
-
+                            <div class="col-md-2 text-center">
+                                <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
                             </div>
+
                             <div class="col-md-3">
                                 <button class="emnsave-btn" id="saveButton">SAVE <i class="fas fa-paper-plane"></i></button>
                                 @*btn btn-outline-primary btn-sm float-lg-right*@
@@ -128,6 +127,8 @@
         var ddlPaymentMode = $("#ddlPaymentMode");
         var ddlAccountNumber = $("#ddlAccountNumber");
 
+        var searchByAny = $("#searchByAny");
+
 
 
 
@@ -153,7 +154,38 @@
 
         })
 
-        //change Invoice
+        //change stokiest
+        $('#searchByAny').keyup(function () {
+            debugger;
+
+            let Stkid = $("#ddlstokiestname option:selected").val();
+
+            if (Stkid == null || Stkid > 0) {
+                debugger;
+                var data = { flag: "View", StockiestId: TryParseInt(Stkid, 0), invoiceNo: $.trim(searchByAny.val()) };
+                console.log(data);
+                debugger
+
+                $.when(getReqWithData('html', 'GET', '/AgroConfiguration/SalesPaymentCreate', data)).then(function (res, status) {
+                    console.log(status);
+                    if (status === "success") {
+                        $("#dataContainer").empty();
+                        $("#dataContainer").append(res);
+
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            }
+
+
+
+
+
+
+        });
+
+        //Change Invoice
         $('#ddlstokiestname').change(function () {
 
             let Stkid = $("#ddlstokiestname option:selected").val();

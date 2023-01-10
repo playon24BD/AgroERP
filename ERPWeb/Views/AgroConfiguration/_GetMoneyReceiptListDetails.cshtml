@@ -1,12 +1,12 @@
 ﻿
-@model IEnumerable<ERPBO.Agriculture.ViewModels.MonyReceptDetails>
+@model IEnumerable<ERPBO.Agriculture.ViewModels.SalesPaymentRegisterViewModel>
 
 @{
     ViewBag.Title = "_GetMoneyReceiptListDetails";
     int sl = 0;
 
 }
-<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm " id="">
+<table class="table table-bordered table-striped table-sm table-responsive-lg text-sm " id="tttt">
     <thead class="thead-dark">
         <tr class="text-center">
             <th>#SL</th>
@@ -28,11 +28,14 @@
             <tr>
                 <td class="text-center">@sl</td>
                 <td class="text-center">@item.InvoiceNo</td>
-                @*<td class="text-center">@item.InvoiceDate.Value.ToString("dd-MMM-yyyy")</td>*@
                 <td class="text-center">@item.PaymentAmount</td>
                 <td class="hide">@item.CommisionPercent</td>
                 <td class="text-center">@item.CommisionAmount</td>
-                
+                <td class="hide">@item.PaymentRegisterID</td>
+                <td class="hide">@item.ProductSalesInfoId</td>
+
+
+
 
 
             </tr>

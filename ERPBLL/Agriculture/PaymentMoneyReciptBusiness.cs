@@ -108,6 +108,7 @@ Where 1=1 {0}", Utility.ParamChecker(param));
             paymentMoneyRecipt.PaymentMode = infoDTO.PaymentMode;
             paymentMoneyRecipt.AccounrNumber = infoDTO.AccounrNumber;
             paymentMoneyRecipt.EntryUserId = userId;
+            paymentMoneyRecipt.Status = "Pending";
             _paymentMoneyReciptRepository.Insert(paymentMoneyRecipt);
             isSucccess = _paymentMoneyReciptRepository.Save();
 
@@ -128,14 +129,15 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                             PaymentDate = DateTime.Now,
                             CommisionPercent = 0,
                             CommisionAmount = item.CommisionPercent,
+                            Status = "Pending",
 
                         };
                         _salesPaymentRegisterRepository.Insert(salesPaymentRegister);
 
-                        var salesPayment = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(item.ProductSalesInfoId);
-                        salesPayment.PaidAmount += item.PaymentAmount;
-                        salesPayment.DueAmount -= item.PaymentAmount;
-                        _agroProductSalesInfoRepository.Update(salesPayment);
+                        //var salesPayment = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(item.ProductSalesInfoId);
+                        //salesPayment.PaidAmount += item.PaymentAmount;
+                        //salesPayment.DueAmount -= item.PaymentAmount;
+                        //_agroProductSalesInfoRepository.Update(salesPayment);
 
                     }
                     else
@@ -151,15 +153,16 @@ Where 1=1 {0}", Utility.ParamChecker(param));
                             PaymentDate = DateTime.Now,
                             CommisionPercent = 0,
                             CommisionAmount = 0,
-                       
+                            Status = "Pending",
+
 
                         };
                         _salesPaymentRegisterRepository.Insert(salesPaymentRegister);
 
-                        var salesPayment = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(item.ProductSalesInfoId);
-                        salesPayment.PaidAmount += item.PaymentAmount;
-                        salesPayment.DueAmount -= item.PaymentAmount;
-                        _agroProductSalesInfoRepository.Update(salesPayment);
+                        //var salesPayment = _agroProductSalesInfoBusiness.CheckBYProductSalesInfoId(item.ProductSalesInfoId);
+                        //salesPayment.PaidAmount += item.PaymentAmount;
+                        //salesPayment.DueAmount -= item.PaymentAmount;
+                        //_agroProductSalesInfoRepository.Update(salesPayment);
 
                     }
 
@@ -231,7 +234,7 @@ order by PaymentMoneyReciptId desc
 
             query = string.Format(@"
 
-SELECT PMR.PaymentMoneyReciptId,PMR.MoneyReciptNo,PMR.StockiestId,f.StockiestName,PMR.BankName,PMR.BranchName,PMR.TotalAmount,PMR.EntryDate
+SELECT PMR.Status,PMR.PaymentMoneyReciptId,PMR.MoneyReciptNo,PMR.StockiestId,f.StockiestName,PMR.BankName,PMR.BranchName,PMR.TotalAmount,PMR.EntryDate
  FROM tblPaymentMoneyRecipt PMR 
  INNER JOIN  tblStockiestInfo f
  on PMR.StockiestId=f.StockiestId
@@ -243,10 +246,10 @@ where 1=1 {0} order by PMR.PaymentMoneyReciptId desc
             return query;
         }
 
-        public IEnumerable<PaymentMoneyReciptDTO> GetMoneyReceiptById(long id, long orgId)
+        public IEnumerable<SalesPaymentRegisterDTO> GetMoneyReceiptById(long id, long orgId)
         {
 
-                return this._agricultureUnitOfWork.Db.Database.SqlQuery<PaymentMoneyReciptDTO>(QueryForMoneyReceiptDetails(id,orgId)).ToList();
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<SalesPaymentRegisterDTO>(QueryForMoneyReceiptDetails(id,orgId)).ToList();
 
         }
 
@@ -264,12 +267,168 @@ where 1=1 {0} order by PMR.PaymentMoneyReciptId desc
 
 
 
-select h.PaymentMoneyReciptId,i.InvoiceNo,h.PaymentAmount,h.CommisionPercent, h.CommisionAmount from tblPaymentMoneyRecipt m
+select i.ProductSalesInfoId,h.PaymentRegisterID,h.PaymentMoneyReciptId,i.InvoiceNo,h.PaymentAmount,h.CommisionPercent, h.CommisionAmount from tblPaymentMoneyRecipt m
 inner join tblProductSalesPaymentHistory h on m.PaymentMoneyReciptId= h.PaymentMoneyReciptId
 inner join tblProductSalesInfo i on h.ProductSalesInfoId=i.ProductSalesInfoId
 Where 1=1 {0} ", Utility.ParamChecker(param));
 
             return query;
+        }
+
+        public IEnumerable<PaymentMoneyReciptDTO> GetMoneyReceiptListApprove(string moneyReceiptNo, long? stockiestId, string fromDate, string toDate)
+        {
+            return this._agricultureUnitOfWork.Db.Database.SqlQuery<PaymentMoneyReciptDTO>(QueryForMoneyReceiptListApprove(moneyReceiptNo, stockiestId, fromDate, toDate)).ToList();
+        }
+
+        private string QueryForMoneyReceiptListApprove(string moneyReceiptNo, long? stockiestId, string fromDate, string toDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (!string.IsNullOrEmpty(moneyReceiptNo))
+            {
+                param += string.Format(@"and PMR.MoneyReciptNo like '%{0}%'", moneyReceiptNo);
+            }
+            if (stockiestId != null && stockiestId > 0)
+            {
+                param += string.Format(@" and PMR.StockiestId={0}", stockiestId);
+            }
+
+            if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "" && !string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(PMR.EntryDate as date) between '{0}' and '{1}'", fDate, tDate);
+            }
+            else if (!string.IsNullOrEmpty(fromDate) && fromDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(fromDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(PMR.EntryDate as date)='{0}'", fDate);
+            }
+            else if (!string.IsNullOrEmpty(toDate) && toDate.Trim() != "")
+            {
+                string tDate = Convert.ToDateTime(toDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(PMR.EntryDate as date)='{0}'", tDate);
+            }
+
+
+            query = string.Format(@"
+
+SELECT PMR.PaymentMoneyReciptId,PMR.MoneyReciptNo,PMR.StockiestId,f.StockiestName,PMR.BankName,PMR.BranchName,PMR.TotalAmount,PMR.EntryDate,PMR.Status
+ FROM tblPaymentMoneyRecipt PMR 
+ INNER JOIN  tblStockiestInfo f
+ on PMR.StockiestId=f.StockiestId
+ 
+where 1=1 {0} and PMR.Status = 'Pending' order by PMR.PaymentMoneyReciptId desc
+
+", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+
+        public PaymentMoneyRecipt getmoneyreciptbyid(long PaymentMoneyReciptId)
+        {
+            return _paymentMoneyReciptRepository.GetOneByOrg(a => a.PaymentMoneyReciptId == PaymentMoneyReciptId);
+        }
+        public SalesPaymentRegister getSalesPaymentRegisterbyid(long PaymentRegisterID)
+        {
+            return _salesPaymentRegisterRepository.GetOneByOrg(a => a.PaymentRegisterID == PaymentRegisterID);
+        }
+        public AgroProductSalesInfo getinvoicebyid(long ProductSalesInfoId)
+        {
+            return _agroProductSalesInfoRepository.GetOneByOrg(s => s.ProductSalesInfoId == ProductSalesInfoId);
+        }
+
+        public bool SavePaymentMOneyRecieptApprove(PaymentMoneyReciptDTO infoDTO, List<SalesPaymentRegisterDTO> detailsDTO, long userId)
+        {
+            bool isSucccess = false;
+            double total = 0;
+            foreach (var bom in detailsDTO)
+            {
+                double subtotal = bom.PaymentAmount;
+                total += subtotal;
+            }
+            PaymentMoneyRecipt paymentMoneyRecipt = new PaymentMoneyRecipt();
+
+            List<SalesPaymentRegister> salesPaymentRegisters = new List<SalesPaymentRegister>();
+
+
+            if (infoDTO.Status == "Approved")
+            {
+                paymentMoneyRecipt = getmoneyreciptbyid(infoDTO.PaymentMoneyReciptId);
+                paymentMoneyRecipt.Status = "Approved";
+                _paymentMoneyReciptRepository.Update(paymentMoneyRecipt);
+
+
+                if (_paymentMoneyReciptRepository.Save())
+                {
+                    List<SalesPaymentRegister> details = new List<SalesPaymentRegister>();
+                    SalesPaymentRegister details1 = new SalesPaymentRegister();
+
+                    foreach (var item in detailsDTO)
+                    {
+                        details1 = getSalesPaymentRegisterbyid(item.PaymentRegisterID);
+                        details1.Status = "Approved";
+                        details.Add(details1);
+
+                    }
+                    _salesPaymentRegisterRepository.UpdateAll(details);
+
+                    if (_salesPaymentRegisterRepository.Save())
+                    {
+                        List<AgroProductSalesInfo> agroProductSalesInfos= new List<AgroProductSalesInfo>();
+                        AgroProductSalesInfo agroProductSalesInfo = new AgroProductSalesInfo();
+
+                        foreach(var item in detailsDTO)
+                        {
+                            agroProductSalesInfo = getinvoicebyid(item.ProductSalesInfoId);
+                            agroProductSalesInfo.PaidAmount += item.PaymentAmount;
+                            agroProductSalesInfo.DueAmount -= item.PaymentAmount;
+                            agroProductSalesInfos.Add(agroProductSalesInfo);
+                        }
+                        _agroProductSalesInfoRepository.UpdateAll(agroProductSalesInfos);
+                    }
+
+                }
+           
+                isSucccess = _agroProductSalesInfoRepository.Save();
+
+            }
+            else
+            {
+                paymentMoneyRecipt = getmoneyreciptbyid(infoDTO.PaymentMoneyReciptId);
+                paymentMoneyRecipt.Status = "Rejected";
+                _paymentMoneyReciptRepository.Update(paymentMoneyRecipt);
+
+
+                if (_paymentMoneyReciptRepository.Save())
+                {
+                    List<SalesPaymentRegister> details = new List<SalesPaymentRegister>();
+                    SalesPaymentRegister details1 = new SalesPaymentRegister();
+
+                    foreach (var item in detailsDTO)
+                    {
+                        details1 = getSalesPaymentRegisterbyid(item.PaymentRegisterID);
+                        details1.Status = "Rejected";
+                        details.Add(details1);
+
+                    }
+                    _salesPaymentRegisterRepository.UpdateAll(details);
+
+
+
+                }
+
+                isSucccess = _salesPaymentRegisterRepository.Save();
+            }
+
+            
+
+
+
+
+            return isSucccess;
         }
     }
 }

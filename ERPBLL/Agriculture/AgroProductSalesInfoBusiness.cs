@@ -1506,12 +1506,12 @@ where 1=1 {0}
     }
 }
 
-public IEnumerable<AgroProductSalesInfoDTO> GetPaymentLadserInfos(long StockiestId)
+public IEnumerable<AgroProductSalesInfoDTO> GetPaymentLadserInfos(long? StockiestId, string invoiceNo)
 {
     try
     {
 
-        return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForGetPaymentLadserInfos(StockiestId)).ToList();
+        return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForGetPaymentLadserInfos(StockiestId, invoiceNo)).ToList();
     }
     catch (Exception)
     {
@@ -1519,7 +1519,7 @@ public IEnumerable<AgroProductSalesInfoDTO> GetPaymentLadserInfos(long Stockiest
     }
 }
 
-private string QueryForGetPaymentLadserInfos(long StockiestId)
+private string QueryForGetPaymentLadserInfos(long? StockiestId, string invoiceNo)
 {
     try
     {
@@ -1532,8 +1532,12 @@ private string QueryForGetPaymentLadserInfos(long StockiestId)
         {
             param += string.Format(@" and sales.StockiestId={0}", StockiestId);
         }
+        if (invoiceNo != null && invoiceNo != "")
+        {
+            param += string.Format(@" and sales.InvoiceNo like '%{0}%'", invoiceNo);
+        }
 
-        query = string.Format(@"	
+                query = string.Format(@"	
 select sales.StockiestId,sales.ChallanNo,sales.DriverName,sales.DeliveryPlace,sales.VehicleType,sales.VehicleNumber,sales.TotalAmount,sales.DueAmount,sales.PaidAmount,sales.InvoiceNo,sales.ProductSalesInfoId,CONVERT(date,sales.InvoiceDate)as InvoiceDate,stock.StockiestName,
 
 
