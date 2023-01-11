@@ -2155,7 +2155,7 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(details, detailsDTO);
                 IsSuccess = _zoneSetup.SaveZoneInfo(detailsDTO, User.UserId, User.OrgId);
             }
-            ViewBag.ActiveTab = "active";
+            //ViewBag.ActiveTab = "active";
 
             return Json(IsSuccess);
         }
@@ -2561,6 +2561,7 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(details, dto);
                 IsSuccess = _stockiestInfo.SaveStockiestList(dto, User.UserId, User.OrgId);
             }
+            ViewBag.ActiveTab = "active";
             return Json(IsSuccess);
 
         }

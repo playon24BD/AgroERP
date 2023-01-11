@@ -105,7 +105,7 @@ namespace ERPBLL.Agriculture
 INNER JOIN tblProductSalesPaymentHistory psphs
 			on si.ProductSalesInfoId= psphs.ProductSalesInfoId
 where 1=1 {0}
-	 ) t  where 1=1  ",
+	 ) t  where 1=1  order by Cast (t.EntryDate as date)",
                         Utility.ParamChecker(param));
 
                 return query;
