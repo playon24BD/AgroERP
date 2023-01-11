@@ -41,5 +41,6 @@ namespace ERPBO.Agriculture.ViewModels
         public long StockiestId { get; set; }
 
         public string StockiestName { get; set; }
+        public double TotalAmount { get; set; }
     }
 }

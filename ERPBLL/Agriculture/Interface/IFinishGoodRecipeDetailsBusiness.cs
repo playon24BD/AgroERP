@@ -21,7 +21,12 @@ namespace ERPBLL.Agriculture.Interface
 
         IEnumerable<FinishGoodRecipeDetailsDTO> GetAgroReciprDetailsByInfoIdRMPrice(long FinishGoodProductId,string EntryDate);
         IEnumerable<FinishGoodProductionInfoDTO> GetAgroReciprDetailsByInfoIdRMPriceUsedSave(long FinishGoodProductId,string EntryDate);
+        IEnumerable<FinishGoodProductionInfoDTO> GetAgroReciprDetailsByInfoIdRMPriceUsedTable(long FinishGoodProductId,string EntryDate);
+
+
+
 
         IEnumerable<FinishGoodRecipeDetailsDTO> GetFGProductAmount(long FinishGoodProductId, string EntryDate);
+        IEnumerable<FinishGoodRecipeDetailsDTO> GetFGProductAmountusedbydate(string EntryDate);
     }
 }

@@ -1,7 +1,68 @@
 ﻿
-@{
-    ViewBag.Title = "_Y";
-}
+@model IEnumerable<ERPBO.Agriculture.ViewModels.FinishGoodProductionInfoViewModel>
 
-<h2>_Y</h2>
+@{
+    ViewBag.Title = "List of Finish Good Production List";
+    var SL = 0;
+    string badge = string.Empty;
+}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm table-striped table-responsive-lg table-responsive-md table-responsive-sm text-sm" id="tblFinishGoodProductList">
+            <thead class="btn-dark">
+                <tr class="text-center">
+                    <th style="vertical-align:middle">#SL</th>
+                    <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle">Production Batch Code</th>
+                    <th style="vertical-align:middle">Product Name</th>
+                    <th style="vertical-align:middle">Measurement Name</th>
+                    <th style="vertical-align:middle">Qty</th>
+                    <th style="vertical-align:middle">Date</th>
+
+                    <th style="vertical-align:middle">RM Price</th>
+                    <th style="vertical-align:middle">Other Expense</th>
+
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    badge = item.ProductionOtherExpense == 0 ? "badge bg-danger" : "";
+                    SL = SL + 1;
+                    <tr>
+
+                        <td class="text-center text-bold">@SL</td>
+                        <td class="hide">@item.FinishGoodProductInfoId</td>
+                        <td class="text-center">@item.FinishGoodProductionBatch</td>
+                        <td class="text-center">@item.FinishGoodProductName</td>
+                        <td class="text-center">@item.MeasurementName</td>
+                        <td class="text-center">@item.TargetQuantity</td>
+                        <td class="text-center">@item.EntryDate.Value.ToString("dd-MMM-yyyy")</td>
+
+                        <td class="text-center">@item.ProductionRMPrice.ToString("N2")</td>
+
+
+                        <td class="text-center" data-val="@item.ProductionOtherExpense.ToString("N2")">
+                            <span class="@badge">@item.ProductionOtherExpense.ToString("N2")</span>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.Count() == 0)
+                {
+                    <tr class="text-center empty-row">
+                        <td colspan="5">
+                            No Rows Found in the table
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
 

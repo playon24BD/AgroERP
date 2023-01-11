@@ -14,5 +14,7 @@ namespace ERPBLL.Agriculture.Interface
         bool SaveFinishGoodProductName(FinishGoodProductDTO finishGoodProduct, long userId, long orgId);
         IEnumerable<FinishGoodProduct> GetProductNameByOrgId(long orgId);
         FinishGoodProduct GetFinishGoodProductById(long FinishGoodProductId, long orgId);
+
+        IEnumerable<FinishGoodProductionInfoDTO> GetFGProductByDate(string EntryDate);
     }
 }

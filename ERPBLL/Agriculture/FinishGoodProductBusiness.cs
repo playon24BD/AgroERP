@@ -1,4 +1,5 @@
 ﻿using ERPBLL.Agriculture.Interface;
+using ERPBLL.Common;
 using ERPBO.Agriculture.DomainModels;
 using ERPBO.Agriculture.DTOModels;
 using ERPDAL.AgricultureDAL;
@@ -71,6 +72,32 @@ namespace ERPBLL.Agriculture
         public IEnumerable<FinishGoodProduct> GetProductNameByOrgId(long orgId)
         {
             return _finishGoodProductRepository.GetAll(des => des.OrganizationId == orgId).ToList();
+        }
+
+        public IEnumerable<FinishGoodProductionInfoDTO> GetFGProductByDate(string EntryDate)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForGetFGProductByDate(EntryDate)).ToList();
+        }
+
+        private string QueryForGetFGProductByDate(string EntryDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+            if (!string.IsNullOrEmpty(EntryDate) && EntryDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(EntryDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(f.EntryDate as date)='{0}'", fDate);
+            }
+            query = string.Format(@" 
+select DISTINCT p.FinishGoodProductName,p.FinishGoodProductId from FinishGoodProductionInfoes f
+inner join tblFinishGoodProductInfo p on f.FinishGoodProductId = p.FinishGoodProductId
+where 1=1 {0} and f.ProductionOtherExpense = 0"
+
+, Utility.ParamChecker(param));
+
+            return query;
         }
     }
 }

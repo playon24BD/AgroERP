@@ -146,35 +146,54 @@
         })
 
 
-        ddlProductName.change(function () {
 
 
-           // LoadQtyUnit();
+        dptFromDate.change(function () {
+
+            LoadProduct();
+            LoadFGTABlE();
+            LoadrmamountDate();
+           
 
 
 
         })
-        //function LoadQtyUnit() {
-        //    clearDropdown("ddlQtyUnit");
-        //    if (ddlProductName.val() != "") {
 
-        //        LoadDropDown('/AgroConfiguration/GetReceipyUnitQtyByProductionId', 'POST', ddlQtyUnit, JSON.stringify({ finishGoodProductId: ddlProductName.val() }));
-        //    }
+        ddlProductName.change(function () {
 
 
-        //}
+            LoadFGTABlE();
+            Loadrmamount();
 
 
 
+        })
 
-        //change Invoice
-        $('#ddlProductName').change(function () {
+
+        function LoadProduct() {
+             debugger;
+            clearDropdown("ddlProductName");
+            if (dptFromDate.val() != "") {
+
+
+
+                LoadDropDown('/AgroConfiguration/GetproductnameBYDate', 'POST', ddlProductName, JSON.stringify({ EntryDate: dptFromDate.val() }));
+                 debugger;
+            }
+            else {
+                clearDropdown("ddlProductName");
+
+            }
+        }
+
+        function LoadFGTABlE() {
+
 
             let FinishGoodProductId = $("#ddlProductName option:selected").val();
             debugger;
             var data = { FinishGoodProductId: TryParseInt(FinishGoodProductId, 0), EntryDate: dptFromDate.val(), };
             console.log(data);
-            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/ProductionPriceCreateTable', data)).then(function (res, status) {
+            $.when(getReqWithData('html', 'GET', '/AgroConfiguration/ProductionPriceCreateTablemain', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {
                     $("#dataContainer").empty();
@@ -186,7 +205,16 @@
             })
 
 
+        }
 
+
+        function Loadrmamount() {
+
+
+            let FinishGoodProductId = $("#ddlProductName option:selected").val();
+            debugger;
+            var data = { FinishGoodProductId: TryParseInt(FinishGoodProductId, 0), EntryDate: dptFromDate.val(), };
+            console.log(data);
 
             $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRMAMount", data)).then(function (res, status) {
                 debugger;
@@ -198,7 +226,62 @@
 
             });
 
-        });
+
+        }
+
+        function LoadrmamountDate() {
+
+
+            let FinishGoodProductId = $("#ddlProductName option:selected").val();
+            debugger;
+            var data = {EntryDate: dptFromDate.val(), };
+            console.log(data);
+
+            $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRMAMountDate", data)).then(function (res, status) {
+                debugger;
+
+                consoleLog(res.replace(/['"]+/g, ''));
+                var totalreturn = res.replace(/['"]+/g, '');
+                ddlRMtotalprice.val(totalreturn);
+
+
+            });
+
+
+        }
+
+        //change Invoice
+        //$('#ddlProductName').change(function () {
+
+        //    let FinishGoodProductId = $("#ddlProductName option:selected").val();
+        //    debugger;
+        //    var data = { FinishGoodProductId: TryParseInt(FinishGoodProductId, 0), EntryDate: dptFromDate.val(), };
+        //    console.log(data);
+        //    $.when(getReqWithData('html', 'GET', '/AgroConfiguration/ProductionPriceCreateTablemain', data)).then(function (res, status) {
+        //        console.log(status);
+        //        if (status === "success") {
+        //            $("#dataContainer").empty();
+        //            $("#dataContainer").append(res);
+
+        //        }
+        //    }).fail(function (error) {
+        //        console.log(error);
+        //    })
+
+
+
+
+        //    $.when(getReqWithData('Html', "Get", "/AgroConfiguration/GetRMAMount", data)).then(function (res, status) {
+        //        debugger;
+
+        //        consoleLog(res.replace(/['"]+/g, ''));
+        //        var totalreturn = res.replace(/['"]+/g, '');
+        //        ddlRMtotalprice.val(totalreturn);
+
+
+        //    });
+
+        //});
 
          $("#saveButton").click(function (e) {
             debugger

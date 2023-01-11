@@ -80,6 +80,56 @@
                 </tr>
 
             }
+            else
+            {
+                badge = "badge bg-success";
+                badges = "badge bg-info";
+                sl = sl + 1;
+                <tr style="width: 100%; background-color: #40E0D0 ">
+                    <td class="text-center text-bold">@sl</td>
+                    <td class="hide">@item.ProductSalesInfoId</td>
+                    <td class="text-center ProductionSalesInfoId" data-val="@item.InvoiceNo">
+                        <span class="@badge">@item.InvoiceNo</span>
+                    </td>
+                    <td class="text-center">@item.InvoiceDate.Value.ToString("yyyy-MMM-dd")</td>
+                    <td class="text-center">@item.TotalAmount</td>
+                    <td class="text-center TotalAmount" data-val="@item.PaidAmount">
+                        <span class="@badges">@item.PaidAmount</span>
+                    </td>
+                    <td class="text-center">@item.DueAmount</td>
+                    <td class="text-center" style="width:15%">
+                        <input type="number" class="text-center paidamount form-control form-control-sm " value="0" readonly />
+                        <span class="error hide">Paid Amount mustbe lessthen or equal Due Aamount </span>
+                    </td>
+                    <td class="text-center" style="width:15%">
+                        <input type="number" class="text-center commision form-control form-control-sm " value="0" readonly />
+                    </td>
+
+                    <td class="hide">
+                        @{
+                            double subtotal = item.TotalAmount;
+                            total += subtotal;
+                        }
+                        @subtotal;
+                    </td>
+                    <td class="hide">
+                        @{
+                            double subtotalpaid = item.PaidAmount;
+                            totalpaid += subtotalpaid;
+                        }
+                        @totalpaid;
+                    </td>
+                    <td class="hide">
+                        @{
+                            double subtotaldue = item.DueAmount;
+                            totaldue += subtotaldue;
+                        }
+                        @totaldue;
+                    </td>
+
+                </tr>
+
+            }
 
 
         }

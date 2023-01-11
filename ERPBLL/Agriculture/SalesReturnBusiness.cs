@@ -51,7 +51,7 @@ namespace ERPBLL.Agriculture
 
                 if (ProductId != null && ProductId > 0)
                 {
-                    param += string.Format(@" and sr.FinishGoodProductInfoId like '%{0}%'", ProductId);
+                    param += string.Format(@" and sr.FinishGoodProductInfoId={0}", ProductId);
                 }
                 if (name != null && name != "")
                 {
@@ -64,11 +64,12 @@ namespace ERPBLL.Agriculture
                 }
                 //query = string.Format(@"	select  sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,CONVERT(date,sr.ReturnDate) AS ReturnDate FROM  
 
-                query = string.Format(@"select sr.SalesReturnId,sr.BoxQuanity, sr.QtyKG,sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,sr.ReturnDate 
+                query = string.Format(@"select si.TotalAmount,s.StockiestName,sr.ReturnCode,sr.SalesReturnId,sr.BoxQuanity, sr.QtyKG,sr.InvoiceNo,sr.ReturnQuanity,sr.ReturnPerUnitPrice,sr.ReturnTotalPrice,sr.Status,sr.FinishGoodProductInfoId,fpi.FinishGoodProductName,sr.MeasurementId,m.MeasurementName,sr.MeasurementSize,sr.AdjustmentDate,sr.ReturnDate 
 FROM tblSalesReturn sr 
 INNER JOIN tblProductSalesInfo si on sr.ProductSalesInfoId = si.ProductSalesInfoId
 inner join tblFinishGoodProductInfo fpi on sr.FinishGoodProductInfoId = fpi.FinishGoodProductId 
 inner join tblMeasurement m on sr.MeasurementId = m.MeasurementId
+inner join tblStockiestInfo s on sr.StockiestId = s.StockiestId
 where 1=1 {0} order by sr.SalesReturnId Desc", Utility.ParamChecker(param));
 
                 return query;

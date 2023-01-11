@@ -32,7 +32,10 @@
                     <th style="vertical-align:middle">#SL</th>
                     <th style="vertical-align:middle" class="hide"></th>
                     <th style="vertical-align:middle" class="hide"></th>
+                    <th style="vertical-align:middle">Return Code</th>
+                    <th style="vertical-align:middle">Stokiest Name</th>
                     <th style="vertical-align:middle">Invoice No</th>
+                    <th style="vertical-align:middle">Invoice Bill</th>
                     <th style="vertical-align:middle">Product Name</th>
                     <th style="vertical-align:middle">Recipe Unit Qty</th>
                     <th style="vertical-align:middle">Quantity</th>
@@ -54,13 +57,18 @@
                         <td class="text-center text-bold">@SL</td>
                         <td class="hide">@item.FinishGoodProductInfoId</td>
                         <td class="hide">@item.ProductSalesInfoId</td>
+                        <td class="text-center">@item.ReturnCode</td>
+
+                        <td class="text-center">@item.StockiestName</td>
                         <td class="text-center">@item.InvoiceNo</td>
+                        <td class="text-center">@item.TotalAmount.ToString("N2")</td>
+ 
                         <td class="text-center">@item.FinishGoodProductName</td>
                         <td class="text-center">@item.QtyKG</td>
                         <td class="text-center">@item.ReturnQuanity</td>
-                        <td class="text-center">@item.ReturnPerUnitPrice</td>
+                        <td class="text-center">@item.ReturnPerUnitPrice.ToString("N2")</td>
                         <td class="text-center">@item.ReturnDate.Value.ToString("dd-MMM-yyyy")</td>
-                        @*<td class="text-center">@item.Status</td>*@
+                        
                         <td class="text-center" data-val="@item.Status">
                             <span class="@badge">@item.Status</span>
                         </td>
@@ -81,22 +89,7 @@
             </tbody>
 
         </table>
-        @*<table class="table table-head-fixed text-nowrap tablesubtotal">
-            <thead>
-                <tr class="text-center">
 
-                    <th>Total</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th class="totalqty">0</th>
-                    <th class="totaldis">0</th>
-                    <th class="totalsub">0</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody class="bg-gradient-gray"></tbody>
-        </table>*@
     </div>
 </div>
 

@@ -13,7 +13,7 @@ namespace ERPBLL.Agriculture.Interface
 {
     public interface IAgroProductSalesInfoBusiness
     {
-        IEnumerable<AgroProductSalesInfoDTO> GetDailySalesReportList(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate);
+        IEnumerable<AgroProductSalesInfoDTO> GetDailySalesReportList(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate, int? RT);
         IEnumerable<DailySalesDataReport> GetDailySalesReport(string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate);
         AgroProductSalesInfo GetSalesById(long ProductSalesInfoId, long orgId);
         
@@ -42,7 +42,7 @@ namespace ERPBLL.Agriculture.Interface
         IEnumerable<ProductSalesDataChallanReport> GetProductSalesChallanData(long? SalesId);
         IEnumerable<ProductSalesDataChallanReport1> GetProductSalesChallanData1(long? SalesId);
         IEnumerable<ProductSalesDataChallanReport2> GetProductSalesChallanData2(long? SalesId);
-        IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long? stockiestId, string invoiceNo, string fromDate, string toDate);
+        IEnumerable<AgroProductSalesInfoDTO> GetAgroSalesInfos(long? stockiestId, string invoiceNo, string fromDate, string toDate, int? RT);
         IEnumerable<AgroProductSalesInfo> GetUserName(long orgId);
         AgroProductSalesInfo GetAgroProductionInfoById(long id, long orgId);
         IEnumerable<AgroProductSalesInfo> GetAgroProductionSalesInfo(long orgId);

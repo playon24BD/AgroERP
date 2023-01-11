@@ -225,6 +225,71 @@ where 1=1 {0} and t.ProductionOtherExpense = 0", Utility.ParamChecker(param));
             return query;
         }
 
+        public IEnumerable<FinishGoodProductionInfoDTO> GetAgroReciprDetailsByInfoIdRMPriceUsedTable(long FinishGoodProductId, string EntryDate)
+        {
+            return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodProductionInfoDTO>(QueryForGetAgroReciprDetailsByInfoIdRMPriceUsedTable(FinishGoodProductId, EntryDate)).ToList();
+        }
+
+        private string QueryForGetAgroReciprDetailsByInfoIdRMPriceUsedTable(long FinishGoodProductId, string EntryDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+            if (FinishGoodProductId != 0 && FinishGoodProductId > 0)
+            {
+                param += string.Format(@" and t.FinishGoodProductId={0}", FinishGoodProductId);
+            }
+            if (!string.IsNullOrEmpty(EntryDate) && EntryDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(EntryDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(t.EntryDate as date)='{0}'", fDate);
+            }
+
+
+            query = string.Format(@"	
+select m.MeasurementName,t.ProductionRMPrice,ISNULL(t.ProductionOtherExpense,0) as ProductionOtherExpense, t.FinishGoodProductionBatch,p.FinishGoodProductName,t.TargetQuantity,t.EntryDate from FinishGoodProductionInfoes t
+inner join tblFinishGoodProductInfo p on t.FinishGoodProductId = p.FinishGoodProductId
+inner join tblMeasurement m on m.MeasurementId=t.MeasurementId
+where 1=1 {0} and t.ProductionOtherExpense = 0", Utility.ParamChecker(param));
+
+            return query;
+        }
+
+        public IEnumerable<FinishGoodRecipeDetailsDTO> GetFGProductAmountusedbydate(string EntryDate)
+        {
+            try
+            {
+                return this._AgricultureUnitOfWork.Db.Database.SqlQuery<FinishGoodRecipeDetailsDTO>(QueryForGetFGProductAmountusedbydate( EntryDate)).ToList();
+            }
+
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        private string QueryForGetFGProductAmountusedbydate(string EntryDate)
+        {
+            string query = string.Empty;
+            string param = string.Empty;
+
+
+
+            if (!string.IsNullOrEmpty(EntryDate) && EntryDate.Trim() != "")
+            {
+                string fDate = Convert.ToDateTime(EntryDate).ToString("yyyy-MM-dd");
+                param += string.Format(@" and Cast(i.EntryDate as date)='{0}'", fDate);
+            }
+
+            query = string.Format(@"
+
+select CONVERT(DATE,t.EntryDate) as EntryDate,ROUND(ISNULL( sum(t.ProductionRMPrice),0),2) as GrandTotal  from(select i.ProductionRMPrice,i.FinishGoodProductId,i.EntryDate from FinishGoodProductionInfoes i 
+where 1=1 {0} and Cast(i.EntryDate as date)='2023-01-11' and i.ProductionOtherExpense = 0)
+t
+group by CONVERT(DATE,t.EntryDate)", Utility.ParamChecker(param));
+
+            return query;
+        }
+
 
     }
 }

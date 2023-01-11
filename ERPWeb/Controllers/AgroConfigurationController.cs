@@ -2683,7 +2683,7 @@ namespace ERPWeb.Controllers
         #region Sales Invoice
 
 
-        public ActionResult GetAgroSalesProductList(string flag, long? id, long? stockiestId, string invoiceNo, string fromDate, string toDate)
+        public ActionResult GetAgroSalesProductList(string flag, long? id, long? stockiestId, string invoiceNo, string fromDate, string toDate, int? RT)
         {
             try
             {
@@ -2701,7 +2701,7 @@ namespace ERPWeb.Controllers
                 }
                 else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
                 {
-                    var dto = _agroProductSalesInfoBusiness.GetAgroSalesInfos(stockiestId ?? 0, invoiceNo ?? null, fromDate, toDate);
+                    var dto = _agroProductSalesInfoBusiness.GetAgroSalesInfos(stockiestId ?? 0, invoiceNo ?? null, fromDate, toDate,RT);
 
 
                     List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
@@ -5426,7 +5426,7 @@ namespace ERPWeb.Controllers
         }
 
 
-        public ActionResult DailySalesReportList(string flag, string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate)
+        public ActionResult DailySalesReportList(string flag, string invoiceNo, long? territoryId, long? stockiestId, string fromDate, string toDate, int? RT)
         {
             try
             {
@@ -5442,7 +5442,7 @@ namespace ERPWeb.Controllers
 
                 else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
                 {
-                    var dto = _agroProductSalesInfoBusiness.GetDailySalesReportList(invoiceNo, territoryId ?? 0, stockiestId ?? 0, fromDate, toDate).ToList();
+                    var dto = _agroProductSalesInfoBusiness.GetDailySalesReportList(invoiceNo, territoryId ?? 0, stockiestId ?? 0, fromDate, toDate,RT).ToList();
                     List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
                     AutoMapper.Mapper.Map(dto, viewModels);
                     return PartialView("_GetDailySalesReportList", viewModels);
@@ -6476,7 +6476,6 @@ namespace ERPWeb.Controllers
         public ActionResult ProductionPriceCreate(long? id)
         {
             ViewBag.ddlQtyUnit = _finishGoodRecipeInfoBusiness.GetAllFinishGoodUnitQty(User.OrgId).Select(d => new SelectListItem { Text = d.UnitQty, Value = d.FGRId.ToString() }).ToList();
-
             ViewBag.ddlProductName = _finishGoodProductionInfoBusiness.GetFinishGoodProductInfosall(User.OrgId).GroupBy(t => t.FinishGoodProductId).Select(g => g.First()).Select(d => new SelectListItem { Text = _finishGoodProductBusiness.GetFinishGoodProductById(d.FinishGoodProductId, User.OrgId).FinishGoodProductName, Value = d.FinishGoodProductId.ToString() }).ToList();
             return View();
         }
@@ -6490,6 +6489,19 @@ namespace ERPWeb.Controllers
                 List<FinishGoodRecipeDetailsViewModel> detailsViewModel = new List<FinishGoodRecipeDetailsViewModel>();
                 AutoMapper.Mapper.Map(details, detailsViewModel);
                 return PartialView("_GetPRProductionPrice", detailsViewModel);
+
+        }
+
+
+        public ActionResult ProductionPriceCreateTablemain(long? FinishGoodProductId, string EntryDate)
+        {
+
+
+            var details = _finishGoodRecipeDetailsBusiness.GetAgroReciprDetailsByInfoIdRMPriceUsedTable(FinishGoodProductId.Value, EntryDate);
+
+            List<FinishGoodProductionInfoViewModel> detailsViewModel = new List<FinishGoodProductionInfoViewModel>();
+            AutoMapper.Mapper.Map(details, detailsViewModel);
+            return PartialView("_Y", detailsViewModel);
 
         }
 
@@ -6509,6 +6521,30 @@ namespace ERPWeb.Controllers
 
         }
 
+        public ActionResult GetRMAMountDate(string EntryDate)
+        {
+
+            try
+            {
+                var checkFinishGoodStockValue = _finishGoodRecipeDetailsBusiness.GetFGProductAmountusedbydate(EntryDate);
+
+                double itemStock = 0;
+
+                itemStock = (checkFinishGoodStockValue.FirstOrDefault().GrandTotal);
+
+
+                return Json(itemStock.ToString("0.00"), JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Not Found", JsonRequestBehavior.AllowGet);
+            }
+
+
+
+        }
+
+
         public ActionResult SaveProductionPrice(FinishGoodProductionInfoViewModel info)
         {
             bool IsSuccess = false;
@@ -6520,6 +6556,24 @@ namespace ERPWeb.Controllers
 
             return Json(IsSuccess);
         }
+
+
+
+        public ActionResult GetproductnameBYDate(string EntryDate)
+        {
+            try
+            {
+                var ProductName = _finishGoodProductBusiness.GetFGProductByDate(EntryDate);
+                var dropDown = ProductName.Select(p => new Dropdown { text = p.FinishGoodProductName, value = p.FinishGoodProductId.ToString() }).ToList();
+
+                return Json(dropDown, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Not Found", JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
         #endregion
 

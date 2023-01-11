@@ -48,6 +48,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-1 pl-0 pr-0">
+                                <div class="input-group">
+                                    <select class="form-control form-control-sm select2" id="ddlAction">
+                                        <option value="">Status</option>
+                                        <option value="1">Open</option>
+                                        <option value="0">Close</option>
+
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-md-1">
                                 <div class="input-group input-group-sm">
@@ -87,6 +97,7 @@
         var ddlStockiestName = $("#ddlStockiestName");
         var ddlTerritoryName = $("#ddlTerritoryName");
         var SearchDailySales = $("#SearchDailySales");
+        var ddlAction = $("#ddlAction");
 
 
 
@@ -155,12 +166,15 @@
 
             LoadDailySalesReportList();
         })
+        ddlAction.change(function () {
+            LoadDailySalesReportList();
+        })
 
 
         function LoadDailySalesReportList() {
             debugger;
 
-            var data = { flag: "View", invoiceNo: $.trim(SearchDailySales.val()), stockiestId: TryParseInt(ddlStockiestName.val(), 0), territoryId: TryParseInt(ddlTerritoryName.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+            var data = { flag: "View", invoiceNo: $.trim(SearchDailySales.val()), stockiestId: TryParseInt(ddlStockiestName.val(), 0), territoryId: TryParseInt(ddlTerritoryName.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val(), RT: ddlAction.val() };
 
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/DailySalesReportList', data)).then(function (res, status) {
                 console.log(status);

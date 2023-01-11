@@ -24,29 +24,39 @@
                                 <input type="text" class="form-control form-control-sm" id="searchByAny" placeholder="search Invoice" />
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-2 pl-0">
                                 @Html.DropDownList("ddlStockiest", (IEnumerable<SelectListItem>)ViewBag.ddlStockiest, "--Select Stockiest--", new { @class = "form-control form-control-sm ctrl-changed select2 select2-danger" })
 
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-1 pl-0">
                                 <div class="input-group input-group-sm ">
                                     <input type="text" class="form-control form-control-sm date-datePicker" id="dptFromDate" placeholder="From Date" />
                                     @*<div class="input-group-prepend cursor-pointer remove-date dptFromDate" style="cursor:pointer">
-                                        <span class="input-group-text">&#10008;</span>
-                                    </div>*@
+                    <span class="input-group-text">&#10008;</span>
+                </div>*@
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1 pl-0">
                                 <div class="input-group input-group-sm ">
                                     <input type="text" class="form-control form-control-sm date-datePicker" id="dptToDate" placeholder="To Date" />
                                     @*<div class="input-group-prepend remove-date dptToDate" style="cursor:pointer">
-                                        <span class="input-group-text">&#10008;</span>
-                                    </div>*@
+                    <span class="input-group-text">&#10008;</span>
+                </div>*@
                                 </div>
                             </div>
-                            
-                            <div class="col-md-2">
+                            <div class="col-md-1 pl-0 pr-0">
+                                <div class="input-group">
+                                    <select class="form-control form-control-sm select2" id="ddlAction">
+                                        <option value="">Select Status</option>
+                                        <option value="1">Open</option>
+                                        <option value="0">Close</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
 
                                 <a href="/AgroConfiguration/CreateAgroSalesProduct" class="das2-btn float-lg-right" id="btnAddNew"><i class="fa fa-plus"></i> Create Invoice</a>
 
@@ -324,6 +334,8 @@
         var txtvehicleType = $("#txtvehicleType");
         var hdSalesId = $("#hdSalesId");
 
+        var ddlAction = $("#ddlAction");
+
 
         $(document).ready(function () {
 
@@ -369,6 +381,11 @@
         dptFromDate.change(function () {
             LoadSalesProducts();
         })
+
+        ddlAction.change(function () {
+            LoadSalesProducts();
+        })
+
         dptToDate.change(function () {
             LoadSalesProducts();
         })
@@ -377,7 +394,7 @@
         })
         function LoadSalesProducts() {
             debugger;
-            var data = { flag: "View", id: 0, invoiceNo: $.trim(searchByAny.val()), stockiestId: TryParseInt(ddlStockiest.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val() };
+            var data = { flag: "View", id: 0, invoiceNo: $.trim(searchByAny.val()), stockiestId: TryParseInt(ddlStockiest.val(), 0), fromDate: dptFromDate.val(), toDate: dptToDate.val(), RT: ddlAction.val() };
             $.when(getReqWithData('html', 'GET', '/AgroConfiguration/GetAgroSalesProductList', data)).then(function (res, status) {
                 console.log(status);
                 if (status === "success") {
