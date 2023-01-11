@@ -284,7 +284,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-md-3 text-center">
                                             <h6 class=" text-bold float-left text-white">
-                                                Measurement List
+                                                Pack List
                                             </h6>
                                         </div>
                                         <div class="col-md-2">
@@ -300,7 +300,7 @@
 
                                         </div>
                                         <div class="col-md-3">
-                                            <a href="/AgroConfiguration/CreateMeasurement" class="das2-btn float-lg-right"><i class="fa fa-plus"></i> Create Measurement</a>
+                                            <a href="/AgroConfiguration/CreateMeasurement" class="das2-btn float-lg-right"><i class="fa fa-plus"></i> Create Pack</a>
                                         </div>
                                     </div>
                                 </div>
@@ -329,7 +329,7 @@
                                     <div class="row text-sm align-items-center">
                                         <div class="col-md-2 text-center">
                                             <h6 class=" text-bold float-left text-white mb-0">
-                                                Accessories Setup
+                                                Gift Setup
                                             </h6>
                                         </div>
                                         <div class="col-md-2">
@@ -345,7 +345,7 @@
                                         </div>
 
                                         <div class="col-md-3">
-                                            <button class="das2-btn float-right" id="btnAddAC"><i class="fa fa-plus"></i>Add New Accessories</button>
+                                            <button class="das2-btn float-right" id="btnAddAC"><i class="fa fa-plus"></i>Add New Gift</button>
 
                                         </div>
                                     </div>
@@ -394,7 +394,6 @@
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm" id="ddlStatus">
-                                <option value="">--Select Status--</option>
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
@@ -444,7 +443,6 @@
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm select2" id="ddlStatusUnit">
-                                <option value="">--Select Status--</option>
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
@@ -504,7 +502,7 @@
                     <div class="col-md-12">
                         <label for="ddlStatus" class="control-label">Status</label>
                         <select class="form-control form-control-sm select2" id="ddlStatusRM">
-                            <option value="">--Select Status--</option>
+                           
                             <option value="Active">Active</option>
                             <option value="InActive">InActive</option>
                         </select>
@@ -575,7 +573,7 @@
                     <div class="form-group col-md-2">
                         <label for="ddlStatus" class="control-label">Status</label>
                         <select class="form-control form-control-sm" id="ddlStatusSupplier">
-                            <option value="">--Select Status--</option>
+                            @*<option value="">--Select Status--</option>*@
                             <option value="Active">Active</option>
                             <option value="InActive">InActive</option>
                         </select>
@@ -623,7 +621,7 @@
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm select2" id="ddlStatusProduct">
-                                <option value="">--Select Status--</option>
+                                @*<option value="">--Select Status--</option>*@
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
@@ -666,9 +664,9 @@
                     <div class="form-row">
 
                         <div class="form-row col-md-12">
-                            <label for="measureMentName" class="control-label">Measurement Name </label>
+                            <label for="measureMentName" class="control-label">Pack Name </label>
                             <input type="text" id="measureMentName" class="form-control form-control-sm" autofocus />
-                            <span class="error hide required-measureMentName font-weight-bold">Input MeasureMent Name !</span>
+                            <span class="error hide required-measureMentName font-weight-bold">Input Pack Name !</span>
 
                         </div>
 
@@ -705,7 +703,7 @@
                         <div class="form-group col-md-12">
                             <label for="ddlStatus" class="control-label">Status</label>
                             <select class="form-control form-control-sm" id="ddlStatusMeasurement">
-                                <option value="">--Select Status--</option>
+                                @*<option value="">--Select Status--</option>*@
                                 <option value="Active">Active</option>
                                 <option value="InActive">InActive</option>
                             </select>
@@ -751,15 +749,15 @@
 
                     <input type="hidden" id="hdAccessoriesId" />
                     <div class="col-md-12">
-                        <label class="control-label font-weight-bold">Accessories Name<span style="color:red">*</span></label>
+                        <label class="control-label font-weight-bold">Gift Name<span style="color:red">*</span></label>
                         <input type="text" id="ddlAccessoriesName" class="form-control form-control-sm" />
-                        <span class="error hide required-raqAccessoriesName">Accessories Name is Required</span>
+                        <span class="error hide required-raqAccessoriesName">Gift Name is Required</span>
 
                     </div>
                     <div class="col-md-12">
                         <label for="ddlStatusA" class="control-label">Status</label>
                         <select class="form-control form-control-sm select2" id="ddlStatusA">
-                            <option value="">--Select Status--</option>
+                            @*<option value="">--Select Status--</option>*@
                             <option value="Active">Active</option>
                             <option value="InActive">InActive</option>
                         </select>
@@ -996,10 +994,11 @@
         })
 
         $("#addButton1").click(function (e) {
+            
             e.preventDefault();
-
-            OpenModals();
             ClearCtrl();
+            OpenModals();
+            
         })
 
         function OpenModals() {
@@ -1021,10 +1020,10 @@
                 $('.required-UnitName').removeClass("hide");
                 Isvalid = false;
             }
-            if ($.trim(ddlStatusUnit.val()) == "") {
-                $('.required-Status').removeClass("hide");
-                Isvalid = false;
-            }
+            //if ($.trim(ddlStatusUnit.val()) == "") {
+            //    $('.required-Status').removeClass("hide");
+            //    Isvalid = false;
+            //}
 
             return Isvalid
 
@@ -1078,7 +1077,7 @@
             txtUnitName.val("");
             ddlStatusUnit.val("");
             hdAgroUnitId.val('0');
-            ddlStatus.trigger("change");
+            //ddlStatus.trigger("change");
 
 
         }
@@ -1089,7 +1088,7 @@
 
             debugger;
             e.preventDefault()
-            ClearCtrl();
+            //ClearCtrl();
             var row = $(this).parent().parents('tr');
             var td1 = row.find('td:eq(1)').html();
             var td2 = row.find('td:eq(2)').html();
@@ -1299,8 +1298,8 @@
         function ClearCtrlRM() {
             rawMaterialName.val("");
             ddlUnitRM.val("");
-            ddlStatusRM.val("");
-            ddlUnitRM.trigger("change");
+            //ddlStatusRM.val("");
+            //ddlUnitRM.trigger("change");
             //remarks.val('');
             //expairDate.val('');
             //ddlOrganization.val('');
@@ -1383,7 +1382,7 @@
 
         function clearCtrlAccessories() {
             ddlAccessoriesName.val("");
-            ddlStatusA.val("");
+            //ddlStatusA.val("");
             
             hdAccessoriesId.val('0');
             

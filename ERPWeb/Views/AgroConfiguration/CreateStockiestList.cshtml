@@ -120,7 +120,7 @@
                 <div class="col-md-3">
                     <label for="ddlcreditlimit" class="control-label">Status <span style="color:red">*</span></label>
                     <select id="ddlcreditlimit" class="form-control form-control-sm select2">
-                        <option value="0">Select</option>
+                        @*<option value="0">Select</option>*@
                         <option value="Active">Active</option>
                         <option value="InActive">InActive</option>
                     </select>
@@ -177,7 +177,7 @@
 
 @section scripts{
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
         var ddlOrganizationName = $("#ddlOrganizationName");
         var ddlTerritoryName = $("#ddlTerritoryName");
@@ -398,7 +398,7 @@
                     debugger;
                     $('.toastrDefaultSuccess').trigger('click');
                     setTimeout(function () {
-                        redirectPage('@Url.Action("GetStockiestList")');
+                        redirectPage('@Url.Action("GetStockiestList",new {tab= "Stockiest" })');
                     }, 1000);
                 }
                 else {
@@ -494,5 +494,5 @@
             numclamountin.val("");
 
         }
-    </script>
+</script>
 }

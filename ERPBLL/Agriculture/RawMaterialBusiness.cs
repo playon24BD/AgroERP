@@ -87,37 +87,46 @@ namespace ERPBLL.Agriculture
         public bool SaveRawMaterial(RawMaterialDTO rawMaterial, long userId, long orgId)
         {
             bool IsSuccess = false;
-            if (rawMaterial.RawMaterialId==0)
+            if(rawMaterial.RMCategorieId>0 && rawMaterial.UnitId > 0)
             {
-                RawMaterial material = new RawMaterial()
+                if (rawMaterial.RawMaterialId == 0)
                 {
-                    OrganizationId = orgId,
-                    RawMaterialName = rawMaterial.RawMaterialName,
-                    //ExpireDate = rawMaterial.ExpireDate,
-                    //DepotId = rawMaterial.DepotId,
-                    Status=rawMaterial.Status,
-                    UnitId=rawMaterial.UnitId,
-                    EntryDate = DateTime.Now,
-                    EntryUserId = userId,
-                    RMCategorieId=rawMaterial.RMCategorieId,
-                };
 
-                _rawMaterialRepository.Insert(material);
+                    RawMaterial material = new RawMaterial()
+                    {
+                        OrganizationId = orgId,
+                        RawMaterialName = rawMaterial.RawMaterialName,
+                        //ExpireDate = rawMaterial.ExpireDate,
+                        //DepotId = rawMaterial.DepotId,
+                        Status = rawMaterial.Status,
+                        UnitId = rawMaterial.UnitId,
+                        EntryDate = DateTime.Now,
+                        EntryUserId = userId,
+                        RMCategorieId = rawMaterial.RMCategorieId,
+                    };
+
+                    _rawMaterialRepository.Insert(material);
+                }
+                else
+                {
+                    RawMaterial material = new RawMaterial();
+                    material = GetRawMaterialById(rawMaterial.RawMaterialId, orgId);
+                    material.RawMaterialName = rawMaterial.RawMaterialName;
+                    material.Status = rawMaterial.Status;
+                    material.UnitId = rawMaterial.UnitId;
+                    material.RMCategorieId = rawMaterial.RMCategorieId;
+                    material.UpdateDate = rawMaterial.UpdateDate;
+                    material.UpdateUserId = rawMaterial.UpdateUserId;
+                    _rawMaterialRepository.Update(material);
+                }
+                IsSuccess = _rawMaterialRepository.Save();
+                return IsSuccess;
             }
             else
             {
-                RawMaterial material = new RawMaterial();
-                material = GetRawMaterialById(rawMaterial.RawMaterialId,orgId);
-                material.RawMaterialName = rawMaterial.RawMaterialName;
-                material.Status = rawMaterial.Status;
-                material.UnitId = rawMaterial.UnitId;
-                material.RMCategorieId= rawMaterial.RMCategorieId;
-                material.UpdateDate = rawMaterial.UpdateDate;
-                material.UpdateUserId = rawMaterial.UpdateUserId;
-                _rawMaterialRepository.Update(material);
+                return false;
             }
-            IsSuccess = _rawMaterialRepository.Save();
-            return IsSuccess;
+            
             
         }
 

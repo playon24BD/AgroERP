@@ -2231,6 +2231,7 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(details, dto);
                 IsSuccess = _divisionInfo.SaveDivisionInfo(dto, User.UserId, User.OrgId);
             }
+            ViewBag.ActiveTab = "active";
             return Json(IsSuccess);
         }
 
@@ -2411,6 +2412,9 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(details, detailsDTO);
                 IsSuccess = _territorySetup.SaveTerritoryInfo(detailsDTO, User.UserId, User.OrgId);
             }
+
+            ViewBag.ActiveTab = "active";
+
             return Json(IsSuccess);
         }
         #endregion
@@ -2561,7 +2565,9 @@ namespace ERPWeb.Controllers
                 AutoMapper.Mapper.Map(details, dto);
                 IsSuccess = _stockiestInfo.SaveStockiestList(dto, User.UserId, User.OrgId);
             }
+
             ViewBag.ActiveTab = "active";
+
             return Json(IsSuccess);
 
         }
@@ -6906,6 +6912,45 @@ namespace ERPWeb.Controllers
         }
 
         #endregion
+
+        #region Drop Approved List
+
+
+        public ActionResult GetDropApprovedList(string flag)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(flag))
+                {
+
+                    ViewBag.ddlStockiest = _stockiestInfo.GetAllStockiestSetup(User.OrgId).Select(d => new SelectListItem { Text = d.StockiestName, Value = d.StockiestId.ToString() }).ToList();
+
+
+                    return View();
+                }
+                else if (!string.IsNullOrEmpty(flag) && flag == Flag.View)
+                {
+                    var dto = _agroProductSalesInfoBusiness.GetSalesDropApprovedList();
+
+
+                    List<AgroProductSalesInfoViewModel> viewModels = new List<AgroProductSalesInfoViewModel>();
+                    AutoMapper.Mapper.Map(dto, viewModels);
+                    return PartialView("_GetSalesDropApprovedList", viewModels);
+                }
+
+
+                return View();
+            }
+            catch (Exception e)
+            {
+                return View();
+            }
+        }
+
+
+        #endregion
+
 
     }
 }

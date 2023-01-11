@@ -1195,7 +1195,7 @@ public bool UpdateInvoiceDrop(long productSalesInfoId, long userId)
 
     if (SalesInfoDb != null)
     {
-        SalesInfoDb.Status = "Drop";
+        SalesInfoDb.Status = "Pending";
         SalesInfoDb.UpdateDate = DateTime.Now;
         SalesInfoDb.UpdateUserId = userId;
         _agroProductSalesInfoRepository.Update(SalesInfoDb);
@@ -1206,7 +1206,7 @@ public bool UpdateInvoiceDrop(long productSalesInfoId, long userId)
     {
         foreach (var item in SalesDetailsDb)
         {
-            item.Status = "Drop";
+            item.Status = "Pending";
             item.UpdateDate = DateTime.Now;
             item.UpdateUserId = userId;
             _agroProductSalesDetailsRepository.Update(item);
@@ -2004,6 +2004,50 @@ left join tblAccessoriesInfo ai on ti.AccessoriesId=ai.AccessoriesId
 Where 1=1 {0}", Utility.ParamChecker(param));
     return query;
 }
+
+        public IEnumerable<AgroProductSalesInfoDTO> GetSalesDropApprovedList()
+        {
+            try
+            {
+
+                return this._agricultureUnitOfWork.Db.Database.SqlQuery<AgroProductSalesInfoDTO>(QueryForSalesDropApprovedList()).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
+        private string QueryForSalesDropApprovedList()
+        {
+            try
+            {
+
+                string query = string.Empty;
+                string param = string.Empty;
+
+                //if (!string.IsNullOrEmpty(invoiceNo))
+                //{
+                //    param += string.Format(@"and info.InvoiceNo like '%{0}%'", invoiceNo);
+                //}
+
+
+                query = string.Format(@"
+select  info.InvoiceNo,info.InvoiceDate,info.ProductSalesInfoId,st.StockiestName,info.Status,info.TotalAmount,info.PaidAmount,info.DueAmount from tblProductSalesInfo info
+inner join tblStockiestInfo st on info.StockiestId=st.StockiestId
+ where 1=1 {0} and info.Status='Pending' order by info.ProductSalesInfoId desc
+			
+ ", Utility.ParamChecker(param));
+
+                return query;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
 
 
 

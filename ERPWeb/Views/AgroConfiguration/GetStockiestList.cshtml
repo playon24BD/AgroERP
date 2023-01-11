@@ -757,9 +757,9 @@
 
         $(document).ready(function () {
 
-            if ($("#tab").val() == 'StockiestList') {
-                $("#custom-tabs-two-StockiestList").addClass('active');
-                $("#custom-tabs-two-StockiestList-tab").addClass('active');
+            if ($("#tab").val() == 'Stockiest') {
+                $("#custom-tabs-two-Stockiest").addClass('active');
+                $("#custom-tabs-two-Stockiest-tab").addClass('active');
 
                 $("#custom-tabs-two-Zone-tab").removeClass('active');
                 $("#custom-tabs-two-Zone").removeClass('active');
@@ -1141,7 +1141,7 @@
                         toastrSuccessAlert(execuStatus.successSave);
                         $("#AreaModal").modal("hide");
 
-                        LoadTerritoryDataTable();
+                        LoadAreaDataTable();
                     }
                     else {
                         toastrErrorAlert(execuStatus.fail);
@@ -1445,7 +1445,7 @@
                         toastrSuccessAlert(execuStatus.successSave);
                         $("#DivisionModal").modal("hide");
 
-                        LoadTerritoryDataTable();
+                        LoadDivisionList();
                     }
                     else {
                         toastrErrorAlert(execuStatus.fail);

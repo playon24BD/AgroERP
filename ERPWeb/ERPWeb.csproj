@@ -3656,6 +3656,8 @@
     <Content Include="Views\AgroConfiguration\_X.cshtml" />
     <Content Include="Views\AgroConfiguration\_Y.cshtml" />
     <Content Include="Views\AgroConfiguration\_Z.cshtml" />
+    <Content Include="Views\AgroConfiguration\_GetSalesDropApprovedList.cshtml" />
+    <Content Include="Views\AgroConfiguration\GetDropApprovedList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
